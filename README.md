@@ -12,7 +12,7 @@ The GUC Internship System is a web application designed to streamline and digiti
 
 ## Project Team
 
-### Development Team - Ctrl + Alt + Defeat
+### Development Team - "Ctrl + Alt + Defeat"
 
 - 58-0454
 - 58-1959
