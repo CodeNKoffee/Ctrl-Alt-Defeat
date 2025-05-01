@@ -71,7 +71,7 @@ export default function SignupForm() {
                   onChange={(e) => setFieldValue('industry', e.target.value)}
                   onBlur={(e) => setFieldValue('industry', e.target.value)}
                   value={values.industry}
-                  className={`w-full h-14 px-0 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${!values.industry ? 'text-transparent' : ''} ${errors.industry && touched.industry ? 'border-red-500' : ''}`}
+                  className={`w-full h-14 px-0 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${!values.industry ? 'text-transparent' : ''} ${errors.industry && touched.industry ? 'border-red-500' : ''}`}
                 >
                   <option value=""></option>
                   {INDUSTRIES.map((industry) => (
@@ -81,7 +81,7 @@ export default function SignupForm() {
                   ))}
                 </select>
                 <label
-                  className={`absolute left-0 transition-all duration-200 pointer-events-none ${values.industry ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-500'
+                  className={`absolute left-0 transition-all duration-200 pointer-events-none ${values.industry ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-400'
                     } ${errors.industry && touched.industry ? 'text-red-500' : ''}`}
                 >
                   Industry
@@ -105,7 +105,7 @@ export default function SignupForm() {
                   onChange={(e) => setFieldValue('companySize', e.target.value)}
                   onBlur={(e) => setFieldValue('companySize', e.target.value)}
                   value={values.companySize}
-                  className={`w-full h-14 px-0 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${!values.companySize ? 'text-transparent' : ''} ${errors.companySize && touched.companySize ? 'border-red-500' : ''}`}
+                  className={`w-full h-14 px-0 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${!values.companySize ? 'text-transparent' : ''} ${errors.companySize && touched.companySize ? 'border-red-500' : ''}`}
                 >
                   <option value=""></option>
                   {COMPANY_SIZES.map((size) => (
@@ -115,7 +115,7 @@ export default function SignupForm() {
                   ))}
                 </select>
                 <label
-                  className={`absolute left-0 transition-all duration-200 pointer-events-none ${values.companySize ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-500'
+                  className={`absolute left-0 transition-all duration-200 pointer-events-none ${values.companySize ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-400'
                     } ${errors.companySize && touched.companySize ? 'text-red-500' : ''}`}
                 >
                   Company Size
@@ -166,7 +166,7 @@ export default function SignupForm() {
                   <input
                     type="file"
                     name="companyLogo"
-                    accept={[...ACCEPTED_FILE_TYPES.images, ...ACCEPTED_FILE_TYPES.documents].join(',')}
+                    accept={[...ACCEPTED_FILE_TYPES.images].join(',')}
                     onChange={(event) => {
                       setFieldValue('companyLogo', event.currentTarget.files[0]);
                     }}
@@ -185,6 +185,9 @@ export default function SignupForm() {
                       Browse
                     </span>
                   </label>
+                </div>
+                <div className="text-sm text-gray-500">
+                  Accepted formats: JPG, PNG, SVG (Preferred dimensions: 200x200px)
                 </div>
                 {errors.companyLogo && touched.companyLogo && (
                   <div className="text-red-500 text-sm">{errors.companyLogo}</div>
@@ -209,7 +212,7 @@ export default function SignupForm() {
                 ) : (
                   <div className="w-full md:w-[calc(50%-16px)] space-y-3 animate-slideIn">
                     <label className="block text-lg font-medium text-metallica-blue-off-charts">
-                      Verification Document
+                      {values.verificationType === 'taxId' ? 'Tax Card' : 'Company Registration Document'}
                     </label>
                     <div className="relative">
                       <input
@@ -234,6 +237,9 @@ export default function SignupForm() {
                           Browse
                         </span>
                       </label>
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      Accepted formats: JPG, PNG, PDF
                     </div>
                     {errors.verificationDocument && touched.verificationDocument && (
                       <div className="text-red-500 text-sm">{errors.verificationDocument}</div>
