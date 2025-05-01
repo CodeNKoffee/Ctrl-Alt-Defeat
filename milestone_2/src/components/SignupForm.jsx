@@ -1,0 +1,252 @@
+'use client';
+
+import { Formik, Form } from 'formik';
+import { signupValidationSchema } from '../../utils/validationSchemas';
+import FloatingLabelInput from '@/components/FloatingLabelInput';
+import { INDUSTRIES, COMPANY_SIZES, VERIFICATION_TYPES, ACCEPTED_FILE_TYPES } from '../../constants/index';
+
+export default function SignupForm() {
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      // TODO: Implement signup logic
+      console.log('Form values:', values);
+    } catch (error) {
+      console.error('Signup error:', error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Formik
+      initialValues={{
+        companyName: '',
+        industry: '',
+        companyEmail: '',
+        companySize: '',
+        verificationType: '',
+        companyLogo: null,
+        verificationDocument: null,
+        taxId: '',
+      }}
+      validationSchema={signupValidationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ errors, touched, isSubmitting, setFieldValue, isValid, dirty, values }) => (
+        <Form className="space-y-6 w-full mx-auto">
+          <div className="flex flex-wrap gap-x-8 gap-y-6">
+            {/* Company Name */}
+            <div className="w-full md:w-[calc(50%-16px)]">
+              <FloatingLabelInput
+                name="companyName"
+                type="text"
+                label="Company Name"
+                errors={errors}
+                touched={touched}
+              />
+            </div>
+
+            {/* Company Email */}
+            <div className="w-full md:w-[calc(50%-16px)]">
+              <FloatingLabelInput
+                name="companyEmail"
+                type="email"
+                label="Company Email"
+                errors={errors}
+                touched={touched}
+                tooltip="This email will be used for business communications"
+              />
+            </div>
+
+            {/* Industry */}
+            <div className="w-full md:w-[calc(50%-16px)]">
+              <div className="relative">
+                <select
+                  name="industry"
+                  onChange={(e) => setFieldValue('industry', e.target.value)}
+                  onBlur={(e) => setFieldValue('industry', e.target.value)}
+                  value={values.industry}
+                  className={`w-full h-14 px-4 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${errors.industry && touched.industry ? 'border-red-500' : ''}`}
+                >
+                  <option value="">Select Industry</option>
+                  {INDUSTRIES.map((industry) => (
+                    <option key={industry} value={industry}>
+                      {industry}
+                    </option>
+                  ))}
+                </select>
+                <label
+                  className={`absolute left-4 transition-all duration-200 ${values.industry
+                    ? '-top-2.5 text-sm bg-transparent px-1'
+                    : 'top-4 text-gray-500'
+                    } ${errors.industry && touched.industry ? 'text-red-500' : ''}`}
+                >
+                  Industry
+                </label>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+                {errors.industry && touched.industry && (
+                  <div className="text-red-500 text-sm mt-1">{errors.industry}</div>
+                )}
+              </div>
+            </div>
+
+            {/* Company Size */}
+            <div className="w-full md:w-[calc(50%-16px)]">
+              <div className="relative">
+                <select
+                  name="companySize"
+                  onChange={(e) => setFieldValue('companySize', e.target.value)}
+                  onBlur={(e) => setFieldValue('companySize', e.target.value)}
+                  value={values.companySize}
+                  className={`w-full h-14 px-4 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${errors.companySize && touched.companySize ? 'border-red-500' : ''}`}
+                >
+                  <option value="">Select Company Size</option>
+                  {COMPANY_SIZES.map((size) => (
+                    <option key={size.value} value={size.value}>
+                      {size.label}
+                    </option>
+                  ))}
+                </select>
+                <label
+                  className={`absolute left-4 transition-all duration-200 ${values.companySize
+                    ? '-top-2.5 text-sm bg-transparent px-1'
+                    : 'top-4 text-gray-500'
+                    } ${errors.companySize && touched.companySize ? 'text-red-500' : ''}`}
+                >
+                  Company Size
+                </label>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+                {errors.companySize && touched.companySize && (
+                  <div className="text-red-500 text-sm mt-1">{errors.companySize}</div>
+                )}
+              </div>
+            </div>
+
+            {/* Verification Type */}
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Company Verification Type
+              </label>
+              <div className="space-y-2">
+                {VERIFICATION_TYPES.map((type) => (
+                  <label key={type.value} className="flex items-center space-x-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="verificationType"
+                      value={type.value}
+                      onChange={(e) => setFieldValue('verificationType', e.target.value)}
+                      className="h-4 w-4 text-metallica-blue-off-charts focus:ring-metallica-blue-off-charts"
+                    />
+                    <span className="text-sm text-gray-700">{type.label}</span>
+                  </label>
+                ))}
+              </div>
+              {errors.verificationType && touched.verificationType && (
+                <div className="text-red-500 text-sm">{errors.verificationType}</div>
+              )}
+            </div>
+
+            {/* Company Logo */}
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Company Logo
+              </label>
+              <div className="relative">
+                <input
+                  type="file"
+                  name="companyLogo"
+                  accept={[...ACCEPTED_FILE_TYPES.images, ...ACCEPTED_FILE_TYPES.documents].join(',')}
+                  onChange={(event) => {
+                    setFieldValue('companyLogo', event.currentTarget.files[0]);
+                  }}
+                  className="hidden"
+                  id="companyLogo"
+                />
+                <label
+                  htmlFor="companyLogo"
+                  className={`w-full px-4 py-2 border rounded-lg cursor-pointer flex items-center ${errors.companyLogo && touched.companyLogo ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                >
+                  <span className="text-gray-500">
+                    {values.companyLogo?.name || 'Choose file...'}
+                  </span>
+                  <span className="ml-auto bg-gray-100 px-4 py-2 rounded-lg text-sm text-gray-700">
+                    Browse
+                  </span>
+                </label>
+              </div>
+              {errors.companyLogo && touched.companyLogo && (
+                <div className="text-red-500 text-sm">{errors.companyLogo}</div>
+              )}
+            </div>
+
+            {/* Conditional Fields */}
+            {values.verificationType && (
+              <div className="space-y-3">
+                {values.verificationType === 'taxId' ? (
+                  <FloatingLabelInput
+                    name="taxId"
+                    type="text"
+                    label="Tax ID"
+                    placeholder="XXX-XXX-XXX"
+                    errors={errors}
+                    touched={touched}
+                  />
+                ) : (
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Verification Document
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="file"
+                        name="verificationDocument"
+                        accept={[...ACCEPTED_FILE_TYPES.images, ...ACCEPTED_FILE_TYPES.documents].join(',')}
+                        onChange={(event) => {
+                          setFieldValue('verificationDocument', event.currentTarget.files[0]);
+                        }}
+                        className="hidden"
+                        id="verificationDocument"
+                      />
+                      <label
+                        htmlFor="verificationDocument"
+                        className={`w-full px-4 py-2 border rounded-lg cursor-pointer flex items-center ${errors.verificationDocument && touched.verificationDocument ? 'border-red-500' : 'border-gray-300'
+                          }`}
+                      >
+                        <span className="text-gray-500">
+                          {values.verificationDocument?.name || 'Choose file...'}
+                        </span>
+                        <span className="ml-auto bg-gray-100 px-4 py-2 rounded-lg text-sm text-gray-700">
+                          Browse
+                        </span>
+                      </label>
+                    </div>
+                    {errors.verificationDocument && touched.verificationDocument && (
+                      <div className="text-red-500 text-sm">{errors.verificationDocument}</div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting || !isValid || !dirty}
+            className="font-bold w-full py-3 px-4 bg-metallica-blue-off-charts text-white rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed enabled:hover:bg-metallica-blue-950"
+          >
+            {isSubmitting ? 'Signing up...' : 'Sign up'}
+          </button>
+        </Form>
+      )}
+    </Formik>
+  );
+} 
