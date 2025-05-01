@@ -66,9 +66,9 @@ export default function SignupForm() {
                   onChange={(e) => setFieldValue('industry', e.target.value)}
                   onBlur={(e) => setFieldValue('industry', e.target.value)}
                   value={values.industry}
-                  className={`w-full h-14 px-4 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${errors.industry && touched.industry ? 'border-red-500' : ''}`}
+                  className={`w-full h-14 px-0 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${errors.industry && touched.industry ? 'border-red-500' : ''}`}
                 >
-                  <option value="" disabled>Select Industry</option>
+                  <option value="" disabled hidden>Select Industry</option>
                   {INDUSTRIES.map((industry) => (
                     <option key={industry} value={industry}>
                       {industry}
@@ -76,7 +76,7 @@ export default function SignupForm() {
                   ))}
                 </select>
                 <label
-                  className={`absolute left-4 transition-all duration-200 pointer-events-none ${values.industry ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-500'
+                  className={`absolute left-0 transition-all duration-200 pointer-events-none ${values.industry ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-500'
                     } ${errors.industry && touched.industry ? 'text-red-500' : ''}`}
                 >
                   Industry
@@ -100,9 +100,9 @@ export default function SignupForm() {
                   onChange={(e) => setFieldValue('companySize', e.target.value)}
                   onBlur={(e) => setFieldValue('companySize', e.target.value)}
                   value={values.companySize}
-                  className={`w-full h-14 px-4 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${errors.companySize && touched.companySize ? 'border-red-500' : ''}`}
+                  className={`w-full h-14 px-0 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${errors.companySize && touched.companySize ? 'border-red-500' : ''}`}
                 >
-                  <option value="" disabled>Select Company Size</option>
+                  <option value="" disabled hidden>Select Company Size</option>
                   {COMPANY_SIZES.map((size) => (
                     <option key={size.value} value={size.value}>
                       {size.label}
@@ -110,7 +110,7 @@ export default function SignupForm() {
                   ))}
                 </select>
                 <label
-                  className={`absolute left-4 transition-all duration-200 pointer-events-none ${values.companySize ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-500'
+                  className={`absolute left-0 transition-all duration-200 pointer-events-none ${values.companySize ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-500'
                     } ${errors.companySize && touched.companySize ? 'text-red-500' : ''}`}
                 >
                   Company Size
