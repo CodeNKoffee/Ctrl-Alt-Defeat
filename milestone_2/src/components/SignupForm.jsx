@@ -59,7 +59,7 @@ export default function SignupForm() {
                 label="Company Email"
                 errors={errors}
                 touched={touched}
-                tooltip="Please enter your official company email address. Free email providers (Gmail, Yahoo, etc.) are not accepted."
+                tooltip="Please enter an official company email address that you use for business communications. Free email providers (Gmail, Yahoo, etc.) are not accepted."
               />
             </div>
 
