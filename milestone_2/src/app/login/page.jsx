@@ -27,14 +27,14 @@ export default function LoginPage() {
                 <div className="w-24 h-24">
                   <Blobs />
                 </div>
-                <Header 
-                  text="Login" 
-                  className="block xl:hidden" 
+                <Header
+                  text="Login"
+                  className="block xl:hidden"
                 />
               </div>
-              <Header 
-                text="Login" 
-                className="hidden xl:block" 
+              <Header
+                text="Login"
+                className="hidden xl:block"
               />
               <LoginForm />
             </div>
