@@ -103,6 +103,10 @@ button {
   height: 170px;
 }
 
+.option_container:hover {
+  cursor: pointer;
+}
+
 .info{
   position: absolute;
   bottom: -40px;
