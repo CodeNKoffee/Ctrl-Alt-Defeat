@@ -4,6 +4,7 @@ import { Formik, Form } from 'formik';
 import { signupValidationSchema } from '../../utils/validationSchemas';
 import FloatingLabelInput from '@/components/FloatingLabelInput';
 import { INDUSTRIES, COMPANY_SIZES, VERIFICATION_TYPES, ACCEPTED_FILE_TYPES } from '../../constants/index';
+import { capitalizeWords } from '../../utils/index';
 
 export default function SignupForm() {
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -43,6 +44,10 @@ export default function SignupForm() {
                 label="Company Name"
                 errors={errors}
                 touched={touched}
+                onChange={(e) => {
+                  const capitalizedValue = capitalizeWords(e.target.value);
+                  setFieldValue('companyName', capitalizedValue);
+                }}
               />
             </div>
 
@@ -54,7 +59,7 @@ export default function SignupForm() {
                 label="Company Email"
                 errors={errors}
                 touched={touched}
-                tooltip="This email will be used for business communications"
+                tooltip="Please enter your official company email address. Free email providers (Gmail, Yahoo, etc.) are not accepted."
               />
             </div>
 

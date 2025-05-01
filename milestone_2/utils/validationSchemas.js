@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { INDUSTRIES, COMPANY_SIZES, VERIFICATION_TYPES, ACCEPTED_FILE_TYPES } from "../constants/index";
+import { FREE_EMAIL_DOMAINS } from "../constants/index";
 
 export const signupValidationSchema = Yup.object().shape({
   companyName: Yup.string()
@@ -10,7 +11,12 @@ export const signupValidationSchema = Yup.object().shape({
     .oneOf(INDUSTRIES, 'Please select a valid industry'),
   companyEmail: Yup.string()
     .email('Invalid email address')
-    .required('Company email is required'),
+    .required('Company email is required')
+    .test('is-company-email', 'Please use a valid company email address', value => {
+      if (!value) return false;
+      const domain = value.split('@')[1];
+      return !FREE_EMAIL_DOMAINS.includes(domain?.toLowerCase());
+    }),
   companySize: Yup.string()
     .required('Company size is required')
     .oneOf(COMPANY_SIZES.map(size => size.value), 'Please select a valid company size'),

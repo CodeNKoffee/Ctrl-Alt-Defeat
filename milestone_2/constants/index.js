@@ -168,3 +168,16 @@ export const ACCEPTED_FILE_TYPES = {
   images: ['image/jpeg', 'image/png'],
   documents: ['application/pdf']
 };
+
+// Free Email Domains
+export const FREE_EMAIL_DOMAINS = [
+  'gmail.com',
+  'yahoo.com',
+  'hotmail.com',
+  'outlook.com',
+  'aol.com',
+  'icloud.com',
+  'mail.com',
+  'protonmail.com',
+  'zoho.com'
+];
