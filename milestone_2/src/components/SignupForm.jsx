@@ -41,7 +41,7 @@ export default function SignupForm() {
               <FloatingLabelInput
                 name="companyName"
                 type="text"
-                label="Company Name"
+                label="Company Name *"
                 errors={errors}
                 touched={touched}
                 onChange={(e) => {
@@ -56,7 +56,7 @@ export default function SignupForm() {
               <FloatingLabelInput
                 name="companyEmail"
                 type="email"
-                label="Company Email"
+                label="Company Email *"
                 errors={errors}
                 touched={touched}
                 tooltip="Please enter an official company email address that you use for business communications. Free email providers (Gmail, Yahoo, etc.) are not accepted."
@@ -84,7 +84,7 @@ export default function SignupForm() {
                   className={`absolute left-0 transition-all duration-200 pointer-events-none ${values.industry ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-400'
                     } ${errors.industry && touched.industry ? 'text-red-500' : ''}`}
                 >
-                  Industry
+                  Industry *
                 </label>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                   <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,7 +118,7 @@ export default function SignupForm() {
                   className={`absolute left-0 transition-all duration-200 pointer-events-none ${values.companySize ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-400'
                     } ${errors.companySize && touched.companySize ? 'text-red-500' : ''}`}
                 >
-                  Company Size
+                  Company Size *
                 </label>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                   <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,7 +136,7 @@ export default function SignupForm() {
               {/* Verification Type */}
               <div className="w-full md:w-[calc(50%-16px)] space-y-3">
                 <label className="block text-lg font-medium text-metallica-blue-off-charts">
-                  Company Verification Type
+                  Company Verification Type *
                 </label>
                 <div className="space-y-2">
                   {VERIFICATION_TYPES.map((type) => (
@@ -160,7 +160,7 @@ export default function SignupForm() {
               {/* Company Logo */}
               <div className="w-full md:w-[calc(50%-16px)] space-y-3">
                 <label className="block text-lg font-medium text-metallica-blue-off-charts">
-                  Company Logo
+                  Company Logo *
                 </label>
                 <div className="relative">
                   <input
@@ -212,7 +212,7 @@ export default function SignupForm() {
                 ) : (
                   <div className="w-full md:w-[calc(50%-16px)] space-y-3 animate-slideIn">
                     <label className="block text-lg font-medium text-metallica-blue-off-charts">
-                      {values.verificationType === 'taxId' ? 'Tax Card' : 'Company Registration Document'}
+                      {values.verificationType === 'taxId' ? 'Tax Card *' : 'Company Registration Document *'}
                     </label>
                     <div className="relative">
                       <input

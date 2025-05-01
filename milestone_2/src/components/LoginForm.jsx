@@ -10,6 +10,11 @@ import { loginValidationSchema } from '../../utils/validationSchemas';
 export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [initialValues, setInitialValues] = useState({
+    email: '',
+    password: '',
+    remember: false
+  });
 
   // Load saved credentials on mount
   useEffect(() => {
@@ -19,14 +24,11 @@ export default function LoginForm() {
 
     if (wasRemembered && savedEmail && savedPassword) {
       setRememberMe(true);
-      // Set the initial values in the form
-      if (formikRef.current) {
-        formikRef.current.setValues({
-          email: savedEmail,
-          password: savedPassword,
-          remember: true
-        });
-      }
+      setInitialValues({
+        email: savedEmail,
+        password: savedPassword,
+        remember: true
+      });
     }
   }, []);
 
@@ -55,7 +57,7 @@ export default function LoginForm() {
     }
   };
 
-  const handleRememberMeChange = (e, setFieldValue) => {
+  const handleRememberMeChange = (e, setFieldValue, values) => {
     const isChecked = e.target.checked;
     setRememberMe(isChecked);
     setFieldValue('remember', isChecked);
@@ -64,22 +66,17 @@ export default function LoginForm() {
   return (
     <Formik
       innerRef={formikRef}
-      initialValues={{
-        email: '',
-        password: '',
-        remember: rememberMe
-      }}
+      initialValues={initialValues}
       validationSchema={loginValidationSchema}
       onSubmit={handleSubmit}
-      enableReinitialize
     >
-      {({ errors, touched, isSubmitting, setFieldValue, isValid, dirty }) => (
+      {({ errors, touched, isSubmitting, setFieldValue, isValid, dirty, values }) => (
         <Form className="space-y-12 w-full">
           <div className="relative">
             <FloatingLabelInput
               name="email"
               type="email"
-              label="Email"
+              label="Email *"
               errors={errors}
               touched={touched}
             />
@@ -87,7 +84,7 @@ export default function LoginForm() {
 
           <PasswordInputField
             name="password"
-            label="Password"
+            label="Password *"
             error={errors.password}
             touched={touched.password}
           />
@@ -98,7 +95,7 @@ export default function LoginForm() {
                 type="checkbox"
                 name="remember"
                 checked={rememberMe}
-                onChange={(e) => handleRememberMeChange(e, setFieldValue)}
+                onChange={(e) => handleRememberMeChange(e, setFieldValue, values)}
                 className="w-4 h-4 accent-[#4C798B] border-gray-300 rounded focus:ring-0 focus:ring-offset-0 cursor-pointer"
               />
               <span className="ml-2 text-sm text-gray-600 select-none cursor-pointer">Remember me</span>
