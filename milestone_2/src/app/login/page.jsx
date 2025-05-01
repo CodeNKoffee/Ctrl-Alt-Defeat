@@ -12,11 +12,11 @@ export default function LoginPage() {
       {/* Main content */}
       <div className="flex-grow flex items-center justify-center py-8">
         <main className="w-full flex flex-col-reverse xl:flex-row items-center justify-center gap-4 xl:gap-16 px-4">
-          <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-row items-center">
+          <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
             <div className="w-full max-w-[430px] px-4">
               <Blobs />
             </div>
-            <div className="text-center mt-0 mb-16 xl:mb-0">
+            <div className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8">
               <span className="text-black font-medium font-ibm-plex-sans">Not registered yet? <Link href="/signup" className="text-metallica-blue-off-charts underline">Sign up</Link></span>
             </div>
           </div>
