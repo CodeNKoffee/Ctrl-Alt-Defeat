@@ -10,7 +10,7 @@ export default function Blobs() {
       '#blob1',
       { path: '#blob1' },
       { path: '#blob1-morph' },
-      { repeat: Infinity, duration: 3000, yoyo: true }
+      { repeat: Infinity, duration: 2000, yoyo: true, easing: 'easingCubicInOut' }
     );
 
     // Light blob animation
@@ -18,7 +18,7 @@ export default function Blobs() {
       '#blob2',
       { path: '#blob2' },
       { path: '#blob2-morph' },
-      { repeat: Infinity, duration: 3000, yoyo: true, offset: 1500 } // Offset to create alternating effect
+      { repeat: Infinity, duration: 2000, yoyo: true, offset: 1000, easing: 'easingCubicInOut' } // Reduced offset to match new duration
     );
 
     darkBlobTween.start();
