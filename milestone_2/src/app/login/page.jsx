@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import LoginForm from '@/components/LoginForm';
-import Link from 'next/link';
-import Blobs from '@/components/Blobs';
-import Header from '@/components/Header';
-import Copyright from '@/components/Copyright';
+import LoginForm from "@/components/LoginForm";
+import Link from "next/link";
+import Blobs from "@/components/Blobs";
+import Header from "@/components/Header";
+import Copyright from "@/components/Copyright";
 
 export default function LoginPage() {
   return (
@@ -32,7 +32,10 @@ export default function LoginPage() {
                   className="block xl:hidden" 
                 />
               </div>
-              <Header text="Login" className="hidden xl:block" />
+              <Header 
+                text="Login" 
+                className="hidden xl:block" 
+              />
               <LoginForm />
             </div>
           </div>

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Formik, Form } from 'formik';
-import { signupValidationSchema } from '../../utils/validationSchemas';
-import FloatingLabelInput from '@/components/FloatingLabelInput';
-import { INDUSTRIES, COMPANY_SIZES, VERIFICATION_TYPES, ACCEPTED_FILE_TYPES } from '../../constants/index';
-import { capitalizeWords } from '../../utils/index';
+import { Formik, Form } from "formik";
+import { signupValidationSchema } from "../../utils/validationSchemas";
+import FloatingLabelInput from "@/components/FloatingLabelInput";
+import { INDUSTRIES, COMPANY_SIZES, VERIFICATION_TYPES, ACCEPTED_FILE_TYPES } from "../../constants/index";
+import { capitalizeWords } from "../../utils/index";
 
 export default function SignupForm() {
   const handleSubmit = async (values, { setSubmitting }) => {

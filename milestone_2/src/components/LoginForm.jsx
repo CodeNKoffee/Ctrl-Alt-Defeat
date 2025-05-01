@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { Formik, Form, Field } from 'formik';
-import PasswordInputField from '@/components/PasswordInputField';
-import FloatingLabelInput from '@/components/FloatingLabelInput';
-import { loginValidationSchema } from '../../utils/validationSchemas';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { Formik, Form, Field } from "formik";
+import PasswordInputField from "@/components/PasswordInputField";
+import FloatingLabelInput from "@/components/FloatingLabelInput";
+import { loginValidationSchema } from "../../utils/validationSchemas";
 
 export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);

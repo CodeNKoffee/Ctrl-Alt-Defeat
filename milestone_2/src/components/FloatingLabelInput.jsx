@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Field } from 'formik';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
-import { Tooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
+import { useState } from "react";
+import { Field } from "formik";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 export default function FloatingLabelInput({ name, type, label, errors, touched, tooltip }) {
   const [isFocused, setIsFocused] = useState(false);

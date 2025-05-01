@@ -1,4 +1,4 @@
-import { getCurrentYear } from '../../utils';
+import { getCurrentYear } from "../../utils";
 
 export default function Copyright() {
   return (

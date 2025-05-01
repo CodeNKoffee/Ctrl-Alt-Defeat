@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Tooltip } from 'react-tooltip';
+import { useState } from "react";
+import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Tooltip } from "react-tooltip";
 
 const baseInputStyles = "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-metallica-blue-off-charts focus:border-transparent bg-white";
 const labelStyles = "block text-sm font-medium text-gray-700 mb-1";

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import KUTE from 'kute.js';
+import { useEffect } from "react";
+import KUTE from "kute.js";
 
 export default function Blobs() {
   useEffect(() => {

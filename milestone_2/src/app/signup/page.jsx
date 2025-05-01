@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import SignupForm from '@/components/SignupForm';
-import Link from 'next/link';
-import Blobs from '@/components/Blobs';
-import Header from '@/components/Header';
-import Copyright from '@/components/Copyright';
+import SignupForm from "@/components/SignupForm";
+import Link from "next/link";
+import Blobs from "@/components/Blobs";
+import Header from "@/components/Header";
+import Copyright from "@/components/Copyright";
 
 export default function SignupPage() {
   return (
