@@ -16,7 +16,7 @@ export default function LoginPage() {
               <Blobs />
             </div>
             <div className="text-center">
-              <span className="text-black font-semibold font-ibm-plex-sans">Not registered yet? <Link href="/signup" className="text-metallica-blue-off-charts hover:underline">Sign up</Link></span>
+              <span className="text-black font-medium font-ibm-plex-sans">Not registered yet? <Link href="/signup" className="text-metallica-blue-off-charts hover:underline">Sign up</Link></span>
             </div>
           </div>
           <div className="w-full xl:w-2/5 relative z-10 flex flex-col items-center justify-center px-4 xl:px-8">
