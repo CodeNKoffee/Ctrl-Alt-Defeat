@@ -11,20 +11,14 @@ export default function PasswordInputField({ name, label, error, touched }) {
       <Field
         type={showPassword ? "text" : "password"}
         name={name}
-        className={`w-full px-4 py-3 rounded-lg border ${error && touched ? 'border-red-500' : 'border-gray-300'
-          } focus:outline-none focus:border-[#2A5F74] bg-transparent`}
-        placeholder=" "
+        className={`w-full text-metallica-blue-950 px-0 py-2 bg-transparent border-0 border-b-2 border-metallica-blue-off-charts focus:ring-0 ${error && touched ? 'border-red-500' : 'border-gray-300'
+          } focus:outline-none focus:border-metallica-blue-off-charts`}
+        placeholder="Password"
       />
-      <label
-        className={`absolute left-4 -top-2.5 bg-white px-1 text-sm transition-all
-          ${error && touched ? 'text-red-500' : 'text-gray-600'}`}
-      >
-        {label}
-      </label>
       <button
         type="button"
         onClick={() => setShowPassword(!showPassword)}
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+        className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
       >
         <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
       </button>

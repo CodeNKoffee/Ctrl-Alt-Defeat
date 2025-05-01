@@ -1,7 +1,9 @@
+import { getCurrentYear } from '../../utils';
+
 export default function Copyright() {
   return (
-    <div className="text-center text-sm text-gray-500">
-      © 2025 German University in Cairo. All rights reserved.
+    <div className="w-full py-1 text-center text-sm text-gray-500">
+      © {getCurrentYear()} German University in Cairo. All rights reserved.
     </div>
   );
 }
