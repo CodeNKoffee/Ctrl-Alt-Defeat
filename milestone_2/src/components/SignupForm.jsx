@@ -66,9 +66,9 @@ export default function SignupForm() {
                   onChange={(e) => setFieldValue('industry', e.target.value)}
                   onBlur={(e) => setFieldValue('industry', e.target.value)}
                   value={values.industry}
-                  className={`w-full h-14 px-0 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${errors.industry && touched.industry ? 'border-red-500' : ''}`}
+                  className={`w-full h-14 px-0 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${!values.industry ? 'text-transparent' : ''} ${errors.industry && touched.industry ? 'border-red-500' : ''}`}
                 >
-                  <option value="" disabled hidden>Select Industry</option>
+                  <option value=""></option>
                   {INDUSTRIES.map((industry) => (
                     <option key={industry} value={industry}>
                       {industry}
@@ -100,9 +100,9 @@ export default function SignupForm() {
                   onChange={(e) => setFieldValue('companySize', e.target.value)}
                   onBlur={(e) => setFieldValue('companySize', e.target.value)}
                   value={values.companySize}
-                  className={`w-full h-14 px-0 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${errors.companySize && touched.companySize ? 'border-red-500' : ''}`}
+                  className={`w-full h-14 px-0 border-b border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${!values.companySize ? 'text-transparent' : ''} ${errors.companySize && touched.companySize ? 'border-red-500' : ''}`}
                 >
-                  <option value="" disabled hidden>Select Company Size</option>
+                  <option value=""></option>
                   {COMPANY_SIZES.map((size) => (
                     <option key={size.value} value={size.value}>
                       {size.label}
