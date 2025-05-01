@@ -212,7 +212,7 @@ export default function SignupForm() {
                 ) : (
                   <div className="w-full md:w-[calc(50%-16px)] space-y-3 animate-slideIn">
                     <label className="block text-lg font-medium text-metallica-blue-off-charts">
-                      {values.verificationType === 'taxId' ? 'Tax Card *' : 'Company Registration Document *'}
+                      {values.verificationType === 'registration' ? 'Company Registration Document *' : 'Tax Card Document *'}
                     </label>
                     <div className="relative">
                       <input
