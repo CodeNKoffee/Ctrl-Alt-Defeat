@@ -34,7 +34,7 @@ export default function SignupForm() {
     >
       {({ errors, touched, isSubmitting, setFieldValue, isValid, dirty, values }) => (
         <Form className="space-y-6 w-full mx-auto">
-          <div className="flex flex-wrap gap-8">
+          <div className="flex flex-wrap gap-x-8 gap-y-12">
             {/* Company Name */}
             <div className="w-full md:w-[calc(50%-16px)]">
               <FloatingLabelInput
