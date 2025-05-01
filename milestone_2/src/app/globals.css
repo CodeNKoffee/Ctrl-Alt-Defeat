@@ -3,8 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --background: #F0F9FB;
+  --background: #eaf3f6;
   --foreground: #171717;
+
+  --metallica-blue-50: #F0F9FB;
+  --metallica-blue-100: #D9F0F4;
+  --metallica-blue-200: #B8E1E9;
+  --metallica-blue-300: #86CBDA;
+  --metallica-blue-400: #5DB2C7;
+  --metallica-blue-500: #318FA8;
+  --metallica-blue-600: #2D758D;
+  --metallica-blue-700: #2A5F74;
+  --metallica-blue-800: #2A5060;
+  --metallica-blue-900: #274353;
+  --metallica-blue-950: #152B37;
+  --metallica-blue-off-charts: #4C798B;
 }
 
 @theme inline {
@@ -56,4 +69,178 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 16px;
+}
+
+/* css for continue options */
+.main{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main + div {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--metallica-blue-700);
+  width:100%;
+  height:100vh;
+}
+
+.continue_options{
+  width:100%;
+  display:flex;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
+  gap:100px;
+}
+
+.option_container {
+  position: relative;
+  width: 170px;
+  height: 170px;
+}
+
+.info{
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index:4;
+}
+
+.circle_1 {
+  position: relative;
+  background-color: #FFF;
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top:48px;
+  z-index: 3;
+  overflow: hidden; /* Keep circle_2 contained within circle_1 */
+}
+
+.image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+  transform-origin: center;
+  transition: transform 0.5s ease;
+  bottom: 0;
+}
+
+.logos{
+  position: relative;
+  z-index: 4;
+}
+
+.circle_2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, transparent 0%, transparent 100%);
+  background-size: 0% 0%;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.5s ease;
+  z-index: 1;
+  pointer-events: none; /* Ensures it doesn't block hover */
+  transform: scale(0.01); /* Start extremely small */
+  opacity: 0;
+}
+
+/* Counter-scale the image to keep it the same size */
+.option_container:hover .image-container {
+  transform: scale(0.83); /* 1/1.2 to counteract parent scaling */
+}
+
+.option_container:hover .circle_1 {
+  transform: scale(1.2);
+}
+
+/* Change to center-outward radial gradients */
+.option_container:hover .circle_2 {
+  opacity: 1;
+  transform: scale(0.9); /* Expand to 90% of circle_1 size */
+  background-size: 100% 100%;
+}
+
+#option_company:hover .circle_2 {
+  background-image: radial-gradient(circle, #FFFBC9 0%, #FFFBC9 70%, transparent 100%);
+}
+
+#option_scad:hover .circle_2 {
+  background-image: radial-gradient(circle, #E9A8AC 0%, #E9A8AC 70%, transparent 100%);
+}
+
+#option_faculty:hover .circle_2 {
+  background-image: radial-gradient(circle, #56415E 0%, #56415E 70%, transparent 100%);
+}
+
+#option_student:hover .circle_2 {
+  background-image: radial-gradient(circle, #FFC48A 0%, #FFC48A 70%, transparent 100%);
+}
+
+.option_name {
+  background-color: var(--metallica-blue-700);
+  color:#FFF;
+  border-radius: 32px;
+  text-align: center;
+  width: 100%;
+  height:30px;
+  font-weight: semibold;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 1px;
+}
+
+.continue-text{
+  font-size: 35px;
+  font-weight:600;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height:170px;
+  width:100%;
+  margin-top:10%;
+  color:#2A5F74;
+  letter-spacing: 2px;
+}
+
+.motivational-text{
+  font-size: 18px;
+  font-style: italic;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  margin-top:14%;
+  letter-spacing: 2px;
+  color:#2A5F74;
+}
+
+.underline{
+  margin: 0 auto;
+  width:200px;
+  height:5px;
+  background-color:#2A5F74;
 }

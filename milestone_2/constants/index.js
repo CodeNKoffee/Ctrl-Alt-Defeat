@@ -195,3 +195,34 @@ export const FREE_EMAIL_DOMAINS = [
   "protonmail.com",
   "zoho.com",
 ];
+
+export const usersOptions = [
+  { 
+    value: "company",
+    class: "option_company", 
+    imageUrl: "/images/company.png",
+    name:"Company",
+    dimension :130
+  },
+  { 
+    value: "scad",
+    class: "option_scad", 
+    imageUrl: "/images/scad.png",
+    name:"SCAD",
+    dimension: 120
+  },
+  { 
+    value: "faculty",
+    class: "option_faculty", 
+    imageUrl: "/images/faculty.png" ,
+    name:"Faculty",
+    dimension: 110
+  },
+  { 
+    value: "student",
+    class: "option_student", 
+    imageUrl: "/images/student.png" ,
+    name:"Student",
+    dimension: 153
+  },
+]

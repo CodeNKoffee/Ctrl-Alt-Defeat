@@ -1,4 +1,4 @@
-export default function Header({ text, className }) {
+export default function Header({ text, className, isFullWidth = false }) {
   return (
     <header className={className}>
       <h1 className="text-6xl text-metallica-blue-950 font-bold mb-4 font-ibm-plex-sans">{text}</h1>
