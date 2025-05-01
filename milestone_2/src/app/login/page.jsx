@@ -3,6 +3,7 @@
 import LoginForm from '@/components/LoginForm';
 import Link from 'next/link';
 import Blobs from '@/components/Blobs';
+import Header from '@/components/Header';
 import Copyright from '@/components/Copyright';
 
 export default function LoginPage() {
@@ -21,8 +22,7 @@ export default function LoginPage() {
           </div>
           <div className="w-full xl:w-2/5 relative z-10 flex flex-col items-center justify-center px-4 xl:px-8">
             <div className="w-full max-w-md">
-              <h1 className="text-6xl text-metallica-blue-950 font-bold mb-4 font-ibm-plex-sans">Login</h1>
-              <div className="bg-metallica-blue-off-charts w-20 h-3 mb-16"></div>
+              <Header text="Login" />
               <LoginForm />
             </div>
           </div>

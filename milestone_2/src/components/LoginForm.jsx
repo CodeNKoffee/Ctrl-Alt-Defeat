@@ -73,7 +73,7 @@ export default function LoginForm() {
       onSubmit={handleSubmit}
       enableReinitialize
     >
-      {({ errors, touched, isSubmitting, setFieldValue }) => (
+      {({ errors, touched, isSubmitting, setFieldValue, isValid, dirty }) => (
         <Form className="space-y-12 w-full">
           <div className="relative">
             <FloatingLabelInput
@@ -110,8 +110,8 @@ export default function LoginForm() {
 
           <button
             type="submit"
-            disabled={isSubmitting}
-            className="font-bold w-full py-3 px-4 bg-metallica-blue-off-charts text-white rounded-full hover:bg-metallica-blue-950 transition-colors disabled:opacity-50"
+            disabled={isSubmitting || !isValid || !dirty}
+            className="font-bold w-full py-3 px-4 bg-metallica-blue-off-charts text-white rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed enabled:hover:bg-metallica-blue-950"
           >
             {isSubmitting ? 'Logging in...' : 'Log in'}
           </button>
