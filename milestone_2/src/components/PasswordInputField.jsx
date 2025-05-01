@@ -32,8 +32,8 @@ export default function PasswordInputField({ name, label, error, touched }) {
               />
               <label
                 className={`absolute left-0 transition-all duration-200 ease-in-out pointer-events-none ${isFocused || hasValue
-                    ? 'text-xs -top-4 text-metallica-blue-off-charts'
-                    : 'top-2 text-gray-400'
+                  ? 'text-xs -top-4 text-metallica-blue-off-charts'
+                  : 'top-2 text-gray-400'
                   }`}
               >
                 {label}

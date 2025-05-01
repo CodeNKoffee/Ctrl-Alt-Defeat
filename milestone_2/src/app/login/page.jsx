@@ -1,9 +1,9 @@
 'use client';
 
 import LoginForm from '@/components/LoginForm';
+import Link from 'next/link';
 import Blobs from '@/components/Blobs';
 import Copyright from '@/components/Copyright';
-import Link from 'next/link';
 
 export default function LoginPage() {
   return (
