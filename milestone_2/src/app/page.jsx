@@ -10,11 +10,11 @@ export default function Home() {
       {/* Add relative class to the kontainer */}
       <div className="min-h-screen flex flex-col kontainer relative overflow-hidden">
         {/* Background Ellipses */}
-        <div className="absolute top-0 left-0 -z-10">
+        {/* <div className="absolute top-0 left-0 -z-10">
           <Image
             src="/images/top-elipse.svg"
             alt="Top background shape"
-            width={283}
+            width={160}
             height={380}
             priority
           />
@@ -23,11 +23,11 @@ export default function Home() {
           <Image
             src="/images/lower-elipse.svg"
             alt="Bottom background shape"
-            width={399}
+            width={229}
             height={246}
             priority
           />
-        </div>
+        </div> */}
 
         {/* Main content */}
         <div className="flex-grow">
@@ -41,7 +41,7 @@ export default function Home() {
                     text="Continue As"
                     className="continue-text"
                     isFullWidth={true}
-                    size="4xl"
+                    size="1xl"
                   />
                 </div>
 

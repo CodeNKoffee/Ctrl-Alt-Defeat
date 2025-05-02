@@ -50,10 +50,8 @@ export default function Blobs({ imageUrl, bgColor, decreaseBorderThickness = fal
       {/* White circle background and image */}
       <div className="absolute left-[12%] top-[12%] w-[70%] h-[70%] z-20">
         <div
-          className={`w-full h-full rounded-full border-white flex items-center justify-center transition-all duration-300 ${decreaseBorderThickness ? 'border-[6px] xl:border-[6px]' : 'border-2 xl:border-[16px]'}`}
-          style={{
-            background: bgColor ? `radial-gradient(circle, ${bgColor} 0%, ${bgColor} 70%, transparent 100%)` : 'white'
-          }}
+          className={`bg-[#eaf3f6] w-full h-full rounded-full border-white flex items-center justify-center transition-all duration-300`}
+          
         >
           {imageUrl && (
             <div className="w-[70%] h-[70%] relative">

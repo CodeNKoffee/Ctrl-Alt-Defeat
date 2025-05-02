@@ -214,7 +214,7 @@ button {
   border-radius: 32px;
   text-align: center;
   width: 100%;
-  min-height: 36px;
+  height:30px;
   font-weight: 600;
   display:flex;
   justify-content: center;
@@ -229,7 +229,7 @@ button {
   text-align: center;
   justify-content: center;
   align-items: center;
-  color: #2A5F74;
+  color: #94b5c2;
   letter-spacing: 2px;
   margin-bottom: 0;
 }
@@ -243,7 +243,7 @@ button {
   width: 100%;
   letter-spacing: 2px;
   color: #2A5F74;
-  margin-top: 3rem;
+  margin-top: 4rem;
 }
 
 .underlined{
@@ -252,3 +252,30 @@ button {
   height:5px;
   background-color:#2A5F74;
 }
+
+/* SALMA HERE FOR THE CONTINUE AS HEADER */
+/* Header Component Custom Classes */
+.header-full-width {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  margin-bottom:1rem;
+}
+
+.header-full-width h1 {
+  color: var(--metallica-blue-800);
+  font-weight: bold;
+  margin-top:0.5rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-ibm-plex-sans);
+}
+
+.header-full-width .underline {
+  background-color: #2A5F74;
+  height: 0.3rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+/* SALMA HERE IT ENDS FOR THE CONTINUE AS HEADER */

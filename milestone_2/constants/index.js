@@ -205,7 +205,7 @@ export const usersOptions = [
     imageUrl: "/images/company.png",
     name: "Company",
     dimension: 130,
-    bgColor: "#FFFBC9"
+    signup: true,
   },
   {
     value: "scad",
@@ -213,7 +213,7 @@ export const usersOptions = [
     imageUrl: "/images/scad.png",
     name: "SCAD",
     dimension: 120,
-    bgColor: "#E9A8AC"
+    signup: false,
   },
   {
     value: "faculty",
@@ -221,7 +221,7 @@ export const usersOptions = [
     imageUrl: "/images/faculty.png",
     name: "Faculty",
     dimension: 110,
-    bgColor: "#56415E"
+    signup: false,
   },
   {
     value: "student",
@@ -229,6 +229,6 @@ export const usersOptions = [
     imageUrl: "/images/student.png",
     name: "Student",
     dimension: 153,
-    bgColor: "#FFC48A"
+    signup: false,
   },
 ]

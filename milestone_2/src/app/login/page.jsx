@@ -44,13 +44,13 @@ export default function LoginPage() {
                   />
                 </div>
                 <Header
-                  text={`${userOption.name || ''} Login`}
+                  text={`Login`}
                   className="block xl:hidden"
                   size="text-6xl"
                 />
               </div>
               <Header
-                text={`${userOption.name || ''} Login`}
+                text={`Login`}
                 className="hidden xl:block"
                 size="text-6xl"
               />
