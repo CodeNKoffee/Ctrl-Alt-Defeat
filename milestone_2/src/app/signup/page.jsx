@@ -17,7 +17,7 @@ export default function SignupPage() {
             <div className="w-24 h-24">
               <Blobs />
             </div>
-            <Header text="Sign up" />
+            <Header text="Sign up" size="text-6xl" />
           </div>
 
           {/* Form Section */}

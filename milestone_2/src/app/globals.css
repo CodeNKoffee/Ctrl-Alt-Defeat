@@ -73,10 +73,13 @@ button {
 
 /* css for continue options */
 .main{
-  height: 100vh;
+  height: calc(100vh - 100px);
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
 }
 
 .main + div {
@@ -89,12 +92,13 @@ button {
 }
 
 .continue_options{
-  width:100%;
-  display:flex;
-  flex-direction:row;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap:100px;
+  gap: 100px;
+  margin: 2rem 0;
 }
 
 .option_container {
@@ -221,15 +225,13 @@ button {
 
 .continue-text{
   font-size: 35px;
-  font-weight:600;
+  font-weight: 600;
   text-align: center;
   justify-content: center;
   align-items: center;
-  height:170px;
-  width:100%;
-  margin-top:10%;
-  color:#2A5F74;
+  color: #2A5F74;
   letter-spacing: 2px;
+  margin-bottom: 0;
 }
 
 .motivational-text{
@@ -238,10 +240,10 @@ button {
   text-align: center;
   justify-content: center;
   align-items: center;
-  width:100%;
-  margin-top:14%;
+  width: 100%;
   letter-spacing: 2px;
-  color:#2A5F74;
+  color: #2A5F74;
+  margin-top: 3rem;
 }
 
 .underlined{

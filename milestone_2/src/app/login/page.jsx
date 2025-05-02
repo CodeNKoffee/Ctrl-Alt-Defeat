@@ -35,6 +35,7 @@ export default function LoginPage() {
               <Header
                 text="Login"
                 className="hidden xl:block"
+                size="text-6xl"
               />
               <LoginForm />
             </div>
