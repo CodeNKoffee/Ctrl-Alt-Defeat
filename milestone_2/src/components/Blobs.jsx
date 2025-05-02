@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import KUTE from "kute.js";
 import Image from "next/image";
 
-export default function Blobs({ imageUrl, bgColor }) {
+export default function Blobs({ imageUrl, bgColor, decreaseBorderThickness = false }) {
   useEffect(() => {
     // Dark blob animation
     const darkBlobTween = KUTE.fromTo(
@@ -50,7 +50,7 @@ export default function Blobs({ imageUrl, bgColor }) {
       {/* White circle background and image */}
       <div className="absolute left-[12%] top-[12%] w-[70%] h-[70%] z-20">
         <div
-          className="w-full h-full rounded-full border-[16px] border-white flex items-center justify-center transition-all duration-300"
+          className={`w-full h-full rounded-full border-white flex items-center justify-center transition-all duration-300 ${decreaseBorderThickness ? 'border-[6px] xl:border-[6px]' : 'border-2 xl:border-[16px]'}`}
           style={{
             background: bgColor ? `radial-gradient(circle, ${bgColor} 0%, ${bgColor} 70%, transparent 100%)` : 'white'
           }}

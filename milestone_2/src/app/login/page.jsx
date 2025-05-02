@@ -37,11 +37,16 @@ export default function LoginPage() {
               {/* Header Section with Blobs */}
               <div className="flex flex-row items-start gap-8 mb-12 xl:hidden">
                 <div className="w-24 h-24">
-                  <Blobs imageUrl={userOption.imageUrl} bgColor={userOption.bgColor} />
+                  <Blobs
+                    imageUrl={userOption.imageUrl}
+                    bgColor={userOption.bgColor}
+                    decreaseBorderThickness={true}
+                  />
                 </div>
                 <Header
                   text={`${userOption.name || ''} Login`}
                   className="block xl:hidden"
+                  size="text-6xl"
                 />
               </div>
               <Header
