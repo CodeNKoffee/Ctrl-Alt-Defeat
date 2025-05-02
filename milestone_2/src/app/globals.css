@@ -114,7 +114,7 @@ button {
 
 .info{
   position: absolute;
-  bottom: -12px;
+  bottom: -15.25px;
   left: 0;
   right: 0;
   display: flex;
@@ -220,7 +220,7 @@ button {
   justify-content: center;
   align-items: center;
   letter-spacing: 1px;
-  padding: 10px 24px;
+  padding: 12px 24px;
 }
 
 .continue-text{
