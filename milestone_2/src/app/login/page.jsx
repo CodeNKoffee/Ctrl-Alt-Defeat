@@ -5,8 +5,20 @@ import Link from "next/link";
 import Blobs from "@/components/Blobs";
 import Header from "@/components/Header";
 import Copyright from "@/components/Copyright";
+import { useSearchParams } from "next/navigation";
+import { usersOptions } from "../../../constants";
 
 export default function LoginPage() {
+  const searchParams = useSearchParams();
+  const userType = searchParams.get("userType");
+
+  // Get the user option details based on user type
+  const getUserOption = (type) => {
+    return usersOptions.find(option => option.value === type) || {};
+  };
+
+  const userOption = getUserOption(userType);
+
   return (
     <div className="min-h-screen flex flex-col kontainer">
       {/* Main content */}
@@ -14,10 +26,10 @@ export default function LoginPage() {
         <main className="w-full flex flex-col-reverse xl:flex-row items-center justify-center gap-4 xl:gap-16 px-4">
           <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
             <div className="w-full max-w-[430px] px-4 xl:block hidden">
-              <Blobs />
+              <Blobs imageUrl={userOption.imageUrl} bgColor={userOption.bgColor} />
             </div>
             <div className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8">
-              <span className="text-black font-medium font-ibm-plex-sans">Not registered yet? <Link href="/signup" className="text-metallica-blue-off-charts underline">Sign up</Link></span>
+              <span className="text-black font-medium font-ibm-plex-sans">Not registered yet? <Link href={`/signup?userType=${userType}`} className="text-metallica-blue-off-charts underline">Sign up</Link></span>
             </div>
           </div>
           <div className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0">
@@ -25,19 +37,19 @@ export default function LoginPage() {
               {/* Header Section with Blobs */}
               <div className="flex flex-row items-start gap-8 mb-12 xl:hidden">
                 <div className="w-24 h-24">
-                  <Blobs />
+                  <Blobs imageUrl={userOption.imageUrl} bgColor={userOption.bgColor} />
                 </div>
                 <Header
-                  text="Login"
+                  text={`${userOption.name || ''} Login`}
                   className="block xl:hidden"
                 />
               </div>
               <Header
-                text="Login"
+                text={`${userOption.name || ''} Login`}
                 className="hidden xl:block"
                 size="text-6xl"
               />
-              <LoginForm />
+              <LoginForm userType={userType} />
             </div>
           </div>
         </main>

@@ -131,6 +131,7 @@ export const INDUSTRIES = [
   "Sporting Goods",
   "Sports",
   "Staffing & Recruiting",
+  "Software as a Service (SaaS)",
   "Supermarkets",
   "Telecommunications",
   "Textiles",
@@ -158,15 +159,15 @@ export const COMPANY_SIZES = [
 
 // Company Verification Types
 export const VERIFICATION_TYPES = [
-  { 
-    value: "registration", 
-    label: "Company Registration" 
+  {
+    value: "registration",
+    label: "Company Registration"
   },
-  { 
-    value: "taxCard", 
-    label: "Tax Card" 
+  {
+    value: "taxCard",
+    label: "Tax Card"
   },
-  { 
+  {
     value: "taxId",
     label: "Tax ID",
   },
@@ -196,33 +197,38 @@ export const FREE_EMAIL_DOMAINS = [
   "zoho.com",
 ];
 
+// Users Options
 export const usersOptions = [
-  { 
+  {
     value: "company",
-    class: "option_company", 
+    class: "option_company",
     imageUrl: "/images/company.png",
-    name:"Company",
-    dimension :130
+    name: "Company",
+    dimension: 130,
+    bgColor: "#FFFBC9"
   },
-  { 
+  {
     value: "scad",
-    class: "option_scad", 
+    class: "option_scad",
     imageUrl: "/images/scad.png",
-    name:"SCAD",
-    dimension: 120
+    name: "SCAD",
+    dimension: 120,
+    bgColor: "#E9A8AC"
   },
-  { 
+  {
     value: "faculty",
-    class: "option_faculty", 
-    imageUrl: "/images/faculty.png" ,
-    name:"Faculty",
-    dimension: 110
+    class: "option_faculty",
+    imageUrl: "/images/faculty.png",
+    name: "Faculty",
+    dimension: 110,
+    bgColor: "#56415E"
   },
-  { 
+  {
     value: "student",
-    class: "option_student", 
-    imageUrl: "/images/student.png" ,
-    name:"Student",
-    dimension: 153
+    class: "option_student",
+    imageUrl: "/images/student.png",
+    name: "Student",
+    dimension: 153,
+    bgColor: "#FFC48A"
   },
 ]
