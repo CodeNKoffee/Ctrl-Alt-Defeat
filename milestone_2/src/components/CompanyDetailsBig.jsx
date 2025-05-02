@@ -44,8 +44,8 @@ export default function CompanyDetailsB({version, companyName, companyEmail, com
       </div>
      </div>
      <div className="verdict">
-      <div className="accept">Accept</div>
-      <div className="reject">Reject</div>
+      <button className="accept">Accept</button>
+      <button className="reject">Reject</button>
      </div>
     </div>
   );

@@ -4,8 +4,8 @@ export default function ScadMain() {
   return (
     <div className="kontainer">
       <div className="row h-full">
-      <CompanyDetailsS
-      version="small"
+      <CompanyDetailsB
+      version="big"
       companyName="Tawabiry"
       companyEmail="contact-us@tawabiry.com"
       companyLogo="/images/company.png"
