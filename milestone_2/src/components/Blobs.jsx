@@ -2,15 +2,16 @@
 
 import { useEffect } from "react";
 import KUTE from "kute.js";
+import Image from "next/image";
 
-export default function Blobs() {
+export default function Blobs({ imageUrl, bgColor, decreaseBorderThickness = false }) {
   useEffect(() => {
     // Dark blob animation
     const darkBlobTween = KUTE.fromTo(
       '#blob1',
       { path: '#blob1' },
       { path: '#blob1-morph' },
-      { repeat: Infinity, duration: 3000, yoyo: true }
+      { repeat: Infinity, duration: 2000, yoyo: true, easing: 'easingCubicInOut' }
     );
 
     // Light blob animation
@@ -18,7 +19,7 @@ export default function Blobs() {
       '#blob2',
       { path: '#blob2' },
       { path: '#blob2-morph' },
-      { repeat: Infinity, duration: 3000, yoyo: true, offset: 1500 } // Offset to create alternating effect
+      { repeat: Infinity, duration: 2000, yoyo: true, offset: 1000, easing: 'easingCubicInOut' }
     );
 
     darkBlobTween.start();
@@ -46,9 +47,23 @@ export default function Blobs() {
           <path id="blob2-morph" d="M71.195 561.047C3.29501 488.629 -17.389 351.783 14.986 242.407C47.812 133.03 133.698 51.622 224.081 18.16C314.014 -15.302 408.444 -0.818 470.498 47.627C532.552 96.072 562.679 178.979 579.317 264.382C595.505 349.286 599.102 436.188 562.23 501.115C525.357 565.542 448.014 607.495 351.336 624.475C255.108 641.456 139.544 633.465 71.195 561.047Z" fill="#D9F0F4" fillOpacity="0" />
         </svg>
       </div>
-      {/* User token overlay */}
+      {/* White circle background and image */}
       <div className="absolute left-[12%] top-[12%] w-[70%] h-[70%] z-20">
-        <img src="/images/chosen_user-token.svg" alt="User Token" className="w-full h-full object-contain" />
+        <div
+          className={`bg-[#eaf3f6] w-full h-full rounded-full border-white flex items-center justify-center transition-all duration-300`}
+          
+        >
+          {imageUrl && (
+            <div className="w-[70%] h-[70%] relative">
+              <Image
+                src={imageUrl}
+                alt="User Type Icon"
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

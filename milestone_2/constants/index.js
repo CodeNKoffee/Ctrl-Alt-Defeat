@@ -131,6 +131,7 @@ export const INDUSTRIES = [
   "Sporting Goods",
   "Sports",
   "Staffing & Recruiting",
+  "Software as a Service (SaaS)",
   "Supermarkets",
   "Telecommunications",
   "Textiles",
@@ -158,15 +159,15 @@ export const COMPANY_SIZES = [
 
 // Company Verification Types
 export const VERIFICATION_TYPES = [
-  { 
-    value: "registration", 
-    label: "Company Registration" 
+  {
+    value: "registration",
+    label: "Company Registration"
   },
-  { 
-    value: "taxCard", 
-    label: "Tax Card" 
+  {
+    value: "taxCard",
+    label: "Tax Card"
   },
-  { 
+  {
     value: "taxId",
     label: "Tax ID",
   },
@@ -195,3 +196,39 @@ export const FREE_EMAIL_DOMAINS = [
   "protonmail.com",
   "zoho.com",
 ];
+
+// Users Options
+export const usersOptions = [
+  {
+    value: "company",
+    class: "option_company",
+    imageUrl: "/images/company.png",
+    name: "Company",
+    dimension: 130,
+    signup: true,
+  },
+  {
+    value: "scad",
+    class: "option_scad",
+    imageUrl: "/images/scad.png",
+    name: "SCAD",
+    dimension: 120,
+    signup: false,
+  },
+  {
+    value: "faculty",
+    class: "option_faculty",
+    imageUrl: "/images/faculty.png",
+    name: "Faculty",
+    dimension: 110,
+    signup: false,
+  },
+  {
+    value: "student",
+    class: "option_student",
+    imageUrl: "/images/student.png",
+    name: "Student",
+    dimension: 153,
+    signup: false,
+  },
+]
