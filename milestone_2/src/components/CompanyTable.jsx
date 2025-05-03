@@ -150,30 +150,17 @@ export default function CompanyTable({ companies }) {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4">
-              {isExpanded ? (
-                <CompanyDetails
-                  variant="big"
-                  companyName={selectedCompany.name}
-                  companyEmail={selectedCompany.email}
-                  companyLogo={selectedCompany.logo}
-                  industry={selectedCompany.industry}
-                  size={selectedCompany.size}
-                  documentation={selectedCompany.documentation}
-                  onExpand={handleExpand}
-                  onCollapse={handleCollapse}
-                />
-              ) : (
-                <CompanyDetailsSmall
-                  companyName={selectedCompany.name}
-                  companyEmail={selectedCompany.email}
-                  companyLogo={selectedCompany.logo}
-                  industry={selectedCompany.industry}
-                  size={selectedCompany.size}
-                  documentation={selectedCompany.documentation}
-                  onExpand={handleExpand}
-                  onExpandModal={() => handleExpandModal(selectedCompany)}
-                />
-              )}
+              <CompanyDetails
+                variant="big"
+                companyName={selectedCompany.name}
+                companyEmail={selectedCompany.email}
+                companyLogo={selectedCompany.logo}
+                industry={selectedCompany.industry}
+                size={selectedCompany.size}
+                documentation={selectedCompany.documentation}
+                onExpand={() => { }}
+                onCollapse={handleCloseSidebar}
+              />
             </div>
           </div>
         )}
