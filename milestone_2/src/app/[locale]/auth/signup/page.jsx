@@ -5,7 +5,7 @@ import Link from "next/link";
 import Blobs from "@/components/Blobs";
 import Header from "@/components/Header";
 import Copyright from "@/components/Copyright";
-import { usersOptions } from "../../../constants";
+import { usersOptions } from "../../../../../constants/index";
 import { useSearchParams } from "next/navigation";
 
 export default function SignupPage() {

@@ -270,7 +270,7 @@ button {
   font-family: var(--font-ibm-plex-sans);
 }
 
-.header-full-width .underline {
+.header-full-width .header-underline {
   background-color: #2A5F74;
   height: 0.3rem;
   position: absolute;

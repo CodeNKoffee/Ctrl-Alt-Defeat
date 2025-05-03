@@ -1,10 +1,18 @@
-import ContinueOption from "../components/ContinueOption";
-import { usersOptions } from "../../constants/index";
+"use client";
+
+import ContinueOption from "@/components/ContinueOption";
+import { usersOptions } from "../../../constants/index";
 import Header from "@/components/Header";
 import Copyright from "@/components/Copyright";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleOptionClick = (userType) => {
+    router.push(`/en/auth/login?userType=${userType}`);
+  };
+
   return (
     <>
       {/* Add relative class to the kontainer */}
@@ -55,6 +63,7 @@ export default function Home() {
                       className={option.class}
                       width={option.dimension}
                       height={option.dimension}
+                      onClick={() => handleOptionClick(option.value)}
                     />
                   ))}
                 </div>
