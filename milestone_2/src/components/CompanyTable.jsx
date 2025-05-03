@@ -159,6 +159,7 @@ export default function CompanyTable({ companies }) {
                 documentation={selectedCompany.documentation}
                 onExpand={() => { }}
                 onCollapse={handleCloseSidebar}
+                onExpandModal={() => handleExpandModal(selectedCompany)}
               />
             </div>
           </div>

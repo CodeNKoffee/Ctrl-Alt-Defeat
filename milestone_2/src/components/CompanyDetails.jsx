@@ -3,7 +3,7 @@ import CompanyProfileCard from './cards/CompanyProfileCard';
 import CompanyIndustryCard from './cards/CompanyIndustryCard';
 import CompanySizeCard from './cards/CompanySizeCard';
 import CompanyDocumentsCard from './cards/CompanyDocumentsCard';
-import { faChevronDown, faChevronUp, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp, faCheck, faTimes, faExpand } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Example industry icon mapping (expand as needed)
@@ -27,7 +27,8 @@ export default function CompanyDetails({
   size,
   documentation = [],
   onExpand,
-  onCollapse
+  onCollapse,
+  onExpandModal
 }) {
   // Compose registration message
   const registrationMessage = `Registered on 01 May, 2025`;
@@ -41,7 +42,14 @@ export default function CompanyDetails({
   // Layout for 'big' variant
   if (variant === 'big') {
     return (
-      <div className="companydetails-root companydetails-big">
+      <div className="companydetails-root companydetails-big relative">
+        <button
+          className="absolute top-4 right-4 text-metallica-blue-700 hover:text-metallica-blue-900 bg-white/80 rounded-full p-2 border border-gray-200 shadow"
+          onClick={onExpandModal}
+          title="Expand details"
+        >
+          <FontAwesomeIcon icon={faExpand} className="w-5 h-5" />
+        </button>
         <div className="companydetails-header-row">
           <CompanyProfileCard logo={companyLogo} name={companyName} email={companyEmail} />
           <CompanyIndustryCard industry={industry} icon={industryIcons[industry]} registrationMessage={registrationMessage} />
