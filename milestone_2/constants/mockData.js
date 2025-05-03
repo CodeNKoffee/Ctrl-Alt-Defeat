@@ -34,34 +34,6 @@ export const MOCK_USERS = {
 export const MOCK_COMPANIES = [
   {
     id: "comp_001",
-    name: "Tech Solutions Inc.",
-    alt: "Tech Solutions Inc.",
-    email: "contact@techsolutions.com",
-    logo: "/images/company-logo-1.png",
-    industry: "Information Technology",
-    size: "Large (101-500 employees)",
-    documentation: [
-      { type: "registration", url: "/docs/reg1.pdf" },
-      { type: "taxCard", url: "/docs/tax1.pdf" }
-    ],
-    status: "pending"
-  },
-  {
-    id: "comp_002",
-    name: "Innovate Labs",
-    alt: "Innovate Labs",
-    email: "info@innovatelabs.com",
-    logo: "/images/company-logo-2.png",
-    industry: "Research & Development",
-    size: "Medium (51-100 employees)",
-    documentation: [
-      { type: "registration", url: "/docs/reg2.pdf" },
-      { type: "taxId", url: "/docs/tax2.pdf" }
-    ],
-    status: "pending"
-  },
-  {
-    id: "comp_003",
     name: "Tawabiry",
     alt: "Tawabiry",
     email: "contact-us@tawabiry.com",
@@ -69,9 +41,163 @@ export const MOCK_COMPANIES = [
     industry: "Software as a Service (SaaS)",
     size: "Small (1-50 employees)",
     documentation: [
-      { type: "registration", url: "/docs/reg3.pdf" },
-      { type: "taxId", url: "/docs/tax3.pdf" }
+      { type: "registration", url: "/docs/company-registration.pdf" },
     ],
     status: "pending"
-  }
+  },
+  {
+    id: "comp_002",
+    name: 'Vodafone Egypt',
+    alt: 'Vodafone Egypt',
+    email: 'contact@vodafone.com.eg',
+    logo: '/logos/tawabiry.png',
+    industry: 'Telecommunications',
+    size: 'Corporate (500+ employees)',
+    documentation: [
+      { type: "registration", url: "/docs/company-registration.pdf" },
+    ],
+    status: "pending"
+  },
+  {
+    id: "comp_003",
+    name: 'Juhayna Food Industries',
+    alt: 'Juhayna Food Industries',
+    email: 'contact@juhayna.com',
+    logo: '/logos/tawabiry.png',
+    industry: 'Food Production',
+    size: 'Large (101-500 employees)',
+    documentation: [
+      { type: "registration", url: "/docs/company-registration.pdf" },
+    ],
+    status: "pending"
+  },
+  {
+    id: "comp_004",
+    name: 'Nestlé Egypt',
+    industry: 'Food & Beverages',
+    size: 'Corporate (500+ employees)',
+    email: 'contact@eg.nestle.com',
+    logo: '/logos/tawabiry.png',
+    documentation: [
+      { type: "registration", url: "/docs/company-registration.pdf" },
+    ],
+    status: "pending"
+  },
+  {
+    id: "comp_005",
+    name: 'Valeo Egypt',
+    alt: 'Valeo Egypt',
+    industry: 'Automotive',
+    size: 'Large (101-500 employees)',
+    email: 'hr@valeo.com',
+    logo: '/logos/tawabiry.png',
+    documentation: [
+      { type: "taxCard", url: "/docs/tax-card.pdf" },
+    ],
+    status: "pending"
+  },
+  {
+    id: "comp_006",
+    name: 'Fawry',
+    alt: 'Fawry',
+    industry: 'Financial Services',
+    size: 'Medium (51-100 employees)',
+    email: 'support@fawry.com',
+    logo: '/logos/tawabiry.png',
+    documentation: [
+      { type: "taxId", url: "/docs/tax-id.pdf" },
+    ],
+    status: "pending"
+  },
+  {
+    id: "comp_007",
+    name: 'Careem Egypt',
+    alt: 'Careem Egypt',
+    industry: 'Internet',
+    size: 'Medium (51-100 employees)',
+    email: 'info@careem.com',
+    logo: '/logos/tawabiry.png',
+    documentation: [
+      { type: "registration", url: "/docs/company-registration.pdf" },
+    ],
+    location: 'Multinational (Egypt)'
+  },
+  {
+    id: "comp_008",
+    name: 'Edita Food Industries',
+    alt: 'Edita Food Industries',
+    industry: 'Food Production',
+    size: 'Large (101-500 employees)',
+    email: 'contact@edita.com.eg',
+    logo: '/logos/tawabiry.png',
+    documentation: [
+      { type: "taxCard", url: "/docs/tax-card.pdf" },
+    ],
+    status: "pending"
+  },
+  {
+    id: "comp_009",
+    name: 'Deloitte Egypt',
+    alt: 'Deloitte Egypt',
+    industry: 'Consulting',
+    size: 'Large (101-500 employees)',
+    email: 'contact@deloitte.com.eg',
+    logo: '/logos/tawabiry.png',
+    documentation: [
+      { type: "registration", url: "/docs/company-registration.pdf" },
+    ],
+    status: "pending"
+  },
+  {
+    id: "comp_010",
+    name: 'KPMG Egypt',
+    alt: 'KPMG Egypt',
+    industry: 'Consulting',
+    size: 'Large (101-500 employees)',
+    email: 'contact@kpmg.com.eg',
+    logo: '/logos/tawabiry.png',
+    documentation: [
+      { type: "registration", url: "/docs/company-registration.pdf" },
+    ],
+    status: "pending"
+  },
+  {
+    id: "comp_011",
+    name: 'PwC Egypt',
+    alt: 'PwC Egypt',
+    industry: 'Consulting',
+    size: 'Large (101-500 employees)',
+    email: 'contact@pwc.com.eg',
+    logo: '/logos/tawabiry.png',
+    documentation: [
+      { type: "registration", url: "/docs/company-registration.pdf" },
+    ],
+    status: "pending"
+  },
+  {
+    id: "comp_012",
+    name: 'EY Egypt',
+    alt: 'EY Egypt',
+    industry: 'Consulting',
+    size: 'Large (101-500 employees)',
+    email: 'contact@ey.com.eg',
+    logo: '/logos/tawabiry.png',
+    documentation: [
+      { type: "registration", url: "/docs/company-registration.pdf" },
+    ],
+    status: "pending"
+  },
+  {
+    id: "comp_013",
+    name: 'Gates Of Egypt',
+    alt: 'Gates Of Egypt',
+    industry: 'Tourism',
+    size: 'Small (1-50 employees)',
+    email: 'contact@gates-of-egypt.com',
+    logo: '/logos/tawabiry.png',
+    documentation: [
+      { type: "registration", url: "/docs/company-registration.pdf" },
+    ],
+    status: "pending"
+  },
 ];

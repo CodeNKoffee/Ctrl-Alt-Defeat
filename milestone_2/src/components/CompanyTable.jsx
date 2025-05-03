@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import IndustryFilter from './IndustryFilter';
 import CompanyDetails from './CompanyDetails';
 import CompanyDetailsSmall from './CompanyDetailsSmall';
+import CompanyDetailsModal from './CompanyDetailsModal';
 import { INDUSTRIES } from '../../constants';
 
 export default function CompanyTable({ companies }) {
@@ -11,6 +12,8 @@ export default function CompanyTable({ companies }) {
   const [selectedIndustry, setSelectedIndustry] = useState('');
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalCompany, setModalCompany] = useState(null);
 
   // Updated filtering logic
   const filteredCompanies = companies.filter(company => {
@@ -38,6 +41,16 @@ export default function CompanyTable({ companies }) {
     setIsExpanded(false);
   };
 
+  // Modal logic
+  const handleExpandModal = (company) => {
+    setModalCompany(company);
+    setModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setModalCompany(null);
+  };
+
   return (
     <div className="flex flex-col items-center w-full min-h-screen">
       {/* Header Section */}
@@ -48,7 +61,7 @@ export default function CompanyTable({ companies }) {
         <p className="text-gray-500 text-sm mb-8">Manage company applications</p>
 
         {/* Filter Controls Container */}
-        <div className="w-full flex flex-col md:flex-row justify-between gap-4 bg-white/50 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm mb-6">
+        <div className="w-full flex flex-col md:flex-row justify-between gap-4 bg-metallica-blue-100/50 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm mb-6">
           <div className="w-full md:w-1/3">
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           </div>
@@ -158,12 +171,15 @@ export default function CompanyTable({ companies }) {
                   size={selectedCompany.size}
                   documentation={selectedCompany.documentation}
                   onExpand={handleExpand}
+                  onExpandModal={() => handleExpandModal(selectedCompany)}
                 />
               )}
             </div>
           </div>
         )}
       </div>
+      {/* Company Details Modal */}
+      <CompanyDetailsModal open={modalOpen} onClose={handleCloseModal} company={modalCompany} />
       <style jsx global>{`
         @keyframes slide-in {
           from { transform: translateX(100%); }

@@ -6,7 +6,7 @@ export default function IndustryFilter({ selectedIndustry, setSelectedIndustry, 
       <select
         value={selectedIndustry}
         onChange={(e) => setSelectedIndustry(e.target.value)}
-        className="appearance-none w-full bg-white/80 backdrop-blur-sm border-2 border-metallica-blue-200 text-sm text-gray-800 py-2 px-4 pr-8 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-metallica-blue-300 focus:border-metallica-blue-400 transition-all duration-300"
+        className="appearance-none w-full bg-white/80 backdrop-blur-sm border-2 hover:border-metallica-blue-300 hover:cursor-pointer text-sm text-gray-800 py-2 px-4 pr-8 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-metallica-blue-300 focus:border-metallica-blue-400 transition-all duration-300"
       >
         <option value="">All Industries</option>
         {industries.map((industry) => (
