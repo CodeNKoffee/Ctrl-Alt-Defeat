@@ -8,6 +8,9 @@ import Copyright from "@/components/Copyright";
 import { useSearchParams } from "next/navigation";
 import { usersOptions } from "../../../constants";
 
+import { ToastContainer, toast } from 'react-toastify';
+import { use, useEffect } from "react";
+
 export default function LoginPage() {
   const searchParams = useSearchParams();
   const userType = searchParams.get("userType");
@@ -17,10 +20,105 @@ export default function LoginPage() {
     return usersOptions.find(option => option.value === type) || {};
   };
 
+
   const userOption = getUserOption(userType);
+
+  useEffect( () => {notify()}, [])
+
+  const notify = () => (
+    toast.info('Please check your inbox, your application has been reviewed',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+    
+    toast.success('Someone has applied to one of your internship listings',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.info('A new internship cycle is staring soon!',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.info('Dear student your report status has been updated',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.success('Your appointment has been accepted',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.info('Incoming call',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.info('Reminder: You have an upcoming workshop',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.info('An attendee has sent a message',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    })
+  );
+
 
   return (
     <div className="min-h-screen flex flex-col kontainer">
+      <ToastContainer />
       {/* Main content */}
       <div className="flex-grow flex items-center justify-center py-8">
         <main className="w-full flex flex-col-reverse xl:flex-row items-center justify-center gap-4 xl:gap-16 px-4">
