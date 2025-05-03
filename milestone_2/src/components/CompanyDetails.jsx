@@ -41,22 +41,22 @@ export default function CompanyDetails({
   // Layout for 'big' variant
   if (variant === 'big') {
     return (
-      <div className="flex flex-col gap-6 w-full max-w-xl mx-auto items-center">
-        <div className="flex flex-col md:flex-row gap-6 w-full items-center">
+      <div className="companydetails-root companydetails-big">
+        <div className="companydetails-header-row">
           <CompanyProfileCard logo={companyLogo} name={companyName} email={companyEmail} />
           <CompanyIndustryCard industry={industry} icon={industryIcons[industry]} registrationMessage={registrationMessage} />
         </div>
         <CompanySizeCard size={size} />
         <CompanyDocumentsCard documents={docs} />
-        <div className="flex flex-col md:flex-row gap-4 justify-center mt-2 w-full items-center">
-          <button className="bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-all flex items-center justify-center w-full md:w-auto text-lg gap-2" onClick={onCollapse}>
-            <FontAwesomeIcon icon={faCheck} className="text-xl" /> Accept
+        <div className="companydetails-action-row">
+          <button className="companydetails-accept-btn" onClick={onCollapse}>
+            <FontAwesomeIcon icon={faCheck} className="companydetails-action-icon" /> Accept
           </button>
-          <button className="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-all flex items-center justify-center w-full md:w-auto text-lg gap-2">
-            <FontAwesomeIcon icon={faTimes} className="text-xl" /> Reject
+          <button className="companydetails-reject-btn">
+            <FontAwesomeIcon icon={faTimes} className="companydetails-action-icon" /> Reject
           </button>
         </div>
-        <button className="mt-4 flex items-center gap-2 text-blue-700 hover:text-blue-900 font-semibold transition-all" onClick={onExpand}>
+        <button className="companydetails-collapse-btn" onClick={onExpand}>
           <FontAwesomeIcon icon={faChevronUp} /> Collapse Details
         </button>
       </div>
@@ -65,15 +65,15 @@ export default function CompanyDetails({
 
   // Layout for 'small' variant
   return (
-    <div className="flex flex-col gap-6 w-full max-w-xs mx-auto items-center">
+    <div className="companydetails-root companydetails-small">
       <CompanyProfileCard logo={companyLogo} name={companyName} email={companyEmail} />
       <CompanyIndustryCard industry={industry} icon={industryIcons[industry]} registrationMessage={registrationMessage} />
       <CompanySizeCard size={size} />
-      <div className="flex flex-col gap-4 justify-center mt-2 w-full items-center">
-        <button className="bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-800 transition-all flex items-center justify-center w-full text-base gap-2" onClick={onExpand}>
+      <div className="companydetails-action-row companydetails-action-row-small">
+        <button className="companydetails-accept-btn companydetails-accept-btn-small" onClick={onExpand}>
           <FontAwesomeIcon icon={faChevronDown} /> View Details
         </button>
-        <button className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition-all flex items-center justify-center w-full text-base gap-2">
+        <button className="companydetails-reject-btn companydetails-reject-btn-small">
           <FontAwesomeIcon icon={faTimes} /> Reject
         </button>
       </div>

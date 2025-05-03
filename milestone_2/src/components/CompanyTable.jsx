@@ -93,8 +93,7 @@ export default function CompanyTable({ companies }) {
               <div
                 key={company.name}
                 className={`grid grid-cols-12 gap-2 items-center p-4 bg-white rounded-xl border border-gray-100 
-                          hover:bg-gradient-to-r hover:from-metallica-blue-950 hover:to-metallica-blue-200/60
-                          hover:border-metallica-blue-200 hover:shadow-lg hover:backdrop-blur-sm
+                          hover:bg-dimmer-white hover:border-metallica-blue-200
                           transition-[background,border,box-shadow,backdrop-filter] duration-300 ease-in-out cursor-pointer group
                           ${selectedCompany && selectedCompany.name === company.name ? 'ring-2 ring-metallica-blue-300 bg-metallica-blue-50' : ''}`}
                 onClick={() => handleRowClick(company)}

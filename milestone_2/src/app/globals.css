@@ -704,3 +704,430 @@ input{
   padding: 12px 24px;
   letter-spacing: 2px;
 }
+
+/* --- CompanyDetails Vanilla CSS --- */
+.companydetails-root {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  align-items: center;
+  box-sizing: border-box;
+}
+.companydetails-big {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+.companydetails-small {
+  max-width: 20rem;
+  margin: 0 auto;
+}
+.companydetails-header-row {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .companydetails-header-row {
+    flex-direction: row;
+  }
+}
+.companydetails-action-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 8px;
+  width: 100%;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .companydetails-action-row {
+    flex-direction: row;
+    width: 100%;
+  }
+}
+.companydetails-accept-btn, .companydetails-reject-btn {
+  padding: 12px 24px;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.companydetails-accept-btn {
+  background: var(--metallica-blue-700);
+  color: #fff;
+}
+.companydetails-accept-btn:hover {
+  background: var(--metallica-blue-800);
+}
+.companydetails-reject-btn {
+  background: #dc2626;
+  color: #fff;
+}
+.companydetails-reject-btn:hover {
+  background: #b91c1c;
+}
+.companydetails-action-icon {
+  font-size: 1.25rem;
+}
+.companydetails-collapse-btn {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--metallica-blue-700);
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.companydetails-collapse-btn:hover {
+  color: var(--metallica-blue-900);
+}
+.companydetails-action-row-small {
+  margin-top: 8px;
+}
+.companydetails-accept-btn-small, .companydetails-reject-btn-small {
+  font-size: 1rem;
+  padding: 8px 16px;
+}
+
+/* --- CompanyProfileCard Vanilla CSS --- */
+.companyprofilecard-root {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.2s;
+}
+.companyprofilecard-root:hover {
+  box-shadow: 0 4px 16px 0 rgba(16,30,54,0.12);
+}
+.companyprofilecard-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.companyprofilecard-logo-container {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.companyprofilecard-logo {
+  border-radius: 50%;
+  object-fit: contain;
+}
+.companyprofilecard-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1e293b;
+  text-align: center;
+}
+.companyprofilecard-email {
+  color: #2563eb;
+  text-decoration: underline;
+  font-size: 0.875rem;
+  text-align: center;
+  transition: color 0.2s;
+}
+.companyprofilecard-email:hover {
+  color: #1e40af;
+}
+
+/* --- CompanyIndustryCard Vanilla CSS --- */
+.companyindustrycard-root {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e5e7eb;
+  min-width: 180px;
+  transition: box-shadow 0.2s;
+}
+.companyindustrycard-root:hover {
+  box-shadow: 0 4px 16px 0 rgba(16,30,54,0.12);
+}
+.companyindustrycard-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #1e293b;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.companyindustrycard-icon {
+  font-size: 2.25rem;
+  margin-top: 4px;
+}
+.companyindustrycard-industry {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #334155;
+  text-align: center;
+}
+.companyindustrycard-registration {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* --- CompanySizeCard Vanilla CSS --- */
+.companysizecard-root {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #e5e7eb;
+  width: 100%;
+  transition: box-shadow 0.2s;
+}
+.companysizecard-root:hover {
+  box-shadow: 0 4px 16px 0 rgba(16,30,54,0.12);
+}
+.companysizecard-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.companysizecard-bar-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.companysizecard-bar {
+  display: flex;
+  width: 100%;
+  max-width: 320px;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+}
+.companysizecard-bar-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+}
+.companysizecard-bar-label {
+  height: 32px;
+  width: 100%;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #dbeafe;
+  color: #1e40af;
+  transition: all 0.2s;
+}
+.companysizecard-bar-label-active {
+  background: #3b82f6;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px 0 rgba(59,130,246,0.15);
+  border: 2px solid #1e40af;
+}
+.companysizecard-bar-here {
+  font-size: 0.75rem;
+  color: #2563eb;
+  margin-top: 4px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: bounce 1s infinite alternate;
+}
+.companysizecard-bar-arrow {
+  display: inline-block;
+}
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+/* --- CompanyDocumentsCard Vanilla CSS --- */
+.companydocumentscard-root {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #e5e7eb;
+  width: 100%;
+  transition: box-shadow 0.2s;
+}
+.companydocumentscard-root:hover {
+  box-shadow: 0 4px 16px 0 rgba(16,30,54,0.12);
+}
+.companydocumentscard-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.companydocumentscard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
+}
+.companydocumentscard-empty {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  text-align: center;
+}
+.companydocumentscard-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f1f5f9;
+  border-radius: 0.5rem;
+  padding: 8px 16px;
+  width: 100%;
+  max-width: 320px;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 1px 2px 0 rgba(16,30,54,0.04);
+  transition: background 0.2s;
+}
+.companydocumentscard-item:hover {
+  background: #e5e7eb;
+}
+.companydocumentscard-item-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  text-align: center;
+}
+.companydocumentscard-item-name {
+  font-weight: 500;
+  color: #1e293b;
+}
+.companydocumentscard-item-type {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.companydocumentscard-download {
+  color: #2563eb;
+  padding: 4px;
+  transition: color 0.2s;
+}
+.companydocumentscard-download:hover {
+  color: #1e40af;
+}
+
+.hover\:bg-dimmer-white:hover {
+  background-color: #f8f8f8 !important;
+}
+
+/* --- CompanyRow Vanilla CSS --- */
+.companyrow-root {
+  background: #fff;
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.companyrow-root:hover {
+  background: #f3f4f6;
+  box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);
+}
+.companyrow-name-col {
+  flex: 1;
+}
+.companyrow-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1e293b;
+  margin: 0;
+}
+.companyrow-industry-col {
+  flex: 1;
+  text-align: center;
+}
+.companyrow-industry {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0;
+}
+.companyrow-size-col {
+  flex: 1;
+  text-align: right;
+}
+.companyrow-size-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #e5e7eb;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.companyrow-size-large {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+.companyrow-size-medium {
+  background: #f3e8ff;
+  color: #7c3aed;
+  border-color: #ddd6fe;
+}
+.companyrow-size-small {
+  background: #ecfdf5;
+  color: #059669;
+  border-color: #bbf7d0;
+}
+.companyrow-size-default {
+  background: #f9fafb;
+  color: #334155;
+  border-color: #e5e7eb;
+}

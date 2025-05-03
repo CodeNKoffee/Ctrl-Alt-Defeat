@@ -17,22 +17,20 @@ function getRangeKey(size) {
 export default function CompanySizeCard({ size }) {
   const activeKey = getRangeKey(size);
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center gap-4 hover:shadow-lg transition-all border border-gray-200 w-full">
-      <div className="text-lg font-bold text-gray-800 mb-2 text-center">Company Size</div>
-      <div className="w-full flex flex-col items-center">
-        <div className="flex w-full max-w-xs justify-between items-end relative">
+    <div className="companysizecard-root">
+      <div className="companysizecard-title">Company Size</div>
+      <div className="companysizecard-bar-container">
+        <div className="companysizecard-bar">
           {sizeRanges.map((range, idx) => (
-            <div key={range.key} className="flex flex-col items-center w-1/4">
+            <div key={range.key} className="companysizecard-bar-segment">
               <div
-                className={`h-8 w-full rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-200
-                  ${activeKey === range.key ? 'bg-blue-500 text-white scale-110 shadow-lg border-2 border-blue-700' : 'bg-blue-100 text-blue-800'}
-                `}
+                className={`companysizecard-bar-label${activeKey === range.key ? ' companysizecard-bar-label-active' : ''}`}
               >
                 {range.label}
               </div>
               {activeKey === range.key && (
-                <div className="text-xs text-blue-600 mt-1 animate-bounce font-bold flex flex-col items-center">
-                  <span className="inline-block">▼</span>
+                <div className="companysizecard-bar-here">
+                  <span className="companysizecard-bar-arrow">▼</span>
                   <span>Here</span>
                 </div>
               )}

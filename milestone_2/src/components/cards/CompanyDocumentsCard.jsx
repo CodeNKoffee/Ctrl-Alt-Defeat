@@ -10,18 +10,18 @@ function getFileIcon(type) {
 
 export default function CompanyDocumentsCard({ documents = [] }) {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center gap-4 hover:shadow-lg transition-all border border-gray-200 w-full">
-      <div className="text-lg font-bold text-gray-800 mb-2 text-center">Verification Documents</div>
-      <div className="flex flex-col gap-3 w-full items-center">
-        {documents.length === 0 && <div className="text-gray-400 text-sm text-center">No documents provided.</div>}
+    <div className="companydocumentscard-root">
+      <div className="companydocumentscard-title">Verification Documents</div>
+      <div className="companydocumentscard-list">
+        {documents.length === 0 && <div className="companydocumentscard-empty">No documents provided.</div>}
         {documents.map((doc, idx) => (
-          <div key={idx} className="flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-2 w-full max-w-xs border border-gray-100 hover:bg-gray-100 shadow-sm">
+          <div key={idx} className="companydocumentscard-item">
             {getFileIcon(doc.type || doc.url)}
-            <div className="flex flex-col flex-1 items-center text-center">
-              <span className="font-medium text-gray-800">{doc.name || doc.url.split('/').pop()}</span>
-              <span className="text-xs text-gray-500 uppercase mt-1">{(doc.type || doc.url.split('.').pop() || '').toUpperCase()}</span>
+            <div className="companydocumentscard-item-info">
+              <span className="companydocumentscard-item-name">{doc.name || doc.url.split('/').pop()}</span>
+              <span className="companydocumentscard-item-type">{(doc.type || doc.url.split('.').pop() || '').toUpperCase()}</span>
             </div>
-            <a href={doc.url} download className="text-blue-600 hover:text-blue-800 p-1" title="Download">
+            <a href={doc.url} download className="companydocumentscard-download" title="Download">
               <FontAwesomeIcon icon={faDownload} />
             </a>
           </div>
