@@ -49,9 +49,6 @@ export default function CompanyDetails({
             <FontAwesomeIcon icon={faTimes} className="companydetails-action-icon" /> Reject
           </button>
         </div>
-        <button className="companydetails-collapse-btn" onClick={onExpand}>
-          <FontAwesomeIcon icon={faChevronUp} /> Collapse Details
-        </button>
       </div>
     );
   }

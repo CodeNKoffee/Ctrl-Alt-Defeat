@@ -847,14 +847,15 @@ button {
   text-align: center;
 }
 .companyprofilecard-email {
-  color: #2563eb;
+  color: var(--metallica-blue-700);
   text-decoration: underline;
   font-size: 0.875rem;
   text-align: center;
   transition: color 0.2s;
+  font-style: italic;
 }
 .companyprofilecard-email:hover {
-  color: #1e40af;
+  color: var(--metallica-blue-900);
 }
 
 /* --- CompanyIndustryCard Vanilla CSS --- */
@@ -868,7 +869,7 @@ button {
   align-items: center;
   gap: 8px;
   border: 1px solid #e5e7eb;
-  min-width: 180px;
+  min-width: 160px;
   transition: box-shadow 0.2s;
 }
 .companyindustrycard-root:hover {
@@ -936,14 +937,17 @@ button {
   width: 100%;
   max-width: 320px;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   position: relative;
+  gap: 12px;
 }
 .companysizecard-bar-segment {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 25%;
+  position: relative;
+  min-height: 56px;
 }
 .companysizecard-bar-label {
   height: 32px;
@@ -954,29 +958,38 @@ button {
   justify-content: center;
   font-size: 0.75rem;
   font-weight: 600;
-  background: #dbeafe;
-  color: #1e40af;
+  background: var(--metallica-blue-100);
+  color: var(--metallica-blue-700);
   transition: all 0.2s;
+  z-index: 1;
 }
 .companysizecard-bar-label-active {
-  background: #3b82f6;
+  background: var(--metallica-blue-700);
   color: #fff;
   transform: scale(1.1);
-  box-shadow: 0 2px 8px 0 rgba(59,130,246,0.15);
-  border: 2px solid #1e40af;
+  box-shadow: 0 2px 8px 0 rgba(37,99,235,0.15);
+  border: 2px solid var(--metallica-blue-700);
+  z-index: 2;
 }
 .companysizecard-bar-here {
-  font-size: 0.75rem;
-  color: #2563eb;
-  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--metallica-blue-500);
   font-weight: bold;
   display: flex;
   flex-direction: column;
   align-items: center;
   animation: bounce 1s infinite alternate;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 38px;
+  z-index: 0;
+  margin-top: 0;
 }
 .companysizecard-bar-arrow {
   display: inline-block;
+  color: var(--metallica-blue-700);
+  transform: rotate(180deg);
 }
 @keyframes bounce {
   0% { transform: translateY(0); }
@@ -1053,12 +1066,12 @@ button {
   margin-top: 4px;
 }
 .companydocumentscard-download {
-  color: #2563eb;
+  color: var(--metallica-blue-500);
   padding: 4px;
   transition: color 0.2s;
 }
 .companydocumentscard-download:hover {
-  color: #1e40af;
+  color: var(--metallica-blue-700);
 }
 
 .hover\:bg-dimmer-white:hover {

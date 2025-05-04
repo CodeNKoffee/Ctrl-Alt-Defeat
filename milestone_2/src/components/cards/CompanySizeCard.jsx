@@ -31,7 +31,7 @@ export default function CompanySizeCard({ size }) {
               {activeKey === range.key && (
                 <div className="companysizecard-bar-here">
                   <span className="companysizecard-bar-arrow">▼</span>
-                  <span>Here</span>
+                  {/* <span>Here</span> */}
                 </div>
               )}
             </div>
