@@ -56,13 +56,24 @@ export default function CompanyDetailsModal({ open, onClose, company }) {
             {/* Notepad */}
             <div className="flex-1 flex flex-col">
               <div className="text-[#497184] text-lg font-semibold mb-2" style={{ letterSpacing: 1 }}>Note Pad</div>
-              <div className={`flex flex-col gap-0 ${BORDER} ${ROUNDED} bg-[#eaf3f6] px-4 py-3`}>
+              <div className={`relative flex flex-col gap-0 ${BORDER} ${ROUNDED} bg-[#eaf3f6] px-4 py-3`} style={{ minHeight: 140 }}>
+                {/* Lined background */}
+                <div className="absolute left-4 right-4 top-0 bottom-0 pointer-events-none z-0">
+                  {[0, 1, 2, 3].map(i => (
+                    <div
+                      key={i}
+                      className="w-full border-b border-[#497184]"
+                      style={{ position: 'absolute', top: `${(i + 1) * 25}px` }}
+                    />
+                  ))}
+                </div>
+                {/* Inputs */}
                 {notes.map((note, idx) => (
                   <input
                     key={idx}
                     type="text"
-                    className="w-full bg-transparent outline-none text-base text-[#274353] border-0 border-b border-[#497184] focus:ring-0 focus:border-[#497184] px-0 mb-2"
-                    style={{ borderRadius: 0 }}
+                    className="relative z-10 w-full bg-transparent outline-none text-base text-[#274353] border-0 focus:ring-0 focus:border-[#497184] px-0 mb-2"
+                    style={{ borderRadius: 0, marginTop: idx === 0 ? 0 : 8, position: 'relative', height: 25 }}
                     placeholder={idx === 0 ? "" : undefined}
                     value={note}
                     onChange={e => handleNoteChange(idx, e.target.value)}
