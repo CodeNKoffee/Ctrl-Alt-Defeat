@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
-export default function CompanyProfileCard({ logo, name, email }) {
+export default function CompanyProfileCard({ logo, name, email, className = '' }) {
   return (
-    <div className="companyprofilecard-root">
+    <div className={`companyprofilecard-root ${className}`}>
       <div className="companyprofilecard-title">Profile</div>
       <div className="companyprofilecard-logo-container">
         <Image src={logo} alt="Company Logo" width={96} height={96} className="companyprofilecard-logo" />

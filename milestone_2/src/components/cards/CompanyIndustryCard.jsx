@@ -1,6 +1,6 @@
-export default function CompanyIndustryCard({ industry, icon, registrationMessage }) {
+export default function CompanyIndustryCard({ industry, icon, registrationMessage, className = '' }) {
   return (
-    <div className="companyindustrycard-root">
+    <div className={`companyindustrycard-root ${className}`}>
       <div className="companyindustrycard-title">
         Industry
         {icon && <span className="companyindustrycard-icon">{icon}</span>}

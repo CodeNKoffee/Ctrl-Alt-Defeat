@@ -1133,3 +1133,29 @@ button {
   color: #334155;
   border-color: #e5e7eb;
 }
+
+/* --- CompanyDetails Flexbox Equal Height/Width --- */
+.companydetails-header-row-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+}
+.companydetails-flex-child {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 768px) {
+  .companydetails-header-row-flex {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .companydetails-flex-child {
+    width: 100%;
+    min-width: 0;
+  }
+}

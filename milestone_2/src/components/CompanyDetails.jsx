@@ -35,7 +35,7 @@ export default function CompanyDetails({
   if (variant === 'big') {
     return (
       <div className="companydetails-root companydetails-big relative">
-        <div className="companydetails-header-row">
+        <div className="companydetails-header-row companydetails-header-row-flex">
           <CompanyProfileCard logo={companyLogo} name={companyName} email={companyEmail} />
           <CompanyIndustryCard industry={industry} icon={industryIcon} registrationMessage={registrationMessage} />
         </div>
