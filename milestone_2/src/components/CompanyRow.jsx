@@ -14,7 +14,7 @@ export default function CompanyRow({ company, onClick }) {
         <h3 className="companyrow-name">{company.name}</h3>
       </div>
       <div className="companyrow-industry-col col-span-5 text-gray-600">
-        <p className="companyrow-industry">{company.industry}</p>
+        <p className="companyrow-industry text-center">{company.industry}</p>
       </div>
       <div className="companyrow-size-col col-span-2 text-right">
         <span className={`companyrow-size-badge inline-block px-3 py-1 rounded-full text-xs font-medium group-hover:bg-white group-hover:text-metallica-blue-800 group-hover:border-white

@@ -84,7 +84,7 @@ export default function CompanyTable({ companies }) {
           {/* Column Headers */}
           <div className="grid grid-cols-12 gap-2 mb-3 px-4 text-xs font-medium text-gray-500 tracking-wide">
             <div className="col-span-5">COMPANY</div>
-            <div className="col-span-5">INDUSTRY</div>
+            <div className={`col-span-5 pl-0 ${selectedCompany ? "sm:pl-0 md:pl-1 lg:pl-8" : "sm:pl-6 md:pl-8 lg:pl-14"}`}>INDUSTRY</div>
             <div className="col-span-2 text-right">SIZE</div>
           </div>
 
