@@ -254,6 +254,7 @@ export default function SignupForm() {
                   >
                     {isSubmitting ? 'Processing...' : 'Complete Registration'}
                   </button>
+                  <pre className="text-xs bg-gray-100 p-2 rounded mt-2 overflow-x-auto">{JSON.stringify({ isValid, dirty, errors, values }, null, 2)}</pre>
                 </div>
               </div>
             )}
