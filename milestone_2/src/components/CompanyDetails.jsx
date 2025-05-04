@@ -5,18 +5,7 @@ import CompanySizeCard from './cards/CompanySizeCard';
 import CompanyDocumentsCard from './cards/CompanyDocumentsCard';
 import { faChevronDown, faChevronUp, faCheck, faTimes, faExpand } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// Example industry icon mapping (expand as needed)
-const industryIcons = {
-  'Software as a Service (SaaS)': '🧑‍💻',
-  'Telecommunications': '📡',
-  'Food Production': '🍞',
-  'Food & Beverages': '🥤',
-  'Automotive': '🚗',
-  'Financial Services': '💳',
-  'Internet': '🌐',
-  // ... add more as needed
-};
+import { INDUSTRY_ICONS } from '../constants/industryIcons';
 
 export default function CompanyDetails({
   variant = 'small',
@@ -31,7 +20,7 @@ export default function CompanyDetails({
   onExpandModal
 }) {
   // Compose registration message
-  const registrationMessage = `Registered on 01 May, 2025`;
+  const registrationMessage = `Registered on 03 May, 2025`;
   // Compose docs array for card
   const docs = Array.isArray(documentation)
     ? documentation
@@ -39,12 +28,15 @@ export default function CompanyDetails({
       ? [{ url: documentation, name: documentation, type: documentation.split('.').pop() }]
       : [];
 
+  // Get the appropriate icon for the industry
+  const industryIcon = INDUSTRY_ICONS[industry] || '🏢'; // Default icon if industry not found
+
   // Layout for 'big' variant
   if (variant === 'big') {
     return (
       <div className="companydetails-root companydetails-big relative">
         <button
-          className="absolute top-4 right-4 text-metallica-blue-700 hover:text-metallica-blue-900 bg-white/80 rounded-full p-2 border border-gray-200 shadow"
+          className="absolute top-4 right-4 text-metallica-blue-700 hover:text-metallica-blue-900 bg-  rounded-full p-2 border border-gray-200 shadow"
           onClick={onExpandModal}
           title="Expand details"
         >
@@ -52,7 +44,7 @@ export default function CompanyDetails({
         </button>
         <div className="companydetails-header-row">
           <CompanyProfileCard logo={companyLogo} name={companyName} email={companyEmail} />
-          <CompanyIndustryCard industry={industry} icon={industryIcons[industry]} registrationMessage={registrationMessage} />
+          <CompanyIndustryCard industry={industry} icon={industryIcon} registrationMessage={registrationMessage} />
         </div>
         <CompanySizeCard size={size} />
         <CompanyDocumentsCard documents={docs} />
@@ -75,7 +67,7 @@ export default function CompanyDetails({
   return (
     <div className="companydetails-root companydetails-small">
       <CompanyProfileCard logo={companyLogo} name={companyName} email={companyEmail} />
-      <CompanyIndustryCard industry={industry} icon={industryIcons[industry]} registrationMessage={registrationMessage} />
+      <CompanyIndustryCard industry={industry} icon={industryIcon} registrationMessage={registrationMessage} />
       <CompanySizeCard size={size} />
       <div className="companydetails-action-row companydetails-action-row-small">
         <button className="companydetails-accept-btn companydetails-accept-btn-small" onClick={onExpand}>
