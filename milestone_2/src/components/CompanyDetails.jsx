@@ -35,13 +35,6 @@ export default function CompanyDetails({
   if (variant === 'big') {
     return (
       <div className="companydetails-root companydetails-big relative">
-        <button
-          className="absolute top-4 right-4 text-metallica-blue-700 hover:text-metallica-blue-900 bg-  rounded-full p-2 border border-gray-200 shadow"
-          onClick={onExpandModal}
-          title="Expand details"
-        >
-          <FontAwesomeIcon icon={faExpand} className="w-5 h-5" />
-        </button>
         <div className="companydetails-header-row">
           <CompanyProfileCard logo={companyLogo} name={companyName} email={companyEmail} />
           <CompanyIndustryCard industry={industry} icon={industryIcon} registrationMessage={registrationMessage} />

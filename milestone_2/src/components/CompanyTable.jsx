@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import SearchBar from './SearchBar';
 import IndustryFilter from './IndustryFilter';
 import CompanyDetails from './CompanyDetails';
-import CompanyDetailsSmall from './CompanyDetailsSmall';
 import CompanyDetailsModal from './CompanyDetailsModal';
 import { INDUSTRIES } from '../../constants';
 import CompanyRow from './CompanyRow';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExpand } from "@fortawesome/free-solid-svg-icons";
 
 export default function CompanyTable({ companies }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -67,20 +68,20 @@ export default function CompanyTable({ companies }) {
         {/* Table Section */}
         <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} text-sm transition-all duration-300`}>
           {/* Filter Controls Container */}
-        <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} flex flex-col md:flex-row justify-between gap-4 bg-metallica-blue-100/50 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm mb-6 transition-all duration-300`}>
-          <div className="w-full md:w-1/3">
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-          </div>
+          <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} flex flex-col md:flex-row justify-between gap-4 bg-metallica-blue-100/50 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm mb-6 transition-all duration-300`}>
+            <div className="w-full md:w-1/3">
+              <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            </div>
 
-          {/* Industry Filter Dropdown */}
-          <div className="w-full md:w-1/3">
-            <IndustryFilter
-              selectedIndustry={selectedIndustry}
-              setSelectedIndustry={setSelectedIndustry}
-              industries={INDUSTRIES}
-            />
+            {/* Industry Filter Dropdown */}
+            <div className="w-full md:w-1/3">
+              <IndustryFilter
+                selectedIndustry={selectedIndustry}
+                setSelectedIndustry={setSelectedIndustry}
+                industries={INDUSTRIES}
+              />
+            </div>
           </div>
-        </div>
           {/* Column Headers */}
           <div className="grid grid-cols-12 gap-2 mb-3 px-4 text-xs font-medium text-gray-500 tracking-wide">
             <div className="col-span-5">COMPANY</div>
@@ -119,7 +120,13 @@ export default function CompanyTable({ companies }) {
             className="fixed top-0 right-0 h-screen w-1/3 bg-metallica-blue-50/90 backdrop-blur-md shadow-xl z-50 flex flex-col border-l border-metallica-blue-100 animate-slide-in"
             style={{ minWidth: 420, maxWidth: 500 }}
           >
-            <div className="flex justify-end p-4">
+            <div className="flex justify-between p-4">
+              <button
+                onClick={handleExpandModal}
+                className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-200"
+              >
+                <FontAwesomeIcon icon={faExpand} className="w-5 h-5" />
+              </button>
               <button
                 onClick={handleCloseSidebar}
                 className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-200"
