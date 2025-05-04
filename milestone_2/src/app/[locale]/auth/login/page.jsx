@@ -9,6 +9,7 @@ import Blobs from "@/components/Blobs";
 import Header from "@/components/Header";
 import Copyright from "@/components/Copyright";
 import LoginForm from "@/components/LoginForm";
+import BackButton from "@/components/shared/BackButton";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -65,6 +66,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col kontainer">
+      <BackButton />
       {/* Main content */}
       <div className="flex-grow flex items-center justify-center py-8">
         <main className="w-full flex flex-col-reverse xl:flex-row items-center justify-center gap-4 xl:gap-16 px-4">
