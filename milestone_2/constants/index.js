@@ -202,7 +202,7 @@ export const usersOptions = [
   {
     value: "company",
     class: "option_company",
-    imageUrl: "/images/company.png",
+    imageUrl: "/images/company-icon.png",
     name: "Company",
     dimension: 130,
     signup: true,
@@ -210,7 +210,7 @@ export const usersOptions = [
   {
     value: "scad",
     class: "option_scad",
-    imageUrl: "/images/scad.png",
+    imageUrl: "/images/scad-icon.png",
     name: "SCAD",
     dimension: 120,
     signup: false,
@@ -218,7 +218,7 @@ export const usersOptions = [
   {
     value: "faculty",
     class: "option_faculty",
-    imageUrl: "/images/faculty.png",
+    imageUrl: "/images/faculty-icon.png",
     name: "Faculty",
     dimension: 110,
     signup: false,
@@ -226,7 +226,7 @@ export const usersOptions = [
   {
     value: "student",
     class: "option_student",
-    imageUrl: "/images/student.png",
+    imageUrl: "/images/student-icon.png",
     name: "Student",
     dimension: 153,
     signup: false,
