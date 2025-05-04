@@ -73,12 +73,14 @@ export default function LoginPage() {
               <Blobs imageUrl={userDetails.imageUrl} bgColor={userDetails.bgColor} />
             </div>
             <div className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8">
-              <span className="text-black font-medium font-ibm-plex-sans">
-                Not registered yet?{' '}
-                <Link href={`/en/auth/signup?userType=${userType}`} className="text-metallica-blue-off-charts underline">
-                  Sign up
-                </Link>
-              </span>
+              {userType === 'company' && (
+                <span className="text-black font-medium font-ibm-plex-sans">
+                  Not registered yet?{' '}
+                  <Link href={`/en/auth/signup?userType=${userType}`} className="text-metallica-blue-off-charts underline">
+                    Sign up
+                  </Link>
+                </span>
+              )}
             </div>
           </div>
           <div className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0">
