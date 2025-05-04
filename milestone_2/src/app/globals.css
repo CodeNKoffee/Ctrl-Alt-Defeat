@@ -888,8 +888,18 @@ button {
   align-items: center;
   gap: 8px;
 }
+.companyindustrycard-icon-container {
+  border-radius: 50%;
+  background-color: var(--metallica-blue-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
 .companyindustrycard-icon {
-  font-size: 2.25rem;
+  font-size: 3rem;
   margin-top: 4px;
 }
 .companyindustrycard-industry {
@@ -1178,8 +1188,8 @@ button {
 
 .companysizecard-bar-with-radius {
   background: #f1f5f9;
-  border-radius: 16px;
-  padding: 8px 0;
+  border-radius: 0.5rem;
+  padding: 16px 0 4px;
   display: flex;
   justify-content: center;
   align-items: center;

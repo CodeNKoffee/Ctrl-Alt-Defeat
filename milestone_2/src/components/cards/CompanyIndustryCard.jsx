@@ -3,7 +3,9 @@ export default function CompanyIndustryCard({ industry, icon, registrationMessag
     <div className={`companyindustrycard-root ${className}`}>
       <div className="companyindustrycard-title">
         Industry
-        {icon && <span className="companyindustrycard-icon">{icon}</span>}
+        <div className="companyindustrycard-icon-container">
+          {icon && <span className="companyindustrycard-icon">{icon}</span>}
+        </div>
       </div>
       <div className="companyindustrycard-industry">{industry}</div>
       <div className="companyindustrycard-registration">{registrationMessage}</div>
