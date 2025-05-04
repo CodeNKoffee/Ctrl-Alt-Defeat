@@ -807,6 +807,8 @@ button {
 
 /* --- CompanyProfileCard Vanilla CSS --- */
 .companyprofilecard-root {
+  min-width: 230px;
+  max-width: 230px;
   background: #fff;
   border-radius: 0.75rem;
   box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);
@@ -860,6 +862,8 @@ button {
 
 /* --- CompanyIndustryCard Vanilla CSS --- */
 .companyindustrycard-root {
+  min-width: 160px;
+  max-width: 220px;
   background: #fff;
   border-radius: 0.75rem;
   box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);
@@ -869,7 +873,6 @@ button {
   align-items: center;
   gap: 8px;
   border: 1px solid #e5e7eb;
-  min-width: 160px;
   transition: box-shadow 0.2s;
 }
 .companyindustrycard-root:hover {
@@ -1171,4 +1174,19 @@ button {
     width: 100%;
     min-width: 0;
   }
+}
+
+.companysizecard-bar-with-radius {
+  background: #f1f5f9;
+  border-radius: 16px;
+  padding: 8px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+.companysizecard-bar-here-outer {
+  z-index: 2;
 }
