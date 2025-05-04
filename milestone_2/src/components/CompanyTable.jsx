@@ -6,6 +6,7 @@ import CompanyDetails from './CompanyDetails';
 import CompanyDetailsSmall from './CompanyDetailsSmall';
 import CompanyDetailsModal from './CompanyDetailsModal';
 import { INDUSTRIES } from '../../constants';
+import CompanyRow from './CompanyRow';
 
 export default function CompanyTable({ companies }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -89,31 +90,11 @@ export default function CompanyTable({ companies }) {
           {/* Company Rows */}
           <div className="space-y-2">
             {filteredCompanies.map((company) => (
-              <div
+              <CompanyRow
                 key={company.name}
-                className={`grid grid-cols-12 gap-2 items-center p-4 bg-white rounded-xl border border-gray-100 
-                          hover:bg-dimmer-white hover:border-metallica-blue-200
-                          transition-[background,border,box-shadow,backdrop-filter] duration-300 ease-in-out cursor-pointer group
-                          ${selectedCompany && selectedCompany.name === company.name ? 'ring-2 ring-metallica-blue-300 bg-metallica-blue-50' : ''}`}
-                onClick={() => handleRowClick(company)}
-              >
-                <div className="col-span-5 font-medium text-gray-800 group-hover:text-white">
-                  {company.name}
-                </div>
-                <div className="col-span-5 text-gray-600 group-hover:text-white">
-                  {company.industry}
-                </div>
-                <div className="col-span-2 text-right">
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium group-hover:bg-white group-hover:text-metallica-blue-800 group-hover:border-white ${company.size.toLowerCase().includes('large') ? 'bg-blue-50 text-blue-700 border border-blue-100' :
-                    company.size.toLowerCase().includes('medium') ? 'bg-purple-50 text-purple-700 border border-purple-100' :
-                      company.size.toLowerCase().includes('corporate') ? 'bg-amber-50 text-amber-700 border border-amber-100' :
-                        company.size.toLowerCase().includes('small') ? 'bg-green-50 text-green-700 border border-green-100' :
-                          'bg-gray-50 text-gray-700 border border-gray-100'
-                    }`}>
-                    {company.size.split(' (')[0]}
-                  </span>
-                </div>
-              </div>
+                company={company}
+                onClick={handleRowClick}
+              />
             ))}
           </div>
 
