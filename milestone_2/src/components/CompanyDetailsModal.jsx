@@ -72,7 +72,7 @@ export default function CompanyDetailsModal({ open, onClose, company }) {
                   <input
                     key={idx}
                     type="text"
-                    className="relative z-10 w-full bg-transparent outline-none text-base text-[#274353] border-0 focus:ring-0 focus:border-[#497184] px-0 mb-2"
+                    className="note-input relative z-10 w-full bg-transparent outline-none text-base text-[#274353] border-0 focus:ring-0 focus:border-[#497184] px-0 mb-2"
                     style={{ borderRadius: 0, marginTop: idx === 0 ? 0 : 8, position: 'relative', height: 25 }}
                     placeholder={idx === 0 ? "" : undefined}
                     value={note}

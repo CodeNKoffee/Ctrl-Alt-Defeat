@@ -401,9 +401,11 @@ button {
   gap:5px;
   padding:10px 10px 50px 10px;
 }
-input{
+
+.note-input{
   all:unset;
 }
+
 .note-input{
   width:90%;
   height:20px;
