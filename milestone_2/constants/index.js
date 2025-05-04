@@ -139,6 +139,7 @@ export const INDUSTRIES = [
   "Tobacco",
   "Translation & Localization",
   "Transportation/Trucking/Railroad",
+  "Travel Arrangements & Tourism",
   "Utilities",
   "Venture Capital & Private Equity",
   "Veterinary",
