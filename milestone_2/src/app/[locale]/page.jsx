@@ -23,7 +23,7 @@ export default function Home() {
 
   const textContent = [
     { title: "", subtitle: "" },                             // Initial state
-    { title: "WELCOME TO", subtitle: "" },                   // Typing "WELCOME TO"
+    { title: "Welcome to", subtitle: "" },                   // Typing "WELCOME TO"
     { title: "InternHub", subtitle: "" },                    // "InternHub" with merge
     { title: "InternHub", subtitle: "Where Experience Begins" } // Slogan with shift
   ];
@@ -103,10 +103,10 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col kontainer relative overflow-hidden">
       {/* Animated Background Blobs - Only show during welcome screen */}
-      {showWelcome && (
+      {/* {showWelcome && (
         <>
           <motion.div
-            className="absolute top-0 left-0 -z-10"
+            className="absolute -top-4 -left-4 -z-10"
             variants={blobVariants}
             initial="initial"
             animate="animate"
@@ -114,7 +114,7 @@ export default function Home() {
             <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-500)] -translate-x-1/3 -translate-y-1/3" />
           </motion.div>
           <motion.div
-            className="absolute bottom-0 right-0 -z-10"
+            className="absolute -bottom-4 -right-4 -z-10"
             variants={blobVariants}
             initial="initial"
             animate="animate"
@@ -122,7 +122,7 @@ export default function Home() {
             <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-200)] translate-x-1/3 translate-y-1/3" />
           </motion.div>
         </>
-      )}
+      )} */}
 
       <AnimatePresence mode="wait">
         {showWelcome ? (
