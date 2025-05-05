@@ -181,12 +181,14 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
                         <div key={label} className="companysizecard-bar-segment">
                           <div className={`companysizecard-bar-label${idx === activeIdx ? ' companysizecard-bar-label-active' : ''}`}>{label}</div>
                           {idx === activeIdx && (
-                            <span className="companysizecard-bar-arrow" style={{ marginTop: 8, fontSize: '1.1rem' }}>▼</span>
+                            <div className="companysizecard-bar-here">
+                              <span className="companysizecard-bar-arrow" style={{ marginTop: 8, fontSize: '1.1rem' }}>▼</span>
+                            </div>
                           )}
                         </div>
                       );
                     })}
-                    
+
                   </div>
                 </div>
               </div>
