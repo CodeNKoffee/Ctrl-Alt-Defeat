@@ -120,16 +120,13 @@ export default function CompanyTable({ companies }) {
             className="fixed top-0 right-0 h-screen w-1/3 bg-metallica-blue-50/90 backdrop-blur-md shadow-xl z-50 flex flex-col border-l border-metallica-blue-100 animate-slide-in"
             style={{ minWidth: 420, maxWidth: 500 }}
           >
-            <div className="flex justify-between p-4">
+            <div className="flex justify-end p-4 gap-4">
               <button
                 onClick={handleExpandModal}
                 className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-200"
               >
                 <FontAwesomeIcon icon={faExpand} className="w-5 h-5" />
               </button>
-              <div className="absolute top-0 left-0 px-4 py-2 bg-metallica-blue-700 text-white text-lg font-bold rounded-br-lg">
-                Company Details
-              </div>
               <button
                 onClick={handleCloseSidebar}
                 className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-200"
@@ -138,6 +135,9 @@ export default function CompanyTable({ companies }) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
+              <div className="absolute top-0 left-0 px-4 py-2 bg-metallica-blue-700 text-white text-lg font-bold rounded-br-lg">
+                Company Details
+              </div>
             </div>
             <div className="flex-1 overflow-y-auto p-4">
               <CompanyDetails
