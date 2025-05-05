@@ -1428,3 +1428,88 @@ button {
   border-bottom: 1px solid #497184;
   transition: opacity 0.2s ease;
 }
+
+/* Additional styles for CompanyDetails.jsx */
+.companydetails-feedback-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.companydetails-feedback-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.companydetails-feedback-icon {
+  color: #fff;
+}
+
+.companydetails-feedback-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  color: #111827;
+}
+
+.companydetails-feedback-message {
+  font-size: 0.875rem;
+  text-align: center;
+  color: #374151;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.companydetails-feedback-approved {
+  font-weight: bold;
+  color: #15803d;
+}
+
+.companydetails-feedback-rejected {
+  font-weight: bold;
+  color: #b91c1c;
+}
+
+.companydetails-action-button {
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  min-width: 100px;
+}
+
+/* Additional styles for CompanyDetailsModal.jsx */
+.companyindustrycard-icon-large {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.companyindustrycard-industry-large {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.companyindustrycard-registration-small {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.companydocumentscard-icon {
+  color: var(--metallica-blue-500);
+  font-size: 1.5rem;
+}
+
+.companydetails-third-width {
+  width: 33.333333%;
+}
+
+.companydetails-flex-grow {
+  flex: 1 1 0%;
+}

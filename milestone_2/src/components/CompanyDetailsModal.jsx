@@ -189,30 +189,27 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
               </div>
             </div>
             {/* Industry Card (card style) */}
-            <div className="w-1/3 companyindustrycard-root bg-white flex flex-col items-center justify-center p-1" style={{ minHeight: 200 }}>
-              <div className="companyindustrycard-title">Industry
-                <div className="companyindustrycard-icon-container text-2xl mt-2">
-                  {/* Show industry icon if available */}
-                  {INDUSTRY_ICONS[industry] && <span>{INDUSTRY_ICONS[industry]}</span>}
-                </div>
+            <div className="companyindustrycard-root bg-white flex flex-col items-center justify-center p-1" style={{ minHeight: 200 }}>
+              <div className="companyindustrycard-title">Industry</div>
+              <div className="companyindustrycard-icon-container companyindustrycard-icon-large">
+                {INDUSTRY_ICONS[industry] && <span>{INDUSTRY_ICONS[industry]}</span>}
               </div>
-              <div className="companyindustrycard-industry text-lg font-semibold mt-2">{industry}</div>
-              {/* Registration message if provided */}
+              <div className="companyindustrycard-industry companyindustrycard-industry-large">{industry}</div>
               {registrationDate && (
-                <div className="companyindustrycard-registration text-gray-500 text-sm mt-1">
+                <div className="companyindustrycard-registration companyindustrycard-registration-small">
                   {registrationMessage}
                 </div>
               )}
             </div>
             {/* Documentation (card style) */}
-            <div className="w-1/3 companydocumentscard-root bg-white p-1 flex flex-col flex-1">
+            <div className="companydetails-third-width companydocumentscard-root bg-white p-1 flex flex-col companydetails-flex-grow">
               <div className="companydocumentscard-title">Verification Documents</div>
               <div className="companydocumentscard-list">
                 {docs.length === 0 && <div className="companydocumentscard-empty">No documents provided.</div>}
                 {docs.map((doc, idx) => (
                   <div key={idx} className="companydocumentscard-item">
                     {/* File Icon logic */}
-                    <FontAwesomeIcon icon={faFile} className="text-metallica-blue-500 text-2xl" />
+                    <FontAwesomeIcon icon={faFile} className="companydocumentscard-icon" />
                     <div className="companydocumentscard-item-info">
                       <span className="companydocumentscard-item-name">{doc.name || doc.url.split('/').pop()}</span>
                       <span className="companydocumentscard-item-type">{(doc.type || doc.url.split('.').pop() || '').toUpperCase()}</span>

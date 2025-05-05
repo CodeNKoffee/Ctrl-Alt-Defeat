@@ -20,8 +20,8 @@ export default function CompanyDetails({
 }) {
   const [feedback, setFeedback] = useState(null); // 'accepted' | 'rejected' | null
 
-    // Compose registration message
-    const registrationMessage = `Registered on 03 May, 2025`;
+  // Compose registration message
+  const registrationMessage = `Registered on 03 May, 2025`;
   // Compose docs array for card
   const docs = Array.isArray(documentation)
     ? documentation
@@ -51,7 +51,7 @@ export default function CompanyDetails({
       <AnimatePresence>
         {feedback && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center"
+            className="companydetails-feedback-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -62,7 +62,7 @@ export default function CompanyDetails({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.7, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              className="flex flex-col items-center justify-center"
+              className="companydetails-feedback-content"
               style={{ minWidth: 0 }}
             >
               <motion.div
@@ -77,18 +77,18 @@ export default function CompanyDetails({
                 >
                   <FontAwesomeIcon
                     icon={feedback === 'accepted' ? faCheck : faTimes}
-                    className="text-white"
+                    className="companydetails-feedback-icon"
                     style={{ fontSize: 32 }}
                   />
                 </div>
               </motion.div>
-              <div className="text-lg font-bold text-center mb-1 text-gray-900" style={{ letterSpacing: 1 }}>
+              <div className="companydetails-feedback-title">
                 {feedback === 'accepted' ? 'Accepted!' : 'Rejected!'}
               </div>
-              <div className="text-sm text-center text-gray-700 font-medium mb-1" style={{ opacity: 0.9 }}>
+              <div className="companydetails-feedback-message">
                 {feedback === 'accepted'
-                  ? (<span>This company has been <span className="font-bold text-green-700">approved</span> and added to your list.</span>)
-                  : (<span>This company has been <span className="font-bold text-red-700">rejected</span> and removed from your list.</span>)}
+                  ? (<span>This company has been <span className="companydetails-feedback-approved">approved</span> and added to your list.</span>)
+                  : (<span>This company has been <span className="companydetails-feedback-rejected">rejected</span> and removed from your list.</span>)}
               </div>
             </motion.div>
           </motion.div>
@@ -105,13 +105,13 @@ export default function CompanyDetails({
           <CompanyDocumentsCard documents={docs} />
           <div className="companydetails-action-row">
             <button
-              className="companydetails-accept-btn rounded-full px-4 py-2 text-base min-w-[100px]"
+              className="companydetails-accept-btn companydetails-action-button"
               onClick={handleAccept}
             >
               <FontAwesomeIcon icon={faCheck} className="companydetails-action-icon" /> Accept
             </button>
             <button
-              className="companydetails-reject-btn rounded-full px-4 py-2 text-base min-w-[100px]"
+              className="companydetails-reject-btn companydetails-action-button"
               onClick={handleReject}
             >
               <FontAwesomeIcon icon={faTimes} className="companydetails-action-icon" /> Reject
