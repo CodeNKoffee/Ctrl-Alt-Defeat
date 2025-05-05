@@ -8,6 +8,7 @@ import { usersOptions } from "../../../constants/index";
 import Header from "@/components/Header";
 import Copyright from "@/components/Copyright";
 import { useRouter } from "next/navigation";
+import { createTypingAnimation } from "../../../utils";
 
 export default function Home() {
   const router = useRouter();
@@ -27,6 +28,12 @@ export default function Home() {
     { title: "InternHub", subtitle: "Unlock Opportunities Today" } // Slogan with shift
   ];
 
+  // Create typing animation variants
+  const typingVariants = createTypingAnimation(textContent[1].title, {
+    delay: 250,  // 250ms delay between each character
+    duration: 2  // 2s duration for each character animation
+  });
+
   // Handle animation timing with explicit states for delay
   useEffect(() => {
     if (!showWelcome) return; // Skip animation if welcome is not shown
@@ -34,11 +41,11 @@ export default function Home() {
     if (animationState < textContent.length - 1) {
       const timer = setTimeout(() => {
         if (animationState === 2) {
-          setTimeout(() => setAnimationState(3), 1000); // 1-second delay for slogan
+          setTimeout(() => setAnimationState(3), 2000); // 2-second delay for slogan
         } else {
           setAnimationState(prevState => prevState + 1);
         }
-      }, animationState === 1 ? 1500 : 700); // Longer delay for typing "WELCOME TO"
+      }, animationState === 1 ? 3000 : 1000); // Longer delay for typing "WELCOME TO"
       return () => clearTimeout(timer);
     } else {
       // After welcome animation completes, wait 2 seconds then show continue options
@@ -62,22 +69,18 @@ export default function Home() {
   };
 
   const blobVariants = {
-    initial: { scale: 0.8, opacity: 0.5 },
+    initial: { scale: 0.8, opacity: 0.3 },
     animate: {
-      scale: [0.8, 1.1, 0.8],
-      opacity: [0.5, 0.7, 0.5],
-      rotate: [0, 5, 0],
-      transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+      scale: [0.8, 1.05, 0.8], // Reduced scale range for subtler movement
+      opacity: [0.3, 0.5, 0.3], // Reduced opacity range for softer effect
+      rotate: [0, 2, 0], // Reduced rotation for calmer movement
+      transition: {
+        duration: 8, // Increased duration for slower animation
+        repeat: Infinity,
+        ease: "easeInOut",
+        times: [0, 0.5, 1] // Added timing array for smoother transitions
+      }
     },
-  };
-
-  // Letter-by-letter typing for "WELCOME TO"
-  const typingVariants = {
-    hidden: { opacity: 0 },
-    visible: (i) => ({
-      opacity: 1,
-      transition: { delay: i * 0.1 },
-    }),
   };
 
   // "Merge" animation for "InternHub" (scaling in)
@@ -172,7 +175,7 @@ export default function Home() {
                   {animationState >= 2 && (
                     <motion.h1
                       key="internhub"
-                      className="text-6xl font-semibold font-ibm-plex-sans"
+                      className="text-6xl font-bold font-ibm-plex-sans"
                       variants={mergeVariants}
                       initial="hidden"
                       animate="visible"
