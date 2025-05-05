@@ -900,6 +900,16 @@ button {
   height: 100%;
 }
 
+.companyindustrycard-icon-container-big {
+  border-radius: 50%;
+  background-color: var(--metallica-blue-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+}
+
 .companyindustrycard-icon {
   font-size: 3rem;
   margin-top: 4px;
@@ -1485,7 +1495,7 @@ button {
 
 /* Additional styles for CompanyDetailsModal.jsx */
 .companyindustrycard-icon-large {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-top: 0.5rem;
 }
 

@@ -191,7 +191,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
             {/* Industry Card (card style) */}
             <div className="companyindustrycard-root bg-white flex flex-col items-center justify-center p-1" style={{ minHeight: 200 }}>
               <div className="companyindustrycard-title">Industry</div>
-              <div className="companyindustrycard-icon-container companyindustrycard-icon-large">
+              <div className="companyindustrycard-icon-container-big companyindustrycard-icon-large">
                 {INDUSTRY_ICONS[industry] && <span>{INDUSTRY_ICONS[industry]}</span>}
               </div>
               <div className="companyindustrycard-industry companyindustrycard-industry-large">{industry}</div>
