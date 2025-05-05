@@ -23,7 +23,7 @@ export default function Home() {
 
   const textContent = [
     { title: "", subtitle: "" },                             // Initial state
-    { title: "WELCOME TO", subtitle: "" },                   // Typing "WELCOME TO"
+    { title: "welcome to", subtitle: "" },                   // Typing "WELCOME TO"
     { title: "InternHub", subtitle: "" },                    // "InternHub" with merge
     { title: "InternHub", subtitle: "Unlock Opportunities Today" } // Slogan with shift
   ];
@@ -151,7 +151,7 @@ export default function Home() {
                 <div className="h-16" />
 
                 {/* Animated Title */}
-                <div className="relative inline-block flex flex-col items-center" style={{ minHeight: '110px' }}>
+                <div className="relative inline-block flex-col items-center" style={{ minHeight: '110px' }}>
                   <AnimatePresence mode="wait">
                     {animationState === 1 && (
                       <motion.div
