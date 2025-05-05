@@ -1,19 +1,47 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { faTimes, faCheck, faExpand, faFilePdf, faFileImage } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faCheck, faExpand, faFilePdf, faFileImage, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { INDUSTRY_ICONS } from '../constants/industryIcons';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const BORDER = "border-2 border-[#497184]";
 const ROUNDED = "rounded-xl";
 const BG = "bg-[#eaf3f6]";
 
-export default function CompanyDetailsModal({ open, onClose, companyName, companyEmail, companyLogo, industry, size, documentation = [] }) {
+// Import INDUSTRY_ICONS
+// (add at the top)
+// import { INDUSTRY_ICONS } from '../../constants';
+// But since this is a single file, add below the imports:
+// (Assume INDUSTRY_ICONS is imported correctly)
+
+export default function CompanyDetailsModal({ open, onClose, companyName, companyEmail, companyLogo, industry, size, documentation = [], registrationDate }) {
   if (!open) return null;
 
   // Notepad state (4 notes for Figma style)
   const [notes, setNotes] = useState(["", "", "", ""]);
   const handleNoteChange = (idx, value) => {
     setNotes((prev) => prev.map((n, i) => (i === idx ? value : n)));
+  };
+
+  // Compose registration message
+  const registrationMessage = `Registered on 03 May, 2025`;
+
+  // Accept/Reject feedback state
+  const [feedback, setFeedback] = useState(null); // 'accepted' | 'rejected' | null
+  const handleAccept = () => {
+    setFeedback('accepted');
+    setTimeout(() => {
+      setFeedback(null);
+      onClose && onClose();
+    }, 1400);
+  };
+  const handleReject = () => {
+    setFeedback('rejected');
+    setTimeout(() => {
+      setFeedback(null);
+      onClose && onClose();
+    }, 1400);
   };
 
   // Render document icon
@@ -32,43 +60,99 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
       : [];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className={`relative w-full max-w-4xl mx-auto ${BG} ${BORDER} ${ROUNDED} p-0`} style={{ boxShadow: '0 2px 8px #49718410' }}>
+    <div className="modal-outer">
+      {/* Feedback overlay */}
+      <AnimatePresence>
+        {feedback && (
+          <motion.div
+            className="modal-feedback-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{ background: 'rgba(42, 95, 116, 0.18)' }}
+          >
+            <motion.div
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              className="modal-feedback-content"
+              style={{ minWidth: 0 }}
+            >
+              <motion.div
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                className="modal-feedback-icon-wrap"
+              >
+                <div
+                  className={`modal-feedback-icon ${feedback === 'accepted' ? 'modal-feedback-accepted' : 'modal-feedback-rejected'}`}
+                  style={{ width: 60, height: 60 }}
+                >
+                  <FontAwesomeIcon
+                    icon={feedback === 'accepted' ? faCheck : faTimes}
+                    className="modal-feedback-icon-inner"
+                    style={{ fontSize: 32 }}
+                  />
+                </div>
+              </motion.div>
+              <div className="modal-feedback-title">
+                {feedback === 'accepted' ? 'Accepted!' : 'Rejected!'}
+              </div>
+              <div className="modal-feedback-message">
+                {feedback === 'accepted'
+                  ? (<span>This company has been <span className="modal-feedback-approved">approved</span> and added to your list.</span>)
+                  : (<span>This company has been <span className="modal-feedback-rejected-text">rejected</span> and removed from your list.</span>)}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* Main modal content (hidden when feedback is shown) */}
+      <div className={`modal-inner ${BG} ${BORDER} ${ROUNDED}`} style={{ boxShadow: '0 2px 8px #49718410', maxHeight: '100vh', overflow: 'hidden', filter: feedback ? 'blur(2px)' : 'none', pointerEvents: feedback ? 'none' : 'auto' }}>
         {/* Close button */}
         <button
-          className="absolute top-4 right-4 text-[#497184] hover:text-[#274353] bg-white/80 rounded-full p-2 border border-gray-200 shadow"
+          className="modal-close-btn"
           onClick={onClose}
         >
-          <FontAwesomeIcon icon={faTimes} className="w-5 h-5" />
+          <FontAwesomeIcon icon={faTimes} className="modal-close-icon" />
         </button>
         {/* Tab Header */}
-        <div className="w-fit mb-4 px-4 py-2 bg-metallica-blue-700 text-white text-lg font-bold rounded-br-lg">
+        <div className="modal-header">
           Company Details
         </div>
-        <div className="p-6 pt-0 flex flex-col gap-8">
+        <div className="modal-content">
           {/* Top Row: Profile & Notepad */}
-          <div className="flex gap-8 mb-2">
-            {/* Profile Card (inlined) */}
-            <div className={`flex flex-col items-center justify-center ${BORDER} ${ROUNDED} bg-[#eaf3f6] p-6 min-w-[220px] max-w-[240px] flex-shrink-0`}>
-              <div className="companyprofilecard-title text-metallica-blue-950 font-semibold mb-2">Profile</div>
-              <div className="companyprofilecard-logo-container mb-2">
-                <Image src={companyLogo} alt="Company Logo" width={96} height={96} className="companyprofilecard-logo rounded-full border border-gray-200 bg-white" />
+          <div className="modal-top-row">
+            {/* Profile Card (inlined, with card styling) */}
+            <div className="companyprofilecard-root bg-white p-6 flex flex-col items-center justify-center">
+              <div className="companyprofilecard-title">Profile</div>
+              <div className="companyprofilecard-logo-container">
+                <Image src={companyLogo} alt="Company Logo" width={72} height={72} className="companyprofilecard-logo" />
               </div>
-              <div className="companyprofilecard-name text-2xl font-bold text-metallica-blue-950">{companyName}</div>
-              <a href={`mailto:${companyEmail}`} className="companyprofilecard-email text-sm italic text-metallica-blue-700 text-center mt-1">{companyEmail}</a>
+              <div className="companyprofilecard-name">{companyName}</div>
+              <a href={`mailto:${companyEmail}`} className="companyprofilecard-email">{companyEmail}</a>
             </div>
             {/* Notepad */}
-            <div className="flex-1 flex flex-col">
-              <div className="text-metallica-blue-950 text-lg font-semibold mb-2" style={{ letterSpacing: 1 }}>Note Pad</div>
-              <div className={`relative flex flex-col gap-0 ${BORDER} ${ROUNDED} bg-[#eaf3f6] px-4 py-3`} style={{ minHeight: 140 }}>
-                {/* Lined background */}
+            <div className="modal-notepad">
+              <div className="modal-notepad-title">Note Pad</div>
+              <div className={`modal-notepad-container ${BORDER} ${ROUNDED} ${BG}`} style={{ minHeight: 140 }}>
                 {/* Inputs */}
                 {notes.map((note, idx) => (
                   <input
                     key={idx}
                     type="text"
-                    className="note-input relative z-10 w-full bg-transparent outline-none text-base text-metallica-blue-950 border-0 focus:ring-0 focus:border-[#497184] px-0 mb-2"
-                    style={{ borderRadius: 0, marginTop: idx === 0 ? 0 : 8, position: 'relative', height: 25 }}
+                    className="modal-note-input"
+                    style={{
+                      borderRadius: 0,
+                      marginTop: idx === 0 ? 0 : 8,
+                      position: 'relative',
+                      height: 25,
+                      lineHeight: '33px',
+                      borderBottom: '1px solid #497184',
+                      opacity: note ? 1 : 0.3,
+                      transition: 'opacity 0.2s ease'
+                    }}
                     placeholder={idx === 0 ? "" : undefined}
                     value={note}
                     onChange={e => handleNoteChange(idx, e.target.value)}
@@ -78,14 +162,55 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
             </div>
           </div>
           {/* Bottom Row: Documentation, Industry, Size */}
-          <div className="grid grid-cols-3 gap-8 mb-2">
-            {/* Documentation (large box, inlined) */}
-            <div className={`col-span-2 ${BORDER} ${ROUNDED} bg-[#eaf3f6] min-h-[180px] p-4 flex flex-col`}>
-              <div className="companydocumentscard-title text-metallica-blue-950 font-semibold mb-2">Verification Documents</div>
+          <div className="modal-bottom-row">
+            {/* Size Card (card style) */}
+            <div className="companysizecard-root-big bg-white flex flex-col items-center justify-center p-1">
+              <div className="companysizecard-title">Company Size</div>
+              <div className="companysizecard-bar-container" style={{ position: 'relative' }}>
+                <div className="companysizecard-bar-with-radius">
+                  <div className="companysizecard-bar">
+                    {['<=50', '51-100', '101-500', '500+'].map((label, idx) => {
+                      let activeIdx = 0;
+                      if (size?.toLowerCase().includes('corporate')) activeIdx = 3;
+                      else if (size?.toLowerCase().includes('large')) activeIdx = 2;
+                      else if (size?.toLowerCase().includes('medium')) activeIdx = 1;
+                      else activeIdx = 0;
+                      return (
+                        <div key={label} className="companysizecard-bar-segment">
+                          <div className={`companysizecard-bar-label${idx === activeIdx ? ' companysizecard-bar-label-active' : ''}`}>{label}</div>
+                          {idx === activeIdx && (
+                            <span className="companysizecard-bar-arrow" style={{ marginTop: 8, fontSize: '1.1rem' }}>▼</span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Industry Card (card style) */}
+            <div className="w-1/3 companyindustrycard-root bg-white flex flex-col items-center justify-center p-1" style={{ minHeight: 200 }}>
+              <div className="companyindustrycard-title">Industry
+                <div className="companyindustrycard-icon-container text-2xl mt-2">
+                  {/* Show industry icon if available */}
+                  {INDUSTRY_ICONS[industry] && <span>{INDUSTRY_ICONS[industry]}</span>}
+                </div>
+              </div>
+              <div className="companyindustrycard-industry text-lg font-semibold mt-2">{industry}</div>
+              {/* Registration message if provided */}
+              {registrationDate && (
+                <div className="companyindustrycard-registration text-gray-500 text-sm mt-1">
+                  {registrationMessage}
+                </div>
+              )}
+            </div>
+            {/* Documentation (card style) */}
+            <div className="w-1/3 companydocumentscard-root bg-white p-1 flex flex-col flex-1">
+              <div className="companydocumentscard-title">Verification Documents</div>
               <div className="companydocumentscard-list">
-                {docs.length === 0 && <div className="companydocumentscard-empty text-metallica-blue-700 italic">No documents provided.</div>}
+                {docs.length === 0 && <div className="companydocumentscard-empty">No documents provided.</div>}
                 {docs.map((doc, idx) => (
-                  <div key={idx} className="companydocumentscard-item flex items-center gap-3 mb-2">
+                  <div key={idx} className="companydocumentscard-item">
                     {/* File Icon logic */}
                     {(() => {
                       const type = doc.type || doc.url;
@@ -94,58 +219,26 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
                       if (type.toLowerCase().includes('png') || type.toLowerCase().includes('jpg') || type.toLowerCase().includes('jpeg')) return <FontAwesomeIcon icon={faFileImage} className="text-blue-400 text-2xl" />;
                       return <FontAwesomeIcon icon={faFilePdf} className="text-metallica-blue-500 text-2xl" />;
                     })()}
-                    <div className="companydocumentscard-item-info flex flex-col">
-                      <span className="companydocumentscard-item-name font-semibold">{doc.name || doc.url.split('/').pop()}</span>
-                      <span className="companydocumentscard-item-type text-xs">{(doc.type || doc.url.split('.').pop() || '').toUpperCase()}</span>
+                    <div className="companydocumentscard-item-info">
+                      <span className="companydocumentscard-item-name">{doc.name || doc.url.split('/').pop()}</span>
+                      <span className="companydocumentscard-item-type">{(doc.type || doc.url.split('.').pop() || '').toUpperCase()}</span>
                     </div>
-                    <a href={doc.url} download className="companydocumentscard-download ml-auto text-metallica-blue-700 hover:text-metallica-blue-900" title="Download">
-                      <FontAwesomeIcon icon={faFilePdf} />
+                    <a href={doc.url} download className="companydocumentscard-download" title="Download">
+                      <FontAwesomeIcon icon={faDownload} />
                     </a>
                   </div>
                 ))}
               </div>
             </div>
-            {/* Industry & Size (stacked, inlined) */}
-            <div className="flex flex-col gap-8 h-full">
-              {/* Industry Card (inlined) */}
-              <div className={`${BORDER} ${ROUNDED} bg-[#eaf3f6] p-4 flex flex-col items-center justify-center min-h-[80px]`}>
-                <div className="companyindustrycard-title text-metallica-blue-950 font-semibold mb-1 flex items-center gap-2">
-                  Industry
-                </div>
-                <div className="companyindustrycard-industry text-metallica-blue-700 text-center">{industry}</div>
-                {/* Registration message omitted in modal for now */}
-              </div>
-              {/* Size Card (inlined) */}
-              <div className={`${BORDER} ${ROUNDED} bg-[#eaf3f6] p-4 flex flex-col items-center justify-center min-h-[80px]`}>
-                <div className="companysizecard-title text-metallica-blue-950 font-semibold mb-1">Company Size</div>
-                <div className="w-full flex items-center gap-2 mt-2">
-                  {['<=50', '51-100', '101-500', '500+'].map((label, idx) => {
-                    let activeIdx = 0;
-                    if (size?.toLowerCase().includes('corporate')) activeIdx = 3;
-                    else if (size?.toLowerCase().includes('large')) activeIdx = 2;
-                    else if (size?.toLowerCase().includes('medium')) activeIdx = 1;
-                    else activeIdx = 0;
-                    return (
-                      <div key={label} className={`flex-1 h-7 rounded-full flex items-center justify-center text-xs font-medium transition-all
-                        ${idx === activeIdx ? 'bg-metallica-blue-700 text-white' : 'bg-metallica-blue-200 text-metallica-blue-800'}`}
-                      >
-                        {label}
-                        {idx === activeIdx && <span className="ml-1 text-base">▼</span>}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         {/* Accept/Reject Buttons (outside main border, centered) */}
-        <div className="flex justify-center gap-8 mb-6">
-          <button className="flex items-center gap-2 bg-metallica-blue-700 text-white font-bold rounded-full px-8 py-3 text-lg shadow hover:bg-metallica-blue-900 transition-colors border-2 border-metallica-blue-700">
-            <FontAwesomeIcon icon={faCheck} className="w-5 h-5" /> Accept
+        <div className="modal-action-row">
+          <button className="modal-accept-btn" onClick={handleAccept}>
+            <FontAwesomeIcon icon={faCheck} className="modal-action-icon" /> Accept
           </button>
-          <button className="flex items-center gap-2 bg-red-500 text-white font-bold rounded-full px-8 py-3 text-lg shadow hover:bg-red-700 transition-colors border-2 border-red-500">
-            <FontAwesomeIcon icon={faTimes} className="w-5 h-5" /> Reject
+          <button className="modal-reject-btn" onClick={handleReject}>
+            <FontAwesomeIcon icon={faTimes} className="modal-action-icon" /> Reject
           </button>
         </div>
       </div>

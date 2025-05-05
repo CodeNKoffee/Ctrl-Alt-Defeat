@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function getFileIcon(type) {
   if (!type) return <FontAwesomeIcon icon={faFile} className="text-gray-400 text-2xl" />;
   if (type.toLowerCase().includes('pdf')) return <FontAwesomeIcon icon={faFilePdf} className="text-red-500 text-2xl" />;
-  if (type.toLowerCase().includes('png') || type.toLowerCase().includes('jpg') || type.toLowerCase().includes('jpeg')) return <FontAwesomeIcon icon={faFileImage} className="text-blue-400 text-2xl" />;
+  if (type.toLowerCase().includes('png') || type.toLowerCase().includes('jpg') || type.toLowerCase().includes('jpeg')) return <FontAwesomeIcon icon={faFilePdf} className=" text-2xl" />;
   return <FontAwesomeIcon icon={faFile} className="text-metallica-blue-500 text-2xl" />;
 }
 
