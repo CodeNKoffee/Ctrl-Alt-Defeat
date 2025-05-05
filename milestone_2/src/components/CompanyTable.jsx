@@ -122,7 +122,7 @@ export default function CompanyTable({ companies }) {
           >
             <div className="flex justify-end p-4 gap-4">
               <button
-                onClick={handleExpandModal}
+                onClick={() => handleExpandModal(selectedCompany)}
                 className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-200"
               >
                 <FontAwesomeIcon icon={faExpand} className="w-5 h-5" />
@@ -157,7 +157,16 @@ export default function CompanyTable({ companies }) {
         )}
       </div>
       {/* Company Details Modal */}
-      <CompanyDetailsModal open={modalOpen} onClose={handleCloseModal} company={modalCompany} />
+      <CompanyDetailsModal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        companyName={modalCompany?.name}
+        companyEmail={modalCompany?.email}
+        companyLogo={modalCompany?.logo}
+        industry={modalCompany?.industry}
+        size={modalCompany?.size}
+        documentation={modalCompany?.documentation}
+      />
       <style jsx global>{`
         @keyframes slide-in {
           from { transform: translateX(100%); }
