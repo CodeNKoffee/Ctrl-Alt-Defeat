@@ -38,7 +38,7 @@ export const MOCK_COMPANIES = [
     alt: "Tawabiry",
     email: "contact-us@tawabiry.com",
     logo: "/logos/tawabiry.png",
-    industry: "Software as a Service (SaaS)",
+    industry: "Software as a Service",
     size: "Small (1-50 employees)",
     documentation: [
       { type: "registration", url: "/docs/company-registration.pdf" },

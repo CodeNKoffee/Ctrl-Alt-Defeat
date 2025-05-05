@@ -19,27 +19,23 @@ export default function CompanySizeCard({ size }) {
   return (
     <div className="companysizecard-root">
       <div className="companysizecard-title">Company Size</div>
-      <div className="companysizecard-bar-container" style={{ position: 'relative' }}>
-        <div className="companysizecard-bar-with-radius">
-          <div className="companysizecard-bar">
-            {sizeRanges.map((range, idx) => (
-              <div key={range.key} className="companysizecard-bar-segment">
-                <div
-                  className={`companysizecard-bar-label${activeKey === range.key ? ' companysizecard-bar-label-active' : ''}`}
-                >
-                  {range.label}
-                </div>
-                {activeKey === range.key && (
-                  <span
-                    className="companysizecard-bar-arrow"
-                    style={{ marginTop: 8, fontSize: '1.1rem' }}
-                  >
-                    ▼
-                  </span>
-                )}
+      <div className="companysizecard-bar-container">
+        <div className="companysizecard-bar">
+          {sizeRanges.map((range, idx) => (
+            <div key={range.key} className="companysizecard-bar-segment">
+              <div
+                className={`companysizecard-bar-label${activeKey === range.key ? ' companysizecard-bar-label-active' : ''}`}
+              >
+                {range.label}
               </div>
-            ))}
-          </div>
+              {activeKey === range.key && (
+                <div className="companysizecard-bar-here">
+                  <span className="companysizecard-bar-arrow">▼</span>
+                  {/* <span>Here</span> */}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

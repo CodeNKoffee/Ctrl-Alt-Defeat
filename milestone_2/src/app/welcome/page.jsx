@@ -72,7 +72,7 @@ export default function Welcome() {
 
   return (
     <div className="min-h-screen flex flex-col kontainer relative overflow-hidden">
-      {/* Animated Background Blobs */}
+      {/* Animated Background Blobs
       <motion.div
         className="absolute top-0 left-0 -z-10"
         variants={blobVariants}
@@ -88,7 +88,7 @@ export default function Welcome() {
         animate="animate"
       >
         <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-200)] translate-x-1/3 translate-y-1/3" />
-      </motion.div>
+      </motion.div> */}
       
       {/* Main content */}
       <div className="flex-grow flex items-center justify-center">
@@ -101,13 +101,22 @@ export default function Welcome() {
               initial="hidden"
               animate="visible"
             >
-              <Image 
+              {/* <Image 
                 src="/images/world-creativity-and-innovation-day.gif" 
                 alt="InternHub Logo" 
                 fill
                 style={{ objectFit: "contain" }}
                 className="z-20"
                 priority
+              /> */}
+              <video
+                src="/images/your-animation.mp4"
+                autoPlay
+                muted
+                playsInline
+                style={{ objectFit: "contain" }}
+                width={240}
+                height={240}
               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="hidden">Fallback content if needed</div>
@@ -147,7 +156,7 @@ export default function Welcome() {
                   initial="hidden"
                   animate="visible"
                 >
-                  <span className="text-[#B0BEC5]">Intern</span>
+                  <span className="text-[#a6b2b7]">Intern</span>
                   <span className="text-[var(--metallica-blue-600)]">Hub</span>
                 </motion.h1>
               )}

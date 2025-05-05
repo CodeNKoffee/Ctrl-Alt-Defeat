@@ -23,14 +23,14 @@ export default function Home() {
 
   const textContent = [
     { title: "", subtitle: "" },                             // Initial state
-    { title: "WELCOME TO", subtitle: "" },                   // Typing "WELCOME TO"
+    { title: "Welcome to", subtitle: "" },                   // Typing "WELCOME TO"
     { title: "InternHub", subtitle: "" },                    // "InternHub" with merge
-    { title: "InternHub", subtitle: "Where Experience Begins" } // Slogan with shift
+    { title: "InternHub", subtitle: "WHERE  EXPERIENCE  BEGINS" } // Slogan with shift
   ];
 
   // Create typing animation variants
   const typingVariants = createTypingAnimation(textContent[1].title, {
-    delay: 250,  // 250ms delay between each character
+    delay: 150,  // 250ms delay between each character
     duration: 2  // 2s duration for each character animation
   });
 
@@ -96,14 +96,14 @@ export default function Home() {
     visible: (i) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.3, duration: 0.5 },
+      transition: { delay: i * 0.1, duration: 0.3 },
     }),
   };
 
   return (
     <div className="min-h-screen flex flex-col kontainer relative overflow-hidden">
       {/* Animated Background Blobs - Only show during welcome screen */}
-      {showWelcome && (
+      {/* {showWelcome && (
         <>
           <motion.div
             className="absolute top-0 left-0 -z-10"
@@ -122,7 +122,7 @@ export default function Home() {
             <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-200)] translate-x-1/3 translate-y-1/3" />
           </motion.div>
         </>
-      )}
+      )} */}
 
       <AnimatePresence mode="wait">
         {showWelcome ? (
@@ -159,7 +159,7 @@ export default function Home() {
                   <AnimatePresence mode="wait">
                     {animationState === 1 && (
                       <motion.div
-                        className="text-6xl font-semibold font-ibm-plex-serif text-[var(--metallica-blue-600)]"
+                        className="text-6xl font-semibold font-young-serif text-[var(--metallica-blue-600)]"
                         initial={{ opacity: 1 }}
                         exit={{ opacity: 0, transition: { duration: 0.5 } }}
                       >
@@ -192,7 +192,7 @@ export default function Home() {
                   {/* Absolutely positioned subtitle */}
                   {animationState >= 3 && (
                     <motion.div
-                      className="absolute left-0 right-0 mx-auto top-full mt-2 text-xl text-[var(--metallica-blue-400)] text-center tracking-wide"
+                      className="absolute top-full mt-2 text-3xl tracking-[.25em] text-[var(--metallica-blue-600)] text-center "
                       initial="hidden"
                       animate="visible"
                       variants={shiftVariants}

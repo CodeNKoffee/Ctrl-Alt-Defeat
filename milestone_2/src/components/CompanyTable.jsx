@@ -57,18 +57,18 @@ export default function CompanyTable({ companies }) {
     <div className="flex flex-col items-center w-full min-h-screen">
       {/* Header Section */}
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-2xl font-bold text-metallica-blue-950 mb-6 mt-4">
+        <h1 className="text-2xl font-bold text-metallica-blue-700 mb-6 mt-4">
           Company Applications
         </h1>
 
         {/* Moved Filter Controls Container */}
       </div>
 
-      <div className={`relative flex w-full justify-center transition-all duration-300 ${selectedCompany ? 'pr-[420px]' : ''}`}>
+      <div className={`relative flex w-full justify-center transition-all duration-600 ${selectedCompany ? 'pr-[420px]' : ''}`}>
         {/* Table Section */}
-        <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} text-sm transition-all duration-300`}>
+        <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} text-sm transition-all duration-600`}>
           {/* Filter Controls Container */}
-          <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} flex flex-col md:flex-row justify-between gap-4 bg-metallica-blue-100/50 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm mb-6 transition-all duration-300`}>
+          <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} flex flex-col md:flex-row justify-between gap-4 bg-metallica-blue-100/50 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm mb-6 transition-all duration-600`}>
             <div className="w-full md:w-1/3">
               <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </div>
@@ -117,19 +117,19 @@ export default function CompanyTable({ companies }) {
         {/* Sidebar for Company Details */}
         {selectedCompany && (
           <div
-            className="fixed top-0 right-0 h-screen w-1/3 bg-metallica-blue-50/90 backdrop-blur-md shadow-xl z-50 flex flex-col border-l border-metallica-blue-100 animate-slide-in"
+            className={`fixed top-0 right-0 h-screen w-1/3 bg-[#002a38] backdrop-blur-md shadow-xl z-50 flex flex-col border-l border-metallica-blue-100 ${isExpanded ? 'animate-slide-out' : 'animate-slide-in'}`}
             style={{ minWidth: 420, maxWidth: 500 }}
           >
             <div className="flex justify-end p-4 gap-4">
               <button
                 onClick={() => handleExpandModal(selectedCompany)}
-                className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-200"
+                className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-600"
               >
                 <FontAwesomeIcon icon={faExpand} className="w-5 h-5" />
               </button>
               <button
                 onClick={handleCloseSidebar}
-                className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-200"
+                className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-600"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
@@ -169,11 +169,18 @@ export default function CompanyTable({ companies }) {
       />
       <style jsx global>{`
         @keyframes slide-in {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slide-out {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
         }
         .animate-slide-in {
-          animation: slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: slide-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .animate-slide-out {
+          animation: slide-out 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         body {
           background: #f8fafc;

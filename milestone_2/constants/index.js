@@ -131,7 +131,7 @@ export const INDUSTRIES = [
   "Sporting Goods",
   "Sports",
   "Staffing & Recruiting",
-  "Software as a Service (SaaS)",
+  "Software as a Service)",
   "Supermarkets",
   "Telecommunications",
   "Textiles",

@@ -26,7 +26,7 @@ export default function ScadDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-metallica-blue-50 to-white px-8 py-6">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-2xl font-medium text-metallica-blue-900 mb-2 font-ibm-plex-sans">SCAD Dashboard</h1>
+        <h1 className="text-2xl font-medium text-metallica-blue-00 mb-2 font-ibm-plex-sans">SCAD Dashboard</h1>
         <CompanyTable companies={MOCK_COMPANIES} />
       </div>
     </div>

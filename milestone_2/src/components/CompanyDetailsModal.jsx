@@ -168,6 +168,8 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
               <div className="companysizecard-title">Company Size</div>
               <div className="companysizecard-bar-container" style={{ position: 'relative' }}>
                 <div className="companysizecard-bar-with-radius">
+
+                  {/* indicator */}
                   <div className="companysizecard-bar">
                     {['<=50', '51-100', '101-500', '500+'].map((label, idx) => {
                       let activeIdx = 0;
@@ -184,6 +186,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
                         </div>
                       );
                     })}
+                    
                   </div>
                 </div>
               </div>
@@ -225,10 +228,10 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
         </div>
         {/* Accept/Reject Buttons (outside main border, centered) */}
         <div className="modal-action-row">
-          <button className="modal-accept-btn" onClick={handleAccept}>
+          <button className="companydetails-accept-btn companydetails-action-button button-30 companydetails-width-limiter" onClick={handleAccept}>
             <FontAwesomeIcon icon={faCheck} className="modal-action-icon" /> Accept
           </button>
-          <button className="modal-reject-btn" onClick={handleReject}>
+          <button className="companydetails-reject-btn companydetails-action-button button-30 companydetails-width-limiter" onClick={handleReject}>
             <FontAwesomeIcon icon={faTimes} className="modal-action-icon" /> Reject
           </button>
         </div>

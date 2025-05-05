@@ -48,13 +48,14 @@ export default function CompanyDetails({
 
   return (
     <div className="companydetails-root companydetails-big relative">
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {feedback && (
           <motion.div
             className="companydetails-feedback-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
             style={{ background: 'rgba(42, 95, 116, 0.18)' }}
           >
             <motion.div
@@ -105,13 +106,13 @@ export default function CompanyDetails({
           <CompanyDocumentsCard documents={docs} />
           <div className="companydetails-action-row">
             <button
-              className="companydetails-accept-btn companydetails-action-button"
+              className="companydetails-accept-btn companydetails-action-button button-30"
               onClick={handleAccept}
             >
               <FontAwesomeIcon icon={faCheck} className="companydetails-action-icon" /> Accept
             </button>
             <button
-              className="companydetails-reject-btn companydetails-action-button"
+              className="companydetails-reject-btn companydetails-action-button button-30"
               onClick={handleReject}
             >
               <FontAwesomeIcon icon={faTimes} className="companydetails-action-icon" /> Reject

@@ -1,6 +1,6 @@
 export const INDUSTRY_ICONS = {
   // Technology & Software
-  'Software as a Service (SaaS)': '🧑‍💻',
+  'Software as a Service': '🧑‍💻',
   'Computer Software': '💻',
   'Information Technology': '💻',
   'Computer & Network Security': '🔒',
