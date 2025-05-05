@@ -96,6 +96,10 @@ export default function CompanyTable({ companies }) {
                 key={company.name}
                 company={company}
                 onClick={handleRowClick}
+                selected={
+                  (selectedCompany && selectedCompany.name === company.name) ||
+                  (modalCompany && modalCompany.name === company.name && modalOpen)
+                }
               />
             ))}
           </div>
