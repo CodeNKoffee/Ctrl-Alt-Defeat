@@ -29,32 +29,18 @@ export default function CompanySizeCard({ size }) {
                 >
                   {range.label}
                 </div>
+                {activeKey === range.key && (
+                  <span
+                    className="companysizecard-bar-arrow"
+                    style={{ marginTop: 8, fontSize: '1.1rem' }}
+                  >
+                    ▼
+                  </span>
+                )}
               </div>
             ))}
           </div>
         </div>
-        {/* Chevron arrow outside the bar, positioned below the selected chunk */}
-        {(() => {
-          const idx = sizeRanges.findIndex(r => r.key === activeKey);
-          if (idx === -1) return null;
-          return (
-            <div
-              className="companysizecard-bar-here-outer"
-              style={{
-                position: 'absolute',
-                left: `calc(${(idx + 0.5) * (100 / sizeRanges.length)}% - 12px)`, // 12px is half arrow width
-                top: '48px', // adjust as needed to be just below the bar
-                width: '24px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                pointerEvents: 'none',
-              }}
-            >
-              <span className="companysizecard-bar-arrow">▼</span>
-            </div>
-          );
-        })()}
       </div>
     </div>
   );

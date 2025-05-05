@@ -127,6 +127,9 @@ export default function CompanyTable({ companies }) {
               >
                 <FontAwesomeIcon icon={faExpand} className="w-5 h-5" />
               </button>
+              <div className="absolute top-0 left-0 px-4 py-2 bg-metallica-blue-700 text-white text-lg font-bold rounded-br-lg">
+                Company Details
+              </div>
               <button
                 onClick={handleCloseSidebar}
                 className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-200"

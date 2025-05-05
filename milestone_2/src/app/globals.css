@@ -753,7 +753,7 @@ button {
 }
 .companydetails-accept-btn, .companydetails-reject-btn {
   padding: 12px 24px;
-  border-radius: 0.5rem;
+  border-radius: 9999px;
   font-weight: 600;
   font-size: 1.125rem;
   display: flex;
@@ -817,7 +817,7 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  border: 1px solid #e5e7eb;
+  /* border: 1px solid var(--metallica-blue-700); */
   transition: box-shadow 0.2s;
 }
 .companyprofilecard-root:hover {
@@ -872,7 +872,7 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  border: 1px solid #e5e7eb;
+  /* border: 1px solid var(--metallica-blue-700); */
   transition: box-shadow 0.2s;
 }
 .companyindustrycard-root:hover {
@@ -925,7 +925,7 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  border: 1px solid #e5e7eb;
+  /* border: 1px solid var(--metallica-blue-700); */
   width: 100%;
   transition: box-shadow 0.2s;
 }
@@ -993,8 +993,7 @@ button {
   align-items: center;
   animation: bounce 1s infinite alternate;
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: calc(${(idx + 0.5) * (100 / sizeRanges.length)}% - 12px);
   top: 38px;
   z-index: 0;
   margin-top: 0;
@@ -1019,7 +1018,7 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  border: 1px solid #e5e7eb;
+  /* border: 1px solid var(--metallica-blue-700); */
   width: 100%;
   transition: box-shadow 0.2s;
 }
