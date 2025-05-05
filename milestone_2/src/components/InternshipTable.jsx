@@ -3,88 +3,28 @@ import { useState } from 'react';
 import SearchBar from './SearchBar';
 import InternshipRow from './InternshipRow';
 import Filter from './Filter'; // Import the new Filter component
-
-export const mockInternships = [
-  {
-    id: 1,
-    title: "Frontend Developer Intern",
-    company: "TechVision",
-    type: "Full-time",
-    locationType: "REMOTE",
-    paid: true,
-    postedDate: "2 days ago",
-    industry: "Technology",
-    duration: "3 months"
-  },
-  {
-    id: 2,
-    title: "Marketing Coordinator",
-    company: "BrandBoost",
-    type: "Part-time",
-    locationType: "HYBRID",
-    paid: false,
-    postedDate: "1 week ago",
-    industry: "Marketing",
-    duration: "6 months"
-  },
-  {
-    id: 3,
-    title: "Data Science Intern",
-    company: "Thndr",
-    type: "Full-time",
-    locationType: "ON-SITE",
-    paid: true,
-    postedDate: "3 days ago",
-    industry: "Technology",
-    duration: "4 months"
-  },
-  {
-    id: 4,
-    title: "UX Design Intern",
-    company: "CreativeMinds",
-    type: "Contract",
-    locationType: "REMOTE",
-    paid: true,
-    postedDate: "5 days ago",
-    industry: "Design",
-    duration: "4 months"
-  },
-  {
-    id: 5,
-    title: "Biomedical Research Assistant",
-    company: "HealthInnovate",
-    type: "Full-time",
-    locationType: "ON-SITE",
-    paid: false,
-    postedDate: "2 weeks ago",
-    industry: "Healthcare",
-    duration: "6 months"
-  }
-];
+import { mockInternships } from '../../constants/index'; // Adjust the import path as necessary
 
 export default function InternshipTable({ internships = mockInternships }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
     industry: '',
     duration: '',
-    paid: '' // Changed to string to match Filter component
+    paid: ''
   });
 
   const filteredInternships = internships.filter(internship => {
-    // Search filter (title or company)
     const matchesSearch = 
       internship.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       internship.company.toLowerCase().includes(searchTerm.toLowerCase());
     
-    // Industry filter
     const matchesIndustry = 
       !filters.industry || internship.industry === filters.industry;
     
-    // Duration filter
     const matchesDuration = 
       !filters.duration || internship.duration === filters.duration;
     
-    // Paid/unpaid filter
     const matchesPaidStatus = 
       filters.paid === '' || 
       (filters.paid === 'paid' && internship.paid) || 
@@ -93,75 +33,113 @@ export default function InternshipTable({ internships = mockInternships }) {
     return matchesSearch && matchesIndustry && matchesDuration && matchesPaidStatus;
   });
 
-  // Get unique filter options from data
   const industryOptions = [...new Set(internships.map(i => i.industry))].sort();
   const durationOptions = [...new Set(internships.map(i => i.duration))].sort();
-  const paidOptions = ['Both','Paid', 'Unpaid'];
+  const paidOptions = ['Both', 'Paid', 'Unpaid'];
+
+  const toggleFilters = () => {
+    setShowFilters(!showFilters);
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      industry: '',
+      duration: '',
+      paid: ''
+    });
+  };
 
   return (
     <div className="flex flex-col items-center">
-      {/* Header */}
       <div className="w-full max-w-4xl mb-8">
         <h1 className="text-3xl font-bold mb-6" style={{ color: 'var(--metallica-blue-600)' }}>
           Internship Opportunities
         </h1>
         
-        {/* Search Bar */}
-        <div className="mb-4">
-          <SearchBar 
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            placeholder="Search by job title or company..."
-          />
-        </div>
-        
-        {/* Filter Row */}
-        <div className="flex flex-wrap gap-4 mb-6">
-          {/* Industry Filter */}
-          <div className="flex-1 min-w-[200px]">
-            <Filter
-              options={industryOptions}
-              selectedValue={filters.industry}
-              onChange={(value) => setFilters({...filters, industry: value})}
-              label="Industry"
-              placeholder="All Industries"
-              id="industry-filter"
-            />
+        {/* Search and Filter Toggle Row */}
+        <div className="flex flex-col gap-4 mb-4">
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <SearchBar 
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                placeholder="Search by job title or company..."
+              />
+            </div>
+            <button
+              onClick={toggleFilters}
+              className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--metallica-blue-500)] focus:border-transparent text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-4 w-4 text-gray-400" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+  </svg>
+  <span>{showFilters ? 'Hide Filters' : 'Filters'}</span>
+</button>
           </div>
-          
-          {/* Duration Filter */}
-          <div className="flex-1 min-w-[200px]">
-            <Filter
-              options={durationOptions}
-              selectedValue={filters.duration}
-              onChange={(value) => setFilters({...filters, duration: value})}
-              label="Duration"
-              placeholder="Any Duration"
-              id="duration-filter"
-            />
-          </div>
-          
-          {/* Paid/Unpaid Filter */}
-          <div className="flex-1 min-w-[200px]">
-        <Filter
-          options={paidOptions}
-          selectedValue={
-            filters.paid === '' ? '' :
-            filters.paid === 'paid' ? 'Paid' : 'Unpaid'
-          }
-          onChange={(value) => {
-            setFilters({
-              ...filters,
-              paid: value === 'Both' ? '' :
-                    value ===  '' ? '' : 
-                    value === 'Paid' ? 'paid' : 'unpaid'
-            });
-          }}
-          label="Compensation"
-          placeholder="Paid/Unpaid" // This will be shown when no value is selected
-          id="paid-filter"
-        />
-      </div>
+
+          {/* Filter Panel - Seamless Transition */}
+          {showFilters && (
+            <div className="flex flex-col gap-4 pt-2">
+              <div className="flex flex-wrap gap-4">
+                <div className="flex-1 min-w-[200px]">
+                  <Filter
+                    options={industryOptions}
+                    selectedValue={filters.industry}
+                    onChange={(value) => setFilters({...filters, industry: value})}
+                    label="Industry"
+                    placeholder="Industry"
+                    id="industry-filter"
+                  />
+                </div>
+                
+                <div className="flex-1 min-w-[200px]">
+                  <Filter
+                    options={durationOptions}
+                    selectedValue={filters.duration}
+                    onChange={(value) => setFilters({...filters, duration: value})}
+                    label="Duration"
+                    placeholder="Duration"
+                    id="duration-filter"
+                  />
+                </div>
+                
+                <div className="flex-1 min-w-[200px]">
+                  <Filter
+                    options={paidOptions}
+                    selectedValue={
+                      filters.paid === '' ? '' :
+                      filters.paid === 'paid' ? 'Paid' : 'Unpaid'
+                    }
+                    onChange={(value) => {
+                      setFilters({
+                        ...filters,
+                        paid: value === 'Both' ? '' :
+                              value === '' ? '' : 
+                              value === 'Paid' ? 'paid' : 'unpaid'
+                      });
+                    }}
+                    label="Compensation"
+                    placeholder="Paid/Unpaid"
+                    id="paid-filter"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex justify-end">
+                <button
+                  onClick={clearFilters}
+                  className="text-sm text-gray-70 hover:text-gray-80 hover:underline"
+                >
+                  Clear All Filters
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       

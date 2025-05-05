@@ -1,5 +1,5 @@
 // LinkedIn Industry Categories
-export const INDUSTRIES = [
+export const industries = [
   "Accounting",
   "Airlines/Aviation",
   "Alternative Dispute Resolution",
@@ -147,6 +147,127 @@ export const INDUSTRIES = [
   "Wine & Spirits",
   "Wireless",
   "Writing & Editing",
+];
+
+export const mockCompanies = [
+  {
+    name: 'Tech Corp',
+    industry: 'Technology',
+    size: 'Large',
+  },
+  {
+    name: 'Finance Inc',
+    industry: 'Finance',
+    size: 'Medium',
+  },
+  {
+    name: 'Health LLC',
+    industry: 'Healthcare',
+    size: 'Small',
+  },
+  {
+    name: 'Microsoft',
+    industry: 'Technology',
+    size: 'Corporate',
+  },
+  {
+    name: 'LSE',
+    industry: 'Electrical Engineering',
+    size: 'Medium',
+  },
+  {
+    name: 'Urban Cafe',
+    industry: 'Food & Beverage',
+    size: 'Small',
+  },
+  {
+    name: 'Global Media',
+    industry: 'Entertainment',
+    size: 'Corporate',
+  },
+  {
+    name: 'Cloud Networks',
+    industry: 'IT Services',
+    size: 'Corporate',
+  },
+  {
+    name: 'Creative Designs',
+    industry: 'Marketing',
+    size: 'Medium',
+  },
+  {
+    name: 'Siemens',
+    industry: 'Technology',
+    size: 'Medium',
+  },
+];
+
+export const mockInternships = [
+  {
+    id: 1,
+    title: "Frontend Developer Intern",
+    company: "TechVision",
+    type: "Full-time",
+    locationType: "REMOTE",
+    paid: true,
+    postedDate: "2 days ago",
+    industry: "Technology",
+    duration: "3 months",
+    skills: ["JavaScript", "React", "CSS"],
+    description: "Join our team to work on exciting projects and gain hands-on experience in frontend development."
+  },
+  {
+    id: 2,
+    title: "Marketing Coordinator",
+    company: "BrandBoost",
+    type: "Part-time",
+    locationType: "HYBRID",
+    paid: false,
+    postedDate: "1 week ago",
+    industry: "Marketing",
+    duration: "6 months",
+    skills: ["SEO", "Content Creation", "Social Media"],
+    description: "Assist in marketing campaigns and help boost our brand presence online."
+  },
+  {
+    id: 3,
+    title: "Data Science Intern",
+    company: "Thndr",
+    type: "Full-time",
+    locationType: "ON-SITE",
+    paid: true,
+    postedDate: "3 days ago",
+    industry: "Technology",
+    duration: "4 months",
+    skills: ["Python", "Machine Learning", "Data Analysis"],
+    description: "Work with our data team to analyze large datasets and derive insights."
+  },
+  {
+    id: 4,
+    title: "UX Design Intern",
+    company: "CreativeMinds",
+    type: "Contract",
+    locationType: "REMOTE",
+    paid: true,
+    postedDate: "5 days ago",
+    industry: "Design",
+    duration: "4 months",
+    skills: ["Figma", "User Research", "Prototyping"],
+    description: "Help design user-friendly interfaces and improve user experience for our products."
+  },
+  {
+    id: 5,
+    title: "Biomedical Research Assistant",
+    company: "HealthInnovate",
+    type: "Full-time",
+    locationType: "ON-SITE",
+    paid: false,
+    postedDate: "2 weeks ago",
+    industry: "Healthcare",
+    duration: "6 months",
+    skills: ["Research", "Data Collection", "Analysis"],
+    description: "Assist in ongoing biomedical research projects and contribute to data collection and analysis."
+  }
 ];
 
 // Company Size Categories
