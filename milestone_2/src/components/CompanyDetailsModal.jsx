@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { faTimes, faCheck, faExpand, faFilePdf, faFileImage, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faCheck, faExpand, faFile, faFileImage, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { INDUSTRY_ICONS } from '../constants/industryIcons';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -18,8 +18,8 @@ const BG = "bg-[#eaf3f6]";
 export default function CompanyDetailsModal({ open, onClose, companyName, companyEmail, companyLogo, industry, size, documentation = [], registrationDate }) {
   if (!open) return null;
 
-  // Notepad state (4 notes for Figma style)
-  const [notes, setNotes] = useState(["", "", "", ""]);
+  // Notepad state (6 notes for Figma style)
+  const [notes, setNotes] = useState(["", "", "", "", "", ""]);
   const handleNoteChange = (idx, value) => {
     setNotes((prev) => prev.map((n, i) => (i === idx ? value : n)));
   };
@@ -136,7 +136,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
             {/* Notepad */}
             <div className="modal-notepad">
               <div className="modal-notepad-title">Note Pad</div>
-              <div className={`modal-notepad-container ${BORDER} ${ROUNDED} ${BG}`} style={{ minHeight: 140 }}>
+              <div className={`modal-notepad-container ${BORDER} ${ROUNDED} ${BG}`} >
                 {/* Inputs */}
                 {notes.map((note, idx) => (
                   <input
@@ -212,13 +212,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
                 {docs.map((doc, idx) => (
                   <div key={idx} className="companydocumentscard-item">
                     {/* File Icon logic */}
-                    {(() => {
-                      const type = doc.type || doc.url;
-                      if (!type) return <FontAwesomeIcon icon={faFilePdf} className="text-gray-400 text-2xl" />;
-                      if (type.toLowerCase().includes('pdf')) return <FontAwesomeIcon icon={faFilePdf} className="text-red-500 text-2xl" />;
-                      if (type.toLowerCase().includes('png') || type.toLowerCase().includes('jpg') || type.toLowerCase().includes('jpeg')) return <FontAwesomeIcon icon={faFileImage} className="text-blue-400 text-2xl" />;
-                      return <FontAwesomeIcon icon={faFilePdf} className="text-metallica-blue-500 text-2xl" />;
-                    })()}
+                    <FontAwesomeIcon icon={faFile} className="text-metallica-blue-500 text-2xl" />
                     <div className="companydocumentscard-item-info">
                       <span className="companydocumentscard-item-name">{doc.name || doc.url.split('/').pop()}</span>
                       <span className="companydocumentscard-item-type">{(doc.type || doc.url.split('.').pop() || '').toUpperCase()}</span>
