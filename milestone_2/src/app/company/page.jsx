@@ -5,6 +5,7 @@ import CompanyCreatePost from '@/components/CompanyCreatePost';
 import PostTiles from '@/components/PostTiles';
 import TileEdit from '@/components/TileEdit';
 import DeleteTileConfirmation from '@/components/DeleteTileConfirmation';
+import Header from '@/components/Header';
 
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
@@ -29,6 +30,7 @@ export default function HomePage() {
 
   return (
     <div className="p-6">
+      <Header text="Company Dashboard" size="text-6xl"></Header>
       <CompanyCreatePost onAddPost={handleAddPost} />
       <h1>Your Job Postings:</h1>
       <PostTiles

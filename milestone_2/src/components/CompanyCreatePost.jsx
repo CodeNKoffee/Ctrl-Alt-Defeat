@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function CompanyCreatePost({ onAddPost }) {
   const [form, setForm] = useState({
@@ -9,6 +9,8 @@ export default function CompanyCreatePost({ onAddPost }) {
     salary: '',
     skills: '',
   });
+
+  const [paidValidation, setPaid] = useState(true)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +30,14 @@ export default function CompanyCreatePost({ onAddPost }) {
     });
   };
 
+  useEffect(() => {
+    if(form.paid === 'Paid'){
+      setPaid(true)
+    }else{
+      setPaid(false)
+    }
+  }, [form.paid])
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4 p-4 max-w-xl">
       <input name="title" value={form.title} onChange={handleChange} placeholder="Job Title" required className="w-full border p-2 rounded" />
@@ -37,7 +47,7 @@ export default function CompanyCreatePost({ onAddPost }) {
         <option value="Paid">Paid</option>
         <option value="Unpaid">Unpaid</option>
       </select>
-      <input name="salary" value={form.salary} onChange={handleChange} placeholder="Salary (Leave empty if N/A)" className="w-full border p-2 rounded" />
+      {paidValidation ? <input name="salary" value={form.salary} onChange={handleChange} placeholder="Salary" required className="w-full border p-2 rounded" /> : null}
       <input name="skills" value={form.skills} onChange={handleChange} placeholder="Skills Required" required className="w-full border p-2 rounded" />
       <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Create Post</button>
     </form>
