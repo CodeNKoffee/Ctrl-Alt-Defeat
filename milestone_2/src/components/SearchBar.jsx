@@ -1,11 +1,11 @@
 "use client";
 
-export default function SearchBar({ searchTerm, setSearchTerm }) {
+export default function SearchBar({placeholder, searchTerm, setSearchTerm }) {
   return (
     <div className="relative w-full">
       <input
         type="text"
-        placeholder="Search companies..."
+        placeholder= {placeholder}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="w-full p-2 pl-9 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--metallica-blue-500)] focus:border-transparent text-sm"
