@@ -23,9 +23,9 @@ export default function Home() {
 
   const textContent = [
     { title: "", subtitle: "" },                             // Initial state
-    { title: "welcome to", subtitle: "" },                   // Typing "WELCOME TO"
+    { title: "WELCOME TO", subtitle: "" },                   // Typing "WELCOME TO"
     { title: "InternHub", subtitle: "" },                    // "InternHub" with merge
-    { title: "InternHub", subtitle: "Unlock Opportunities Today" } // Slogan with shift
+    { title: "InternHub", subtitle: "Where Experience Begins" } // Slogan with shift
   ];
 
   // Create typing animation variants
@@ -102,23 +102,27 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col kontainer relative overflow-hidden">
-      {/* Animated Background Blobs */}
-      <motion.div
-        className="absolute top-0 left-0 -z-10"
-        variants={blobVariants}
-        initial="initial"
-        animate="animate"
-      >
-        <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-500)] -translate-x-1/3 -translate-y-1/3" />
-      </motion.div>
-      <motion.div
-        className="absolute bottom-0 right-0 -z-10"
-        variants={blobVariants}
-        initial="initial"
-        animate="animate"
-      >
-        <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-200)] translate-x-1/3 translate-y-1/3" />
-      </motion.div>
+      {/* Animated Background Blobs - Only show during welcome screen */}
+      {showWelcome && (
+        <>
+          <motion.div
+            className="absolute top-0 left-0 -z-10"
+            variants={blobVariants}
+            initial="initial"
+            animate="animate"
+          >
+            <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-500)] -translate-x-1/3 -translate-y-1/3" />
+          </motion.div>
+          <motion.div
+            className="absolute bottom-0 right-0 -z-10"
+            variants={blobVariants}
+            initial="initial"
+            animate="animate"
+          >
+            <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-200)] translate-x-1/3 translate-y-1/3" />
+          </motion.div>
+        </>
+      )}
 
       <AnimatePresence mode="wait">
         {showWelcome ? (
@@ -174,7 +178,7 @@ export default function Home() {
                     )}
                     {animationState >= 2 && (
                       <motion.h1
-                        className="text-6xl font-bold font-ibm-plex-sans"
+                        className="text-6xl font-bold font-young-serif"
                         variants={mergeVariants}
                         initial="hidden"
                         animate="visible"
@@ -188,7 +192,7 @@ export default function Home() {
                   {/* Absolutely positioned subtitle */}
                   {animationState >= 3 && (
                     <motion.div
-                      className="absolute left-0 right-0 mx-auto top-full mt-2 text-xl text-[var(--metallica-blue-400)] text-center"
+                      className="absolute left-0 right-0 mx-auto top-full mt-2 text-xl text-[var(--metallica-blue-400)] text-center tracking-wide"
                       initial="hidden"
                       animate="visible"
                       variants={shiftVariants}

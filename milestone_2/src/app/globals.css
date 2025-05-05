@@ -25,6 +25,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-ibm-plex-sans);
+  --font-serif: var(--font-young-serif);
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -56,6 +57,10 @@ button {
 
 .font-ibm-plex-sans {
   font-family: var(--font-ibm-plex-sans);
+}
+
+.font-young-serif {
+  font-family: var(--font-young-serif);
 }
 
 .kontainer {
