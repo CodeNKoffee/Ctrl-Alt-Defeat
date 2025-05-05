@@ -133,13 +133,13 @@ export default function Home() {
               <div className="flex flex-col items-center justify-center text-center space-y-6 py-12">
                 {/* Larger GIF with adjusted positioning */}
                 <motion.div
-                  className="w-60 h-60 relative -mt-12"
+                  className="w-60 h-60 relative -mt-12 rounded-full"
                   variants={gifVariants}
                   initial="hidden"
                   animate="visible"
                 >
                   <Image
-                    src="/images/world-creativity-and-innovation-day.gif"
+                    src="/images/world-creativity-and-innovation-day-transparent.gif"
                     alt="InternHub Logo"
                     fill
                     style={{ objectFit: "contain" }}
@@ -151,59 +151,65 @@ export default function Home() {
                 <div className="h-16" />
 
                 {/* Animated Title */}
-                <AnimatePresence mode="wait">
-                  {animationState === 1 && (
+                <div className="relative inline-block flex flex-col items-center" style={{ minHeight: '110px' }}>
+                  <AnimatePresence mode="wait">
+                    {animationState === 1 && (
+                      <motion.div
+                        className="text-6xl font-semibold font-ibm-plex-serif text-[var(--metallica-blue-600)]"
+                        initial={{ opacity: 1 }}
+                        exit={{ opacity: 0, transition: { duration: 0.5 } }}
+                      >
+                        {textContent[1].title.split("").map((letter, index) => (
+                          <motion.span
+                            key={index}
+                            custom={index}
+                            variants={typingVariants}
+                            initial="hidden"
+                            animate="visible"
+                          >
+                            {letter}
+                          </motion.span>
+                        ))}
+                      </motion.div>
+                    )}
+                    {animationState >= 2 && (
+                      <motion.h1
+                        className="text-6xl font-bold font-ibm-plex-sans"
+                        variants={mergeVariants}
+                        initial="hidden"
+                        animate="visible"
+                      >
+                        <span className="text-[#B0BEC5]">Intern</span>
+                        <span className="text-[var(--metallica-blue-600)]">Hub</span>
+                      </motion.h1>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Absolutely positioned subtitle */}
+                  {animationState >= 3 && (
                     <motion.div
-                      key="welcome"
-                      className="text-6xl font-semibold font-ibm-plex-serif text-[var(--metallica-blue-600)]"
-                      initial={{ opacity: 1 }}
-                      exit={{ opacity: 0, transition: { duration: 0.5 } }}
+                      className="absolute left-0 right-0 mx-auto top-full mt-2 text-xl text-[var(--metallica-blue-400)] text-center"
+                      initial="hidden"
+                      animate="visible"
+                      variants={shiftVariants}
+                      style={{ whiteSpace: 'nowrap', width: 'max-content' }}
                     >
-                      {textContent[1].title.split("").map((letter, index) => (
+                      {textContent[3].subtitle.split(" ").map((word, index, arr) => (
                         <motion.span
                           key={index}
                           custom={index}
-                          variants={typingVariants}
+                          variants={shiftVariants}
                           initial="hidden"
                           animate="visible"
+                          className={index !== arr.length - 1 ? "inline-block mr-1" : "inline-block"}
+                          transition={{ delay: 0.1 + index * 0.08, duration: 0.25 }}
                         >
-                          {letter}
+                          {word}
                         </motion.span>
                       ))}
                     </motion.div>
                   )}
-                  {animationState >= 2 && (
-                    <motion.h1
-                      key="internhub"
-                      className="text-6xl font-bold font-ibm-plex-sans"
-                      variants={mergeVariants}
-                      initial="hidden"
-                      animate="visible"
-                    >
-                      <span className="text-[#B0BEC5]">Intern</span>
-                      <span className="text-[var(--metallica-blue-600)]">Hub</span>
-                    </motion.h1>
-                  )}
-                </AnimatePresence>
-
-                {/* Animated Subtitle with Delay */}
-                {animationState >= 3 && (
-                  <motion.div className="text-xl text-[var(--metallica-blue-400)]">
-                    {textContent[3].subtitle.split(" ").map((word, index) => (
-                      <motion.span
-                        key={index}
-                        custom={index}
-                        variants={shiftVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className="inline-block mr-2"
-                        transition={{ delay: 0.5 + index * 0.3, duration: 0.5 }}
-                      >
-                        {word}
-                      </motion.span>
-                    ))}
-                  </motion.div>
-                )}
+                </div>
               </div>
             </div>
           </motion.div>
