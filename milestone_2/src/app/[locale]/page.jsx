@@ -11,7 +11,13 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(() => {
+    // Check if welcome animation has been shown before
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('welcomeShown');
+    }
+    return true;
+  });
   const [animationState, setAnimationState] = useState(0);
 
   const textContent = [
@@ -23,6 +29,8 @@ export default function Home() {
 
   // Handle animation timing with explicit states for delay
   useEffect(() => {
+    if (!showWelcome) return; // Skip animation if welcome is not shown
+
     if (animationState < textContent.length - 1) {
       const timer = setTimeout(() => {
         if (animationState === 2) {
@@ -36,10 +44,12 @@ export default function Home() {
       // After welcome animation completes, wait 2 seconds then show continue options
       const timer = setTimeout(() => {
         setShowWelcome(false);
+        // Mark welcome as shown in session storage
+        sessionStorage.setItem('welcomeShown', 'true');
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [animationState]);
+  }, [animationState, showWelcome]);
 
   const handleOptionClick = (userType) => {
     router.push(`/en/auth/login?userType=${userType}`);
