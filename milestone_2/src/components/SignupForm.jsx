@@ -5,6 +5,7 @@ import { signupValidationSchema } from "../../utils/validationSchemas";
 import FloatingLabelInput from "@/components/FloatingLabelInput";
 import { INDUSTRIES, COMPANY_SIZES, VERIFICATION_TYPES, ACCEPTED_FILE_TYPES } from "../../constants/index";
 import { capitalizeWords } from "../../utils/index";
+import SearchableSelect from "@/components/SearchableSelect";
 
 export default function SignupForm() {
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -65,70 +66,32 @@ export default function SignupForm() {
 
             {/* Industry */}
             <div className="w-full md:w-[calc(50%-16px)]">
-              <div className="relative">
-                <select
-                  name="industry"
-                  onChange={(e) => setFieldValue('industry', e.target.value)}
-                  onBlur={(e) => setFieldValue('industry', e.target.value)}
-                  value={values.industry}
-                  className={`w-full h-14 px-0 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${!values.industry ? 'text-transparent' : ''} ${errors.industry && touched.industry ? 'border-red-500' : ''}`}
-                >
-                  <option value=""></option>
-                  {INDUSTRIES.map((industry) => (
-                    <option key={industry} value={industry}>
-                      {industry}
-                    </option>
-                  ))}
-                </select>
-                <label
-                  className={`absolute left-0 transition-all duration-200 pointer-events-none ${values.industry ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-400'
-                    } ${errors.industry && touched.industry ? 'text-red-500' : ''}`}
-                >
-                  Industry *
-                </label>
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-                {errors.industry && touched.industry && (
-                  <div className="text-red-500 text-sm mt-1">{errors.industry}</div>
-                )}
-              </div>
+              <SearchableSelect
+                name="industry"
+                label="Industry *"
+                value={values.industry}
+                options={INDUSTRIES.map(i => ({ label: i, value: i }))}
+                onChange={e => setFieldValue('industry', e.target.value)}
+                onBlur={e => setFieldValue('industry', e.target.value)}
+                error={errors.industry}
+                touched={touched.industry}
+                placeholder="Select industry"
+              />
             </div>
 
             {/* Company Size */}
             <div className="w-full md:w-[calc(50%-16px)]">
-              <div className="relative">
-                <select
-                  name="companySize"
-                  onChange={(e) => setFieldValue('companySize', e.target.value)}
-                  onBlur={(e) => setFieldValue('companySize', e.target.value)}
-                  value={values.companySize}
-                  className={`w-full h-14 px-0 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-metallica-blue-off-charts transition-colors peer appearance-none ${!values.companySize ? 'text-transparent' : ''} ${errors.companySize && touched.companySize ? 'border-red-500' : ''}`}
-                >
-                  <option value=""></option>
-                  {COMPANY_SIZES.map((size) => (
-                    <option key={size.value} value={size.value}>
-                      {size.label}
-                    </option>
-                  ))}
-                </select>
-                <label
-                  className={`absolute left-0 transition-all duration-200 pointer-events-none ${values.companySize ? '-top-2.5 text-sm text-metallica-blue-off-charts' : 'top-4 text-gray-400'
-                    } ${errors.companySize && touched.companySize ? 'text-red-500' : ''}`}
-                >
-                  Company Size *
-                </label>
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-                {errors.companySize && touched.companySize && (
-                  <div className="text-red-500 text-sm mt-1">{errors.companySize}</div>
-                )}
-              </div>
+              <SearchableSelect
+                name="companySize"
+                label="Company Size *"
+                value={values.companySize}
+                options={COMPANY_SIZES.map(s => ({ label: s.label, value: s.value }))}
+                onChange={e => setFieldValue('companySize', e.target.value)}
+                onBlur={e => setFieldValue('companySize', e.target.value)}
+                error={errors.companySize}
+                touched={touched.companySize}
+                placeholder="Select size"
+              />
             </div>
 
             {/* Verification and Logo Section */}
