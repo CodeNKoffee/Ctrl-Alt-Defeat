@@ -35,7 +35,7 @@ export default function SearchableSelect({
   return (
     <div className="relative w-full">
       <div
-        className={`w-full h-14 px-0 border-b-2 bg-transparent focus:outline-none transition-colors peer appearance-none ${error && touched ? 'border-red-500' : 'border-gray-300'} ${disabled ? 'opacity-50' : ''}`}
+        className={`w-full h-14 px-0 border-b-2 bg-transparent focus:outline-none transition-colors peer appearance-none ${error && touched ? 'border-red-500' : 'border-metallica-blue-off-charts'} ${disabled ? 'opacity-50' : ''}`}
         tabIndex={0}
         onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 100)}
