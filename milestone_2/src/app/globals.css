@@ -19,6 +19,7 @@
   --metallica-blue-900: #274353;
   --metallica-blue-950: #152B37;
   --metallica-blue-off-charts: #4C798B;
+  --metallica-green-pop-color:rgb(53, 168, 158);
 }
 
 @theme inline {
@@ -330,7 +331,6 @@ button {
 
 /* CSS */
 .companydetails-accept-btn, .companydetails-reject-btn {
-  width: 40%;
   align-items: center;
   appearance: none;
   background-color: #FCFCFD;
@@ -373,7 +373,7 @@ button {
 }
 /* rgb(53, 168, 158); */
 .companydetails-accept-btn {
-  width: 50%;
+  width: 35%;
   background: rgb(35, 125, 117);
   color: #fff;
   box-shadow:  rgba(1, 18, 24, 0.8) 0 2px 4px, rgba(9, 33, 42, 0.6) 0 7px 13px -3px, #0e2c37 0 -3px 0 inset;
@@ -382,7 +382,7 @@ button {
   background: rgb(28, 108, 101);
 }
 .companydetails-reject-btn {
-  width: 50%;
+  width: 35%;
   background: #dc2626;
   color: #fff;
   box-shadow:#871212 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #6b0c0c 0 -3px 0 inset;
