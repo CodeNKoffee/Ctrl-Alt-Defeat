@@ -16,13 +16,30 @@ export default function IndustryFilter({ selectedIndustry, setSelectedIndustry, 
     setOpen(false);
   };
 
+  // On blur, if search is not empty and doesn't match a valid option, clear search and selection
+  const handleBlur = () => {
+    setTimeout(() => {
+      setOpen(false);
+      if (search) {
+        const match = industries.find(i => i.toLowerCase() === search.toLowerCase());
+        if (match) {
+          setSelectedIndustry(match);
+          setSearch('');
+        } else {
+          setSearch('');
+          setSelectedIndustry('');
+        }
+      }
+    }, 100);
+  };
+
   return (
     <div className="relative min-w-[200px]">
       <div
         className="w-full"
         tabIndex={0}
         onFocus={() => setOpen(true)}
-        onBlur={() => setTimeout(() => setOpen(false), 100)}
+        onBlur={handleBlur}
       >
         <input
           type="text"

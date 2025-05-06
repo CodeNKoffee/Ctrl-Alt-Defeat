@@ -32,18 +32,39 @@ export default function SearchableSelect({
   // Floating label logic
   const isFloating = !!value || open || !!search;
 
+  // Only allow valid option values
+  const validOption = options.find(o => o.value === value);
+
+  // On blur, if search is not empty and doesn't match a valid option, clear search and value
+  const handleBlur = () => {
+    setTimeout(() => {
+      setOpen(false);
+      if (search) {
+        const match = options.find(o => o.label.toLowerCase() === search.toLowerCase());
+        if (match) {
+          onChange({ target: { name, value: match.value } });
+          setSearch('');
+        } else {
+          setSearch('');
+          onChange({ target: { name, value: '' } });
+        }
+      }
+      if (onBlur) onBlur({ target: { name, value: value } });
+    }, 100);
+  };
+
   return (
     <div className="relative w-full">
       <div
         className={`w-full h-14 px-0 border-b-2 bg-transparent focus:outline-none transition-colors peer appearance-none ${error && touched ? 'border-red-500' : 'border-metallica-blue-off-charts'} ${disabled ? 'opacity-50' : ''}`}
         tabIndex={0}
         onFocus={() => setOpen(true)}
-        onBlur={() => setTimeout(() => setOpen(false), 100)}
+        onBlur={handleBlur}
       >
         <input
           ref={inputRef}
           type="text"
-          value={search || (value ? options.find(o => o.value === value)?.label : '')}
+          value={search || (validOption ? validOption.label : '')}
           onChange={e => setSearch(e.target.value)}
           onClick={() => setOpen(true)}
           placeholder={isFloating ? '' : placeholder}
