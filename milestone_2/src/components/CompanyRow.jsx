@@ -1,12 +1,15 @@
 import React from 'react';
 
-export default function CompanyRow({ company, onClick }) {
+export default function CompanyRow({ company, onClick, selected }) {
   if (!company) return null;
 
   return (
     <div
-      className="companyrow-root grid grid-cols-12 gap-2 items-center p-4 bg-white rounded-xl border border-gray-100 
-                transition-[background,border,box-shadow,backdrop-filter] duration-600 ease-in-out cursor-pointer group"
+      className={
+        "companyrow-root grid grid-cols-12 gap-2 items-center p-4 bg-white rounded-xl border border-gray-100 " +
+        "transition-[background,border,box-shadow,backdrop-filter] duration-600 ease-in-out cursor-pointer group" +
+        (selected ? " selected" : "")
+      }
       onClick={() => onClick?.(company)}
     >
       <div className="companyrow-name-col col-span-5 font-medium text-gray-800">

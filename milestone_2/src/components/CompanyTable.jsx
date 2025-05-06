@@ -96,6 +96,10 @@ export default function CompanyTable({ companies }) {
                 key={company.name}
                 company={company}
                 onClick={handleRowClick}
+                selected={
+                  (selectedCompany && selectedCompany.name === company.name) ||
+                  (modalCompany && modalCompany.name === company.name && modalOpen)
+                }
               />
             ))}
           </div>
@@ -117,7 +121,8 @@ export default function CompanyTable({ companies }) {
         {/* Sidebar for Company Details */}
         {selectedCompany && (
           <div
-            className={`fixed top-0 right-0 h-screen w-1/3 bg-[#002a38] backdrop-blur-md shadow-xl z-50 flex flex-col border-l border-metallica-blue-100 ${isExpanded ? 'animate-slide-out' : 'animate-slide-in'}`}
+            // bg-[#002a38]
+            className={`fixed top-0 right-0 h-screen w-1/3 bg-metallica-blue-100/70 backdrop-blur-md shadow-xl z-50 flex flex-col border-l border-metallica-blue-100 ${isExpanded ? 'animate-slide-out' : 'animate-slide-in'}`}
             style={{ minWidth: 420, maxWidth: 500 }}
           >
             <div className="flex justify-end p-4 gap-4">

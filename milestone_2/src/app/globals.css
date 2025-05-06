@@ -373,6 +373,7 @@ button {
 }
 /* rgb(53, 168, 158); */
 .companydetails-accept-btn {
+  width: 50%;
   background: rgb(35, 125, 117);
   color: #fff;
   box-shadow:  rgba(1, 18, 24, 0.8) 0 2px 4px, rgba(9, 33, 42, 0.6) 0 7px 13px -3px, #0e2c37 0 -3px 0 inset;
@@ -381,6 +382,7 @@ button {
   background: rgb(28, 108, 101);
 }
 .companydetails-reject-btn {
+  width: 50%;
   background: #dc2626;
   color: #fff;
   box-shadow:#871212 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #6b0c0c 0 -3px 0 inset;
@@ -751,11 +753,12 @@ button {
   cursor: pointer;
 }
 
-.companyrow-root:hover {
+.companyrow-root.selected, .companyrow-root:hover {
   background: linear-gradient(to right,  #e7e8ec, #f3f4f6, #e7e8ec);
   box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);
   border: 2px solid var(--metallica-blue-200);
 }
+
 .companyrow-root:active {
   background: linear-gradient(to right,  #e7e8ec, #f3f4f6, #e7e8ec);
   box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);

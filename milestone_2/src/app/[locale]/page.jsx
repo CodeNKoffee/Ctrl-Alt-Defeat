@@ -143,7 +143,7 @@ export default function Home() {
                   animate="visible"
                 >
                   <Image
-                    src="/images/world-creativity-and-innovation-day-transparent.gif"
+                    src="/images/world-creativity-and-innovation-day-transparent-one-count.gif"
                     alt="InternHub Logo"
                     fill
                     style={{ objectFit: "contain" }}
