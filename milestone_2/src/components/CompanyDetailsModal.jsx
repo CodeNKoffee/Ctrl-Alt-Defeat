@@ -110,13 +110,15 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
       </AnimatePresence>
       {/* Main modal content (hidden when feedback is shown) */}
       <div className={`modal-inner ${BG} ${BORDER} ${ROUNDED}`} style={{ boxShadow: '0 2px 8px #49718410', maxHeight: '100vh', overflow: 'hidden', filter: feedback ? 'blur(2px)' : 'none', pointerEvents: feedback ? 'none' : 'auto' }}>
-        {/* Close button */}
-        <button
-          className="modal-close-btn"
+        {/* Close button - styled like CompanyDetails */}
+        <div
+          className="absolute top-4 right-4 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow bg-white border border-gray-200 cursor-pointer transition hover:bg-gray-100"
           onClick={onClose}
+          role="button"
+          tabIndex={0}
         >
-          <FontAwesomeIcon icon={faTimes} className="modal-close-icon" />
-        </button>
+          <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
+        </div>
         {/* Tab Header */}
         <div className="modal-header">
           Company Details
