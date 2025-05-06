@@ -106,7 +106,7 @@ export default function Home() {
       {/* {showWelcome && (
         <>
           <motion.div
-            className="absolute top-0 left-0 -z-10"
+            className="absolute -top-4 -left-4 -z-10"
             variants={blobVariants}
             initial="initial"
             animate="animate"
@@ -114,7 +114,7 @@ export default function Home() {
             <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-500)] -translate-x-1/3 -translate-y-1/3" />
           </motion.div>
           <motion.div
-            className="absolute bottom-0 right-0 -z-10"
+            className="absolute -bottom-4 -right-4 -z-10"
             variants={blobVariants}
             initial="initial"
             animate="animate"
