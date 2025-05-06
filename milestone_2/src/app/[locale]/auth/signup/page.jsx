@@ -5,8 +5,9 @@ import Link from "next/link";
 import Blobs from "@/components/Blobs";
 import Header from "@/components/Header";
 import Copyright from "@/components/Copyright";
-import { usersOptions } from "../../../constants";
+import { usersOptions } from "../../../../../constants/index";
 import { useSearchParams } from "next/navigation";
+import BackButton from "@/components/shared/BackButton";
 
 export default function SignupPage() {
   const searchParams = useSearchParams();
@@ -20,6 +21,7 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex flex-col kontainer">
+      <BackButton />
       {/* Main content */}
       <div className="flex-grow flex items-center justify-center py-8">
         <main className="w-full max-w-4xl px-4">

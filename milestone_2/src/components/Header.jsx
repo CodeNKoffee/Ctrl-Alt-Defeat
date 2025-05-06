@@ -8,7 +8,7 @@ export default function Header({ text, className, isFullWidth = false, size = '6
         // </div>
         <div className="header-full-width">
           <h1 className={`${size ? size : 'text-6xl'}`}>{text}</h1>
-          <div className="underline"></div>
+          <div className="header-underline"></div>
         </div>
       ) : (
         <>

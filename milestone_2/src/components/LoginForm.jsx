@@ -7,7 +7,7 @@ import PasswordInputField from "@/components/PasswordInputField";
 import FloatingLabelInput from "@/components/FloatingLabelInput";
 import { loginValidationSchema } from "../../utils/validationSchemas";
 
-export default function LoginForm() {
+export default function LoginForm({ userType, onSubmit }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [initialValues, setInitialValues] = useState({
@@ -36,23 +36,12 @@ export default function LoginForm() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      // If remember me is checked, save credentials
-      if (values.remember) {
-        localStorage.setItem('rememberedEmail', values.email);
-        localStorage.setItem('rememberedPassword', values.password);
-        localStorage.setItem('rememberMe', 'true');
-      } else {
-        // Clear saved credentials if remember me is unchecked
-        localStorage.removeItem('rememberedEmail');
-        localStorage.removeItem('rememberedPassword');
-        localStorage.removeItem('rememberMe');
-      }
-
-      // Handle login logic here
-      console.log(values);
+      setIsSubmitting(true);
+      await onSubmit(values);
     } catch (error) {
       console.error('Login error:', error);
     } finally {
+      setIsSubmitting(false);
       setSubmitting(false);
     }
   };
