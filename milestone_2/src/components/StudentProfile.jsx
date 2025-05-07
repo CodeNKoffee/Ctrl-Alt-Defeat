@@ -118,7 +118,7 @@ export default function Student() {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid overflow-x-hidden"> {/* Added overflow-x-hidden to prevent horizontal scrolling using Tailwind CSS */}
       <div className="row">
         <div className="main">
           <div className="student-profile">
