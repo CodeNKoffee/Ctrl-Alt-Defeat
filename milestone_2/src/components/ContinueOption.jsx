@@ -1,19 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
-export default function ContinueOption({ name, imageUrl, className, width, height }) {
-  const router = useRouter();
-
-  const handleClick = () => {
-    // Remove 'option_' from className to get the user type
-    const userType = className.replace('option_', '');
-    router.push(`/login?userType=${userType}`);
-  };
-
+export default function ContinueOption({ name, imageUrl, className, width, height, onClick }) {
   return (
-    <div id={className} className="option_container" onClick={handleClick}>
+    <div id={className} className="option_container" onClick={onClick}>
       <div className="circle_1">
         <div className="circle_2"></div>
         <div className="image-container">

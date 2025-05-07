@@ -46,6 +46,7 @@ export const signupValidationSchema = Yup.object().shape({
           if (!value) return false;
           return value.size <= 5 * 1024 * 1024; // 5MB max
         }),
+      otherwise: (schema) => schema.notRequired()
     }),
   taxId: Yup.string()
     .when('verificationType', {
@@ -53,6 +54,7 @@ export const signupValidationSchema = Yup.object().shape({
       then: (schema) => schema
         .required('Tax ID is required')
         .matches(/^\d{3}-\d{3}-\d{3}$/, 'Tax ID must be in format XXX-XXX-XXX'),
+      otherwise: (schema) => schema.notRequired()
     }),
 });
 
