@@ -128,9 +128,9 @@ export default function CompanyTable({ companies }) {
             <div className="flex justify-end p-4 gap-4">
               <button
                 onClick={() => handleExpandModal(selectedCompany)}
-                className="h-8 w-8 flex items-center justify-center rounded-full bg-white/80 border border-gray-200 text-gray-500 hover:text-gray-800 hover:bg-white transition-colors duration-600"
+                className="companyrow-size-badge bg-white/80 text-metallica-blue-700 !border !border-metallica-blue-400 px-3 py-1 rounded-full text-xs font-medium transition-colors duration-200 hover:bg-white"
               >
-                <FontAwesomeIcon icon={faExpand} className="w-5 h-5" />
+                Expand
               </button>
               <button
                 onClick={handleCloseSidebar}

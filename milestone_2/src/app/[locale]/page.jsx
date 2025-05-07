@@ -30,8 +30,8 @@ export default function Home() {
 
   // Create typing animation variants
   const typingVariants = createTypingAnimation(textContent[1].title, {
-    delay: 150,  // 250ms delay between each character
-    duration: 2  // 2s duration for each character animation
+    delay: 100,  // Reduced from 150ms to 100ms
+    duration: 1  // Reduced from 2s to 1s
   });
 
   // Handle animation timing with explicit states for delay
@@ -41,19 +41,19 @@ export default function Home() {
     if (animationState < textContent.length - 1) {
       const timer = setTimeout(() => {
         if (animationState === 2) {
-          setTimeout(() => setAnimationState(3), 2000); // 2-second delay for slogan
+          setTimeout(() => setAnimationState(3), 1000); // Reduced from 2000ms to 1000ms
         } else {
           setAnimationState(prevState => prevState + 1);
         }
-      }, animationState === 1 ? 3000 : 1000); // Longer delay for typing "WELCOME TO"
+      }, animationState === 1 ? 2000 : 500); // Reduced from 3000ms/1000ms to 2000ms/500ms
       return () => clearTimeout(timer);
     } else {
-      // After welcome animation completes, wait 2 seconds then show continue options
+      // After welcome animation completes, wait 1 second then show continue options
       const timer = setTimeout(() => {
         setShowWelcome(false);
         // Mark welcome as shown in session storage
         sessionStorage.setItem('welcomeShown', 'true');
-      }, 2000);
+      }, 1000); // Reduced from 2000ms to 1000ms
       return () => clearTimeout(timer);
     }
   }, [animationState, showWelcome]);
@@ -192,7 +192,7 @@ export default function Home() {
                   {/* Absolutely positioned subtitle */}
                   {animationState >= 3 && (
                     <motion.div
-                      className="absolute top-full mt-2 text-3xl tracking-[.25em] text-[var(--metallica-blue-600)] text-center "
+                      className="absolute top-full mt-2 text-md tracking-[.25em] text-[var(--metallica-blue-600)] text-center "
                       initial="hidden"
                       animate="visible"
                       variants={shiftVariants}

@@ -997,21 +997,19 @@ button {
   box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);
 }
 .modal-feedback-accepted {
-  background: #22c55e;
+  background: #4ade80 !important; /* Brighter green (Tailwind emerald-400) */
 }
 .modal-feedback-rejected {
-  background: #ef4444;
+  background: #ff6868 !important; /* Brighter red (Tailwind red-400) */
 }
 .modal-feedback-icon-inner {
-  color: #fff;
+  color: #f8fafc !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.18);
 }
 .modal-feedback-title {
-  font-size: 1.125rem;
   font-weight: bold;
-  text-align: center;
-  margin-bottom: 0.25rem;
-  color: #1e293b;
-  letter-spacing: 1px;
+  color: #f8fafc !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.18);
 }
 .modal-feedback-message {
   font-size: 0.875rem;
@@ -1025,9 +1023,17 @@ button {
   font-weight: bold;
   color: #15803d;
 }
+.modal-feedback-approved-light {
+  font-weight: bold;
+  color: #4ade80;
+}
 .modal-feedback-rejected-text {
   font-weight: bold;
   color: #b91c1c;
+}
+.modal-feedback-rejected-text-light {
+  font-weight: bold;
+  color: #ff6868;
 }
 .modal-notepad {
   flex: 1 1 0%;
@@ -1158,4 +1164,9 @@ button {
 
 .companydetails-flex-grow {
   flex: 1 1 0%;
+}
+
+.modal-feedback-light {
+  color: #f8fafc;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.18);
 }
