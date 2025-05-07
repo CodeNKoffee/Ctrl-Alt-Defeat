@@ -2,14 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import './styles/StudentProfile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faSave, faPlus, faTrash, faCamera, faPalette } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faSave, faPlus, faTrash, faCamera, faPalette, faFont, faSquare } from '@fortawesome/free-solid-svg-icons';
 
 export default function UpdateProfileS({ isOpen, onClose, studentData, onProfileUpdate }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(studentData?.profileImage || "/images/student.png");
   const [initialValues, setInitialValues] = useState({
     ...studentData,
-    cardColor: studentData?.cardColor || "#318FA8" // Default blue color if not set
+    cardColor: studentData?.cardColor || "#318FA8", // Default blue color if not set
+    theme: studentData?.theme || {
+      primary: "#318FA8",
+      secondary: "#256980",
+      accent: "#41B9D9",
+      text: "#1A4857",
+      background: "#E8F4F8"
+    }
   });
 
   // Update initial values when student data changes
@@ -17,7 +24,14 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
     setImagePreview(studentData?.profileImage || "/images/student.png");
     setInitialValues({
       ...studentData,
-      cardColor: studentData?.cardColor || "#318FA8"
+      cardColor: studentData?.cardColor || "#318FA8",
+      theme: studentData?.theme || {
+        primary: "#318FA8",
+        secondary: "#256980",
+        accent: "#41B9D9",
+        text: "#1A4857",
+        background: "#E8F4F8"
+      }
     });
   }, [studentData]);
 
@@ -48,6 +62,43 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
     const darkerColor = `rgb(${Math.max(r - 40, 0)}, ${Math.max(g - 40, 0)}, ${Math.max(b - 40, 0)})`;
     
     return `linear-gradient(135deg, ${lighterColor} 0%, ${darkerColor} 100%)`;
+  };
+
+  // Generate a complete color theme based on the selected base color
+  const generateColorTheme = (baseColor) => {
+    // Convert hex to RGB
+    const r = parseInt(baseColor.slice(1, 3), 16);
+    const g = parseInt(baseColor.slice(3, 5), 16);
+    const b = parseInt(baseColor.slice(5, 7), 16);
+    
+    // Create color variations for the theme
+    const primary = baseColor;
+    
+    // Darker variation for secondary color (30% darker)
+    const secondaryR = Math.max(r * 0.7, 0);
+    const secondaryG = Math.max(g * 0.7, 0);
+    const secondaryB = Math.max(b * 0.7, 0);
+    const secondary = `#${Math.round(secondaryR).toString(16).padStart(2, '0')}${Math.round(secondaryG).toString(16).padStart(2, '0')}${Math.round(secondaryB).toString(16).padStart(2, '0')}`;
+    
+    // Lighter variation for accent color (20% lighter)
+    const accentR = Math.min(r * 1.3, 255);
+    const accentG = Math.min(g * 1.3, 255);
+    const accentB = Math.min(b * 1.3, 255);
+    const accent = `#${Math.round(accentR).toString(16).padStart(2, '0')}${Math.round(accentG).toString(16).padStart(2, '0')}${Math.round(accentB).toString(16).padStart(2, '0')}`;
+    
+    // Very dark variation for text (60% darker)
+    const textR = Math.max(r * 0.4, 0);
+    const textG = Math.max(g * 0.4, 0);
+    const textB = Math.max(b * 0.4, 0);
+    const text = `#${Math.round(textR).toString(16).padStart(2, '0')}${Math.round(textG).toString(16).padStart(2, '0')}${Math.round(textB).toString(16).padStart(2, '0')}`;
+    
+    // Very light variation for background (90% lighter with some opacity)
+    const backgroundR = Math.min(255, r + (255 - r) * 0.9);
+    const backgroundG = Math.min(255, g + (255 - g) * 0.9);
+    const backgroundB = Math.min(255, b + (255 - b) * 0.9);
+    const background = `#${Math.round(backgroundR).toString(16).padStart(2, '0')}${Math.round(backgroundG).toString(16).padStart(2, '0')}${Math.round(backgroundB).toString(16).padStart(2, '0')}`;
+    
+    return { primary, secondary, accent, text, background };
   };
 
   const handleSubmit = (values) => {
@@ -141,10 +192,10 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                       <Field as="textarea" id="bio" name="bio" rows="3" />
                     </div>
 
-                    {/* Card Color Picker */}
+                    {/* Color Theme Picker */}
                     <div className="form-row color-picker-container">
                       <label htmlFor="cardColor" className="color-picker-label">
-                        <FontAwesomeIcon icon={faPalette} /> Card Background Color
+                        <FontAwesomeIcon icon={faPalette} /> Profile Color Theme
                       </label>
                       <div className="color-picker-wrapper">
                         <input 
@@ -153,17 +204,44 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                           name="cardColor"
                           value={values.cardColor}
                           onChange={(e) => {
-                            setFieldValue('cardColor', e.target.value);
+                            const newColor = e.target.value;
+                            // Update both cardColor and theme
+                            setFieldValue('cardColor', newColor);
+                            const newTheme = generateColorTheme(newColor);
+                            setFieldValue('theme', newTheme);
                           }}
                           className="color-picker-input"
                         />
-                        <div 
-                          className="color-preview"
-                          style={{ 
-                            background: generateGradient(values.cardColor)
-                          }}
-                        >
-                          <span className='preview'>Preview</span>
+                        <div className="theme-preview-container">
+                          <div 
+                            className="color-preview"
+                            style={{ 
+                              background: generateGradient(values.cardColor)
+                            }}
+                          >
+                            <span className='preview'>Card Preview</span>
+                          </div>
+                          <div className="theme-color-squares">
+                            <div className="theme-color-row">
+                              <div className="theme-color-square" style={{ backgroundColor: values.theme.primary }} title="Primary">
+                                <FontAwesomeIcon icon={faSquare} />
+                              </div>
+                              <div className="theme-color-square" style={{ backgroundColor: values.theme.secondary }} title="Secondary">
+                                <FontAwesomeIcon icon={faSquare} />
+                              </div>
+                              <div className="theme-color-square" style={{ backgroundColor: values.theme.accent }} title="Accent">
+                                <FontAwesomeIcon icon={faSquare} />
+                              </div>
+                            </div>
+                            <div className="theme-color-row">
+                              <div className="theme-color-square" style={{ backgroundColor: values.theme.text, color: values.theme.background }} title="Text">
+                                <FontAwesomeIcon icon={faFont} />
+                              </div>
+                              <div className="theme-color-square" style={{ backgroundColor: values.theme.background, color: values.theme.text }} title="Background">
+                                <span>Bg</span>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>

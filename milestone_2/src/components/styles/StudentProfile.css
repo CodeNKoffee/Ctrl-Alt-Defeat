@@ -1,10 +1,19 @@
-.student-details{
-  width:70%;
-  height:80%;
-  display:flex;
+/* Custom theme properties */
+:root {
+  --user-primary: #318FA8;
+  --user-secondary: #256980;
+  --user-accent: #41B9D9;
+  --user-text: #1A4857;
+  --user-background: #E8F4F8;
+}
+
+.student-details {
+  width: 70%;
+  height: 80%;
+  display: flex;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  position:absolute;
+  position: absolute;
   transition: all 0.5s cubic-bezier(0.25, 1, 0.7, 1);
   left: 100%;
   z-index: 1;
@@ -15,28 +24,26 @@
   overflow: hidden;
   max-height: 80%;
   pointer-events: none;
-  border-top:3px solid var(--metallica-blue-200);
-  border-left:3px solid var(--metallica-blue-200);
-  border-bottom:3px solid var(--metallica-blue-200);
-  border-right:3px solid var(--metallica-blue-200);
+  border-color: var(--user-primary);
+  border-width: 3px;
 }
 
 .student-details.expanded {
-  width:70%;
-  height:80%;
+  width: 70%;
+  height: 80%;
   opacity: 1;
   left: 65%;
   transform: translateX(-38%);
   pointer-events: all;
 }
 
-.student-card{
-  width:30%;
-  height:80%;
-  display:flex;
+.student-card {
+  width: 30%;
+  height: 80%;
+  display: flex;
   flex-direction: column;
   position: relative;
-  z-index:2;
+  z-index: 2;
   transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   cursor: pointer;
   border-radius: 20px;
@@ -55,13 +62,13 @@
   bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--metallica-blue-600);
+  background-color: var(--user-secondary);
   color: white;
   padding: 6px 15px;
   border-radius: 20px;
   font-size: 0.85rem;
   opacity: 1;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
   pointer-events: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   white-space: nowrap;
@@ -69,7 +76,7 @@
 
 .student-card.active::after {
   content: "Click to view less";
-  background-color: var(--metallica-blue-400);
+  background-color: var(--user-accent);
 }
 
 /* Mouse pointer indicator */
@@ -81,9 +88,10 @@
   bottom: 45px;
   left: 50%;
   transform: translateX(-50%);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23318FA8'%3E%3Cpath d='M7,2l12,11.2-5.8,0.5l3.3,7.3-2.2,1-3.2-7.4L7,18'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M7,2l12,11.2-5.8,0.5l3.3,7.3-2.2,1-3.2-7.4L7,18'/%3E%3C/svg%3E");
   background-size: contain;
   background-repeat: no-repeat;
+  filter: var(--user-svg-filter, none);
   opacity: 1;
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
@@ -111,12 +119,13 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: var(--metallica-blue-200);
+  background: var(--user-primary);
   padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .profile-image {
@@ -199,12 +208,12 @@
   transform: translateX(-50%);
 }
 
-.student-profile{
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  position:relative;
+.student-profile {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
   perspective: 1000px;
 }
 
@@ -220,7 +229,7 @@
   transform: translateX(30px);
   transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   transition-delay: 0.1s;
-  background-color: var(--metallica-blue-50);
+  background-color: var(--user-background);
   scrollbar-width: thin;
   scrollbar-color: var(--metallica-blue-400) var(--metallica-blue-100);
 }
@@ -272,7 +281,7 @@
   left: 0;
   height: 3px;
   width: 100%;
-  background: linear-gradient(to right, var(--metallica-green-pop-color), var(--metallica-blue-400));
+  background: linear-gradient(to right, var(--user-accent), var(--user-primary));
   border-radius: 2px;
 }
 
@@ -280,7 +289,7 @@
 .details-section h4 {
   font-size: 1.05rem;
   font-weight: 500;
-  color: var(--metallica-blue-600);
+  color: var(--user-text);
   margin-top: 12px;
   margin-bottom: 8px;
 }
@@ -301,8 +310,8 @@
 
 /* Personality Traits section */
 .personality-traits-section {
-  background: linear-gradient(to bottom right, white, var(--metallica-blue-50));
-  border-left: 4px solid var(--metallica-green-pop-color);
+  background: linear-gradient(to bottom right, white, var(--user-background));
+  border-left: 4px solid var(--user-accent);
 }
 
 .personality-traits {
@@ -350,7 +359,7 @@
 }
 
 .trait-star.filled {
-  color: var(--metallica-green-pop-color);
+  color: var(--user-primary);
   text-shadow: 0 0 2px rgba(53, 168, 158, 0.3);
 }
 
@@ -407,8 +416,8 @@
 }
 
 .skill-tag {
-  background-color: var(--metallica-blue-100);
-  color: var(--metallica-blue-700);
+  background-color: var(--user-background);
+  color: var(--user-text);
   padding: 5px 12px;
   border-radius: 50px;
   font-size: 0.85rem;
@@ -416,7 +425,8 @@
 }
 
 .skill-tag:hover {
-  background-color: var(--metallica-blue-200);
+  background-color: var(--user-accent);
+  color: white;
   transform: translateY(-2px);
 }
 
@@ -441,7 +451,7 @@
 }
 
 .internship-header {
-  background-color: var(--metallica-blue-100);
+  background-color: var(--user-background);
   padding: 10px 15px;
   display: flex;
   align-items: center;
@@ -450,7 +460,7 @@
 
 .internship-header h4 {
   margin: 0;
-  color: var(--metallica-blue-700);
+  color: var(--user-text);
   font-size: 1rem;
   font-weight: 600;
 }
@@ -487,7 +497,7 @@
 
 .internship-separator {
   height: 2px;
-  background: linear-gradient(to right, var(--metallica-blue-200), var(--metallica-green-pop-color), var(--metallica-blue-200));
+  background: linear-gradient(to right, var(--user-secondary), var(--user-primary), var(--user-secondary));
   margin: 10px 0;
   border-radius: 2px;
 }
@@ -549,7 +559,7 @@
 
 /* Job Interests section */
 .job-interests-section {
-  background: linear-gradient(to bottom right, white, var(--metallica-blue-50));
+  background: linear-gradient(to bottom right, white, var(--user-background));
 }
 
 .job-interests-container {
@@ -564,7 +574,7 @@
 
 .job-interest-item h4 {
   font-size: 1.05rem;
-  color: var(--metallica-blue-700);
+  color: var(--user-text);
   margin: 0 0 8px 0;
   font-weight: 600;
   display: inline-block;
@@ -573,7 +583,7 @@
 
 .job-interest-separator {
   height: 3px;
-  background: linear-gradient(to right, var(--metallica-green-pop-color), var(--metallica-blue-300));
+  background: linear-gradient(to right, var(--user-accent), var(--user-primary));
   margin: 5px 0 12px 0;
   width: 80px;
   border-radius: 2px;
@@ -608,7 +618,7 @@
 .frustration-dot {
   width: 10px;
   height: 10px;
-  background-color: var(--metallica-blue-700);
+  background-color: var(--user-primary);
   border-radius: 50%;
 }
 
@@ -618,23 +628,23 @@
   margin: 0;
 }
 
-.main{
-  width:100%;
-  height:100vh;
-  display:flex;
+.main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  margin:0 auto;
+  margin: 0 auto;
 }
 
-.title{
-  height:50px;
-  width:100%;
-  display:flex;
-  font-size:18px;
-  font-weight:600;
+.title {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 /* Update Profile Modal Styles */
@@ -645,7 +655,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
 }
 
@@ -797,7 +807,7 @@
   justify-content: center;
   cursor: pointer;
   border: 2px solid white;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: all 0.2s;
 }
 
@@ -1052,7 +1062,7 @@
   padding: 6px 15px;
   border-radius: 50px;
   background-color: white;
-  color: var(--metallica-blue-700);
+  color: var(--user-text);
   font-size: 0.85rem;
   font-weight: 500;
   border: none;
@@ -1065,7 +1075,7 @@
 
 .edit-profile-button:hover {
   transform: translateY(-2px);
-  background-color: var(--metallica-blue-50);
+  background-color: var(--user-background);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
   opacity: 1;
 }
@@ -1089,10 +1099,10 @@
   font-weight: 500;
 }
 
-.preview{
+.preview {
   font-size: 10px;
-  width:50px;
-  text-align:center;
+  width: 50px;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1102,20 +1112,21 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .color-picker-input {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
-  border: none;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
   border-radius: 50%;
+  appearance: none;
+  -webkit-appearance: none;
   overflow: hidden;
+  box-shadow: 0 0 0 2px var(--metallica-blue-100), 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .color-picker-input::-webkit-color-swatch-wrapper {
@@ -1133,6 +1144,13 @@
   border-radius: 50%;
 }
 
+.theme-preview-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .color-preview {
   flex: 1;
   height: 40px;
@@ -1148,19 +1166,55 @@
   transition: all 0.3s ease;
 }
 
+.theme-color-squares {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.theme-color-row {
+  display: flex;
+  gap: 5px;
+}
+
+.theme-color-square {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.theme-color-square:hover {
+  transform: scale(1.05);
+}
+
+.preview {
+  font-size: 12px;
+  padding: 2px 6px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
 @media (max-width: 768px) {
   .grid-layout {
     grid-template-columns: 1fr;
   }
-  
+
   .student-details {
     width: 85%;
   }
-  
+
   .student-details.expanded {
     left: 50%;
   }
-  
+
   .student-card.active {
     left: 50%;
     transform: translateX(-50%) scale(0.9);
@@ -1170,7 +1224,7 @@
   .update-profile-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .update-profile-content {
     width: 95%;
   }
