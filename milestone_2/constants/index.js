@@ -1,3 +1,5 @@
+
+
 // LinkedIn Industry Categories
 export const industries = [
   "Accounting",
@@ -149,58 +151,6 @@ export const industries = [
   "Writing & Editing",
 ];
 
-export const mockCompanies = [
-  {
-    name: 'Tech Corp',
-    industry: 'Technology',
-    size: 'Large',
-  },
-  {
-    name: 'Finance Inc',
-    industry: 'Finance',
-    size: 'Medium',
-  },
-  {
-    name: 'Health LLC',
-    industry: 'Healthcare',
-    size: 'Small',
-  },
-  {
-    name: 'Microsoft',
-    industry: 'Technology',
-    size: 'Corporate',
-  },
-  {
-    name: 'LSE',
-    industry: 'Electrical Engineering',
-    size: 'Medium',
-  },
-  {
-    name: 'Urban Cafe',
-    industry: 'Food & Beverage',
-    size: 'Small',
-  },
-  {
-    name: 'Global Media',
-    industry: 'Entertainment',
-    size: 'Corporate',
-  },
-  {
-    name: 'Cloud Networks',
-    industry: 'IT Services',
-    size: 'Corporate',
-  },
-  {
-    name: 'Creative Designs',
-    industry: 'Marketing',
-    size: 'Medium',
-  },
-  {
-    name: 'Siemens',
-    industry: 'Technology',
-    size: 'Medium',
-  },
-];
 
 export const mockInternships = [
   {
@@ -210,11 +160,15 @@ export const mockInternships = [
     type: "Full-time",
     locationType: "REMOTE",
     paid: true,
+    rate: "$0/hr",
     postedDate: "2 days ago",
+    startDate: "July 1, 2025",
     industry: "Technology",
     duration: "3 months",
-    skills: ["JavaScript", "React", "CSS"],
-    description: "Join our team to work on exciting projects and gain hands-on experience in frontend development."
+    skills: ["JavaScript", "React", "TypeScript", "Redux", "HTML5", "CSS3", "REST APIs"],
+    description: "Join our team to work on exciting projects and gain hands-on experience in frontend development.",
+    details: "TechVision is an industry-leading software development company that has been at the forefront of web technology innovation for over a decade. We specialize in creating cutting-edge web applications for Fortune 500 companies, with a strong focus on user experience, performance optimization, and scalable architecture. Our team of 300+ engineers works across 15 countries to deliver exceptional digital solutions.",
+    requirements: "Applicants should be pursuing a Computer Science degree with basic JavaScript/React knowledge. Strong problem-solving skills and ability to work independently are required."
   },
   {
     id: 2,
@@ -223,11 +177,15 @@ export const mockInternships = [
     type: "Part-time",
     locationType: "HYBRID",
     paid: false,
+    rate: "$0/hr",
     postedDate: "1 week ago",
+    startDate: "July 1, 2025",
     industry: "Marketing",
     duration: "6 months",
-    skills: ["SEO", "Content Creation", "Social Media"],
-    description: "Assist in marketing campaigns and help boost our brand presence online."
+    skills: ["SEO", "Content Creation", "Social Media", "Google Analytics", "Email Marketing", "Copywriting", "Market Research"],
+    description: "Assist in marketing campaigns and help boost our brand presence online.",
+    details: "BrandBoost is a premier digital marketing agency that has helped over 500 businesses establish and grow their online presence since our founding in 2015. We offer comprehensive marketing solutions including SEO, content strategy, social media management, and digital advertising. Our team of creative professionals works closely with clients across various industries to develop customized marketing strategies that deliver measurable results.",
+    requirements: "Marketing/Communications students with social media knowledge and strong writing skills preferred. Must be available 15-20 hours weekly."
   },
   {
     id: 3,
@@ -236,11 +194,15 @@ export const mockInternships = [
     type: "Full-time",
     locationType: "ON-SITE",
     paid: true,
+    rate: "$0/hr",
     postedDate: "3 days ago",
+    startDate: "July 1, 2025",
     industry: "Technology",
     duration: "4 months",
-    skills: ["Python", "Machine Learning", "Data Analysis"],
-    description: "Work with our data team to analyze large datasets and derive insights."
+    skills: ["Python", "Machine Learning", "Data Analysis", "SQL", "Pandas", "NumPy", "Data Visualization"],
+    description: "Work with our data team to analyze large datasets and derive insights.",
+    details: "Thndr is an innovative fintech startup that's transforming the investment landscape through AI-powered analytics. Founded in 2020 by former Wall Street quant analysts, we've quickly grown to serve over 50,000 active users with our data-driven investment platform. Our team combines deep financial expertise with cutting-edge machine learning techniques to democratize access to sophisticated investment tools.",
+    requirements: "Data Science/CS majors with Python proficiency and basic ML understanding needed. Full-time availability for 4 months is required."
   },
   {
     id: 4,
@@ -249,11 +211,15 @@ export const mockInternships = [
     type: "Contract",
     locationType: "REMOTE",
     paid: true,
+    rate: "$0/hr",
     postedDate: "5 days ago",
+    startDate: "July 1, 2025",
     industry: "Design",
     duration: "4 months",
-    skills: ["Figma", "User Research", "Prototyping"],
-    description: "Help design user-friendly interfaces and improve user experience for our products."
+    skills: ["Figma", "User Research", "Prototyping", "UI Design", "Wireframing", "Usability Testing", "Adobe XD"],
+    description: "Help design user-friendly interfaces and improve user experience for our products.",
+    details: "CreativeMinds is a globally recognized design consultancy that has been shaping exceptional user experiences since 2012. We've partnered with leading tech companies and startups to create intuitive, beautiful digital products that users love. Our award-winning team of 100+ designers follows a human-centered design approach, combining research, strategy, and creativity to solve complex design challenges across various platforms and industries.",
+    requirements: "Design students proficient in Figma with user research experience preferred. Portfolio demonstrating UX skills is required."
   },
   {
     id: 5,
@@ -262,11 +228,15 @@ export const mockInternships = [
     type: "Full-time",
     locationType: "ON-SITE",
     paid: false,
+    rate: "$0/hr",
     postedDate: "2 weeks ago",
+    startDate: "July 1, 2025",
     industry: "Healthcare",
     duration: "6 months",
-    skills: ["Research", "Data Collection", "Analysis"],
-    description: "Assist in ongoing biomedical research projects and contribute to data collection and analysis."
+    skills: ["Research", "Data Collection", "Analysis", "Lab Techniques", "Scientific Writing", "Statistics", "Clinical Protocols"],
+    description: "Assist in ongoing biomedical research projects and contribute to data collection and analysis.",
+    details: "HealthInnovate is a pioneering medical research organization dedicated to advancing healthcare technology and treatments. Established in 2008, we've contributed to over 50 peer-reviewed studies and clinical trials in areas ranging from cancer research to medical device innovation. Our team of 200+ researchers, scientists",
+    requirements: "Biology/Medical students with research experience and strong analytical skills needed. Must commit to full 6-month program."
   }
 ];
 

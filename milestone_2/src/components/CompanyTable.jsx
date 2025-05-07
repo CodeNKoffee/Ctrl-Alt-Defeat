@@ -1,7 +1,59 @@
 "use client";
 import React, { useState, useMemo } from 'react';
 import DataTable from './Table'; // Changed from './Table' to './DataTable' to match the filename
-import { mockCompanies } from "../../constants/index"; 
+
+export const mockCompanies = [
+  {
+    name: 'Tech Corp',
+    industry: 'Technology',
+    size: 'Large',
+  },
+  {
+    name: 'Finance Inc',
+    industry: 'Finance',
+    size: 'Medium',
+  },
+  {
+    name: 'Health LLC',
+    industry: 'Healthcare',
+    size: 'Small',
+  },
+  {
+    name: 'Microsoft',
+    industry: 'Technology',
+    size: 'Corporate',
+  },
+  {
+    name: 'LSE',
+    industry: 'Electrical Engineering',
+    size: 'Medium',
+  },
+  {
+    name: 'Urban Cafe',
+    industry: 'Food & Beverage',
+    size: 'Small',
+  },
+  {
+    name: 'Global Media',
+    industry: 'Entertainment',
+    size: 'Corporate',
+  },
+  {
+    name: 'Cloud Networks',
+    industry: 'IT Services',
+    size: 'Corporate',
+  },
+  {
+    name: 'Creative Designs',
+    industry: 'Marketing',
+    size: 'Medium',
+  },
+  {
+    name: 'Siemens',
+    industry: 'Technology',
+    size: 'Medium',
+  },
+];
 
 const filterCompanies = (company, searchTerm, selectedIndustry) => {
   const matchesSearch = company.name.toLowerCase().includes(searchTerm.toLowerCase());

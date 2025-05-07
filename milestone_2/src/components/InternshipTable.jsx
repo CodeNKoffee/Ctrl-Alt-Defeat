@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import InternshipRow from './InternshipRow';
 import Filter from './Filter'; // Import the new Filter component
 import { mockInternships } from '../../constants/index'; // Adjust the import path as necessary
+import * as Accordion from '@radix-ui/react-accordion';
 
 export default function InternshipTable({ internships = mockInternships }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -50,15 +51,16 @@ export default function InternshipTable({ internships = mockInternships }) {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="w-full max-w-4xl mb-8">
+    <div className="flex flex-col items-center w-full">
+      {/* Container with consistent max-width */}
+      <div className="w-full max-w-4xl mb-8 px-4"> {/* Added px-4 for padding */}
         <h1 className="text-3xl font-bold mb-6" style={{ color: 'var(--metallica-blue-600)' }}>
           Internship Opportunities
         </h1>
         
-        {/* Search and Filter Toggle Row */}
-        <div className="flex flex-col gap-4 mb-4">
-          <div className="flex gap-4">
+        {/* Search and Filter Toggle Row - now matches internship width */}
+        <div className="flex flex-col gap-4 mb-4 w-full">
+          <div className="flex gap-4 w-full">
             <div className="flex-1">
               <SearchBar 
                 searchTerm={searchTerm}
@@ -144,19 +146,22 @@ export default function InternshipTable({ internships = mockInternships }) {
       </div>
       
       {/* Internship Cards */}
-      <div className="w-full max-w-4xl space-y-3">
-        {filteredInternships.map(internship => (
-          <InternshipRow key={internship.id} internship={internship} />
-        ))}
-        
-        {filteredInternships.length === 0 && (
-          <div className="p-8 text-center text-gray-500">
-            {searchTerm || Object.values(filters).some(Boolean)
-              ? "No internships match your search criteria"
-              : "No internships available at the moment"}
-          </div>
-        )}
-      </div>
+<Accordion.Root type="single" collapsible className="w-full max-w-4xl mx-auto space-y-3">
+  {filteredInternships.map(internship => (
+    <Accordion.Item key={internship.id} value={internship.id}>
+      <InternshipRow internship={internship} />
+    </Accordion.Item>
+  ))}
+
+  {filteredInternships.length === 0 && (
+    <div className="p-8 text-center text-gray-500">
+      {searchTerm || Object.values(filters).some(Boolean)
+        ? "No internships match your search criteria"
+        : "No internships available at the moment"}
     </div>
+  )}
+</Accordion.Root>
+    </div>
+
   );
 }
