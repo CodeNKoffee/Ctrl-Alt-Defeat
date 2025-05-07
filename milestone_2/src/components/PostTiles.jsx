@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import CompanyPost from './CompanyPost';
 import CompanyCreatePost from './CompanyCreatePost';
+import DeleteTileConfirmation from './DeleteTileConfirmation';
 
 export default function PostTiles() {
   const [posts, setPosts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [deletingPostIndex, setDeletingPostIndex] = useState(null);
   const [postPreview, setPostPreview] = useState({
     title: '',
     description: '',
@@ -66,6 +68,28 @@ export default function PostTiles() {
       setPostPreview(post);
       setShowForm(true);
     }
+  };
+
+  const handleDeleteClick = (post) => {
+    const postIndex = posts.findIndex(p => 
+      p.title === post.title && 
+      p.description === post.description
+    );
+    
+    if (postIndex !== -1) {
+      setDeletingPostIndex(postIndex);
+    }
+  };
+  
+  const handleConfirmDelete = () => {
+    if (deletingPostIndex !== null) {
+      setPosts(prevPosts => prevPosts.filter((_, index) => index !== deletingPostIndex));
+      setDeletingPostIndex(null);
+    }
+  };
+  
+  const handleCancelDelete = () => {
+    setDeletingPostIndex(null);
   };
   
   const toggleCreatePost = () => {
@@ -285,6 +309,13 @@ export default function PostTiles() {
         </div>
       )}
       
+      {deletingPostIndex !== null && (
+        <DeleteTileConfirmation 
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
+      
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post, index) => (
@@ -292,6 +323,7 @@ export default function PostTiles() {
               <CompanyPost 
                 post={post} 
                 onUpdateClick={handleUpdateClick}
+                onDeleteClick={handleDeleteClick}
                 compact={true}
               />
             </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function CompanyPost({ post, onUpdateClick, compact = false }) {
+export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compact = false }) {
   const [expanded, setExpanded] = useState(false);
   
   // Mock data for applicants count - in real app this would come from post prop
@@ -24,6 +24,12 @@ export default function CompanyPost({ post, onUpdateClick, compact = false }) {
   const handleUpdateClick = () => {
     if (onUpdateClick) {
       onUpdateClick(post);
+    }
+  };
+  
+  const handleDeleteClick = () => {
+    if (onDeleteClick) {
+      onDeleteClick(post);
     }
   };
 
@@ -240,12 +246,18 @@ export default function CompanyPost({ post, onUpdateClick, compact = false }) {
               {expanded ? 'See less' : 'See more'}
             </button>
           )}
-          <div className={compact ? 'ml-auto' : ''}>
+          <div className={compact ? 'ml-auto flex space-x-2' : 'flex space-x-2'}>
             <button 
               onClick={handleUpdateClick}
               className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-3 py-1 rounded-md text-xs transition-colors"
             >
-              Update Post
+              Update
+            </button>
+            <button 
+              onClick={handleDeleteClick}
+              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-xs transition-colors"
+            >
+              Delete
             </button>
           </div>
         </div>
