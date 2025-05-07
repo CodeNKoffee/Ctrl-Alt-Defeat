@@ -5,7 +5,7 @@ import CompanySizeCard from './cards/CompanySizeCard';
 import CompanyDocumentsCard from './cards/CompanyDocumentsCard';
 import { faChevronDown, faChevronUp, faCheck, faTimes, faExpand } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { INDUSTRY_ICONS } from '../constants/industryIcons';
+import { INDUSTRY_ICONS } from "../../constants";
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ActionButton from "./shared/ActionButton";

@@ -10,6 +10,8 @@ import Header from "@/components/Header";
 import Copyright from "@/components/Copyright";
 import LoginForm from "@/components/LoginForm";
 import BackButton from "@/components/shared/BackButton";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -63,6 +65,105 @@ export default function LoginPage() {
   };
 
   if (!userDetails) return null;
+
+  /**
+   * AMR's NOTIFICATIONS starts here
+   */
+  useEffect( () => {notify()}, [])
+
+  const notify = () => (
+    toast.info('Please check your inbox, your application has been reviewed',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+    
+    toast.success('Someone has applied to one of your internship listings',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.info('A new internship cycle is staring soon!',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.info('Dear student your report status has been updated',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.success('Your appointment has been accepted',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.info('Incoming call',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.info('Reminder: You have an upcoming workshop',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    }),
+
+    toast.info('An attendee has sent a message',{
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", 
+    })
+  );
+
+  /**
+   * AMR's NOTIFICATIONS ends here
+   */
 
   return (
     <div className="min-h-screen flex flex-col kontainer">

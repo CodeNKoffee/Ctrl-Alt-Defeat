@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { faTimes, faCheck, faExpand, faFile, faFileImage, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { INDUSTRY_ICONS } from '../constants/industryIcons';
+import { INDUSTRY_ICONS } from "../../constants";
 import { motion, AnimatePresence } from 'framer-motion';
 import ActionButton from "./shared/ActionButton";
 
