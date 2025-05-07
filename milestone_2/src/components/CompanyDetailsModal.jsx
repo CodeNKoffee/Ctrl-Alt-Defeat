@@ -4,6 +4,7 @@ import { faTimes, faCheck, faExpand, faFile, faFileImage, faDownload } from "@fo
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { INDUSTRY_ICONS } from '../constants/industryIcons';
 import { motion, AnimatePresence } from 'framer-motion';
+import ActionButton from "./shared/ActionButton";
 
 const BORDER = "border-2 border-[#497184]";
 const ROUNDED = "rounded-xl";
@@ -233,12 +234,14 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
           </div>
           {/* Accept/Reject Buttons (outside main border, centered) */}
           <div className="modal-action-row">
-            <button className="companydetails-accept-btn companydetails-action-button button-30 companydetails-width-limiter" onClick={handleAccept}>
+            {/* <button className="companydetails-accept-btn companydetails-action-button button-30 companydetails-width-limiter" onClick={handleAccept}>
               <FontAwesomeIcon icon={faCheck} className="modal-action-icon" /> Accept
             </button>
             <button className="companydetails-reject-btn companydetails-action-button button-30 companydetails-width-limiter" onClick={handleReject}>
               <FontAwesomeIcon icon={faTimes} className="modal-action-icon" /> Reject
-            </button>
+            </button> */}
+            <ActionButton buttonType="accept" onClick={handleAccept} icon={faCheck} text="Accept" widthLimiter="companydetails-width-limiter" iconClassName="modal-action-icon" />
+            <ActionButton buttonType="reject" onClick={handleReject} icon={faTimes} text="Reject" widthLimiter="companydetails-width-limiter" iconClassName="modal-action-icon" />
           </div>
         </div>
       )}

@@ -1007,6 +1007,7 @@ button {
   text-shadow: 0 1px 8px rgba(0,0,0,0.18);
 }
 .modal-feedback-title {
+  font-weight: bold;
   color: #f8fafc !important;
   text-shadow: 0 1px 8px rgba(0,0,0,0.18);
 }
