@@ -166,8 +166,8 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Job Type</label>
-        <div className="flex gap-4 mt-2">
+        <label className={labelClasses}>Internship Type</label>
+        <div className="flex flex-wrap gap-4 mt-2">
           <label className="inline-flex items-center cursor-pointer">
             <input
               type="radio"
@@ -190,11 +190,22 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
             />
             <span className="ml-2 text-[var(--metallica-blue-700)]">Part-time</span>
           </label>
+          <label className="inline-flex items-center cursor-pointer">
+            <input
+              type="radio"
+              name="jobType"
+              value="Internship"
+              checked={form.jobType === 'Internship'}
+              onChange={handleChange}
+              className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
+            />
+            <span className="ml-2 text-[var(--metallica-blue-700)]">Internship</span>
+          </label>
         </div>
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Job Setting</label>
+        <label className={labelClasses}>Internship Setting</label>
         <div className="flex flex-wrap gap-4 mt-2">
           <label className="inline-flex items-center cursor-pointer">
             <input

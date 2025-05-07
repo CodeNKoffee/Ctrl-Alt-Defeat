@@ -6,6 +6,7 @@ export default function PostTiles() {
   const [posts, setPosts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [postPreview, setPostPreview] = useState({
     title: '',
     description: '',
@@ -87,13 +88,71 @@ export default function PostTiles() {
     setShowForm(!showForm);
   };
 
+  // Filter posts based on search query
+  const filteredPosts = posts.filter(post => {
+    const searchText = searchQuery.toLowerCase();
+    return (
+      post.title?.toLowerCase().includes(searchText) ||
+      post.description?.toLowerCase().includes(searchText) ||
+      post.skills?.some(skill => skill.toLowerCase().includes(searchText))
+    );
+  });
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-[var(--metallica-blue-800)]">Internship Posts</h1>
+      <h1 className="text-2xl font-bold text-[var(--metallica-blue-800)] mb-6">Internship Posts</h1>
+      
+      {/* Search and Actions Bar */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+        <div className="flex items-center w-full sm:w-2/3">
+          {/* Search Bar */}
+          <div className="relative flex-grow mr-2">
+            <input
+              type="text"
+              placeholder="Search posts by title, description, or skills..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full border-2 border-[var(--metallica-blue-200)] rounded-md py-2 px-4 pr-10 focus:outline-none focus:border-[var(--metallica-blue-500)]"
+            />
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+              />
+            </svg>
+          </div>
+          
+          {/* Filter Button */}
+          <button className="flex items-center justify-center bg-[var(--metallica-blue-100)] text-[var(--metallica-blue-800)] p-2 rounded-md hover:bg-[var(--metallica-blue-200)] transition-colors">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" 
+              />
+            </svg>
+          </button>
+        </div>
+        
+        {/* Create Post Button */}
         <button
           onClick={toggleCreatePost}
-          className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md shadow-sm transition-colors font-medium"
+          className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md shadow-sm transition-colors font-medium w-full sm:w-auto"
         >
           {showForm ? 'Cancel' : 'Create New Post'}
         </button>
@@ -139,9 +198,28 @@ export default function PostTiles() {
                           <h3 className="text-xl font-bold text-[var(--metallica-blue-800)]">
                             {postPreview.title || "Job Title"}
                           </h3>
-                          <div className="flex items-center text-gray-600 mt-1">
-                            <span className="mr-4">{postPreview.jobSetting || "Job Setting"}</span>
-                            <span>{postPreview.jobType || "Job Type"}</span>
+                          <div className="flex flex-wrap items-center gap-2 mt-1">
+                            {postPreview.jobSetting && (
+                              <span className={`px-2.5 py-1 text-xs rounded-full font-medium border flex items-center
+                                ${postPreview.jobSetting === 'Remote' ? 'bg-teal-100 text-teal-700 border-teal-200' : ''}
+                                ${postPreview.jobSetting === 'On-site' ? 'bg-indigo-100 text-indigo-700 border-indigo-200' : ''}
+                                ${postPreview.jobSetting === 'Hybrid' ? 'bg-cyan-100 text-cyan-700 border-cyan-200' : ''}
+                              `}>
+                                {postPreview.jobSetting}
+                              </span>
+                            )}
+                            
+                            {postPreview.jobType && (
+                              <span className={`px-2.5 py-1 text-xs rounded-full font-medium border flex items-center
+                                ${postPreview.jobType === 'Full-time' ? 'bg-green-100 text-green-700 border-green-200' : ''}
+                                ${postPreview.jobType === 'Part-time' ? 'bg-blue-100 text-blue-700 border-blue-200' : ''}
+                                ${postPreview.jobType === 'Internship' ? 'bg-purple-100 text-purple-700 border-purple-200' : ''}
+                                ${postPreview.jobType === 'Contract' ? 'bg-orange-100 text-orange-700 border-orange-200' : ''}
+                                ${postPreview.jobType === 'Temporary' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' : ''}
+                              `}>
+                                {postPreview.jobType}
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div className="text-right">
@@ -208,8 +286,8 @@ export default function PostTiles() {
       )}
       
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-        {posts.length > 0 ? (
-          posts.map((post, index) => (
+        {filteredPosts.length > 0 ? (
+          filteredPosts.map((post, index) => (
             <div key={index} className="max-w-sm w-full">
               <CompanyPost 
                 post={post} 
@@ -220,8 +298,10 @@ export default function PostTiles() {
           ))
         ) : (
           <div className="col-span-full text-center py-12 bg-white rounded-lg shadow-sm p-8 border border-[var(--metallica-blue-100)]">
-            <p className="text-[var(--metallica-blue-600)] text-lg mb-4">No internship posts yet.</p>
-            {!showForm && (
+            <p className="text-[var(--metallica-blue-600)] text-lg mb-4">
+              {posts.length > 0 ? 'No posts match your search' : 'No internship posts yet.'}
+            </p>
+            {!showForm && posts.length === 0 && (
               <button
                 onClick={toggleCreatePost}
                 className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md shadow-sm transition-colors font-medium"
