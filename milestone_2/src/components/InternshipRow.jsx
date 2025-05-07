@@ -2,9 +2,17 @@
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from 'lucide-react';
 
+const formatDate = (isoDate) => {
+  const date = new Date(isoDate);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+};
 export default function InternshipRow({ internship }) {
   return (
-    <Accordion.Item value={internship.id} className="mb-3 w-full max-w-3xl mx-auto">
+    <Accordion.Item value={internship.id} className="mb-3 w-full max-w-4xl mx-auto">
 
       {/* Header Row (Click to Expand) */}
       <Accordion.Header>
@@ -76,12 +84,12 @@ export default function InternshipRow({ internship }) {
 <div className="flex-1 space-y-4 p-3">
   {/* Start Date & Duration */}
   <div className="space-y-2">
-    <p className="text-sm text-gray-700">
-      <span className="font-semibold">Start Date:</span> {internship.startDate}
-    </p>
-    <p className="text-sm text-gray-700">
-      <span className="font-semibold">Duration:</span> {internship.duration}
-    </p>
+  <p className="text-sm text-gray-700">
+  <span className="font-semibold">Start Date:</span> {formatDate(internship.startDate)}
+  </p>
+  <p className="text-sm text-gray-700">
+  <span className="font-semibold">Duration:</span> {internship.duration}
+  </p>
   </div>
 
   {/* Skills */}
@@ -115,7 +123,6 @@ export default function InternshipRow({ internship }) {
         </div>
         </div>
 
-
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-t border-gray-400 mt-6 pt-3">
           <div className="flex flex-col">
@@ -130,9 +137,7 @@ export default function InternshipRow({ internship }) {
             Apply
           </button>
         </div>
-
       </Accordion.Content>
-
     </Accordion.Item>
   );
 }
