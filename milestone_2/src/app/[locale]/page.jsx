@@ -192,7 +192,7 @@ export default function Home() {
                   {/* Absolutely positioned subtitle */}
                   {animationState >= 3 && (
                     <motion.div
-                      className="absolute top-full mt-2 text-3xl tracking-[.25em] text-[var(--metallica-blue-600)] text-center "
+                      className="absolute top-full mt-2 text-md tracking-[.25em] text-[var(--metallica-blue-600)] text-center "
                       initial="hidden"
                       animate="visible"
                       variants={shiftVariants}
