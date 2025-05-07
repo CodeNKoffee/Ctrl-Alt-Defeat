@@ -1,7 +1,7 @@
 // /app/internships/page.jsx
 'use client'; 
-import InternshipTable from "../../components/InternshipTable";
-import { mockInternships } from "../../components/InternshipTable";
+import InternshipTable from "@/components/InternshipTable";
+import { mockInternships } from "@/components/InternshipTable";
 
 export default function InternshipsPage() {
   return (

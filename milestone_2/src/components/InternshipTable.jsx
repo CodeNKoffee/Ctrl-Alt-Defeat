@@ -4,7 +4,6 @@ import SearchBar from './SearchBar';
 import InternshipRow from './InternshipRow';
 import Filter from './Filter'; // Import the new Filter component
 import { mockInternships } from '../../constants/index'; // Adjust the import path as necessary
-import * as Accordion from '@radix-ui/react-accordion';
 
 export default function InternshipTable({ internships = mockInternships }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,21 +15,21 @@ export default function InternshipTable({ internships = mockInternships }) {
   });
 
   const filteredInternships = internships.filter(internship => {
-    const matchesSearch = 
+    const matchesSearch =
       internship.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       internship.company.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesIndustry = 
+
+    const matchesIndustry =
       !filters.industry || internship.industry === filters.industry;
-    
-    const matchesDuration = 
+
+    const matchesDuration =
       !filters.duration || internship.duration === filters.duration;
-    
-    const matchesPaidStatus = 
-      filters.paid === '' || 
-      (filters.paid === 'paid' && internship.paid) || 
+
+    const matchesPaidStatus =
+      filters.paid === '' ||
+      (filters.paid === 'paid' && internship.paid) ||
       (filters.paid === 'unpaid' && !internship.paid);
-    
+
     return matchesSearch && matchesIndustry && matchesDuration && matchesPaidStatus;
   });
 
@@ -57,12 +56,12 @@ export default function InternshipTable({ internships = mockInternships }) {
         <h1 className="text-3xl font-bold mb-6" style={{ color: 'var(--metallica-blue-600)' }}>
           Internship Opportunities
         </h1>
-        
+
         {/* Search and Filter Toggle Row - now matches internship width */}
         <div className="flex flex-col gap-4 mb-4 w-full">
           <div className="flex gap-4 w-full">
             <div className="flex-1">
-              <SearchBar 
+              <SearchBar
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 placeholder="Search by job title or company..."
@@ -71,17 +70,17 @@ export default function InternshipTable({ internships = mockInternships }) {
             <button
               onClick={toggleFilters}
               className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--metallica-blue-500)] focus:border-transparent text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-4 w-4 text-gray-400" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-  </svg>
-  <span>{showFilters ? 'Hide Filters' : 'Filters'}</span>
-</button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              </svg>
+              <span>{showFilters ? 'Hide Filters' : 'Filters'}</span>
+            </button>
           </div>
 
           {/* Filter Panel - Seamless Transition */}
@@ -92,37 +91,37 @@ export default function InternshipTable({ internships = mockInternships }) {
                   <Filter
                     options={industryOptions}
                     selectedValue={filters.industry}
-                    onChange={(value) => setFilters({...filters, industry: value})}
+                    onChange={(value) => setFilters({ ...filters, industry: value })}
                     label="Industry"
                     placeholder="Industry"
                     id="industry-filter"
                   />
                 </div>
-                
+
                 <div className="flex-1 min-w-[200px]">
                   <Filter
                     options={durationOptions}
                     selectedValue={filters.duration}
-                    onChange={(value) => setFilters({...filters, duration: value})}
+                    onChange={(value) => setFilters({ ...filters, duration: value })}
                     label="Duration"
                     placeholder="Duration"
                     id="duration-filter"
                   />
                 </div>
-                
+
                 <div className="flex-1 min-w-[200px]">
                   <Filter
                     options={paidOptions}
                     selectedValue={
                       filters.paid === '' ? '' :
-                      filters.paid === 'paid' ? 'Paid' : 'Unpaid'
+                        filters.paid === 'paid' ? 'Paid' : 'Unpaid'
                     }
                     onChange={(value) => {
                       setFilters({
                         ...filters,
                         paid: value === 'Both' ? '' :
-                              value === '' ? '' : 
-                              value === 'Paid' ? 'paid' : 'unpaid'
+                          value === '' ? '' :
+                            value === 'Paid' ? 'paid' : 'unpaid'
                       });
                     }}
                     label="Compensation"
@@ -131,7 +130,7 @@ export default function InternshipTable({ internships = mockInternships }) {
                   />
                 </div>
               </div>
-              
+
               <div className="flex justify-end">
                 <button
                   onClick={clearFilters}
@@ -144,23 +143,21 @@ export default function InternshipTable({ internships = mockInternships }) {
           )}
         </div>
       </div>
-      
-      {/* Internship Cards */}
-<Accordion.Root type="single" collapsible className="w-full max-w-4xl mx-auto space-y-3">
-  {filteredInternships.map(internship => (
-    <Accordion.Item key={internship.id} value={internship.id}>
-      <InternshipRow internship={internship} />
-    </Accordion.Item>
-  ))}
 
-  {filteredInternships.length === 0 && (
-    <div className="p-8 text-center text-gray-500">
-      {searchTerm || Object.values(filters).some(Boolean)
-        ? "No internships match your search criteria"
-        : "No internships available at the moment"}
-    </div>
-  )}
-</Accordion.Root>
+      {/* Internship Cards */}
+      <div className="w-full max-w-4xl mx-auto space-y-3">
+        {filteredInternships.map(internship => (
+          <InternshipRow key={internship.id} internship={internship} />
+        ))}
+
+        {filteredInternships.length === 0 && (
+          <div className="p-8 text-center text-gray-500">
+            {searchTerm || Object.values(filters).some(Boolean)
+              ? "No internships match your search criteria"
+              : "No internships available at the moment"}
+          </div>
+        )}
+      </div>
     </div>
 
   );
