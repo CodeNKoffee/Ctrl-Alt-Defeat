@@ -9,7 +9,7 @@ import TileEdit from '@/components/TileEdit';
 import DeleteTileConfirmation from '@/components/DeleteTileConfirmation';
 import Header from '@/components/Header';
 
-export default function HomePage() {
+export default function CompanyDashboard() {
   const [posts, setPosts] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [deleteIndex, setDeleteIndex] = useState(null);
