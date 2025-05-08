@@ -162,6 +162,7 @@ export const mockInternships = [
     rate: "$0/hr",
     postedDate: "2 days ago",
     startDate: "2025-01-15", // Changed from "January 15, 2025"
+    appliedDate: "2025-01-15", // Changed from "January 15, 2025"
     industry: "Technology",
     duration: "3 months",
     skills: ["JavaScript", "React", "TypeScript", "Redux", "HTML5", "CSS3", "REST APIs"],
@@ -180,6 +181,7 @@ export const mockInternships = [
     rate: "$0/hr",
     postedDate: "1 week ago",
     startDate: "2025-02-01", // Changed from "February 1, 2025"
+    appliedDate: "2025-01-15", // Changed from "January 15, 2025"
     industry: "Marketing",
     duration: "6 months",
     skills: ["SEO", "Content Creation", "Social Media", "Google Analytics", "Email Marketing", "Copywriting", "Market Research"],
@@ -198,6 +200,7 @@ export const mockInternships = [
     rate: "$0/hr",
     postedDate: "3 days ago",
     startDate: "2025-03-01", // Changed from "March 1, 2025"
+    appliedDate: "2025-01-15", // Changed from "January 15, 2025"
     industry: "Technology",
     duration: "4 months",
     skills: ["Python", "Machine Learning", "Data Analysis", "SQL", "Pandas", "NumPy", "Data Visualization"],
@@ -216,6 +219,7 @@ export const mockInternships = [
     rate: "$0/hr",
     postedDate: "5 days ago",
     startDate: "2025-06-01", // Changed from "June 1, 2025"
+    appliedDate: "2025-01-15", // Changed from "January 15, 2025"
     industry: "Design",
     duration: "4 months",
     skills: ["Figma", "User Research", "Prototyping", "UI Design", "Wireframing", "Usability Testing", "Adobe XD"],
@@ -234,6 +238,7 @@ export const mockInternships = [
     rate: "$0/hr",
     postedDate: "2 weeks ago",
     startDate: "2025-04-01", // Changed from "April 1, 2025"
+    appliedDate: "2025-01-15", // Changed from "January 15, 2025"
     industry: "Healthcare",
     duration: "6 months",
     skills: ["Research", "Data Collection", "Analysis", "Lab Techniques", "Scientific Writing", "Statistics", "Clinical Protocols"],

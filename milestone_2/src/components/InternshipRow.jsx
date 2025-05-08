@@ -110,9 +110,11 @@ export default function InternshipRow({ internship, type }) {
               aria-hidden
             />
 
-            {/* Posted Date */}
+            {/* Posted/Applied/Started Date (Header Row) */}
             <span className="absolute bottom-2 right-2 text-xs text-gray-500">
-              posted {internship.postedDate}
+              {type === 'my' && `started on ${formatDate(internship.startDate)}`}
+              {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
+              {type === 'regular' && `posted on ${formatDate(internship.postedDate)}`}
             </span>
           </div>
 
@@ -186,13 +188,11 @@ export default function InternshipRow({ internship, type }) {
               <p className="text-base font-bold text-gray-800">
                 {internship.rate || "Rate not specified"}
               </p>
-              {!internship.appliedDate && (
-                <p className="text-xs text-gray-500 mt-0.5">
-                  {type === 'my' && `started on ${formatDate(internship.startDate)}`}
-                  {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
-                  {type === 'regular' && `posted on ${formatDate(internship.postedDate)}`}
-                </p>
-              )}
+              <p className="text-xs text-gray-500 mt-0.5">
+                {type === 'my' && `started on ${formatDate(internship.startDate)}`}
+                {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
+                {type === 'regular' && `posted on ${formatDate(internship.postedDate)}`}
+              </p>
             </div>
             {type === 'regular' ? (
               <button className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm">
