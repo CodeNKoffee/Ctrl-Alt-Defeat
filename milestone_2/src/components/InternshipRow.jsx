@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import StatusBadge from './shared/StatusBadge';
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";
@@ -12,7 +13,7 @@ const formatDate = (isoDate) => {
     day: 'numeric'
   });
 };
-export default function InternshipRow({ internship }) {
+export default function InternshipRow({ internship, type }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
@@ -66,11 +67,41 @@ export default function InternshipRow({ internship }) {
               </div>
             </div>
 
-            {/* Right: Compensation */}
+            {/* Right: Status Badge */}
             <div className="flex flex-col items-end w-28 flex-shrink-0 space-y-2">
-              <span className={`font-semibold text-sm ${internship.paid ? 'text-green-600' : 'text-gray-600'}`}>
-                {internship.paid ? '$ Paid' : 'Unpaid'}
-              </span>
+              {type === 'regular' && (
+                <StatusBadge color={internship.paid ? 'bg-green-100 text-green-800 border-green-400' : 'bg-gray-100 text-gray-600 border-gray-400'} className="border">
+                  {internship.paid ? '$ Paid' : 'Unpaid'}
+                </StatusBadge>
+              )}
+
+              {type === 'my' && (
+                <StatusBadge
+                  color={
+                    internship.status === 'current' ? 'bg-blue-100 text-blue-800 border-blue-400' :
+                      internship.status === 'completed' ? 'bg-green-100 text-green-800 border-green-400' :
+                        internship.status === 'evaluated' ? 'bg-purple-100 text-purple-800 border-purple-400' :
+                          'bg-gray-100 text-gray-600 border-gray-400'
+                  }
+                  className="border"
+                >
+                  {internship.status ? internship.status.toUpperCase() : 'CURRENT'}
+                </StatusBadge>
+              )}
+
+              {type === 'applied' && (
+                <StatusBadge
+                  color={
+                    internship.status === 'accepted' ? 'bg-green-100 text-green-800 border-green-400' :
+                      internship.status === 'rejected' ? 'bg-red-100 text-red-800 border-red-400' :
+                        internship.status === 'finalized' ? 'bg-purple-100 text-purple-800 border-purple-400' :
+                          'bg-yellow-100 text-yellow-800 border-yellow-400'
+                  }
+                  className="border"
+                >
+                  {internship.status ? internship.status.toUpperCase() : 'PENDING'}
+                </StatusBadge>
+              )}
             </div>
 
             {/* Chevron Icon */}
@@ -99,11 +130,11 @@ export default function InternshipRow({ internship }) {
       {/* Collapsible Content */}
       <div
         className={`overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] transform-gpu
-                   ${isOpen ? 'max-h-[2000px]' : 'max-h-0'}`}
+                  ${isOpen ? 'max-h-[2000px]' : 'max-h-0'}`}
       >
         <div className={`px-4 py-4 bg-white rounded-b-lg border border-t-0 border-[#5DB2C7] mt-1 font-['IBM_Plex_Sans']
-                       transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] transform-gpu origin-top
-                       ${isOpen ? 'translate-y-0 scale-y-100' : 'translate-y-[-100%] scale-y-0'}`}>
+                      transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] transform-gpu origin-top
+                      ${isOpen ? 'translate-y-0 scale-y-100' : 'translate-y-[-100%] scale-y-0'}`}>
           {/* Section 1 & 2 */}
           <div className="flex flex-col md:flex-row gap-6 mb-4">
             {/* Left */}
@@ -161,15 +192,18 @@ export default function InternshipRow({ internship }) {
                 </p>
               )}
             </div>
-            {internship.appliedDate && (
+            {type === 'regular' ? (
+              <button className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm">
+                Apply
+              </button>
+            ) : internship.appliedDate ? (
               <button
                 className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
                 onClick={() => router.push(`/dashboard/student/applied-internships/${internship.id}`)}
               >
                 View Application
               </button>
-            )}
-            {!internship.appliedDate && (
+            ) : (
               <button className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm">
                 Apply
               </button>

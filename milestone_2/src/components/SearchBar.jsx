@@ -9,7 +9,7 @@ export default function SearchBar({ searchTerm, setSearchTerm, placeholder = "Se
           placeholder={placeholder}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full py-2 pl-9 pr-4 appearance-none bg-white/80 backdrop-blur-sm border-2 border-gray-300 hover:border-[#5DB2C7] hover:cursor-pointer text-sm text-gray-800 rounded-full shadow-sm focus:outline-none focus:ring-1 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300"
+          className="w-full py-3 pl-9 pr-4 appearance-none bg-white/80 backdrop-blur-sm border-2 border-gray-300 hover:border-[#5DB2C7] hover:cursor-pointer text-sm text-gray-800 rounded-full shadow-sm focus:outline-none focus:ring-1 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300"
         />
         <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
           <svg

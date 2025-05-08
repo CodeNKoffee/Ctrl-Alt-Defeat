@@ -88,7 +88,7 @@ export default function InternshipList({
 
         {/* Status Tabs and Date Picker Row */}
         {displayStatuses.length > 0 && (
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2 mb-4">
             {/* Status Tabs */}
             <div className="flex flex-wrap gap-2">
               {['all', ...displayStatuses].map((tab) => (
