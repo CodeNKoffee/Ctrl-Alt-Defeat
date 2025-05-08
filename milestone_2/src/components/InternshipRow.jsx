@@ -188,7 +188,9 @@ export default function InternshipRow({ internship, type }) {
               </p>
               {!internship.appliedDate && (
                 <p className="text-xs text-gray-500 mt-0.5">
-                  posted {internship.postedDate}
+                  {type === 'my' && `started on ${formatDate(internship.startDate)}`}
+                  {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
+                  {type === 'regular' && `posted on ${formatDate(internship.postedDate)}`}
                 </p>
               )}
             </div>
