@@ -190,17 +190,6 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
             />
             <span className="ml-2 text-[var(--metallica-blue-700)]">Part-time</span>
           </label>
-          <label className="inline-flex items-center cursor-pointer">
-            <input
-              type="radio"
-              name="jobType"
-              value="Internship"
-              checked={form.jobType === 'Internship'}
-              onChange={handleChange}
-              className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
-            />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">Internship</span>
-          </label>
         </div>
       </div>
 
