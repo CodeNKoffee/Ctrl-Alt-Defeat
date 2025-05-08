@@ -6,7 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 
 export default function DatePicker({ selectedDate, onDateChange }) {
-  const parsedDate = typeof selectedDate === 'string' 
+  const parsedDate = typeof selectedDate === 'string'
     ? parse(selectedDate, 'yyyy-MM-dd', new Date())
     : selectedDate;
 
@@ -20,10 +20,9 @@ export default function DatePicker({ selectedDate, onDateChange }) {
         <button
           type="button"
           className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center
-            ${
-              parsedDate
-                ? "bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]"
-                : "bg-white text-gray-600 border border-gray-300 hover:bg-gray-50"
+            ${parsedDate
+              ? "bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]"
+              : "bg-white text-gray-600 border border-gray-300 hover:bg-gray-50"
             }`}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
@@ -31,7 +30,7 @@ export default function DatePicker({ selectedDate, onDateChange }) {
             {parsedDate ? format(parsedDate, "MMM d, yyyy") : "Filter by date"}
           </span>
           {parsedDate && (
-            <X 
+            <X
               className="ml-2 h-4 w-4 text-gray-500 hover:text-[#2a5f74]"
               onClick={(e) => {
                 e.stopPropagation();

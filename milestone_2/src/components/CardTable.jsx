@@ -1,96 +1,99 @@
 "use client";
+import { useState } from 'react';
 import SearchBar from './SearchBar';
 import Filter from './Filter';
 
 export default function CardTable({
   title = "",
   data = [],
-  filterFunction,
+  filterFunction = () => true,
   emptyMessage = "No items found",
-  searchConfig = {},
-  filterConfig = {},
+  searchConfig = {
+    searchTerm: '',
+    onSearchChange: () => { },
+    placeholder: 'Search...',
+    hideSearchBar: false
+  },
+  filterConfig = {
+    showFilter: false,
+    filterOptions: [],
+    selectedFilter: '',
+    onFilterChange: () => { },
+    filterLabel: "Filter"
+  },
   renderCard,
   renderContainer,
   customSearchBar = null
 }) {
-  const { 
-    searchTerm = '', 
+  const {
+    searchTerm = '',
     onSearchChange,
     placeholder = "Search...",
     hideSearchBar = false
   } = searchConfig;
 
-  const { 
+  const {
     showFilter = false,
     filterOptions = [],
     selectedFilter = '',
     onFilterChange,
-    filterLabel = "Filter" 
+    filterLabel = "Filter"
   } = filterConfig;
 
-  const filteredData = data.filter(item => 
-    filterFunction(item, searchTerm, selectedFilter)
-  );
+  const filteredData = data.filter(filterFunction);
 
   const Container = renderContainer
     ? ({ children }) => renderContainer({ children })
     : ({ children }) => <div className="w-full space-y-3">{children}</div>;
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
-      <div className="mb-2">
-        {/* Title Section */}
-        {title && (
-          <h1 className="text-3xl font-bold mb-6 text-left text-[#2a5f74] relative">
-            {title}
-            <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-          </h1>
-        )}
+    <div className="w-full">
+      {/* Title */}
+      {title && (
+        <h1 className="text-3xl font-bold mb-6 text-left text-[#2a5f74] relative">
+          {title}
+          <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      )}
 
-        {/* Search and Filter Row */}
-        {!hideSearchBar && (
-          <div className="w-full mb-2">
-            {customSearchBar ? (
-              customSearchBar
-            ) : (
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6 w-full">
-                <div className="flex-1">
-                  <SearchBar 
-                    searchTerm={searchTerm} 
-                    setSearchTerm={onSearchChange} 
-                    placeholder={placeholder}
-                  />
-                </div>
-                {showFilter && (
-                  <div className="flex-1">
-                    <Filter 
-                      options={filterOptions}
-                      selectedValue={selectedFilter}
-                      onChange={onFilterChange}
-                      label={filterLabel}
-                      placeholder="Select an option"
-                    />
-                  </div>
-                )}
+      {/* Search Bar */}
+      {!hideSearchBar && (
+        <div className="w-full mb-4">
+          <SearchBar
+            searchTerm={searchTerm}
+            setSearchTerm={onSearchChange}
+            placeholder={placeholder}
+          />
+        </div>
+      )}
+
+      {/* Filter Bar */}
+      {showFilter && (
+        <div className="w-full mb-4">
+          <Filter
+            options={filterOptions}
+            selectedValue={selectedFilter}
+            onChange={onFilterChange}
+            label={filterLabel}
+            placeholder="Select an option"
+          />
+        </div>
+      )}
+
+      {/* Cards Container - Only show content when we have data or if we need to display an empty message */}
+      {(filteredData.length > 0 || data.length > 0) && (
+        <Container>
+          {filteredData.length > 0 ? (
+            filteredData.map((item) => renderCard(item))
+          ) : (
+            data.length > 0 && (
+              <div className="p-8 text-center text-gray-500 border border-dashed border-gray-300 rounded-lg">
+                {emptyMessage}
               </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Cards Section */}
-      <Container>
-        {filteredData.map((item) => renderCard(item))}
-        
-        {filteredData.length === 0 && (
-          <div className="text-center text-gray-500">
-            {typeof emptyMessage === 'function' 
-              ? emptyMessage(searchTerm)
-              : emptyMessage.replace(/{searchTerm}/g, searchTerm)
-            }
-          </div>
-        )}
-      </Container>
+            )
+          )}
+        </Container>
+      )}
     </div>
   );
 }

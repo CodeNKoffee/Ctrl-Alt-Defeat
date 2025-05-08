@@ -1,8 +1,10 @@
 "use client";
-import {useState} from 'react';
-import { ChevronDownIcon } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const formatDate = (isoDate) => {
+  if (!isoDate) return "-";
   const date = new Date(isoDate);
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -14,6 +16,7 @@ export default function InternshipRow({ internship }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
+  const router = useRouter();
 
   const handleToggle = () => {
     if (!isOpen) {
@@ -71,7 +74,7 @@ export default function InternshipRow({ internship }) {
             </div>
 
             {/* Chevron Icon */}
-            <ChevronDownIcon
+            <ChevronDown
               className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 h-5 w-5 text-gray-500 transition-transform duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] ${isOpen ? 'rotate-180' : ''}`}
               aria-hidden
             />
@@ -152,13 +155,25 @@ export default function InternshipRow({ internship }) {
               <p className="text-base font-bold text-gray-800">
                 {internship.rate || "Rate not specified"}
               </p>
-              <p className="text-xs text-gray-500 mt-0.5">
-                posted {internship.postedDate}
-              </p>
+              {!internship.appliedDate && (
+                <p className="text-xs text-gray-500 mt-0.5">
+                  posted {internship.postedDate}
+                </p>
+              )}
             </div>
-            <button className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm">
-              Apply
-            </button>
+            {internship.appliedDate && (
+              <button
+                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
+                onClick={() => router.push(`/dashboard/student/applied-internships/${internship.id}`)}
+              >
+                View Application
+              </button>
+            )}
+            {!internship.appliedDate && (
+              <button className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm">
+                Apply
+              </button>
+            )}
           </div>
         </div>
       </div>
