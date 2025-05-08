@@ -1,7 +1,6 @@
 "use client";
-import { useState } from 'react';
 import SearchBar from './SearchBar';
-import IndustryFilter from './Filter';
+import Filter from './Filter';
 
 export default function CardTable({
   title = "",
@@ -10,14 +9,17 @@ export default function CardTable({
   emptyMessage = "No items found",
   searchConfig = {},
   filterConfig = {},
-  renderCard // New prop for custom card rendering
+  renderCard,
+  renderContainer,
+  customSearchBar = null
 }) {
   const { 
     searchTerm = '', 
-    onSearchChange, 
-    placeholder = "Search..." 
+    onSearchChange,
+    placeholder = "Search...",
+    hideSearchBar = false
   } = searchConfig;
-  
+
   const { 
     showFilter = false,
     filterOptions = [],
@@ -30,53 +32,65 @@ export default function CardTable({
     filterFunction(item, searchTerm, selectedFilter)
   );
 
+  const Container = renderContainer
+    ? ({ children }) => renderContainer({ children })
+    : ({ children }) => <div className="w-full space-y-3">{children}</div>;
+
   return (
-    <div className="flex flex-col items-center">
-      {/* Header Section */}
-      <div className="w-full max-w-4xl mb-8">
+    <div className="w-full max-w-3xl mx-auto">
+      <div className="mb-2">
+        {/* Title Section */}
         {title && (
-          <h1 className="text-3xl font-bold mb-4 mt-6" style={{ color: 'var(--metallica-blue-600)' }}>
+          <h1 className="text-3xl font-bold mb-6 text-left text-[#2a5f74] relative">
             {title}
+            <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
           </h1>
         )}
-        
+
         {/* Search and Filter Row */}
-        <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-4">
-          <div className="flex-1">
-            <SearchBar 
-              searchTerm={searchTerm} 
-              setSearchTerm={onSearchChange} 
-              placeholder={placeholder}
-            />
+        {!hideSearchBar && (
+          <div className="w-full mb-2">
+            {customSearchBar ? (
+              customSearchBar
+            ) : (
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6 w-full">
+                <div className="flex-1">
+                  <SearchBar 
+                    searchTerm={searchTerm} 
+                    setSearchTerm={onSearchChange} 
+                    placeholder={placeholder}
+                  />
+                </div>
+                {showFilter && (
+                  <div className="flex-1">
+                    <Filter 
+                      options={filterOptions}
+                      selectedValue={selectedFilter}
+                      onChange={onFilterChange}
+                      label={filterLabel}
+                      placeholder="Select an option"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-          {showFilter && (
-            <div className="flex-1">
-              <IndustryFilter 
-                industries={filterOptions}
-                selectedIndustry={selectedFilter}
-                onIndustryChange={onFilterChange}
-                label={filterLabel}
-              />
-            </div>
-          )}
-        </div>
+        )}
       </div>
 
-      {/* Card Grid Section */}
-      <div className="w-full max-w-4xl space-y-3">
-        {filteredData.map((item) => (
-          renderCard(item)
-        ))}
-
+      {/* Cards Section */}
+      <Container>
+        {filteredData.map((item) => renderCard(item))}
+        
         {filteredData.length === 0 && (
-          <div className="p-8 text-center text-gray-500">
+          <div className="text-center text-gray-500">
             {typeof emptyMessage === 'function' 
               ? emptyMessage(searchTerm)
               : emptyMessage.replace(/{searchTerm}/g, searchTerm)
             }
           </div>
         )}
-      </div>
+      </Container>
     </div>
   );
 }
