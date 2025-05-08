@@ -1,6 +1,5 @@
 "use client";
 import { useState } from 'react';
-import * as Accordion from '@radix-ui/react-accordion';
 import CardTable from './CardTable';
 import DatePicker from './DatePicker';
 import InternshipRow from './InternshipRow';
@@ -15,44 +14,44 @@ export default function MyInternships() {
     const searchLower = searchTerm.toLowerCase();
     const matchesSearch =
       internship.title.toLowerCase().includes(searchLower) ||
-      internship.company.toLowerCase().includes(searchLower);
+      internship.company.toLowerCase().includes(searchLower) ||
+      (internship.skills && internship.skills.some(skill => 
+        skill.toLowerCase().includes(searchLower))
+      );
   
     const matchesStatus =
       activeTab === 'all' || 
       internship.status?.toLowerCase() === activeTab;
   
-    // Exact date match comparison
     const matchesDate = !selectedDate || (
-    internship.startDate && 
-    new Date(internship.startDate).toDateString() === new Date(selectedDate).toDateString()
-  );
-
+      internship.startDate && 
+      new Date(internship.startDate).toDateString() === new Date(selectedDate).toDateString()
+    );
   
     return matchesSearch && matchesStatus && matchesDate;
   };
 
   return (
-    <div className="flex flex-col items-center w-full">
-      <div className="w-full max-w-4xl px-4">
-        {/* First CardTable - for title and search */}
+    <div className="w-full px-4 py-6 space-y-4">
+      <div className="w-full max-w-3xl mx-auto">
+        {/* First CardTable for Title and Search Bar */}
         <CardTable
           title="MY INTERNSHIPS"
-          data={[]}
+          data={[]} 
           filterFunction={() => true}
+          emptyMessage=""
           searchConfig={{
             searchTerm: searchTerm,
             onSearchChange: setSearchTerm,
-            placeholder: 'Search by job title or company...',
+            placeholder: 'Search by job title, company, or skills...',
+            hideSearchBar: false
           }}
-          filterConfig={{
-            showFilter: false,
-          }}
-          emptyMessage=""
+          filterConfig={{ showFilter: false }}
           renderCard={() => null}
         />
 
-        {/* Status Tabs and DatePicker */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+        {/* Status Tabs and Date Picker Row */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2">
           {/* Status Tabs */}
           <div className="flex flex-wrap gap-2">
             {['all', 'current', 'completed', 'evaluated'].map((tab) => (
@@ -71,34 +70,27 @@ export default function MyInternships() {
             ))}
           </div>
           
-          <div>
-            <DatePicker
-              selectedDate={selectedDate}
-              onDateChange={setSelectedDate}
-            />
-          </div>
+          <DatePicker
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+          />
         </div>
 
-        {/* Second CardTable - for cards only */}
+        {/* Second CardTable for Internship Cards */}
         <CardTable
           data={mockInternships}
           filterFunction={filterFunction}
           emptyMessage="No internships found matching your criteria."
           searchConfig={{
-            searchTerm: searchTerm,
-            onSearchChange: setSearchTerm,
-            placeholder: '',
-            hideSearchBar: true, // Add this prop to CardTable component
+            hideSearchBar: true
           }}
-          renderContainer={({ children }) => (
-            <Accordion.Root type="single" collapsible className="space-y-3">
-              {children}
-            </Accordion.Root>
-          )}
+          filterConfig={{ showFilter: false }}
           renderCard={(internship) => (
-            <Accordion.Item key={internship.id} value={internship.id}>
-              <InternshipRow internship={internship} />
-            </Accordion.Item>
+            <InternshipRow 
+              key={internship.id} 
+              internship={internship} 
+              className="mb-3"
+            />
           )}
         />
       </div>

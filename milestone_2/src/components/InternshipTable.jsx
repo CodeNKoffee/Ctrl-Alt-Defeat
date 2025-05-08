@@ -1,9 +1,9 @@
 "use client";
 import { useState } from 'react';
-import CardTable from './CardTable';
 import InternshipRow from './InternshipRow';
-import Filter from './Filter'; // Import the new Filter component
-import { mockInternships } from '../../constants/index'; // Adjust the import path as necessary
+import Filter from './Filter';
+import SearchBar from './SearchBar';
+import { mockInternships } from '../../constants/index';
 
 export default function InternshipTable({ internships = mockInternships }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -51,114 +51,115 @@ export default function InternshipTable({ internships = mockInternships }) {
 
   return (
     <div className="flex flex-col items-center w-full">
-      {/* Container with consistent max-width */}
-      <div className="w-full max-w-4xl mb-8 px-4"> {/* Added px-4 for padding */}
-        <h1 className="text-3xl font-bold mb-6" style={{ color: 'var(--metallica-blue-600)' }}>
-          Internship Opportunities
-        </h1>
+      {/* Main container with consistent width */}
+      <div className="w-full max-w-3xl mx-auto px-4">
+        {/* Title */}
+        <h1 className="text-3xl font-bold mb-6 text-left text-[#2a5f74] relative">
+            INTERNSHIP OPPORTUNITIES
+            <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
+          </h1>
 
-        {/* Search and Filter Toggle Row - now matches internship width */}
-        <div className="flex flex-col gap-4 mb-4 w-full">
-          <div className="flex gap-4 w-full">
-            <div className="flex-1">
-              <SearchBar
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-                placeholder="Search by job title or company..."
-              />
-            </div>
-            <button
-              onClick={toggleFilters}
-              className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--metallica-blue-500)] focus:border-transparent text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-              </svg>
-              <span>{showFilters ? 'Hide Filters' : 'Filters'}</span>
-            </button>
+        {/* Search and Filter Button Row */}
+        <div className="flex gap-4 w-full mb-4">
+          {/* Search Bar - takes remaining space */}
+          <div className="flex-1">
+            <SearchBar
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              placeholder="Search by job title or company..."
+            />
           </div>
-
-      {/* Filter panel */}
-      {showFilters && (
-      <div className="w-full max-w-4xl px-4">
-        <div className="flex flex-col gap-4 mb-4 w-full max-w-4xl mx-auto">
-          <div className="flex flex-col gap-4 pt-2">
-            <div className="flex flex-wrap gap-4 w-full max-w-4xl mx-auto"> 
-              <div className="flex-1 min-w-[200px] self-start">
-                  <Filter
-                    options={industryOptions}
-                    selectedValue={filters.industry}
-                    onChange={(value) => setFilters({ ...filters, industry: value })}
-                    label="Industry"
-                    placeholder="Industry"
-                    id="industry-filter"
-                  />
-                </div>
-
-                <div className="flex-1 min-w-[200px]">
-                  <Filter
-                    options={durationOptions}
-                    selectedValue={filters.duration}
-                    onChange={(value) => setFilters({ ...filters, duration: value })}
-                    label="Duration"
-                    placeholder="Duration"
-                    id="duration-filter"
-                  />
-                </div>
-
-                <div className="flex-1 min-w-[200px]">
-                  <Filter
-                    options={paidOptions}
-                    selectedValue={
-                      filters.paid === '' ? '' :
-                        filters.paid === 'paid' ? 'Paid' : 'Unpaid'
-                    }
-                    onChange={(value) => {
-                      setFilters({
-                        ...filters,
-                        paid: value === 'Both' ? '' :
-                          value === '' ? '' :
-                            value === 'Paid' ? 'paid' : 'unpaid'
-                      });
-                    }}
-                    label="Compensation"
-                    placeholder="Paid/Unpaid"
-                    id="paid-filter"
-                  />
-                </div>
-              </div>
-
-              <div className="flex justify-end">
-                <button
-                  onClick={clearFilters}
-                  className="text-sm text-gray-70 hover:text-gray-80 hover:underline"
-                >
-                  Clear All Filters
-                </button>
-              </div>
-            </div>
-          </div>
+          
+          <button
+            onClick={toggleFilters}
+            className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-300 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+            <span>{showFilters ? 'Hide Filters' : 'Filters'}</span>
+          </button>
         </div>
-      </div>
 
-      {/* Internship Cards */}
-      <div className="w-full max-w-4xl mx-auto space-y-3">
-        {filteredInternships.map(internship => (
-          <InternshipRow key={internship.id} internship={internship} />
-        ))}
+        {/* Filter panel */}
+        {showFilters && (
+          <div className="w-full mb-4 p-2 ">
+            <div className="flex flex-wrap gap-4 w-full max-w-3xl mx-auto">
+              <div className="flex-1 min-w-[200px]">
+                <Filter
+                  options={industryOptions}
+                  selectedValue={filters.industry}
+                  onChange={(value) => setFilters({ ...filters, industry: value })}
+                  label="Industry"
+                  placeholder="Industry"
+                  id="industry-filter"
+                />
+              </div>
 
-        {filteredInternships.length === 0 && (
-          <div className="p-8 text-center text-gray-500">
-            {searchTerm || Object.values(filters).some(Boolean)
-              ? "No internships match your search criteria"
-              : "No internships available at the moment"}
+              <div className="flex-1 min-w-[200px]">
+                <Filter
+                  options={durationOptions}
+                  selectedValue={filters.duration}
+                  onChange={(value) => setFilters({ ...filters, duration: value })}
+                  label="Duration"
+                  placeholder="Duration"
+                  id="duration-filter"
+                />
+              </div>
+
+              <div className="flex-1 min-w-[200px]">
+                <Filter
+                  options={paidOptions}
+                  selectedValue={
+                    filters.paid === '' ? '' :
+                      filters.paid === 'paid' ? 'Paid' : 'Unpaid'
+                  }
+                  onChange={(value) => {
+                    setFilters({
+                      ...filters,
+                      paid: value === 'Both' ? '' :
+                        value === '' ? '' :
+                          value === 'Paid' ? 'paid' : 'unpaid'
+                    });
+                  }}
+                  label="Compensation"
+                  placeholder="Paid/Unpaid"
+                  id="paid-filter"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end mt-2">
+              <button
+                onClick={clearFilters}
+                className="text-xs text-gray-700 hover:text-gray-800 hover:underline"
+              >
+                Clear All Filters
+              </button>
+            </div>
           </div>
         )}
+
+        {/* Internship Cards */}
+        <div className="w-full space-y-3">
+          {filteredInternships.map(internship => (
+            <InternshipRow key={internship.id} internship={internship} />
+          ))}
+
+          {filteredInternships.length === 0 && (
+            <div className="p-8 text-center text-gray-500">
+              {searchTerm || Object.values(filters).some(Boolean)
+                ? "No internships match your search criteria"
+                : "No internships available at the moment"}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

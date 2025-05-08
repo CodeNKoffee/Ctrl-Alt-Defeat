@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import {useState} from 'react';
 import { ChevronDownIcon } from 'lucide-react';
 
 const formatDate = (isoDate) => {
@@ -108,7 +108,7 @@ export default function InternshipRow({ internship }) {
               {/* Start Date & Duration */}
               <div className="space-y-2">
                 <p className="text-sm text-gray-700">
-                  <span className="font-semibold">Start Date:</span> {internship.startDate}
+                  <span className="font-semibold">Start Date:</span> {formatDate(internship.startDate)}
                 </p>
                 <p className="text-sm text-gray-700">
                   <span className="font-semibold">Duration:</span> {internship.duration}

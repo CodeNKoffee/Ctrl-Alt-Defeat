@@ -1,11 +1,6 @@
 'use client'; 
-<<<<<<< HEAD:milestone_2/src/app/internship/page.jsx
 import InternshipTable from '@/components/InternshipTable';
-import { mockInternships } from '../../../constants';
-=======
-import InternshipTable from "@/components/InternshipTable";
-import { mockInternships } from "@/components/InternshipTable";
->>>>>>> 368e90bfd1a08332f1c71bee4485cb1b09a4e30f:milestone_2/src/app/[locale]/dashboard/internship/page.jsx
+import { mockInternships } from '../../../../../constants/index';
 
 export default function InternshipsPage() {
   return (
