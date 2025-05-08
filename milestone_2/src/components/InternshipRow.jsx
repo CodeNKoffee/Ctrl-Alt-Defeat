@@ -30,7 +30,7 @@ export default function InternshipRow({ internship }) {
         <button
           onClick={handleToggle}
           className={`group flex flex-col p-4 w-full bg-[#E2F4F7] rounded-lg border-2 border-[#5DB2C7] hover:shadow-md transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] gap-4 relative font-['IBM_Plex_Sans']
-                     ${isHeightAnimating ? 'pb-8' : ''} overflow-hidden`}
+                    ${isHeightAnimating ? 'pb-8' : ''} overflow-hidden`}
         >
           {/* Top Row */}
           <div className="flex items-start gap-4">
