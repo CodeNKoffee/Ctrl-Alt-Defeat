@@ -13,6 +13,27 @@ const formatDate = (isoDate) => {
     day: 'numeric'
   });
 };
+
+// Helper to show how long ago a date was
+const timeAgo = (isoDate) => {
+  if (!isoDate) return "-";
+  const now = new Date();
+  const date = new Date(isoDate);
+  const diff = now - date;
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30);
+  if (months > 0) return `posted ${months} month${months > 1 ? 's' : ''} ago`;
+  if (weeks > 0) return `posted ${weeks} week${weeks > 1 ? 's' : ''} ago`;
+  if (days > 0) return `posted ${days} day${days > 1 ? 's' : ''} ago`;
+  if (hours > 0) return `posted ${hours} hour${hours > 1 ? 's' : ''} ago`;
+  if (minutes > 0) return `posted ${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  return 'posted just now';
+};
+
 export default function InternshipRow({ internship, type }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
@@ -114,7 +135,7 @@ export default function InternshipRow({ internship, type }) {
             <span className="absolute bottom-2 right-2 text-xs text-gray-500">
               {type === 'my' && `started on ${formatDate(internship.startDate)}`}
               {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
-              {type === 'regular' && `posted on ${formatDate(internship.postedDate)}`}
+              {type === 'regular' && timeAgo(internship.postedDate)}
             </span>
           </div>
 
@@ -191,7 +212,7 @@ export default function InternshipRow({ internship, type }) {
               <p className="text-xs text-gray-500 mt-0.5">
                 {type === 'my' && `started on ${formatDate(internship.startDate)}`}
                 {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
-                {type === 'regular' && `posted on ${formatDate(internship.postedDate)}`}
+                {type === 'regular' && timeAgo(internship.postedDate)}
               </p>
             </div>
             {type === 'regular' ? (
