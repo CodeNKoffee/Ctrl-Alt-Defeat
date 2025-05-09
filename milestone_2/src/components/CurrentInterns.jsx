@@ -108,7 +108,7 @@ export default function CurrentInterns() {
 
   return (
     <div className="container">
-      <h1 className="title">Current Interns</h1>
+      <h1 className="title">My Interns</h1>
       
       <div className="search-container">
         <input
@@ -138,7 +138,7 @@ export default function CurrentInterns() {
             onClick={() => setFilter('complete')} 
             className={`filter-btn ${filter === 'complete' ? 'active' : ''}`}
           >
-            COMPLETE
+            COMPLETED
           </button>
           <button 
             onClick={() => setFilter('evaluated')} 
@@ -147,12 +147,6 @@ export default function CurrentInterns() {
             EVALUATED
           </button>
         </div>
-        <button 
-          onClick={() => {}} 
-          className={`filter-btn ${filter === 'filter' ? 'active' : ''}`}
-        >
-          FILTER
-        </button>
       </div>
 
       <div className="interns-list">
