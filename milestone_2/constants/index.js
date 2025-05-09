@@ -226,7 +226,7 @@ export const mockInternships = [
     description: "Help design user-friendly interfaces and improve user experience for our products.",
     details: "CreativeMinds is a globally recognized design consultancy that has been shaping exceptional user experiences since 2012...",
     requirements: "Design students proficient in Figma with user research experience preferred...",
-    status: "current"
+    status: "Current"
   },
   {
     id: 5,

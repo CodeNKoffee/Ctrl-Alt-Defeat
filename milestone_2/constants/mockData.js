@@ -310,3 +310,77 @@ export const MOCK_APPLIED_INTERNSHIPS = [
     status: "rejected"
   }
 ];
+export const mockStudents = [
+  {
+    id: "61-1959",
+    name: "Farid Khaled",
+    photo: "/images/boy1.png",
+    major: "DMET",
+    semester: "4",
+    status: "Regular",
+    gpa: 1.3
+  },
+  {
+    id: "55-5727",
+    name: "Salma Tarek",
+    photo: "/images/girl1.png",
+    major: "Mechatronics Engineering",
+    semester: "8",
+    status: "Regular",
+    gpa: 2.3
+  },
+  {
+    id: "58-16143",
+    name: "Amr Baher",
+    photo: "/images/boy2.png",
+    major: "Business Management",
+    semester: "6",
+    status: "PRO",
+    gpa: 1.7
+  },
+  {
+    id: "52-4567",
+    name: "Layla Khaled",
+    photo: "/images/girl2.png",
+    major: "Product Design",
+    semester: "8",
+    status: "PRO",
+    gpa: 2.7
+  },
+  {
+    id: "64-5123",
+    name: "Khaled Ahmed",
+    photo: "/images/boy3.png",
+    major: "IET",
+    semester: "2",
+    status: "Regular",
+    gpa: 3.0
+  },
+  {
+    id: "58-0454",
+    name: "Habiba Mahmoud",
+    photo: "/images/girl3.png",
+    major: "Pharmacy",
+    semester: "6",
+    status: "PRO",
+    gpa: 1.0
+  },
+  {
+    id:"61-7128",
+    name: "Hala Khaled",
+    photo: "/images/girl4.png",
+    major: "Business Informatics",
+    semester: "4",
+    status: "Regular",
+    gpa: 2.0
+  },
+  {
+    id:"55-6188",
+    name:"Hatem Soliman",
+    photo:"/images/boy4.png",
+    major:"MET",
+    semester:"6",
+    status:"PRO",
+    gpa:1.7
+  }
+];
