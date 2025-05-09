@@ -33,35 +33,45 @@ export default function LoginPage() {
   const handleLogin = async (values) => {
     setError('');
 
-    // Get mock user data for the selected user type
-    const mockUser = MOCK_USERS[userType];
+    let mockUser = null;
+
+    // Check if it's a student login
+    if (userType === 'student') {
+      // Find the student in the students array
+      mockUser = MOCK_USERS.students.find(
+        student => student.email === values.email && student.password === values.password
+      );
+    } else {
+      // For other user types, access directly
+      mockUser = MOCK_USERS[userType];
+
+      // Check credentials for non-student users
+      if (mockUser && (values.email !== mockUser.email || values.password !== mockUser.password)) {
+        mockUser = null; // Reset if credentials don't match
+      }
+    }
 
     if (!mockUser) {
-      setError('Invalid user type');
+      setError('Invalid email or password');
       return;
     }
 
-    // Check credentials
-    if (values.email === mockUser.email && values.password === mockUser.password) {
-      // Create user session data
-      const userSession = {
-        ...mockUser,
-        timestamp: new Date().toISOString()
-      };
+    // Create user session data
+    const userSession = {
+      ...mockUser,
+      timestamp: new Date().toISOString()
+    };
 
-      // Store in localStorage if remember me is checked
-      if (values.remember) {
-        localStorage.setItem('userSession', JSON.stringify(userSession));
-      }
-
-      // Store in sessionStorage for current session
-      sessionStorage.setItem('userSession', JSON.stringify(userSession));
-
-      // Redirect to appropriate dashboard
-      router.push(`/en/dashboard/${userType}`);
-    } else {
-      setError('Invalid email or password');
+    // Store in localStorage if remember me is checked
+    if (values.remember) {
+      localStorage.setItem('userSession', JSON.stringify(userSession));
     }
+
+    // Store in sessionStorage for current session
+    sessionStorage.setItem('userSession', JSON.stringify(userSession));
+
+    // Redirect to appropriate dashboard
+    router.push(`/en/dashboard/${userType}`);
   };
 
   if (!userDetails) return null;
@@ -69,10 +79,10 @@ export default function LoginPage() {
   /**
    * AMR's NOTIFICATIONS starts here
    */
-  useEffect( () => {notify()}, [])
+  useEffect(() => { notify() }, [])
 
   const notify = () => (
-    toast.info('Please check your inbox, your application has been reviewed',{
+    toast.info('Please check your inbox, your application has been reviewed', {
       position: "top-right",
       autoClose: false,
       hideProgressBar: true,
@@ -80,21 +90,10 @@ export default function LoginPage() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light", 
-    }),
-    
-    toast.success('Someone has applied to one of your internship listings',{
-      position: "top-right",
-      autoClose: false,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light", 
+      theme: "light",
     }),
 
-    toast.info('A new internship cycle is staring soon!',{
+    toast.success('Someone has applied to one of your internship listings', {
       position: "top-right",
       autoClose: false,
       hideProgressBar: true,
@@ -102,10 +101,10 @@ export default function LoginPage() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light", 
+      theme: "light",
     }),
 
-    toast.info('Dear student your report status has been updated',{
+    toast.info('A new internship cycle is staring soon!', {
       position: "top-right",
       autoClose: false,
       hideProgressBar: true,
@@ -113,10 +112,10 @@ export default function LoginPage() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light", 
+      theme: "light",
     }),
 
-    toast.success('Your appointment has been accepted',{
+    toast.info('Dear student your report status has been updated', {
       position: "top-right",
       autoClose: false,
       hideProgressBar: true,
@@ -124,10 +123,10 @@ export default function LoginPage() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light", 
+      theme: "light",
     }),
 
-    toast.info('Incoming call',{
+    toast.success('Your appointment has been accepted', {
       position: "top-right",
       autoClose: false,
       hideProgressBar: true,
@@ -135,10 +134,10 @@ export default function LoginPage() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light", 
+      theme: "light",
     }),
 
-    toast.info('Reminder: You have an upcoming workshop',{
+    toast.info('Incoming call', {
       position: "top-right",
       autoClose: false,
       hideProgressBar: true,
@@ -146,10 +145,10 @@ export default function LoginPage() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light", 
+      theme: "light",
     }),
 
-    toast.info('An attendee has sent a message',{
+    toast.info('Reminder: You have an upcoming workshop', {
       position: "top-right",
       autoClose: false,
       hideProgressBar: true,
@@ -157,7 +156,18 @@ export default function LoginPage() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light", 
+      theme: "light",
+    }),
+
+    toast.info('An attendee has sent a message', {
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
     })
   );
 

@@ -21,13 +21,50 @@ export const MOCK_USERS = {
     role: "company",
     id: "company_001"
   },
-  student: {
-    email: "student@example.com",
-    password: "student123",
-    name: "Student User",
-    role: "student",
-    id: "student_001"
-  }
+  students: [
+    {
+      email: "student@example.com",
+      password: "student123",
+      name: "Student User",
+      role: "student",
+      id: "student_001",
+      major: "Computer Science",
+      jobInterests: ["Software Engineer", "Backend Developer"],
+      industries: ["Law", "Education"],
+      recommendedCompanies: [3, 2],
+      pastInterns: [
+        { name: "Omar", companyId: 3, feedback: "Learned a lot about ML." }
+      ]
+    },
+    {
+      email: "hatem@trybytes.ai",
+      password: "hatem123",
+      name: "Hatem",
+      role: "student",
+      id: "student_002",
+      major: "Media Engineering & Technology",
+      jobInterests: ["Frontend Developer", "UI/UX Designer"],
+      industries: ["Technology", "Finance"],
+      recommendedCompanies: [1, 4],
+      pastInterns: [
+        { name: "Omar", companyId: 1, feedback: "Great mentorship!" }
+      ]
+    },
+    {
+      email: "salmaaburahma@gmail.com",
+      password: "salma123",
+      name: "Salma",
+      role: "student",
+      id: "student_003",
+      major: "Computer Science",
+      jobInterests: ["UI/UX Designer", "Backend Developer"],
+      industries: ["Technology", "Design"],
+      recommendedCompanies: [3, 2],
+      pastInterns: [
+        { name: "Sara", companyId: 3, feedback: "Learned a lot about ML." }
+      ]
+    }
+  ]
 };
 
 // Mock companies data for SCAD dashboard

@@ -1,3 +1,5 @@
+import { MOCK_USERS } from "./mockData";
+
 // Unified mock internship data with all properties needed across different views
 export const allInternships = [
   {
@@ -133,4 +135,29 @@ export const getAppliedInternships = () => {
 
 export const getRecommendedInternships = () => {
   return allInternships.filter(internship => internship.isRecommended);
+};
+
+// Get recommended internships based on a specific student's profile
+export const getRecommendedInternshipsForStudent = (studentProfile) => {
+  if (!studentProfile) return []; // Return empty if no student profile
+
+  // Ensure MOCK_USERS.students is available and is an array
+  const allStudents = MOCK_USERS && Array.isArray(MOCK_USERS.students) ? MOCK_USERS.students : [];
+
+  // Find the student if an email is passed, otherwise assume studentProfile is the object
+  const student = typeof studentProfile === 'string'
+    ? allStudents.find(s => s.email === studentProfile)
+    : studentProfile;
+
+  if (!student) return []; // Return empty if student not found or profile invalid
+
+  return allInternships.filter((internship) => {
+    const matchesRecommendedCompanies = student.recommendedCompanies?.includes(internship.id);
+    const matchesIndustries = student.industries?.includes(internship.industry);
+    const matchesJobInterests = student.jobInterests?.some((interest) =>
+      internship.title.toLowerCase().includes(interest.toLowerCase())
+    );
+    // Add more sophisticated logic here if needed, e.g., weighting
+    return matchesRecommendedCompanies || matchesIndustries || matchesJobInterests;
+  });
 }; 

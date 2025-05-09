@@ -3,7 +3,7 @@
 'use client';
 import { useState } from 'react';
 import InternshipList from '@/components/shared/InternshipList';
-import { getRegularInternships, getRecommendedInternships } from '@/constants/internshipData';
+import { getRegularInternships, getRecommendedInternships } from "../../../../../../constants/internshipData";
 
 export default function BrowseInternshipsPage() {
   const [filterType, setFilterType] = useState('all');
