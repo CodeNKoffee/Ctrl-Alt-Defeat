@@ -3,6 +3,7 @@ import { useState } from 'react';
 import CardTable from '../CardTable';
 import DatePicker from '../DatePicker';
 import InternshipRow from '../InternshipRow';
+import NoResults from './NoResults';
 
 const statusColors = {
   // Applied internship statuses
@@ -123,7 +124,12 @@ export default function InternshipList({
         <CardTable
           data={internships}
           filterFunction={filterFunction}
-          emptyMessage={`No ${type === "my" ? "my" : type === "applied" ? "applied" : ""} internships found matching your criteria.`}
+          emptyMessage={
+            <NoResults
+              mainMessage={`No internships found matching your criteria`}
+              subMessage="Try adjusting your search or filter"
+            />
+          }
           searchConfig={{
             hideSearchBar: true
           }}
