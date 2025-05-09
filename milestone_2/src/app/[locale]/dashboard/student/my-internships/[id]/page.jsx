@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import { getMyInternships } from "@/constants/internshipData";
+import { getMyInternships } from "../../../../../../../constants/internshipData";
 import InfoCard from "@/components/shared/InfoCard";
 import StatusBadge from "@/components/shared/StatusBadge";
 

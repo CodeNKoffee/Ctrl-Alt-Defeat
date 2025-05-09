@@ -3,6 +3,7 @@ import { useState } from 'react';
 import CardTable from '../CardTable';
 import DatePicker from '../DatePicker';
 import InternshipRow from '../InternshipRow';
+import NoResults from './NoResults';
 
 const statusColors = {
   // Applied internship statuses
@@ -22,6 +23,7 @@ export default function InternshipList({
   internships = [],
   type = "regular", // "regular", "my", "applied"
   statuses = [],
+  customFilterPanel,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -86,6 +88,11 @@ export default function InternshipList({
           renderCard={() => null}
         />
 
+        {/* Custom Filter Panel (e.g., All/Recommended) */}
+        {customFilterPanel && (
+          <div className="mb-4">{customFilterPanel}</div>
+        )}
+
         {/* Status Tabs and Date Picker Row */}
         {displayStatuses.length > 0 && (
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2 mb-4">
@@ -117,7 +124,12 @@ export default function InternshipList({
         <CardTable
           data={internships}
           filterFunction={filterFunction}
-          emptyMessage={`No ${type === "my" ? "my" : type === "applied" ? "applied" : ""} internships found matching your criteria.`}
+          emptyMessage={
+            <NoResults
+              mainMessage={`No internships found matching your criteria`}
+              subMessage="Try adjusting your search or filter"
+            />
+          }
           searchConfig={{
             hideSearchBar: true
           }}

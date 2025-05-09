@@ -1,6 +1,6 @@
 'use client';
 import InternshipList from "@/components/shared/InternshipList";
-import { getMyInternships } from "@/constants/internshipData";
+import { getMyInternships } from "../../../../../../constants/internshipData";
 
 export default function MyInternshipsPage() {
   return (
