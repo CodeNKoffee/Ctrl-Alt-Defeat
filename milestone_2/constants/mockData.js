@@ -201,3 +201,75 @@ export const MOCK_COMPANIES = [
     status: "pending"
   },
 ];
+
+// Mock data for applied internships
+export const MOCK_APPLIED_INTERNSHIPS = [
+  {
+    id: 1,
+    title: "UI Designer",
+    company: "Dribble",
+    type: "Part-time",
+    jobType: "Part-time",
+    jobSetting: "Remote",
+    paid: true,
+    rate: "$20/hr",
+    appliedDate: "2021-06-03",
+    startDate: "2025-01-15",
+    duration: "3 months",
+    skills: ["Figma", "User Research", "Prototyping", "UI Design", "Wireframing", "Usability Testing", "Adobe XD"],
+    description: "Help design user-friendly interfaces and improve user experience for our products.",
+    requirements: "Design students proficient in Figma with user research experience preferred...",
+    status: "pending"
+  },
+  {
+    id: 2,
+    title: "Frontend Developer Intern",
+    company: "TechVision",
+    type: "Full-time",
+    jobType: "Full-time",
+    jobSetting: "Remote",
+    paid: true,
+    rate: "$0/hr",
+    appliedDate: "2021-06-03",
+    startDate: "2025-01-15",
+    duration: "3 months",
+    skills: ["JavaScript", "React", "TypeScript", "Redux", "HTML5", "CSS3", "REST APIs"],
+    description: "Join our team to work on exciting projects and gain hands-on experience in frontend development.",
+    requirements: "Applicants should be pursuing a Computer Science degree with basic JavaScript/React knowledge...",
+    status: "accepted"
+  },
+  {
+    id: 3,
+    title: "Marketing Coordinator",
+    company: "BrandBoost",
+    type: "Part-time",
+    jobType: "Part-time",
+    jobSetting: "Hybrid",
+    paid: false,
+    rate: "$0/hr",
+    appliedDate: "2021-06-03",
+    startDate: "2025-02-01",
+    duration: "6 months",
+    skills: ["SEO", "Content Creation", "Social Media", "Google Analytics", "Email Marketing", "Copywriting", "Market Research"],
+    description: "Assist in marketing campaigns and help boost our brand presence online.",
+    requirements: "Marketing/Communications students with social media knowledge and strong writing skills preferred...",
+    status: "finalized"
+  },
+  {
+    id: 4,
+    title: "Data Science Intern",
+    company: "Thndr",
+    type: "Full-time",
+    jobType: "Full-time",
+    jobSetting: "On-site",
+    paid: true,
+    rate: "$0/hr",
+    appliedDate: "2021-06-03",
+    startDate: "2025-03-01",
+    duration: "4 months",
+    skills: ["Python", "Machine Learning", "Data Analysis", "SQL", "Pandas", "NumPy", "Data Visualization"],
+    description: "Work with our data team to analyze large datasets and derive insights.",
+    requirements: "Data Science/CS majors with Python proficiency and basic ML understanding needed...",
+    status: "rejected"
+  }
+];

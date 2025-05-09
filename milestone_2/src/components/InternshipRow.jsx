@@ -1,11 +1,44 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { ChevronDownIcon } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import StatusBadge from './shared/StatusBadge';
 
-export default function InternshipRow({ internship }) {
+const formatDate = (isoDate) => {
+  if (!isoDate) return "-";
+  const date = new Date(isoDate);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+};
+
+// Helper to show how long ago a date was
+const timeAgo = (isoDate) => {
+  if (!isoDate) return "-";
+  const now = new Date();
+  const date = new Date(isoDate);
+  const diff = now - date;
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30);
+  if (months > 0) return `posted ${months} month${months > 1 ? 's' : ''} ago`;
+  if (weeks > 0) return `posted ${weeks} week${weeks > 1 ? 's' : ''} ago`;
+  if (days > 0) return `posted ${days} day${days > 1 ? 's' : ''} ago`;
+  if (hours > 0) return `posted ${hours} hour${hours > 1 ? 's' : ''} ago`;
+  if (minutes > 0) return `posted ${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  return 'posted just now';
+};
+
+export default function InternshipRow({ internship, type }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
+  const router = useRouter();
 
   const handleToggle = () => {
     if (!isOpen) {
@@ -55,22 +88,54 @@ export default function InternshipRow({ internship }) {
               </div>
             </div>
 
-            {/* Right: Compensation */}
+            {/* Right: Status Badge */}
             <div className="flex flex-col items-end w-28 flex-shrink-0 space-y-2">
-              <span className={`font-semibold text-sm ${internship.paid ? 'text-green-600' : 'text-gray-600'}`}>
-                {internship.paid ? '$ Paid' : 'Unpaid'}
-              </span>
+              {type === 'regular' && (
+                <StatusBadge color={internship.paid ? 'bg-green-100 text-green-800 border-green-400' : 'bg-gray-100 text-gray-600 border-gray-400'} className="border">
+                  {internship.paid ? '$ Paid' : 'Unpaid'}
+                </StatusBadge>
+              )}
+
+              {type === 'my' && (
+                <StatusBadge
+                  color={
+                    internship.status === 'current' ? 'bg-blue-100 text-blue-800 border-blue-400' :
+                      internship.status === 'completed' ? 'bg-green-100 text-green-800 border-green-400' :
+                        internship.status === 'evaluated' ? 'bg-purple-100 text-purple-800 border-purple-400' :
+                          'bg-gray-100 text-gray-600 border-gray-400'
+                  }
+                  className="border"
+                >
+                  {internship.status ? internship.status.toUpperCase() : 'CURRENT'}
+                </StatusBadge>
+              )}
+
+              {type === 'applied' && (
+                <StatusBadge
+                  color={
+                    internship.status === 'accepted' ? 'bg-green-100 text-green-800 border-green-400' :
+                      internship.status === 'rejected' ? 'bg-red-100 text-red-800 border-red-400' :
+                        internship.status === 'finalized' ? 'bg-purple-100 text-purple-800 border-purple-400' :
+                          'bg-yellow-100 text-yellow-800 border-yellow-400'
+                  }
+                  className="border"
+                >
+                  {internship.status ? internship.status.toUpperCase() : 'PENDING'}
+                </StatusBadge>
+              )}
             </div>
 
             {/* Chevron Icon */}
-            <ChevronDownIcon
+            <ChevronDown
               className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 h-5 w-5 text-gray-500 transition-transform duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] ${isOpen ? 'rotate-180' : ''}`}
               aria-hidden
             />
 
-            {/* Posted Date */}
+            {/* Posted/Applied/Started Date (Header Row) */}
             <span className="absolute bottom-2 right-2 text-xs text-gray-500">
-              posted {internship.postedDate}
+              {type === 'my' && `started on ${formatDate(internship.startDate)}`}
+              {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
+              {type === 'regular' && timeAgo(internship.postedDate)}
             </span>
           </div>
 
@@ -88,11 +153,11 @@ export default function InternshipRow({ internship }) {
       {/* Collapsible Content */}
       <div
         className={`overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] transform-gpu
-                   ${isOpen ? 'max-h-[2000px]' : 'max-h-0'}`}
+                  ${isOpen ? 'max-h-[2000px]' : 'max-h-0'}`}
       >
         <div className={`px-4 py-4 bg-white rounded-b-lg border border-t-0 border-[#5DB2C7] mt-1 font-['IBM_Plex_Sans']
-                       transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] transform-gpu origin-top
-                       ${isOpen ? 'translate-y-0 scale-y-100' : 'translate-y-[-100%] scale-y-0'}`}>
+                      transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] transform-gpu origin-top
+                      ${isOpen ? 'translate-y-0 scale-y-100' : 'translate-y-[-100%] scale-y-0'}`}>
           {/* Section 1 & 2 */}
           <div className="flex flex-col md:flex-row gap-6 mb-4">
             {/* Left */}
@@ -100,7 +165,7 @@ export default function InternshipRow({ internship }) {
               {/* Start Date & Duration */}
               <div className="space-y-2">
                 <p className="text-sm text-gray-700">
-                  <span className="font-semibold">Start Date:</span> {internship.startDate}
+                  <span className="font-semibold">Start Date:</span> {formatDate(internship.startDate)}
                 </p>
                 <p className="text-sm text-gray-700">
                   <span className="font-semibold">Duration:</span> {internship.duration}
@@ -145,12 +210,27 @@ export default function InternshipRow({ internship }) {
                 {internship.rate || "Rate not specified"}
               </p>
               <p className="text-xs text-gray-500 mt-0.5">
-                posted {internship.postedDate}
+                {type === 'my' && `started on ${formatDate(internship.startDate)}`}
+                {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
+                {type === 'regular' && timeAgo(internship.postedDate)}
               </p>
             </div>
-            <button className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm">
-              Apply
-            </button>
+            {type === 'regular' ? (
+              <button className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm">
+                Apply
+              </button>
+            ) : internship.appliedDate ? (
+              <button
+                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
+                onClick={() => router.push(`/dashboard/student/applied-internships/${internship.id}`)}
+              >
+                View Application
+              </button>
+            ) : (
+              <button className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm">
+                Apply
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -57,9 +57,10 @@ export default function CompanyTable({ companies }) {
     <div className="flex flex-col items-center w-full min-h-screen">
       {/* Header Section */}
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-2xl font-bold text-metallica-blue-700 mb-6 mt-4">
-          Company Applications
-        </h1>
+      <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
+      Company Applications
+      <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+      </h1>
 
         {/* Moved Filter Controls Container */}
       </div>
