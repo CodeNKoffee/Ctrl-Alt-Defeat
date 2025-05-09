@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Student({ student }) {
   const { id, name, photo, major, semester, status } = student;
+  const router = useRouter();
 
   const handleViewProfile = () => {
-    // Handle navigation programmatically if needed
-    console.log(`Viewing profile for student ${id}`);
+    router.push(`/dashboard/scad/StudentList/StudentProfile/`);
   };
 
   return (
