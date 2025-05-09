@@ -22,6 +22,7 @@ export default function InternshipList({
   internships = [],
   type = "regular", // "regular", "my", "applied"
   statuses = [],
+  customFilterPanel,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -85,6 +86,11 @@ export default function InternshipList({
           filterConfig={{ showFilter: false }}
           renderCard={() => null}
         />
+
+        {/* Custom Filter Panel (e.g., All/Recommended) */}
+        {customFilterPanel && (
+          <div className="mb-4">{customFilterPanel}</div>
+        )}
 
         {/* Status Tabs and Date Picker Row */}
         {displayStatuses.length > 0 && (

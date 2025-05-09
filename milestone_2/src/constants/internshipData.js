@@ -19,7 +19,8 @@ export const allInternships = [
     details: "TechVision is an industry-leading software development company that has been at the forefront of web technology innovation for over a decade...",
     requirements: "Applicants should be pursuing a Computer Science degree with basic JavaScript/React knowledge...",
     status: "current", // For my-internships
-    applicationStatus: "accepted" // For applied-internships
+    applicationStatus: "accepted", // For applied-internships
+    isRecommended: true
   },
   {
     id: 2,
@@ -40,7 +41,8 @@ export const allInternships = [
     details: "BrandBoost is a premier digital marketing agency that has helped over 500 businesses establish and grow their online presence...",
     requirements: "Marketing/Communications students with social media knowledge and strong writing skills preferred...",
     status: "completed", // For my-internships
-    applicationStatus: "finalized" // For applied-internships
+    applicationStatus: "finalized", // For applied-internships
+    isRecommended: false
   },
   {
     id: 3,
@@ -61,7 +63,8 @@ export const allInternships = [
     details: "Thndr is an innovative fintech startup that's transforming the investment landscape through AI-powered analytics...",
     requirements: "Data Science/CS majors with Python proficiency and basic ML understanding needed...",
     status: "evaluated", // For my-internships
-    applicationStatus: "rejected" // For applied-internships
+    applicationStatus: "rejected", // For applied-internships
+    isRecommended: true
   },
   {
     id: 4,
@@ -82,7 +85,8 @@ export const allInternships = [
     details: "CreativeMinds is a globally recognized design consultancy that has been shaping exceptional user experiences since 2012...",
     requirements: "Design students proficient in Figma with user research experience preferred...",
     status: "current", // For my-internships
-    applicationStatus: "pending" // For applied-internships
+    applicationStatus: "pending", // For applied-internships
+    isRecommended: false
   },
   {
     id: 5,
@@ -102,7 +106,8 @@ export const allInternships = [
     details: "HealthInnovate is a pioneering medical research organization dedicated to advancing healthcare technology and treatments...",
     requirements: "Biology/Medical students with research experience and strong analytical skills needed...",
     status: "completed",
-    applicationStatus: null // Not applied to
+    applicationStatus: null, // Not applied to
+    isRecommended: false
   }
 ];
 
@@ -124,4 +129,8 @@ export const getAppliedInternships = () => {
     ...internship,
     status: internship.applicationStatus // Use applicationStatus as status for applied view
   }));
+};
+
+export const getRecommendedInternships = () => {
+  return allInternships.filter(internship => internship.isRecommended);
 }; 
