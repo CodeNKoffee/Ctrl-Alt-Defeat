@@ -26,6 +26,7 @@ export default function InternshipList({
   customFilterPanel,
   onApplicationCompleted,
   appliedInternshipIds = new Set(),
+  showDatePicker = true,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -115,10 +116,12 @@ export default function InternshipList({
               ))}
             </div>
 
-            <DatePicker
-              selectedDate={selectedDate}
-              onDateChange={setSelectedDate}
-            />
+            {showDatePicker && (
+              <DatePicker
+                selectedDate={selectedDate}
+                onDateChange={setSelectedDate}
+              />
+            )}
           </div>
         )}
 

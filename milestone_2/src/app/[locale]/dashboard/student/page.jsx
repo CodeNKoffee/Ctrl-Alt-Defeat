@@ -88,6 +88,7 @@ function AppliedInternshipsView() {
         internships={getAppliedInternships()}
         type="applied"
         statuses={['pending', 'accepted', 'finalized', 'rejected']}
+        showDatePicker={false}
       />
     </div>
   );
