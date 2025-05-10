@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faUser, faBuilding, faXmark, faChevronDown, faChevronUp, faEnvelope, faPhone, faCalendarAlt, faMapMarkerAlt, faGraduationCap, faLink, faCheckCircle, faTimesCircle, faClock } from '@fortawesome/free-solid-svg-icons';
-import StatusBadge from '../shared/StatusBadge';
-import ActionButton from '../shared/ActionButton';
+import StatusBadge from './shared/StatusBadge';
+import ActionButton from './shared/ActionButton';
 
 // Mock applications data
 const MOCK_APPLICATIONS = [
