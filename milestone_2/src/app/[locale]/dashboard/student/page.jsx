@@ -12,7 +12,7 @@ import { getRecommendedInternshipsForStudent } from '../../../../../constants/in
 import { getRegularInternships, getRecommendedInternships, getAppliedInternships, getMyInternships } from '../../../../../constants/internshipData';
 
 // Dashboard Home View Component
-function DashboardHomeView() {
+function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
   const [personalizedInternships, setPersonalizedInternships] = useState([]);
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
 
@@ -30,13 +30,15 @@ function DashboardHomeView() {
         title=""
         internships={personalizedInternships}
         type="regular"
+        onApplicationCompleted={onApplicationCompleted}
+        appliedInternshipIds={appliedInternshipIds}
       />
     </div>
   );
 }
 
 // Using the actual page components for each view
-function BrowseInternshipsView() {
+function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds }) {
   const [filterType, setFilterType] = useState('all');
 
   const internshipsToDisplay = filterType === 'all'
@@ -49,13 +51,15 @@ function BrowseInternshipsView() {
         title=""
         internships={internshipsToDisplay}
         type="regular"
+        onApplicationCompleted={onApplicationCompleted}
+        appliedInternshipIds={appliedInternshipIds}
         customFilterPanel={
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setFilterType('all')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'all'
-                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
                 }`}
             >
               All
@@ -63,8 +67,8 @@ function BrowseInternshipsView() {
             <button
               onClick={() => setFilterType('recommended')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'recommended'
-                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
                 }`}
             >
               Recommended
@@ -120,7 +124,12 @@ const viewComponents = {
 };
 
 export default function StudentDashboardPage() {
-  // Initialize currentView first, default to 'home'
+  const [appliedIdsSet, setAppliedIdsSet] = useState(new Set());
+
+  const handleApplicationCompleted = (internshipId) => {
+    setAppliedIdsSet(prevSet => new Set(prevSet).add(internshipId));
+  };
+
   const [currentView, setCurrentView] = useState(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.replace('#', '');
@@ -128,10 +137,9 @@ export default function StudentDashboardPage() {
         return hash;
       }
     }
-    return 'home'; // Default to home if no valid hash
+    return 'home';
   });
 
-  // Initialize currentTitle based on the initial currentView
   const getInitialTitle = (viewId) => {
     switch (viewId) {
       case 'home':
@@ -145,23 +153,21 @@ export default function StudentDashboardPage() {
       case 'profile':
         return "STUDENT PROFILE";
       default:
-        return "RECOMMENDED OPPORTUNITIES"; // Default title
+        return "RECOMMENDED OPPORTUNITIES";
     }
   };
   const [currentTitle, setCurrentTitle] = useState(() => getInitialTitle(currentView));
 
   const handleViewChange = (viewId) => {
-    setCurrentView(viewId); // Update the current view state
-    setCurrentTitle(getInitialTitle(viewId)); // Update title using the same logic
+    setCurrentView(viewId);
+    setCurrentTitle(getInitialTitle(viewId));
   };
 
-  // Effect to update view and title if hash changes after initial load
   useEffect(() => {
     const handleHashChange = () => {
       if (typeof window !== 'undefined') {
         const hash = window.location.hash.replace('#', '');
         if (hash && viewComponents[hash] && hash !== currentView) {
-          // Call handleViewChange to update both view and title
           handleViewChange(hash);
         }
       }
@@ -169,15 +175,27 @@ export default function StudentDashboardPage() {
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [currentView]); // Re-run if currentView changes to avoid stale closure
+  }, [currentView]);
+
+  const CurrentViewComponent = viewComponents[currentView];
+
+  // Prepare props for the current view component
+  let viewProps = {};
+  if (currentView === 'home' || currentView === 'browse') {
+    viewProps = {
+      onApplicationCompleted: handleApplicationCompleted,
+      appliedInternshipIds: appliedIdsSet,
+    };
+  }
 
   return (
     <DashboardLayout
       userType="student"
-      viewComponents={viewComponents}
-      initialView={currentView} // Pass the determined initial view
-      title={currentTitle}
-      onViewChange={handleViewChange}
-    />
+      title={currentTitle} // Pass title directly
+      currentViewId={currentView} // Pass currentViewId for sidebar active state
+      onViewChange={handleViewChange} // For sidebar navigation
+    >
+      {CurrentViewComponent && <CurrentViewComponent {...viewProps} />}
+    </DashboardLayout>
   );
 }

@@ -44,7 +44,7 @@ const appliedStatusTooltipMessages = {
   rejected: "Unfortunately, your application was not selected for this position this time.",
 };
 
-export default function InternshipRow({ internship, type }) {
+export default function InternshipRow({ internship, type, onApplicationCompleted, isApplied }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
@@ -80,9 +80,12 @@ export default function InternshipRow({ internship, type }) {
     setIsUploadModalOpen(true);
   };
 
-  const handleCloseUploadModal = () => {
+  const handleCloseUploadModal = (success, appliedInternshipId) => {
     setIsUploadModalOpen(false);
-    // Potentially refresh data or give feedback if an upload happened
+    if (success && onApplicationCompleted && appliedInternshipId) {
+      onApplicationCompleted(appliedInternshipId);
+    }
+    // Potentially refresh data or give feedback if an upload happened - handled by parent
   };
 
   return (
@@ -248,10 +251,14 @@ export default function InternshipRow({ internship, type }) {
             </div>
             {type === 'regular' ? (
               <button
-                onClick={handleOpenUploadModal}
-                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
+                onClick={isApplied ? undefined : handleOpenUploadModal}
+                className={`px-4 py-2 text-white rounded-lg transition w-full sm:w-auto text-sm ${isApplied
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-[#5DB2C7] hover:bg-[#4796a8]'
+                  }`}
+                disabled={isApplied}
               >
-                Apply
+                {isApplied ? 'Applied' : 'Apply'}
               </button>
             ) : internship.appliedDate ? (
               <button
@@ -278,6 +285,7 @@ export default function InternshipRow({ internship, type }) {
       <UploadDocuments
         open={isUploadModalOpen}
         onClose={handleCloseUploadModal}
+        internshipId={internship.id}
       />
     </div>
   );

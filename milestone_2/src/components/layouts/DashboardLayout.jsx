@@ -10,11 +10,9 @@ export default function DashboardLayout({
   userType,
   title,
   showSidebar = true,
-  viewComponents = {},
-  initialView = null,
-  onViewChange = null
+  currentViewId,
+  onViewChange,
 }) {
-  const [currentView, setCurrentView] = useState(initialView);
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const router = useRouter();
 
@@ -44,25 +42,9 @@ export default function DashboardLayout({
     }
   }, [isAuthenticated, currentUser, router, userType]);
 
-  // If no view components are provided, just render children
-  const hasViewComponents = Object.keys(viewComponents).length > 0;
-
   // Determine content based on whether view components are provided
   const renderContent = () => {
-    if (hasViewComponents && currentView && viewComponents[currentView]) {
-      const CurrentViewComponent = viewComponents[currentView];
-      return <CurrentViewComponent />;
-    }
     return children;
-  };
-
-  const handleViewChange = (viewId) => {
-    setCurrentView(viewId);
-
-    // Call the parent onViewChange if provided
-    if (onViewChange && typeof onViewChange === 'function') {
-      onViewChange(viewId);
-    }
   };
 
   return (
@@ -70,8 +52,8 @@ export default function DashboardLayout({
       {showSidebar && (
         <Sidebar
           userType={userType}
-          onViewChange={hasViewComponents ? handleViewChange : null}
-          currentView={currentView}
+          onViewChange={onViewChange}
+          currentView={currentViewId}
         />
       )}
 

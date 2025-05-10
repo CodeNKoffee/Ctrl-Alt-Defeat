@@ -24,6 +24,8 @@ export default function InternshipList({
   type = "regular", // "regular", "my", "applied"
   statuses = [],
   customFilterPanel,
+  onApplicationCompleted,
+  appliedInternshipIds = new Set(),
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -140,6 +142,8 @@ export default function InternshipList({
               internship={internship}
               type={type}
               statusColors={statusColors}
+              onApplicationCompleted={onApplicationCompleted}
+              isApplied={appliedInternshipIds.has(internship.id)}
             />
           )}
         />
