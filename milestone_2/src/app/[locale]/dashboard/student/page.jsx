@@ -122,48 +122,62 @@ const viewComponents = {
 };
 
 export default function StudentDashboardPage() {
-  const [currentTitle, setCurrentTitle] = useState("Student Dashboard");
-  const [currentView, setCurrentView] = useState('home');
-
-  const handleViewChange = (viewId) => {
-    // Update title based on selected view
-    switch (viewId) {
-      case 'home':
-        setCurrentTitle("RECOMMENDED OPPORTUNITIES");
-        break;
-      case 'browse':
-        setCurrentTitle("INTERNSHIP OPPORTUNITIES");
-        break;
-      case 'applied':
-        setCurrentTitle("APPLIED INTERNSHIPS");
-        break;
-      case 'my-internships':
-        setCurrentTitle("MY INTERNSHIPS");
-        break;
-      case 'profile':
-        setCurrentTitle("STUDENT PROFILE");
-        break;
-      default:
-        setCurrentTitle("RECOMMENDED OPPORTUNITIES");
-    }
-  };
-
-  useEffect(() => {
-    // Check if there's a hash in the URL to determine which view to show initially
+  // Initialize currentView first, default to 'home'
+  const [currentView, setCurrentView] = useState(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.replace('#', '');
       if (hash && viewComponents[hash]) {
-        setCurrentView(hash);
-        handleViewChange(hash);
+        return hash;
       }
     }
-  }, []);
+    return 'home'; // Default to home if no valid hash
+  });
+
+  // Initialize currentTitle based on the initial currentView
+  const getInitialTitle = (viewId) => {
+    switch (viewId) {
+      case 'home':
+        return "RECOMMENDED OPPORTUNITIES";
+      case 'browse':
+        return "INTERNSHIP OPPORTUNITIES";
+      case 'applied':
+        return "APPLIED INTERNSHIPS";
+      case 'my-internships':
+        return "MY INTERNSHIPS";
+      case 'profile':
+        return "STUDENT PROFILE";
+      default:
+        return "RECOMMENDED OPPORTUNITIES"; // Default title
+    }
+  };
+  const [currentTitle, setCurrentTitle] = useState(() => getInitialTitle(currentView));
+
+  const handleViewChange = (viewId) => {
+    setCurrentView(viewId); // Update the current view state
+    setCurrentTitle(getInitialTitle(viewId)); // Update title using the same logic
+  };
+
+  // Effect to update view and title if hash changes after initial load
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (typeof window !== 'undefined') {
+        const hash = window.location.hash.replace('#', '');
+        if (hash && viewComponents[hash] && hash !== currentView) {
+          // Call handleViewChange to update both view and title
+          handleViewChange(hash);
+        }
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [currentView]); // Re-run if currentView changes to avoid stale closure
 
   return (
     <DashboardLayout
       userType="student"
       viewComponents={viewComponents}
-      initialView={currentView}
+      initialView={currentView} // Pass the determined initial view
       title={currentTitle}
       onViewChange={handleViewChange}
     />
