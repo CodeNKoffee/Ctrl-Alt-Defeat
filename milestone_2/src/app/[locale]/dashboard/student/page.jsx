@@ -8,6 +8,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import InternshipList from '@/components/shared/InternshipList';
 import StudentProfile from '@/components/StudentProfile';
+import InternshipFilterModal from '@/components/InternshipFilterModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import { getRegularInternships, getRecommendedInternships, getAppliedInternships, getMyInternships } from '../../../../../constants/internshipData';
 
@@ -40,41 +43,124 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
 // Using the actual page components for each view
 function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds }) {
   const [filterType, setFilterType] = useState('all');
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    industry: '',
+    duration: '',
+    isPaid: null
+  });
+  const [filteredInternships, setFilteredInternships] = useState([]);
 
-  const internshipsToDisplay = filterType === 'all'
+  // Get internships based on "all" or "recommended" filter type
+  const baseInternships = filterType === 'all'
     ? getRegularInternships()
     : getRecommendedInternships();
+
+  // Apply additional filters (industry, duration, paid/unpaid)
+  useEffect(() => {
+    let result = [...baseInternships];
+
+    // Filter by industry
+    if (filters.industry) {
+      result = result.filter(internship =>
+        internship.industry === filters.industry
+      );
+    }
+
+    // Filter by duration
+    if (filters.duration) {
+      result = result.filter(internship => {
+        // Parse the duration value from the filter (e.g., "3 months" -> 3)
+        const filterDurationMatch = filters.duration.match(/(\d+)/);
+        const filterDurationMonths = filterDurationMatch ? parseInt(filterDurationMatch[1]) : 0;
+
+        // Parse the internship duration (e.g., "3 months", "6-8 months", etc.)
+        const internshipDurationMatch = internship.duration.match(/(\d+)/);
+        const internshipDurationMonths = internshipDurationMatch ? parseInt(internshipDurationMatch[1]) : 0;
+
+        // If we have valid numbers for both, compare them
+        if (filterDurationMonths > 0 && internshipDurationMonths > 0) {
+          return internshipDurationMonths === filterDurationMonths;
+        }
+
+        return true;
+      });
+    }
+
+    // Filter by paid status
+    if (filters.isPaid !== null) {
+      result = result.filter(internship =>
+        internship.paid === filters.isPaid
+      );
+    }
+
+    setFilteredInternships(result);
+  }, [baseInternships, filters]);
+
+  // Check if any filters are active
+  const hasActiveFilters = filters.industry || filters.duration || filters.isPaid !== null;
+
+  // Handle applying filters from modal
+  const handleApplyFilters = (newFilters) => {
+    setFilters(newFilters);
+  };
 
   return (
     <div className="container mx-auto px-4 pt-0 pb-8">
       <InternshipList
         title=""
-        internships={internshipsToDisplay}
+        internships={hasActiveFilters ? filteredInternships : baseInternships}
         type="regular"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         customFilterPanel={
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center justify-between">
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setFilterType('all')}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'all'
+                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                  }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => setFilterType('recommended')}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'recommended'
+                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                  }`}
+              >
+                Recommended
+              </button>
+            </div>
             <button
-              onClick={() => setFilterType('all')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'all'
-                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+              onClick={() => setIsFilterModalOpen(true)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border flex items-center gap-1 ml-2 
+                ${hasActiveFilters
+                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
                 }`}
             >
-              All
-            </button>
-            <button
-              onClick={() => setFilterType('recommended')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'recommended'
-                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
-                }`}
-            >
-              Recommended
+              <FontAwesomeIcon icon={faFilter} className="mr-1" />
+              {hasActiveFilters ? 'Filters Applied' : 'Filter'}
+              {hasActiveFilters && (
+                <span className="inline-flex items-center justify-center w-5 h-5 bg-[#3298BA] text-white rounded-full text-xs ml-1">
+                  {Object.values(filters).filter(f => f !== '' && f !== null).length}
+                </span>
+              )}
             </button>
           </div>
         }
+      />
+
+      {/* Filter Modal */}
+      <InternshipFilterModal
+        open={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        initialFilters={filters}
+        onApplyFilters={handleApplyFilters}
       />
     </div>
   );

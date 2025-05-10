@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import StatusBadge from './shared/StatusBadge';
+import StatusBadge from './StatusBadge';
 import { Tooltip } from 'react-tooltip';
-import UploadDocuments from './UploadDocuments';
+import UploadDocuments from '../UploadDocuments';
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";

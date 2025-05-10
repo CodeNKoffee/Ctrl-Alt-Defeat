@@ -1,8 +1,8 @@
 "use client";
 import { useState } from 'react';
-import CardTable from '../CardTable';
+import CardTable from './CardTable';
 import DatePicker from '../DatePicker';
-import InternshipRow from '../InternshipRow';
+import InternshipRow from './InternshipRow';
 import NoResults from './NoResults';
 
 const statusColors = {

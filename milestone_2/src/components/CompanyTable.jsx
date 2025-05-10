@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import SearchBar from './SearchBar';
+import SearchBar from './shared/SearchBar';
 import IndustryFilter from './IndustryFilter';
 import CompanyDetails from './CompanyDetails';
 import CompanyDetailsModal from './CompanyDetailsModal';
