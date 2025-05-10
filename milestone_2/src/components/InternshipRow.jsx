@@ -4,6 +4,7 @@ import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import StatusBadge from './shared/StatusBadge';
 import { Tooltip } from 'react-tooltip';
+import UploadDocuments from './UploadDocuments';
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";
@@ -47,6 +48,7 @@ export default function InternshipRow({ internship, type }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const router = useRouter();
 
   const handleToggle = () => {
@@ -73,6 +75,15 @@ export default function InternshipRow({ internship, type }) {
       tooltipContent = appliedStatusTooltipMessages[currentStatus];
     }
   }
+
+  const handleOpenUploadModal = () => {
+    setIsUploadModalOpen(true);
+  };
+
+  const handleCloseUploadModal = () => {
+    setIsUploadModalOpen(false);
+    // Potentially refresh data or give feedback if an upload happened
+  };
 
   return (
     <div className="mb-3 w-full max-w-3xl mx-auto">
@@ -236,7 +247,10 @@ export default function InternshipRow({ internship, type }) {
               </p>
             </div>
             {type === 'regular' ? (
-              <button className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm">
+              <button
+                onClick={handleOpenUploadModal}
+                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
+              >
                 Apply
               </button>
             ) : internship.appliedDate ? (
@@ -247,7 +261,10 @@ export default function InternshipRow({ internship, type }) {
                 View Application
               </button>
             ) : (
-              <button className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm">
+              <button
+                onClick={handleOpenUploadModal}
+                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
+              >
                 Apply
               </button>
             )}
@@ -256,6 +273,12 @@ export default function InternshipRow({ internship, type }) {
       </div>
       {/* Tooltip component instance - only needed if type='applied' might be rendered */}
       {type === 'applied' && <Tooltip id="status-tooltip" />}
+
+      {/* Upload Documents Modal */}
+      <UploadDocuments
+        open={isUploadModalOpen}
+        onClose={handleCloseUploadModal}
+      />
     </div>
   );
 }
