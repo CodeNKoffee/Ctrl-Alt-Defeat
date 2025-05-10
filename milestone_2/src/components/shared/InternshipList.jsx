@@ -72,9 +72,9 @@ export default function InternshipList({
   return (
     <div className="w-full px-4 py-6 space-y-4">
       <div className="w-full max-w-3xl mx-auto">
-        {/* First CardTable for Title and Search Bar */}
+        {/* First CardTable for Search Bar only */}
         <CardTable
-          title={title}
+          title=""
           data={[]}
           filterFunction={() => true}
           emptyMessage=""

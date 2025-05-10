@@ -1,0 +1,258 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faChevronLeft,
+  faChevronRight,
+  faHome,
+  faSearch,
+  faClipboardList,
+  faBriefcase,
+  faUser,
+  faGraduationCap,
+  faChartBar,
+  faBuilding,
+  faList,
+  faFolder,
+  faRightFromBracket
+} from '@fortawesome/free-solid-svg-icons';
+import ActionButton from './ActionButton';
+
+// Icon mapping for different menu items
+const iconMap = {
+  home: faHome,
+  browse: faSearch,
+  applied: faClipboardList,
+  'my-internships': faBriefcase,
+  profile: faUser,
+  students: faGraduationCap,
+  reports: faChartBar,
+  companies: faBuilding,
+  listings: faList,
+  applications: faFolder,
+  logout: faRightFromBracket
+};
+
+// Map of sidebar items for different user types
+const sidebarConfig = {
+  student: [
+    { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/student', isPage: false },
+    { id: 'browse', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/student/browse-internships', isPage: false },
+    { id: 'applied', iconId: 'applied', label: 'Applied Internships', path: '/dashboard/student/applied-internships', isPage: false },
+    { id: 'my-internships', iconId: 'my-internships', label: 'My Internships', path: '/dashboard/student/my-internships', isPage: false },
+    { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/student/profile', isPage: false },
+  ],
+  faculty: [
+    { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },
+    { id: 'students', iconId: 'students', label: 'Students', path: '/dashboard/faculty/students', isPage: false },
+    { id: 'reports', iconId: 'reports', label: 'Reports', path: '/dashboard/faculty/reports', isPage: false },
+    { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/faculty/profile', isPage: false },
+  ],
+  company: [
+    { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/company', isPage: false },
+    { id: 'listings', iconId: 'listings', label: 'Internship Listings', path: '/dashboard/company/listings', isPage: false },
+    { id: 'applications', iconId: 'applications', label: 'Applications', path: '/dashboard/company/applications', isPage: false },
+    { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/company/profile', isPage: false },
+  ],
+  scad: [
+    { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/scad', isPage: false },
+    { id: 'companies', iconId: 'companies', label: 'Companies', path: '/dashboard/scad/companies', isPage: false },
+    { id: 'students', iconId: 'students', label: 'Students', path: '/dashboard/scad/students', isPage: false },
+    { id: 'reports', iconId: 'reports', label: 'Reports', path: '/dashboard/scad/reports', isPage: false },
+    { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/scad/profile', isPage: false },
+  ],
+};
+
+export default function Sidebar({ userType, onViewChange, currentView }) {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [prevView, setPrevView] = useState(currentView);
+  const pathname = usePathname();
+  const router = useRouter();
+  const sidebarItems = sidebarConfig[userType] || [];
+
+  // Extract locale from pathname
+  const locale = pathname.split('/')[1] || 'en';
+
+  // Add locale to paths
+  const localizedItems = sidebarItems.map(item => ({
+    ...item,
+    path: `/${locale}${item.path}`
+  }));
+
+  // Check for mobile devices and set initial state
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+      // Auto-collapse on mobile
+      if (window.innerWidth < 768) {
+        setIsExpanded(false);
+      }
+    };
+
+    // Set on first load
+    checkMobile();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Close sidebar when view changes
+  useEffect(() => {
+    if (currentView !== prevView) {
+      setIsExpanded(false);
+      setPrevView(currentView);
+    }
+  }, [currentView, prevView]);
+
+  const toggleSidebar = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  // Handle view change with auto-collapse
+  const handleViewChange = (itemId) => {
+    // Call the parent's onViewChange
+    if (onViewChange) {
+      onViewChange(itemId);
+    }
+
+    // Auto-collapse sidebar after navigation
+    setIsExpanded(false);
+  };
+
+  // Determine active item based on current pathname or view
+  const getIsActive = (item) => {
+    if (item.isPage) {
+      // For path-based navigation, compare with pathname
+      return pathname === item.path || pathname.startsWith(item.path + '/');
+    } else if (onViewChange) {
+      // For view-based navigation, compare with currentView
+      return currentView === item.id;
+    }
+    return false;
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    router.push(`/${locale}/auth/login`);
+  };
+
+  return (
+    <div
+      className={`bg-[#E2F4F7] h-screen flex flex-col border-r border-[#5DB2C7] sticky top-0 transform transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-20'
+        }`}
+      style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}
+    >
+      {/* Sidebar Header */}
+      <div className="p-3 border-b border-[#5DB2C7] flex items-center justify-between">
+        {/* Logo and Optional Portal Text */}
+        <div className={`flex items-center transition-all duration-300 ease-in-out ${isExpanded ? 'justify-start' : 'justify-center flex-grow'}`}>
+          <Image
+            src="/logos/internhub-logo.png"
+            alt="InternHub Logo"
+            width={32} // Slightly larger for better visibility
+            height={32}
+            className={`transition-all duration-300 ease-in-out ${isExpanded ? 'mr-2' : 'mr-0'}`}
+          />
+          <span
+            className={`font-bold text-[#2a5f74] whitespace-nowrap transition-all duration-300 ease-in-out ${isExpanded ? 'opacity-100 max-w-xs' : 'opacity-0 max-w-0 overflow-hidden'}`}>
+            {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
+          </span>
+        </div>
+
+        {/* Toggle Button */}
+        <button
+          onClick={toggleSidebar}
+          className="text-[#5DB2C7] hover:bg-[#D9F0F4] p-2 rounded-full transition-all duration-300 hover:scale-105 ml-2 flex-shrink-0" // Added ml-2 for spacing from logo/text, and flex-shrink-0
+          aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
+        >
+          <FontAwesomeIcon
+            icon={isExpanded ? faChevronLeft : faChevronRight}
+            className="transition-transform duration-300 ease-in-out"
+            size="sm"
+          />
+        </button>
+      </div>
+
+      {/* Sidebar Content (Navigation Items) */}
+      <div className="flex-1 overflow-y-auto pt-2 overflow-x-hidden">
+        <ul className="space-y-1 px-2">
+          {localizedItems.map(item => {
+            const isActive = getIsActive(item);
+            const icon = iconMap[item.iconId] || faHome;
+
+            const commonClasses = "w-full flex items-center p-3 rounded-lg transition-all duration-300 ease-in-out text-sm";
+            const activeClasses = "bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA] shadow-md";
+            const inactiveClasses = "hover:bg-[#D9F0F4] text-[#2a5f74] hover:shadow-sm";
+            const alignmentClass = isExpanded ? "justify-start" : "justify-center";
+
+            const itemContent = (
+              <>
+                <span className={`flex-shrink-0 flex items-center ${isExpanded ? 'w-6' : 'w-auto'} justify-center`}>
+                  <FontAwesomeIcon icon={icon} size="lg" className={`transition-all duration-300 ease-in-out ${isActive ? 'text-[#3298BA]' : 'text-[#2a5f74]'}`} />
+                </span>
+                <span
+                  className={`whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'ml-3 opacity-100 max-w-[150px]' : 'ml-0 opacity-0 max-w-0'
+                    }`}
+                >
+                  {item.label}
+                </span>
+              </>
+            );
+
+            if (item.isPage) {
+              return (
+                <li key={item.id}>
+                  <Link
+                    href={item.path}
+                    className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
+                    onClick={() => !isExpanded && setIsExpanded(false)} // Keep expanded if clicking on mobile for views, collapse for pages
+                  >
+                    {itemContent}
+                  </Link>
+                </li>
+              );
+            } else if (onViewChange) {
+              return (
+                <li key={item.id}>
+                  <button
+                    onClick={() => handleViewChange(item.id)} // handleViewChange already collapses sidebar
+                    className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
+                  >
+                    {itemContent}
+                  </button>
+                </li>
+              );
+            }
+            return null;
+          })}
+        </ul>
+      </div>
+
+      {/* Sidebar Footer (Logout Button) */}
+      <div className={`p-3 border-t border-[#5DB2C7] transition-all duration-300 ease-in-out ${isExpanded ? '' : 'flex justify-center'}`}>
+        <ActionButton
+          buttonType="reject"
+          onClick={handleLogout}
+          icon={faRightFromBracket}
+          text={isExpanded ? "Logout" : ""}
+          buttonClassName={`flex items-center p-2.5 text-sm ${isExpanded ? 'w-full justify-start' : 'w-auto justify-center px-3'}`}
+          iconClassName={`transition-all duration-300 ease-in-out ${isExpanded ? 'mr-3' : 'mr-0'}`}
+          style={{
+            backgroundColor: '#e74c3c',
+            color: 'white', // Ensure text is white too
+            borderRadius: '0.5rem',
+            border: 'none'
+          }}
+        />
+      </div>
+    </div>
+  );
+} 

@@ -13,7 +13,7 @@ export default function BrowseInternshipsPage() {
     : getRecommendedInternships();
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 pt-0 pb-8">
       <InternshipList
         title="INTERNSHIP OPPORTUNITIES"
         internships={internshipsToDisplay}
