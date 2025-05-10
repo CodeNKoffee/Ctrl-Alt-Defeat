@@ -90,7 +90,7 @@ export default function InternshipList({
 
         {/* Custom Filter Panel (e.g., All/Recommended) */}
         {customFilterPanel && (
-          <div className="mb-4">{customFilterPanel}</div>
+          <div className="py-2 mb-4">{customFilterPanel}</div>
         )}
 
         {/* Status Tabs and Date Picker Row */}

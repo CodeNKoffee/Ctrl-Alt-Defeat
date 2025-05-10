@@ -53,21 +53,19 @@ function BrowseInternshipsView() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setFilterType('all')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors border
-                ${filterType === 'all'
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'all'
                   ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}
-              `}
+                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                }`}
             >
               All
             </button>
             <button
               onClick={() => setFilterType('recommended')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors border
-                ${filterType === 'recommended'
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'recommended'
                   ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}
-              `}
+                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                }`}
             >
               Recommended
             </button>
