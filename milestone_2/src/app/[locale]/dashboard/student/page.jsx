@@ -320,7 +320,7 @@ export default function StudentDashboardPage() {
       case 'my-internships':
         return "MY INTERNSHIPS";
       case 'profile':
-        return "STUDENT PROFILE";
+        return "MY PROFILE";
       default:
         return "RECOMMENDED OPPORTUNITIES";
     }
