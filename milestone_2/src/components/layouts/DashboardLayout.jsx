@@ -48,7 +48,7 @@ export default function DashboardLayout({
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-white">
       {showSidebar && (
         <Sidebar
           userType={userType}
@@ -65,7 +65,7 @@ export default function DashboardLayout({
             </h1>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 flex-1">
+          <div className="bg-metallica-blue-50 rounded-xl shadow-sm overflow-hidden border border-gray-200 flex-1">
             {title && (
               <div className="w-full px-4 pt-6 pb-2">
                 <div className="w-full max-w-3xl mx-auto">
