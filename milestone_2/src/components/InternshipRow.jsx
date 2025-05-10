@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import StatusBadge from './shared/StatusBadge';
+import { Tooltip } from 'react-tooltip';
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";
@@ -34,6 +35,19 @@ const timeAgo = (isoDate) => {
   return 'posted just now';
 };
 
+// Tooltip messages for statuses
+const statusTooltipMessages = {
+  // Applied internship statuses
+  accepted: "Your application has been accepted by the company.",
+  pending: "Your application is currently under review.",
+  finalized: "You have accepted the offer and the internship is finalized.",
+  rejected: "Your application was not selected for this position.",
+  // My internship statuses
+  current: "This internship is currently in progress.",
+  completed: "You have successfully completed this internship.",
+  evaluated: "This internship has been completed and evaluated.",
+};
+
 export default function InternshipRow({ internship, type }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
@@ -55,6 +69,9 @@ export default function InternshipRow({ internship, type }) {
       }, 600);
     }
   };
+
+  const currentStatus = internship.status ? internship.status.toLowerCase() : null;
+  const tooltipContent = currentStatus ? statusTooltipMessages[currentStatus] : undefined;
 
   return (
     <div className="mb-3 w-full max-w-3xl mx-auto">
@@ -98,6 +115,8 @@ export default function InternshipRow({ internship, type }) {
 
               {type === 'my' && (
                 <StatusBadge
+                  data-tooltip-id="status-tooltip"
+                  data-tooltip-content={tooltipContent}
                   color={
                     internship.status === 'current' ? 'bg-blue-100 text-blue-800 border-blue-400' :
                       internship.status === 'completed' ? 'bg-green-100 text-green-800 border-green-400' :
@@ -112,6 +131,8 @@ export default function InternshipRow({ internship, type }) {
 
               {type === 'applied' && (
                 <StatusBadge
+                  data-tooltip-id="status-tooltip"
+                  data-tooltip-content={tooltipContent}
                   color={
                     internship.status === 'accepted' ? 'bg-green-100 text-green-800 border-green-400' :
                       internship.status === 'rejected' ? 'bg-red-100 text-red-800 border-red-400' :
@@ -234,6 +255,7 @@ export default function InternshipRow({ internship, type }) {
           </div>
         </div>
       </div>
+      <Tooltip id="status-tooltip" />
     </div>
   );
 }

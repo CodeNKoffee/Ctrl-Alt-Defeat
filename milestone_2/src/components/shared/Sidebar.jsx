@@ -257,7 +257,7 @@ export default function Sidebar({ userType, onViewChange, currentView }) {
             onClick={handleLogout}
             icon={faRightFromBracket}
             text="Logout"
-            buttonClassName="flex items-center justify-center p-2.5 text-sm"
+            buttonClassName="flex items-center justify-center p-2.5 text-sm font-bold"
             iconClassName="mr-2"
             style={{
               backgroundColor: '#e74c3c',
