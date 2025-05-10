@@ -253,8 +253,8 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
                 className={`px-4 py-2 text-white rounded-lg transition w-full sm:w-auto text-sm ${isApplied
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-[#5DB2C7] hover:bg-[#4796a8]'
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-[#5DB2C7] hover:bg-[#4796a8]'
                   }`}
                 disabled={isApplied}
               >

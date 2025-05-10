@@ -51,8 +51,8 @@ export default function InternshipList({
       internship.status?.toLowerCase() === activeTab;
 
     const matchesDate = !selectedDate || (
-      internship.startDate &&
-      new Date(internship.startDate).toDateString() === new Date(selectedDate).toDateString()
+      (type === "applied" && internship.appliedDate && new Date(internship.appliedDate).toDateString() === new Date(selectedDate).toDateString()) ||
+      (type !== "applied" && internship.startDate && new Date(internship.startDate).toDateString() === new Date(selectedDate).toDateString())
     );
 
     // For "applied" type, only show internships with applied statuses
