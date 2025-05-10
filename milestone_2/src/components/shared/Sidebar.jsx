@@ -146,8 +146,7 @@ export default function Sidebar({ userType, onViewChange, currentView }) {
 
   return (
     <div
-      className={`bg-[#E2F4F7] h-screen flex flex-col border-r border-[#5DB2C7] sticky top-0 transform transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-20'
-        }`}
+      className={`bg-[#E2F4F7] h-screen flex flex-col border-r border-[#5DB2C7] sticky top-0 transform transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-20'}`}
       style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}
     >
       {/* Sidebar Header */}
@@ -157,20 +156,22 @@ export default function Sidebar({ userType, onViewChange, currentView }) {
           <Image
             src="/logos/internhub-logo.png"
             alt="InternHub Logo"
-            width={32} // Slightly larger for better visibility
+            width={32}
             height={32}
             className={`transition-all duration-300 ease-in-out ${isExpanded ? 'mr-2' : 'mr-0'}`}
           />
-          <span
-            className={`font-bold text-[#2a5f74] whitespace-nowrap transition-all duration-300 ease-in-out ${isExpanded ? 'opacity-100 max-w-xs' : 'opacity-0 max-w-0 overflow-hidden'}`}>
-            {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
-          </span>
+          <div
+            className={`font-young-serif font-bold whitespace-nowrap transition-all duration-300 ease-in-out text-lg ${isExpanded ? 'opacity-100 max-w-xs' : 'opacity-0 max-w-0 overflow-hidden'}`}
+          >
+            <span className="text-[#B0BEC5]">Intern</span>
+            <span className="text-[#2a5f74]">Hub</span>
+          </div>
         </div>
 
         {/* Toggle Button */}
         <button
           onClick={toggleSidebar}
-          className="text-[#5DB2C7] hover:bg-[#D9F0F4] p-2 rounded-full transition-all duration-300 hover:scale-105 ml-2 flex-shrink-0" // Added ml-2 for spacing from logo/text, and flex-shrink-0
+          className="text-[#5DB2C7] hover:bg-[#D9F0F4] p-2 rounded-full transition-all duration-300 hover:scale-105 ml-2 flex-shrink-0"
           aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
         >
           <FontAwesomeIcon
@@ -237,21 +238,33 @@ export default function Sidebar({ userType, onViewChange, currentView }) {
       </div>
 
       {/* Sidebar Footer (Logout Button) */}
-      <div className={`p-3 border-t border-[#5DB2C7] transition-all duration-300 ease-in-out ${isExpanded ? '' : 'flex justify-center'}`}>
-        <ActionButton
-          buttonType="reject"
-          onClick={handleLogout}
-          icon={faRightFromBracket}
-          text={isExpanded ? "Logout" : ""}
-          buttonClassName={`flex items-center p-2.5 text-sm ${isExpanded ? 'w-full justify-start' : 'w-auto justify-center px-3'}`}
-          iconClassName={`transition-all duration-300 ease-in-out ${isExpanded ? 'mr-3' : 'mr-0'}`}
-          style={{
-            backgroundColor: '#e74c3c',
-            color: 'white', // Ensure text is white too
-            borderRadius: '0.5rem',
-            border: 'none'
-          }}
-        />
+      <div className={`w-full p-3 border-t border-[#5DB2C7] transition-all duration-300 ease-in-out flex ${isExpanded ? 'justify-start' : 'justify-center'}`}>
+        {isExpanded ? (
+          <ActionButton
+            buttonType="reject"
+            onClick={handleLogout}
+            icon={faRightFromBracket}
+            text="Logout"
+            buttonClassName="flex items-center justify-center p-2.5 text-sm"
+            iconClassName="mr-2"
+            style={{
+              backgroundColor: '#e74c3c',
+              color: 'white',
+              border: 'none',
+              borderRadius: '9999px',
+              width: '100%'
+            }}
+          />
+        ) : (
+          <button
+            onClick={handleLogout}
+            className="p-2.5 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out hover:bg-red-700/20"
+            style={{ color: '#e74c3c' }}
+            aria-label="Logout"
+          >
+            <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
+          </button>
+        )}
       </div>
     </div>
   );
