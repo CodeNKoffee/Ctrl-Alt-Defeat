@@ -385,6 +385,7 @@ const UploadDocuments = ({ open, onClose }) => {
             onClick={handleCancelAndClose}
             text="Cancel"
             buttonClassName="your-custom-cancel-class"
+            style={{ fontWeight: 'bold' }}
           />
           <ActionButton
             buttonType="accept"
@@ -392,6 +393,7 @@ const UploadDocuments = ({ open, onClose }) => {
             text="Upload"
             buttonClassName="your-custom-upload-class"
             disabled={!resumeFile || !resumeUploadComplete || isResumeUploading}
+            style={{ fontWeight: 'bold' }}
           />
         </div>
       </div>
