@@ -5,9 +5,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import Lottie from 'lottie-react';
 // import animationData from '../../public/animted-cloud.json'; // Your Lottie JSON
 import animationData from '../../public/cloud-icon.json'; // Your Lottie JSON
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloudArrowUp, faXmark, faTimes, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCloudArrowUp, faXmark, faTimes, faCheckCircle, faTimesCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
 import ActionButton from './shared/ActionButton';
 
 // Create the main component for uploading documents
@@ -36,6 +37,9 @@ const UploadDocuments = ({ open, onClose }) => {
   const [links, setLinks] = useState([{ id: Date.now(), value: '' }]);
   // Add state for animation
   const [animatingLinks, setAnimatingLinks] = useState({});
+
+  // Feedback state for successful upload
+  const [feedback, setFeedback] = useState(null);
 
   const resetUploadStates = (type) => {
     if (type === 'resume' || type === 'all') {
@@ -131,36 +135,6 @@ const UploadDocuments = ({ open, onClose }) => {
     resetUploadStates(type);
   };
 
-  const handleActualSubmit = () => {
-    if (!resumeFile || !resumeUploadComplete) {
-      setResumeError('Resume is required and must finish uploading.');
-      return;
-    }
-    setResumeError('');
-
-    console.log("Submitting Documents:", {
-      resume: resumeFile ? resumeFile.name : null,
-      coverLetterFile: coverLetterFile ? coverLetterFile.name : null,
-      coverLetterText,
-      links
-    });
-    setTimeout(() => {
-      console.log('Documents successfully submitted (simulated).');
-      resetUploadStates('all');
-      setCoverLetterText('');
-      setLinks([{ id: Date.now(), value: '' }]);
-      if (onClose) onClose();
-    }, 1000);
-  };
-
-  const handleCancelAndClose = () => {
-    resetUploadStates('all');
-    setCoverLetterText('');
-    setLinks([{ id: Date.now(), value: '' }]);
-    if (onClose) onClose();
-  };
-
-  const handleCoverLetterChange = (event) => setCoverLetterText(event.target.value);
   const handleAddLink = () => {
     const newLinkId = Date.now();
     // Set animating state for new link
@@ -176,7 +150,9 @@ const UploadDocuments = ({ open, onClose }) => {
       });
     }, 500);
   };
+
   const handleLinkChange = (id, newValue) => setLinks(links.map(link => (link.id === id ? { ...link, value: newValue } : link)));
+
   const handleRemoveLink = (idToRemove) => {
     if (links.length > 1) {
       // Set animating state for link being removed
@@ -188,6 +164,42 @@ const UploadDocuments = ({ open, onClose }) => {
       }, 300);
     }
   };
+
+  const handleActualSubmit = () => {
+    if (!resumeFile || !resumeUploadComplete) {
+      setResumeError('Resume is required and must finish uploading.');
+      return;
+    }
+    setResumeError('');
+
+    console.log("Submitting Documents:", {
+      resume: resumeFile ? resumeFile.name : null,
+      coverLetterFile: coverLetterFile ? coverLetterFile.name : null,
+      coverLetterText,
+      links
+    });
+
+    // Show success feedback
+    setFeedback('success');
+
+    setTimeout(() => {
+      setFeedback(null);
+      console.log('Documents successfully submitted (simulated).');
+      resetUploadStates('all');
+      setCoverLetterText('');
+      setLinks([{ id: Date.now(), value: '' }]);
+      if (onClose) onClose();
+    }, 1400);
+  };
+
+  const handleCancelAndClose = () => {
+    resetUploadStates('all');
+    setCoverLetterText('');
+    setLinks([{ id: Date.now(), value: '' }]);
+    if (onClose) onClose();
+  };
+
+  const handleCoverLetterChange = (event) => setCoverLetterText(event.target.value);
 
   if (!open) return null;
 
@@ -275,6 +287,82 @@ const UploadDocuments = ({ open, onClose }) => {
       backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex',
       alignItems: 'center', justifyContent: 'center', zIndex: 1000,
     }}>
+      {/* Feedback overlay */}
+      <AnimatePresence>
+        {feedback && (
+          <motion.div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1100,
+              background: 'rgba(42, 95, 116, 0.18)'
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              style={{
+                background: 'white',
+                padding: '25px',
+                borderRadius: '15px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+                maxWidth: '400px'
+              }}
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            >
+              <motion.div
+                style={{
+                  marginBottom: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+              >
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    background: '#318FA8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    style={{ fontSize: 32, color: 'white' }}
+                  />
+                </div>
+              </motion.div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
+                Success!
+              </div>
+              <div style={{ color: '#333', textAlign: 'center' }}>
+                Your documents have been successfully uploaded.
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main modal content */}
       <div style={{
         backgroundColor: '#F0F9FB', padding: '20px 40px', borderRadius: '10px',
         fontFamily: 'IBM Plex Sans, sans-serif', width: '900px',
