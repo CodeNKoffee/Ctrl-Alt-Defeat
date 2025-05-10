@@ -21,6 +21,8 @@ import {
   faRightFromBracket
 } from '@fortawesome/free-solid-svg-icons';
 import ActionButton from './ActionButton';
+import { useDispatch } from 'react-redux';
+import { LOGOUT_USER } from '@/store/authReducer';
 
 // Icon mapping for different menu items
 const iconMap = {
@@ -73,6 +75,7 @@ export default function Sidebar({ userType, onViewChange, currentView }) {
   const [prevView, setPrevView] = useState(currentView);
   const pathname = usePathname();
   const router = useRouter();
+  const dispatch = useDispatch();
   const sidebarItems = sidebarConfig[userType] || [];
 
   // Extract locale from pathname
@@ -141,7 +144,16 @@ export default function Sidebar({ userType, onViewChange, currentView }) {
 
   // Handle logout
   const handleLogout = () => {
-    router.push(`/${locale}/auth/login`);
+    dispatch({ type: LOGOUT_USER });
+
+    // Clear session and local storage
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('userSession');
+      localStorage.removeItem('userSession');
+      sessionStorage.removeItem('welcomeShown'); // Also clear welcomeShown flag
+    }
+
+    router.push(`/${locale}/`);
   };
 
   return (
