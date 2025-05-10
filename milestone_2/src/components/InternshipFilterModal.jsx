@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { INDUSTRIES } from '../../constants';
 import SearchableSelect from './SearchableSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
 import ActionButton from './shared/ActionButton';
 
 // Updated slider configuration with 1-month steps
@@ -95,6 +95,29 @@ export default function InternshipFilterModal({ open, onClose, initialFilters, o
     onClose();
   };
 
+  // Clear individual filters
+  const clearIndustryFilter = () => {
+    setFilters({
+      ...filters,
+      industry: ''
+    });
+  };
+
+  const clearDurationFilter = () => {
+    setFilters({
+      ...filters,
+      duration: ''
+    });
+    setSliderValue(DURATION_CONFIG.min);
+  };
+
+  const clearPaidFilter = () => {
+    setFilters({
+      ...filters,
+      isPaid: null
+    });
+  };
+
   if (!open) return null;
 
   return (
@@ -114,11 +137,62 @@ export default function InternshipFilterModal({ open, onClose, initialFilters, o
           </button>
         </div>
 
+        {/* Active Filters Display */}
+        {(filters.industry || filters.duration || filters.isPaid !== null) && (
+          <div className="mb-4 flex flex-wrap gap-2">
+            <div className="text-sm text-gray-500 mr-1 flex items-center">Active filters:</div>
+
+            {filters.industry && (
+              <div className="bg-[#D9F0F4] text-[#2a5f74] px-3 py-1 rounded-full text-sm flex items-center">
+                Industry: {filters.industry}
+                <button
+                  className="ml-2 text-[#2a5f74] hover:text-[#1a3f54]"
+                  onClick={clearIndustryFilter}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+              </div>
+            )}
+
+            {filters.duration && (
+              <div className="bg-[#D9F0F4] text-[#2a5f74] px-3 py-1 rounded-full text-sm flex items-center">
+                Duration: {filters.duration}
+                <button
+                  className="ml-2 text-[#2a5f74] hover:text-[#1a3f54]"
+                  onClick={clearDurationFilter}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+              </div>
+            )}
+
+            {filters.isPaid !== null && (
+              <div className="bg-[#D9F0F4] text-[#2a5f74] px-3 py-1 rounded-full text-sm flex items-center">
+                {filters.isPaid ? 'Paid' : 'Unpaid'}
+                <button
+                  className="ml-2 text-[#2a5f74] hover:text-[#1a3f54]"
+                  onClick={clearPaidFilter}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="space-y-6">
           {/* Industry Filter */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Industry
+            <label className="block text-sm font-medium text-gray-700 mb-1 flex justify-between">
+              <span>Industry</span>
+              {filters.industry && (
+                <button
+                  className="text-xs text-metallica-blue-600 hover:text-metallica-blue-800 flex items-center"
+                  onClick={clearIndustryFilter}
+                >
+                  Clear <FontAwesomeIcon icon={faXmark} className="ml-1" />
+                </button>
+              )}
             </label>
             <SearchableSelect
               name="industry"
@@ -131,8 +205,16 @@ export default function InternshipFilterModal({ open, onClose, initialFilters, o
 
           {/* Duration Slider */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Duration
+            <label className="block text-sm font-medium text-gray-700 mb-1 flex justify-between">
+              <span>Duration</span>
+              {filters.duration && (
+                <button
+                  className="text-xs text-metallica-blue-600 hover:text-metallica-blue-800 flex items-center"
+                  onClick={clearDurationFilter}
+                >
+                  Clear <FontAwesomeIcon icon={faXmark} className="ml-1" />
+                </button>
+              )}
             </label>
             <div className="mt-2 px-2">
               <div className="flex justify-between items-center text-xs text-gray-500 mb-1">
@@ -200,8 +282,16 @@ export default function InternshipFilterModal({ open, onClose, initialFilters, o
 
           {/* Paid/Unpaid Filter */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Payment Status
+            <label className="block text-sm font-medium text-gray-700 mb-1 flex justify-between">
+              <span>Payment Status</span>
+              {filters.isPaid !== null && (
+                <button
+                  className="text-xs text-metallica-blue-600 hover:text-metallica-blue-800 flex items-center"
+                  onClick={clearPaidFilter}
+                >
+                  Clear <FontAwesomeIcon icon={faXmark} className="ml-1" />
+                </button>
+              )}
             </label>
             <div className="flex gap-4">
               <button
@@ -241,7 +331,7 @@ export default function InternshipFilterModal({ open, onClose, initialFilters, o
           <div className="flex justify-end gap-4 mt-8">
             <ActionButton
               buttonType="reject"
-              text="Reset Filters"
+              text="Reset All Filters"
               onClick={handleResetFilters}
               buttonClassName="w-fit"
             />

@@ -10,7 +10,7 @@ import InternshipList from '@/components/shared/InternshipList';
 import StudentProfile from '@/components/StudentProfile';
 import InternshipFilterModal from '@/components/InternshipFilterModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import { getRegularInternships, getRecommendedInternships, getAppliedInternships, getMyInternships } from '../../../../../constants/internshipData';
 
@@ -105,6 +105,36 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     setFilters(newFilters);
   };
 
+  // Clear individual filters
+  const clearIndustryFilter = () => {
+    setFilters({
+      ...filters,
+      industry: ''
+    });
+  };
+
+  const clearDurationFilter = () => {
+    setFilters({
+      ...filters,
+      duration: ''
+    });
+  };
+
+  const clearPaidFilter = () => {
+    setFilters({
+      ...filters,
+      isPaid: null
+    });
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      industry: '',
+      duration: '',
+      isPaid: null
+    });
+  };
+
   return (
     <div className="container mx-auto px-4 pt-0 pb-8">
       <InternshipList
@@ -114,43 +144,95 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         customFilterPanel={
-          <div className="flex flex-wrap items-center justify-between">
-            <div className="flex flex-wrap gap-2">
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center justify-between">
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setFilterType('all')}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'all'
+                    ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                    : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                    }`}
+                >
+                  All
+                </button>
+                <button
+                  onClick={() => setFilterType('recommended')}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'recommended'
+                    ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                    : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                    }`}
+                >
+                  Recommended
+                </button>
+              </div>
               <button
-                onClick={() => setFilterType('all')}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'all'
-                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                onClick={() => setIsFilterModalOpen(true)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border flex items-center gap-1 ml-2 
+                  ${hasActiveFilters
+                    ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                    : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
                   }`}
               >
-                All
-              </button>
-              <button
-                onClick={() => setFilterType('recommended')}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${filterType === 'recommended'
-                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
-                  }`}
-              >
-                Recommended
+                <FontAwesomeIcon icon={faFilter} className="mr-1" />
+                {hasActiveFilters ? 'Filters Applied' : 'Filter'}
+                {hasActiveFilters && (
+                  <span className="inline-flex items-center justify-center w-5 h-5 bg-[#3298BA] text-white rounded-full text-xs ml-1">
+                    {Object.values(filters).filter(f => f !== '' && f !== null).length}
+                  </span>
+                )}
               </button>
             </div>
-            <button
-              onClick={() => setIsFilterModalOpen(true)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border flex items-center gap-1 ml-2 
-                ${hasActiveFilters
-                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
-                }`}
-            >
-              <FontAwesomeIcon icon={faFilter} className="mr-1" />
-              {hasActiveFilters ? 'Filters Applied' : 'Filter'}
-              {hasActiveFilters && (
-                <span className="inline-flex items-center justify-center w-5 h-5 bg-[#3298BA] text-white rounded-full text-xs ml-1">
-                  {Object.values(filters).filter(f => f !== '' && f !== null).length}
-                </span>
-              )}
-            </button>
+
+            {/* Active Filters Display */}
+            {hasActiveFilters && (
+              <div className="flex flex-wrap gap-2 items-center">
+                <span className="text-sm text-gray-500">Active filters:</span>
+
+                {filters.industry && (
+                  <div className="bg-[#D9F0F4] text-[#2a5f74] px-3 py-1 rounded-full text-sm flex items-center">
+                    Industry: {filters.industry}
+                    <button
+                      className="ml-2 text-[#2a5f74] hover:text-[#1a3f54]"
+                      onClick={clearIndustryFilter}
+                    >
+                      <FontAwesomeIcon icon={faXmark} />
+                    </button>
+                  </div>
+                )}
+
+                {filters.duration && (
+                  <div className="bg-[#D9F0F4] text-[#2a5f74] px-3 py-1 rounded-full text-sm flex items-center">
+                    Duration: {filters.duration}
+                    <button
+                      className="ml-2 text-[#2a5f74] hover:text-[#1a3f54]"
+                      onClick={clearDurationFilter}
+                    >
+                      <FontAwesomeIcon icon={faXmark} />
+                    </button>
+                  </div>
+                )}
+
+                {filters.isPaid !== null && (
+                  <div className="bg-[#D9F0F4] text-[#2a5f74] px-3 py-1 rounded-full text-sm flex items-center">
+                    {filters.isPaid ? 'Paid' : 'Unpaid'}
+                    <button
+                      className="ml-2 text-[#2a5f74] hover:text-[#1a3f54]"
+                      onClick={clearPaidFilter}
+                    >
+                      <FontAwesomeIcon icon={faXmark} />
+                    </button>
+                  </div>
+                )}
+
+                <button
+                  className="text-xs text-metallica-blue-600 hover:text-metallica-blue-800 ml-2 underline"
+                  onClick={clearAllFilters}
+                >
+                  Clear all
+                </button>
+              </div>
+            )}
           </div>
         }
       />
