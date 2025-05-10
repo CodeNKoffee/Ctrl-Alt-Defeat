@@ -12,7 +12,7 @@ import { faCloudArrowUp, faXmark, faTimes, faCheckCircle, faTimesCircle, faCheck
 import ActionButton from './shared/ActionButton';
 
 // Create the main component for uploading documents
-const UploadDocuments = ({ open, onClose }) => {
+const UploadDocuments = ({ open, onClose, internshipId }) => {
   // States for Resume
   const [resumeFile, setResumeFile] = useState(null);
   const [isResumeUploading, setIsResumeUploading] = useState(false);
@@ -172,7 +172,7 @@ const UploadDocuments = ({ open, onClose }) => {
     }
     setResumeError('');
 
-    console.log("Submitting Documents:", {
+    console.log("Submitting Documents for internship:", internshipId, {
       resume: resumeFile ? resumeFile.name : null,
       coverLetterFile: coverLetterFile ? coverLetterFile.name : null,
       coverLetterText,
@@ -188,7 +188,7 @@ const UploadDocuments = ({ open, onClose }) => {
       resetUploadStates('all');
       setCoverLetterText('');
       setLinks([{ id: Date.now(), value: '' }]);
-      if (onClose) onClose();
+      if (onClose) onClose(true, internshipId); // Indicate success and pass internshipId
     }, 1400);
   };
 
@@ -196,7 +196,7 @@ const UploadDocuments = ({ open, onClose }) => {
     resetUploadStates('all');
     setCoverLetterText('');
     setLinks([{ id: Date.now(), value: '' }]);
-    if (onClose) onClose();
+    if (onClose) onClose(false, null); // Indicate not a successful submission
   };
 
   const handleCoverLetterChange = (event) => setCoverLetterText(event.target.value);
@@ -420,7 +420,7 @@ const UploadDocuments = ({ open, onClose }) => {
                 transition: 'all 0.3s ease-in-out'
               }}
             >
-              <div style={{ position: 'relative', flex: 1 }}>
+              <div className="relative w-2/3">
                 <input type="text" value={link.value} onChange={(e) => handleLinkChange(link.id, e.target.value)} placeholder="https://example.com" style={{
                   width: '100%', border: '2px solid #318FA8', borderRadius: '50px', padding: '10px 12px',
                   fontSize: '14px', color: '#2A5F74', fontFamily: 'IBM Plex Sans, sans-serif', backgroundColor: '#FFFFFF'
