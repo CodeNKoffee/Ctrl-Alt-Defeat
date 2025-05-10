@@ -262,7 +262,7 @@ const UploadDocuments = ({ open, onClose }) => {
             ref={type === 'resume' ? resumeFileInputRef : coverLetterFileInputRef}
             onChange={(e) => handleFileChange(e, type)}
             style={{ display: 'none' }}
-            accept=".pdf,.doc,.docx,.txt"
+            accept=".pdf"
           />
         </div>
       </div>
