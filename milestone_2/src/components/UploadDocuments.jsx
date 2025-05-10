@@ -213,9 +213,9 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
 
     return (
       <div style={{ width: '48%', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>
           <label style={{ color: '#2A5F74', fontSize: '16px', fontWeight: '600', display: 'block', textAlign: 'left' }}>
-            {title} {isRequired && <span style={{ color: '#D32F2F' }}>*</span>}
+            {title} {isRequired && <span style={{ color: '#D32F2F'}}>*</span>}
           </label>
 
           {type === 'resume' && resumeError && (
@@ -260,10 +260,21 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
 
           {!isUploading && !uploadComplete && (
             <button onClick={() => handleTriggerFileInput(type)} style={{
-              cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center',
-              justifyContent: 'center', padding: '15px', backgroundColor: '#D9F0F4',
-              borderRadius: '20px', color: '#2A5F74', fontSize: '14px', gap: '8px',
-              width: '144px', marginTop: '24px', border: 'none', alignSelf: 'center'
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '15px',
+              backgroundColor: 'transparent',
+              borderRadius: '20px',
+              color: '#2A5F74',
+              fontSize: '20px',
+              gap: '8px',
+              width: '144px',
+              marginTop: '24px',
+              border: 'none',
+              alignSelf: 'center'
             }}>
               <FontAwesomeIcon icon={faCloudArrowUp} style={{ width: '32px', height: '32px', color: '#318FA8' }} />
               <span style={{ fontWeight: '700' }}>Upload</span>
@@ -468,21 +479,48 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '30px' }}>
-          <ActionButton
-            buttonType="reject"
+          <button
             onClick={handleCancelAndClose}
-            text="Cancel"
-            buttonClassName="your-custom-cancel-class w-fit"
-            style={{ fontWeight: 'bold' }}
-          />
-          <ActionButton
-            buttonType="accept"
+            style={{
+              backgroundColor: '#C41E3A',
+              color: 'white',
+              padding: '12px 40px',
+              borderRadius: '50px',
+              border: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              width: '200px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              transition: 'background-color 0.2s ease'
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#A01830'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#C41E3A'}
+          >
+            Cancel
+          </button>
+          <button
             onClick={handleActualSubmit}
-            text="Upload"
-            buttonClassName="your-custom-upload-class w-fit"
             disabled={!resumeFile || !resumeUploadComplete || isResumeUploading}
-            style={{ fontWeight: 'bold' }}
-          />
+            style={{
+              backgroundColor: '#318FA8',
+              color: 'white',
+              padding: '12px 40px',
+              borderRadius: '50px',
+              border: 'none',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              cursor: !resumeFile || !resumeUploadComplete || isResumeUploading ? 'not-allowed' : 'pointer',
+              width: '200px',
+              opacity: (!resumeFile || !resumeUploadComplete || isResumeUploading) ? 0.7 : 1,
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              transition: 'background-color 0.2s ease'
+            }}
+            onMouseOver={(e) => !e.target.disabled && (e.target.style.backgroundColor = '#287A8F')} // Darker shade for hover
+            onMouseOut={(e) => !e.target.disabled && (e.target.style.backgroundColor = '#318FA8')}
+          >
+            Upload
+          </button>
         </div>
       </div>
     </div>
