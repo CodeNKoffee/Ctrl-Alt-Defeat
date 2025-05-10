@@ -160,8 +160,7 @@ export default function ApplicationsList() {
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [selectedInternship, setSelectedInternship] = useState('all');
   const [selectedApplication, setSelectedApplication] = useState(null);
-  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
-  const [isInternshipDropdownOpen, setIsInternshipDropdownOpen] = useState(false);
+  const [isCombinedFilterPopoverOpen, setIsCombinedFilterPopoverOpen] = useState(false);
 
   // Filter applications based on search term, status, and internship
   const filteredApplications = applications.filter(app => {
@@ -209,11 +208,9 @@ export default function ApplicationsList() {
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest('.status-dropdown') && !event.target.closest('.status-dropdown-button')) {
-        setIsStatusDropdownOpen(false);
-      }
-      if (!event.target.closest('.internship-dropdown') && !event.target.closest('.internship-dropdown-button')) {
-        setIsInternshipDropdownOpen(false);
+      // New: Close combined filter popover on outside click
+      if (!event.target.closest('.combined-filter-popover') && !event.target.closest('.combined-filter-button')) {
+        setIsCombinedFilterPopoverOpen(false);
       }
     };
 
@@ -231,10 +228,13 @@ export default function ApplicationsList() {
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
 
-        {/* Filters section */}
-        <div className="w-full bg-metallica-blue-100/50 backdrop-blur-sm p-5 rounded-xl shadow-sm mb-6 border border-metallica-blue-200 transition-all duration-300 hover:shadow-md hover:border-metallica-blue-300 flex flex-row !items-center">
-          <div className="w-full flex flex-col md:flex-row gap-4 justify-between !items-center">
-            {/* Search box - styled like SearchBar */}
+        {/* Filters section - MODIFIED for modern/futuristic look */}
+        <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
+          {/* Added Title for Filter Options */}
+          <h3 className="text-lg font-semibold text-[#2a5f74] mb-5 text-left">Filter Options</h3>
+
+          <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center"> {/* Ensured items-center here for the input row itself */}
+            {/* Search box - MODIFIED */}
             <div className="flex-1 w-full md:w-auto md:max-w-md">
               <div className="relative w-full flex justify-center items-center">
                 <input
@@ -242,172 +242,149 @@ export default function ApplicationsList() {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search by name, email, or position..."
-                  className="w-full py-3 pl-9 pr-9 appearance-none bg-white/80 backdrop-blur-sm border-2 border-gray-300 hover:border-[#5DB2C7] text-sm text-gray-800 rounded-full shadow-sm focus:outline-none focus:ring-1 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300"
+                  className="w-full py-3 pl-10 pr-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
                 />
-                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
                   <FontAwesomeIcon
                     icon={faSearch}
-                    className="h-4 w-4 text-gray-400"
+                    className="h-4 w-4 text-[#5DB2C7]"
                   />
                 </div>
                 {searchTerm && (
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-3 flex items-center"
+                    className="absolute inset-y-0 right-3.5 flex items-center p-1 rounded-full hover:bg-[#B8E1E9]/50 transition-colors duration-200"
                     onClick={() => setSearchTerm('')}
                   >
                     <FontAwesomeIcon
                       icon={faXmark}
-                      className="w-4 h-4 text-gray-500 hover:text-gray-700"
+                      className="w-4 h-4 text-[#5DB2C7] hover:text-[#2a5f74]"
                     />
                   </button>
                 )}
               </div>
             </div>
 
-            {/* Internship filter - styled like IndustryFilter */}
-            <div className="w-full md:w-auto md:max-w-xs">
-              <div className="relative min-w-[256px]">
-                <button
-                  className="appearance-none w-full bg-white/80 backdrop-blur-sm border-2 hover:border-metallica-blue-300 hover:cursor-pointer text-sm text-gray-800 py-3 px-4 pr-8 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-metallica-blue-300 focus:border-metallica-blue-400 transition-all duration-300 text-left internship-dropdown-button"
-                  onClick={() => setIsInternshipDropdownOpen(!isInternshipDropdownOpen)}
-                >
-                  {selectedInternship === 'all'
-                    ? 'All Internships'
-                    : MOCK_INTERNSHIPS.find(i => i.id === parseInt(selectedInternship))?.title
-                  }
-                </button>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
-                  <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </div>
+            {/* NEW Combined Filter Button and Popover */}
+            <div className="relative w-full md:w-auto">
+              <button
+                onClick={() => setIsCombinedFilterPopoverOpen(!isCombinedFilterPopoverOpen)}
+                className="appearance-none w-full md:w-auto bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-3 px-4 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 flex items-center justify-center gap-2 combined-filter-button min-w-[150px]"
+              >
+                <FontAwesomeIcon icon={faFilter} className="h-4 w-4 text-[#5DB2C7]" />
+                <span>Filters</span>
+                <FontAwesomeIcon icon={faChevronDown} className={`h-4 w-4 text-[#5DB2C7] transition-transform duration-300 ${isCombinedFilterPopoverOpen ? 'rotate-180' : ''}`} />
+              </button>
 
-                {isInternshipDropdownOpen && (
-                  <div className="absolute left-0 right-0 mt-2 bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg z-10 max-h-48 overflow-y-auto internship-dropdown animate-dropdown">
-                    <div
-                      className={`px-4 py-2 text-sm text-gray-700 hover:bg-metallica-blue-100 rounded-xl cursor-pointer ${selectedInternship === 'all' ? 'bg-metallica-blue-100' : ''}`}
-                      onClick={() => {
-                        setSelectedInternship('all');
-                        setIsInternshipDropdownOpen(false);
-                      }}
-                    >
-                      All Internships
-                    </div>
-                    {MOCK_INTERNSHIPS.map(internship => (
+              {isCombinedFilterPopoverOpen && (
+                <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-30 combined-filter-popover animate-dropdown focus:outline-none p-4 space-y-4">
+                  {/* Internship Filter Section */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Internship Position</h4>
+                    <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
                       <div
-                        key={internship.id}
-                        className={`px-4 py-2 text-sm text-gray-700 hover:bg-metallica-blue-100 rounded-xl cursor-pointer ${selectedInternship === internship.id.toString() ? 'bg-metallica-blue-100' : ''}`}
-                        onClick={() => {
-                          setSelectedInternship(internship.id.toString());
-                          setIsInternshipDropdownOpen(false);
-                        }}
+                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${selectedInternship === 'all' ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
+                        onClick={() => { setSelectedInternship('all'); /* setIsCombinedFilterPopoverOpen(false); // Optional: close on select */ }}
                       >
-                        {internship.title}
+                        All Internships
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Status filter - styled like IndustryFilter */}
-            <div className="w-full md:w-auto md:max-w-xs">
-              <div className="relative min-w-[256px]">
-                <button
-                  className="appearance-none w-full bg-white/80 backdrop-blur-sm border-2 hover:border-metallica-blue-300 hover:cursor-pointer text-sm text-gray-800 py-3 px-4 pr-8 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-metallica-blue-300 focus:border-metallica-blue-400 transition-all duration-300 text-left status-dropdown-button"
-                  onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
-                >
-                  {selectedStatus === 'all'
-                    ? 'All Statuses'
-                    : STATUS_CONFIG[selectedStatus].label
-                  }
-                </button>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
-                  <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </div>
-
-                {isStatusDropdownOpen && (
-                  <div className="absolute left-0 right-0 mt-2 bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg z-10 max-h-48 overflow-y-auto status-dropdown animate-dropdown">
-                    <div
-                      className={`px-4 py-2 text-sm text-gray-700 hover:bg-metallica-blue-100 rounded-xl cursor-pointer ${selectedStatus === 'all' ? 'bg-metallica-blue-100' : ''}`}
-                      onClick={() => {
-                        setSelectedStatus('all');
-                        setIsStatusDropdownOpen(false);
-                      }}
-                    >
-                      All Statuses
+                      {MOCK_INTERNSHIPS.map(internship => (
+                        <div
+                          key={internship.id}
+                          className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${selectedInternship === internship.id.toString() ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
+                          onClick={() => { setSelectedInternship(internship.id.toString()); /* setIsCombinedFilterPopoverOpen(false); */ }}
+                        >
+                          {internship.title}
+                        </div>
+                      ))}
                     </div>
-                    {Object.entries(STATUS_CONFIG).map(([status, config]) => (
-                      <div
-                        key={status}
-                        className={`px-4 py-2 text-sm flex items-center gap-2 text-gray-700 hover:bg-metallica-blue-100 rounded-xl cursor-pointer ${selectedStatus === status ? 'bg-metallica-blue-100' : ''}`}
-                        onClick={() => {
-                          setSelectedStatus(status);
-                          setIsStatusDropdownOpen(false);
-                        }}
-                      >
-                        <span className={`h-2 w-2 rounded-full ${config.badgeColor}`}></span>
-                        {config.label}
-                      </div>
-                    ))}
                   </div>
-                )}
-              </div>
+
+                  {/* Status Filter Section */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Status</h4>
+                    <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
+                      <div
+                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${selectedStatus === 'all' ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
+                        onClick={() => { setSelectedStatus('all'); /* setIsCombinedFilterPopoverOpen(false); */ }}
+                      >
+                        All Statuses
+                      </div>
+                      {Object.entries(STATUS_CONFIG).map(([status, config]) => (
+                        <div
+                          key={status}
+                          className={`px-3 py-2 text-sm flex items-center gap-2 text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${selectedStatus === status ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
+                          onClick={() => { setSelectedStatus(status); /* setIsCombinedFilterPopoverOpen(false); */ }}
+                        >
+                          <span className={`h-2.5 w-2.5 rounded-full ${config.badgeColor} border border-black/20`}></span>
+                          {config.label}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Optional: Add Apply/Close buttons for the popover here */}
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Active filters */}
-          <div className="flex flex-wrap gap-2 items-center mt-4">
-            {(searchTerm || selectedStatus !== 'all' || selectedInternship !== 'all') && (
+          {/* Active filters - MODIFIED for tag-like appearance */}
+          <div className="w-full flex flex-wrap gap-3 items-center mt-4 pt-4 border-t border-[#B8E1E9]/50">
+            {(searchTerm || selectedStatus !== 'all' || selectedInternship !== 'all') ? (
               <>
-                <span className="text-sm text-gray-500">Active filters:</span>
+                <span className="text-sm text-[#2a5f74] font-medium">Active Filters:</span>
 
                 {searchTerm && (
-                  <div className="bg-[#D9F0F4] text-[#2a5f74] px-3 py-1 rounded-full text-sm flex items-center border border-[#B8E1E9] shadow-sm hover:shadow-md transition-shadow duration-300 group">
-                    Search: {searchTerm}
+                  <div className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group">
+                    <span className="mr-1.5">Search:</span>
+                    <span className="font-semibold italic mr-1.5">"{searchTerm}"</span>
                     <button
-                      className="ml-2 text-[#2a5f74] opacity-75 group-hover:opacity-100 hover:text-[#1a3f54] transition-opacity duration-300"
+                      className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
                       onClick={() => setSearchTerm('')}
+                      aria-label="Remove search term"
                     >
-                      <FontAwesomeIcon icon={faXmark} />
+                      <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
                     </button>
                   </div>
                 )}
 
                 {selectedStatus !== 'all' && (
-                  <div className={`${STATUS_CONFIG[selectedStatus].color} px-3 py-1 rounded-full text-sm flex items-center shadow-sm hover:shadow-md transition-shadow duration-300 group`}>
-                    Status: {STATUS_CONFIG[selectedStatus].label}
+                  <div className={`flex items-center px-3 py-1.5 rounded-full text-xs font-medium ${STATUS_CONFIG[selectedStatus].color} shadow-sm hover:shadow-md transition-all duration-300 group`}>
+                    <span className="mr-1.5">Status:</span>
+                    <span className="font-semibold mr-1.5">{STATUS_CONFIG[selectedStatus].label}</span>
                     <button
-                      className="ml-2 opacity-75 group-hover:opacity-100 transition-opacity duration-300"
+                      className="ml-1 p-0.5 rounded-full opacity-70 hover:opacity-100 transition-opacity duration-200 hover:bg-black/10"
                       onClick={() => setSelectedStatus('all')}
+                      aria-label={`Remove status filter ${STATUS_CONFIG[selectedStatus].label}`}
                     >
-                      <FontAwesomeIcon icon={faXmark} />
+                      <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
                     </button>
                   </div>
                 )}
 
                 {selectedInternship !== 'all' && (
-                  <div className="bg-[#D9F0F4] text-[#2a5f74] px-3 py-1 rounded-full text-sm flex items-center border border-[#B8E1E9] shadow-sm hover:shadow-md transition-shadow duration-300 group">
-                    Position: {MOCK_INTERNSHIPS.find(i => i.id === parseInt(selectedInternship))?.title}
+                  <div className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group">
+                    <span className="mr-1.5">Position:</span>
+                    <span className="font-semibold mr-1.5">{MOCK_INTERNSHIPS.find(i => i.id === parseInt(selectedInternship))?.title}</span>
                     <button
-                      className="ml-2 text-[#2a5f74] opacity-75 group-hover:opacity-100 hover:text-[#1a3f54] transition-opacity duration-300"
+                      className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
                       onClick={() => setSelectedInternship('all')}
+                      aria-label="Remove position filter"
                     >
-                      <FontAwesomeIcon icon={faXmark} />
+                      <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
                     </button>
                   </div>
                 )}
 
                 <button
-                  className="text-xs text-metallica-blue-600 hover:text-metallica-blue-800 ml-auto underline hover:no-underline transition-all duration-300"
+                  className="ml-auto bg-[#2a5f74] hover:bg-[#1a3f54] text-white px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm hover:shadow-md transition-all duration-300 flex items-center"
                   onClick={clearFilters}
                 >
-                  Clear all
+                  <FontAwesomeIcon icon={faXmark} className="w-3 h-3 mr-1.5" /> Clear All
                 </button>
               </>
+            ) : (
+              <p className="text-sm text-gray-500 italic">No filters currently applied.</p>
             )}
           </div>
         </div>
@@ -484,16 +461,16 @@ export default function ApplicationsList() {
 
                   {/* Expand/Collapse icon */}
                   <FontAwesomeIcon
-                    icon={selectedApplication?.id === application.id ? faChevronUp : faChevronDown}
-                    className={`text-gray-400 ml-2 flex-shrink-0 transition-transform duration-300 
-                      ${selectedApplication?.id === application.id ? 'rotate-0' : 'group-hover:translate-y-1'}`}
+                    icon={faChevronDown}
+                    className={`text-gray-400 ml-2 flex-shrink-0 transition-transform duration-300 ease-in-out 
+                      ${selectedApplication?.id === application.id ? 'rotate-180' : 'rotate-0'}`}
                   />
                 </div>
 
                 {/* Expanded application details - NEW outer wrapper for accordion animation */}
                 <div
                   className={`
-                    overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]
+                    overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]
                     transform-gpu
                     ${selectedApplication?.id === application.id ? 'max-h-[1000px]' : 'max-h-0'}
                   `}
@@ -505,8 +482,8 @@ export default function ApplicationsList() {
                       px-4 pt-4 pb-6 
                       bg-gray-50 border-t border-gray-200 
                       flex flex-col md:flex-row 
-                      transition-opacity duration-500 ease-in-out
-                      ${selectedApplication?.id === application.id ? 'opacity-100 delay-150' : 'opacity-0'}
+                      transition-opacity duration-700 ease-in-out
+                      ${selectedApplication?.id === application.id ? 'opacity-100 delay-300' : 'opacity-0'}
                     `}
                   >
                     {/* Left column - Student details (removed animate-slideInFromLeft and py-4) */}
