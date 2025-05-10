@@ -48,7 +48,7 @@ export default function DashboardLayout({
   };
 
   return (
-    <div className="flex h-screen bg-white">
+    <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white">
       {showSidebar && (
         <Sidebar
           userType={userType}
