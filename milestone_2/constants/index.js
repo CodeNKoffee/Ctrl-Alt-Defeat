@@ -150,6 +150,104 @@ export const INDUSTRIES = [
   "Writing & Editing",
 ];
 
+export const mockInternships = [
+  {
+    id: 1,
+    title: "Frontend Developer Intern",
+    company: "TechVision",
+    type: "Full-time",
+    locationType: "REMOTE",
+    paid: true,
+    rate: "$0/hr",
+    postedDate: "2 days ago",
+    startDate: "2025-01-15", // Changed from "January 15, 2025"
+    appliedDate: "2025-01-15", // Changed from "January 15, 2025"
+    industry: "Technology",
+    duration: "3 months",
+    skills: ["JavaScript", "React", "TypeScript", "Redux", "HTML5", "CSS3", "REST APIs"],
+    description: "Join our team to work on exciting projects and gain hands-on experience in frontend development.",
+    details: "TechVision leads in software development, pioneering web technology innovation for over a decade with cutting-edge solutions.",
+    requirements: "Applicants should be pursuing a Computer Science degree with basic JavaScript/React knowledge...",
+    status: "current"
+  },
+  {
+    id: 2,
+    title: "Marketing Coordinator",
+    company: "BrandBoost",
+    type: "Part-time",
+    locationType: "HYBRID",
+    paid: false,
+    rate: "$0/hr",
+    postedDate: "1 week ago",
+    startDate: "2025-02-01", // Changed from "February 1, 2025"
+    appliedDate: "2025-01-15", // Changed from "January 15, 2025"
+    industry: "Marketing",
+    duration: "6 months",
+    skills: ["SEO", "Content Creation", "Social Media", "Google Analytics", "Email Marketing", "Copywriting", "Market Research"],
+    description: "Assist in marketing campaigns and help boost our brand presence online.",
+    details: "BrandBoost, a premier digital marketing agency, empowers businesses to establish and grow their online presence effectively.",
+    requirements: "Marketing/Communications students with social media knowledge and strong writing skills preferred...",
+    status: "completed"
+  },
+  {
+    id: 3,
+    title: "Data Science Intern",
+    company: "Thndr",
+    type: "Full-time",
+    locationType: "ON-SITE",
+    paid: true,
+    rate: "$0/hr",
+    postedDate: "3 days ago",
+    startDate: "2025-03-01", // Changed from "March 1, 2025"
+    appliedDate: "2025-01-15", // Changed from "January 15, 2025"
+    industry: "Technology",
+    duration: "4 months",
+    skills: ["Python", "Machine Learning", "Data Analysis", "SQL", "Pandas", "NumPy", "Data Visualization"],
+    description: "Work with our data team to analyze large datasets and derive insights.",
+    details: "Thndr, an innovative fintech startup, transforms the investment landscape using advanced AI-powered analytics and insights.",
+    requirements: "Data Science/CS majors with Python proficiency and basic ML understanding needed...",
+    status: "evaluated"
+  },
+  {
+    id: 4,
+    title: "UX Design Intern",
+    company: "CreativeMinds",
+    type: "Contract",
+    locationType: "REMOTE",
+    paid: true,
+    rate: "$0/hr",
+    postedDate: "5 days ago",
+    startDate: "2025-06-01", // Changed from "June 1, 2025"
+    appliedDate: "2025-01-15", // Changed from "January 15, 2025"
+    industry: "Design",
+    duration: "4 months",
+    skills: ["Figma", "User Research", "Prototyping", "UI Design", "Wireframing", "Usability Testing", "Adobe XD"],
+    description: "Help design user-friendly interfaces and improve user experience for our products.",
+    details: "CreativeMinds, a globally recognized design consultancy, has been shaping exceptional user experiences worldwide since 2012.",
+    requirements: "Design students proficient in Figma with user research experience preferred...",
+    status: "current"
+  },
+  {
+    id: 5,
+    title: "Biomedical Research Assistant",
+    company: "HealthInnovate",
+    type: "Full-time",
+    locationType: "ON-SITE",
+    paid: false,
+    rate: "$0/hr",
+    postedDate: "2 weeks ago",
+    startDate: "2025-04-01", // Changed from "April 1, 2025"
+    appliedDate: "2025-01-15", // Changed from "January 15, 2025"
+    industry: "Healthcare",
+    duration: "6 months",
+    skills: ["Research", "Data Collection", "Analysis", "Lab Techniques", "Scientific Writing", "Statistics", "Clinical Protocols"],
+    description: "Assist in ongoing biomedical research projects and contribute to data collection and analysis.",
+    details: "HealthInnovate, a pioneering medical research firm, is dedicated to advancing global healthcare technology and treatments.",
+    requirements: "Biology/Medical students with research experience and strong analytical skills needed...",
+    status: "completed"
+  }
+];
+
 // Industry Icons
 export const INDUSTRY_ICONS = {
   // Technology & Software
@@ -247,7 +345,7 @@ export const INDUSTRY_ICONS = {
   // Energy & Environment
   'Oil & Energy': '⛽',
   'Renewables & Environment': '🌱',
-  'Environmental Services': '🌍',
+  'Environmental Services': '��',
   'Utilities': '⚡',
 
   // Government & Public Services

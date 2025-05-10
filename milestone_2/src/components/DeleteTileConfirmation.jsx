@@ -8,7 +8,7 @@ export default function DeleteTileConfirmation({ onConfirm, onCancel }) {
             <button onClick={onCancel} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
           </div>
         </div>
-      </div>
+      </div> 
     );
   }
   
