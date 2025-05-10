@@ -9,12 +9,12 @@ export default function StudentDashboard() {
       try {
         // Check if data already exists in localStorage
         const existingData = localStorage.getItem('studentProfileData');
-        
+
         // If data doesn't exist, we could either:
         // 1. Load default data from a server
         // 2. Use default data from the StudentProfile component
         // Here we'll just ensure the localStorage cache is warmed
-        
+
         if (!existingData) {
           // This would be replaced with an API call in a real app
           // For now we'll just let the StudentProfile component handle the default data
