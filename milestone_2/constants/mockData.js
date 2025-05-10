@@ -51,7 +51,7 @@ export const MOCK_USERS = {
       ]
     },
     {
-      email: "salmaaburahma@gmail.com",
+      email: "salmaaburahmah@gmail.com",
       password: "salma123",
       name: "Salma",
       role: "student",
