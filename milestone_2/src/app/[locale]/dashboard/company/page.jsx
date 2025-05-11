@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
 export default function Home() {
-  redirect('/en/dashboard/company/companypost');
+  redirect('/en/dashboard/company/companyposts');
 }

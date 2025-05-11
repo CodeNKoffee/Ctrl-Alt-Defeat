@@ -20,12 +20,14 @@ export default function DeleteTileConfirmation({ onConfirm, onCancel }) {
               onClick={onConfirm}
               icon={faTrash}
               text="Confirm Delete"
+              buttonClassName="!w-1/2 !px-2"
             />
             <ActionButton
               buttonType="accept"
               onClick={onCancel}
               icon={faTimes}
               text="Cancel"
+              buttonClassName="!w-1/2 !px-2"
             />
           </div>
         </div>

@@ -4,57 +4,57 @@ import { useState, useEffect } from "react";
 import Image from 'next/image';
 
 // Mock data for interns (replace with API call or database data)
-const initialInterns = [
-  { 
-    id: 1, 
-    name: "John Doe", 
-    jobTitle: "Software Engineer", 
-    status: "current", 
+const initialInternsData = [
+  {
+    id: 1,
+    name: "John Doe",
+    jobTitle: "Software Engineer",
+    status: "current",
     company: "Tech Corp",
     profilePic: "/public/icons8-avatar-50.png",
     gender: "male"
   },
-  { 
-    id: 2, 
-    name: "Jane Smith", 
-    jobTitle: "Marketing Intern", 
-    status: "complete", 
+  {
+    id: 2,
+    name: "Jane Smith",
+    jobTitle: "Marketing Intern",
+    status: "complete",
     company: "Marketing Co",
     profilePic: "/public/icons8-avatar-50 (1).png",
     gender: "female"
   },
-  { 
-    id: 3, 
-    name: "Bob Johnson", 
-    jobTitle: "Data Analyst", 
-    status: "current", 
+  {
+    id: 3,
+    name: "Bob Johnson",
+    jobTitle: "Data Analyst",
+    status: "current",
     company: "Data Inc",
     profilePic: "/public/icons8-avatar-50.png",
     gender: "male"
   },
-  { 
-    id: 4, 
-    name: "Alice Brown", 
-    jobTitle: "UI/UX Designer", 
-    status: "evaluated", 
+  {
+    id: 4,
+    name: "Alice Brown",
+    jobTitle: "UI/UX Designer",
+    status: "evaluated",
     company: "Design Studio",
     profilePic: "/public/icons8-avatar-50 (1).png",
     gender: "female"
   },
-  { 
-    id: 5, 
-    name: "Charlie Wilson", 
-    jobTitle: "DevOps Intern", 
-    status: "current", 
+  {
+    id: 5,
+    name: "Charlie Wilson",
+    jobTitle: "DevOps Intern",
+    status: "current",
     company: "Cloud Tech",
     profilePic: "/public/icons8-avatar-50.png",
     gender: "male"
   },
-  { 
-    id: 6, 
-    name: "Emma Davis", 
-    jobTitle: "Product Manager", 
-    status: "evaluated", 
+  {
+    id: 6,
+    name: "Emma Davis",
+    jobTitle: "Product Manager",
+    status: "evaluated",
     company: "Product Co",
     profilePic: "/public/icons8-avatar-50 (1).png",
     gender: "female"
@@ -79,23 +79,33 @@ const AvatarImage = ({ gender }) => {
 export default function CurrentInterns() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("current"); // Changed from "all" to "current"
-  const [interns, setInterns] = useState(initialInterns);
+  const [allInterns, setAllInterns] = useState(initialInternsData); // ADDED: State for all interns
+  const [interns, setInterns] = useState([]); // CHANGED: Initialize as empty, will be populated by useEffect
 
   const handleSelectIntern = (id) => {
     console.log(`Selected intern with id: ${id}`);
   };
 
+  // ADDED: Function to handle intern evaluation
+  const handleEvaluate = (internId) => {
+    setAllInterns(prevAllInterns =>
+      prevAllInterns.map(intern =>
+        intern.id === internId ? { ...intern, status: 'evaluated' } : intern
+      )
+    );
+  };
+
   // Handle search and filter
   useEffect(() => {
-    let filteredInterns = [...initialInterns];
+    let filteredInterns = [...allInterns]; // CHANGED: Use allInterns from state
 
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
       filteredInterns = filteredInterns.filter(
         (intern) =>
-          intern.name.toLowerCase().includes(searchLower) ||     
-          intern.jobTitle.toLowerCase().includes(searchLower) || 
-          intern.company.toLowerCase().includes(searchLower)     
+          intern.name.toLowerCase().includes(searchLower) ||
+          intern.jobTitle.toLowerCase().includes(searchLower) ||
+          intern.company.toLowerCase().includes(searchLower)
       );
     }
 
@@ -104,12 +114,12 @@ export default function CurrentInterns() {
     }
 
     setInterns(filteredInterns);
-  }, [searchTerm, filter]);
+  }, [searchTerm, filter, allInterns]); // CHANGED: Added allInterns to dependency array
 
   return (
     <div className="container">
-      <h1 className="title">My Interns</h1>
-      
+      <h1 className="title">MY INTERNS</h1>
+
       <div className="search-container">
         <input
           type="text"
@@ -122,26 +132,26 @@ export default function CurrentInterns() {
 
       <div className="filter-container">
         <div className="filter-buttons">
-          <button 
-            onClick={() => setFilter('all')} 
+          <button
+            onClick={() => setFilter('all')}
             className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
           >
             ALL
           </button>
-          <button 
-            onClick={() => setFilter('current')} 
+          <button
+            onClick={() => setFilter('current')}
             className={`filter-btn ${filter === 'current' ? 'active' : ''}`}
           >
             CURRENT
           </button>
-          <button 
-            onClick={() => setFilter('complete')} 
+          <button
+            onClick={() => setFilter('complete')}
             className={`filter-btn ${filter === 'complete' ? 'active' : ''}`}
           >
             COMPLETED
           </button>
-          <button 
-            onClick={() => setFilter('evaluated')} 
+          <button
+            onClick={() => setFilter('evaluated')}
             className={`filter-btn ${filter === 'evaluated' ? 'active' : ''}`}
           >
             EVALUATED
@@ -151,12 +161,14 @@ export default function CurrentInterns() {
 
       <div className="interns-list">
         {interns.map((intern) => (
-          <div 
-            key={intern.id} 
+          <div
+            key={intern.id}
             className="intern-card"
-            onClick={() => handleSelectIntern(intern.id)}
           >
-            <div className="intern-info">
+            <div
+              className="intern-info"
+              onClick={() => handleSelectIntern(intern.id)}
+            >
               <AvatarImage gender={intern.gender} />
               <div className="details">
                 <p className="intern-name">{intern.name} - {intern.jobTitle}</p>
@@ -165,6 +177,17 @@ export default function CurrentInterns() {
                 </p>
               </div>
             </div>
+            {intern.status === 'current' && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEvaluate(intern.id);
+                }}
+                className="evaluate-btn"
+              >
+                Evaluate
+              </button>
+            )}
           </div>
         ))}
       </div>
@@ -299,6 +322,25 @@ export default function CurrentInterns() {
 
         .intern-status.evaluated {
           color:rgb(49, 106, 128);
+        }
+
+        .evaluate-btn {
+          padding: 6px 12px;
+          border: 1px solid #2A5F74;
+          border-radius: 15px;
+          font-size: 12px;
+          background: #E0F7FA;
+          color: #2A5F74;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          align-self: center;
+          margin-left: 10px;
+        }
+
+        .evaluate-btn:hover {
+          background: #B2EBF2;
+          color: #1A4C5B;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
       `}</style>
     </div>
