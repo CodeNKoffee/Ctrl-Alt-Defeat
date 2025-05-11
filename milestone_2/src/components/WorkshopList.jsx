@@ -12,7 +12,7 @@ export default function WorkshopList() {
       {/* Title */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
-          WORKSHOPS
+          UPCOMING WORKSHOPS
           <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
