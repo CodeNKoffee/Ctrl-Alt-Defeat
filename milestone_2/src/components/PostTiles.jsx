@@ -487,6 +487,7 @@ export default function PostTiles() {
 
       {deletingPostIndex !== null && (
         <DeleteTileConfirmation
+          type="post" 
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
         />
