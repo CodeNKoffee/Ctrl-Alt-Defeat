@@ -1,7 +1,15 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import Image from 'next/image';
+import Filter from './Filter';
+import CardTable from './CardTable';
+
+// Add status colors configuration at the top level
+const statusColors = {
+  current: 'bg-blue-100 text-blue-800 border-blue-400',
+  completed: 'bg-green-100 text-green-800 border-green-400',
+  evaluated: 'bg-purple-100 text-purple-800 border-purple-400',
+};
 
 // Mock data for interns (replace with API call or database data)
 const initialInterns = [
@@ -18,7 +26,7 @@ const initialInterns = [
     id: 2, 
     name: "Jane Smith", 
     jobTitle: "Marketing Intern", 
-    status: "complete", 
+    status: "completed", 
     company: "Marketing Co",
     profilePic: "/public/icons8-avatar-50 (1).png",
     gender: "female"
@@ -63,13 +71,13 @@ const initialInterns = [
 
 const AvatarImage = ({ gender }) => {
   return (
-    <div className="profile-image-container">
+    <div className="w-10 h-10 rounded-full bg-[#D9F0F4] p-0.5 flex items-center justify-center shadow-sm">
       <Image
         src={gender === "female" ? "/images/icons8-avatar-50 (1).png" : "/images/icons8-avatar-50.png"}
         alt="Profile"
-        width={50}
-        height={50}
-        className="profile-image"
+        width={40}
+        height={40}
+        className="rounded-full object-cover"
         priority
       />
     </div>
@@ -78,229 +86,113 @@ const AvatarImage = ({ gender }) => {
 
 export default function CurrentInterns() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState("current"); // Changed from "all" to "current"
+  const [filter, setFilter] = useState("current");
   const [interns, setInterns] = useState(initialInterns);
+
+  // Update filter options to remove duplicate "All"
+  const filterOptions = ['Current', 'Completed', 'Evaluated'];
+
+  const handleFilterChange = (value) => {
+    setFilter(value ? value.toLowerCase() : 'all');
+  };
 
   const handleSelectIntern = (id) => {
     console.log(`Selected intern with id: ${id}`);
   };
 
-  // Handle search and filter
-  useEffect(() => {
-    let filteredInterns = [...initialInterns];
-
-    if (searchTerm) {
-      const searchLower = searchTerm.toLowerCase();
-      filteredInterns = filteredInterns.filter(
-        (intern) =>
-          intern.name.toLowerCase().includes(searchLower) ||     
-          intern.jobTitle.toLowerCase().includes(searchLower) || 
-          intern.company.toLowerCase().includes(searchLower)     
-      );
-    }
-
-    if (filter !== "all") {
-      filteredInterns = filteredInterns.filter((intern) => intern.status === filter);
-    }
-
-    setInterns(filteredInterns);
-  }, [searchTerm, filter]);
+  // Filter logic
+  const filteredInterns = interns.filter(intern => {
+    const matchesSearch = 
+      intern.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      intern.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      intern.company.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesFilter = 
+      filter === 'all' ||
+      intern.status === filter;
+    
+    return matchesSearch && matchesFilter;
+  });
 
   return (
-    <div className="container">
-      <h1 className="title">My Interns</h1>
+    <div className="max-w-4xl mx-auto p-4">
+      <h1 className="text-2xl font-bold text-[#2A5F74] mb-6">My Interns</h1>
       
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search by job title or name..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-        />
-      </div>
-
-      <div className="filter-container">
-        <div className="filter-buttons">
-          <button 
-            onClick={() => setFilter('all')} 
-            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-          >
-            ALL
-          </button>
-          <button 
-            onClick={() => setFilter('current')} 
-            className={`filter-btn ${filter === 'current' ? 'active' : ''}`}
-          >
-            CURRENT
-          </button>
-          <button 
-            onClick={() => setFilter('complete')} 
-            className={`filter-btn ${filter === 'complete' ? 'active' : ''}`}
-          >
-            COMPLETED
-          </button>
-          <button 
-            onClick={() => setFilter('evaluated')} 
-            className={`filter-btn ${filter === 'evaluated' ? 'active' : ''}`}
-          >
-            EVALUATED
-          </button>
+      {/* Search and Filter Section */}
+      <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="flex-1">
+          <input
+            type="text"
+            placeholder="Search interns by name or job title..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full p-2 pl-4 pr-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-transparent text-sm"
+          />
+        </div>
+        
+        <div className="min-w-[200px]">
+          <Filter
+            options={filterOptions}
+            selectedValue={filter === 'all' ? '' : filter.charAt(0).toUpperCase() + filter.slice(1)}
+            onChange={handleFilterChange}
+            label="Status"
+            placeholder="All"  // Changed from "All Interns" to just "All"
+            id="status-filter"
+          />
         </div>
       </div>
 
-      <div className="interns-list">
-        {interns.map((intern) => (
+      {/* Interns List */}
+      <div className="space-y-4">
+        {filteredInterns.map((intern) => (
           <div 
             key={intern.id} 
-            className="intern-card"
+            className="bg-white p-6 rounded-xl border-2 border-[#318FA8] flex justify-between items-center hover:shadow-lg hover:transform hover:translate-y-[-2px] transition-all duration-300 hover:bg-gray-50"
             onClick={() => handleSelectIntern(intern.id)}
           >
-            <div className="intern-info">
+            <div className="flex items-center gap-4">
               <AvatarImage gender={intern.gender} />
-              <div className="details">
-                <p className="intern-name">{intern.name} - {intern.jobTitle}</p>
-                <p className={`intern-status ${intern.status}`}>
-                  {intern.status.toUpperCase()}
-                </p>
+              <div>
+                <h3 className="text-lg font-semibold text-[#2A5F74]">{intern.name}</h3>
+                <div className="flex items-center gap-2">
+                  <p className="text-gray-600 text-sm">{intern.jobTitle}</p>
+                </div>
               </div>
+            </div>
+
+            {/* Right side: Status and Action */}
+            <div className="flex flex-col items-end gap-2">
+              <span className={`
+                px-3 py-1.5 rounded-full text-xs font-medium border
+                ${statusColors[intern.status]}
+              `}>
+                {intern.status.toUpperCase()}
+              </span>
+
+              {intern.status === "completed" && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log(`Evaluating intern with id: ${intern.id}`);
+                  }}
+                  className="px-4 py-1.5 bg-[#318FA8] text-white text-xs font-medium
+                  rounded-full hover:bg-[#2A5F74] transition-all duration-300
+                  border-2 border-[#318FA8] hover:border-[#2A5F74] shadow-sm
+                  hover:shadow-md hover:transform hover:translate-y-[-1px]"
+                >
+                  EVALUATE
+                </button>
+              )}
             </div>
           </div>
         ))}
+
+        {filteredInterns.length === 0 && (
+          <div className="text-center text-gray-500 py-8">
+            No interns found matching your criteria
+          </div>
+        )}
       </div>
-
-      <style jsx>{`
-        .container {
-          background-color: #F0F9FB;
-          padding: 20px;
-          border-radius: 10px;
-          font-family: 'IBM Plex Sans', sans-serif;
-          max-width: 800px;
-          margin: 0 auto;
-        }
-
-        .title {
-          color: #2A5F74;
-          font-size: 42px;
-          font-weight: bold;
-          margin-bottom: 20px;
-          text-decoration: underline;
-          text-decoration-thickness: 3px;
-          text-underline-offset: 8px;
-        }
-
-        .search-input {
-          width: 100%;
-          padding: 12px;
-          border: 2px solid #318FA8;
-          border-radius: 25px;
-          margin-bottom: 20px;
-          font-size: 14px;
-        }
-
-        .filter-container {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 20px;
-        }
-
-        .filter-buttons {
-          display: flex;
-          gap: 10px;
-        }
-
-        .filter-btn {
-          padding: 8px 24px;
-          border: 2px solid #318FA8;
-          border-radius: 20px;
-          font-size: 14px;
-          background: white;
-          color: #318FA8;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        .filter-btn.active {
-          background: #D9F0F4;
-          border-color: #318FA8;
-          color: #2A5F74;
-        }
-
-        .intern-card {
-          background-color: white;
-          padding: 15px;
-          border: 3px solid #318FA8;
-          border-radius: 10px;
-          margin-bottom: 10px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        .intern-card:hover {
-          background-color: #F0F9FB;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 6px #2A5F74;
-        }
-
-        .intern-info {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          width: 100%;
-        }
-
-        .profile-image-container {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: var(--user-primary, #D9F0F4);
-          padding: 2px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-image {
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-
-        .details {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-        }
-
-        .intern-name {
-          color:rgb(54, 120, 147);
-          font-size: 16px;
-          margin: 0;
-        }
-
-        .intern-status {
-          font-size: 12px;
-          margin: 0;
-        }
-
-        .intern-status.current {
-          color: #5CB2C7;
-        }
-
-        .intern-status.complete {
-          color: #328FA8;
-        }
-
-        .intern-status.evaluated {
-          color:rgb(49, 106, 128);
-        }
-      `}</style>
     </div>
   );
 }
