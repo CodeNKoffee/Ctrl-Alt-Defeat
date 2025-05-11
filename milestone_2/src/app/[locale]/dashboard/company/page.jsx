@@ -49,6 +49,7 @@ export default function CompanyDashboard() {
       )}
       {deleteIndex !== null && (
         <DeleteTileConfirmation
+          type="post"
           onConfirm={handleDeletePost}
           onCancel={() => setDeleteIndex(null)}
         />
