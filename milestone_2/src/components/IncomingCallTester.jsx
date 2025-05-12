@@ -8,7 +8,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 const IncomingCallTester = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const appointments = useSelector((state) => state.call.appointments);
+  // No need to get appointments since this is a test feature
 
   // Helper to get the effective user (Redux or fallback from session/local storage)
   const getEffectiveUser = () => {
@@ -31,18 +31,7 @@ const IncomingCallTester = () => {
   const shouldShowTester = isScadAdmin || isProStudent;
 
   const simulateIncomingCall = () => {
-    // Check if there's a confirmed appointment with Alien X
-    const hasConfirmedAppointment = appointments.some(appt =>
-      ((appt.requesterId === effectiveUser.id && appt.requestedUserId === 'alien-x-001') ||
-        (appt.requestedUserId === effectiveUser.id && appt.requesterId === 'alien-x-001')) &&
-      appt.status === 'confirmed'
-    );
-
-    if (!hasConfirmedAppointment) {
-      alert("Test call not possible: No confirmed appointment with Alien X exists. You need a confirmed appointment before receiving calls.");
-      return;
-    }
-
+    // No appointment check needed for test functionality
     const simulatedPayload = {
       callerId: 'alien-x-001', // Dummy ID for Alien X
       callerName: 'Alien X',
@@ -63,7 +52,7 @@ const IncomingCallTester = () => {
     <button
       onClick={simulateIncomingCall}
       className="fixed bottom-5 right-5 bg-purple-600 hover:bg-purple-700 text-white font-bold p-3 rounded-full shadow-lg z-50 flex items-center justify-center transition-transform transform hover:scale-105 h-12 w-12"
-      title="Simulate Incoming Call from Alien X (requires confirmed appointment)"
+      title="Simulate Incoming Call from Alien X (Test Feature)"
     >
       <FontAwesomeIcon icon={faBell} className="h-5 w-5" />
     </button>
