@@ -315,19 +315,19 @@ const CallModal = ({ isOpen, onClose }) => {
               </div>
             ) : (
               <div>
-                {/* Header */}
-                <div className="px-6 py-4 bg-metallica-blue-600 text-white">
-                  <div className="flex items-center justify-between">
+                {/* Close button - positioned relative to the main light background */}
+                <button
+                  className="absolute top-3 right-3 z-20 flex items-center justify-center w-7 h-7 rounded-full shadow-sm bg-gray-200/70 hover:bg-gray-300/90 transition-colors"
+                  onClick={onClose}
+                  aria-label="Close modal"
+                >
+                  <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
+                </button>
+
+                {/* Header Tab */}
+                <div className="relative z-10">
+                  <div className="inline-block bg-metallica-blue-600 text-white px-6 py-3 rounded-tl-2xl rounded-br-xl shadow-md">
                     <h3 className="text-xl font-young-serif font-medium">Video Calls & Appointments</h3>
-                    <button
-                      onClick={onClose}
-                      className="text-white hover:bg-metallica-blue-500 rounded-full p-1 transition-colors"
-                      aria-label="Close modal"
-                    >
-                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
                   </div>
                 </div>
 
