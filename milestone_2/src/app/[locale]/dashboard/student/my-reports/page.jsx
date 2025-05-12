@@ -5,6 +5,7 @@ import Header from "@/components/Header"
 import ReportTiles from "@/components/ReportTiles"
 import ReportEdit from "@/components/ReportEdit"
 import DeleteTileConfirmation from "@/components/DeleteTileConfirmation"
+import StatusBadge from "@/components/shared/StatusBadge"
 
 export default function ReportDashboard(){
     const [reports, setReports] = useState([]);
@@ -35,10 +36,14 @@ export default function ReportDashboard(){
         <div>
             <Header text="My Reports" size="text-6xl"></Header>
             <ReportTiles 
-                tiles={reports} 
+                tiles={reports.map(report => ({
+                    ...report,
+                    major: report.major || "N/A",
+                    selectedCourses: report.selectedCourses || []
+                }))} 
                 onEditClick={(index) => setEditIndex(index)}
-                onDeleteClick={(index) => setDeleteIndex(index)}>  
-            </ReportTiles>
+                onDeleteClick={(index) => setDeleteIndex(index)}
+            ></ReportTiles>
             <Report onAddTile={handleAddReport}></Report>
             {editIndex !== null && (
                 <ReportEdit
