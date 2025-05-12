@@ -208,6 +208,14 @@ export default function FacultyReportViewerPage() {
         </div>
         
         <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+          <div className="bg-metallica-blue-50 border-l-4 border-metallica-blue-600 p-4 mb-6 rounded-r">
+            <h3 className="text-metallica-blue-800 font-semibold mb-1">Evaluation Mode</h3>
+            <p className="text-metallica-blue-700">
+              You're evaluating this student's report. Select any text to highlight key sections or add comments. 
+              Your annotations help provide constructive feedback and assess the report quality.
+            </p>
+          </div>
+          
           <p className="text-metallica-blue-800 mb-6">
             Select any text in the report below to highlight important sections or add comments. Your annotations will appear in the sidebar.
           </p>

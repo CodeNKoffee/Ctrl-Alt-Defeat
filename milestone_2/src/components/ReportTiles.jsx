@@ -42,9 +42,12 @@ export default function ReportTiles({ tiles, onEditClick, onDeleteClick }) {
             </button>
             <button 
               onClick={() => navigateToReportViewer(index)} 
-              className="px-3 py-1 bg-[var(--metallica-blue-600)] text-white rounded hover:bg-[var(--metallica-blue-700)] transition flex-grow md:flex-grow-0"
+              className="inline-flex items-center px-4 py-2 bg-[var(--metallica-blue-600)] text-white rounded-lg hover:bg-[var(--metallica-blue-700)] transition shadow-sm hover:shadow-md"
+              title="View report with annotation features"
             >
-              View & Annotate
+              <span className="font-medium">View</span>
+              <div className="w-px h-4 mx-2 bg-[var(--metallica-blue-300)]"></div>
+              <span className="text-xs">Read & Annotate</span>
             </button>
           </div>
         </div>

@@ -250,9 +250,12 @@ export default function FacultyDashboard() {
                       <td className="py-3 px-4 text-center">
                         <a 
                           href={`/en/dashboard/faculty/report-viewer?id=${report.id}`}
-                          className="inline-block bg-metallica-blue-600 text-white px-3 py-1 rounded hover:bg-metallica-blue-700 transition"
+                          className="inline-flex items-center justify-center bg-metallica-blue-600 text-white px-4 py-2 rounded-lg hover:bg-metallica-blue-700 transition shadow-sm hover:shadow-md"
+                          title="Evaluate and provide feedback on this report"
                         >
-                          View & Annotate
+                          <span className="font-medium">View</span>
+                          <div className="w-px h-4 mx-2 bg-metallica-blue-300"></div>
+                          <span className="text-xs">Evaluate & Comment</span>
                         </a>
                       </td>
                     </tr>

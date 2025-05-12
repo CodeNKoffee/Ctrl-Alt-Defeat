@@ -1,0 +1,382 @@
+/* ReportViewer.css: Styles for the report viewing and annotation component */
+
+/* CSS Variables for consistent theming */
+:root {
+  --metallica-blue-50: #f0f9fc;
+  --metallica-blue-100: #d9f0f7;
+  --metallica-blue-200: #b0e0ee;
+  --metallica-blue-300: #86cde2;
+  --metallica-blue-400: #57b8d5;
+  --metallica-blue-500: #318fa8;
+  --metallica-blue-600: #2a7a8c;
+  --metallica-blue-700: #23606e;
+  --metallica-blue-800: #1c4752;
+  --metallica-blue-900: #132e36;
+}
+
+/* Main container */
+.report-viewer-container {
+  display: flex;
+  height: 100%;
+  min-height: 600px;
+  background-color: #f7f9fb;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--metallica-blue-200);
+  transition: all 0.3s ease;
+}
+
+/* Content area */
+.report-content-container {
+  flex: 1;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.report-content-container.with-sidebar {
+  width: calc(100% - 320px);
+}
+
+/* Action buttons bar */
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--metallica-blue-200);
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--metallica-blue-600);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.action-button:hover {
+  background-color: var(--metallica-blue-700);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-button.disabled {
+  background-color: var(--metallica-blue-300);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.action-button.disabled:hover {
+  transform: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Report content styles */
+.report-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  height: 100%;
+  overflow-y: auto;
+  min-height: 550px;
+}
+
+.report-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--metallica-blue-800);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--metallica-blue-200);
+}
+
+.report-section {
+  margin-bottom: 2rem;
+}
+
+.report-section-title {
+  font-size: 1.25rem;
+  color: var(--metallica-blue-700);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.report-text {
+  line-height: 1.8;
+  color: var(--metallica-blue-900);
+}
+
+.report-text mark {
+  background-color: rgba(255, 251, 201, 0.6);
+  padding: 2px 0;
+}
+
+.report-paragraph {
+  margin-bottom: 1.25rem;
+}
+
+/* Annotations sidebar */
+.annotations-sidebar {
+  width: 320px;
+  background-color: white;
+  border-left: 1px solid var(--metallica-blue-200);
+  padding: 1.5rem;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.03);
+}
+
+.annotations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--metallica-blue-200);
+}
+
+.annotations-header h3 {
+  color: var(--metallica-blue-700);
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.annotation-count {
+  background-color: var(--metallica-blue-100);
+  color: var(--metallica-blue-700);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.annotations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.annotation-item {
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--metallica-blue-200);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.annotation-item:hover {
+  border-color: var(--metallica-blue-500);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.annotation-item.active {
+  border-color: var(--metallica-blue-500);
+  box-shadow: 0 4px 10px rgba(49, 143, 168, 0.15);
+}
+
+.annotation-item.highlight {
+  background-color: #FFFEF7;
+}
+
+.annotation-item.comment {
+  background-color: var(--metallica-blue-50);
+}
+
+.annotation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.annotation-type {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: var(--metallica-blue-600);
+  font-weight: 600;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: var(--metallica-blue-500);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.delete-button:hover {
+  color: #C41E3A;
+  background-color: #FEE2E2;
+}
+
+.annotation-text {
+  font-size: 0.875rem;
+  color: var(--metallica-blue-900);
+  margin-bottom: 0.75rem;
+  word-break: break-word;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.annotation-comment {
+  font-size: 0.875rem;
+  background-color: white;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--metallica-blue-200);
+  color: var(--metallica-blue-800);
+  line-height: 1.6;
+}
+
+.no-annotations {
+  color: var(--metallica-blue-500);
+  font-style: italic;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* Comment form */
+.comment-form {
+  position: fixed;
+  width: 340px;
+  background-color: white;
+  padding: 1.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--metallica-blue-300);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  right: 40px;
+  top: 120px;
+  z-index: 50;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.comment-form h3 {
+  color: var(--metallica-blue-700);
+  margin-bottom: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.selected-text {
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--metallica-blue-700);
+  padding: 0.75rem;
+  background-color: var(--metallica-blue-50);
+  border-radius: 6px;
+  border: 1px solid var(--metallica-blue-200);
+  line-height: 1.5;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.comment-input {
+  width: 100%;
+  min-height: 120px;
+  padding: 0.75rem;
+  border: 1px solid var(--metallica-blue-300);
+  border-radius: 6px;
+  resize: vertical;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.comment-input:focus {
+  border-color: var(--metallica-blue-500);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(49, 143, 168, 0.15);
+}
+
+.comment-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.save-button, .cancel-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-button {
+  background-color: var(--metallica-blue-600);
+  color: white;
+}
+
+.save-button:hover {
+  background-color: var(--metallica-blue-700);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cancel-button {
+  background-color: #F3F4F6;
+  color: #4B5563;
+}
+
+.cancel-button:hover {
+  background-color: #E5E7EB;
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .report-viewer-container {
+    flex-direction: column;
+    min-height: auto;
+  }
+  
+  .report-content-container {
+    width: 100% !important;
+  }
+  
+  .annotations-sidebar {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--metallica-blue-200);
+  }
+  
+  .comment-form {
+    width: calc(100% - 32px);
+    left: 16px;
+    right: 16px;
+  }
+}
