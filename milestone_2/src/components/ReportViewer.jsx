@@ -45,6 +45,11 @@ export default function ReportViewer({ report }) {
   // Current selected color
   const [selectedColor, setSelectedColor] = useState(highlightColors[0].value);
 
+  // Floating toolbar state
+  const [toolbarPos, setToolbarPos] = useState({ top: 0, left: 0, visible: false });
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const toolbarRef = useRef(null);
+
   // Handle text selection
   const handleTextSelection = () => {
     const selection = window.getSelection();
@@ -154,51 +159,123 @@ export default function ReportViewer({ report }) {
     setShowAnnotations(!showAnnotations);
   };
 
+  // Show floating toolbar above selection
+  useEffect(() => {
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0 && selection.toString().trim().length > 0 && textRef.current.contains(selection.anchorNode)) {
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        setToolbarPos({
+          top: rect.top + window.scrollY - 48, // 48px above selection, relative to viewport
+          left: rect.left + window.scrollX + rect.width / 2,
+          visible: true
+        });
+      } else {
+        setToolbarPos(pos => ({ ...pos, visible: false }));
+        setShowColorPicker(false);
+      }
+    };
+    document.addEventListener('selectionchange', handleSelectionChange);
+    return () => document.removeEventListener('selectionchange', handleSelectionChange);
+  }, []);
+
+  // Hide toolbar on click outside
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (toolbarRef.current && !toolbarRef.current.contains(e.target)) {
+        setToolbarPos(pos => ({ ...pos, visible: false }));
+        setShowColorPicker(false);
+      }
+    };
+    if (toolbarPos.visible) {
+      document.addEventListener('mousedown', handleClick);
+    }
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [toolbarPos.visible]);
+
+  // Helper: Render text with highlights
+  function renderTextWithHighlights(text) {
+    if (!annotations.some(a => a.type === 'highlight')) return text;
+    let result = [];
+    let lastIndex = 0;
+    let workingText = text;
+    // Find all highlights in this text
+    const highlights = annotations.filter(a => a.type === 'highlight' && a.text && workingText.includes(a.text));
+    // Sort by first occurrence in text
+    highlights.sort((a, b) => workingText.indexOf(a.text) - workingText.indexOf(b.text));
+    highlights.forEach((ann, i) => {
+      const idx = workingText.indexOf(ann.text, lastIndex);
+      if (idx !== -1) {
+        if (idx > lastIndex) {
+          result.push(workingText.slice(lastIndex, idx));
+        }
+        result.push(
+          <mark key={i} style={{ backgroundColor: ann.color, borderRadius: 4, padding: '0 2px' }}>{ann.text}</mark>
+        );
+        lastIndex = idx + ann.text.length;
+      }
+    });
+    if (lastIndex < workingText.length) {
+      result.push(workingText.slice(lastIndex));
+    }
+    return result.length ? result : text;
+  }
+
   return (
     <div className="report-viewer-container">
-      <div className={`report-content-container ${showAnnotations ? 'with-sidebar' : ''}`}>
-        <div className="report-actions">
-          <button 
-            onClick={handleShowColorSelection} 
-            disabled={!selectedText} 
-            className={`action-button ${!selectedText ? 'disabled' : ''}`}
-            title="Highlight selected text"
+      <div className={`report-content-container ${showAnnotations ? 'with-sidebar' : ''}`}>  
+        {/* Floating annotation toolbar */}
+        {toolbarPos.visible && (
+          <div
+            ref={toolbarRef}
+            className="floating-toolbar"
+            style={{ top: toolbarPos.top, left: toolbarPos.left, position: 'fixed', zIndex: 100 }}
           >
-            <FontAwesomeIcon icon={faHighlighter} />
-            <span>Highlight</span>
-          </button>
-          <button 
-            onClick={handleAddComment} 
-            disabled={!selectedText} 
-            className={`action-button ${!selectedText ? 'disabled' : ''}`}
-            title="Comment on selected text"
-          >
-            <FontAwesomeIcon icon={faComment} />
-            <span>Comment</span>
-          </button>
-          <button 
-            onClick={toggleAnnotations}
-            className="action-button"
-            title={showAnnotations ? "Hide annotations panel" : "Show annotations panel"}
-          >
-            <FontAwesomeIcon icon={showAnnotations ? faTimes : faComment} />
-            <span>{showAnnotations ? "Hide Annotations" : "Show Annotations"}</span>
-          </button>
-        </div>
-
+            <button
+              className="toolbar-btn"
+              aria-label="Highlight"
+              onClick={() => setShowColorPicker(v => !v)}
+              tabIndex={0}
+            >
+              <FontAwesomeIcon icon={faHighlighter} />
+              <span className="toolbar-tooltip">Highlight</span>
+            </button>
+            <button
+              className="toolbar-btn"
+              aria-label="Comment"
+              onClick={handleAddComment}
+              tabIndex={0}
+            >
+              <FontAwesomeIcon icon={faComment} />
+              <span className="toolbar-tooltip">Comment</span>
+            </button>
+            {showColorPicker && (
+              <div className="color-picker-popover">
+                {highlightColors.map((color, idx) => (
+                  <button
+                    key={color.value}
+                    className={`color-dot ${selectedColor === color.value ? 'selected' : ''}`}
+                    style={{ backgroundColor: color.value }}
+                    onClick={() => { handleHighlight(color.value); setShowColorPicker(false); }}
+                    aria-label={color.name}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
         <div className="report-content" onMouseUp={handleTextSelection} ref={textRef}>
           <h1 className="report-title">{reportData.title}</h1>
-          
           <div className="report-section">
             <h2 className="report-section-title">Introduction</h2>
-            <p className="report-text">{reportData.introduction}</p>
+            <p className="report-text">{renderTextWithHighlights(reportData.introduction)}</p>
           </div>
-          
           <div className="report-section">
             <h2 className="report-section-title">Report Body</h2>
             <div className="report-text">
               {reportData.body.split('\n\n').map((paragraph, idx) => (
-                <p key={idx} className="report-paragraph">{paragraph}</p>
+                <p key={idx} className="report-paragraph">{renderTextWithHighlights(paragraph)}</p>
               ))}
             </div>
           </div>
@@ -328,37 +405,6 @@ export default function ReportViewer({ report }) {
         
         .report-content-container.with-sidebar {
           width: calc(100% - 320px);
-        }
-        
-        .report-actions {
-          display: flex;
-          gap: 0.5rem;
-          margin-bottom: 1rem;
-          padding-bottom: 0.75rem;
-          border-bottom: 1px solid var(--metallica-blue-200);
-        }
-        
-        .action-button {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          background-color: var(--metallica-blue-600);
-          color: white;
-          border: none;
-          border-radius: 6px;
-          padding: 0.5rem 1rem;
-          font-size: 0.875rem;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        
-        .action-button:hover {
-          background-color: var(--metallica-blue-700);
-        }
-        
-        .action-button.disabled {
-          background-color: var(--metallica-blue-300);
-          cursor: not-allowed;
         }
         
         .report-content {
@@ -664,23 +710,84 @@ export default function ReportViewer({ report }) {
           color: var(--metallica-blue-900);
         }
 
-        .custom-tooltip {
+        .floating-toolbar {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          background: #fff;
+          border-radius: 20px;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+          padding: 12px 24px;
+          position: fixed;
+          transform: translate(-50%, -100%);
+          border: 1.5px solid #E0E7EF;
+        }
+        .toolbar-btn {
+          background: #f6f8fa;
+          border: none;
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(49,143,168,0.06);
+          transition: background 0.15s, box-shadow 0.15s, transform 0.12s;
+          position: relative;
+          color: #2A5F74;
+          font-size: 20px;
+          outline: none;
+        }
+        .toolbar-btn:focus {
+          box-shadow: 0 0 0 2px #318FA8, 0 2px 8px rgba(49,143,168,0.06);
+        }
+        .toolbar-btn:hover {
+          background: #e6f2fa;
+          transform: translateY(-2px) scale(1.07);
+        }
+        .toolbar-tooltip {
+          display: none;
           position: absolute;
-          left: 110%;
-          top: 50%;
-          transform: translateY(-50%);
+          top: -38px;
+          left: 50%;
+          transform: translateX(-50%);
           background: #fff;
           color: #2A5F74;
-          padding: 6px 12px;
-          border-radius: 6px;
           font-size: 12px;
-          white-space: nowrap;
+          border-radius: 6px;
+          padding: 4px 10px;
           border: 1px solid #318FA8;
           box-shadow: 0 2px 8px rgba(49,143,168,0.08);
-          z-index: 50;
-          font-weight: 500;
-          letter-spacing: 0.01em;
-          min-width: 180px;
+          white-space: nowrap;
+          z-index: 200;
+        }
+        .toolbar-btn:hover .toolbar-tooltip {
+          display: block;
+        }
+        .color-picker-popover {
+          display: flex;
+          gap: 8px;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 4px 16px rgba(49,143,168,0.10);
+          border: 1px solid #E0E7EF;
+          padding: 8px 12px;
+          position: absolute;
+          top: 54px;
+          left: 0;
+          z-index: 300;
+        }
+        .color-dot {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          border: 2px solid transparent;
+          cursor: pointer;
+          transition: border 0.15s, transform 0.12s;
+        }
+        .color-dot.selected {
+          border: 2px solid #318FA8;
+          transform: scale(1.12);
         }
       `}</style>
     </div>

@@ -183,15 +183,15 @@ export default function FacultyReportViewerPage() {
     <DashboardLayout userType="faculty">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between">
-          <div className="flex items-center mb-4 md:mb-0">
+          <div className="flex flex-col mb-4 md:mb-0">
             <button 
               onClick={goBack}
-              className="mr-4 flex items-center text-metallica-blue-700 hover:text-metallica-blue-900 transition-colors"
+              className="mb-6 flex items-center text-metallica-blue-700 hover:text-metallica-blue-900 transition-colors"
             >
               <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
               <span>Back to Reports</span>
             </button>
-            <Header text="Report Review & Annotation" size="text-3xl md:text-4xl" />
+            <Header text="Report Review & Annotation" size="text-3xl md:text-4xl" className="mb-2 mt-0" />
           </div>
           <div className="flex items-center">
             <span className="text-metallica-blue-700 mr-2 text-sm">Student: <strong>{report.studentName}</strong></span>
