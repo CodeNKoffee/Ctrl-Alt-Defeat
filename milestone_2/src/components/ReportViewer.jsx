@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment, faHighlighter, faSave, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faHighlighter, faSave, faTimes, faTrash, faPalette } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * ReportViewer Component
@@ -10,7 +10,7 @@ import { faComment, faHighlighter, faSave, faTimes, faTrash } from '@fortawesome
  * A component that allows users to view report text and annotate it with comments and highlights.
  * The component supports:
  * - Text selection for commenting
- * - Highlighting text sections
+ * - Highlighting text sections with different colors
  * - Adding comments to selected text
  * - Viewing all annotations in a sidebar
  * - Saving annotations
@@ -28,10 +28,22 @@ export default function ReportViewer({ report }) {
   const [selectedText, setSelectedText] = useState('');
   const [selectedRange, setSelectedRange] = useState(null);
   const [isCommenting, setIsCommenting] = useState(false);
+  const [isSelectingHighlightColor, setIsSelectingHighlightColor] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [activeAnnotation, setActiveAnnotation] = useState(null);
   const textRef = useRef(null);
   const [showAnnotations, setShowAnnotations] = useState(true);
+
+  // Highlight color options
+  const highlightColors = [
+    { name: 'Yellow', value: '#FFFBC9' }, // Pastel yellow
+    { name: 'Green', value: '#D1F5D3' },  // Pastel green
+    { name: 'Pink', value: '#FFDBF2' },   // Pastel pink
+    { name: 'Blue', value: '#D4F1F9' }    // Pastel blue
+  ];
+
+  // Current selected color
+  const [selectedColor, setSelectedColor] = useState(highlightColors[0].value);
 
   // Handle text selection
   const handleTextSelection = () => {
@@ -68,19 +80,27 @@ export default function ReportViewer({ report }) {
     return path;
   };
 
+  // Show color selection panel
+  const handleShowColorSelection = () => {
+    if (selectedText && selectedRange) {
+      setIsSelectingHighlightColor(true);
+    }
+  };
+
   // Handle adding highlight to selected text
-  const handleHighlight = () => {
+  const handleHighlight = (color) => {
     if (selectedText && selectedRange) {
       const newAnnotation = {
         id: Date.now(),
         type: 'highlight',
         text: selectedText,
         range: selectedRange,
-        color: '#FFFBC9', // Default highlight color
+        color: color || selectedColor,
       };
       setAnnotations([...annotations, newAnnotation]);
       setSelectedText('');
       setSelectedRange(null);
+      setIsSelectingHighlightColor(false);
       window.getSelection().removeAllRanges();
     }
   };
@@ -117,6 +137,12 @@ export default function ReportViewer({ report }) {
     setCommentText('');
   };
 
+  // Handle canceling highlight color selection
+  const handleCancelHighlightColor = () => {
+    setIsSelectingHighlightColor(false);
+    setSelectedColor(highlightColors[0].value);
+  };
+
   // Delete an annotation
   const handleDeleteAnnotation = (id) => {
     setAnnotations(annotations.filter(ann => ann.id !== id));
@@ -128,20 +154,12 @@ export default function ReportViewer({ report }) {
     setShowAnnotations(!showAnnotations);
   };
 
-  // Calculate text sections with annotations applied (for display purposes)
-  const renderTextWithAnnotations = (text) => {
-    // This is a simplified implementation that would need to be expanded
-    // for a production-ready component that handles overlapping annotations
-    
-    return text;
-  };
-
   return (
     <div className="report-viewer-container">
       <div className={`report-content-container ${showAnnotations ? 'with-sidebar' : ''}`}>
         <div className="report-actions">
           <button 
-            onClick={handleHighlight} 
+            onClick={handleShowColorSelection} 
             disabled={!selectedText} 
             className={`action-button ${!selectedText ? 'disabled' : ''}`}
             title="Highlight selected text"
@@ -208,6 +226,39 @@ export default function ReportViewer({ report }) {
             </div>
           </div>
         )}
+        
+        {isSelectingHighlightColor && (
+          <div className="highlight-color-form">
+            <h3>Select Highlight Color</h3>
+            <p className="selected-text">"{selectedText}"</p>
+            <div className="color-options">
+              {highlightColors.map((color, index) => (
+                <button
+                  key={index}
+                  className={`color-option ${selectedColor === color.value ? 'selected' : ''}`}
+                  style={{ backgroundColor: color.value }}
+                  onClick={() => handleHighlight(color.value)}
+                  title={color.name}
+                >
+                  <span className="color-preview" style={{ backgroundColor: color.value }}></span>
+                  <span className="color-name">{color.name}</span>
+                </button>
+              ))}
+            </div>
+            <div className="preview-section">
+              <span>Preview: </span>
+              <span className="highlight-preview" style={{ backgroundColor: selectedColor }}>
+                {selectedText.length > 30 ? selectedText.substring(0, 30) + '...' : selectedText}
+              </span>
+            </div>
+            <div className="comment-actions">
+              <button onClick={handleCancelHighlightColor} className="cancel-button">
+                <FontAwesomeIcon icon={faTimes} />
+                <span>Cancel</span>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {showAnnotations && (
@@ -241,7 +292,12 @@ export default function ReportViewer({ report }) {
                       <FontAwesomeIcon icon={faTrash} />
                     </button>
                   </div>
-                  <div className="annotation-text">"{annotation.text}"</div>
+                  <div 
+                    className="annotation-text"
+                    style={annotation.type === 'highlight' ? { backgroundColor: annotation.color } : {}}
+                  >
+                    "{annotation.text}"
+                  </div>
                   {annotation.type === 'comment' && (
                     <div className="annotation-comment">{annotation.comment}</div>
                   )}
@@ -538,6 +594,93 @@ export default function ReportViewer({ report }) {
         
         .cancel-button:hover {
           background-color: #D1D5DB;
+        }
+        
+        .highlight-color-form {
+          position: absolute;
+          width: 300px;
+          background-color: white;
+          padding: 1rem;
+          border-radius: 8px;
+          border: 1px solid var(--metallica-blue-200);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          right: 2rem;
+          top: 2rem;
+          z-index: 10;
+        }
+        
+        .highlight-color-form h3 {
+          color: var(--metallica-blue-700);
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
+          font-weight: 600;
+        }
+        
+        .color-options {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 0.75rem;
+        }
+        
+        .color-option {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.5rem;
+          border: 1px solid var(--metallica-blue-300);
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        
+        .color-option.selected {
+          border-color: var(--metallica-blue-500);
+          box-shadow: 0 0 0 2px rgba(49, 143, 168, 0.2);
+        }
+        
+        .color-preview {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+        }
+        
+        .color-name {
+          font-size: 0.875rem;
+          color: var(--metallica-blue-700);
+        }
+        
+        .preview-section {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-bottom: 0.75rem;
+        }
+        
+        .highlight-preview {
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          font-size: 0.875rem;
+          color: var(--metallica-blue-900);
+        }
+
+        .custom-tooltip {
+          position: absolute;
+          left: 110%;
+          top: 50%;
+          transform: translateY(-50%);
+          background: #fff;
+          color: #2A5F74;
+          padding: 6px 12px;
+          border-radius: 6px;
+          font-size: 12px;
+          white-space: nowrap;
+          border: 1px solid #318FA8;
+          box-shadow: 0 2px 8px rgba(49,143,168,0.08);
+          z-index: 50;
+          font-weight: 500;
+          letter-spacing: 0.01em;
+          min-width: 180px;
         }
       `}</style>
     </div>
