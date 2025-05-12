@@ -23,6 +23,12 @@ const IncomingCallTester = () => {
 
   const effectiveUser = getEffectiveUser();
 
+  // Determine if the current user is SCAD admin or a PRO student
+  const isScadAdmin = effectiveUser?.role === 'scad';
+  const isProStudent = effectiveUser?.role === 'student' && effectiveUser?.accountType === 'PRO';
+
+  const shouldShowTester = isScadAdmin || isProStudent;
+
   const simulateIncomingCall = () => {
     const simulatedPayload = {
       callerId: 'alien-x-001', // Dummy ID for Alien X
@@ -35,14 +41,18 @@ const IncomingCallTester = () => {
     dispatch(incomingCall(simulatedPayload));
   };
 
+  // Only render the button if the user is SCAD Admin or PRO Student
+  if (!shouldShowTester) {
+    return null;
+  }
+
   return (
     <button
       onClick={simulateIncomingCall}
-      className="fixed bottom-5 right-5 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-full shadow-lg z-50 flex items-center transition-transform transform hover:scale-105"
+      className="fixed bottom-5 right-5 bg-purple-600 hover:bg-purple-700 text-white font-bold p-3 rounded-full shadow-lg z-50 flex items-center justify-center transition-transform transform hover:scale-105 h-12 w-12"
       title="Simulate Incoming Call from Alien X"
     >
-      <FontAwesomeIcon icon={faBell} className="mr-2" />
-      Test Incoming Call
+      <FontAwesomeIcon icon={faBell} className="h-5 w-5" />
     </button>
   );
 };
