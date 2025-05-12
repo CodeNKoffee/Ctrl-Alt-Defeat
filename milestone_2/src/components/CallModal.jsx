@@ -151,6 +151,18 @@ const CallModal = ({ isOpen, onClose }) => {
   }, [callState.isInCall, isOpen, onClose]);
 
   const initiateCall = (userId, userName) => {
+    // Check if there is a confirmed appointment first
+    const hasConfirmedAppointment = appointments.some(appt =>
+      ((appt.requesterId === effectiveUser?.id && appt.requestedUserId === userId) ||
+        (appt.requestedUserId === effectiveUser?.id && appt.requesterId === userId)) &&
+      appt.status === 'confirmed'
+    );
+
+    if (!hasConfirmedAppointment) {
+      alert("You can only call users with confirmed appointments. Please book an appointment first.");
+      return;
+    }
+
     setSchedulingForUserId(null); // Close date picker if open
     setSelectedUser({ id: userId, name: userName });
     setIsInitiatingCall(true);
@@ -289,7 +301,7 @@ const CallModal = ({ isOpen, onClose }) => {
                 <h2 className="text-2xl font-young-serif text-metallica-blue-600 font-semibold mt-2">
                   {selectedUser.name}
                 </h2>
-                <p className="text-metallica-blue-500 mb-6 text-sm">Calling...</p>
+                <p className="text-metallica-metallica-blue-900 mb-6 text-sm">Calling...</p>
                 {/* Cancel Button */}
                 <div className="flex items-center justify-center space-x-4 mt-4">
                   <button
@@ -323,6 +335,20 @@ const CallModal = ({ isOpen, onClose }) => {
 
                 {/* Content Area with Scroll */}
                 <div className="p-6 max-h-[70vh] overflow-y-auto">
+                  {/* Appointment-First Policy Alert */}
+                  <div className="bg-blue-50 border-l-4 border-metallica-blue-700 p-4 mb-4 rounded-md">
+                    <div className="flex">
+                      <div className="flex-shrink-0">
+                        <FontAwesomeIcon icon={faUserClock} className="h-5 w-5 text-metallica-blue-700" />
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-sm text-metallica-blue-700">
+                          <strong>Appointment-First Policy:</strong> You can only call contacts with confirmed appointments. Please request an appointment and wait for confirmation.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Available Contacts Section */}
                   <h4 className="text-lg font-semibold text-metallica-blue-700 mb-3 font-ibm-plex-sans border-b pb-2">Available Contacts</h4>
                   {availableUsers.length === 0 ? (
@@ -342,7 +368,7 @@ const CallModal = ({ isOpen, onClose }) => {
                               <div className="flex items-center justify-between mb-3">
                                 <div className="flex items-center flex-grow min-w-0 mr-2">
                                   <div className="relative mr-3 flex-shrink-0">
-                                    <div className="bg-metallica-blue-100 text-metallica-blue-600 rounded-full h-10 w-10 flex items-center justify-center font-medium text-base shadow-sm">
+                                    <div className="bg-metallica-blue-100 text-metallica-blue-700 rounded-full h-10 w-10 flex items-center justify-center font-medium text-base shadow-sm">
                                       {user.name.charAt(0)}
                                     </div>
                                     {confirmedAppointments.some(appt => appt.requesterId === user.id && appt.requestedUserId === effectiveUser?.id && appt.status === 'confirmed') && (
@@ -353,8 +379,8 @@ const CallModal = ({ isOpen, onClose }) => {
                                     )}
                                   </div>
                                   <div className="text-left">
-                                    <h3 className="font-medium text-sm text-metallica-blue-800 font-ibm-plex-sans">{user.name}</h3>
-                                    <p className="text-xs text-metallica-blue-500 mt-0.5 font-ibm-plex-sans">
+                                    <h3 className="font-medium text-sm text-metallica-blue-700 font-ibm-plex-sans">{user.name}</h3>
+                                    <p className="text-xs text-metallica-metallica-blue-900 mt-0.5 font-ibm-plex-sans">
                                       {user.role === 'scad' ? 'SCAD Admin' : `${user.major || 'Student'}`}
                                       {user.role === 'student' && <span className="ml-2 inline-block bg-green-100 text-green-800 text-[10px] px-1.5 py-0.5 rounded font-semibold">PRO</span>}
                                     </p>
@@ -363,16 +389,16 @@ const CallModal = ({ isOpen, onClose }) => {
                                 <div className="flex items-center space-x-2 ml-2 flex-shrink-0">
                                   <button
                                     onClick={() => initiateCall(user.id, user.name)}
-                                    className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
-                                    title="Call Now"
-                                    disabled={isThisUserScheduling}
+                                    className={`${isConfirmed ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-400 cursor-not-allowed'} text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9`}
+                                    title={isConfirmed ? "Call Now" : "Confirmed appointment required"}
+                                    disabled={!isConfirmed || isThisUserScheduling}
                                   >
                                     <FontAwesomeIcon icon={faVideo} className="h-4 w-4" />
                                   </button>
                                   {canRequest && !isThisUserScheduling && (
                                     <button
                                       onClick={() => handleOpenScheduler(user.id)}
-                                      className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
+                                      className="bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
                                       title="Request Appointment"
                                     >
                                       <FontAwesomeIcon icon={faCalendarPlus} className="h-4 w-4" />
@@ -417,7 +443,7 @@ const CallModal = ({ isOpen, onClose }) => {
                                       />
                                       <button
                                         onClick={() => handleConfirmAppointmentRequest(user)}
-                                        className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full text-sm font-medium flex items-center justify-center shadow-sm transition-colors h-9 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-2 px-4 rounded-full text-sm font-medium flex items-center justify-center shadow-sm transition-colors h-9 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                                         disabled={!pendingDateTime}
                                         title="Confirm Appointment Request"
                                       >
