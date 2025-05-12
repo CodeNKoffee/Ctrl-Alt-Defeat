@@ -1,7 +1,7 @@
 const TopCoursesCard = ({ courses }) => {
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-      <div className="flex justify-between items-center mb-4">
+    <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100"> {/* Reduced padding */}
+      <div className="flex justify-between items-center mb-3"> {/* Reduced margin-bottom */}
         <div>
           <h3 className="text-lg font-semibold text-gray-800">Most Beneficial Courses</h3>
           <p className="text-xs text-gray-500 mt-1">Based on student internship testimonies</p>
@@ -11,7 +11,7 @@ const TopCoursesCard = ({ courses }) => {
         </span>
       </div>
       
-      <div className="space-y-4">
+      <div className="space-y-3"> {/* Reduced vertical spacing */}
         {courses.map((course, index) => (
           <div key={index} className="flex items-start">
             <div className="flex-shrink-0 mt-1">
@@ -50,7 +50,7 @@ const TopCoursesCard = ({ courses }) => {
         ))}
       </div>
       
-      <div className="mt-4 pt-4 border-t border-gray-100 text-center">
+      <div className="mt-3 pt-3 border-t border-gray-100 text-center"> {/* Reduced margin/padding */}
         <p className="text-xs text-gray-500">
           Based on analysis of 150+ student internship evaluations
         </p>

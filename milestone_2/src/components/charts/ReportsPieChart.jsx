@@ -16,7 +16,7 @@ const ReportsPieChart = ({ data, selectedCycle, setSelectedCycle, cycles }) => {
           data[selectedCycle].flagged,
           data[selectedCycle].rejected,
         ],
-        backgroundColor: ['#34D399', '#F87171', '#60A5FA'],
+        backgroundColor: ['#34D399', '#FBBF24', '#F87171'], // pigmented green, orange, red
         hoverOffset: 4,
       },
     ],

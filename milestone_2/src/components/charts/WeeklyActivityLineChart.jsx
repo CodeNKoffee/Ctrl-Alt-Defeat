@@ -10,34 +10,34 @@ const WeeklyActivityLineChart = ({ data, cycles }) => {
       {
         label: 'Accepted',
         data: cycles.map(cycle => data[cycle].accepted),
-        borderColor: '#8B5CF6', // Purple
+        borderColor: '#34D399', // Green
         backgroundColor: 'transparent',
         tension: 0.4,
         pointRadius: 4,
-        pointBorderColor: '#8B5CF6',
-        pointBackgroundColor: '#ffffff', // Hollow points
+        pointBorderColor: '#34D399',
+        pointBackgroundColor: '#ffffff',
         pointBorderWidth: 2,
       },
       {
         label: 'Flagged',
         data: cycles.map(cycle => data[cycle].flagged),
-        borderColor: '#374151', // Black
+        borderColor: '#FBBF24', // Orange
         backgroundColor: 'transparent',
         tension: 0.4,
         pointRadius: 4,
-        pointBorderColor: '#374151',
-        pointBackgroundColor: '#ffffff', // Hollow points
+        pointBorderColor: '#FBBF24',
+        pointBackgroundColor: '#ffffff',
         pointBorderWidth: 2,
       },
       {
         label: 'Rejected',
         data: cycles.map(cycle => data[cycle].rejected),
-        borderColor: '#3B82F6', // Light Blue
+        borderColor: '#F87171', // Red
         backgroundColor: 'transparent',
         tension: 0.4,
         pointRadius: 4,
-        pointBorderColor: '#3B82F6',
-        pointBackgroundColor: '#ffffff', // Hollow points
+        pointBorderColor: '#F87171',
+        pointBackgroundColor: '#ffffff',
         pointBorderWidth: 2,
       },
     ],
@@ -47,15 +47,7 @@ const WeeklyActivityLineChart = ({ data, cycles }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
-        align: 'end', // Align legend to the right
-        labels: {
-          font: {
-            size: 10,
-          },
-          color: '#6B7280', // Neutral gray
-          usePointStyle: true, // Use point style for legend
-        },
+        display: false, // Hide Chart.js legend, we'll render it manually
       },
       tooltip: {
         mode: 'index',
@@ -119,7 +111,21 @@ const WeeklyActivityLineChart = ({ data, cycles }) => {
   return (
     <div className="bg-white p-4 rounded-md shadow-sm">
       <div className="flex justify-between items-center mb-3">
-        <h2 className="text-sm font-medium text-gray-700">Weekly Activity</h2>
+        <h2 className="text-sm font-medium text-gray-700">Cycle Activity</h2>
+        <div className="flex items-center">
+          <div className="flex items-center mr-2">
+            <span className="w-3 h-3 rounded-full bg-[#34D399] inline-block mr-1"></span>
+            <span className="text-xs text-gray-700">Accepted</span>
+          </div>
+          <div className="flex items-center mr-2">
+            <span className="w-3 h-3 rounded-full bg-[#FBBF24] inline-block mr-1"></span>
+            <span className="text-xs text-gray-700">Flagged</span>
+          </div>
+          <div className="flex items-center">
+            <span className="w-3 h-3 rounded-full bg-[#F87171] inline-block mr-1"></span>
+            <span className="text-xs text-gray-700">Rejected</span>
+          </div>
+        </div>
       </div>
       <Line data={chartData} options={options} />
     </div>
