@@ -17,6 +17,15 @@ const CallModal = ({ isOpen, onClose }) => {
   const [callTimeout, setCallTimeout] = useState(null);
   const callingAudioRef = useRef(null);
 
+  // Reset state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      console.log("CallModal: Opening, resetting initiation state.");
+      setIsInitiatingCall(false);
+      setSelectedUser(null);
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     console.log('Current user from Redux:', currentUser);
 
@@ -226,7 +235,7 @@ const CallModal = ({ isOpen, onClose }) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full max-w-md bg-metallica-blue-50 rounded-2xl overflow-hidden shadow-2xl transform sm:my-8 sm:max-w-md"
+            className="relative w-full max-w-lg bg-metallica-blue-50 rounded-2xl overflow-hidden shadow-2xl transform sm:my-8 text-left"
           >
             {/* Conditional Rendering: Calling UI or Contact List */}
             {isInitiatingCall && selectedUser ? (
@@ -310,7 +319,7 @@ const CallModal = ({ isOpen, onClose }) => {
                               <div className="bg-metallica-blue-100 text-metallica-blue-600 rounded-full h-12 w-12 flex items-center justify-center mr-4 font-medium text-lg shadow-sm">
                                 {user.name.charAt(0)}
                               </div>
-                              <div>
+                              <div className="text-left">
                                 <h3 className="font-medium text-metallica-blue-800 font-ibm-plex-sans">{user.name}</h3>
                                 <p className="text-xs text-metallica-blue-500 mt-0.5 font-ibm-plex-sans">
                                   {user.role === 'scad' ? 'SCAD Administrator' : `${user.major} Student`}

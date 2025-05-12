@@ -36,6 +36,11 @@ const CallInterface = () => {
   const otherPartyName = isCallee ? callerName : calleeName;
   const otherPartyId = isCallee ? callerId : calleeId;
 
+  // Log currentUser when component mounts
+  useEffect(() => {
+    console.log("CallInterface currentUser:", currentUser);
+  }, [currentUser]);
+
   // Initialize WebRTC and set up event listeners when call starts
   useEffect(() => {
     let isMounted = true; // Flag to prevent state updates on unmounted component
@@ -157,13 +162,17 @@ const CallInterface = () => {
   // Handle video toggling
   useEffect(() => {
     if (isInCall) {
+      // Remove the delay logic
       WebRTCService.toggleVideo(isVideoEnabled);
 
-      // If video is being enabled AND the ref exists, re-assign the stream
-      // This handles the case where the <video> element was re-mounted
+      // Re-assign srcObject logic remains the same
       if (isVideoEnabled && localVideoRef.current && WebRTCService.localStream) {
         console.log("CallInterface: Re-assigning srcObject to localVideoRef as video is enabled.");
         localVideoRef.current.srcObject = WebRTCService.localStream;
+        // Attempt to play the video element after setting srcObject
+        localVideoRef.current.play().catch(err => {
+          console.error("CallInterface: Error trying to play local video ref:", err);
+        });
       }
     }
   }, [isVideoEnabled, isInCall]); // Re-run when isVideoEnabled or isInCall changes
@@ -320,8 +329,8 @@ const CallInterface = () => {
               muted // Always mute local video to prevent echo
             />
           ) : (
-            <div className="flex flex-col items-center justify-center text-white">
-              <div className="w-16 h-16 rounded-full bg-metallica-blue-500 flex items-center justify-center text-3xl font-bold mb-2">
+            <div className="flex flex-col items-center justify-center text-white h-full w-full">
+              <div className="w-16 h-16 rounded-full bg-metallica-blue-600 flex items-center justify-center text-3xl font-bold mb-2 p-2">
                 {currentUser?.name?.charAt(0).toUpperCase() || 'U'}
               </div>
               <span className="text-xs font-semibold">{currentUser?.name || 'User'}</span>
