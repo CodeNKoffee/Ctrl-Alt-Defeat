@@ -251,8 +251,19 @@ class WebRTCService {
         this.screenStream.getTracks().forEach(track => track.stop());
         this.screenStream = null;
       }
-      throw error; // Re-throw the error for the UI to handle
+      if (onStopScreenShareCallback) {
+        onStopScreenShareCallback(); // Notify UI that screen share attempt failed or stopped
+      }
+      throw error;
     }
+  }
+
+  /**
+   * Checks if screen sharing is currently active.
+   * @returns {boolean} True if screen sharing is active, false otherwise.
+   */
+  isCurrentlySharingScreen() {
+    return !!(this.screenStream && this.screenStream.getVideoTracks()[0] && this.screenStream.getVideoTracks()[0].readyState === 'live');
   }
 
   /**

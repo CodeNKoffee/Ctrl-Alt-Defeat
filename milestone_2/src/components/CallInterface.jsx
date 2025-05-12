@@ -9,6 +9,22 @@ import {
 } from '../store/callReducer';
 import WebRTCService from '../services/WebRTCService';
 import SignalingService from '../services/SignalingService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faMicrophone,
+  faMicrophoneSlash,
+  faVideo,
+  faVideoSlash,
+  faDesktop,
+  faPhoneSlash,
+  faUserCircle,
+  faComments,
+  faNoteSticky,
+  faPaperPlane,
+  faSave,
+  faXmark,
+  faExpand
+} from '@fortawesome/free-solid-svg-icons';
 
 const CallInterface = () => {
   const dispatch = useDispatch();
@@ -31,24 +47,36 @@ const CallInterface = () => {
   const answerAudioRef = useRef(null);
   const [showManualLeaveToast, setShowManualLeaveToast] = useState(false);
 
-  // Get the name and ID of the other party (caller or callee)
+  const [showChat, setShowChat] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [noteContent, setNoteContent] = useState('');
+  const [currentMessage, setCurrentMessage] = useState('');
+  const chatScrollRef = useRef(null);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
   const isCallee = currentUser?.id === calleeId;
   const otherPartyName = isCallee ? callerName : calleeName;
   const otherPartyId = isCallee ? callerId : calleeId;
 
-  // Log currentUser when component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsFullScreen(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     console.log("CallInterface currentUser:", currentUser);
   }, [currentUser]);
 
-  // Initialize WebRTC and set up event listeners when call starts
   useEffect(() => {
-    let isMounted = true; // Flag to prevent state updates on unmounted component
+    let isMounted = true;
     async function setupCall() {
       if (!isInCall || !otherPartyId || !currentUser?.id) return;
 
       try {
-        // Play answer sound immediately on entry
         if (answerAudioRef.current) {
           console.log("CallInterface: Playing answer sound.");
           answerAudioRef.current.currentTime = 0;
@@ -56,27 +84,25 @@ const CallInterface = () => {
             .catch(err => console.error("CallInterface: Error playing answer audio:", err));
         }
 
-        // Initialize signaling with current user's ID
         SignalingService.init(currentUser.id);
         SignalingService.addReceiverId(otherPartyId);
 
-        // Initialize WebRTC peer connection with callbacks
         await WebRTCService.initialize(
-          // ICE candidate callback
           (candidate) => {
             SignalingService.sendIceCandidate(otherPartyId, candidate);
           },
-          // Track callback
           (stream) => {
             if (remoteVideoRef.current && isMounted) {
               remoteVideoRef.current.srcObject = stream;
+              if (isFullScreen) remoteVideoRef.current.play().catch(console.error);
             }
           },
-          // Connection state change callback
           (connectionState) => {
             if (isMounted) {
               if (connectionState === 'connected') {
                 setIsCallConnected(true);
+                if (remoteVideoRef.current) remoteVideoRef.current.play().catch(console.error);
+                if (localVideoRef.current) localVideoRef.current.play().catch(console.error);
               } else if (['disconnected', 'failed', 'closed'].includes(connectionState)) {
                 setIsCallConnected(false);
               }
@@ -84,9 +110,7 @@ const CallInterface = () => {
           }
         );
 
-        // Get local media stream - ALWAYS request video, enable/disable later
         const localStream = await WebRTCService.getUserMedia(true, !isMuted);
-        // Log the stream and its tracks
         if (localStream) {
           console.log("CallInterface: Got localStream:", localStream);
           console.log("CallInterface: Local Tracks:", localStream.getTracks());
@@ -96,18 +120,16 @@ const CallInterface = () => {
 
         if (localVideoRef.current && isMounted) {
           localVideoRef.current.srcObject = localStream;
+          if (isVideoEnabled && isFullScreen) localVideoRef.current.play().catch(console.error);
         }
 
-        // Add local stream tracks to peer connection
         WebRTCService.addLocalStreamTracks();
 
-        // If this user is the caller, create and send an offer
         if (!isCallee) {
           const offer = await WebRTCService.createOffer();
           SignalingService.sendOffer(otherPartyId, offer);
         }
 
-        // Set up signaling event listeners
         SignalingService.on('offer', async ({ senderId, offer }) => {
           if (senderId === otherPartyId) {
             await WebRTCService.setRemoteDescription(offer);
@@ -140,70 +162,65 @@ const CallInterface = () => {
 
     setupCall();
 
-    // Clean up when call ends or component unmounts
     return () => {
       isMounted = false;
       console.log("CallInterface: Unmounting or call ended, closing WebRTC.");
-      WebRTCService.close(); // Ensure close is called on unmount/dependency change
+      WebRTCService.close();
       SignalingService.disconnect();
-      // Stop answer sound if playing
       if (answerAudioRef.current) {
         answerAudioRef.current.pause();
         answerAudioRef.current.currentTime = 0;
       }
     };
-  }, [isInCall, otherPartyId, currentUser?.id, dispatch, isCallee]);
+  }, [isInCall, otherPartyId, currentUser?.id, dispatch, isCallee, isFullScreen]);
 
-  // Handle mute toggling
   useEffect(() => {
     if (isInCall) WebRTCService.toggleAudio(!isMuted);
   }, [isMuted, isInCall]);
 
-  // Handle video toggling
   useEffect(() => {
     if (isInCall) {
-      // Remove the delay logic
       WebRTCService.toggleVideo(isVideoEnabled);
 
-      // Re-assign srcObject logic remains the same
       if (isVideoEnabled && localVideoRef.current && WebRTCService.localStream) {
         console.log("CallInterface: Re-assigning srcObject to localVideoRef as video is enabled.");
         localVideoRef.current.srcObject = WebRTCService.localStream;
-        // Attempt to play the video element after setting srcObject
         localVideoRef.current.play().catch(err => {
           console.error("CallInterface: Error trying to play local video ref:", err);
         });
+      } else if (!isVideoEnabled && localVideoRef.current) {
+        // Optional: Clear srcObject when video is disabled to show avatar properly
+        // localVideoRef.current.srcObject = null;
       }
     }
-  }, [isVideoEnabled, isInCall]); // Re-run when isVideoEnabled or isInCall changes
+  }, [isVideoEnabled, isInCall]);
 
-  // Handle screen sharing
   useEffect(() => {
     let isEffectMounted = true;
     async function handleScreenShare() {
+      if (!isEffectMounted) return;
       if (isScreenSharing) {
         try {
           console.log("Attempting to start screen share...");
-          // Provide a callback to update Redux state when screen share stops
           await WebRTCService.replaceVideoTrackWithScreenShare(() => {
             if (isEffectMounted) {
               console.log("Screen share stopped callback triggered.");
-              dispatch(toggleScreenShare()); // Toggle the state back in Redux
+              dispatch(toggleScreenShare());
             }
           });
           console.log("Screen share started successfully.");
         } catch (error) {
           console.error('CallInterface: Error starting screen share:', error);
-          // If error occurred (e.g., user cancelled), toggle Redux state back
           if (isEffectMounted) {
             dispatch(toggleScreenShare());
           }
         }
-      } else {
-        // Stop screen sharing if it was previously active
+      } else if (WebRTCService.isCurrentlySharingScreen()) {
         console.log("Attempting to stop screen share (isScreenSharing is false)...");
         await WebRTCService.stopScreenShare(() => {
-          console.log("WebRTCService stopScreenShare completed.");
+          if (isEffectMounted) {
+            console.log("WebRTCService stopScreenShare completed.");
+          }
         });
       }
     }
@@ -214,125 +231,160 @@ const CallInterface = () => {
 
     return () => {
       isEffectMounted = false;
-      // Optional: Ensure screen sharing stops if component unmounts mid-share
-      // This might be handled by WebRTCService.close() already in the main cleanup
-      // if (WebRTCService.screenStream) { 
-      //    WebRTCService.stopScreenShare();
-      // }
+      if (WebRTCService.isCurrentlySharingScreen()) {
+        console.log("CallInterface unmount: Stopping screen share.");
+        WebRTCService.stopScreenShare();
+      }
     };
   }, [isScreenSharing, isInCall, dispatch]);
 
-  // Handle other party leaving
   useEffect(() => {
     if (hasOtherPartyLeft) {
       const timer = setTimeout(() => {
-        // No need to call WebRTCService.close() here, dispatching endCall
-        // will unmount the component, triggering the main cleanup effect.
         dispatch(endCall());
       }, 5000);
       return () => clearTimeout(timer);
     }
   }, [hasOtherPartyLeft, dispatch]);
 
-  // Handle call ending - Updated
+  useEffect(() => {
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
+    }
+  }, [chatMessages]);
+
   const handleEndCall = () => {
     console.log("handleEndCall: User clicked end call button.");
-    // Send end call signal *before* closing locally
     if (otherPartyId) {
       SignalingService.sendEndCall(otherPartyId);
     }
-    // Explicitly close WebRTC connection and stop streams *now*
     WebRTCService.close();
-    // Dispatch Redux action to update global state and unmount component
     dispatch(endCall());
   };
 
-  // --- Add handler for manual toast --- 
   const triggerLeaveToast = () => {
-    if (showManualLeaveToast) return; // Prevent multiple triggers
+    if (showManualLeaveToast) return;
     console.log("CallInterface: Manually triggering leave toast.");
     setShowManualLeaveToast(true);
-    setTimeout(() => setShowManualLeaveToast(false), 4000); // Show for 4 seconds
+    setTimeout(() => setShowManualLeaveToast(false), 4000);
   };
-  // --- End of handler --- 
+
+  const handleToggleChat = () => {
+    setShowChat(!showChat);
+    if (!showChat && showNotes) setShowNotes(false);
+  };
+
+  const handleToggleNotes = () => {
+    setShowNotes(!showNotes);
+    if (!showNotes && showChat) setShowChat(false);
+  };
+
+  const getAutoResponse = (message) => {
+    const responses = [
+      "Okay, I understand.", "Got it.", "That makes sense.", "Thanks for the info.",
+      "Acknowledged.", "Will do.", "Interesting point."
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
+  };
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    const messageContent = currentMessage.trim();
+    if (!messageContent) return;
+
+    const newMessage = {
+      id: Date.now(),
+      sender: currentUser?.name || 'You',
+      content: messageContent,
+      timestamp: new Date(),
+      isSelf: true
+    };
+    setChatMessages(prev => [...prev, newMessage]);
+    setCurrentMessage('');
+
+    setTimeout(() => {
+      setChatMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        sender: otherPartyName || 'Other',
+        content: getAutoResponse(messageContent),
+        timestamp: new Date(),
+        isSelf: false
+      }]);
+    }, 1500);
+  };
+
+  const handleSaveNotes = () => {
+    console.log("Saving notes:", noteContent);
+    alert("Notes saved (logged to console).");
+  };
 
   if (!isInCall) return null;
 
-  return (
-    <div className="fixed inset-0 bg-black flex flex-col z-50">
-      {/* Add Answer Audio Element */}
-      <audio
-        ref={answerAudioRef}
-        src="/sounds/Facetime_Ring_and_Answer_Sound.mp3"
-        preload="auto"
-      />
+  const baseButtonClass = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-apple-gray-800";
+  const defaultButtonClass = "bg-apple-gray-700 hover:bg-apple-gray-600 text-white focus:ring-apple-gray-500";
+  const activeButtonClass = "bg-apple-blue-600 text-white focus:ring-apple-blue-400";
+  const redButtonClass = "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500";
+  const greenButtonClass = "bg-green-600 hover:bg-green-700 text-white focus:ring-green-500";
+  const yellowButtonClass = "bg-yellow-500 hover:bg-yellow-600 text-white focus:ring-yellow-400";
 
-      {/* Video container */}
-      <div className="flex-1 flex">
-        {/* Main video (other person or screen share) */}
-        <div className="flex-1 bg-gray-800 relative">
-          <video
-            ref={remoteVideoRef}
-            className="w-full h-full object-cover"
-            autoPlay
-            playsInline
-          />
+  const renderCallContent = () => (
+    <>
+      <div className={`flex-1 flex relative ${isFullScreen ? 'bg-apple-gray-900' : 'bg-apple-gray-800'}`}>
+        <video
+          ref={remoteVideoRef}
+          className="w-full h-full object-contain"
+          autoPlay
+          playsInline
+        />
 
-          {!isVideoEnabled && !isScreenSharing && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-white text-xl">Video is disabled</div>
-            </div>
-          )}
-
-          {!isCallConnected && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
-              <div className="text-white text-xl">Connecting...</div>
-            </div>
-          )}
-
-          {/* Notification when other party leaves */}
-          {hasOtherPartyLeft && (
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded">
-              {otherPartyName} has left the call
-            </div>
-          )}
-
-          {/* Call info */}
-          <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded flex items-center">
-            {isCallConnected ? 'Connected' : 'Connecting'} with {otherPartyName}
-            {/* Add Manual Toast Trigger Button Here */}
-            <button
-              onClick={triggerLeaveToast}
-              className="ml-4 text-xs bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-1 px-2 rounded opacity-75 hover:opacity-100 transition-opacity"
-              title="Simulate other party leaving"
-            >
-              Simulate Leave
-            </button>
+        {!isVideoEnabled && !isScreenSharing && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-apple-gray-800 text-white p-4">
+            <FontAwesomeIcon icon={faUserCircle} className="text-apple-gray-500 text-6xl sm:text-8xl mb-2 sm:mb-4" />
+            <p className="text-lg sm:text-xl text-center">{otherPartyName}'s video is off</p>
           </div>
+        )}
+
+        {!isCallConnected && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
+            <div className="text-white text-lg sm:text-xl">Connecting...</div>
+          </div>
+        )}
+
+        {hasOtherPartyLeft && (
+          <div className={`absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-3 py-1 rounded shadow-md text-sm ${!isFullScreen ? 'scale-90' : ''}`}>
+            {otherPartyName} has left the call
+          </div>
+        )}
+
+        <div className={`absolute top-4 ${isFullScreen ? 'left-4' : 'left-1/2 transform -translate-x-1/2'} bg-black bg-opacity-60 text-white px-3 py-1 rounded-lg flex items-center text-xs sm:text-sm shadow`}>
+          {isCallConnected ? 'Connected' : 'Connecting'} with {otherPartyName}
+          <button
+            onClick={triggerLeaveToast}
+            className="ml-2 text-xs bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
+            title="Simulate other party leaving"
+          >
+            Sim Leave
+          </button>
         </div>
 
-        {/* Self view (Picture in Picture) - Use 16:9 aspect ratio */}
-        <div className="absolute right-4 top-4 w-48 aspect-video bg-gray-700 border-2 border-white overflow-hidden rounded flex items-center justify-center">
+        <div className={`absolute ${isFullScreen ? 'right-4 bottom-24' : 'right-2 bottom-20'} w-1/4 sm:w-1/5 max-w-[150px] sm:max-w-xs aspect-video bg-apple-gray-700 border border-apple-gray-500 overflow-hidden rounded-md sm:rounded-lg shadow-lg flex items-center justify-center`}>
           {isVideoEnabled ? (
             <video
               ref={localVideoRef}
               className="w-full h-full object-cover"
               autoPlay
               playsInline
-              muted // Always mute local video to prevent echo
+              muted
             />
           ) : (
-            <div className="flex flex-col items-center justify-center text-white h-full w-full">
-              <div className="w-16 h-16 rounded-full bg-metallica-blue-600 flex items-center justify-center text-3xl font-bold mb-2 p-2">
+            <div className="flex flex-col items-center justify-center text-white h-full w-full p-1 sm:p-2 bg-apple-gray-700">
+              <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-metallica-blue-600 flex items-center justify-center text-sm sm:text-xl font-bold mb-1 p-1 shrink-0">
                 {currentUser?.name?.charAt(0).toUpperCase() || 'U'}
               </div>
-              <span className="text-xs font-semibold">{currentUser?.name || 'User'}</span>
+              <span className="text-xs font-semibold max-w-full truncate mt-0.5" title={currentUser?.name || 'User'}>{currentUser?.name || 'User'}</span>
               {isMuted && (
-                <div className="mt-1 flex items-center text-red-400 text-xs">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 017 8a1 1 0 10-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-1v-2.07z" clipRule="evenodd" />
-                    <path stroke="#FFF" strokeWidth="1.5" d="M2.93 2.93a1 1 0 011.414 0L17.07 15.656a1 1 0 01-1.414 1.414L2.93 4.344a1 1 0 010-1.414z" />
-                  </svg>
+                <div className="mt-0.5 flex items-center text-red-400 text-xs scale-90">
+                  <FontAwesomeIcon icon={faMicrophoneSlash} className="h-2.5 w-2.5 mr-1" />
                   Muted
                 </div>
               )}
@@ -341,75 +393,174 @@ const CallInterface = () => {
         </div>
       </div>
 
-      {/* Control bar */}
-      <div className="h-20 bg-gray-900 flex items-center justify-center gap-8">
-        {/* Mute/unmute button */}
+      <div className={`h-20 flex items-center justify-center gap-3 sm:gap-4 px-4 ${isFullScreen ? 'bg-apple-gray-900' : 'bg-apple-gray-800 border-t border-apple-gray-700'}`}>
         <button
           onClick={() => dispatch(toggleMute())}
-          className={`rounded-full p-4 ${isMuted ? 'bg-red-600' : 'bg-gray-700'}`}
+          className={`${baseButtonClass} ${isMuted ? redButtonClass : defaultButtonClass}`}
+          title={isMuted ? 'Unmute' : 'Mute'}
         >
-          <span className="sr-only">{isMuted ? 'Unmute' : 'Mute'}</span>
-          {isMuted ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-              <line x1="2" y1="2" x2="22" y2="22" strokeWidth="2" stroke="currentColor" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-            </svg>
-          )}
+          <FontAwesomeIcon icon={isMuted ? faMicrophoneSlash : faMicrophone} className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
 
-        {/* Video toggle button */}
         <button
           onClick={() => dispatch(toggleVideo())}
-          className={`rounded-full p-4 ${isVideoEnabled ? 'bg-gray-700' : 'bg-red-600'}`}
+          className={`${baseButtonClass} ${!isVideoEnabled ? redButtonClass : defaultButtonClass}`}
+          title={isVideoEnabled ? 'Stop Video' : 'Start Video'}
         >
-          <span className="sr-only">{isVideoEnabled ? 'Turn off video' : 'Turn on video'}</span>
-          {isVideoEnabled ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              <line x1="2" y1="2" x2="22" y2="22" strokeWidth="2" stroke="currentColor" />
-            </svg>
-          )}
+          <FontAwesomeIcon icon={isVideoEnabled ? faVideo : faVideoSlash} className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
 
-        {/* Screen share button */}
+        <button
+          onClick={handleToggleChat}
+          className={`${baseButtonClass} ${showChat ? activeButtonClass : defaultButtonClass}`}
+          title="Chat"
+        >
+          <FontAwesomeIcon icon={faComments} className="h-5 w-5 sm:h-6 sm:w-6" />
+        </button>
+
+        <button
+          onClick={handleToggleNotes}
+          className={`${baseButtonClass} ${showNotes ? yellowButtonClass : defaultButtonClass}`}
+          title="Notes"
+        >
+          <FontAwesomeIcon icon={faNoteSticky} className="h-5 w-5 sm:h-6 sm:w-6" />
+        </button>
+
         <button
           onClick={() => dispatch(toggleScreenShare())}
-          className={`rounded-full p-4 ${isScreenSharing ? 'bg-green-600' : 'bg-gray-700'}`}
+          className={`${baseButtonClass} ${isScreenSharing ? greenButtonClass : defaultButtonClass}`}
+          title={isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
         >
-          <span className="sr-only">{isScreenSharing ? 'Stop sharing screen' : 'Share screen'}</span>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
+          <FontAwesomeIcon icon={faDesktop} className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
 
-        {/* End call button */}
         <button
           onClick={handleEndCall}
-          className="rounded-full p-4 bg-red-600"
+          className={`${baseButtonClass} ${redButtonClass}`}
+          title="End Call"
         >
-          <span className="sr-only">End call</span>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z" />
-            <line x1="2" y1="22" x2="22" y2="2" strokeWidth="2" stroke="currentColor" />
-          </svg>
+          <FontAwesomeIcon icon={faPhoneSlash} className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
       </div>
+    </>
+  );
 
-      {/* --- Repeating Leave Toast (Point 6) --- */}
+  if (!isFullScreen) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+        <audio
+          ref={answerAudioRef}
+          src="/sounds/Facetime_Ring_and_Answer_Sound.mp3"
+          preload="auto"
+        />
+        <div className="bg-apple-gray-800 rounded-xl shadow-xl w-full max-w-3xl h-[80vh] max-h-[700px] overflow-hidden flex flex-col relative text-white">
+          {renderCallContent()}
+        </div>
+        {showManualLeaveToast && (
+          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-pulse z-60">
+            {otherPartyName || 'Other party'} has left the call (Simulated)
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black flex flex-row z-40">
+      <audio
+        ref={answerAudioRef}
+        src="/sounds/Facetime_Ring_and_Answer_Sound.mp3"
+        preload="auto"
+      />
+
+      <div className={`flex flex-col ${showChat || showNotes ? 'w-2/3' : 'w-full'} h-screen transition-all duration-300 ease-in-out`}>
+        {renderCallContent()}
+      </div>
+
+      {(showChat || showNotes) && (
+        <div className="w-1/3 h-screen flex flex-col bg-white border-l border-gray-300 transition-all duration-300 ease-in-out shadow-lg">
+          <div className="flex justify-between items-center p-3 border-b bg-gray-50">
+            <h3 className="text-lg font-semibold text-gray-700">
+              {showChat ? 'Chat' : 'Private Notes'}
+            </h3>
+            <button
+              onClick={showChat ? handleToggleChat : handleToggleNotes}
+              className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+              title="Close Panel"
+            >
+              <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+            </button>
+          </div>
+
+          {showChat && (
+            <div className="flex flex-col flex-grow overflow-hidden">
+              <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-gray-100">
+                {chatMessages.length === 0 ? (
+                  <p className="text-center text-sm text-gray-500 py-4">No messages yet.</p>
+                ) : (
+                  chatMessages.map(message => (
+                    <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`max-w-[80%] rounded-lg px-3 py-2 shadow-sm ${message.isSelf
+                        ? 'bg-apple-blue-500 text-white rounded-br-none'
+                        : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'
+                        }`}>
+                        <p className="text-sm">{message.content}</p>
+                        <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100' : 'text-gray-400'} ${message.isSelf ? 'text-right' : 'text-left'}`}>
+                          {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+              <div className="p-3 border-t bg-white">
+                <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={currentMessage}
+                    onChange={(e) => setCurrentMessage(e.target.value)}
+                    className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-apple-blue-500 focus:border-apple-blue-500 text-sm"
+                    placeholder="Type your message..."
+                  />
+                  <button
+                    type="submit"
+                    className={`w-10 h-10 rounded-full bg-apple-blue-500 hover:bg-apple-blue-600 text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''}`}
+                    disabled={!currentMessage.trim()}
+                    title="Send Message"
+                  >
+                    <FontAwesomeIcon icon={faPaperPlane} />
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {showNotes && (
+            <div className="flex flex-col flex-grow overflow-hidden p-4">
+              <textarea
+                value={noteContent}
+                onChange={(e) => setNoteContent(e.target.value)}
+                className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-apple-blue-500 focus:border-apple-blue-500 resize-none text-sm mb-4"
+                placeholder="Write your private notes here..."
+              />
+              <button
+                onClick={handleSaveNotes}
+                className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors"
+                title="Save Notes (logs to console)"
+              >
+                <FontAwesomeIcon icon={faSave} />
+                Save Notes
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
       {showManualLeaveToast && (
-        <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-pulse">
+        <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-pulse z-60">
           {otherPartyName || 'Other party'} has left the call (Simulated)
         </div>
       )}
-      {/* --- End of Repeating Toast --- */}
     </div>
   );
 };
