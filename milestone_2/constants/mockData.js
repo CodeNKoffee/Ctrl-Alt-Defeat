@@ -317,3 +317,244 @@ export const MOCK_APPLIED_INTERNSHIPS = [
     status: "rejected"
   }
 ];
+export const mockStudents = [
+  {
+    id: "61-1959",
+    name: "Farid Khaled",
+    photo: "/images/boy1.png",
+    major: "DMET",
+    semester: "4",
+    status: "Regular",
+    gpa: 1.3
+  },
+  {
+    id: "55-5727",
+    name: "Salma Tarek",
+    photo: "/images/girl1.png",
+    major: "Mechatronics Engineering",
+    semester: "8",
+    status: "Regular",
+    gpa: 2.3
+  },
+  {
+    id: "58-16143",
+    name: "Amr Baher",
+    photo: "/images/boy2.png",
+    major: "Business Management",
+    semester: "6",
+    status: "PRO",
+    gpa: 1.7
+  },
+  {
+    id: "52-4567",
+    name: "Layla Khaled",
+    photo: "/images/girl2.png",
+    major: "Product Design",
+    semester: "8",
+    status: "PRO",
+    gpa: 2.7
+  },
+  {
+    id: "64-5123",
+    name: "Khaled Ahmed",
+    photo: "/images/boy3.png",
+    major: "IET",
+    semester: "2",
+    status: "Regular",
+    gpa: 3.0
+  },
+  {
+    id: "58-0454",
+    name: "Habiba Mahmoud",
+    photo: "/images/girl3.png",
+    major: "Pharmacy",
+    semester: "6",
+    status: "PRO",
+    gpa: 1.0
+  },
+  {
+    id:"61-7128",
+    name: "Hala Khaled",
+    photo: "/images/girl4.png",
+    major: "Business Informatics",
+    semester: "4",
+    status: "Regular",
+    gpa: 2.0
+  },
+  {
+    id:"55-6188",
+    name:"Hatem Soliman",
+    photo:"/images/boy4.png",
+    major:"MET",
+    semester:"6",
+    status:"PRO",
+    gpa:1.7
+  }
+];
+export const reports = [
+  {
+    id: "RPT-001",
+    studentName: "Alex Johnson",
+    studentId: "S12345",
+    major: "DMET",
+    company: "Tech Innovations Inc.",
+    internshipDuration: "12 weeks",
+    reportTitle: "Digital Media Internship Experience",
+    submissionDate: "2023-05-15",
+    status: "ACCEPTED"
+  },
+  {
+    id: "RPT-002",
+    studentName: "Maria Garcia",
+    studentId: "S12346",
+    major: "IET",
+    company: "PowerGrid Solutions",
+    internshipDuration: "10 weeks",
+    reportTitle: "Industrial Systems Analysis Internship",
+    submissionDate: "2023-05-18",
+    status: "PENDING"
+  },
+  {
+    id: "RPT-003",
+    studentName: "James Wilson",
+    studentId: "S12347",
+    major: "MET",
+    company: "Auto Dynamics",
+    internshipDuration: "8 weeks",
+    reportTitle: "Manufacturing Engineering Internship",
+    submissionDate: "2023-05-20",
+    status: "FLAGGED"
+  },
+  {
+    id: "RPT-004",
+    studentName: "Sarah Lee",
+    studentId: "S12348",
+    major: "Management",
+    company: "Global Finance Corp",
+    internshipDuration: "12 weeks",
+    reportTitle: "Marketing Strategy Internship Report",
+    submissionDate: "2023-05-22",
+    status: "REJECTED" 
+  },
+  {
+    id: "RPT-005",
+    studentName: "David Kim",
+    studentId: "S12349",
+    major: "BI",
+    company: "DataSystems LLC",
+    internshipDuration: "14 weeks",
+    reportTitle: "Business Data Analysis Internship",
+    submissionDate: "2023-05-25",
+    status: "ACCEPTED"
+  },
+  {
+    id: "RPT-006",
+    studentName: "Emma Thompson",
+    studentId: "S12350",
+    major: "Law",
+    company: "Legal Associates LLP",
+    internshipDuration: "10 weeks",
+    reportTitle: "Corporate Law Internship Report",
+    submissionDate: "2023-05-28",
+    status: "PENDING"
+  },
+  {
+    id: "RPT-007",
+    studentName: "Michael Brown",
+    studentId: "S12351",
+    major: "Applied Arts",
+    company: "Creative Design Studio",
+    internshipDuration: "12 weeks",
+    reportTitle: "Graphic Design Internship Portfolio",
+    submissionDate: "2023-05-30",
+    status: "ACCEPTED"
+  },
+  {
+    id: "RPT-008",
+    studentName: "Olivia Davis",
+    studentId: "S12352",
+    major: "DMET",
+    company: "Digital Media Solutions",
+    internshipDuration: "8 weeks",
+    reportTitle: "Animation Internship Experience",
+    submissionDate: "2023-06-01",
+    status: "FLAGGED"
+  },
+  {
+    id: "RPT-009",
+    studentName: "Daniel Wilson",
+    studentId: "S12353",
+    major: "IET",
+    company: "Industrial Automation Co.",
+    internshipDuration: "16 weeks",
+    reportTitle: "Process Control Systems Internship",
+    submissionDate: "2023-06-03",
+    status: "PENDING"
+  },
+  {
+    id: "RPT-010",
+    studentName: "Sophia Martinez",
+    studentId: "S12354",
+    major: "Management",
+    company: "Market Leaders Inc.",
+    internshipDuration: "10 weeks",
+    reportTitle: "Business Development Internship Report",
+    submissionDate: "2023-06-05",
+    status: "ACCEPTED"
+  },
+  {
+    id: "RPT-011",
+    studentName: "Ethan Parker",
+    studentId: "S12355",
+    major: "Pharmacy",
+    company: "Metro Health Pharmaceuticals",
+    internshipDuration: "12 weeks",
+    reportTitle: "Clinical Pharmacy Internship Experience",
+    submissionDate: "2023-06-08",
+    status: "ACCEPTED"
+  },
+  {
+    id: "RPT-012",
+    studentName: "Ava Rodriguez",
+    studentId: "S12356",
+    major: "DMET",
+    company: "Virtual Reality Studios",
+    internshipDuration: "14 weeks",
+    reportTitle: "VR Content Development Internship",
+    submissionDate: "2023-06-10",
+    status: "PENDING"
+  },
+  {
+    id: "RPT-013",
+    studentName: "Noah Chen",
+    studentId: "S12357",
+    major: "BI",
+    company: "Analytics Pro",
+    internshipDuration: "10 weeks",
+    reportTitle: "Business Intelligence Systems Internship",
+    submissionDate: "2023-06-12",
+    status: "FLAGGED",
+  },
+  {
+    id: "RPT-014",
+    studentName: "Isabella Wong",
+    studentId: "S12358",
+    major: "Applied Arts",
+    company: "Urban Design Collective",
+    internshipDuration: "8 weeks",
+    reportTitle: "Product Design Internship Portfolio",
+    submissionDate: "2023-06-15",
+    status: "ACCEPTED"
+  },
+  {
+    id: "RPT-015",
+    studentName: "Liam O'Brien",
+    studentId: "S12359",
+    major: "Pharmacy",
+    company: "Community Care Pharmacy",
+    internshipDuration: "16 weeks",
+    reportTitle: "Retail Pharmacy Operations Internship",
+    submissionDate: "2023-06-18",
+    status: "PENDING"
+  }
+];

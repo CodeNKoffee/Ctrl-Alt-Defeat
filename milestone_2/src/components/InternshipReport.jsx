@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Filter from './Filter';
 import StatusBadge from './shared/StatusBadge';
 
+
 export default function InternshipReport() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('all');
@@ -11,6 +12,7 @@ export default function InternshipReport() {
   const [showAppealModal, setShowAppealModal] = useState(false);
   const [appealMessage, setAppealMessage] = useState("");
 
+
   // Status badge colors based on report status
   const statusColors = {
     'flagged': 'bg-orange-100 text-orange-800 border border-orange-400',
@@ -18,6 +20,7 @@ export default function InternshipReport() {
     'accepted': 'bg-green-100 text-green-800 border border-green-400',
     'pending': 'bg-yellow-100 text-yellow-800 border border-yellow-400'
   };
+
 
   const [reports] = useState([
     {
@@ -188,9 +191,11 @@ export default function InternshipReport() {
             <div className="report-info">
               <h3 className="text-lg font-semibold text-[#2A5F74]">{report.internName}</h3>
               <p className="text-gray-600">{report.internshipTitle}</p>
+              
               <StatusBadge className={statusColors[report.status]}>
                 {report.status.toUpperCase()}
               </StatusBadge>
+
             </div>
             <div className="report-actions">
               {(report.status === "flagged" || report.status === "rejected") && (
