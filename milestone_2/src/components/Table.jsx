@@ -1,5 +1,5 @@
 "use client";
-import SearchBar from "./SearchBar";
+import SearchBar from './shared/SearchBar';
 import React from "react";
 
 export default function DataTable({
