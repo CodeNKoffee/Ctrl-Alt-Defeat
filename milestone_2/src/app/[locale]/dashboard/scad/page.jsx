@@ -47,16 +47,24 @@ export default function ScadDashboard() {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-medium text-metallica-blue-900 mb-2 font-ibm-plex-sans">SCAD Dashboard</h1>
-          <button
-            onClick={openCallModal}
-            className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-5 rounded-full shadow flex items-center transition-colors duration-200"
-            aria-label="Start a video call with students"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
-            Call Students
-          </button>
+          <div className="flex items-center">
+            <span className="mr-2 text-sm font-medium text-gray-600 hidden sm:inline">
+              Call PRO Students
+            </span>
+            <div className="relative">
+              <button
+                onClick={openCallModal}
+                className="relative p-2 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white transition-colors shadow-md cursor-pointer"
+                aria-label="Start a video call with students"
+                title="Call PRO Students"
+                type="button"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
         <CompanyTable companies={MOCK_COMPANIES} />
       </div>

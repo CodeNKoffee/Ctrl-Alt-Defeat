@@ -29,7 +29,7 @@ const CallInterface = () => {
   const remoteVideoRef = useRef(null);
   const [isCallConnected, setIsCallConnected] = useState(false);
   const answerAudioRef = useRef(null);
-  const [showLeaveToast, setShowLeaveToast] = useState(false);
+  const [showManualLeaveToast, setShowManualLeaveToast] = useState(false);
 
   // Get the name and ID of the other party (caller or callee)
   const isCallee = currentUser?.id === calleeId;
@@ -234,30 +234,6 @@ const CallInterface = () => {
     }
   }, [hasOtherPartyLeft, dispatch]);
 
-  // Effect for repeating 'left call' toast simulation (Point 6)
-  useEffect(() => {
-    let intervalId = null;
-    if (isInCall) {
-      console.log("CallInterface: Starting repeating 'left call' toast interval.");
-      intervalId = setInterval(() => {
-        // Use otherPartyName determined earlier
-        console.log(`CallInterface: Simulating toast for ${otherPartyName} left.`);
-        setShowLeaveToast(true);
-        // Hide the toast after a few seconds (e.g., 3 seconds)
-        setTimeout(() => setShowLeaveToast(false), 3000);
-      }, 5000); // Show every 5 seconds
-    }
-
-    // Cleanup function to clear the interval
-    return () => {
-      if (intervalId) {
-        console.log("CallInterface: Clearing repeating 'left call' toast interval.");
-        clearInterval(intervalId);
-      }
-      setShowLeaveToast(false); // Ensure toast is hidden on unmount
-    };
-  }, [isInCall, otherPartyName]); // Rerun if isInCall changes or otherPartyName changes
-
   // Handle call ending - Updated
   const handleEndCall = () => {
     console.log("handleEndCall: User clicked end call button.");
@@ -270,6 +246,15 @@ const CallInterface = () => {
     // Dispatch Redux action to update global state and unmount component
     dispatch(endCall());
   };
+
+  // --- Add handler for manual toast --- 
+  const triggerLeaveToast = () => {
+    if (showManualLeaveToast) return; // Prevent multiple triggers
+    console.log("CallInterface: Manually triggering leave toast.");
+    setShowManualLeaveToast(true);
+    setTimeout(() => setShowManualLeaveToast(false), 4000); // Show for 4 seconds
+  };
+  // --- End of handler --- 
 
   if (!isInCall) return null;
 
@@ -313,8 +298,16 @@ const CallInterface = () => {
           )}
 
           {/* Call info */}
-          <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded">
+          <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded flex items-center">
             {isCallConnected ? 'Connected' : 'Connecting'} with {otherPartyName}
+            {/* Add Manual Toast Trigger Button Here */}
+            <button
+              onClick={triggerLeaveToast}
+              className="ml-4 text-xs bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-1 px-2 rounded opacity-75 hover:opacity-100 transition-opacity"
+              title="Simulate other party leaving"
+            >
+              Simulate Leave
+            </button>
           </div>
         </div>
 
@@ -411,7 +404,7 @@ const CallInterface = () => {
       </div>
 
       {/* --- Repeating Leave Toast (Point 6) --- */}
-      {showLeaveToast && (
+      {showManualLeaveToast && (
         <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-pulse">
           {otherPartyName || 'Other party'} has left the call (Simulated)
         </div>
