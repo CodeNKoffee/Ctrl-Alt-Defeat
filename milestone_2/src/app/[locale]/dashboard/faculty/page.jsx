@@ -105,13 +105,13 @@ export default function FacultyDashboard() {
   // Format the display of the status
   const formatStatus = (status) => {
     const statusMap = {
-      'pending': 'Pending Review',
-      'flagged': 'Flagged',
-      'rejected': 'Rejected',
-      'accepted': 'Accepted',
-      'reviewed': 'Reviewed'
+      'pending': 'PENDING',
+      'flagged': 'FLAGGED',
+      'rejected': 'REJECTED',
+      'accepted': 'ACCEPTED',
+      'reviewed': 'REVIEWED'
     };
-    return statusMap[status] || status;
+    return statusMap[status] || status.toUpperCase();
   };
 
   // Get appropriate CSS classes for the status badge
@@ -193,11 +193,11 @@ export default function FacultyDashboard() {
                     className="w-full px-3 py-2 border border-metallica-blue-200 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
                   >
                     <option value="">All Statuses</option>
-                    <option value="pending">Pending Review</option>
-                    <option value="flagged">Flagged</option>
-                    <option value="rejected">Rejected</option>
-                    <option value="accepted">Accepted</option>
-                    <option value="reviewed">Reviewed</option>
+                    <option value="pending">PENDING</option>
+                    <option value="flagged">FLAGGED</option>
+                    <option value="rejected">REJECTED</option>
+                    <option value="accepted">ACCEPTED</option>
+                    <option value="reviewed">REVIEWED</option>
                   </select>
                 </div>
               </div>
