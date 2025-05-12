@@ -30,15 +30,15 @@ export default function RootLayout({
   children,
 }) {
   return (
-      <html lang="en">
-        <body
-          className={`${inter.variable} ${ibmPlexSans.variable} ${youngSerif.variable} antialiased`}
-        >
-          <ReduxProvider>
-            {children}
-            <GlobalCallHandler />
-          </ReduxProvider>
-        </body>
-      </html>
+    <html lang="en">
+      <body
+        className={`${inter.variable} ${ibmPlexSans.variable} ${youngSerif.variable} antialiased`}
+      >
+        <ReduxProvider>
+          {children}
+          <GlobalCallHandler />
+        </ReduxProvider>
+      </body>
+    </html>
   );
 }
