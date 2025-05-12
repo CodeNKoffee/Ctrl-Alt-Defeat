@@ -15,12 +15,13 @@ import { faComment, faHighlighter, faSave, faTimes, faTrash, faPalette } from '@
  * - Viewing all annotations in a sidebar
  * - Saving annotations
  */
-export default function ReportViewer({ report }) {
+export default function ReportViewer({ report, userType = "faculty" }) {
   // Sample report data if none provided
   const sampleReport = {
     title: 'Frontend Development Internship Report',
     introduction: 'This report outlines my experience as a frontend developer intern at TechCorp from June to August 2025. During this period, I worked on several projects involving React, NextJS, and Tailwind CSS.',
-    body: 'During my internship, I participated in the development of a customer-facing web application. I was responsible for implementing responsive UI components using React and ensuring compatibility across different browsers. The team followed an agile methodology with two-week sprints and daily stand-up meetings.\n\nOne of the most challenging aspects was optimizing performance for users with slow internet connections. I implemented code splitting and lazy loading techniques to improve the initial load time by 40%.\n\nI also had the opportunity to learn about state management with Redux and how to properly structure a large-scale application. My mentor provided valuable feedback on my code during regular code reviews, which significantly improved my coding practices.\n\nIn the final month, I was tasked with creating a design system to standardize UI components across the application. This involved close collaboration with UX designers and other frontend developers.'
+    body: 'During my internship, I participated in the development of a customer-facing web application. I was responsible for implementing responsive UI components using React and ensuring compatibility across different browsers. The team followed an agile methodology with two-week sprints and daily stand-up meetings.\n\nOne of the most challenging aspects was optimizing performance for users with slow internet connections. I implemented code splitting and lazy loading techniques to improve the initial load time by 40%.\n\nI also had the opportunity to learn about state management with Redux and how to properly structure a large-scale application. My mentor provided valuable feedback on my code during regular code reviews, which significantly improved my coding practices.\n\nIn the final month, I was tasked with creating a design system to standardize UI components across the application. This involved close collaboration with UX designers and other frontend developers.',
+    status: 'approved' // Example status
   };
 
   const reportData = report || sampleReport;
@@ -33,6 +34,8 @@ export default function ReportViewer({ report }) {
   const [activeAnnotation, setActiveAnnotation] = useState(null);
   const textRef = useRef(null);
   const [showAnnotations, setShowAnnotations] = useState(true);
+  const [scadReason, setScadReason] = useState('');
+  const [onSubmitReason, setOnSubmitReason] = useState(null);
 
   // Highlight color options
   const highlightColors = [
@@ -49,6 +52,32 @@ export default function ReportViewer({ report }) {
   const [toolbarPos, setToolbarPos] = useState({ top: 0, left: 0, visible: false });
   const [showColorPicker, setShowColorPicker] = useState(false);
   const toolbarRef = useRef(null);
+
+  // Hide annotation tools for SCAD
+  const isScad = userType === "scad";
+
+  // Load highlights/comments from report prop if present
+  useEffect(() => {
+    if (report && (report.highlights || report.comments)) {
+      const highlights = (report.highlights || []).map((h, idx) => ({
+        id: `highlight-${idx}`,
+        type: 'highlight',
+        text: report.text?.substring(h.start, h.end) || '',
+        color: h.color || '#FFFBC9',
+        range: { start: h.start, end: h.end },
+      }));
+      const comments = (report.comments || []).map((c, idx) => ({
+        id: `comment-${idx}`,
+        type: 'comment',
+        text: report.text?.substring(c.position, c.position + 20) || '',
+        comment: c.text,
+        range: { start: c.position, end: c.position + 20 },
+      }));
+      setAnnotations([...highlights, ...comments]);
+    } else {
+      setAnnotations([]);
+    }
+  }, [report]);
 
   // Handle text selection
   const handleTextSelection = () => {
@@ -196,10 +225,10 @@ export default function ReportViewer({ report }) {
 
   // Helper: Render text with highlights
   function renderTextWithHighlights(text) {
-    if (!annotations.some(a => a.type === 'highlight')) return text;
+    let workingText = text || "";
+    if (!annotations.some(a => a.type === 'highlight')) return workingText;
     let result = [];
     let lastIndex = 0;
-    let workingText = text;
     // Find all highlights in this text
     const highlights = annotations.filter(a => a.type === 'highlight' && a.text && workingText.includes(a.text));
     // Sort by first occurrence in text
@@ -225,8 +254,8 @@ export default function ReportViewer({ report }) {
   return (
     <div className="report-viewer-container">
       <div className={`report-content-container ${showAnnotations ? 'with-sidebar' : ''}`}>  
-        {/* Floating annotation toolbar */}
-        {toolbarPos.visible && (
+        {/* Floating annotation toolbar (hide for SCAD) */}
+        {!isScad && toolbarPos.visible && (
           <div
             ref={toolbarRef}
             className="floating-toolbar"
@@ -274,7 +303,7 @@ export default function ReportViewer({ report }) {
           <div className="report-section">
             <h2 className="report-section-title">Report Body</h2>
             <div className="report-text">
-              {reportData.body.split('\n\n').map((paragraph, idx) => (
+              {(reportData.body || reportData.text || "").split('\n\n').map((paragraph, idx) => (
                 <p key={idx} className="report-paragraph">{renderTextWithHighlights(paragraph)}</p>
               ))}
             </div>
@@ -334,6 +363,25 @@ export default function ReportViewer({ report }) {
                 <span>Cancel</span>
               </button>
             </div>
+          </div>
+        )}
+
+        {/* SCAD reason input for flagged/rejected */}
+        {isScad && (reportData.status === 'flagged' || reportData.status === 'rejected') && (
+          <div className="mt-8 p-4 bg-metallica-blue-50 rounded-lg border border-metallica-blue-200">
+            <h3 className="text-metallica-blue-800 font-semibold mb-2">State your reason for flagging/rejecting this report</h3>
+            <textarea
+              className="w-full p-2 border border-metallica-blue-200 rounded mb-2"
+              placeholder="Enter your reason here..."
+              value={scadReason || ''}
+              onChange={e => setScadReason(e.target.value)}
+            />
+            <button
+              className="bg-metallica-blue-600 text-white px-4 py-2 rounded hover:bg-metallica-blue-700 transition"
+              onClick={() => onSubmitReason && onSubmitReason(scadReason)}
+            >
+              Submit Reason
+            </button>
           </div>
         )}
       </div>
@@ -412,6 +460,8 @@ export default function ReportViewer({ report }) {
           padding: 2rem;
           border-radius: 8px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+          max-height: 60vh;
+          overflow-y: auto;
         }
         
         .report-title {

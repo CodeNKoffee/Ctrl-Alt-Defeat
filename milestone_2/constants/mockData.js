@@ -558,3 +558,295 @@ export const reports = [
     status: "PENDING"
   }
 ];
+
+export const reportsMockData = [
+  {
+    id: 1,
+    reportNumber: 'RPT-001',
+    studentName: "David Lee",
+    studentMajor: "Computer Science",
+    internshipTitle: "Backend Developer Internship",
+    companyName: "TechCorp Inc.",
+    submissionDate: "2025-04-15",
+    status: "pending"
+  },
+  {
+    id: 2,
+    reportNumber: 'RPT-002',
+    studentName: "Sarah Wilson",
+    studentMajor: "Computer Engineering",
+    internshipTitle: "Frontend Developer Internship",
+    companyName: "Web Solutions Ltd.",
+    submissionDate: "2025-04-10",
+    status: "pending"
+  },
+  {
+    id: 3,
+    reportNumber: 'RPT-003',
+    studentName: "Michael Brown",
+    studentMajor: "Computer Science",
+    internshipTitle: "Full Stack Developer Internship",
+    companyName: "Digital Innovations",
+    submissionDate: "2025-04-05",
+    status: "pending"
+  },
+  {
+    id: 4,
+    reportNumber: 'RPT-004',
+    studentName: "Emma Johnson",
+    studentMajor: "Information Systems",
+    internshipTitle: "Data Analysis Internship",
+    companyName: "Data Insights Corp",
+    submissionDate: "2025-04-12",
+    status: "flagged"
+  },
+  {
+    id: 5,
+    reportNumber: 'RPT-005',
+    studentName: "James Rodriguez",
+    studentMajor: "Software Engineering",
+    internshipTitle: "Mobile App Developer Internship",
+    companyName: "AppWorks Inc.",
+    submissionDate: "2025-04-08",
+    status: "rejected"
+  },
+  {
+    id: 6,
+    reportNumber: 'RPT-006',
+    studentName: "Olivia Chen",
+    studentMajor: "Information Systems",
+    internshipTitle: "UX/UI Design Internship",
+    companyName: "Creative Solutions",
+    submissionDate: "2025-04-17",
+    status: "accepted"
+  },
+  {
+    id: 7,
+    reportNumber: 'RPT-007',
+    studentName: "Fatima Al-Masri",
+    studentMajor: "Business Administration",
+    internshipTitle: "Marketing Analyst Internship",
+    companyName: "MarketMinds",
+    submissionDate: "2025-04-18",
+    status: "pending"
+  },
+  {
+    id: 8,
+    reportNumber: 'RPT-008',
+    studentName: "Mohamed El-Sayed",
+    studentMajor: "Electrical Engineering",
+    internshipTitle: "Embedded Systems Internship",
+    companyName: "ElectroTech",
+    submissionDate: "2025-04-19",
+    status: "accepted"
+  },
+  {
+    id: 9,
+    reportNumber: 'RPT-009',
+    studentName: "Layla Hassan",
+    studentMajor: "Graphic Design",
+    internshipTitle: "UI/UX Design Internship",
+    companyName: "Designify",
+    submissionDate: "2025-04-20",
+    status: "flagged"
+  },
+  {
+    id: 10,
+    reportNumber: 'RPT-010',
+    studentName: "Omar Khaled",
+    studentMajor: "Civil Engineering",
+    internshipTitle: "Site Engineer Internship",
+    companyName: "BuildRight",
+    submissionDate: "2025-04-21",
+    status: "rejected"
+  },
+  {
+    id: 11,
+    reportNumber: 'RPT-011',
+    studentName: "Sara Nabil",
+    studentMajor: "Pharmacy",
+    internshipTitle: "Clinical Research Internship",
+    companyName: "PharmaPlus",
+    submissionDate: "2025-04-22",
+    status: "accepted"
+  },
+  {
+    id: 12,
+    reportNumber: 'RPT-012',
+    studentName: "Youssef Adel",
+    studentMajor: "Mechanical Engineering",
+    internshipTitle: "CAD Design Internship",
+    companyName: "AutoMech",
+    submissionDate: "2025-04-23",
+    status: "pending"
+  },
+  {
+    id: 13,
+    reportNumber: 'RPT-013',
+    studentName: "Mona Fathy",
+    studentMajor: "Accounting",
+    internshipTitle: "Audit Internship",
+    companyName: "FinCheck",
+    submissionDate: "2025-04-24",
+    status: "flagged"
+  },
+  {
+    id: 14,
+    reportNumber: 'RPT-014',
+    studentName: "Karim Mostafa",
+    studentMajor: "Architecture",
+    internshipTitle: "Architectural Design Internship",
+    companyName: "UrbanVisions",
+    submissionDate: "2025-04-25",
+    status: "accepted"
+  },
+  {
+    id: 15,
+    reportNumber: 'RPT-015',
+    studentName: "Nourhan Samir",
+    studentMajor: "Computer Science",
+    internshipTitle: "AI Research Internship",
+    companyName: "DeepThink",
+    submissionDate: "2025-04-26",
+    status: "pending"
+  },
+  {
+    id: 16,
+    reportNumber: 'RPT-016',
+    studentName: "Hassan Tarek",
+    studentMajor: "Political Science",
+    internshipTitle: "Policy Analyst Internship",
+    companyName: "GovInsight",
+    submissionDate: "2025-04-27",
+    status: "rejected"
+  }
+];
+
+export const reportDetailsMockData = [
+  // ACCEPTED
+  {
+    reportNumber: 'RPT-001',
+    status: 'accepted',
+    text: `During my internship at Creative Solutions, I participated in a variety of UX/UI projects, collaborating with both designers and developers. My responsibilities included conducting user research, creating wireframes, and developing interactive prototypes. I was able to apply my academic knowledge in real-world scenarios, and my mentor provided constructive feedback that helped me refine my skills. One of my main achievements was leading a usability testing session, which resulted in actionable insights for the team. This experience greatly improved my proficiency in Figma and enhanced my communication and teamwork abilities. Overall, the internship deepened my understanding of user-centered design and the importance of iterative development.`,
+    highlights: [
+      { start: 0, end: 120, color: "#bbf7d0" }
+    ],
+    comments: [
+      { author: "Dr. Ahmed", text: "Excellent summary of your learning experience!", position: 10 },
+      { author: "Dr. Ahmed", text: "Great collaboration skills shown.", position: 100 }
+    ],
+    feedback: {
+      summary: "Outstanding work!",
+      details: "Your report is clear, insightful, and well-structured. Keep it up!",
+      facultyReason: "Student demonstrated strong understanding and teamwork."
+    }
+  },
+  // FLAGGED
+  {
+    reportNumber: 'RPT-002',
+    status: 'flagged',
+    text: `During my internship at Creative Solutions, I participated in a variety of UX/UI projects, collaborating with both designers and developers. My responsibilities included conducting user research, creating wireframes, and developing interactive prototypes. I was able to apply my academic knowledge in real-world scenarios, and my mentor provided constructive feedback that helped me refine my skills. One of my main achievements was leading a usability testing session, which resulted in actionable insights for the team. This experience greatly improved my proficiency in Figma and enhanced my communication and teamwork abilities. Overall, the internship deepened my understanding of user-centered design and the importance of iterative development.`,
+    highlights: [
+      { start: 70, end: 180, color: "#fde68a" }
+    ],
+    comments: [
+      { author: "Dr. Smith", text: "Objectives are unclear. Please specify.", position: 80 },
+      { author: "Dr. Smith", text: "Results section is incomplete.", position: 120 }
+    ],
+    feedback: {
+      summary: "Flagged for missing details.",
+      details: "The report does not specify objectives or methods.",
+      facultyReason: "Flagged because the student did not clarify objectives or provide a complete results section."
+    }
+  },
+  // REJECTED
+  {
+    reportNumber: 'RPT-003',
+    status: 'rejected',
+    text: `During my internship at Creative Solutions, I participated in a variety of UX/UI projects, collaborating with both designers and developers. My responsibilities included conducting user research, creating wireframes, and developing interactive prototypes. I was able to apply my academic knowledge in real-world scenarios, and my mentor provided constructive feedback that helped me refine my skills. One of my main achievements was leading a usability testing session, which resulted in actionable insights for the team. This experience greatly improved my proficiency in Figma and enhanced my communication and teamwork abilities. Overall, the internship deepened my understanding of user-centered design and the importance of iterative development.`,
+    highlights: [
+      { start: 60, end: 180, color: "#fecaca" }
+    ],
+    comments: [
+      { author: "Dr. Lee", text: "Methodology section is missing.", position: 80 },
+      { author: "Dr. Lee", text: "No analysis or reflection provided.", position: 120 }
+    ],
+    feedback: {
+      summary: "Rejected due to missing methodology and analysis.",
+      details: "Please include a detailed methodology and reflect on your experience.",
+      facultyReason: "Rejected because the report lacks methodology and analysis."
+    }
+  },
+  // PENDING
+  {
+    reportNumber: 'RPT-004',
+    status: 'pending',
+    text: `During my internship at Creative Solutions, I participated in a variety of UX/UI projects, collaborating with both designers and developers. My responsibilities included conducting user research, creating wireframes, and developing interactive prototypes. I was able to apply my academic knowledge in real-world scenarios, and my mentor provided constructive feedback that helped me refine my skills. One of my main achievements was leading a usability testing session, which resulted in actionable insights for the team. This experience greatly improved my proficiency in Figma and enhanced my communication and teamwork abilities. Overall, the internship deepened my understanding of user-centered design and the importance of iterative development.`,
+    highlights: [],
+    comments: [],
+    feedback: null
+  },
+  // ACCEPTED
+  {
+    reportNumber: 'RPT-005',
+    status: 'accepted',
+    text: `During my internship at Creative Solutions, I participated in a variety of UX/UI projects, collaborating with both designers and developers. My responsibilities included conducting user research, creating wireframes, and developing interactive prototypes. I was able to apply my academic knowledge in real-world scenarios, and my mentor provided constructive feedback that helped me refine my skills. One of my main achievements was leading a usability testing session, which resulted in actionable insights for the team. This experience greatly improved my proficiency in Figma and enhanced my communication and teamwork abilities. Overall, the internship deepened my understanding of user-centered design and the importance of iterative development.`,
+    highlights: [
+      { start: 0, end: 120, color: "#bbf7d0" }
+    ],
+    comments: [
+      { author: "Dr. Ahmed", text: "Excellent summary of your learning experience!", position: 10 },
+      { author: "Dr. Ahmed", text: "Great collaboration skills shown.", position: 100 }
+    ],
+    feedback: {
+      summary: "Outstanding work!",
+      details: "Your report is clear, insightful, and well-structured. Keep it up!",
+      facultyReason: "Student demonstrated strong understanding and teamwork."
+    }
+  },
+  // FLAGGED
+  {
+    reportNumber: 'RPT-006',
+    status: 'flagged',
+    text: `During my internship at Creative Solutions, I participated in a variety of UX/UI projects, collaborating with both designers and developers. My responsibilities included conducting user research, creating wireframes, and developing interactive prototypes. I was able to apply my academic knowledge in real-world scenarios, and my mentor provided constructive feedback that helped me refine my skills. One of my main achievements was leading a usability testing session, which resulted in actionable insights for the team. This experience greatly improved my proficiency in Figma and enhanced my communication and teamwork abilities. Overall, the internship deepened my understanding of user-centered design and the importance of iterative development.`,
+    highlights: [
+      { start: 70, end: 180, color: "#fde68a" }
+    ],
+    comments: [
+      { author: "Dr. Smith", text: "Objectives are unclear. Please specify.", position: 80 },
+      { author: "Dr. Smith", text: "Results section is incomplete.", position: 120 }
+    ],
+    feedback: {
+      summary: "Flagged for missing details.",
+      details: "The report does not specify objectives or methods.",
+      facultyReason: "Flagged because the student did not clarify objectives or provide a complete results section."
+    }
+  },
+  // REJECTED
+  {
+    reportNumber: 'RPT-007',
+    status: 'rejected',
+    text: `During my internship at Creative Solutions, I participated in a variety of UX/UI projects, collaborating with both designers and developers. My responsibilities included conducting user research, creating wireframes, and developing interactive prototypes. I was able to apply my academic knowledge in real-world scenarios, and my mentor provided constructive feedback that helped me refine my skills. One of my main achievements was leading a usability testing session, which resulted in actionable insights for the team. This experience greatly improved my proficiency in Figma and enhanced my communication and teamwork abilities. Overall, the internship deepened my understanding of user-centered design and the importance of iterative development.`,
+    highlights: [
+      { start: 60, end: 180, color: "#fecaca" }
+    ],
+    comments: [
+      { author: "Dr. Lee", text: "Methodology section is missing.", position: 80 },
+      { author: "Dr. Lee", text: "No analysis or reflection provided.", position: 120 }
+    ],
+    feedback: {
+      summary: "Rejected due to missing methodology and analysis.",
+      details: "Please include a detailed methodology and reflect on your experience.",
+      facultyReason: "Rejected because the report lacks methodology and analysis."
+    }
+  },
+  // PENDING
+  {
+    reportNumber: 'RPT-008',
+    status: 'pending',
+    text: `During my internship at Creative Solutions, I participated in a variety of UX/UI projects, collaborating with both designers and developers. My responsibilities included conducting user research, creating wireframes, and developing interactive prototypes. I was able to apply my academic knowledge in real-world scenarios, and my mentor provided constructive feedback that helped me refine my skills. One of my main achievements was leading a usability testing session, which resulted in actionable insights for the team. This experience greatly improved my proficiency in Figma and enhanced my communication and teamwork abilities. Overall, the internship deepened my understanding of user-centered design and the importance of iterative development.`,
+    highlights: [],
+    comments: [],
+    feedback: null
+  }
+];
