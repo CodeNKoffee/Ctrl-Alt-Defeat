@@ -1,5 +1,6 @@
+"use client";
 import { useState } from 'react';
-import { FiDownload, FiFileText, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiDownload, FiFileText} from 'react-icons/fi';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import ReportPDF from './ReportPDF';
 import TopCoursesCard from './charts/TopCoursesCard';
