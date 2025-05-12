@@ -45,8 +45,8 @@ export const callReducer = (state = initialState, action) => {
         isInCall: true,
         isReceivingCall: false,
         isMakingCall: false,
-        isMuted: false,
-        isVideoEnabled: true,
+        isMuted: true,
+        isVideoEnabled: false,
         isScreenSharing: false,
         otherPartyLeft: false,
       };

@@ -70,7 +70,7 @@ export default function DashboardLayout({
     (userData.role === 'scad' || (userData.role === 'student' && userData.accountType === 'PRO'));
 
   return (
-    <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white">
+    <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white overflow-x-hidden">
       {showSidebar && (
         <Sidebar
           userType={userType}
@@ -79,7 +79,7 @@ export default function DashboardLayout({
         />
       )}
 
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto overflow-x-hidden">
         <div className="p-4 md:p-6 min-h-screen flex flex-col">
           <div className="mb-6 flex justify-between items-center">
             <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
