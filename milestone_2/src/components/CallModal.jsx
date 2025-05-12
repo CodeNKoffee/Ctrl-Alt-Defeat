@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { outgoingCall, acceptCall, requestAppointment, acceptAppointment, rejectAppointment } from '../store/callReducer';
@@ -8,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarPlus, faCheck, faTimes, faVideo, faSpinner, faUserClock, faUsers, faUserCheck, faClock, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from './DatePicker';
 import { format as formatDateFns } from 'date-fns';
+import CallInterface from './CallInterface';
+import CallNotification from './CallNotification';
 
 const CallModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -346,9 +350,17 @@ const CallModal = ({ isOpen, onClose }) => {
                           <div key={user.id} className="bg-white rounded-xl p-4 shadow-sm border border-metallica-blue-100 transition-all duration-200">
                             <motion.div layout>
                               <div className="flex items-center justify-between mb-3">
-                                <div className="flex items-center">
-                                  <div className="bg-metallica-blue-100 text-metallica-blue-600 rounded-full h-10 w-10 flex items-center justify-center mr-3 font-medium text-base shadow-sm flex-shrink-0">
-                                    {user.name.charAt(0)}
+                                <div className="flex items-center flex-grow min-w-0 mr-2">
+                                  <div className="relative mr-3 flex-shrink-0">
+                                    <div className="bg-metallica-blue-100 text-metallica-blue-600 rounded-full h-10 w-10 flex items-center justify-center font-medium text-base shadow-sm">
+                                      {user.name.charAt(0)}
+                                    </div>
+                                    {confirmedAppointments.some(appt => appt.requesterId === user.id && appt.requestedUserId === effectiveUser?.id && appt.status === 'confirmed') && (
+                                      <span
+                                        className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 ring-2 ring-white shadow-sm"
+                                        title={`${user.name} has a confirmed appointment with you (requested by them)`}
+                                      />
+                                    )}
                                   </div>
                                   <div className="text-left">
                                     <h3 className="font-medium text-sm text-metallica-blue-800 font-ibm-plex-sans">{user.name}</h3>

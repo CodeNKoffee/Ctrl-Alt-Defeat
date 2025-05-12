@@ -13,7 +13,18 @@ const initialState = {
   calleeName: null,
   incomingCallData: null,
   otherPartyLeft: false,
-  appointments: [], // Added: { id, requesterId, requesterName, requestedUserId, requestedUserName, status: 'pending' | 'confirmed' | 'rejected', dateTime?: string }
+  appointments: [
+    // Sample pending appointment for testing: SCAD requests Hatem
+    {
+      id: 'appt_test_scad_to_hatem',
+      requesterId: 'scad_001', // SCAD Admin ID
+      requesterName: 'SCAD Admin',
+      requestedUserId: 'student_002', // Hatem's ID
+      requestedUserName: 'Hatem',
+      status: 'pending',
+      dateTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // e.g., tomorrow
+    }
+  ], // Added: { id, requesterId, requesterName, requestedUserId, requestedUserName, status: 'pending' | 'confirmed' | 'rejected', dateTime?: string }
 };
 
 const callSlice = createSlice({
