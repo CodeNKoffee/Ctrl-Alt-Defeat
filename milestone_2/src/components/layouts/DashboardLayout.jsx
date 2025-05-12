@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
 import CallButton from '@/components/CallButton';
 import CallInterface from '@/components/CallInterface';
-import CallNotification from '@/components/CallNotification';
 
 export default function DashboardLayout({
   children,
@@ -122,9 +121,8 @@ export default function DashboardLayout({
         </div>
       </div>
 
-      {/* Global call components */}
+      {/* Global call components - only CallInterface needed */}
       <CallInterface />
-      <CallNotification />
     </div>
   );
 }

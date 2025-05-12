@@ -229,16 +229,6 @@ const CallModal = ({ isOpen, onClose }) => {
   // 1. If isInCall or isReceivingCall, show CallInterface.
   // 2. Otherwise, if the modal is open, show the contact list or the initiating UI.
 
-  if (callState.isInCall || callState.isReceivingCall) {
-    // If already in a call (accepted) or receiving one, show the main interface
-    return (
-      <div className="fixed inset-0 z-50">
-        <CallInterface />
-        <CallNotification />
-      </div>
-    );
-  }
-
   // If modal is not open and not in a call state, render nothing
   if (!isOpen) {
     return null;

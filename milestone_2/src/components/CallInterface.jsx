@@ -27,6 +27,7 @@ import {
   faXmark,
   faExpand
 } from '@fortawesome/free-solid-svg-icons';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const CallInterface = () => {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ const CallInterface = () => {
   const remoteVideoRef = useRef(null);
   const [isCallConnected, setIsCallConnected] = useState(false);
   const answerAudioRef = useRef(null);
+  const [showConnectingOverlay, setShowConnectingOverlay] = useState(true);
   const [showManualLeaveToast, setShowManualLeaveToast] = useState(false);
 
   const [showChat, setShowChat] = useState(false);
@@ -58,173 +60,92 @@ const CallInterface = () => {
   const [noteContent, setNoteContent] = useState('');
   const [currentMessage, setCurrentMessage] = useState('');
   const chatScrollRef = useRef(null);
-  const [isFullScreen, setIsFullScreen] = useState(false);
-
-  // State for dragging modal
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
-  const modalRef = useRef(null); // Ref for the draggable modal element
 
   const isCallee = currentUser?.id === calleeId;
   const otherPartyName = isCallee ? callerName : calleeName;
   const otherPartyId = isCallee ? callerId : calleeId;
-
-  // Effect to center modal initially and clean up drag listeners
-  useEffect(() => {
-    console.log(`[CallInterface ${instanceId}] Mount/Drag useEffect running. isFullScreen: ${isFullScreen}`); // Log mount effect
-    // Center the modal initially only if not fullscreen
-    if (!isFullScreen && window && modalRef.current) {
-      const modalWidth = modalRef.current.offsetWidth;
-      const modalHeight = modalRef.current.offsetHeight;
-      const initialX = (window.innerWidth - modalWidth) / 2;
-      const initialY = (window.innerHeight - modalHeight) / 2;
-      setPosition({ x: Math.max(0, initialX), y: Math.max(0, initialY) });
-    }
-
-    const handleDragging = (e) => {
-      if (!isDragging) return;
-      const dx = e.clientX - startPos.x;
-      const dy = e.clientY - startPos.y;
-      setPosition(prevPos => ({
-        x: Math.max(0, startPos.initialX + dx), // Prevent dragging off-screen left
-        y: Math.max(0, startPos.initialY + dy)  // Prevent dragging off-screen top
-      }));
-    };
-
-    const handleDragEnd = () => {
-      if (isDragging) {
-        setIsDragging(false);
-      }
-    };
-
-    // Only add listeners if dragging is possible (i.e., in modal view)
-    if (!isFullScreen) {
-      window.addEventListener('mousemove', handleDragging);
-      window.addEventListener('mouseup', handleDragEnd);
-    }
-
-    // Cleanup listeners
-    return () => {
-      window.removeEventListener('mousemove', handleDragging);
-      window.removeEventListener('mouseup', handleDragEnd);
-    };
-    // Add isDragging dependency to re-attach/detach listeners if needed, and isFullScreen to handle transition
-  }, [isDragging, startPos, isFullScreen]);
-
-  const handleDragStart = useCallback((e) => {
-    // Prevent drag start on buttons or interactive elements inside modal if necessary
-    // For simplicity, we allow dragging from anywhere on the modal background for now.
-    if (modalRef.current) {
-      setIsDragging(true);
-      // Record mouse position and initial modal position
-      setStartPos({
-        x: e.clientX,
-        y: e.clientY,
-        initialX: position.x,
-        initialY: position.y
-      });
-      e.preventDefault(); // Prevent text selection during drag
-    }
-  }, [position]); // Depend on position to get the correct initialX/Y
 
   useEffect(() => {
     console.log("CallInterface currentUser:", currentUser);
   }, [currentUser]);
 
   useEffect(() => {
+    setShowConnectingOverlay(true);
     let isMounted = true;
-    const setupInstanceId = instanceId; // Capture instance ID for cleanup log
-    console.log(`[CallInterface ${setupInstanceId}] Setup useEffect running. isInCall: ${isInCall}, otherPartyId: ${otherPartyId}, userId: ${currentUser?.id}`); // Log setup effect start
+    const setupInstanceId = instanceId;
+    console.log(`[CallInterface ${setupInstanceId}] Setup useEffect running. isInCall: ${isInCall}, otherPartyId: ${otherPartyId}, userId: ${currentUser?.id}`);
 
     async function setupCall() {
       if (!isInCall || !otherPartyId || !currentUser?.id) {
-        console.log(`[CallInterface ${setupInstanceId}] Setup useEffect: Aborting setup (conditions not met).`);
+        console.log(`[CallInterface ${setupInstanceId}] Setup useEffect: Aborting setup.`);
         return;
       }
-      console.log(`[CallInterface ${setupInstanceId}] Setup useEffect: Proceeding with call setup.`);
+      console.log(`[CallInterface ${setupInstanceId}] Setup useEffect: Proceeding.`);
 
       try {
         if (answerAudioRef.current) {
-          console.log("CallInterface: Playing answer sound.");
           answerAudioRef.current.currentTime = 0;
-          answerAudioRef.current.play()
-            .catch(err => console.error("CallInterface: Error playing answer audio:", err));
+          answerAudioRef.current.play().catch(e => console.error("Answer audio play error:", e));
         }
 
         SignalingService.init(currentUser.id);
         SignalingService.addReceiverId(otherPartyId);
 
         await WebRTCService.initialize(
-          (candidate) => {
-            SignalingService.sendIceCandidate(otherPartyId, candidate);
-          },
+          (candidate) => SignalingService.sendIceCandidate(otherPartyId, candidate),
           (stream) => {
             if (remoteVideoRef.current && isMounted) {
               remoteVideoRef.current.srcObject = stream;
-              if (isFullScreen) remoteVideoRef.current.play().catch(console.error);
+              remoteVideoRef.current.play().catch(console.error);
             }
           },
           (connectionState) => {
             if (isMounted) {
+              setIsCallConnected(connectionState === 'connected');
               if (connectionState === 'connected') {
-                setIsCallConnected(true);
                 if (remoteVideoRef.current) remoteVideoRef.current.play().catch(console.error);
                 if (localVideoRef.current) localVideoRef.current.play().catch(console.error);
-              } else if (['disconnected', 'failed', 'closed'].includes(connectionState)) {
-                setIsCallConnected(false);
               }
             }
           }
         );
 
         const localStream = await WebRTCService.getUserMedia(true, !isMuted);
-        if (localStream) {
-          console.log("CallInterface: Got localStream:", localStream);
-          console.log("CallInterface: Local Tracks:", localStream.getTracks());
-        } else {
-          console.error("CallInterface: Failed to get localStream.");
-        }
-
-        if (localVideoRef.current && isMounted) {
+        if (localVideoRef.current && isMounted && localStream) {
           localVideoRef.current.srcObject = localStream;
-          if (isVideoEnabled && isFullScreen) localVideoRef.current.play().catch(console.error);
+          if (isVideoEnabled) localVideoRef.current.play().catch(console.error);
         }
 
         WebRTCService.addLocalStreamTracks();
+
+        SignalingService.on('offer', async ({ senderId, offer }) => {
+          if (senderId === otherPartyId && isMounted) {
+            await WebRTCService.setRemoteDescription(offer);
+            const answer = await WebRTCService.createAnswer();
+            SignalingService.sendAnswer(otherPartyId, answer);
+          }
+        });
+        SignalingService.on('answer', async ({ senderId, answer }) => {
+          if (senderId === otherPartyId && isMounted) {
+            await WebRTCService.setRemoteDescription(answer);
+          }
+        });
+        SignalingService.on('ice-candidate', async ({ senderId, candidate }) => {
+          if (senderId === otherPartyId && isMounted) {
+            await WebRTCService.addIceCandidate(candidate);
+          }
+        });
+        SignalingService.on('end-call', ({ senderId }) => {
+          if (senderId === otherPartyId && isMounted) dispatch(otherPartyLeft());
+        });
 
         if (!isCallee) {
           const offer = await WebRTCService.createOffer();
           SignalingService.sendOffer(otherPartyId, offer);
         }
 
-        SignalingService.on('offer', async ({ senderId, offer }) => {
-          if (senderId === otherPartyId) {
-            await WebRTCService.setRemoteDescription(offer);
-            const answer = await WebRTCService.createAnswer();
-            SignalingService.sendAnswer(otherPartyId, answer);
-          }
-        });
-
-        SignalingService.on('answer', async ({ senderId, answer }) => {
-          if (senderId === otherPartyId) {
-            await WebRTCService.setRemoteDescription(answer);
-          }
-        });
-
-        SignalingService.on('ice-candidate', async ({ senderId, candidate }) => {
-          if (senderId === otherPartyId) {
-            await WebRTCService.addIceCandidate(candidate);
-          }
-        });
-
-        SignalingService.on('end-call', ({ senderId }) => {
-          if (senderId === otherPartyId && isMounted) {
-            dispatch(otherPartyLeft());
-          }
-        });
       } catch (error) {
-        console.error(`[CallInterface ${setupInstanceId}] Error setting up WebRTC call:`, error);
+        console.error(`[CallInterface ${setupInstanceId}] Error setting up WebRTC:`, error);
       }
     }
 
@@ -232,7 +153,7 @@ const CallInterface = () => {
 
     return () => {
       isMounted = false;
-      console.log(`[CallInterface ${setupInstanceId}] Cleanup running (Unmounting or call ended). Closing WebRTC.`); // Log cleanup
+      console.log(`[CallInterface ${setupInstanceId}] Cleanup running.`);
       WebRTCService.close();
       SignalingService.disconnect();
       if (answerAudioRef.current) {
@@ -240,7 +161,21 @@ const CallInterface = () => {
         answerAudioRef.current.currentTime = 0;
       }
     };
-  }, [isInCall, otherPartyId, currentUser?.id, dispatch, isCallee, isFullScreen, instanceId]); // Added instanceId just for logging stability if needed
+  }, [isInCall, otherPartyId, currentUser?.id, dispatch, isCallee, instanceId]);
+
+  useEffect(() => {
+    let timerId = null;
+    if (isInCall) {
+      timerId = setTimeout(() => {
+        setShowConnectingOverlay(false);
+      }, 2000);
+    }
+    return () => {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+    };
+  }, [isInCall]);
 
   useEffect(() => {
     if (isInCall) WebRTCService.toggleAudio(!isMuted);
@@ -316,7 +251,7 @@ const CallInterface = () => {
   }, [hasOtherPartyLeft, dispatch]);
 
   useEffect(() => {
-    if (chatScrollRef.current) {
+    if (chatScrollRef && chatScrollRef.current) {
       chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
     }
   }, [chatMessages]);
@@ -391,7 +326,7 @@ const CallInterface = () => {
     return null;
   }
 
-  console.log(`[CallInterface ${instanceId}] Rendering UI. isFullScreen: ${isFullScreen}`); // Log UI render
+  console.log(`[CallInterface ${instanceId}] Rendering UI.`); // Log UI render
 
   const baseButtonClass = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-apple-gray-800";
   const defaultButtonClass = "bg-apple-gray-700 hover:bg-apple-gray-600 text-white focus:ring-apple-gray-500";
@@ -400,9 +335,9 @@ const CallInterface = () => {
   const greenButtonClass = "bg-green-600 hover:bg-green-700 text-white focus:ring-green-500";
   const yellowButtonClass = "bg-yellow-500 hover:bg-yellow-600 text-white focus:ring-yellow-400";
 
-  const renderCallContent = (isModalView = false) => (
+  const renderCallContent = () => (
     <>
-      <div className={`flex-1 flex relative ${isFullScreen ? 'bg-apple-gray-900' : 'bg-apple-gray-800'}`}>
+      <div className="flex-1 flex relative bg-apple-gray-900">
         <video
           ref={remoteVideoRef}
           className="w-full h-full object-contain"
@@ -417,19 +352,19 @@ const CallInterface = () => {
           </div>
         )}
 
-        {!isCallConnected && (
+        {showConnectingOverlay && (
           <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
             <div className="text-white text-lg sm:text-xl">Connecting...</div>
           </div>
         )}
 
         {hasOtherPartyLeft && (
-          <div className={`absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-3 py-1 rounded shadow-md text-sm ${!isFullScreen ? 'scale-90' : ''}`}>
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-3 py-1 rounded shadow-md text-sm">
             {otherPartyName} has left the call
           </div>
         )}
 
-        <div className={`absolute top-4 ${isFullScreen ? 'left-4' : 'left-1/2 transform -translate-x-1/2'} bg-black bg-opacity-60 text-white px-3 py-1 rounded-lg flex items-center text-xs sm:text-sm shadow`}>
+        <div className="absolute top-4 left-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-lg flex items-center text-xs sm:text-sm shadow">
           {isCallConnected ? 'Connected' : 'Connecting'} with {otherPartyName}
           <button
             onClick={triggerLeaveToast}
@@ -440,7 +375,7 @@ const CallInterface = () => {
           </button>
         </div>
 
-        <div className={`absolute ${isModalView ? 'right-2 bottom-20' : 'right-4 bottom-24'} w-1/4 sm:w-1/5 max-w-[150px] sm:max-w-xs aspect-video bg-apple-gray-700 border border-apple-gray-500 overflow-hidden rounded-md sm:rounded-lg shadow-lg flex items-center justify-center`}>
+        <div className="absolute right-4 bottom-24 w-1/4 sm:w-1/5 max-w-[150px] sm:max-w-xs aspect-video bg-apple-gray-700 border border-apple-gray-500 overflow-hidden rounded-md sm:rounded-lg shadow-lg flex items-center justify-center">
           {isVideoEnabled ? (
             <video
               ref={localVideoRef}
@@ -466,7 +401,7 @@ const CallInterface = () => {
         </div>
       </div>
 
-      <div className={`h-20 flex items-center justify-center gap-3 sm:gap-4 px-4 ${isModalView ? 'bg-apple-gray-800 border-t border-apple-gray-700' : 'bg-apple-gray-900'}`}>
+      <div className="h-20 flex items-center justify-center gap-3 sm:gap-4 px-4 bg-apple-gray-900">
         <button
           onClick={() => dispatch(toggleMute())}
           className={`${baseButtonClass} ${isMuted ? redButtonClass : defaultButtonClass}`}
@@ -487,7 +422,6 @@ const CallInterface = () => {
           onClick={handleToggleChat}
           className={`${baseButtonClass} ${showChat ? activeButtonClass : defaultButtonClass}`}
           title="Chat"
-          disabled={isModalView}
         >
           <FontAwesomeIcon icon={faComments} className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
@@ -496,7 +430,6 @@ const CallInterface = () => {
           onClick={handleToggleNotes}
           className={`${baseButtonClass} ${showNotes ? yellowButtonClass : defaultButtonClass}`}
           title="Notes"
-          disabled={isModalView}
         >
           <FontAwesomeIcon icon={faNoteSticky} className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
@@ -516,47 +449,9 @@ const CallInterface = () => {
         >
           <FontAwesomeIcon icon={faPhoneSlash} className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
-
-        {isModalView && (
-          <button
-            onClick={() => setIsFullScreen(true)}
-            className={`${baseButtonClass} ${defaultButtonClass} ml-auto`}
-            title="Enter Fullscreen"
-          >
-            <FontAwesomeIcon icon={faExpand} className="h-5 w-5 sm:h-6 sm:w-6" />
-          </button>
-        )}
       </div>
     </>
   );
-
-  if (!isFullScreen) {
-    return (
-      <div className="fixed inset-0 z-50 pointer-events-none">
-        <audio
-          ref={answerAudioRef}
-          src="/sounds/Facetime_Ring_and_Answer_Sound.mp3"
-          preload="auto"
-        />
-        <div
-          ref={modalRef}
-          onMouseDown={handleDragStart}
-          className={`absolute bg-apple-gray-800 rounded-xl shadow-xl w-full max-w-3xl h-[80vh] max-h-[700px] overflow-hidden flex flex-col text-white pointer-events-auto ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-          style={{
-            left: `${position.x}px`,
-            top: `${position.y}px`,
-          }}
-        >
-          {renderCallContent(true)}
-        </div>
-        {showManualLeaveToast && (
-          <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-pulse z-60 pointer-events-auto">
-            {otherPartyName || 'Other party'} has left the call (Simulated)
-          </div>
-        )}
-      </div>
-    );
-  }
 
   return (
     <div className="fixed inset-0 bg-black flex flex-row z-40">
@@ -567,7 +462,7 @@ const CallInterface = () => {
       />
 
       <div className={`flex flex-col ${showChat || showNotes ? 'w-2/3' : 'w-full'} h-screen transition-all duration-300 ease-in-out`}>
-        {renderCallContent(false)}
+        {renderCallContent()}
       </div>
 
       {(showChat || showNotes) && (

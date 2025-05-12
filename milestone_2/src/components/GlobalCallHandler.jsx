@@ -7,10 +7,9 @@ import { AnimatePresence } from 'framer-motion';
 
 const GlobalCallHandler = () => {
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const isInCall = useSelector((state) => state.call.isInCall);
-  const isReceivingCall = useSelector((state) => state.call.isReceivingCall);
+  const { isInCall, isReceivingCall, isMakingCall } = useSelector((state) => state.call);
 
-  console.log(`[GlobalCallHandler] Rendering. User: ${currentUser?.id}, isInCall: ${isInCall}, isReceivingCall: ${isReceivingCall}`);
+  console.log(`[GlobalCallHandler] Rendering. User: ${currentUser?.id}, isInCall: ${isInCall}, isReceivingCall: ${isReceivingCall}, isMakingCall: ${isMakingCall}`);
 
   // Only show call components for SCAD admins and PRO students
   if (!currentUser || (
@@ -25,7 +24,7 @@ const GlobalCallHandler = () => {
     <>
       {isInCall && <CallInterface />}
       <AnimatePresence>
-        {isReceivingCall && <CallNotification />}
+        {isReceivingCall && !isMakingCall && <CallNotification />}
       </AnimatePresence>
     </>
   );

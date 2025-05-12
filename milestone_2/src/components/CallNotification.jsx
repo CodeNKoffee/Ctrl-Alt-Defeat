@@ -9,6 +9,7 @@ import { faVideo, faPhoneSlash, faChevronDown } from '@fortawesome/free-solid-sv
 const CallNotification = () => {
   const dispatch = useDispatch();
   const { isReceivingCall, callerId, callerName } = useSelector((state) => state.call);
+  console.log(`[CallNotification] Rendering. isReceivingCall: ${isReceivingCall}, callerId: ${callerId}, callerName: ${callerName}`);
   const currentUser = useSelector((state) => state.auth.currentUser);
   const audioRef = useRef(null);
 

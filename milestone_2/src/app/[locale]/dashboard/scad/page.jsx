@@ -7,7 +7,6 @@ import { MOCK_COMPANIES } from '../../../../../constants/mockData';
 import CompanyTable from '@/components/CompanyTable';
 import CallModal from '@/components/CallModal';
 import CallInterface from '@/components/CallInterface';
-import CallNotification from '@/components/CallNotification';
 
 export default function ScadDashboard() {
   const router = useRouter();
@@ -40,7 +39,6 @@ export default function ScadDashboard() {
       {isInCall && (
         <div className="fixed inset-0 z-50">
           <CallInterface />
-          <CallNotification />
         </div>
       )}
 

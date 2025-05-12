@@ -43,6 +43,7 @@ const callSlice = createSlice({
     incomingCall: (state, action) => {
       // Prevent setting incoming call if already in one or making one
       if (!state.isInCall && !state.isMakingCall) {
+        console.log('[Redux] incomingCall action received. Payload:', action.payload); // Log entire payload
         state.isReceivingCall = true;
         state.incomingCallData = action.payload; // { offer, callerId, callerName }
         state.callerId = action.payload.callerId;
