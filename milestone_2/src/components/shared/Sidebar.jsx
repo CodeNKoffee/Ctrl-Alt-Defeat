@@ -146,11 +146,12 @@ export default function Sidebar({ userType, onViewChange, currentView }) {
   const handleLogout = () => {
     dispatch({ type: LOGOUT_USER });
 
-    // Clear session and local storage
+    // Clear session and local storage for user data only
+    // Keep welcomeShown flags to prevent welcome animation on logout
     if (typeof window !== 'undefined') {
       sessionStorage.removeItem('userSession');
       localStorage.removeItem('userSession');
-      sessionStorage.removeItem('welcomeShown'); // Also clear welcomeShown flag
+      // Don't remove welcomeShown flags to avoid showing animation again after logout
     }
 
     router.push(`/${locale}/`);

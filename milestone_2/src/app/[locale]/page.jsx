@@ -15,7 +15,7 @@ export default function Home() {
   const [showWelcome, setShowWelcome] = useState(() => {
     // Check if welcome animation has been shown before
     if (typeof window !== 'undefined') {
-      return !sessionStorage.getItem('welcomeShown');
+      return !sessionStorage.getItem('welcomeShown') && !localStorage.getItem('welcomeShown');
     }
     return true;
   });
@@ -51,8 +51,9 @@ export default function Home() {
       // After welcome animation completes, wait 1 second then show continue options
       const timer = setTimeout(() => {
         setShowWelcome(false);
-        // Mark welcome as shown in session storage
+        // Mark welcome as shown in session storage and local storage
         sessionStorage.setItem('welcomeShown', 'true');
+        localStorage.setItem('welcomeShown', 'true');
       }, 1000); // Reduced from 2000ms to 1000ms
       return () => clearTimeout(timer);
     }
