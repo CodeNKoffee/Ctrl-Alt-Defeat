@@ -489,7 +489,7 @@ const CallInterface = () => {
                   chatMessages.map(message => (
                     <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
                       <div className={`max-w-[80%] rounded-lg px-3 py-2 shadow-sm ${message.isSelf
-                        ? 'bg-apple-blue-500 text-white rounded-br-none'
+                        ? 'bg-metallica-blue-700 text-white rounded-br-none'
                         : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'
                         }`}>
                         <p className="text-sm">{message.content}</p>
@@ -507,12 +507,12 @@ const CallInterface = () => {
                     type="text"
                     value={currentMessage}
                     onChange={(e) => setCurrentMessage(e.target.value)}
-                    className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-apple-blue-500 focus:border-apple-blue-500 text-sm"
+                    className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 text-sm"
                     placeholder="Type your message..."
                   />
                   <button
                     type="submit"
-                    className={`w-10 h-10 rounded-full bg-apple-blue-500 hover:bg-apple-blue-600 text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''}`}
+                    className={`w-10 h-10 rounded-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''}`}
                     disabled={!currentMessage.trim()}
                     title="Send Message"
                   >
@@ -528,12 +528,12 @@ const CallInterface = () => {
               <textarea
                 value={noteContent}
                 onChange={(e) => setNoteContent(e.target.value)}
-                className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-apple-blue-500 focus:border-apple-blue-500 resize-none text-sm mb-4"
+                className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 resize-none text-sm mb-4"
                 placeholder="Write your private notes here..."
               />
               <button
                 onClick={handleSaveNotes}
-                className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors"
+                className="w-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-2 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors"
                 title="Save Notes (logs to console)"
               >
                 <FontAwesomeIcon icon={faSave} />

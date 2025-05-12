@@ -51,7 +51,7 @@ const IncomingCallTester = () => {
   return (
     <button
       onClick={simulateIncomingCall}
-      className="fixed bottom-5 right-5 bg-purple-600 hover:bg-purple-700 text-white font-bold p-3 rounded-full shadow-lg z-50 flex items-center justify-center transition-transform transform hover:scale-105 h-12 w-12"
+      className="fixed bottom-5 left-5 bg-purple-600 hover:bg-purple-700 text-white font-bold p-3 rounded-full shadow-lg z-50 flex items-center justify-center transition-transform transform hover:scale-105 h-12 w-12"
       title="Simulate Incoming Call from Alien X (Test Feature)"
     >
       <FontAwesomeIcon icon={faBell} className="h-5 w-5" />
