@@ -24,12 +24,17 @@ export default function DashboardLayout({
     // Check session storage as fallback
     const userSessionData = sessionStorage.getItem('userSession') || localStorage.getItem('userSession');
 
+    /* 
+    // PROBLEM: This check might run *after* logout is initiated but *before* the 
+    // redirect to the home page completes, causing a redirect back to login.
+    // Relying on Sidebar.jsx logout redirect and potentially middleware/page-level guards.
     if (!isAuthenticated && !userSessionData) {
       router.push(`/en/auth/login?userType=${userType}`);
       return;
     }
+    */
 
-    // If we have user data in session
+    // If we have user data in session (and potentially Redux state is not yet updated)
     if (userSessionData) {
       const userData = JSON.parse(userSessionData);
 
@@ -48,11 +53,11 @@ export default function DashboardLayout({
   // Get user data for conditional rendering
   const getUserData = () => {
     if (currentUser) return currentUser;
-    
+
     // Get from session/local storage as fallback
-    const userSessionData = typeof window !== 'undefined' ? 
+    const userSessionData = typeof window !== 'undefined' ?
       sessionStorage.getItem('userSession') || localStorage.getItem('userSession') : null;
-    
+
     if (userSessionData) {
       try {
         return JSON.parse(userSessionData);
@@ -61,12 +66,12 @@ export default function DashboardLayout({
         return null;
       }
     }
-    
+
     return null;
   };
 
   const userData = getUserData();
-  const showCallButton = userData && 
+  const showCallButton = userData &&
     (userData.role === 'scad' || (userData.role === 'student' && userData.accountType === 'PRO'));
 
   return (
@@ -85,7 +90,7 @@ export default function DashboardLayout({
             <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
               {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
             </h1>
-            
+
             {/* Call button prominently displayed for eligible users */}
             {showCallButton && (
               <div className="flex items-center">
@@ -95,7 +100,7 @@ export default function DashboardLayout({
                 <div className="relative">
                   <CallButton />
                   {/* Animated pulse effect to draw attention */}
-                  <span className="absolute -inset-1 rounded-full animate-ping bg-indigo-300 opacity-75" style={{animationDuration: '3s'}}></span>
+                  <span className="absolute -inset-1 rounded-full animate-ping bg-indigo-300 opacity-75" style={{ animationDuration: '3s' }}></span>
                 </div>
               </div>
             )}
@@ -116,7 +121,7 @@ export default function DashboardLayout({
           </div>
         </div>
       </div>
-      
+
       {/* Global call components */}
       <CallInterface />
       <CallNotification />

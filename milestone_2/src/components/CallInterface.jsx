@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   endCall,
@@ -28,6 +28,9 @@ import {
 
 const CallInterface = () => {
   const dispatch = useDispatch();
+  const instanceId = useRef(Math.random().toString(36).substring(2, 7)).current; // Unique ID for this instance
+  console.log(`[CallInterface ${instanceId}] Function body executing.`); // Log instance invocation
+
   const {
     isInCall,
     isMuted,
@@ -55,17 +58,73 @@ const CallInterface = () => {
   const chatScrollRef = useRef(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
 
+  // State for dragging modal
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+  const modalRef = useRef(null); // Ref for the draggable modal element
+
   const isCallee = currentUser?.id === calleeId;
   const otherPartyName = isCallee ? callerName : calleeName;
   const otherPartyId = isCallee ? callerId : calleeId;
 
+  // Effect to center modal initially and clean up drag listeners
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsFullScreen(true);
-    }, 2000);
+    console.log(`[CallInterface ${instanceId}] Mount/Drag useEffect running. isFullScreen: ${isFullScreen}`); // Log mount effect
+    // Center the modal initially only if not fullscreen
+    if (!isFullScreen && window && modalRef.current) {
+      const modalWidth = modalRef.current.offsetWidth;
+      const modalHeight = modalRef.current.offsetHeight;
+      const initialX = (window.innerWidth - modalWidth) / 2;
+      const initialY = (window.innerHeight - modalHeight) / 2;
+      setPosition({ x: Math.max(0, initialX), y: Math.max(0, initialY) });
+    }
 
-    return () => clearTimeout(timer);
-  }, []);
+    const handleDragging = (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - startPos.x;
+      const dy = e.clientY - startPos.y;
+      setPosition(prevPos => ({
+        x: Math.max(0, startPos.initialX + dx), // Prevent dragging off-screen left
+        y: Math.max(0, startPos.initialY + dy)  // Prevent dragging off-screen top
+      }));
+    };
+
+    const handleDragEnd = () => {
+      if (isDragging) {
+        setIsDragging(false);
+      }
+    };
+
+    // Only add listeners if dragging is possible (i.e., in modal view)
+    if (!isFullScreen) {
+      window.addEventListener('mousemove', handleDragging);
+      window.addEventListener('mouseup', handleDragEnd);
+    }
+
+    // Cleanup listeners
+    return () => {
+      window.removeEventListener('mousemove', handleDragging);
+      window.removeEventListener('mouseup', handleDragEnd);
+    };
+    // Add isDragging dependency to re-attach/detach listeners if needed, and isFullScreen to handle transition
+  }, [isDragging, startPos, isFullScreen]);
+
+  const handleDragStart = useCallback((e) => {
+    // Prevent drag start on buttons or interactive elements inside modal if necessary
+    // For simplicity, we allow dragging from anywhere on the modal background for now.
+    if (modalRef.current) {
+      setIsDragging(true);
+      // Record mouse position and initial modal position
+      setStartPos({
+        x: e.clientX,
+        y: e.clientY,
+        initialX: position.x,
+        initialY: position.y
+      });
+      e.preventDefault(); // Prevent text selection during drag
+    }
+  }, [position]); // Depend on position to get the correct initialX/Y
 
   useEffect(() => {
     console.log("CallInterface currentUser:", currentUser);
@@ -73,8 +132,15 @@ const CallInterface = () => {
 
   useEffect(() => {
     let isMounted = true;
+    const setupInstanceId = instanceId; // Capture instance ID for cleanup log
+    console.log(`[CallInterface ${setupInstanceId}] Setup useEffect running. isInCall: ${isInCall}, otherPartyId: ${otherPartyId}, userId: ${currentUser?.id}`); // Log setup effect start
+
     async function setupCall() {
-      if (!isInCall || !otherPartyId || !currentUser?.id) return;
+      if (!isInCall || !otherPartyId || !currentUser?.id) {
+        console.log(`[CallInterface ${setupInstanceId}] Setup useEffect: Aborting setup (conditions not met).`);
+        return;
+      }
+      console.log(`[CallInterface ${setupInstanceId}] Setup useEffect: Proceeding with call setup.`);
 
       try {
         if (answerAudioRef.current) {
@@ -156,7 +222,7 @@ const CallInterface = () => {
           }
         });
       } catch (error) {
-        console.error('Error setting up WebRTC call:', error);
+        console.error(`[CallInterface ${setupInstanceId}] Error setting up WebRTC call:`, error);
       }
     }
 
@@ -164,7 +230,7 @@ const CallInterface = () => {
 
     return () => {
       isMounted = false;
-      console.log("CallInterface: Unmounting or call ended, closing WebRTC.");
+      console.log(`[CallInterface ${setupInstanceId}] Cleanup running (Unmounting or call ended). Closing WebRTC.`); // Log cleanup
       WebRTCService.close();
       SignalingService.disconnect();
       if (answerAudioRef.current) {
@@ -172,7 +238,7 @@ const CallInterface = () => {
         answerAudioRef.current.currentTime = 0;
       }
     };
-  }, [isInCall, otherPartyId, currentUser?.id, dispatch, isCallee, isFullScreen]);
+  }, [isInCall, otherPartyId, currentUser?.id, dispatch, isCallee, isFullScreen, instanceId]); // Added instanceId just for logging stability if needed
 
   useEffect(() => {
     if (isInCall) WebRTCService.toggleAudio(!isMuted);
@@ -318,7 +384,12 @@ const CallInterface = () => {
     alert("Notes saved (logged to console).");
   };
 
-  if (!isInCall) return null;
+  if (!isInCall) {
+    console.log(`[CallInterface ${instanceId}] Rendering null because isInCall is false.`); // Log null render
+    return null;
+  }
+
+  console.log(`[CallInterface ${instanceId}] Rendering UI. isFullScreen: ${isFullScreen}`); // Log UI render
 
   const baseButtonClass = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-apple-gray-800";
   const defaultButtonClass = "bg-apple-gray-700 hover:bg-apple-gray-600 text-white focus:ring-apple-gray-500";
@@ -327,7 +398,7 @@ const CallInterface = () => {
   const greenButtonClass = "bg-green-600 hover:bg-green-700 text-white focus:ring-green-500";
   const yellowButtonClass = "bg-yellow-500 hover:bg-yellow-600 text-white focus:ring-yellow-400";
 
-  const renderCallContent = () => (
+  const renderCallContent = (isModalView = false) => (
     <>
       <div className={`flex-1 flex relative ${isFullScreen ? 'bg-apple-gray-900' : 'bg-apple-gray-800'}`}>
         <video
@@ -367,7 +438,7 @@ const CallInterface = () => {
           </button>
         </div>
 
-        <div className={`absolute ${isFullScreen ? 'right-4 bottom-24' : 'right-2 bottom-20'} w-1/4 sm:w-1/5 max-w-[150px] sm:max-w-xs aspect-video bg-apple-gray-700 border border-apple-gray-500 overflow-hidden rounded-md sm:rounded-lg shadow-lg flex items-center justify-center`}>
+        <div className={`absolute ${isModalView ? 'right-2 bottom-20' : 'right-4 bottom-24'} w-1/4 sm:w-1/5 max-w-[150px] sm:max-w-xs aspect-video bg-apple-gray-700 border border-apple-gray-500 overflow-hidden rounded-md sm:rounded-lg shadow-lg flex items-center justify-center`}>
           {isVideoEnabled ? (
             <video
               ref={localVideoRef}
@@ -393,7 +464,7 @@ const CallInterface = () => {
         </div>
       </div>
 
-      <div className={`h-20 flex items-center justify-center gap-3 sm:gap-4 px-4 ${isFullScreen ? 'bg-apple-gray-900' : 'bg-apple-gray-800 border-t border-apple-gray-700'}`}>
+      <div className={`h-20 flex items-center justify-center gap-3 sm:gap-4 px-4 ${isModalView ? 'bg-apple-gray-800 border-t border-apple-gray-700' : 'bg-apple-gray-900'}`}>
         <button
           onClick={() => dispatch(toggleMute())}
           className={`${baseButtonClass} ${isMuted ? redButtonClass : defaultButtonClass}`}
@@ -414,6 +485,7 @@ const CallInterface = () => {
           onClick={handleToggleChat}
           className={`${baseButtonClass} ${showChat ? activeButtonClass : defaultButtonClass}`}
           title="Chat"
+          disabled={isModalView}
         >
           <FontAwesomeIcon icon={faComments} className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
@@ -422,6 +494,7 @@ const CallInterface = () => {
           onClick={handleToggleNotes}
           className={`${baseButtonClass} ${showNotes ? yellowButtonClass : defaultButtonClass}`}
           title="Notes"
+          disabled={isModalView}
         >
           <FontAwesomeIcon icon={faNoteSticky} className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
@@ -441,23 +514,41 @@ const CallInterface = () => {
         >
           <FontAwesomeIcon icon={faPhoneSlash} className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
+
+        {isModalView && (
+          <button
+            onClick={() => setIsFullScreen(true)}
+            className={`${baseButtonClass} ${defaultButtonClass} ml-auto`}
+            title="Enter Fullscreen"
+          >
+            <FontAwesomeIcon icon={faExpand} className="h-5 w-5 sm:h-6 sm:w-6" />
+          </button>
+        )}
       </div>
     </>
   );
 
   if (!isFullScreen) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+      <div className="fixed inset-0 z-50 pointer-events-none">
         <audio
           ref={answerAudioRef}
           src="/sounds/Facetime_Ring_and_Answer_Sound.mp3"
           preload="auto"
         />
-        <div className="bg-apple-gray-800 rounded-xl shadow-xl w-full max-w-3xl h-[80vh] max-h-[700px] overflow-hidden flex flex-col relative text-white">
-          {renderCallContent()}
+        <div
+          ref={modalRef}
+          onMouseDown={handleDragStart}
+          className={`absolute bg-apple-gray-800 rounded-xl shadow-xl w-full max-w-3xl h-[80vh] max-h-[700px] overflow-hidden flex flex-col text-white pointer-events-auto ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+          style={{
+            left: `${position.x}px`,
+            top: `${position.y}px`,
+          }}
+        >
+          {renderCallContent(true)}
         </div>
         {showManualLeaveToast && (
-          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-pulse z-60">
+          <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-pulse z-60 pointer-events-auto">
             {otherPartyName || 'Other party'} has left the call (Simulated)
           </div>
         )}
@@ -474,7 +565,7 @@ const CallInterface = () => {
       />
 
       <div className={`flex flex-col ${showChat || showNotes ? 'w-2/3' : 'w-full'} h-screen transition-all duration-300 ease-in-out`}>
-        {renderCallContent()}
+        {renderCallContent(false)}
       </div>
 
       {(showChat || showNotes) && (
