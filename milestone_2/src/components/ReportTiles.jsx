@@ -1,11 +1,18 @@
 "use client"
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ReportTiles({ tiles, onEditClick, onDeleteClick }) {
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const router = useRouter();
 
   const toggleExpand = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
+  };
+  
+  const navigateToReportViewer = (index) => {
+    // In a real application, you would pass the report ID as a parameter
+    router.push("/en/dashboard/student/report-viewer");
   };
 
   return (
@@ -27,11 +34,17 @@ export default function ReportTiles({ tiles, onEditClick, onDeleteClick }) {
               <p className="text-sm text-gray-600">Appendices: {tile.appendencies}</p>
             </div>
           )}
-          <div className="mt-2 space-x-2">
-            <button onClick={() => onEditClick(index)} className="px-3 py-1 bg-yellow-500 text-white rounded">Edit</button>
-            <button onClick={() => onDeleteClick(index)} className="px-3 py-1 bg-red-600 text-white rounded">Delete</button>
-            <button onClick={() => toggleExpand(index)} className="px-3 py-1 bg-green-500 text-white rounded">
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button onClick={() => onEditClick(index)} className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition">Edit</button>
+            <button onClick={() => onDeleteClick(index)} className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition">Delete</button>
+            <button onClick={() => toggleExpand(index)} className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition">
               {expandedIndex === index ? "Collapse" : "View Full Report"}
+            </button>
+            <button 
+              onClick={() => navigateToReportViewer(index)} 
+              className="px-3 py-1 bg-[var(--metallica-blue-600)] text-white rounded hover:bg-[var(--metallica-blue-700)] transition flex-grow md:flex-grow-0"
+            >
+              View & Annotate
             </button>
           </div>
         </div>
