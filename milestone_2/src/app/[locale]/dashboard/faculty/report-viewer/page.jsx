@@ -152,6 +152,13 @@ export default function FacultyReportViewerPage() {
     );
   }
 
+  // Determine if the report is editable (pending status)
+  const isEditable = report.status === 'pending';
+
+  // Mock feedback and reason for non-pending reports
+  const mockFeedback = report.feedback || 'Faculty feedback: This report demonstrates strong technical skills and clear documentation.';
+  const mockReason = report.statusReason || (report.status === 'flagged' ? 'Reason: Needs clarification on project scope.' : report.status === 'rejected' ? 'Reason: Did not meet the minimum requirements.' : '');
+
   return (
     <DashboardLayout userType="faculty">
       <div className="container mx-auto px-4 py-8">
@@ -179,7 +186,6 @@ export default function FacultyReportViewerPage() {
             </StatusBadge>
           </div>
         </div>
-        
         <div className="bg-white shadow-md rounded-lg p-6 mb-8">
           <div className="bg-metallica-blue-50 border-l-4 border-metallica-blue-600 p-4 mb-6 rounded-r">
             <h3 className="text-metallica-blue-800 font-semibold mb-1">Evaluation Mode</h3>
@@ -188,105 +194,121 @@ export default function FacultyReportViewerPage() {
               Your annotations help provide constructive feedback and assess the report quality.
             </p>
           </div>
-          
           <p className="text-metallica-blue-800 mb-6">
             Select any text in the report below to highlight important sections or add comments. Your annotations will appear in the sidebar.
           </p>
-          
           <div className="min-h-[600px]">
             <ReportViewer report={report} />
           </div>
-          
-          <div className="mt-8 pt-6 border-t border-metallica-blue-200">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Overall Feedback Section */}
-              <div>
-                <h3 className="text-lg font-semibold text-metallica-blue-800 mb-3">Overall Feedback</h3>
-                <textarea
-                  value={overallFeedback}
-                  onChange={(e) => setOverallFeedback(e.target.value)}
-                  placeholder="Provide overall feedback on the student's report..."
-                  className="w-full min-h-[150px] p-3 border border-metallica-blue-300 rounded focus:ring-2 focus:ring-metallica-blue-500 focus:border-metallica-blue-500 outline-none"
-                />
-              </div>
-              
-              {/* Status Section */}
-              <div>
-                <h3 className="text-lg font-semibold text-metallica-blue-800 mb-3">Report Status</h3>
-                <div className="p-4 bg-metallica-blue-50 rounded-lg border border-metallica-blue-100">
-                  <p className="text-sm text-metallica-blue-800 mb-3">
-                    Choose the final status for this report after your review:
-                  </p>
-                  
-                  <div className="mb-4">
-                    <label htmlFor="reportStatus" className="block text-sm font-medium text-metallica-blue-800 mb-1">
-                      Status
-                    </label>
-                    <select
-                      id="reportStatus"
-                      value={reportStatus}
-                      onChange={handleStatusChange}
-                      className="w-full px-3 py-2 border border-metallica-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
-                    >
-                      <option value="pending">PENDING</option>
-                      <option value="accepted">ACCEPTED</option>
-                      <option value="rejected">REJECTED</option>
-                      <option value="flagged">FLAGGED</option>
-                    </select>
-                  </div>
-                  
-                  {/* Conditional reason field for rejected or flagged status */}
-                  {showStatusReasonField && (
-                    <div className="mb-2">
-                      <label htmlFor="statusReason" className="block text-sm font-medium text-metallica-blue-800 mb-1">
-                        Reason for {reportStatus === 'flagged' ? 'Flagging' : 'Rejecting'}
+          {/* Editable fields for pending, static for others */}
+          {isEditable ? (
+            <div className="mt-8 pt-6 border-t border-metallica-blue-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Overall Feedback Section */}
+                <div>
+                  <h3 className="text-lg font-semibold text-metallica-blue-800 mb-3">Overall Feedback</h3>
+                  <textarea
+                    value={overallFeedback}
+                    onChange={(e) => setOverallFeedback(e.target.value)}
+                    placeholder="Provide overall feedback on the student's report..."
+                    className="w-full min-h-[150px] p-3 border border-metallica-blue-300 rounded focus:ring-2 focus:ring-metallica-blue-500 focus:border-metallica-blue-500 outline-none"
+                  />
+                </div>
+                {/* Status Section */}
+                <div>
+                  <h3 className="text-lg font-semibold text-metallica-blue-800 mb-3">Report Status</h3>
+                  <div className="p-4 bg-metallica-blue-50 rounded-lg border border-metallica-blue-100">
+                    <p className="text-sm text-metallica-blue-800 mb-3">
+                      Choose the final status for this report after your review:
+                    </p>
+                    <div className="mb-4">
+                      <label htmlFor="reportStatus" className="block text-sm font-medium text-metallica-blue-800 mb-1">
+                        Status
                       </label>
-                      <textarea
-                        id="statusReason"
-                        value={statusChangeReason}
-                        onChange={(e) => setStatusChangeReason(e.target.value)}
-                        placeholder={`Please explain why this report is being ${reportStatus === 'flagged' ? 'flagged' : 'rejected'}...`}
-                        className="w-full p-3 border border-metallica-blue-300 rounded focus:ring-2 focus:ring-metallica-blue-500 focus:border-metallica-blue-500 outline-none min-h-[80px]"
-                        required={reportStatus === 'flagged' || reportStatus === 'rejected'}
-                      />
-                      <p className="text-xs text-metallica-blue-600 mt-1">
-                        {reportStatus === 'flagged' 
-                          ? 'Flagging a report indicates issues that need resolution before acceptance.' 
-                          : 'Please provide specific reasons why this report does not meet requirements.'}
-                      </p>
+                      <select
+                        id="reportStatus"
+                        value={reportStatus}
+                        onChange={handleStatusChange}
+                        className="w-full px-3 py-2 border border-metallica-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
+                      >
+                        <option value="pending">PENDING</option>
+                        <option value="accepted">ACCEPTED</option>
+                        <option value="rejected">REJECTED</option>
+                        <option value="flagged">FLAGGED</option>
+                      </select>
                     </div>
-                  )}
-                  
-                  <StatusBadge color={getStatusBadgeClasses(reportStatus)} className="p-3 w-full flex items-center justify-center mt-4">
-                    <div className="flex items-center">
-                      <FontAwesomeIcon icon={getStatusIcon(reportStatus)} className="mr-2" />
-                      <span className="font-medium">
-                        {reportStatus === 'pending' && 'Report will remain under review'}
-                        {reportStatus === 'accepted' && 'Report will be marked as accepted'}
-                        {reportStatus === 'rejected' && 'Report will be returned to student with feedback'}
-                        {reportStatus === 'flagged' && 'Report will be flagged for specific issues'}
-                      </span>
-                    </div>
-                  </StatusBadge>
+                    {/* Conditional reason field for rejected or flagged status */}
+                    {showStatusReasonField && (
+                      <div className="mb-2">
+                        <label htmlFor="statusReason" className="block text-sm font-medium text-metallica-blue-800 mb-1">
+                          Reason for {reportStatus === 'flagged' ? 'Flagging' : 'Rejecting'}
+                        </label>
+                        <textarea
+                          id="statusReason"
+                          value={statusChangeReason}
+                          onChange={(e) => setStatusChangeReason(e.target.value)}
+                          placeholder={`Please explain why this report is being ${reportStatus === 'flagged' ? 'flagged' : 'rejected'}...`}
+                          className="w-full p-3 border border-metallica-blue-300 rounded focus:ring-2 focus:ring-metallica-blue-500 focus:border-metallica-blue-500 outline-none min-h-[80px]"
+                          required={reportStatus === 'flagged' || reportStatus === 'rejected'}
+                        />
+                        <p className="text-xs text-metallica-blue-600 mt-1">
+                          {reportStatus === 'flagged' 
+                            ? 'Flagging a report indicates issues that need resolution before acceptance.' 
+                            : 'Please provide specific reasons why this report does not meet requirements.'}
+                        </p>
+                      </div>
+                    )}
+                    <StatusBadge color={getStatusBadgeClasses(reportStatus)} className="p-3 w-full flex items-center justify-center mt-4">
+                      <div className="flex items-center">
+                        <FontAwesomeIcon icon={getStatusIcon(reportStatus)} className="mr-2" />
+                        <span className="font-medium">
+                          {reportStatus === 'pending' && 'Report will remain under review'}
+                          {reportStatus === 'accepted' && 'Report will be marked as accepted'}
+                          {reportStatus === 'rejected' && 'Report will be returned to student with feedback'}
+                          {reportStatus === 'flagged' && 'Report will be flagged for specific issues'}
+                        </span>
+                      </div>
+                    </StatusBadge>
+                  </div>
                 </div>
               </div>
+              <div className="flex justify-end mt-6">
+                <button
+                  onClick={handleSaveFeedback}
+                  disabled={isSaving || (showStatusReasonField && !statusChangeReason.trim())}
+                  className={`flex items-center px-4 py-2 rounded ${
+                    isSaving || savedFeedback || (showStatusReasonField && !statusChangeReason.trim())
+                      ? 'bg-metallica-blue-400 cursor-not-allowed' 
+                      : 'bg-metallica-blue-600 hover:bg-metallica-blue-700'
+                  } text-white transition-colors`}
+                >
+                  <FontAwesomeIcon icon={savedFeedback ? faCheckCircle : faSave} className="mr-2" />
+                  <span>{getButtonText()}</span>
+                </button>
+              </div>
             </div>
-            
-            <div className="flex justify-end mt-6">
-              <button
-                onClick={handleSaveFeedback}
-                disabled={isSaving || (showStatusReasonField && !statusChangeReason.trim())}
-                className={`flex items-center px-4 py-2 rounded ${
-                  isSaving || savedFeedback || (showStatusReasonField && !statusChangeReason.trim())
-                    ? 'bg-metallica-blue-400 cursor-not-allowed' 
-                    : 'bg-metallica-blue-600 hover:bg-metallica-blue-700'
-                } text-white transition-colors`}
-              >
-                <FontAwesomeIcon icon={savedFeedback ? faCheckCircle : faSave} className="mr-2" />
-                <span>{getButtonText()}</span>
-              </button>
+          ) : (
+            <div className="mt-8 pt-6 border-t border-metallica-blue-200">
+              <div className="max-w-lg mx-auto p-6 border-2 border-dashed border-metallica-blue-300 rounded-lg bg-transparent">
+                <StatusBadge color={getStatusBadgeClasses(report.status)} className="mb-4 w-full flex items-center justify-center">
+                  <div className="flex items-center">
+                    <FontAwesomeIcon icon={getStatusIcon(report.status)} className="mr-2" />
+                    <span className="font-medium text-lg">{report.status.toUpperCase()}</span>
+                  </div>
+                </StatusBadge>
+                <div className="mb-3 p-3 border border-metallica-blue-200 rounded bg-white/40">
+                  <div className="text-metallica-blue-800 font-semibold mb-1">Faculty Feedback</div>
+                  <div className="text-metallica-blue-700 text-sm">{mockFeedback}</div>
+                </div>
+                {mockReason && (
+                  <div className="p-3 border border-metallica-blue-200 rounded bg-white/40">
+                    <div className="text-metallica-blue-800 font-semibold mb-1">Reason</div>
+                    <div className="text-metallica-blue-700 text-sm">{mockReason}</div>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </DashboardLayout>

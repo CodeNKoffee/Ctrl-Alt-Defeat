@@ -11,6 +11,7 @@ export default function ReportsPage() {
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
   
   // Convert the facultyScadReports object to an array on component mount
   // and add missing fields or map existing ones correctly
@@ -34,6 +35,11 @@ export default function ReportsPage() {
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelectedReport(null);
+  };
+
+  const handleSubmitReview = () => {
+    setReviewSubmitted(true);
+    setTimeout(() => setReviewSubmitted(false), 2000);
   };
 
   return (
@@ -111,11 +117,17 @@ export default function ReportsPage() {
                   <div className="flex justify-end gap-3">
                     <button
                       onClick={handleCloseModal}
-                      className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
+
+                      className="inline-flex items-center justify-center w-32 min-w-[8rem] px-0 py-2 rounded-full font-medium shadow-sm bg-metallica-blue-500 text-metallica-blue-100 border border-metallica-blue-200 hover:bg-metallica-blue-900 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
                     >
                       Close
                     </button>
                   </div>
+                  {reviewSubmitted && (
+                    <div className="mt-4 text-green-700 font-semibold text-center">
+                      Review submitted!
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

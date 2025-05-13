@@ -36,6 +36,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
   const [showAnnotations, setShowAnnotations] = useState(true);
   const [scadReason, setScadReason] = useState('');
   const [onSubmitReason, setOnSubmitReason] = useState(null);
+  const [scadReasonSubmitted, setScadReasonSubmitted] = useState(false);
 
   // Highlight color options
   const highlightColors = [
@@ -56,23 +57,37 @@ export default function ReportViewer({ report, userType = "faculty" }) {
   // Enable annotation tools for faculty only if the report status is 'pending'. Otherwise, read-only for faculty and always for SCAD.
   const isReadOnly = userType === "scad" || (userType === "faculty" && report?.status !== 'pending');
 
+  // Helper to get the full report text for annotation extraction
+  function getReportText(sectionKey = 'body') {
+    if (sectionKey === 'introduction') return report?.introduction || '';
+    return report?.body || '';
+  }
+
   // Load highlights/comments from report prop if present
   useEffect(() => {
     if (report && (report.highlights || report.comments)) {
-      const highlights = (report.highlights || []).map((h, idx) => ({
-        id: `highlight-${idx}`,
-        type: 'highlight',
-        text: report.text?.substring(h.start, h.end) || '',
-        color: h.color || '#FFFBC9',
-        range: { start: h.start, end: h.end },
-      }));
-      const comments = (report.comments || []).map((c, idx) => ({
-        id: `comment-${idx}`,
-        type: 'comment',
-        text: report.text?.substring(c.position, c.position + 20) || '',
-        comment: c.text,
-        range: { start: c.position, end: c.position + 20 },
-      }));
+      const highlights = (report.highlights || []).map((h, idx) => {
+        const sectionText = h.section === 'introduction' ? report.introduction : report.body;
+        return {
+          id: `highlight-${idx}`,
+          type: 'highlight',
+          text: sectionText?.substring(h.start, h.end) || '',
+          color: h.color || '#FFFBC9',
+          range: { start: h.start, end: h.end },
+          section: h.section || 'body',
+        };
+      });
+      const comments = (report.comments || []).map((c, idx) => {
+        const sectionText = c.section === 'introduction' ? report.introduction : report.body;
+        return {
+          id: `comment-${idx}`,
+          type: 'comment',
+          text: sectionText?.substring(c.position, c.position + 20) || '',
+          comment: c.text,
+          range: { start: c.position, end: c.position + 20 },
+          section: c.section || 'body',
+        };
+      });
       setAnnotations([...highlights, ...comments]);
     } else {
       setAnnotations([]);
@@ -231,30 +246,46 @@ export default function ReportViewer({ report, userType = "faculty" }) {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [toolbarPos.visible]);
 
-  // Helper: Render text with highlights
-  function renderTextWithHighlights(text) {
-    let workingText = text || "";
-    if (!annotations.some(a => a.type === 'highlight')) return workingText;
+  // Helper: Render text with highlights and comments using start/end indices
+  function renderTextWithHighlights(text, sectionKey = 'body') {
+    if (!text) return null;
+    // Get highlights/comments for this section
+    const highlights = (report?.highlights || []).filter(h => (h.section || 'body') === sectionKey);
+    const comments = (report?.comments || []).filter(c => (c.section || 'body') === sectionKey);
+    // Build a list of all annotation ranges
+    let ranges = [];
+    highlights.forEach((h, i) => {
+      ranges.push({ type: 'highlight', start: h.start, end: h.end, color: h.color, id: `highlight-${i}` });
+    });
+    comments.forEach((c, i) => {
+      ranges.push({ type: 'comment', start: c.position, end: c.position + 20, comment: c.text, id: `comment-${i}` });
+    });
+    // Sort by start index
+    ranges.sort((a, b) => a.start - b.start);
+    // Render text with highlights/comments
     let result = [];
     let lastIndex = 0;
-    // Find all highlights in this text
-    const highlights = annotations.filter(a => a.type === 'highlight' && a.text && workingText.includes(a.text));
-    // Sort by first occurrence in text
-    highlights.sort((a, b) => workingText.indexOf(a.text) - workingText.indexOf(b.text));
-    highlights.forEach((ann, i) => {
-      const idx = workingText.indexOf(ann.text, lastIndex);
-      if (idx !== -1) {
-        if (idx > lastIndex) {
-          result.push(workingText.slice(lastIndex, idx));
-        }
-        result.push(
-          <mark key={i} style={{ backgroundColor: ann.color, borderRadius: 4, padding: '0 2px' }}>{ann.text}</mark>
-        );
-        lastIndex = idx + ann.text.length;
+    for (let i = 0; i < ranges.length; i++) {
+      const r = ranges[i];
+      if (r.start > lastIndex) {
+        result.push(text.slice(lastIndex, r.start));
       }
-    });
-    if (lastIndex < workingText.length) {
-      result.push(workingText.slice(lastIndex));
+      const annotatedText = text.slice(r.start, r.end);
+      if (r.type === 'highlight') {
+        result.push(
+          <mark key={r.id} style={{ backgroundColor: r.color, borderRadius: 4, padding: '0 2px' }}>{annotatedText}</mark>
+        );
+      } else if (r.type === 'comment') {
+        result.push(
+          <span key={r.id} style={{ backgroundColor: '#FFDBF2', borderRadius: 4, padding: '0 2px', border: '1px dashed #C41E3A' }} title={r.comment}>
+            {annotatedText}
+          </span>
+        );
+      }
+      lastIndex = r.end;
+    }
+    if (lastIndex < text.length) {
+      result.push(text.slice(lastIndex));
     }
     return result.length ? result : text;
   }
@@ -306,13 +337,13 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           <h1 className="report-title">{reportData.title}</h1>
           <div className="report-section">
             <h2 className="report-section-title">Introduction</h2>
-            <p className="report-text">{renderTextWithHighlights(reportData.introduction)}</p>
+            <p className="report-text">{renderTextWithHighlights(reportData.introduction, 'introduction')}</p>
           </div>
           <div className="report-section">
             <h2 className="report-section-title">Report Body</h2>
             <div className="report-text">
               {(reportData.body || reportData.text || "").split('\n\n').map((paragraph, idx) => (
-                <p key={idx} className="report-paragraph">{renderTextWithHighlights(paragraph)}</p>
+                <p key={idx} className="report-paragraph">{renderTextWithHighlights(paragraph, 'body')}</p>
               ))}
             </div>
           </div>
@@ -386,11 +417,20 @@ export default function ReportViewer({ report, userType = "faculty" }) {
               onChange={e => setScadReason(e.target.value)}
             />
             <button
-              className="bg-metallica-blue-600 text-white px-4 py-2 rounded hover:bg-metallica-blue-700 transition"
-              onClick={() => onSubmitReason && onSubmitReason(scadReason)}
+              className="inline-flex items-center justify-center w-40 min-w-[10rem] px-0 py-2 rounded-full font-medium shadow-sm bg-metallica-blue-500 text-metallica-blue-100 border border-metallica-blue-200 hover:bg-metallica-blue-900 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
+              onClick={() => {
+                if (onSubmitReason) onSubmitReason(scadReason);
+                setScadReasonSubmitted(true);
+                setTimeout(() => setScadReasonSubmitted(false), 2000);
+              }}
             >
               Submit Reason
             </button>
+            {scadReasonSubmitted && (
+              <div className="mt-3 text-green-700 font-semibold text-center">
+                Reason submitted!
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -433,7 +473,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
                     className="annotation-text"
                     style={annotation.type === 'highlight' ? { backgroundColor: annotation.color } : {}}
                   >
-                    "{annotation.text}"
+                    {annotation.text ? `"${annotation.text}"` : <em>No text found for this highlight</em>}
                   </div>
                   {annotation.type === 'comment' && (
                     <div className="annotation-comment">{annotation.comment}</div>

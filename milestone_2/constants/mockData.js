@@ -414,7 +414,9 @@ export const facultyScadReports = {
       // { position: 112, text: "Good focus on key backend skills" },
       // { position: 389, text: "Impressive technical challenge to tackle as an intern" },
       // { position: 695, text: "Quantifiable results - excellent addition to the report!" }
-    ]
+    ],
+    feedback: 'This report demonstrates strong technical skills and clear documentation.',
+    statusReason: ''
   },
   "2": {
     id: "2",
@@ -436,7 +438,9 @@ export const facultyScadReports = {
       { position: 137, text: "Need more details on specific React features used" },
       { position: 465, text: "Good example of cross-functional collaboration" },
       { position: 642, text: "This section lacks specific examples of accessibility improvements made" }
-    ]
+    ],
+    feedback: 'The report shows good UI/UX understanding but lacks detail on accessibility improvements.',
+    statusReason: 'Needs clarification on accessibility implementation.'
   },
   "3": {
     id: "3",
@@ -458,7 +462,9 @@ export const facultyScadReports = {
       { position: 98, text: "Report is vague about specific project contributions" },
       { position: 313, text: "No concrete examples of state management implementation" },
       { position: 607, text: "Claims appear exaggerated without supporting evidence" }
-    ]
+    ],
+    feedback: 'Report is vague about specific project contributions. Please provide more concrete examples.',
+    statusReason: 'Did not meet the minimum requirements.'
   },
   "4": {
     id: "4",
@@ -479,7 +485,9 @@ export const facultyScadReports = {
     comments: [
       { position: 428, text: "Excellent cross-functional collaboration example" },
       { position: 662, text: "Great quantifiable result with business impact" }
-    ]
+    ],
+    feedback: 'Excellent application of data science concepts and clear business impact.',
+    statusReason: ''
   },
   "5": {
     id: "5",
@@ -501,7 +509,9 @@ export const facultyScadReports = {
       // { position: 183, text: "Good technology choice for the project requirements" },
       // { position: 622, text: "Excellent technical solution for a challenging problem" },
       // { position: 1121, text: "Shows good understanding of mobile development constraints" }
-    ]
+    ],
+    feedback: 'Good technology choice and strong technical solution for mobile development.',
+    statusReason: ''
   },
   "6": {
     id: "6",
@@ -523,7 +533,9 @@ export const facultyScadReports = {
       { position: 292, text: "Great application of academic concepts" },
       { position: 562, text: "Excellent practical application of UX principles" },
       { position: 812, text: "Impressive measurable business impact" }
-    ]
+    ],
+    feedback: 'Great application of academic concepts and impressive measurable business impact.',
+    statusReason: ''
   }
 };
 
