@@ -75,7 +75,7 @@ export default function WorkshopSidebar({ workshop, onClose }) {
               <img 
                 src={workshop.imageUrl} 
                 alt={workshop.title} 
-                className="w-full h-40 object-cover rounded-md mb-4" 
+                className="w-full h-56 object-cover rounded-md mb-4" 
               />
               <h2 className="text-2xl font-bold text-[#3298BA] mb-4">{workshop.title}</h2>
 
