@@ -320,6 +320,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
       {deletingPostIndex !== null && (
         <DeleteTileConfirmation
+          type="post" 
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
         />

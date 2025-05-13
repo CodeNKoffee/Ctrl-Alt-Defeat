@@ -74,11 +74,8 @@ export default function LoginPage() {
 
     // Dispatch Redux action to update auth state
     dispatch({
-      type: 'LOGIN',
-      payload: {
-        email: values.email,
-        password: values.password
-      }
+      type: 'LOGIN_SUCCESS',
+      payload: userSession
     });
 
     // Redirect to appropriate dashboard

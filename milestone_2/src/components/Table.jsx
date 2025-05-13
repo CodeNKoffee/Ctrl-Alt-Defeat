@@ -1,51 +1,35 @@
 "use client";
-import { useState } from 'react';
-import SearchBar from './SearchBar';
-import Filter from './Filter';
-
-const getSpanClass = (span) => {
-  const spans = {
-    1: 'col-span-1',
-    2: 'col-span-2',
-    3: 'col-span-3',
-    4: 'col-span-4',
-    5: 'col-span-5',
-    6: 'col-span-6',
-    7: 'col-span-7',
-    8: 'col-span-8',
-    9: 'col-span-9',
-    10: 'col-span-10',
-    11: 'col-span-11',
-    12: 'col-span-12'
-  };
-  return spans[span] || 'col-span-12';
-};
+import SearchBar from "./shared/SearchBar";
+import React from "react";
 
 export default function DataTable({
   title = "",
   data = [],
   columns = [],
-  filterFunction,
   emptyMessage = "No items found",
+  searchTerm = "",
+  setSearchTerm = () => {},
+  searchPlaceholder = "Search...",
   searchConfig = {},
   filterConfig = {}
 }) {
-  const { 
-    searchTerm = '', 
-    onSearchChange, 
-    placeholder = "Search Companies..." 
-  } = searchConfig;
-  
-  const { 
-    showFilter = false,
-    filterOptions = [],
-    selectedFilter = '',
-    onFilterChange,
-    filterLabel = "Filter",
-    filterPlaceholder = "All" 
-  } = filterConfig;
-
-  const filteredData = data.filter(item => filterFunction(item, searchTerm, selectedFilter));
+  const getSpanClass = (span) => {
+    const spans = {
+      1: 'col-span-1',
+      2: 'col-span-2',
+      3: 'col-span-3',
+      4: 'col-span-4',
+      5: 'col-span-5',
+      6: 'col-span-6',
+      7: 'col-span-7',
+      8: 'col-span-8',
+      9: 'col-span-9',
+      10: 'col-span-10',
+      11: 'col-span-11',
+      12: 'col-span-12'
+    };
+    return spans[span] || 'col-span-1';
+  };
 
   return (
     <div className="flex flex-col items-center">
