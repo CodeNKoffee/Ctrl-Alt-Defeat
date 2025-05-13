@@ -12,12 +12,12 @@ const statusColors = {
 };
 
 // Mock data for interns (replace with API call or database data)
-const initialInterns = [
-  { 
-    id: 1, 
-    name: "John Doe", 
-    jobTitle: "Software Engineer", 
-    status: "current", 
+const initialInternsData = [
+  {
+    id: 1,
+    name: "John Doe",
+    jobTitle: "Software Engineer",
+    status: "current",
     company: "Tech Corp",
     profilePic: "/public/icons8-avatar-50.png",
     gender: "male"
@@ -31,38 +31,38 @@ const initialInterns = [
     profilePic: "/public/icons8-avatar-50 (1).png",
     gender: "female"
   },
-  { 
-    id: 3, 
-    name: "Bob Johnson", 
-    jobTitle: "Data Analyst", 
-    status: "current", 
+  {
+    id: 3,
+    name: "Bob Johnson",
+    jobTitle: "Data Analyst",
+    status: "current",
     company: "Data Inc",
     profilePic: "/public/icons8-avatar-50.png",
     gender: "male"
   },
-  { 
-    id: 4, 
-    name: "Alice Brown", 
-    jobTitle: "UI/UX Designer", 
-    status: "evaluated", 
+  {
+    id: 4,
+    name: "Alice Brown",
+    jobTitle: "UI/UX Designer",
+    status: "evaluated",
     company: "Design Studio",
     profilePic: "/public/icons8-avatar-50 (1).png",
     gender: "female"
   },
-  { 
-    id: 5, 
-    name: "Charlie Wilson", 
-    jobTitle: "DevOps Intern", 
-    status: "current", 
+  {
+    id: 5,
+    name: "Charlie Wilson",
+    jobTitle: "DevOps Intern",
+    status: "current",
     company: "Cloud Tech",
     profilePic: "/public/icons8-avatar-50.png",
     gender: "male"
   },
-  { 
-    id: 6, 
-    name: "Emma Davis", 
-    jobTitle: "Product Manager", 
-    status: "evaluated", 
+  {
+    id: 6,
+    name: "Emma Davis",
+    jobTitle: "Product Manager",
+    status: "evaluated",
     company: "Product Co",
     profilePic: "/public/icons8-avatar-50 (1).png",
     gender: "female"
@@ -86,8 +86,9 @@ const AvatarImage = ({ gender }) => {
 
 export default function CurrentInterns() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState("current");
-  const [interns, setInterns] = useState(initialInterns);
+  const [filter, setFilter] = useState("current"); // Changed from "all" to "current"
+  const [allInterns, setAllInterns] = useState(initialInternsData); // ADDED: State for all interns
+  const [interns, setInterns] = useState([]); // CHANGED: Initialize as empty, will be populated by useEffect
 
   // Update filter options to remove duplicate "All"
   const filterOptions = ['Current', 'Completed', 'Evaluated'];
@@ -159,7 +160,6 @@ export default function CurrentInterns() {
                 </div>
               </div>
             </div>
-
             {/* Right side: Status and Action */}
             <div className="flex flex-col items-end gap-2">
               <span className={`

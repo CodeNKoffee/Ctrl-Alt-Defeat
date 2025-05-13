@@ -2,6 +2,7 @@
 import { IBM_Plex_Sans, Inter, Young_Serif } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "../components/ReduxProvider";
+import GlobalCallHandler from "../components/GlobalCallHandler";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,14 +30,15 @@ export default function RootLayout({
   children,
 }) {
   return (
-      <html lang="en">
-        <body
-          className={`${inter.variable} ${ibmPlexSans.variable} ${youngSerif.variable} antialiased`}
-        >
-          <ReduxProvider>
-            {children}
-          </ReduxProvider>
-        </body>
-      </html>
+    <html lang="en">
+      <body
+        className={`${inter.variable} ${ibmPlexSans.variable} ${youngSerif.variable} antialiased`}
+      >
+        <ReduxProvider>
+          {children}
+          <GlobalCallHandler />
+        </ReduxProvider>
+      </body>
+    </html>
   );
 }
