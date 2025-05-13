@@ -66,7 +66,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         internship.industry === filters.industry
       );
     }
- 
+
     // Filter by duration
     if (filters.duration) {
       result = result.filter(internship => {
