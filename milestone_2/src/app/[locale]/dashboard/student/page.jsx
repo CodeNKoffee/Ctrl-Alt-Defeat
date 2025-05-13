@@ -10,14 +10,49 @@ import InternshipList from '@/components/shared/InternshipList';
 import StudentProfile from '@/components/StudentProfile';
 import InternshipFilterModal from '@/components/InternshipFilterModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faXmark, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import { getRegularInternships, getRecommendedInternships, getAppliedInternships, getMyInternships } from '../../../../../constants/internshipData';
+
+// Video Sidebar Component
+function InternshipVideoSidebar({ userMajor }) {
+  return (
+    <div className="bg-white rounded-lg shadow-md p-4 h-fit sticky top-4">
+      <h3 className="text-lg font-semibold text-[#2a5f74] mb-3">Internship Requirements</h3>
+      <div className="space-y-3">
+        <div className="relative bg-[#D9F0F4] rounded-lg overflow-hidden aspect-video flex items-center justify-center cursor-pointer group">
+          <FontAwesomeIcon icon={faPlay} className="text-[#3298BA] text-3xl group-hover:scale-110 transition-transform" />
+          <div className="absolute bottom-0 left-0 right-0 bg-[#2a5f74]/70 text-white text-xs py-2 px-3">
+            Watch: Internships for {userMajor || 'Your Major'}
+          </div>
+        </div>
+        <p className="text-sm text-gray-600">
+          Learn which internships count toward your graduation requirements based on your major and academic plan.
+        </p>
+        <div className="border-t pt-3">
+          <h4 className="font-medium text-[#2a5f74] mb-2">Quick Resources</h4>
+          <ul className="text-sm space-y-2">
+            <li>
+              <a href="#" className="text-[#3298BA] hover:underline">Academic Requirements Guide</a>
+            </li>
+            <li>
+              <a href="#" className="text-[#3298BA] hover:underline">Contact Academic Advisor</a>
+            </li>
+            <li>
+              <a href="#" className="text-[#3298BA] hover:underline">FAQs About Internships</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // Dashboard Home View Component
 function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
   const [personalizedInternships, setPersonalizedInternships] = useState([]);
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
+  const userMajor = currentUser?.major || 'Computer Science';
 
   useEffect(() => {
     const userData = currentUser || JSON.parse(sessionStorage.getItem('userSession') || localStorage.getItem('userSession') || '{}');
@@ -28,13 +63,15 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
   }, [currentUser]);
 
   return (
-    <div className="container mx-auto px-4 pt-0 pb-8">
+    <div className="w-full px-6 py-4">
       <InternshipList
         title=""
         internships={personalizedInternships}
         type="regular"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
+        showSidebar={true}
+        userMajor={userMajor}
       />
     </div>
   );
@@ -50,6 +87,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     isPaid: null
   });
   const [filteredInternships, setFilteredInternships] = useState([]);
+  const { currentUser } = useSelector(state => state.auth);
+  const userMajor = currentUser?.major || 'Computer Science';
 
   // Get internships based on "all" or "recommended" filter type
   const baseInternships = filterType === 'all'
@@ -136,13 +175,15 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   };
 
   return (
-    <div className="container mx-auto px-4 pt-0 pb-8">
+    <div className="w-full px-6 py-4">
       <InternshipList
         title=""
         internships={hasActiveFilters ? filteredInternships : baseInternships}
         type="regular"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
+        showSidebar={true}
+        userMajor={userMajor}
         customFilterPanel={
           <div className="space-y-4">
             <div className="flex flex-wrap items-center justify-between">
@@ -249,27 +290,37 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 }
 
 function AppliedInternshipsView() {
+  const { currentUser } = useSelector(state => state.auth);
+  const userMajor = currentUser?.major || 'Computer Science';
+
   return (
-    <div className="container mx-auto px-4 pt-0 pb-8">
+    <div className="w-full px-6 py-4">
       <InternshipList
         title=""
         internships={getAppliedInternships()}
         type="applied"
         statuses={['pending', 'accepted', 'finalized', 'rejected']}
         showDatePicker={false}
+        showSidebar={true}
+        userMajor={userMajor}
       />
     </div>
   );
 }
 
 function MyInternshipsView() {
+  const { currentUser } = useSelector(state => state.auth);
+  const userMajor = currentUser?.major || 'Computer Science';
+
   return (
-    <div className="container mx-auto px-4 pt-0 pb-8">
+    <div className="w-full px-6 py-4">
       <InternshipList
         title=""
         internships={getMyInternships()}
         type="my"
         statuses={['current', 'completed', 'evaluated']}
+        showSidebar={true}
+        userMajor={userMajor}
       />
     </div>
   );
@@ -277,7 +328,7 @@ function MyInternshipsView() {
 
 function ProfileView() {
   return (
-    <div className="p-6">
+    <div className="w-full px-6 py-4">
       <StudentProfile />
     </div>
   );
@@ -360,9 +411,9 @@ export default function StudentDashboardPage() {
   return (
     <DashboardLayout
       userType="student"
-      title={currentTitle} // Pass title directly
-      currentViewId={currentView} // Pass currentViewId for sidebar active state
-      onViewChange={handleViewChange} // For sidebar navigation
+      title={currentTitle}
+      currentViewId={currentView}
+      onViewChange={handleViewChange}
     >
       {CurrentViewComponent && <CurrentViewComponent {...viewProps} />}
     </DashboardLayout>
