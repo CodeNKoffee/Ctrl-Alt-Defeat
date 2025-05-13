@@ -10,21 +10,30 @@ export default function ReportsTable({
   onEdit,
   onDelete
 }) {
-  const [reports, setReports] = useState(initialReports);
+  const [reports, setReports] = useState([]);
   const [majorOptions, setMajorOptions] = useState([]);
   const [selectedMajor, setSelectedMajor] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
-  const [filteredReports, setFilteredReports] = useState(reports);
+  const [filteredReports, setFilteredReports] = useState([]);
   const [isFiltersActive, setIsFiltersActive] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
+  // Initialize reports from props when component mounts or props change
   useEffect(() => {
-    const uniqueMajors = [...new Set(reports.map(report => report.studentMajor))];
-    setMajorOptions(uniqueMajors);
-    setFilteredReports(reports);
+    setReports(initialReports);
+  }, [initialReports]);
+
+  useEffect(() => {
+    if (reports.length > 0) {
+      const uniqueMajors = [...new Set(reports.map(report => report.studentMajor))];
+      setMajorOptions(uniqueMajors);
+      setFilteredReports(reports);
+    }
   }, [reports]);
 
   useEffect(() => {
+    if (reports.length === 0) return;
+    
     let results = [...reports];
     if (selectedMajor) {
       results = results.filter(report => report.studentMajor === selectedMajor);
@@ -61,6 +70,13 @@ export default function ReportsTable({
     };
     return statusClasses[status] || 'bg-gray-100 text-gray-800';
   };
+
+  // For debugging
+  useEffect(() => {
+    console.log("Initial Reports:", initialReports);
+    console.log("Reports in state:", reports);
+    console.log("Filtered Reports:", filteredReports);
+  }, [initialReports, reports, filteredReports]);
 
   return (
     <div className="mt-8 bg-white shadow-md rounded-lg p-6">
@@ -164,7 +180,7 @@ export default function ReportsTable({
                   <td className="py-4 px-5 font-mono text-sm text-gray-700">{report.reportNumber || `RPT-${report.id.toString().padStart(3, '0')}`}</td>
                   <td className="py-4 px-5">{report.studentName}</td>
                   <td className="py-4 px-5">{report.studentMajor}</td>
-                  <td className="py-4 px-5">{report.internshipTitle}</td>
+                  <td className="py-4 px-5">{report.internshipTitle || report.title}</td>
                   <td className="py-4 px-5">{report.companyName}</td>
                   <td className="py-4 px-5">{new Date(report.submissionDate).toLocaleDateString()}</td>
                   <td className="py-4 px-5">
@@ -206,13 +222,17 @@ export default function ReportsTable({
             ) : (
               <tr>
                 <td colSpan="8" className="py-8 text-center text-gray-500">
-                  No reports match the selected filters
-                  <button 
-                    onClick={clearFilters}
-                    className="ml-2 text-metallica-blue-600 hover:text-metallica-blue-800 underline"
-                  >
-                    Clear all filters
-                  </button>
+                  {reports.length > 0 
+                    ? "No reports match the selected filters" 
+                    : "No reports available at the moment"}
+                  {isFiltersActive && (
+                    <button 
+                      onClick={clearFilters}
+                      className="ml-2 text-metallica-blue-600 hover:text-metallica-blue-800 underline"
+                    >
+                      Clear all filters
+                    </button>
+                  )}
                 </td>
               </tr>
             )}

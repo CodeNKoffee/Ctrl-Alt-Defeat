@@ -53,8 +53,8 @@ export default function ReportViewer({ report, userType = "faculty" }) {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const toolbarRef = useRef(null);
 
-  // Hide annotation tools for SCAD
-  const isScad = userType === "scad";
+  // Enable annotation tools for faculty only if the report status is 'pending'. Otherwise, read-only for faculty and always for SCAD.
+  const isReadOnly = userType === "scad" || (userType === "faculty" && report?.status !== 'pending');
 
   // Load highlights/comments from report prop if present
   useEffect(() => {
@@ -81,6 +81,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
 
   // Handle text selection
   const handleTextSelection = () => {
+    if (isReadOnly) return; // Disable in read-only mode
     const selection = window.getSelection();
     if (selection && selection.toString().trim().length > 0 && textRef.current) {
       const range = selection.getRangeAt(0);
@@ -116,6 +117,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
 
   // Show color selection panel
   const handleShowColorSelection = () => {
+    if (isReadOnly) return;
     if (selectedText && selectedRange) {
       setIsSelectingHighlightColor(true);
     }
@@ -123,6 +125,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
 
   // Handle adding highlight to selected text
   const handleHighlight = (color) => {
+    if (isReadOnly) return;
     if (selectedText && selectedRange) {
       const newAnnotation = {
         id: Date.now(),
@@ -141,6 +144,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
 
   // Handle opening comment form for selected text
   const handleAddComment = () => {
+    if (isReadOnly) return;
     if (selectedText && selectedRange) {
       setIsCommenting(true);
     }
@@ -148,6 +152,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
 
   // Handle saving a comment
   const handleSaveComment = () => {
+    if (isReadOnly) return;
     if (commentText.trim() && selectedRange) {
       const newAnnotation = {
         id: Date.now(),
@@ -167,18 +172,21 @@ export default function ReportViewer({ report, userType = "faculty" }) {
 
   // Handle canceling comment creation
   const handleCancelComment = () => {
+    if (isReadOnly) return;
     setIsCommenting(false);
     setCommentText('');
   };
 
   // Handle canceling highlight color selection
   const handleCancelHighlightColor = () => {
+    if (isReadOnly) return;
     setIsSelectingHighlightColor(false);
     setSelectedColor(highlightColors[0].value);
   };
 
   // Delete an annotation
   const handleDeleteAnnotation = (id) => {
+    if (isReadOnly) return;
     setAnnotations(annotations.filter(ann => ann.id !== id));
     setActiveAnnotation(null);
   };
@@ -254,8 +262,8 @@ export default function ReportViewer({ report, userType = "faculty" }) {
   return (
     <div className="report-viewer-container">
       <div className={`report-content-container ${showAnnotations ? 'with-sidebar' : ''}`}>  
-        {/* Floating annotation toolbar (hide for SCAD) */}
-        {!isScad && toolbarPos.visible && (
+        {/* Floating annotation toolbar (hide for SCAD and Faculty) */}
+        {!isReadOnly && toolbarPos.visible && (
           <div
             ref={toolbarRef}
             className="floating-toolbar"
@@ -310,7 +318,8 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           </div>
         </div>
 
-        {isCommenting && (
+        {/* Comment/Highlight forms (hide for read-only) */}
+        {!isReadOnly && isCommenting && (
           <div className="comment-form">
             <h3>Add Comment</h3>
             <p className="selected-text">"{selectedText}"</p>
@@ -333,7 +342,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           </div>
         )}
         
-        {isSelectingHighlightColor && (
+        {!isReadOnly && isSelectingHighlightColor && (
           <div className="highlight-color-form">
             <h3>Select Highlight Color</h3>
             <p className="selected-text">"{selectedText}"</p>
@@ -367,7 +376,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
         )}
 
         {/* SCAD reason input for flagged/rejected */}
-        {isScad && (reportData.status === 'flagged' || reportData.status === 'rejected') && (
+        {userType === "scad" && (reportData.status === 'flagged' || reportData.status === 'rejected') && (
           <div className="mt-8 p-4 bg-metallica-blue-50 rounded-lg border border-metallica-blue-200">
             <h3 className="text-metallica-blue-800 font-semibold mb-2">State your reason for flagging/rejecting this report</h3>
             <textarea
@@ -406,16 +415,19 @@ export default function ReportViewer({ report, userType = "faculty" }) {
                       <FontAwesomeIcon icon={annotation.type === 'comment' ? faComment : faHighlighter} />
                       {annotation.type === 'comment' ? 'Comment' : 'Highlight'}
                     </span>
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteAnnotation(annotation.id);
-                      }}
-                      className="delete-button"
-                      title="Delete annotation"
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
+                    {/* Hide delete button in read-only mode */}
+                    {!isReadOnly && (
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteAnnotation(annotation.id);
+                        }}
+                        className="delete-button"
+                        title="Delete annotation"
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    )}
                   </div>
                   <div 
                     className="annotation-text"
@@ -440,6 +452,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           display: flex;
           height: 100%;
           min-height: 500px;
+          max-height: 70vh; /* Set maximum height */
           background-color: var(--metallica-blue-50);
           border-radius: 12px;
           overflow: hidden;
@@ -449,6 +462,9 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           flex: 1;
           padding: 2rem;
           transition: all 0.3s ease;
+          overflow: hidden; /* Hide overflow */
+          display: flex;
+          flex-direction: column;
         }
         
         .report-content-container.with-sidebar {
@@ -460,8 +476,9 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           padding: 2rem;
           border-radius: 8px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-          max-height: 60vh;
-          overflow-y: auto;
+          overflow-y: auto; /* Make content scrollable */
+          flex-grow: 1;
+          max-height: 100%;
         }
         
         .report-title {
@@ -497,18 +514,19 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           width: 320px;
           background-color: white;
           border-left: 1px solid var(--metallica-blue-200);
-          padding: 1.5rem;
-          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
           box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
+          max-height: 70vh; /* Match container height */
         }
         
         .annotations-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 1rem;
-          padding-bottom: 0.5rem;
+          padding: 1.5rem 1.5rem 0.5rem;
           border-bottom: 1px solid var(--metallica-blue-200);
+          flex-shrink: 0; /* Prevent header from shrinking */
         }
         
         .annotations-header h3 {
@@ -530,6 +548,9 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           display: flex;
           flex-direction: column;
           gap: 0.75rem;
+          padding: 1.5rem;
+          overflow-y: auto; /* Make annotations scrollable */
+          flex-grow: 1; /* Allow list to grow and fill space */
         }
         
         .annotation-item {
@@ -621,6 +642,8 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           right: 2rem;
           top: 2rem;
           z-index: 10;
+          max-height: 400px;
+          overflow-y: auto;
         }
         
         .comment-form h3 {
@@ -637,6 +660,8 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           padding: 0.5rem;
           background-color: var(--metallica-blue-50);
           border-radius: 4px;
+          max-height: 120px;
+          overflow-y: auto;
         }
         
         .comment-input {
@@ -703,6 +728,8 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           right: 2rem;
           top: 2rem;
           z-index: 10;
+          max-height: 400px;
+          overflow-y: auto;
         }
         
         .highlight-color-form h3 {
@@ -838,6 +865,27 @@ export default function ReportViewer({ report, userType = "faculty" }) {
         .color-dot.selected {
           border: 2px solid #318FA8;
           transform: scale(1.12);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          .report-viewer-container {
+            flex-direction: column;
+            max-height: none;
+            height: auto;
+          }
+          
+          .report-content-container {
+            width: 100% !important;
+            padding: 1rem;
+          }
+          
+          .annotations-sidebar {
+            width: 100%;
+            border-left: none;
+            border-top: 1px solid var(--metallica-blue-200);
+            max-height: 300px;
+          }
         }
       `}</style>
     </div>

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from 'next/image';
 import Filter from './Filter';
-import CardTable from './CardTable';
+
 
 // Add status colors configuration at the top level
 const statusColors = {

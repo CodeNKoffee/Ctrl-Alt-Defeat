@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Filter from './Filter';
 import StatusBadge from './shared/StatusBadge';
-
+import { facultyScadReports } from '../../constants/mockData';
 
 export default function InternshipReport() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,7 +12,6 @@ export default function InternshipReport() {
   const [showAppealModal, setShowAppealModal] = useState(false);
   const [appealMessage, setAppealMessage] = useState("");
 
-
   // Status badge colors based on report status
   const statusColors = {
     'flagged': 'bg-orange-100 text-orange-800 border border-orange-400',
@@ -21,30 +20,14 @@ export default function InternshipReport() {
     'pending': 'bg-yellow-100 text-yellow-800 border border-yellow-400'
   };
 
-
-  const [reports] = useState([
-    {
-      id: 1,
-      internName: "David Lee",
-      internshipTitle: "Backend Developer",
-      status: "flagged",
-      comments: "Report needs more detailed documentation of implemented features."
-    },
-    {
-      id: 2, 
-      internName: "Sarah Wilson",
-      internshipTitle: "Frontend Developer",
-      status: "rejected",
-      comments: "Missing essential project milestones and outcomes."
-    },
-    {
-      id: 3,
-      internName: "John Smith",
-      internshipTitle: "Full Stack Developer",
-      status: "accepted",
-      comments: "Excellent work and detailed documentation."
-    }
-  ]);
+  // Use reports from mockData
+  const [reports, setReports] = useState(Object.values(facultyScadReports).map((r, idx) => ({
+    id: idx + 1,
+    internName: r.studentName,
+    internshipTitle: r.title,
+    status: r.status,
+    comments: r.body.slice(0, 80) + '...'
+  })));
 
   const filteredReports = reports.filter(report => {
     const matchesSearch = 
