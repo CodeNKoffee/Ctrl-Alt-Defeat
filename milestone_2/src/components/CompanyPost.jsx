@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+import ActionButton from './shared/ActionButton';
 
 export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compact = false }) {
   const [expanded, setExpanded] = useState(false);
@@ -82,6 +85,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
   return (
     <div className="relative">
       <div className={containerClasses}>
+        {/* Header section with edit button moved inside at the top */}
         <div className="flex justify-between items-start mb-3">
           <div className="flex-grow">
             <h3 className={titleClasses}>
@@ -132,7 +136,17 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
               )}
             </div>
           </div>
-          <div className="text-right flex flex-col items-end">
+
+          {/* Edit button now positioned inside the card but at the topmost position */}
+          <div className="flex flex-col items-end">
+            <button 
+              onClick={handleUpdateClick}
+              className="bg-[#5DB2C7] hover:bg-[#4AA0B5] text-white rounded-full w-7 h-7 flex items-center justify-center shadow-sm transition-all duration-200 hover:scale-105 border border-[#B8E1E9] mb-2"
+              aria-label="Edit post"
+            >
+              <FontAwesomeIcon icon={faPen} className="text-xs" />
+            </button>
+
             <span className="inline-block bg-[var(--metallica-blue-100)] text-[var(--metallica-blue-800)] px-2 py-1 rounded text-xs">
               {post.paid || "Payment Status"}
             </span>
@@ -142,7 +156,6 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
               </p>
             )}
             
-            {/* Applicants counter badge - always visible */}
             <div className={`flex items-center mt-2 px-2 py-1 rounded-full ${getApplicantPulseClass()}`}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -237,27 +250,25 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
           </div>
         )}
         
-        <div className="flex justify-between items-center mt-auto pt-3 border-t border-gray-200">
-          {compact && (
-            <button
-              onClick={toggleExpanded}
-              className="text-[var(--metallica-blue-600)] hover:text-[var(--metallica-blue-800)] text-xs font-medium"
-            >
-              {expanded ? 'See less' : 'See more'}
-            </button>
-          )}
-          <div className={compact ? 'ml-auto flex space-x-2' : 'flex space-x-2'}>
-            <button 
-              onClick={handleUpdateClick}
-              className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-3 py-1 rounded-md text-xs transition-colors"
-            >
-              Update
-            </button>
+        {/* Modified footer with only delete button */}
+        <div className="flex flex-col mt-auto pt-3 border-t border-gray-200">
+          <div className="flex justify-between items-center">
+            {compact && (
+              <button
+                onClick={toggleExpanded}
+                className="text-[var(--metallica-blue-600)] hover:text-[var(--metallica-blue-800)] text-xs font-medium"
+              >
+                {expanded ? 'See less' : 'See more'}
+              </button>
+            )}
+            
+            {/* Smaller delete button with updated colors to match theme */}
             <button 
               onClick={handleDeleteClick}
-              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-xs transition-colors"
+              className="bg-white hover:bg-red-50 text-red-500 rounded-full w-6 h-6 flex items-center justify-center shadow-sm transition-all duration-200 hover:scale-105 ml-auto border border-red-200"
+              aria-label="Delete post"
             >
-              Delete
+              <FontAwesomeIcon icon={faTrash} className="text-xs" />
             </button>
           </div>
         </div>

@@ -220,7 +220,7 @@ export default function ApplicationsList() {
     };
   }, []);
 
-  return (
+  return ( 
     <div className="container mx-auto px-4 py-8">
       <div className="w-full max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
@@ -231,7 +231,7 @@ export default function ApplicationsList() {
         {/* Filters section - MODIFIED for modern/futuristic look */}
         <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
           {/* Added Title for Filter Options */}
-          <h3 className="text-lg font-semibold text-[#2a5f74] mb-5 text-left">Filter Options</h3>
+          {/* <h3 className="text-lg font-semibold text-[#2a5f74] mb-5 text-left">Filter Options</h3> */}
 
           <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center"> {/* Ensured items-center here for the input row itself */}
             {/* Search box - MODIFIED */}
@@ -470,7 +470,7 @@ export default function ApplicationsList() {
                 {/* Expanded application details - NEW outer wrapper for accordion animation */}
                 <div
                   className={`
-                    overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]
+                    overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]
                     transform-gpu
                     ${selectedApplication?.id === application.id ? 'max-h-[1000px]' : 'max-h-0'}
                   `}
@@ -482,7 +482,7 @@ export default function ApplicationsList() {
                       px-4 pt-4 pb-6 
                       bg-gray-50 border-t border-gray-200 
                       flex flex-col md:flex-row 
-                      transition-opacity duration-700 ease-in-out
+                      transition-opacity duration-500 ease-in-out
                       ${selectedApplication?.id === application.id ? 'opacity-100 delay-300' : 'opacity-0'}
                     `}
                   >
@@ -616,4 +616,4 @@ export default function ApplicationsList() {
       `}</style>
     </div>
   );
-} 
+}
