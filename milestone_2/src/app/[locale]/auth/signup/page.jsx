@@ -1,17 +1,18 @@
 "use client";
 
 import SignupForm from "@/components/SignupForm";
-import Link from "next/link";
 import Blobs from "@/components/Blobs";
 import Header from "@/components/Header";
 import Copyright from "@/components/Copyright";
 import { usersOptions } from "../../../../../constants/index";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import BackButton from "@/components/shared/BackButton";
 
 export default function SignupPage() {
-  const searchParams = useSearchParams();
-  const userType = searchParams.get("userType");
+  const router = useRouter();
+  const params = useParams();
+  const locale = params.locale || 'en';
+  const userType = "company";
 
   const getUserOption = (type) => {
     return usersOptions.find(option => option.value === type) || {};
@@ -39,13 +40,19 @@ export default function SignupPage() {
 
           {/* Form Section */}
           <div className="w-full">
-            <SignupForm />
+            <SignupForm userType={userType} />
           </div>
 
-          {/* Login Link */}
+          {/* Login Navigation */}
           <div className="text-center mt-8">
             <span className="text-black font-medium font-ibm-plex-sans">
-              Already have an account? <Link href={`/login?userType=${userType}`} className="text-metallica-blue-off-charts underline">Login</Link>
+              Already have an account?{" "}
+              <button
+                onClick={() => router.push(`/${locale}/auth/login?userType=${userType}`)}
+                className="text-metallica-blue-off-charts underline"
+              >
+                Login
+              </button>
             </span>
           </div>
         </main>

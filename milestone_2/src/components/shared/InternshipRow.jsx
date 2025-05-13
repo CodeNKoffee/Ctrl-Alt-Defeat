@@ -89,7 +89,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
   };
 
   return (
-    <div className="mb-3 w-full max-w-3xl mx-auto">
+    <div className="mb-3 w-full">
       {/* Header Row (Click to Expand) */}
       <div className="relative">
         <button
