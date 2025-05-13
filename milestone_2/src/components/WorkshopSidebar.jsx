@@ -1,153 +1,202 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { motion, AnimatePresence } from 'framer-motion';
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarAlt, faUsers, faMapMarkerAlt, faClock, faUserTie, faListUl, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default function WorkshopSidebar({ workshop, onClose }) {
-  const [registrationFeedback, setRegistrationFeedback] = useState(null);
+  // Format date for display
+  const formatDateFull = (date) => {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleDateString(undefined, {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
 
-  const handleRegister = () => {
-    setRegistrationFeedback('success');
-    setTimeout(() => {
-      setRegistrationFeedback(null);
-      // Add any post-registration logic here if needed
-    }, 1500);
+  const formatTime = (date) => {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleTimeString(undefined, {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
+
+  // Calculate duration
+  const calculateDuration = (start, end) => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const durationMs = endDate - startDate;
+    const durationHours = Math.floor(durationMs / (1000 * 60 * 60));
+    const durationMinutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${durationHours > 0 ? `${durationHours}h ` : ''}${durationMinutes > 0 ? `${durationMinutes}m` : ''}`;
   };
 
   return (
-    <div className={`fixed top-0 right-0 h-full transition-all duration-300 ease-in-out transform ${
-      workshop ? "translate-x-0" : "translate-x-full"
-    } w-1/3 z-50`}>
+    <AnimatePresence>
       {workshop && (
-        <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
-          {/* Success Feedback Overlay */}
-          <AnimatePresence>
-            {registrationFeedback === 'success' && (
-              <motion.div
-                className="absolute inset-0 bg-[rgba(42,95,116,0.18)] z-50 flex items-center justify-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <motion.div
-                  className="bg-white p-6 rounded-lg shadow-xl text-center max-w-xs"
-                  initial={{ scale: 0.7, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.7, opacity: 0 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                >
-                  <motion.div
-                    className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"
-                    initial={{ scale: 0.5 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-                  >
-                    <FontAwesomeIcon 
-                      icon={faCheck} 
-                      className="text-green-600 text-xl" 
-                    />
-                  </motion.div>
-                  <h3 className="text-lg font-semibold text-gray-800 mb-1">
-                    Success!
-                  </h3>
-                  <p className="text-gray-600">
-                    You've registered to this workshop successfully
-                  </p>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
+        <motion.div
+          initial={{ x: '100%', opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: '100%', opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          className="fixed right-0 top-0 bottom-0 w-full sm:w-1/2 lg:w-1/3 bg-white shadow-xl overflow-y-auto z-20"
+        >
           {/* Close button */}
-          <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
-            <button 
-              onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 text-2xl"
-            >
-              ×
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors z-10"
+          >
+            <FontAwesomeIcon icon={faTimes} className="h-5 w-5 text-gray-600" />
+          </button>
 
-          {/* Scrollable content */}
-          <div className="overflow-y-auto flex-1 px-6">
-            <div className="pr-2">
-              <img 
-                src={workshop.imageUrl} 
-                alt={workshop.title} 
-                className="w-full h-56 object-cover rounded-md mb-4" 
-              />
-              <h2 className="text-2xl font-bold text-[#3298BA] mb-4">{workshop.title}</h2>
-
-              {/* Instructor Info */}
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden mr-3">
-                  <Image
-                    src={workshop.instructorImage}
-                    alt={workshop.instructor}
-                    width={48}
-                    height={48}
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">{workshop.instructor}</p>
-                  <p className="text-sm text-gray-500">{workshop.instructorBio}</p>
-                </div>
-              </div>
-
-              {/* Workshop Details */}
-              <div className="space-y-3 mb-6">
-                <p className="text-gray-600 flex items-center">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  {new Date(workshop.date).toLocaleDateString()} | {workshop.time}
-                </p>
-
-                <p className="text-gray-600 flex items-center">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  {workshop.location}
-                </p>
-
-                <p className="text-gray-600 flex items-center">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                  {workshop.seatsAvailable} seats available
-                </p>
-              </div>
-
-              {/* Description */}
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
-                <p className="text-gray-700">{workshop.description}</p>
-              </div>
-
-              {/* Prerequisites */}
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Prerequisites</h3>
-                <p className="text-gray-700">{workshop.prerequisites}</p>
-              </div>
+          {/* Workshop Cover Image */}
+          <div className="relative h-64 w-full">
+            <img
+              src={workshop.imageUrl}
+              alt={workshop.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 p-6">
+              <span className="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full mb-2">
+                {workshop.category || "WORKSHOP"}
+              </span>
+              <h2 className="text-white text-2xl font-bold">{workshop.title}</h2>
             </div>
           </div>
 
-          {/* Register Button */}
-          <div className="sticky bottom-0 bg-white py-4 px-6 border-t border-gray-100">
-            <button 
-              onClick={handleRegister}
-              className="w-full bg-[#3298BA] text-white py-2 px-4 rounded-md
-                       hover:bg-[#267a8c] transition-colors duration-200"
-              disabled={registrationFeedback === 'success'}
-            >
-              {registrationFeedback === 'success' ? 'Registered!' : 'Register Now'}
-            </button>
+          {/* Workshop Details */}
+          <div className="p-6 space-y-6">
+            {/* Date and Time Section */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-[#2a5f74] flex items-center">
+                <FontAwesomeIcon icon={faCalendarAlt} className="h-5 w-5 text-[#5DB2C7] mr-2" />
+                Schedule
+              </h3>
+
+              <div className="bg-[#F1F9FB] p-4 rounded-lg">
+                <div className="flex flex-col space-y-3">
+                  <div>
+                    <p className="text-sm text-gray-600">Date</p>
+                    <p className="font-medium">{formatDateFull(workshop.startDate)}</p>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600">Start Time</p>
+                      <p className="font-medium">{formatTime(workshop.startDate)}</p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-gray-600">End Time</p>
+                      <p className="font-medium">{formatTime(workshop.endDate)}</p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-gray-600">Duration</p>
+                      <p className="font-medium">{calculateDuration(workshop.startDate, workshop.endDate)}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div>
+              <h3 className="text-lg font-medium text-[#2a5f74] mb-2">About This Workshop</h3>
+              <p className="text-gray-600">{workshop.description}</p>
+            </div>
+
+            {/* Location and Capacity */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-[#F1F9FB] p-4 rounded-lg">
+                <div className="flex items-start">
+                  <FontAwesomeIcon icon={faMapMarkerAlt} className="h-5 w-5 text-[#5DB2C7] mr-3 mt-0.5" />
+                  <div>
+                    <p className="text-sm text-gray-600">Location</p>
+                    <p className="font-medium">{workshop.location || "Online"}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[#F1F9FB] p-4 rounded-lg">
+                <div className="flex items-start">
+                  <FontAwesomeIcon icon={faUsers} className="h-5 w-5 text-[#5DB2C7] mr-3 mt-0.5" />
+                  <div>
+                    <p className="text-sm text-gray-600">Capacity</p>
+                    <p className="font-medium">{workshop.maxAttendees || 25} attendees</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Instructor Section */}
+            <div className="border-t border-gray-200 pt-6">
+              <h3 className="text-lg font-medium text-[#2a5f74] flex items-center mb-4">
+                <FontAwesomeIcon icon={faUserTie} className="h-5 w-5 text-[#5DB2C7] mr-2" />
+                Instructor
+              </h3>
+
+              <div className="flex items-start">
+                <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 mr-4">
+                  <img
+                    src={workshop.instructorImage || "/images/default-avatar.png"}
+                    alt={workshop.instructor}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="text-lg font-medium text-gray-900">{workshop.instructor}</h4>
+                  <p className="text-gray-600 mt-1">{workshop.instructorBio || "Workshop instructor"}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Agenda Section */}
+            {workshop.agenda && workshop.agenda.length > 0 && (
+              <div className="border-t border-gray-200 pt-6">
+                <h3 className="text-lg font-medium text-[#2a5f74] flex items-center mb-4">
+                  <FontAwesomeIcon icon={faListUl} className="h-5 w-5 text-[#5DB2C7] mr-2" />
+                  Workshop Agenda
+                </h3>
+
+                <ol className="space-y-3">
+                  {workshop.agenda.map((item, index) => (
+                    <li key={index} className="flex">
+                      <span className="inline-flex items-center justify-center bg-[#5DB2C7] text-white rounded-full h-6 w-6 text-sm mr-3 mt-0.5 flex-shrink-0">
+                        {index + 1}
+                      </span>
+                      <span className="text-gray-700">{item}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            {/* Register Button */}
+            <div className="pt-6">
+              <button className="w-full bg-[#2a5f74] hover:bg-[#1a3f54] text-white py-3 rounded-lg text-center font-medium shadow-md transition-colors">
+                Register for Workshop
+              </button>
+            </div>
           </div>
-        </div>
+        </motion.div>
       )}
-    </div>
+
+      {/* Overlay */}
+      {workshop && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 z-10"
+          onClick={onClose}
+        />
+      )}
+    </AnimatePresence>
   );
 }
