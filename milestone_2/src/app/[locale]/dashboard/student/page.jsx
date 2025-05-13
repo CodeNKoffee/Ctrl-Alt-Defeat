@@ -9,6 +9,7 @@ import DashboardLayout from '@/components/layouts/DashboardLayout';
 import InternshipList from '@/components/shared/InternshipList';
 import StudentProfile from '@/components/StudentProfile';
 import InternshipFilterModal from '@/components/InternshipFilterModal';
+import NotificationsList from '@/components/NotificationsList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faXmark, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
@@ -326,6 +327,14 @@ function MyInternshipsView() {
   );
 }
 
+function NotificationsView() {
+  return (
+    <div className="w-full px-6 py-4">
+      <NotificationsList />
+    </div>
+  );
+}
+
 function ProfileView() {
   return (
     <div className="w-full px-6 py-4">
@@ -340,6 +349,7 @@ const viewComponents = {
   'browse': BrowseInternshipsView,
   'applied': AppliedInternshipsView,
   'my-internships': MyInternshipsView,
+  'notifications': NotificationsView,
   'profile': ProfileView
 };
 
@@ -370,6 +380,8 @@ export default function StudentDashboardPage() {
         return "APPLIED INTERNSHIPS";
       case 'my-internships':
         return "MY INTERNSHIPS";
+      case 'notifications':
+        return "NOTIFICATIONS";
       case 'profile':
         return "MY PROFILE";
       default:

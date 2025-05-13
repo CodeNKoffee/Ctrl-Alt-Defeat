@@ -18,7 +18,8 @@ import {
   faBuilding,
   faList,
   faFolder,
-  faRightFromBracket
+  faRightFromBracket,
+  faBell
 } from '@fortawesome/free-solid-svg-icons';
 import ActionButton from './ActionButton';
 import { useDispatch } from 'react-redux';
@@ -36,7 +37,8 @@ const iconMap = {
   companies: faBuilding,
   listings: faList,
   applications: faFolder,
-  logout: faRightFromBracket
+  logout: faRightFromBracket,
+  notifications: faBell
 };
 
 // Map of sidebar items for different user types
@@ -46,18 +48,21 @@ const sidebarConfig = {
     { id: 'browse', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/student/browse-internships', isPage: false },
     { id: 'applied', iconId: 'applied', label: 'Applied Internships', path: '/dashboard/student/applied-internships', isPage: false },
     { id: 'my-internships', iconId: 'my-internships', label: 'My Internships', path: '/dashboard/student/my-internships', isPage: false },
+    { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/student/notifications', isPage: false },
     { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/student/profile', isPage: false },
   ],
   faculty: [
     { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },
     { id: 'students', iconId: 'students', label: 'Students', path: '/dashboard/faculty/students', isPage: false },
     { id: 'reports', iconId: 'reports', label: 'Reports', path: '/dashboard/faculty/reports', isPage: false },
+    { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/faculty/notifications', isPage: false },
     { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/faculty/profile', isPage: false },
   ],
   company: [
     { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/company', isPage: false },
     { id: 'listings', iconId: 'listings', label: 'Internship Listings', path: '/dashboard/company/listings', isPage: false },
     { id: 'applications', iconId: 'applications', label: 'Applications', path: '/dashboard/company/applications', isPage: false },
+    { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/company/notifications', isPage: false },
     { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/company/profile', isPage: false },
   ],
   scad: [
@@ -65,6 +70,7 @@ const sidebarConfig = {
     { id: 'companies', iconId: 'companies', label: 'Companies', path: '/dashboard/scad/companies', isPage: false },
     { id: 'students', iconId: 'students', label: 'Students', path: '/dashboard/scad/students', isPage: false },
     { id: 'reports', iconId: 'reports', label: 'Reports', path: '/dashboard/scad/reports', isPage: false },
+    { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/scad/notifications', isPage: false },
     { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/scad/profile', isPage: false },
   ],
 };
