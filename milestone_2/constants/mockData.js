@@ -317,6 +317,7 @@ export const MOCK_APPLIED_INTERNSHIPS = [
     status: "rejected"
   }
 ];
+
 export const mockStudents = [
   {
     id: "61-1959",
@@ -566,3 +567,35 @@ export const reports = [
   // ...rest of the original reports...
 ];
 
+
+//Courses by Major:
+
+export const CSEN_Courses = [
+  'Software Engineering',
+  'Databses I',
+  'Databases II',
+  'Introduction to Communication Networks',
+  'Data Structures and Algorithms'
+]
+
+export const DMET_Courses = [
+  'Computer Graphics',
+  'Introduction to Media Engineering',
+  'Web Technologies and Usability',
+  'Visualization and Animation'
+]
+
+export const BioTech_Courses = [
+  'Physiology and Anatomy I',
+  'Physical Chemistry',
+  'General and Pharmaceutical Microbiology',
+  'Physiology and Anatomy II',
+]
+
+export const Law_Courses = [
+  'Introduction to Common Law',
+  'The Constitutional Law',
+  'Criminology and Penology',
+  'Civil Law',
+  'Criminal Law'
+]

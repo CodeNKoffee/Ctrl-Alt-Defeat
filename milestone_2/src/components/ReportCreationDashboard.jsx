@@ -1,8 +1,7 @@
-"use client"
 import { useState, useEffect } from "react"
 import { CSEN_Courses, DMET_Courses, BioTech_Courses, Law_Courses  } from "../../constants/mockData";
 
-export default function Report({ onAddTile, onCancel }) {
+export default function ReportCreationDashboard({ onAddTile, onCancel }) {
     const [filledReport, setReport] = useState({
         internshipTitle: '',
         companyOrgName: '',
@@ -15,17 +14,14 @@ export default function Report({ onAddTile, onCancel }) {
         references: '',
         appendencies: ''
     });
-
     const [major, setMajor] = useState(null)
-    const [courses, setCourses] = useState([]) 
+    const [courses, setCourses] = useState([])
     const [selectedCourses, setSelectedCourses] = useState([]);
-    const [isExpanded, setIsExpanded] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setReport((prev) => ({ ...prev, [name]: value }));
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         onAddTile({
@@ -49,26 +45,22 @@ export default function Report({ onAddTile, onCancel }) {
         setSelectedCourses([]);
         document.querySelectorAll('input, textarea').forEach(input => input.value = '');
     };
-
     const handleMajorChange = (e) => {
         setMajor(e.target.value);
-        setSelectedCourses([]); // Reset selected courses when major changes
+        setSelectedCourses([]);
     };
-
     const handleCourseSelect = (e) => {
         const selectedCourse = e.target.value;
         if (selectedCourse && !selectedCourses.includes(selectedCourse)) {
             setSelectedCourses((prev) => [...prev, selectedCourse]);
             setCourses((prev) => prev.filter((course) => course !== selectedCourse));
         }
-        e.target.value = ""; // Reset the dropdown to allow re-selection
+        e.target.value = "";
     };
-
     const handleCourseRemove = (course) => {
         setSelectedCourses((prev) => prev.filter((c) => c !== course));
         setCourses((prev) => [...prev, course]);
     };
-
     useEffect(() =>{
         if(major === 'CSEN'){
             setCourses(CSEN_Courses)

@@ -31,6 +31,7 @@ export default function InternshipList({
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedDate, setSelectedDate] = useState(null);
+  const [reportingInternship, setReportingInternship] = useState(false);
 
   // Default statuses if none provided
   const displayStatuses = statuses.length > 0 ? statuses :
@@ -72,85 +73,113 @@ export default function InternshipList({
     return matchesSearch && matchesStatus && matchesDate;
   };
 
+  const handleTriggerReportCreate = (internship) => {
+    setReportingInternship(internship);
+  };
+
+  const handleReportClose = () => {
+    setReportingInternship(null);
+  };
+
+  const handleReportAddTile = (data) => {
+    // Handle any data submission from the report if necessary
+    // For now, just closes the report view
+    setReportingInternship(null);
+    // You might want to trigger a data refresh or navigation here
+  };
+
   return (
-    <div className="w-full px-4 py-6 space-y-4">
-      <div className="w-full max-w-3xl mx-auto">
-        {/* First CardTable for Search Bar only */}
-        <CardTable
-          title=""
-          data={[]}
-          filterFunction={() => true}
-          emptyMessage=""
-          searchConfig={{
-            searchTerm: searchTerm,
-            onSearchChange: setSearchTerm,
-            placeholder: 'Search by job title, company, or skills...',
-            hideSearchBar: false
-          }}
-          filterConfig={{ showFilter: false }}
-          renderCard={() => null}
-        />
+    <>
+    {reportingInternship ? (
+      <Report
+        // Pass the internship data to the Report component if it needs it
+        // internshipData={reportingInternship} 
+        isOpen={true} // If reportingInternship is not null, the report is open
+        onClose={handleReportClose}
+        onAddTile={handleReportAddTile}
+      />
+    ) : (
+      <div className="w-full px-4 py-6 space-y-4">
+        <div className="w-full max-w-3xl mx-auto">
+          {/* First CardTable for Search Bar only */}
+          <CardTable
+            title=""
+            data={[]}
+            filterFunction={() => true}
+            emptyMessage=""
+            searchConfig={{
+              searchTerm: searchTerm,
+              onSearchChange: setSearchTerm,
+              placeholder: 'Search by job title, company, or skills...',
+              hideSearchBar: false
+            }}
+            filterConfig={{ showFilter: false }}
+            renderCard={() => null}
+          />
 
-        {/* Custom Filter Panel (e.g., All/Recommended) */}
-        {customFilterPanel && (
-          <div className="py-2 mb-4">{customFilterPanel}</div>
-        )}
+          {/* Custom Filter Panel (e.g., All/Recommended) */}
+          {customFilterPanel && (
+            <div className="py-2 mb-4">{customFilterPanel}</div>
+          )}
 
-        {/* Status Tabs and Date Picker Row */}
-        {displayStatuses.length > 0 && (
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2 mb-4">
-            {/* Status Tabs */}
-            <div className="flex flex-wrap gap-2">
-              {['all', ...displayStatuses].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-                    ${activeTab === tab
-                      ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                      : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                    }`}
-                >
-                  {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </button>
-              ))}
+          {/* Status Tabs and Date Picker Row */}
+          {displayStatuses.length > 0 && (
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2 mb-4">
+              {/* Status Tabs */}
+              <div className="flex flex-wrap gap-2">
+                {['all', ...displayStatuses].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
+                      ${activeTab === tab
+                        ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                        : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                      }`}
+                  >
+                    {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  </button>
+                ))}
+              </div>
+
+              {showDatePicker && (
+                <DatePicker
+                  selectedDate={selectedDate}
+                  onDateChange={setSelectedDate}
+                />
+              )}
             </div>
+          )}
 
-            {showDatePicker && (
-              <DatePicker
-                selectedDate={selectedDate}
-                onDateChange={setSelectedDate}
+          {/* Internship Cards */}
+          <CardTable
+            data={internships}
+            filterFunction={filterFunction}
+            emptyMessage={
+              <NoResults
+                mainMessage={`No internships found matching your criteria`}
+                subMessage="Try adjusting your search or filter"
+              />
+            }
+            searchConfig={{
+              hideSearchBar: true
+            }}
+            filterConfig={{ showFilter: false }}
+            renderCard={(internship) => (
+              <InternshipRow
+                key={internship.id}
+                internship={internship}
+                type={type}
+                statusColors={statusColors}
+                onApplicationCompleted={onApplicationCompleted}
+                isApplied={appliedInternshipIds.has(internship.id)}
+                onTriggerReportCreate={handleTriggerReportCreate} // Pass the handler down
               />
             )}
-          </div>
-        )}
-
-        {/* Internship Cards */}
-        <CardTable
-          data={internships}
-          filterFunction={filterFunction}
-          emptyMessage={
-            <NoResults
-              mainMessage={`No internships found matching your criteria`}
-              subMessage="Try adjusting your search or filter"
-            />
-          }
-          searchConfig={{
-            hideSearchBar: true
-          }}
-          filterConfig={{ showFilter: false }}
-          renderCard={(internship) => (
-            <InternshipRow
-              key={internship.id}
-              internship={internship}
-              type={type}
-              statusColors={statusColors}
-              onApplicationCompleted={onApplicationCompleted}
-              isApplied={appliedInternshipIds.has(internship.id)}
-            />
-          )}
-        />
+          />
+        </div>
       </div>
-    </div>
+    )}
+    </>
   );
 } 

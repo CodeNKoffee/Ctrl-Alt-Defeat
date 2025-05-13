@@ -51,7 +51,7 @@ export default function MyInternships() {
         />
 
         {/* Status Tabs and Date Picker Row */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2">
+        <div className="onClick={() => onCreateReport && onCreateReport(internship)}flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2">
           {/* Status Tabs */}
           <div className="flex flex-wrap gap-2">
             {['all', 'current', 'completed', 'evaluated'].map((tab) => (

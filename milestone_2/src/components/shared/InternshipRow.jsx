@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import StatusBadge from './StatusBadge';
 import { Tooltip } from 'react-tooltip';
 import UploadDocuments from '../UploadDocuments';
+import Report from "../Report"; // Import the Report component
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";
@@ -44,11 +45,12 @@ const appliedStatusTooltipMessages = {
   rejected: "Unfortunately, your application was not selected for this position this time.",
 };
 
-export default function InternshipRow({ internship, type, onApplicationCompleted, isApplied }) {
+export default function InternshipRow({ internship, type, onApplicationCompleted, isApplied, onTriggerReportCreate }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [reportCreate, setReportCreate] = useState(false);
   const router = useRouter();
 
   const handleToggle = () => {
@@ -87,6 +89,14 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
     }
     // Potentially refresh data or give feedback if an upload happened - handled by parent
   };
+
+  const handleOpenReportCreate = () => {
+    setReportCreate(true);
+  }
+
+  const handleCloseReportCreate = () => {
+    setReportCreate(false);
+  }
 
   return (
     <div className="mb-3 w-full max-w-3xl mx-auto">
@@ -249,6 +259,15 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                 {type === 'regular' && timeAgo(internship.postedDate)}
               </p>
             </div>
+            {/* Only show Create Report for completed status in 'my' internships, remove all other buttons */}
+            {type === 'my' && internship.status === 'completed' && (
+              <button
+                onClick={handleOpenReportCreate}
+                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
+              >
+                Create Report
+              </button>
+            )}
             {type === 'regular' ? (
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
@@ -260,21 +279,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
               >
                 {isApplied ? 'Applied' : 'Apply'}
               </button>
-            ) : internship.appliedDate ? (
-              <button
-                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
-                onClick={() => router.push(`/dashboard/student/applied-internships/${internship.id}`)}
-              >
-                View Application
-              </button>
-            ) : (
-              <button
-                onClick={handleOpenUploadModal}
-                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
-              >
-                Apply
-              </button>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
@@ -287,6 +292,17 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         onClose={handleCloseUploadModal}
         internshipId={internship.id}
       />
+
+      {/* Create Report Modal */}
+      {reportCreate && (
+        <Report
+          isOpen={reportCreate}
+          onClose={handleCloseReportCreate}
+          onAddTile={(data) => {
+            handleCloseReportCreate();
+          }}
+        />
+      )}
     </div>
   );
 }

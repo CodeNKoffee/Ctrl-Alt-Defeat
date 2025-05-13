@@ -54,8 +54,10 @@ export default function ReportViewer({ report, userType = "faculty" }) {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const toolbarRef = useRef(null);
 
-  // Enable annotation tools for faculty only if the report status is 'pending'. Otherwise, read-only for faculty and always for SCAD.
-  const isReadOnly = userType === "scad" || (userType === "faculty" && report?.status !== 'pending');
+  // Enable annotation tools for faculty only if the report status is 'pending'. Otherwise, read-only for faculty, SCAD, and students.
+  // For 'student-draft', hide annotation sidebar and tools
+  const isReadOnly = userType === "scad" || userType === "student" || userType === "student-draft" || (userType === "faculty" && report?.status !== 'pending');
+  const hideAnnotations = userType === "student-draft";
 
   // Helper to get the full report text for annotation extraction
   function getReportText(sectionKey = 'body') {
@@ -293,7 +295,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
   return (
     <div className="report-viewer-container">
       <div className={`report-content-container ${showAnnotations ? 'with-sidebar' : ''}`}>  
-        {/* Floating annotation toolbar (hide for SCAD and Faculty) */}
+        {/* Floating annotation toolbar (hide for SCAD, Faculty, and Students) */}
         {!isReadOnly && toolbarPos.visible && (
           <div
             ref={toolbarRef}
@@ -435,7 +437,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
         )}
       </div>
 
-      {showAnnotations && (
+      {showAnnotations && !hideAnnotations && (
         <div className="annotations-sidebar">
           <div className="annotations-header">
             <h3>Annotations</h3>
