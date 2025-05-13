@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faClock, faBell, faFilter, faEllipsisH, faSearch, faXmark, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faClock, faBell, faFilter, faEllipsisH, faSearch, faXmark, faLock, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 // Mock data
 const MOCK_COMPANIES = [
@@ -125,12 +125,28 @@ const ProUpgradePrompt = ({ durationCompleted, durationRequired = 12 }) => {
   );
 };
 
-export default function NotificationsList() {
+export default function NotificationsList({ selectedCompanies = [] }) {
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // Get user data from Redux store
   const { currentUser } = useSelector(state => state.auth);
+
+  // Add useEffect for click outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Close filter dropdown on outside click
+      if (!event.target.closest('.filter-dropdown') && !event.target.closest('.filter-button')) {
+        setIsFilterOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Get user data using a fallback mechanism
   const getUserData = () => {
@@ -181,13 +197,34 @@ export default function NotificationsList() {
     }
   ];
 
-  // Filter notifications based on search term
-  const filteredNotifications = notifications.filter(notification => {
-    return notification.title.toLowerCase().includes(searchTerm.toLowerCase());
-  });
-
   // Companies that viewed profile (mock data)
   const companyViews = MOCK_COMPANIES.slice(0, 5);
+
+  // Filter notifications based on search term and selected companies
+  const filteredNotifications = notifications.filter(notification => {
+    // Filter by search term
+    const matchesSearch = notification.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+    // If no companies are selected or if we're not filtering by company, only use search filter
+    if (selectedCompanies.length === 0) {
+      return matchesSearch;
+    }
+
+    // Extract company names from the notification title
+    const notificationText = notification.title.toLowerCase();
+
+    // Check if any selected company name is mentioned in the notification
+    const matchesCompany = MOCK_COMPANIES
+      .filter(company => selectedCompanies.includes(company.id))
+      .some(company => notificationText.includes(company.name.toLowerCase()));
+
+    return matchesSearch && matchesCompany;
+  });
+
+  // Companies that viewed profile - filter if selectedCompanies is not empty
+  const filteredCompanyViews = selectedCompanies.length > 0
+    ? companyViews.filter(company => selectedCompanies.includes(company.id))
+    : companyViews;
 
   const clearSearch = () => {
     setSearchTerm('');
@@ -230,13 +267,84 @@ export default function NotificationsList() {
             </div>
 
             <div className="flex space-x-2">
-              <button className="appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-2 px-4 rounded-full shadow-md focus:outline-none transition-all duration-300 flex items-center gap-2">
-                <FontAwesomeIcon icon={faFilter} className="h-4 w-4 text-[#5DB2C7]" />
-                <span>Filter</span>
-              </button>
-              <button className="appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-2 px-4 rounded-full shadow-md focus:outline-none transition-all duration-300 flex items-center gap-2">
-                <FontAwesomeIcon icon={faEllipsisH} className="h-4 w-4 text-[#5DB2C7]" />
-              </button>
+              {/* {(isPro || userData?.role !== 'student') && (
+                <button className="appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-2 px-4 rounded-full shadow-md focus:outline-none transition-all duration-300 flex items-center gap-2">
+                  <FontAwesomeIcon icon={faFilter} className="h-4 w-4 text-[#5DB2C7]" />
+                  <span>Filter</span>
+                </button>
+              )} */}
+
+              {/* Replace simple ellipsis button with filter dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  className="appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-2 px-4 rounded-full shadow-md focus:outline-none transition-all duration-300 flex items-center gap-2 filter-button"
+                >
+                  <FontAwesomeIcon icon={faFilter} className="h-4 w-4 text-[#5DB2C7]" />
+                  <span>Filter</span>
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    className={`h-3 w-3 text-[#5DB2C7] transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+
+                {isFilterOpen && (
+                  <div className="absolute right-0 mt-2 w-60 bg-white/95 backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-10 animate-dropdown focus:outline-none p-3 space-y-2 filter-dropdown">
+                    <div className="px-3 py-2 text-sm font-medium text-[#2a5f74] border-b border-gray-100 pb-2 mb-1 flex items-center justify-between">
+                      <span>Filter Options</span>
+                      <button
+                        onClick={() => setIsFilterOpen(false)}
+                        className="text-gray-400 hover:text-gray-600"
+                      >
+                        <FontAwesomeIcon icon={faXmark} className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    {/* Date Range Option */}
+                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
+                      <span className="mr-2">Last 7 days</span>
+                      {!isPro && userData?.role === 'student' && (
+                        <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
+                      )}
+                    </div>
+
+                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
+                      <span className="mr-2">Last 30 days</span>
+                      {!isPro && userData?.role === 'student' && (
+                        <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
+                      )}
+                    </div>
+
+                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
+                      <span className="mr-2">All time</span>
+                    </div>
+
+                    {/* Type Options */}
+                    <div className="border-t border-gray-100 my-1 pt-1"></div>
+
+                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
+                      <span className="mr-2">Read notifications</span>
+                      {!isPro && userData?.role === 'student' && (
+                        <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
+                      )}
+                    </div>
+
+                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
+                      <span className="mr-2">Unread notifications</span>
+                      {!isPro && userData?.role === 'student' && (
+                        <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
+                      )}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="border-t border-gray-100 my-1 pt-1"></div>
+
+                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200">
+                      Mark all as read
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -288,7 +396,7 @@ export default function NotificationsList() {
                 {searchTerm && filteredNotifications.length === 0 ? (
                   <div className="p-8 text-center">
                     <p className="text-gray-500 font-medium">No notifications found</p>
-                    <p className="text-gray-400 text-sm mt-1">Try adjusting your search</p>
+                    <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filters</p>
                   </div>
                 ) : (
                   filteredNotifications.map(notification => (
@@ -314,27 +422,39 @@ export default function NotificationsList() {
                   </h3>
                   <p className="text-xs text-gray-500">
                     {isPro
-                      ? 'See which companies are interested in your profile'
-                      : `${companyViews.length} companies viewed your profile recently. Upgrade to PRO to see details.`
+                      ? `${selectedCompanies.length > 0 ? 'Filtered' : 'All'} companies that viewed your profile${selectedCompanies.length > 0 ? ' (filtered)' : ''}`
+                      : `${filteredCompanyViews.length} companies viewed your profile recently. Upgrade to PRO to see details.`
                     }
                   </p>
                 </div>
 
-                {companyViews.map((company, index) => (
-                  <ProfileViewItem
-                    key={company.id || index}
-                    company={company}
-                    isPro={isPro}
-                  />
-                ))}
-
-                {!isPro && companyViews.length > 0 && (
-                  <div className="p-4 text-center border-t">
+                {isPro ? (
+                  <>
+                    {filteredCompanyViews.length === 0 ? (
+                      <div className="p-8 text-center">
+                        <p className="text-gray-500 font-medium">No profile views found</p>
+                        <p className="text-gray-400 text-sm mt-1">Try adjusting your filters</p>
+                      </div>
+                    ) : (
+                      filteredCompanyViews.map((company, index) => (
+                        <ProfileViewItem
+                          key={company.id || index}
+                          company={company}
+                          isPro={isPro}
+                        />
+                      ))
+                    )}
+                  </>
+                ) : (
+                  <div className="p-8 text-center">
+                    <div className="w-16 h-16 bg-[#D9F0F4] rounded-full flex items-center justify-center text-[#3298BA] mx-auto mb-4">
+                      <FontAwesomeIcon icon={faLock} size="lg" />
+                    </div>
                     <p className="text-sm text-[#2a5f74] mb-2">
-                      <span className="font-medium">{companyViews.length} companies</span> have viewed your profile
+                      <span className="font-medium">{filteredCompanyViews.length} companies</span> have viewed your profile
                     </p>
-                    <p className="text-xs text-gray-500">
-                      Complete your internship duration to unlock PRO features and see who's interested in your profile
+                    <p className="text-xs text-gray-500 max-w-md mx-auto">
+                      Complete your internship duration to unlock PRO features and see which companies are interested in your profile
                     </p>
                   </div>
                 )}
@@ -343,6 +463,18 @@ export default function NotificationsList() {
           </div>
         </div>
       </div>
+
+      {/* Add dropdown animation */}
+      <style jsx global>{`
+        @keyframes dropdown {
+          from { opacity: 0; transform: translateY(-5px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-dropdown {
+          animation: dropdown 0.2s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 }
