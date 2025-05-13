@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import { getRegularInternships, getRecommendedInternships, getAppliedInternships, getMyInternships } from '../../../../../constants/internshipData';
+import Report from '../../../../../src/components/Report';
 
 // Dashboard Home View Component
 function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
@@ -262,7 +263,44 @@ function AppliedInternshipsView() {
   );
 }
 
-function MyInternshipsView() {
+function MyInternshipsView({ onSetTitle }) {
+  const [isCreatingReport, setIsCreatingReport] = useState(false);
+  const [selectedInternship, setSelectedInternship] = useState(null);
+
+  useEffect(() => {
+    if (!isCreatingReport) {
+      onSetTitle("MY INTERNSHIPS");
+    }
+  }, []);
+
+  const handleReportCreation = (internship) => {
+    setSelectedInternship(internship);
+    setIsCreatingReport(true);
+    onSetTitle("Create Internship Report");
+  };
+
+  const handleReportCancel = () => {
+    setIsCreatingReport(false);
+    setSelectedInternship(null);
+    onSetTitle("MY INTERNSHIPS");
+  };
+
+  const handleReportSubmit = (reportData) => {
+    console.log('Report submitted:', reportData);
+    setIsCreatingReport(false);
+    setSelectedInternship(null);
+    onSetTitle("MY INTERNSHIPS");
+  };
+
+  if (isCreatingReport) {
+    return (
+      <Report
+        onAddTile={handleReportSubmit}
+        onCancel={handleReportCancel}
+      />
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 pt-0 pb-8">
       <InternshipList
@@ -270,6 +308,7 @@ function MyInternshipsView() {
         internships={getMyInternships()}
         type="my"
         statuses={['current', 'completed', 'evaluated']}
+        onTriggerReportCreate={handleReportCreation}
       />
     </div>
   );
@@ -332,6 +371,14 @@ export default function StudentDashboardPage() {
     setCurrentTitle(getInitialTitle(viewId));
   };
 
+  const handleSetSpecificTitle = (title) => {
+    setCurrentTitle(title);
+  };
+
+  useEffect(() => {
+    setCurrentTitle(getInitialTitle(currentView));
+  }, [currentView]);
+
   useEffect(() => {
     const handleHashChange = () => {
       if (typeof window !== 'undefined') {
@@ -344,11 +391,10 @@ export default function StudentDashboardPage() {
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [currentView]);
+  }, []);
 
   const CurrentViewComponent = viewComponents[currentView];
 
-  // Prepare props for the current view component
   let viewProps = {};
   if (currentView === 'home' || currentView === 'browse') {
     viewProps = {
@@ -356,13 +402,16 @@ export default function StudentDashboardPage() {
       appliedInternshipIds: appliedIdsSet,
     };
   }
+  if (currentView === 'my-internships') {
+    viewProps.onSetTitle = handleSetSpecificTitle;
+  }
 
   return (
     <DashboardLayout
       userType="student"
-      title={currentTitle} // Pass title directly
-      currentViewId={currentView} // Pass currentViewId for sidebar active state
-      onViewChange={handleViewChange} // For sidebar navigation
+      title={currentTitle}
+      currentViewId={currentView}
+      onViewChange={handleViewChange}
     >
       {CurrentViewComponent && <CurrentViewComponent {...viewProps} />}
     </DashboardLayout>

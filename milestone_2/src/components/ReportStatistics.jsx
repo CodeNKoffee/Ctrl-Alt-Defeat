@@ -1,4 +1,4 @@
-import { FiFileText, FiClock, FiCheckCircle, FiFlag } from 'react-icons/fi';
+import { DocumentTextIcon, ClockIcon, CheckCircleIcon, FlagIcon } from '@heroicons/react/24/outline';
 
 export default function ReportStatistics({
   total = 0,
@@ -11,7 +11,7 @@ export default function ReportStatistics({
       {/* Total Reports Card */}
       <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center h-full">
         <div className="flex-shrink-0 rounded-full bg-blue-50 text-blue-600 p-3 mr-3 h-12 w-12 flex items-center justify-center">
-          <FiFileText className="w-5 h-5" />
+          <DocumentTextIcon className="w-5 h-5" />
         </div>
         <div className="min-w-0">
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Total Reports</h3>
@@ -21,7 +21,7 @@ export default function ReportStatistics({
       {/* Accepted Reports Card */}
       <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center h-full">
         <div className="flex-shrink-0 rounded-full bg-green-50 text-green-600 p-3 mr-3 h-12 w-12 flex items-center justify-center">
-          <FiCheckCircle className="w-5 h-5" />
+          <CheckCircleIcon className="w-5 h-5" />
         </div>
         <div className="min-w-0">
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Accepted Reports</h3>
@@ -31,7 +31,7 @@ export default function ReportStatistics({
       {/* Pending Reports Card */}
       <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center h-full">
         <div className="flex-shrink-0 rounded-full bg-yellow-50 text-yellow-600 p-3 mr-3 h-12 w-12 flex items-center justify-center">
-          <FiClock className="w-5 h-5" />
+          <ClockIcon className="w-5 h-5" />
         </div>
         <div className="min-w-0">
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Pending Reports</h3>
@@ -41,7 +41,7 @@ export default function ReportStatistics({
       {/* Flagged Reports Card */}
       <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center h-full">
         <div className="flex-shrink-0 rounded-full bg-orange-50 text-orange-600 p-3 mr-3 h-12 w-12 flex items-center justify-center">
-          <FiFlag className="w-5 h-5" />
+          <FlagIcon className="w-5 h-5" />
         </div>
         <div className="min-w-0">
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Flagged Reports</h3>

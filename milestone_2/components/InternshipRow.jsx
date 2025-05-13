@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import StatusBadge from './StatusBadge';
 import { Tooltip } from 'react-tooltip';
 import UploadDocuments from '../UploadDocuments';
+// import Report from "../Report"; // Report component is no longer rendered here
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";
@@ -44,11 +45,18 @@ const appliedStatusTooltipMessages = {
   rejected: "Unfortunately, your application was not selected for this position this time.",
 };
 
-export default function InternshipRow({ internship, type, onApplicationCompleted, isApplied, onTriggerReportCreate }) {
+export default function InternshipRow({
+  internship,
+  type,
+  onApplicationCompleted,
+  isApplied,
+  onTriggerReportCreate // New prop to trigger report creation in parent
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  // Removed reportCreate state
   const router = useRouter();
 
   const handleToggle = () => {
@@ -87,6 +95,8 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
     }
     // Potentially refresh data or give feedback if an upload happened - handled by parent
   };
+
+  // Removed handleOpenReportCreate and handleCloseReportCreate functions
 
   return (
     <div className="mb-3 w-full max-w-3xl mx-auto">
@@ -252,7 +262,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             {/* Only show Create Report for completed status in 'my' internships, remove all other buttons */}
             {type === 'my' && internship.status === 'completed' && (
               <button
-                onClick={() => onTriggerReportCreate(internship)}
+                onClick={() => onTriggerReportCreate(internship)} // Call the new prop instead
                 className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
               >
                 Create Report
@@ -282,6 +292,8 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         onClose={handleCloseUploadModal}
         internshipId={internship.id}
       />
+
+      {/* Create Report Modal - Removed since it's now in InternshipList */}
     </div>
   );
-}
+} 
