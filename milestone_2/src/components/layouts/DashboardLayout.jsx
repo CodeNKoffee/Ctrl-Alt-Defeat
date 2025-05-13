@@ -80,6 +80,7 @@ export default function DashboardLayout({
           userType={userType}
           onViewChange={onViewChange}
           currentView={currentViewId}
+          currentUser={userData}
         />
       )}
 
