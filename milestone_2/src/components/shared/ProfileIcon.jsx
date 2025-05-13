@@ -38,6 +38,20 @@ const ProfileIcon = ({
     'offline': 'bg-gray-400'
   };
 
+  // Generate initials from name (first letter of first name + first letter of last name)
+  const getInitials = (name) => {
+    if (!name || typeof name !== 'string') return '??';
+
+    // Clean the name and split by space
+    const nameParts = name.trim().split(' ').filter(part => part.length > 0);
+
+    // Handle single name case
+    if (nameParts.length === 1) return nameParts[0].substring(0, 2).toUpperCase();
+
+    // First letter of first name + first letter of last name
+    return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+  };
+
   return (
     <div className={`relative inline-block ${className}`}>
       <div className={`${sizeClasses[size]} rounded-full overflow-hidden border-2 border-white shadow-sm`}>
@@ -51,7 +65,7 @@ const ProfileIcon = ({
           />
         ) : (
           <div className="w-full h-full bg-metallica-blue-100 flex items-center justify-center text-metallica-blue-800 font-medium">
-            {alt.substring(0, 2).toUpperCase()}
+            {getInitials(alt)}
           </div>
         )}
       </div>

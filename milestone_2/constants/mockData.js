@@ -4,6 +4,8 @@ export const MOCK_USERS = {
     email: "scad@example.com",
     password: "scad123",
     name: "SCAD Admin",
+    firstName: "SCAD",
+    lastName: "Admin",
     role: "scad",
     id: "scad_001"
   },
@@ -11,6 +13,8 @@ export const MOCK_USERS = {
     email: "faculty@example.com",
     password: "faculty123",
     name: "Faculty Member",
+    firstName: "Faculty",
+    lastName: "Member",
     role: "faculty",
     id: "faculty_001"
   },
@@ -18,6 +22,8 @@ export const MOCK_USERS = {
     email: "company@example.com",
     password: "company123",
     name: "Company Representative",
+    firstName: "Company",
+    lastName: "Representative",
     role: "company",
     id: "company_001"
   },
@@ -26,6 +32,8 @@ export const MOCK_USERS = {
       email: "student@example.com",
       password: "student123",
       name: "Student User",
+      firstName: "Student",
+      lastName: "User",
       role: "student",
       accountType: "none",
       id: "student_001",
@@ -40,7 +48,9 @@ export const MOCK_USERS = {
     {
       email: "hatem@trybytes.ai",
       password: "hatem123",
-      name: "Hatem",
+      name: "Hatem Soliman",
+      firstName: "Hatem",
+      lastName: "Soliman",
       role: "student",
       accountType: "PRO",
       id: "student_002",
@@ -55,7 +65,9 @@ export const MOCK_USERS = {
     {
       email: "salmaaburahmah@gmail.com",
       password: "salma123",
-      name: "Salma",
+      name: "Salma Soliman",
+      firstName: "Salma",
+      lastName: "Soliman",
       role: "student",
       accountType: "PRO",
       id: "student_003",
@@ -373,7 +385,7 @@ export const mockStudents = [
     gpa: 1.0
   },
   {
-    id:"61-7128",
+    id: "61-7128",
     name: "Hala Khaled",
     photo: "/images/girl4.png",
     major: "Business Informatics",
@@ -382,13 +394,13 @@ export const mockStudents = [
     gpa: 2.0
   },
   {
-    id:"55-6188",
-    name:"Hatem Soliman",
-    photo:"/images/boy4.png",
-    major:"MET",
-    semester:"6",
-    status:"PRO",
-    gpa:1.7
+    id: "55-6188",
+    name: "Hatem Soliman",
+    photo: "/images/boy4.png",
+    major: "MET",
+    semester: "6",
+    status: "PRO",
+    gpa: 1.7
   }
 ];
 export const reports = [
@@ -434,7 +446,7 @@ export const reports = [
     internshipDuration: "12 weeks",
     reportTitle: "Marketing Strategy Internship Report",
     submissionDate: "2023-05-22",
-    status: "REJECTED" 
+    status: "REJECTED"
   },
   {
     id: "RPT-005",
@@ -773,7 +785,7 @@ export const mockAssessments = [
     imageUrl: "/images/bigfive.jpeg",
     type: "Personality Assessment",
     description: "This assessment evaluates five core personality traits: Openness to Experience, Conscientiousness, Extraversion, Agreeableness, and Neuroticism. It provides a detailed profile for personal growth, career planning, and understanding relationships.",
-    whyTakeIt: "The Big Five provides a scientifically-backed model of personality, giving you valuable insights into how you approach life. It’s helpful for improving self-awareness, personal development, and understanding how you interact with others. By understanding your scores, you can improve your relationships, adapt to work environments, and boost emotional intelligence.",
+    whyTakeIt: "The Big Five provides a scientifically-backed model of personality, giving you valuable insights into how you approach life. It's helpful for improving self-awareness, personal development, and understanding how you interact with others. By understanding your scores, you can improve your relationships, adapt to work environments, and boost emotional intelligence.",
     questions: [
       {
         id: 1,
@@ -813,7 +825,7 @@ export const mockAssessments = [
       },
       {
         id: 4,
-        question: "I find it easy to empathize with others’ feelings.",
+        question: "I find it easy to empathize with others' feelings.",
         options: [
           { id: "A", text: "Strongly Agree", value: 3 },
           { id: "B", text: "Agree", value: 2 },
@@ -873,7 +885,7 @@ export const mockAssessments = [
       },
       {
         id: 9,
-        question: "I often put others’ needs before my own.",
+        question: "I often put others' needs before my own.",
         options: [
           { id: "A", text: "Strongly Agree", value: 3 },
           { id: "B", text: "Agree", value: 2 },
@@ -905,7 +917,7 @@ export const mockAssessments = [
     imageUrl: "/images/sii.jpeg",
     type: "Career Assessment",
     description: "The Strong Interest Inventory assesses your interests across six occupational themes: Realistic, Investigative, Artistic, Social, Enterprising, and Conventional. It suggests career paths aligned with your preferences for work activities and environments.",
-    whyTakeIt: "The SII helps you identify career paths that align with your interests, ensuring greater satisfaction and success in your professional life. Whether you’re looking to change careers or make a more informed decision about your path, the SII provides guidance based on your individual preferences for work environments and tasks.",
+    whyTakeIt: "The SII helps you identify career paths that align with your interests, ensuring greater satisfaction and success in your professional life. Whether you're looking to change careers or make a more informed decision about your path, the SII provides guidance based on your individual preferences for work environments and tasks.",
     questions: [
       {
         id: 1,
