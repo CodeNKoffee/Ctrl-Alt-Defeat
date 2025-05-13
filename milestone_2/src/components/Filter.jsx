@@ -24,9 +24,9 @@ export default function Filter({
         value={selectedValue}
         onChange={handleChange}
         className={`w-full p-2 pl-9 pr-3 rounded-full border border-gray-300 
-                   focus:outline-none focus:ring-2 focus:ring-[var(--metallica-blue-500)] 
-                   focus:border-transparent text-sm appearance-none bg-white
-                   cursor-pointer ${selectTextColor}`}
+                  focus:outline-none focus:ring-2 focus:ring-[var(--metallica-blue-500)] 
+                  focus:border-transparent text-sm appearance-none bg-white
+                  cursor-pointer ${selectTextColor}`}
       >
         <option value="" className="text-gray-400">{placeholder}</option>
         {options.map((option) => (

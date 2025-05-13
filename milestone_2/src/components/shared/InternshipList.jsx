@@ -119,94 +119,88 @@ export default function InternshipList({
   };
 
   return (
-    <div className="w-full">
-      {/* Search Bar - stays at full width above the content/sidebar split */}
-      <CardTable
-        title=""
-        data={[]}
-        filterFunction={() => true}
-        emptyMessage=""
-        searchConfig={{
-          searchTerm: searchTerm,
-          onSearchChange: setSearchTerm,
-          placeholder: 'Search by job title, company, or skills...',
-          hideSearchBar: false
-        }}
-        filterConfig={{ showFilter: false }}
-        renderCard={() => null}
-      />
+    <div className="w-full flex flex-col lg:flex-row gap-5 items-start">
+      {/* Main Content Column (Search, Filters, Tabs, Internship Cards) */}
+      <div className="w-full lg:w-2/3 flex flex-col items-start">
+        {/* Search Bar CardTable */}
+        <CardTable
+          title=""
+          data={[]}
+          filterFunction={() => true}
+          emptyMessage=""
+          searchConfig={{
+            searchTerm: searchTerm,
+            onSearchChange: setSearchTerm,
+            placeholder: 'Search by job title, company, or skills...',
+            hideSearchBar: false
+          }}
+          filterConfig={{ showFilter: false }}
+          renderCard={() => null}
+        />
 
-      {/* Container for the content (filters, tabs, cards) AND the sidebar */}
-      <div className="flex flex-col lg:flex-row gap-5 items-start mt-4">
+        {/* Custom Filter Panel (e.g., All/Recommended) */}
+        {customFilterPanel && (
+          <div className="w-full mb-4">{customFilterPanel}</div>
+        )}
 
-        {/* Main Content Column (filters, tabs, internship cards) */}
-        <div className="lg:flex-1 space-y-4">
-          {customFilterPanel && (
-            <div>{customFilterPanel}</div>
-          )}
-
-          {displayStatuses.length > 0 && (
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              {/* Status Tabs */}
-              <div className="flex flex-wrap gap-2">
-                {['all', ...displayStatuses].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-                      ${activeTab === tab
-                        ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                        : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                      }`}
-                  >
-                    {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
-                  </button>
-                ))}
-              </div>
-
-              {showDatePicker && (
-                <DatePicker
-                  selectedDate={selectedDate}
-                  onDateChange={setSelectedDate}
-                />
-              )}
+        {/* Status Tabs and Date Picker Row */}
+        {displayStatuses.length > 0 && (
+          <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+            <div className="flex flex-wrap gap-2">
+              {['all', ...displayStatuses].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
+                    ${activeTab === tab
+                      ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                      : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                    }`}
+                >
+                  {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </button>
+              ))}
             </div>
-          )}
-
-          {/* Internship Cards */}
-          <CardTable
-            data={internships}
-            filterFunction={filterFunction}
-            emptyMessage={
-              <NoResults
-                mainMessage={`No internships found matching your criteria`}
-                subMessage="Try adjusting your search or filter"
-              />
-            }
-            searchConfig={{
-              hideSearchBar: true // Important: search bar is not repeated here
-            }}
-            filterConfig={{ showFilter: false }}
-            renderCard={(internship) => (
-              <InternshipRow
-                key={internship.id}
-                internship={internship}
-                type={type}
-                statusColors={statusColors}
-                onApplicationCompleted={onApplicationCompleted}
-                isApplied={appliedInternshipIds.has(internship.id)}
+            {showDatePicker && (
+              <DatePicker
+                selectedDate={selectedDate}
+                onDateChange={setSelectedDate}
               />
             )}
-          />
-        </div>
-
-        {/* Sidebar Column */}
-        {showSidebar && (
-          <div className="lg:w-80">
-            <InternshipVideoSidebar userMajor={userMajor} />
           </div>
         )}
+
+        {/* Internship Cards */}
+        <CardTable
+          data={internships}
+          filterFunction={filterFunction}
+          emptyMessage={
+            <NoResults
+              mainMessage={`No internships found matching your criteria`}
+              subMessage="Try adjusting your search or filter"
+            />
+          }
+          searchConfig={{ hideSearchBar: true }} // Search is handled by the CardTable above
+          filterConfig={{ showFilter: false }}
+          renderCard={(internship) => (
+            <InternshipRow
+              key={internship.id}
+              internship={internship}
+              type={type}
+              statusColors={statusColors}
+              onApplicationCompleted={onApplicationCompleted}
+              isApplied={appliedInternshipIds.has(internship.id)}
+            />
+          )}
+        />
       </div>
+
+      {/* Sidebar Column */}
+      {showSidebar && (
+        <div className="w-full lg:w-1/3">
+          <InternshipVideoSidebar userMajor={userMajor} />
+        </div>
+      )}
     </div>
   );
 } 
