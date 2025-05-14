@@ -257,13 +257,13 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
               <div className="flex gap-2">
                 <button
                   onClick={() => onTriggerReportCreate(internship)}
-                  className="px-4 py-2 text-gray-600 rounded-lg font-semibold hover:bg-[#4796a8] hover:text-white transition w-full sm:w-auto text-sm border border-[#5DB2C7]  shadow"
+                  className="px-4 py-2 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67]  transition w-full sm:w-auto text-sm border border-[#5DB2C7]  shadow"
                 >
                   Create Report
                 </button>
                 <button
                   onClick={() => setShowEvaluation(true)}
-                  className="px-4 py-2  text-gray-600 rounded-lg font-semibold hover:bg-[#4796a8]  hover:text-white transition w-full sm:w-auto text-sm border border-[#5DB2C7] shadow"
+                  className="px-4 py-2 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67]  transition w-full sm:w-auto text-sm border border-[#5DB2C7]  shadow"
                 >
                   Evaluate Company
                 </button>

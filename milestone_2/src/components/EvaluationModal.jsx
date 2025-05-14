@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Save } from 'lucide-react';
 
 export default function EvaluationModal({ isOpen, onClose, onSubmit, mockReviews = [] }) {
   const [form, setForm] = useState({
@@ -84,7 +85,7 @@ export default function EvaluationModal({ isOpen, onClose, onSubmit, mockReviews
         </div>
         {/* Right: Evaluation Form */}
         <form className="flex-1 min-w-[300px]" onSubmit={handleSubmit}>
-          <h2 className="text-xl font-bold text-[#2A5F74] mb-4">Element of Evaluation</h2>
+          <h2 className="text-xl font-bold text-[#2A5F74] mb-4">Your Evaluation</h2>
           <div className="mb-3">
             <label className="block text-sm font-medium text-[#2A5F74] mb-1">Company Supervisor Name</label>
             <input
@@ -129,13 +130,26 @@ export default function EvaluationModal({ isOpen, onClose, onSubmit, mockReviews
               required
             />
           </div>
-          <button
-            type="submit"
-            className="w-full py-2 mt-2 bg-[#2A5F74] text-white rounded-lg font-semibold hover:bg-[#3298BA] transition"
-            disabled={submitting}
-          >
-            {submitting ? "Submitting..." : "Submit Evaluation"}
-          </button>
+          <div className="flex gap-2 mt-2 w-full">
+            <button
+              type="submit"
+              className="flex-1 px-4 py-2 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67] transition text-sm border border-[#5DB2C7] shadow"
+              disabled={submitting}
+            >
+              {submitting ? "Submitting..." : "Submit Evaluation"}
+            </button>
+            <button
+              type="button"
+              className="flex-1 px-4 py-2 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67] transition text-sm border border-[#5DB2C7] shadow"
+              disabled={submitting}
+              onClick={() => {
+                onSubmit({ ...form, draft: true });
+                onClose();
+              }}
+            >
+              Save as Draft
+            </button>
+          </div>
         </form>
       </div>
     </div>
