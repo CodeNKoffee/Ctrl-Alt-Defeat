@@ -585,6 +585,75 @@ export const mockCompanyReviews = [
   }
 ];
 
+// Mock evaluations for students
+export const MOCK_EVALUATIONS = [
+  {
+    studentName: "Layla Khaled",
+    major: "Computer Science",
+    companyName: "Juhayna Food Industries",
+    supervisorName: "Dr. Indra",
+    supervisorEmail: "indra@juhayna.com",
+    tasks: "Worked on backend APIs and learned about scalable systems.",
+    environment: "Supportive and collaborative team.",
+    rating: 5,
+    startDate: "2024-06-01",
+    endDate: "2024-08-31",
+    avatar: "/images/girl2.png"
+  },
+  {
+    studentName: "Hatem Soliman",
+    major: "Media Engineering & Technology",
+    companyName: "Vodafone Egypt",
+    supervisorName: "Ms. Laila Hassan",
+    supervisorEmail: "laila.hassan@vodafone.com.eg",
+    tasks: "Designed UI/UX for mobile app and participated in frontend sprints.",
+    environment: "Fast-paced, innovative, and fun.",
+    rating: 4,
+    startDate: "2024-07-01",
+    endDate: "2024-09-15",
+    avatar: "/images/boy2.png"
+  },
+  {
+    studentName: "Salma Tarek",
+    major: "Computer Science",
+    companyName: "Nestlé Egypt",
+    supervisorName: "Mr. Ahmed Said",
+    supervisorEmail: "ahmed.said@eg.nestle.com",
+    tasks: "Worked on data analysis and automation scripts.",
+    environment: "Very organized and welcoming.",
+    rating: 5,
+    startDate: "2024-06-15",
+    endDate: "2024-09-01",
+    avatar: "/images/girl1.png"
+  },
+   {
+    studentName: "Salma Tarek",
+    major: "Computer Science",
+    companyName: "Nestlé Egypt",
+    supervisorName: "Mr. Ahmed Said",
+    supervisorEmail: "ahmed.said@eg.nestle.com",
+    tasks: "Worked on data analysis and automation scripts.",
+    environment: "Very organized and welcoming.",
+    rating: 5,
+    startDate: "2024-06-15",
+    endDate: "2024-09-01",
+    avatar: "/images/girl1.png"
+  },
+   {
+    studentName: "Salma Tarek",
+    major: "Computer Science",
+    companyName: "Nestlé Egypt",
+    supervisorName: "Mr. Ahmed Said",
+    supervisorEmail: "ahmed.said@eg.nestle.com",
+    tasks: "Worked on data analysis and automation scripts.",
+    environment: "Very organized and welcoming.",
+    rating: 5,
+    startDate: "2024-06-15",
+    endDate: "2024-09-01",
+    avatar: "/images/girl1.png"
+  }
+];
+
 //Courses by Major:
 
 export const CSEN_Courses = [
