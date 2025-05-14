@@ -9,6 +9,12 @@ const statusColors = {
   completed: 'bg-green-100 text-green-800 border-2 border-green-400',
   evaluated: 'bg-purple-100 text-purple-800 border-2 border-purple-400',
 };
+const hoverStatusColors = {
+  current: 'hover:bg-blue-100 hover:text-blue-800 border-2 hover:border-blue-400',
+  completed: 'hover:bg-green-100 hover:text-green-800 border-2 hover:border-green-400',
+  evaluated: 'hover:bg-purple-100 hover:text-purple-800 border-2 hover:border-purple-400',
+};
+
 
 // Helper to infer internship status from period
 const inferStatus = (period) => {
@@ -109,11 +115,11 @@ export default function CurrentInterns() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-                ${activeTab === tab
-                  ? `${statusColors[tab] || 'bg-white text-gray-600 border-2 border-gray-300'} text-[#2a5f74]`
-                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                }`}
+className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
+  ${activeTab === tab
+    ? `${statusColors[tab]}`
+    : `bg-white text-gray-600 border border-gray-300 ${hoverStatusColors[tab] || ''}`}`}
+
             >
               {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>

@@ -64,22 +64,18 @@ const InternRow = ({ intern, onSelect, onEvaluate }) => {
       <div className="relative">
         <button
           onClick={handleToggle}
-          className={`group flex flex-col p-4 w-full bg-[#E2F4F7] rounded-lg border-2 border-[#5DB2C7] hover:shadow-md transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] gap-4 relative font-['IBM_Plex_Sans']
-                    ${isHeightAnimating ? 'pb-8' : ''} overflow-hidden`}
+          className={`group flex flex-col p-4 w-full bg-[#E2F4F7] rounded-lg border-2 border-[#5DB2C7] hover:shadow-md transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] relative font-['IBM_Plex_Sans']
+                    ${isHeightAnimating ? 'pb-12' : 'pb-8'} overflow-hidden`}
         >
-          <div className="flex items-center gap-4">
-            <div className="flex flex-col items-center w-24 flex-shrink-0 space-y-3">
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0 pt-1">
               <AvatarImage profilePic={intern.profilePic} />
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex flex-col space-y-1">
-                <h3 className="text-lg font-bold text-gray-800 text-left">{intern.name}</h3>
-                <div className="flex flex-col space-y-2">
-                  <p className="text-sm text-gray-600 text-left">{intern.jobTitle}</p>
-                </div>
+            <div className="flex-1 min-w-0 flex items-start justify-between">
+              <div className="text-left pt-1">
+                <h3 className="text-lg font-bold text-gray-800">{intern.name}</h3>
+                <p className="text-sm text-gray-600 mt-1">{intern.jobTitle}</p>
               </div>
-            </div>
-            <div className="flex flex-col items-end w-28 flex-shrink-0 space-y-2">
               <span className={`
                 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border
                 ${statusColors[intern.status]}
@@ -87,14 +83,14 @@ const InternRow = ({ intern, onSelect, onEvaluate }) => {
                 {intern.status.toUpperCase()}
               </span>
             </div>
-            <ChevronDown
-              className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 h-5 w-5 text-gray-500 transition-transform duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] ${isOpen ? 'rotate-180' : ''}`}
-              aria-hidden
-            />
-            <span className="absolute bottom-2 right-2 text-xs text-gray-500">
-              started on {formatDate(intern.startDate)}
-            </span>
           </div>
+          <span className="absolute bottom-2 right-2 text-xs text-gray-500">
+            started on {formatDate(intern.startDate)}
+          </span>
+          <ChevronDown
+            className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 h-5 w-5 text-gray-500 transition-transform duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] ${isOpen ? 'rotate-180' : ''}`}
+            aria-hidden
+          />
           {isHeightAnimating && (
             <div className="mt-4 flex flex-col p-4 w-full text-left space-y-1 transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]">
               <p className={`text-sm text-gray-700 transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] ${isDescriptionVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>
@@ -136,12 +132,12 @@ const InternRow = ({ intern, onSelect, onEvaluate }) => {
               <div className="space-y-1">
                 <h4 className="text-sm font-semibold text-gray-600 mb-1">Degree</h4>
                 <div className="border border-[#5DB2C7] rounded-md p-2">
-                    <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600">
                     {intern.degree}, {intern.period}
-                    </p>
-                    <p className="text-sm text-gray-600">
+                  </p>
+                  <p className="text-sm text-gray-600">
                     {intern.period}
-                    </p>
+                  </p>
                 </div>
               </div>
               <div className="space-y-1">

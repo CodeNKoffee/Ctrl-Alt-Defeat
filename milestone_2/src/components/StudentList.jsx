@@ -9,12 +9,17 @@ const statusColors = {
   completed: 'bg-green-100 text-green-800 border-2 border-green-400',
 };
 
+const hoverStatusColors = {
+  current: 'hover:bg-blue-100 hover:text-blue-800 hover:border-blue-400',
+  completed: 'hover:bg-green-100 hover:text-green-800 hover:border-green-400',
+  all: 'hover:bg-gray-100 hover:text-gray-800 hover:border-gray-400'
+};
+
 export default function StudentList({ students }) {
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(null);
 
-  // Updated tabs to filter by internshipStatus
   const tabs = [
     { id: 'all', label: 'ALL' },
     { id: 'current', label: 'CURRENT' },
@@ -24,9 +29,9 @@ export default function StudentList({ students }) {
   const filterStudents = (students) => {
     if (!students) return [];
 
-    let filtered = activeTab === 'all' 
-      ? students 
-      : students.filter(student => 
+    let filtered = activeTab === 'all'
+      ? students
+      : students.filter(student =>
           student.internshipStatus?.toLowerCase() === activeTab.toLowerCase()
         );
 
@@ -49,17 +54,16 @@ export default function StudentList({ students }) {
     setSelectedStudent(null);
   };
 
-  // Get the active tab's status color
   const getTabStatusColor = (tabId) => {
     if (tabId === 'all') {
-      return 'bg-white text-gray-600 border-2 border-gray-300';  // Make sure ALL tab is consistent
+      return 'bg-white text-gray-600 border-2 border-gray-300';
     }
     return statusColors[tabId] || 'bg-white text-gray-600 border-2 border-gray-300';
   };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-6 relative">
-      {/* Title Section */}
+      {/* Title */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
           STUDENT PROFILES
@@ -74,8 +78,10 @@ export default function StudentList({ students }) {
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-                ${activeTab === id ? `${getTabStatusColor(id)} text-[#2a5f74]` : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'}`}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200
+                ${activeTab === id
+                  ? `${getTabStatusColor(id)} text-[#2a5f74]`
+                  : `bg-white text-gray-600 border border-gray-300 ${hoverStatusColors[id] || 'hover:bg-gray-50'}`}`}
             >
               {label}
             </button>
@@ -92,9 +98,7 @@ export default function StudentList({ students }) {
       </div>
 
       {/* Grid */}
-      <div className={`transition-all duration-300 ${
-        selectedStudent ? 'w-[calc(100%-33%)]' : 'w-full'
-      }`}>
+      <div className={`transition-all duration-300 ${selectedStudent ? 'w-[calc(100%-33%)]' : 'w-full'}`}>
         <div className={`grid gap-8 ${
           selectedStudent
             ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3'
@@ -102,9 +106,9 @@ export default function StudentList({ students }) {
         }`}>
           {filteredStudents.map((student) => (
             <div key={student.id}>
-              <Student 
-                student={student} 
-                onViewProfile={() => handleViewProfile(student)} 
+              <Student
+                student={student}
+                onViewProfile={() => handleViewProfile(student)}
               />
             </div>
           ))}

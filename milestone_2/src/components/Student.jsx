@@ -17,7 +17,7 @@ export default function Student({ student, onViewProfile }) {
       hover:scale-110 hover:shadow-2xl hover:border-[#3298BA]">
 
       <div className="flex flex-col items-center space-y-4">
-        <span className={`absolute top-2 left-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border
+        <span className={`absolute top-2 right-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border
           ${statusColors[internshipStatus.toLowerCase()] || 'bg-gray-100 text-gray-800 border-gray-400'}`}
         >
           {internshipStatus.toUpperCase()}
