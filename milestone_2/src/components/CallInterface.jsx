@@ -326,12 +326,12 @@ const CallInterface = () => {
 
   console.log(`[CallInterface ${instanceId}] Rendering UI.`); // Log UI render
 
-  const baseButtonClass = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-apple-gray-800";
-  const defaultButtonClass = "bg-apple-gray-700 hover:bg-apple-gray-600 text-white focus:ring-apple-gray-500";
-  const activeButtonClass = "bg-apple-blue-600 text-white focus:ring-apple-blue-400";
-  const redButtonClass = "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500";
-  const greenButtonClass = "bg-green-600 hover:bg-green-700 text-white focus:ring-green-500";
-  const yellowButtonClass = "bg-yellow-500 hover:bg-yellow-600 text-white focus:ring-yellow-400";
+  const baseButtonClass = "flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-colors transition-shadow transition-transform duration-150 focus:outline-none shadow-[0_2px_8px_rgba(49,143,168,0.06)] hover:translate-y-[-2px] hover:scale-107 focus:ring-2 focus:ring-[#318FA8] focus:ring-offset-2 focus:ring-offset-metallica-blue-400";
+  const defaultButtonClass = "bg-gray-200 hover:bg-gray-300 text-[#2A5F74]";
+  const activeButtonClass = "bg-[#318FA8] hover:bg-[#2A5F74] text-white";
+  const activeNotesButtonClass = "bg-metallica-blue-100 hover:bg-metallica-blue-200 text-metallica-blue-700";
+  const redButtonClass = "bg-red-600 hover:bg-red-700 text-white";
+  const greenButtonClass = "bg-green-600 hover:bg-green-700 text-white";
 
   const renderCallContent = () => (
     <>
@@ -399,54 +399,56 @@ const CallInterface = () => {
         </div>
       </div>
 
-      <div className="h-20 flex items-center justify-center gap-3 sm:gap-4 px-4 bg-apple-gray-900">
-        <button
-          onClick={() => dispatch(toggleMute())}
-          className={`${baseButtonClass} ${isMuted ? redButtonClass : defaultButtonClass}`}
-          title={isMuted ? 'Unmute' : 'Mute'}
-        >
-          <FontAwesomeIcon icon={isMuted ? faMicrophoneSlash : faMicrophone} className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
+      <div className="h-24 flex items-center justify-center px-4 bg-gray-50">
+        <div className="bg-gray-100 p-3 rounded-full flex items-center justify-center gap-3 sm:gap-4">
+          <button
+            onClick={() => dispatch(toggleMute())}
+            className={`${baseButtonClass} ${isMuted ? redButtonClass : defaultButtonClass}`}
+            title={isMuted ? 'Unmute' : 'Mute'}
+          >
+            <FontAwesomeIcon icon={isMuted ? faMicrophoneSlash : faMicrophone} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
 
-        <button
-          onClick={() => dispatch(toggleVideo())}
-          className={`${baseButtonClass} ${!isVideoEnabled ? redButtonClass : defaultButtonClass}`}
-          title={isVideoEnabled ? 'Stop Video' : 'Start Video'}
-        >
-          <FontAwesomeIcon icon={isVideoEnabled ? faVideo : faVideoSlash} className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
+          <button
+            onClick={() => dispatch(toggleVideo())}
+            className={`${baseButtonClass} ${!isVideoEnabled ? redButtonClass : defaultButtonClass}`}
+            title={isVideoEnabled ? 'Stop Video' : 'Start Video'}
+          >
+            <FontAwesomeIcon icon={isVideoEnabled ? faVideo : faVideoSlash} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
 
-        <button
-          onClick={handleToggleChat}
-          className={`${baseButtonClass} ${showChat ? activeButtonClass : defaultButtonClass}`}
-          title="Chat"
-        >
-          <FontAwesomeIcon icon={faComments} className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
+          <button
+            onClick={handleToggleChat}
+            className={`${baseButtonClass} ${showChat ? activeButtonClass : defaultButtonClass}`}
+            title="Chat"
+          >
+            <FontAwesomeIcon icon={faComments} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
 
-        <button
-          onClick={handleToggleNotes}
-          className={`${baseButtonClass} ${showNotes ? yellowButtonClass : defaultButtonClass}`}
-          title="Notes"
-        >
-          <FontAwesomeIcon icon={faNoteSticky} className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
+          <button
+            onClick={handleToggleNotes}
+            className={`${baseButtonClass} ${showNotes ? activeNotesButtonClass : defaultButtonClass}`}
+            title="Notes"
+          >
+            <FontAwesomeIcon icon={faNoteSticky} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
 
-        <button
-          onClick={() => dispatch(toggleScreenShare())}
-          className={`${baseButtonClass} ${isScreenSharing ? greenButtonClass : defaultButtonClass}`}
-          title={isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
-        >
-          <FontAwesomeIcon icon={faDesktop} className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
+          <button
+            onClick={() => dispatch(toggleScreenShare())}
+            className={`${baseButtonClass} ${isScreenSharing ? greenButtonClass : defaultButtonClass}`}
+            title={isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
+          >
+            <FontAwesomeIcon icon={faDesktop} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
 
-        <button
-          onClick={handleEndCall}
-          className={`${baseButtonClass} ${redButtonClass}`}
-          title="End Call"
-        >
-          <FontAwesomeIcon icon={faPhoneSlash} className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
+          <button
+            onClick={handleEndCall}
+            className={`${baseButtonClass} ${redButtonClass}`}
+            title="End Call"
+          >
+            <FontAwesomeIcon icon={faPhoneSlash} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
+        </div>
       </div>
     </>
   );
@@ -468,9 +470,9 @@ const CallInterface = () => {
             animate={{ x: '0%' }}
             exit={{ x: '-100%' }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-1/3 h-screen flex flex-col bg-white border-r border-gray-300 shadow-lg"
+            className="w-1/4 h-screen flex flex-col bg-white border-r border-gray-300 shadow-lg"
           >
-            <div className="flex justify-between items-center p-3 border-b bg-gray-50">
+            <div className="flex justify-between items-center p-3 border-b bg-gray-50 rounded-t-lg">
               <h3 className="text-lg font-semibold text-gray-700">Chat</h3>
               <button
                 onClick={handleToggleChat}
@@ -529,9 +531,9 @@ const CallInterface = () => {
         layout
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className={`flex flex-col h-screen ${showChat && showNotes
-          ? 'w-1/3'
+          ? 'w-1/2'
           : showChat || showNotes
-            ? 'w-2/3'
+            ? 'w-3/4'
             : 'w-full'
           }`}
       >
@@ -547,7 +549,7 @@ const CallInterface = () => {
             animate={{ x: '0%' }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-1/3 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg"
+            className="w-1/4 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg"
           >
             <div className="flex justify-between items-center p-3 border-b bg-gray-50">
               <h3 className="text-lg font-semibold text-gray-700">Private Notes</h3>
