@@ -12,6 +12,8 @@ export default function StudentReportCards() {
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [editingDraftIndex, setEditingDraftIndex] = useState(null);
   const [editingDraftData, setEditingDraftData] = useState(null);
+  const [showAppealModal, setShowAppealModal] = useState(false);
+  const [appealMessage, setAppealMessage] = useState("");
 
   // Use one accepted and one pending as drafts, rest as submitted
   const reports = Object.values(facultyScadReports);
@@ -37,6 +39,32 @@ export default function StudentReportCards() {
   const handleCancelEdit = () => {
     setEditingDraftIndex(null);
     setEditingDraftData(null);
+  };
+  
+  // Handler for opening appeal modal
+  const handleAppeal = (report) => {
+    setSelectedReport(report);
+    setShowAppealModal(true);
+  };
+
+  // Handler for submitting appeal
+  const handleSubmitAppeal = () => {
+    console.log(`Submitting appeal for report ${selectedReport.id}:`, appealMessage);
+    
+    // Update report status locally
+    const updatedSubmittedReports = submittedReports.map(report => {
+      if (report.id === selectedReport.id) {
+        return {
+          ...report,
+          appealStatus: 'pending'
+        };
+      }
+      return report;
+    });
+    
+    setShowAppealModal(false);
+    setAppealMessage("");
+    setSelectedReport(prev => ({...prev, appealStatus: 'pending'}));
   };
 
   if (editingDraftIndex !== null && editingDraftData) {
@@ -143,7 +171,26 @@ export default function StudentReportCards() {
                     >
                       &times;
                     </button>
-                    <ReportViewer report={selectedReport} userType="student" />
+                    <div>
+                      <ReportViewer report={selectedReport} userType="student" />
+                      
+                      {/* Add Make an Appeal button for flagged or rejected reports */}
+                      {(selectedReport.status === "flagged" || selectedReport.status === "rejected") && !selectedReport.appealStatus && (
+                        <div className="mt-6 flex justify-end">
+                          <button
+                            onClick={() => handleAppeal(selectedReport)}
+                            className="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition shadow-sm hover:shadow-md flex items-center"
+                          >
+                            Make an Appeal
+                          </button>
+                        </div>
+                      )}
+                      {selectedReport.appealStatus === 'pending' && (
+                        <div className="mt-6 text-center">
+                          <span className="text-metallica-blue-600 font-semibold italic">Appeal Pending</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
@@ -198,7 +245,26 @@ export default function StudentReportCards() {
                     >
                       &times;
                     </button>
-                    <ReportViewer report={selectedReport} userType="student-draft" />
+                    <div>
+                      <ReportViewer report={selectedReport} userType="student-draft" />
+                      
+                      {/* Add Make an Appeal button for flagged or rejected draft reports */}
+                      {(selectedReport.status === "flagged" || selectedReport.status === "rejected") && !selectedReport.appealStatus && (
+                        <div className="mt-6 flex justify-end">
+                          <button
+                            onClick={() => handleAppeal(selectedReport)}
+                            className="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition shadow-sm hover:shadow-md flex items-center"
+                          >
+                            Make an Appeal
+                          </button>
+                        </div>
+                      )}
+                      {selectedReport.appealStatus === 'pending' && (
+                        <div className="mt-6 text-center">
+                          <span className="text-metallica-blue-600 font-semibold italic">Appeal Pending</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
@@ -206,6 +272,49 @@ export default function StudentReportCards() {
           )}
         </div>
       </div>
+
+      {/* Appeal Modal */}
+      {showAppealModal && selectedReport && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative">
+            <button
+              className="absolute top-4 right-4 text-gray-500 hover:text-metallica-blue-700 text-2xl font-bold"
+              onClick={() => {
+                setShowAppealModal(false);
+                setAppealMessage("");
+              }}
+            >
+              &times;
+            </button>
+            <h2 className="text-xl font-bold text-[#2A5F74] mb-4">Submit Appeal</h2>
+            <textarea
+              value={appealMessage}
+              onChange={(e) => setAppealMessage(e.target.value)}
+              placeholder="Enter your appeal message..."
+              rows="4"
+              className="w-full p-4 border-2 border-metallica-blue-300 rounded-lg mb-4 resize-vertical min-h-[100px] focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
+            />
+            <div className="flex justify-end gap-3">
+              <button 
+                onClick={() => {
+                  setShowAppealModal(false);
+                  setAppealMessage("");
+                }}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleSubmitAppeal}
+                disabled={!appealMessage.trim()}
+                className="px-4 py-2 bg-metallica-blue-600 text-white rounded-lg font-semibold hover:bg-metallica-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Submit Appeal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
