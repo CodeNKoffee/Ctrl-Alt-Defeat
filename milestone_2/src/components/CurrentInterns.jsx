@@ -3,18 +3,29 @@ import { useState } from "react";
 import { mockStudents } from '../../constants/mockData';
 import InternRow from './InternRow';
 
-// Status colors
+// Basic styling for tabs (default state)
 const statusColors = {
+  all: 'bg-white text-gray-600 border-2 border-gray-300', // Basic styling for "All" tab
+  current: 'bg-white text-gray-600 border-2 border-gray-300',
+  completed: 'bg-white text-gray-600 border-2 border-gray-300',
+  evaluated: 'bg-white text-gray-600 border-2 border-gray-300',
+};
+
+// Hover effect for tabs
+const hoverStatusColors = {
+  current: 'hover:bg-blue-100 hover:text-blue-800 hover:border-blue-400',
+  completed: 'hover:bg-green-100 hover:text-green-800 hover:border-green-400',
+  evaluated: 'hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400',
+  all: 'hover:bg-gray-100 hover:text-gray-700 hover:border-gray-400', // Hover effect for "All" tab
+};
+
+// Active tab styling
+const activeTabStyles = {
   current: 'bg-blue-100 text-blue-800 border-2 border-blue-400',
   completed: 'bg-green-100 text-green-800 border-2 border-green-400',
   evaluated: 'bg-purple-100 text-purple-800 border-2 border-purple-400',
+  all: 'bg-white text-gray-600 border-2 border-gray-300', // Active "All" tab styling
 };
-const hoverStatusColors = {
-  current: 'hover:bg-blue-100 hover:text-blue-800 border-2 hover:border-blue-400',
-  completed: 'hover:bg-green-100 hover:text-green-800 border-2 hover:border-green-400',
-  evaluated: 'hover:bg-purple-100 hover:text-purple-800 border-2 hover:border-purple-400',
-};
-
 
 // Helper to infer internship status from period
 const inferStatus = (period) => {
@@ -112,17 +123,17 @@ export default function CurrentInterns() {
         </div>
         <div className="flex flex-wrap gap-2 w-full">
           {['all', 'current', 'completed', 'evaluated'].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
-  ${activeTab === tab
-    ? `${statusColors[tab]}`
-    : `bg-white text-gray-600 border border-gray-300 ${hoverStatusColors[tab] || ''}`}`}
-
-            >
-              {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </button>
+<button
+  key={tab}
+  onClick={() => setActiveTab(tab)}
+  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
+    ${activeTab === tab
+      ? activeTabStyles[tab] // Apply active tab styles
+      : `${statusColors[tab]} ${hoverStatusColors[tab]}`} // Default styles and hover effects
+  `}
+>
+  {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+</button>
           ))}
         </div>
       </div>
