@@ -1,14 +1,8 @@
 "use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
-export default function Student({ student }) {
+export default function Student({ student, onViewProfile }) {
   const { id, name, photo, major, semester, status } = student;
-  const router = useRouter();
-
-  const handleViewProfile = () => {
-    router.push(`/dashboard/scad/StudentList/StudentProfile/`);
-  };
 
   return (
     <div className="bg-[#F0F9FB] rounded-lg p-6 w-[280px] shadow-sm border-2 border-[#5DB2C7]
@@ -43,7 +37,7 @@ export default function Student({ student }) {
 
         {/* View Profile Button */}
         <button
-          onClick={handleViewProfile}
+          onClick={onViewProfile}
           className="px-6 py-2 bg-white text-sm font-medium text-[#2a5f74] border-2 border-[#3298BA] rounded-full
             hover:bg-[#D9F0F4] transition-colors"
         >
