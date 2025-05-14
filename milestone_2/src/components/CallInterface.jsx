@@ -467,7 +467,7 @@ const CallInterface = () => {
             initial={{ x: '-100%' }}
             animate={{ x: '0%' }}
             exit={{ x: '-100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
             className="w-1/3 h-screen flex flex-col bg-white border-r border-gray-300 shadow-lg"
           >
             <div className="flex justify-between items-center p-3 border-b bg-gray-50">
@@ -525,16 +525,18 @@ const CallInterface = () => {
       </AnimatePresence>
 
       {/* Main Call Content Area */}
-      <div
-        className={`flex flex-col h-screen transition-all duration-300 ease-in-out ${showChat && showNotes
-          ? 'w-1/3'
-          : showChat || showNotes
-            ? 'w-2/3'
-            : 'w-full'
+      <motion.div
+        layout
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={`flex flex-col h-screen ${showChat && showNotes
+            ? 'w-1/3'
+            : showChat || showNotes
+              ? 'w-2/3'
+              : 'w-full'
           }`}
       >
         {renderCallContent()}
-      </div>
+      </motion.div>
 
       {/* Notes Panel (Right) */}
       <AnimatePresence>
@@ -544,7 +546,7 @@ const CallInterface = () => {
             initial={{ x: '100%' }}
             animate={{ x: '0%' }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
             className="w-1/3 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg"
           >
             <div className="flex justify-between items-center p-3 border-b bg-gray-50">
