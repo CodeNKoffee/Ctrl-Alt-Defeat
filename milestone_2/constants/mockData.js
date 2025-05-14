@@ -318,81 +318,6 @@ export const MOCK_APPLIED_INTERNSHIPS = [
   }
 ];
 
-export const mockStudents = [
-  {
-    id: "61-1959",
-    name: "Farid Khaled",
-    photo: "/images/boy1.png",
-    major: "DMET",
-    semester: "4",
-    status: "Regular",
-    gpa: 1.3
-  },
-  {
-    id: "55-5727",
-    name: "Salma Tarek",
-    photo: "/images/girl1.png",
-    major: "Mechatronics Engineering",
-    semester: "8",
-    status: "Regular",
-    gpa: 2.3
-  },
-  {
-    id: "58-16143",
-    name: "Amr Baher",
-    photo: "/images/boy2.png",
-    major: "Business Management",
-    semester: "6",
-    status: "PRO",
-    gpa: 1.7
-  },
-  {
-    id: "52-4567",
-    name: "Layla Khaled",
-    photo: "/images/girl2.png",
-    major: "Product Design",
-    semester: "8",
-    status: "PRO",
-    gpa: 2.7
-  },
-  {
-    id: "64-5123",
-    name: "Khaled Ahmed",
-    photo: "/images/boy3.png",
-    major: "IET",
-    semester: "2",
-    status: "Regular",
-    gpa: 3.0
-  },
-  {
-    id: "58-0454",
-    name: "Habiba Mahmoud",
-    photo: "/images/girl3.png",
-    major: "Pharmacy",
-    semester: "6",
-    status: "PRO",
-    gpa: 1.0
-  },
-  {
-    id:"61-7128",
-    name: "Hala Khaled",
-    photo: "/images/girl4.png",
-    major: "Business Informatics",
-    semester: "4",
-    status: "Regular",
-    gpa: 2.0
-  },
-  {
-    id:"55-6188",
-    name:"Hatem Soliman",
-    photo:"/images/boy4.png",
-    major:"MET",
-    semester:"6",
-    status:"PRO",
-    gpa:1.7
-  }
-];
-
 // Faculty and SCAD Report Data - shared between both views
 export const facultyScadReports = {
   "1": {
@@ -599,3 +524,388 @@ export const Law_Courses = [
   'Civil Law',
   'Criminal Law'
 ]
+
+export const mockStudents = [
+  {
+    id: "61-1959",
+    name: "Farid Khaled",
+    photo: "/images/boy1.png",
+    major: "DMET",
+    semester: "4",
+    status: "Regular",
+    gpa: 1.3,
+    email: "FaridKhaled@student.guc.edu.eg",
+    bio: "DMET student with a strong interest in embedded systems and robotics.",
+    profileImage: "/images/boy1.png",
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/faridkhaled",
+      github: "https://github.com/faridkhaled"
+    },
+    personalityTraits: [
+      { trait: "Openness", rating: 3 },
+      { trait: "Conscientiousness", rating: 4 },
+      { trait: "Extraversion", rating: 2 },
+      { trait: "Agreeableness", rating: 4 }
+    ],
+    education: [
+      {
+        degree: "B.Sc. in Digital Media Engineering & Technology",
+        institution: "German University in Cairo",
+        period: "2021 - Present"
+      }
+    ],
+    skills: ["C++", "Verilog", "Arduino", "MATLAB", "Teamwork"],
+    jobInterests: [
+      {
+        title: "Embedded Systems Engineer",
+        description: "Loves building low-level systems that interface directly with hardware."
+      }
+    ],
+    experience: [
+      {
+        title: "Robotics Club Member",
+        company: "GUC Robotics Society",
+        duration: "2023",
+        responsibilities: [
+          "Built autonomous robots using Arduino",
+          "Participated in local robotics competitions"
+        ]
+      }
+    ],
+    internships: [
+      {
+        title: "Embedded Intern",
+        company: "Valeo Egypt",
+        period: "Summer 2023",
+        description: "Worked on firmware for automotive microcontrollers."
+      }
+    ]
+  },
+  {
+    id: "55-5727",
+    name: "Salma Tarek",
+    photo: "/images/girl1.png",
+    major: "Mechatronics Engineering",
+    semester: "8",
+    status: "Regular",
+    gpa: 2.3,
+    email: "SalmaTarek@student.guc.edu.eg",
+    bio: "Final-year Mechatronics student focused on industrial automation.",
+    profileImage: "/images/girl1.png",
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/salmatarek",
+      portfolio: "https://salmatarek.me"
+    },
+    personalityTraits: [
+      { trait: "Openness", rating: 5 },
+      { trait: "Conscientiousness", rating: 4 },
+      { trait: "Extraversion", rating: 3 },
+      { trait: "Agreeableness", rating: 5 }
+    ],
+    education: [
+      {
+        degree: "B.Sc. in Mechatronics Engineering",
+        institution: "German University in Cairo",
+        period: "2019 - Present"
+      }
+    ],
+    skills: ["PLC Programming", "SolidWorks", "Python", "ROS", "Simulink"],
+    jobInterests: [
+      {
+        title: "Automation Engineer",
+        description: "Interested in smart factories and robotic assembly lines."
+      }
+    ],
+    experience: [
+      {
+        title: "Senior Project",
+        company: "GUC Lab",
+        duration: "2024",
+        responsibilities: [
+          "Designed a pick-and-place robotic arm",
+          "Integrated computer vision for object detection"
+        ]
+      }
+    ],
+    internships: [
+      {
+        title: "Control Systems Intern",
+        company: "Siemens Egypt",
+        period: "Summer 2023",
+        description: "Assisted in commissioning PLC-based systems in a manufacturing plant."
+      }
+    ]
+  },
+  {
+    id: "58-16143",
+    name: "Amr Baher",
+    photo: "/images/boy2.png",
+    major: "Business Management",
+    semester: "6",
+    status: "PRO",
+    gpa: 1.7,
+    email: "AmrBaher@student.guc.edu.eg",
+    bio: "Business student with a focus on digital transformation and analytics.",
+    profileImage: "/images/boy2.png",
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/amrbaher",
+      github: "https://github.com/amrbaher"
+    },
+    personalityTraits: [
+      { trait: "Openness", rating: 4 },
+      { trait: "Conscientiousness", rating: 2 },
+      { trait: "Extraversion", rating: 5 },
+      { trait: "Agreeableness", rating: 3 }
+    ],
+    education: [
+      {
+        degree: "B.A. in Business Management",
+        institution: "German University in Cairo",
+        period: "2021 - Present"
+      }
+    ],
+    skills: ["Excel", "Power BI", "Marketing", "Communication", "Public Speaking"],
+    jobInterests: [
+      {
+        title: "Marketing Analyst",
+        description: "Loves interpreting market trends and campaign data."
+      },
+      {
+        title: "Product Strategist",
+        description: "Enjoys aligning products with customer needs and market gaps."
+      }
+    ],
+    experience: [
+      {
+        title: "Marketing Trainee",
+        company: "PepsiCo Egypt",
+        duration: "Spring 2023",
+        responsibilities: [
+          "Supported digital ad campaigns",
+          "Collected and analyzed social media metrics"
+        ]
+      }
+    ],
+    internships: [
+      {
+        title: "Business Analyst Intern",
+        company: "Vodafone",
+        period: "Summer 2023",
+        description: "Worked with BI teams to generate reports on customer churn."
+      }
+    ]
+  },
+  {
+    id: "52-4567",
+    name: "Layla Khaled",
+    photo: "/images/girl2.png",
+    major: "Product Design",
+    semester: "8",
+    status: "PRO",
+    gpa: 2.7,
+    email: "LaylaKhaled@student.guc.edu.eg",
+    bio: "Passionate product designer blending aesthetics and functionality.",
+    profileImage: "/images/girl2.png",
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/laylakhaled",
+      portfolio: "https://laylakhaled.design"
+    },
+    personalityTraits: [
+      { trait: "Openness", rating: 5 },
+      { trait: "Conscientiousness", rating: 3 },
+      { trait: "Extraversion", rating: 4 },
+      { trait: "Agreeableness", rating: 4 }
+    ],
+    education: [
+      {
+        degree: "B.Sc. in Product Design",
+        institution: "German University in Cairo",
+        period: "2019 - Present"
+      }
+    ],
+    skills: ["Sketch", "Figma", "3D Modeling", "UX Research", "Design Thinking"],
+    jobInterests: [
+      {
+        title: "UX Designer",
+        description: "Driven to create seamless digital experiences."
+      },
+      {
+        title: "Product Designer",
+        description: "Loves iterating on prototypes and testing with users."
+      }
+    ],
+    experience: [
+      {
+        title: "Freelance UX Designer",
+        company: "Startup Portfolio",
+        duration: "2023",
+        responsibilities: [
+          "Designed mobile app interfaces",
+          "Conducted usability tests"
+        ]
+      }
+    ],
+    internships: [
+      {
+        title: "Design Intern",
+        company: "Orange Labs",
+        period: "Summer 2023",
+        description: "Assisted in redesigning internal tools for employee use."
+      }
+    ]
+  },
+  {
+    id: "64-5123",
+    name: "Khaled Ahmed",
+    photo: "/images/boy3.png",
+    major: "IET",
+    semester: "2",
+    status: "Regular",
+    gpa: 3.0,
+    email: "KhaledAhmed@student.guc.edu.eg",
+    bio: "Early IET student exploring the intersections of electrical engineering and computing.",
+    profileImage: "/images/boy3.png",
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/khaledahmed"
+    },
+    personalityTraits: [
+      { trait: "Openness", rating: 3 },
+      { trait: "Conscientiousness", rating: 4 },
+      { trait: "Extraversion", rating: 2 },
+      { trait: "Agreeableness", rating: 3 }
+    ],
+    education: [
+      {
+        degree: "B.Sc. in Information Engineering and Technology",
+        institution: "German University in Cairo",
+        period: "2023 - Present"
+      }
+    ],
+    skills: ["Python", "Circuits", "Microcontrollers", "Debugging", "Soldering"],
+    jobInterests: [
+      {
+        title: "IoT Engineer",
+        description: "Excited about connecting the physical world through sensors and software."
+      }
+    ],
+    experience: [],
+    internships: []
+  },
+  {
+    id: "58-0454",
+    name: "Habiba Mahmoud",
+    photo: "/images/girl3.png",
+    major: "Pharmacy",
+    semester: "6",
+    status: "PRO",
+    gpa: 1.0,
+    email: "HabibaMahmoud@student.guc.edu.eg",
+    bio: "Pharmacy student interested in clinical research and pharmacovigilance.",
+    profileImage: "/images/girl3.png",
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/habibamahmoud"
+    },
+    personalityTraits: [
+      { trait: "Openness", rating: 4 },
+      { trait: "Conscientiousness", rating: 5 },
+      { trait: "Extraversion", rating: 2 },
+      { trait: "Agreeableness", rating: 4 }
+    ],
+    education: [
+      {
+        degree: "B.Pharm in Pharmaceutical Sciences",
+        institution: "German University in Cairo",
+        period: "2021 - Present"
+      }
+    ],
+    skills: ["Drug Interaction Analysis", "Lab Techniques", "Research Writing", "SPSS"],
+    jobInterests: [
+      {
+        title: "Clinical Research Associate",
+        description: "Interested in supporting clinical trials and ensuring drug safety."
+      },
+      {
+        title: "Regulatory Affairs Specialist",
+        description: "Wants to work with compliance teams to bring pharmaceuticals to market safely."
+      }
+    ],
+    experience: [
+      {
+        title: "Lab Assistant",
+        company: "GUC Pharmacology Lab",
+        duration: "2023",
+        responsibilities: [
+          "Prepared chemical solutions for lab tests",
+          "Assisted in documentation of compound reactions"
+        ]
+      }
+    ],
+    internships: [
+      {
+        title: "Pharmacy Intern",
+        company: "El Ezaby Pharmacy",
+        period: "Summer 2023",
+        description: "Gained experience in prescription processing and patient consultation."
+      }
+    ]
+  },
+  {
+    id: "61-7128",
+    name: "Hala Khaled",
+    photo: "/images/girl4.png",
+    major: "Business Informatics",
+    semester: "4",
+    status: "Regular",
+    gpa: 2.0,
+    email: "HalaKhaled@student.guc.edu.eg",
+    bio: "Business Informatics student passionate about data-driven solutions and ERP systems.",
+    profileImage: "/images/girl4.png",
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/halakhaled",
+      github: "https://github.com/halakhaled"
+    },
+    personalityTraits: [
+      { trait: "Openness", rating: 3 },
+      { trait: "Conscientiousness", rating: 4 },
+      { trait: "Extraversion", rating: 3 },
+      { trait: "Agreeableness", rating: 5 }
+    ],
+    education: [
+      {
+        degree: "B.Sc. in Business Informatics",
+        institution: "German University in Cairo",
+        period: "2022 - Present"
+      }
+    ],
+    skills: ["SQL", "ERP Systems", "Data Analytics", "Business Intelligence", "Excel"],
+    jobInterests: [
+      {
+        title: "ERP Consultant",
+        description: "Interested in helping companies digitize their operations through ERP systems."
+      },
+      {
+        title: "Data Analyst",
+        description: "Enjoys working with data to uncover business insights and support decision-making."
+      }
+    ],
+    experience: [
+      {
+        title: "Business Analyst Trainee",
+        company: "SAP Student Academy",
+        duration: "2023",
+        responsibilities: [
+          "Completed workshops on SAP ERP systems",
+          "Created mock dashboards using BI tools"
+        ]
+      }
+    ],
+    internships: [
+      {
+        title: "IT Support Intern",
+        company: "Nestlé Egypt",
+        period: "Summer 2023",
+        description: "Provided support for internal systems and assisted with data integrity checks in ERP modules."
+      }
+    ]
+  }
+];

@@ -11,10 +11,10 @@ export default function Student() {
   
   // Default student data
   const defaultStudentData = {
-    name: "John Doe",
-    handle: "@johndoe",
+    name: "Salma Soliman",
+    email: "SalmaSoliman@student.guc.edu.eg",
     bio: "Computer Science student passionate about web development and AI.",
-    profileImage: "/images/student.png",
+    profileImage: "/images/girl1.png",
     socialLinks: {
       linkedin: "https://linkedin.com/in/johndoe",
       github: "https://github.com/johndoe",

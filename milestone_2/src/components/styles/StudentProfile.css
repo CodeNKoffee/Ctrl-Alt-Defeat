@@ -35,6 +35,7 @@
   left: 65%;
   transform: translateX(-38%);
   pointer-events: all;
+  padding: 0 10px ;
 }
 
 .student-card {
@@ -53,6 +54,9 @@
   left: 50%;
   transform: translateX(-50%);
   transform-origin: center left;
+  background: #F0F9FB;
+  border: 3px solid #318FA8;
+  border-radius: 1rem; /* Optional: gives it a softer look */
 }
 
 /* Call to action for student card */
@@ -64,6 +68,7 @@
   transform: translateX(-50%);
   background-color: var(--user-secondary);
   color: white;
+  border-radius: 1rem; /* Optional: gives it a softer look */
   padding: 6px 15px;
   border-radius: 20px;
   font-size: 0.85rem;
@@ -102,7 +107,43 @@
   bottom: 55px;
 }
 
+/* Profile Card Section */
 .card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: #F0F9FB;
+}
+
+.card-top .profile-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.card-top .profile-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--user-primary);
+  margin-top: 8rem;
+}
+
+.card-top .edit-profile-button {
+  margin-top: 0.5rem;
+}
+
+.card-content {
+  text-align: center;
+  padding: 1rem;
+}
+
+
+/*.card-top {
   height: 45%;
   width: 100%;
   background: linear-gradient(135deg, var(--metallica-blue-300) 0%, var(--metallica-blue-600) 100%);
@@ -119,29 +160,32 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: var(--user-primary);
-  padding: 4px;
+  background: #F0F9FB; /* Soft blue background 
+  padding: 6px;        /* Slightly more padding for the ring effect 
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 2.5px solid #3298BA; /* Blue border ring 
   transition: all 0.3s ease;
 }
 
 .profile-image {
-  width: 92px;
-  height: 92px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
   object-fit: cover;
-}
+  background: #F0F9FB; /* fallback background 
+  box-shadow: 0 2px 8px rgba(50, 152, 186, 0.10);
+}*/
 
-.card-content {
+/*.card-content {
   padding: 60px 25px 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
-}
+}*/
 
 .student-name {
   font-size: 1.6rem;
@@ -162,7 +206,7 @@
   display: flex;
   gap: 15px;
   justify-content: center;
-  margin-bottom: 25px;
+  margin-bottom: 8px;
 }
 
 .social-icon {
@@ -206,6 +250,9 @@
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
   left: 25%;
   transform: translateX(-50%);
+  background: #F0F9FB;
+  border: 3px solid #318FA8;
+  border-radius: 1rem; /* Optional: gives it a softer look */
 }
 
 .student-profile {
