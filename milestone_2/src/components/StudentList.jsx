@@ -9,19 +9,22 @@ export default function StudentList({ students }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(null);
 
+  // Updated tabs to filter by internshipStatus
   const tabs = [
-    { id: 'all', label: 'All' },
-    { id: 'regular', label: 'Regular Students' },
-    { id: 'pro', label: 'PRO Students' }
+    { id: 'all', label: 'ALL' },
+    { id: 'Current', label: 'CURRENT' },
+    { id: 'Completed', label: 'COMPLETED' }
   ];
 
   const filterStudents = (students) => {
     if (!students) return [];
-    
+
     let filtered = activeTab === 'all' 
       ? students 
-      : students.filter(student => student.status.toLowerCase() === activeTab.toLowerCase());
-    
+      : students.filter(student => 
+          student.internshipStatus?.toLowerCase() === activeTab.toLowerCase()
+        );
+
     if (searchTerm.trim()) {
       filtered = filtered.filter(student =>
         student.id.toLowerCase().includes(searchTerm.toLowerCase())
@@ -51,9 +54,8 @@ export default function StudentList({ students }) {
         </h1>
       </div>
 
-      {/* Status Tabs and Search Bar */}
+      {/* Tabs & Search */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 pr-[2px]">
-        {/* Status Tabs */}
         <div className="flex flex-wrap gap-2">
           {tabs.map(({ id, label }) => (
             <button
@@ -71,7 +73,6 @@ export default function StudentList({ students }) {
           ))}
         </div>
 
-        {/* Search Bar */}
         <div className="w-full sm:w-[280px]">
           <SearchBar
             searchTerm={searchTerm}
@@ -81,7 +82,7 @@ export default function StudentList({ students }) {
         </div>
       </div>
 
-      {/* Grid Container - Adjusted for sidebar */}
+      {/* Grid */}
       <div className={`transition-all duration-300 ${
         selectedStudent ? 'w-[calc(100%-33%)]' : 'w-full'
       }`}>

@@ -2,6 +2,12 @@
 import React from "react";
 import Image from "next/image";
 
+const statusColors = {
+  current: 'bg-blue-100 text-blue-800 border-blue-400',
+  completed: 'bg-green-100 text-green-800 border-green-400',
+  evaluated: 'bg-purple-100 text-purple-800 border-purple-400',
+};
+
 export default function StudentProfileSidebar({ student, onClose }) {
   return (
     <div className={`fixed top-0 right-0 h-full transition-all duration-300 ease-in-out transform ${
@@ -9,15 +15,24 @@ export default function StudentProfileSidebar({ student, onClose }) {
     } w-1/3 z-50`}>
       {student && (
         <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
-          {/* Close button */}
-          <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
+          {/* Top bar with Internship Status and Close button */}
+            <div className="flex justify-between items-center sticky top-0 bg-white z-10 px-4 py-2">
+            {/* Internship Status badge */}
+            <span className={`
+                inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border
+                ${statusColors[student.internshipStatus.toLowerCase()] || 'bg-gray-100 text-gray-800 border-gray-400'}
+            `}>
+                {student.internshipStatus.toUpperCase()}
+            </span>
+
+            {/* Close button */}
             <button 
-              onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 text-2xl"
+                onClick={onClose}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
             >
-              ×
+                ×
             </button>
-          </div>
+            </div>
 
           {/* Scrollable content */}
           <div className="overflow-y-auto flex-1 px-6">
