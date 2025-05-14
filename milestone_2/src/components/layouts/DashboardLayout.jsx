@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function DashboardLayout({
   children,
@@ -15,6 +17,8 @@ export default function DashboardLayout({
 }) {
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const router = useRouter();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   // Authentication check
   useEffect(() => {
@@ -59,11 +63,36 @@ export default function DashboardLayout({
 
       <div className="flex-1 overflow-auto">
         <div className="p-4 md:p-6 min-h-screen flex flex-col">
-          <div className="mb-6">
-            <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
-              {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
-            </h1>
-          </div>
+        <div className="mb-6 flex justify-between items-center flex-wrap gap-4">
+  <h1 className="text-2xl font-semibold text-[#2a5f74] font-ibm-plex-sans tracking-wide">
+    {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
+  </h1>
+
+  <div className="flex items-center gap-4 bg-white px-5 py-3 rounded-lg shadow-sm border border-[#d3e1e5]">
+    <div className="flex flex-col">
+      <label className="text-xs font-medium text-[#2A5F74] mb-1">Start Date</label>
+      <DatePicker
+        selected={startDate}
+        onChange={(date) => setStartDate(date)}
+        placeholderText="Select"
+        dateFormat="MMMM d, yyyy"
+        className="text-[11px] text-[#2A5F74] bg-[#F0F8FA] border border-[#2A5F74] rounded px-2 py-1 w-[110px] shadow-sm placeholder-[#A5BBC2] focus:outline-none focus:ring-1 focus:ring-[#2A5F74] transition duration-150 ease-in-out"
+        />
+    </div>
+    <div className="flex flex-col">
+      <label className="text-xs font-medium text-[#2A5F74] mb-1">End Date</label>
+      <DatePicker
+        selected={endDate}
+        onChange={(date) => setEndDate(date)}
+        placeholderText="Select"
+        dateFormat="MMMM d, yyyy"
+        className="text-[11px] text-[#2A5F74] bg-[#F0F8FA] border border-[#2A5F74] rounded px-2 py-1 w-[110px] shadow-sm placeholder-[#A5BBC2] focus:outline-none focus:ring-1 focus:ring-[#2A5F74] transition duration-150 ease-in-out"
+        />
+    </div>
+  </div>
+</div>
+
+
 
           <div className="bg-metallica-blue-50 rounded-xl shadow-sm overflow-hidden border border-gray-200 flex-1">
             {title && (
