@@ -567,6 +567,23 @@ export const reports = [
   // ...rest of the original reports...
 ];
 
+// Mock reviews for company evaluation modal
+export const mockCompanyReviews = [
+  {
+    user: "Sarah Ahmed",
+    rating: 4,
+    date: "18 APR 2025",
+    comment: "Great mentorship and supportive environment. Learned a lot!",
+    likes: 298
+  },
+  {
+    user: "Mohamed Tarek",
+    rating: 5,
+    date: "15 APR 2025",
+    comment: "Amazing experience, the team was very helpful and the projects were interesting.",
+    likes: 178
+  }
+];
 
 //Courses by Major:
 

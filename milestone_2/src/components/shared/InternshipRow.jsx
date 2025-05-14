@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import StatusBadge from './StatusBadge';
 import { Tooltip } from 'react-tooltip';
 import UploadDocuments from '../UploadDocuments';
+import EvaluationModal from '../EvaluationModal';
+import { mockCompanyReviews } from '../../../constants/mockData';
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";
@@ -49,6 +51,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [showEvaluation, setShowEvaluation] = useState(false);
   const router = useRouter();
 
   const handleToggle = () => {
@@ -251,12 +254,20 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             </div>
             {/* Only show Create Report for completed status in 'my' internships, remove all other buttons */}
             {type === 'my' && internship.status === 'completed' && (
-              <button
-                onClick={() => onTriggerReportCreate(internship)}
-                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
-              >
-                Create Report
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => onTriggerReportCreate(internship)}
+                  className="px-4 py-2 text-gray-600 rounded-lg font-semibold hover:bg-[#4796a8] hover:text-white transition w-full sm:w-auto text-sm border border-[#5DB2C7]  shadow"
+                >
+                  Create Report
+                </button>
+                <button
+                  onClick={() => setShowEvaluation(true)}
+                  className="px-4 py-2  text-gray-600 rounded-lg font-semibold hover:bg-[#4796a8]  hover:text-white transition w-full sm:w-auto text-sm border border-[#5DB2C7] shadow"
+                >
+                  Evaluate Company
+                </button>
+              </div>
             )}
             {type === 'regular' ? (
               <button
@@ -281,6 +292,17 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         open={isUploadModalOpen}
         onClose={handleCloseUploadModal}
         internshipId={internship.id}
+      />
+
+      {/* Evaluation Modal */}
+      <EvaluationModal
+        isOpen={showEvaluation}
+        onClose={() => setShowEvaluation(false)}
+        onSubmit={(data) => {
+          // You can handle the evaluation submission here (e.g., API call or state update)
+          setShowEvaluation(false);
+        }}
+        mockReviews={mockCompanyReviews}
       />
     </div>
   );
