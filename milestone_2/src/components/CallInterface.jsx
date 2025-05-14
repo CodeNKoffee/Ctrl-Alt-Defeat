@@ -272,15 +272,13 @@ const CallInterface = () => {
     setTimeout(() => setShowManualLeaveToast(false), 4000);
   };
 
-  const handleToggleChat = () => {
-    setShowChat(!showChat);
-    if (!showChat && showNotes) setShowNotes(false);
-  };
+  const handleToggleChat = useCallback(() => {
+    setShowChat(prev => !prev);
+  }, []);
 
-  const handleToggleNotes = () => {
-    setShowNotes(!showNotes);
-    if (!showNotes && showChat) setShowChat(false);
-  };
+  const handleToggleNotes = useCallback(() => {
+    setShowNotes(prev => !prev);
+  }, []);
 
   const getAutoResponse = (message) => {
     const responses = [
@@ -461,26 +459,27 @@ const CallInterface = () => {
         preload="auto"
       />
 
-      <div className={`flex flex-col ${showChat || showNotes ? 'w-2/3' : 'w-full'} h-screen transition-all duration-300 ease-in-out`}>
-        {renderCallContent()}
-      </div>
-
-      {(showChat || showNotes) && (
-        <div className="w-1/3 h-screen flex flex-col bg-white border-l border-gray-300 transition-all duration-300 ease-in-out shadow-lg">
-          <div className="flex justify-between items-center p-3 border-b bg-gray-50">
-            <h3 className="text-lg font-semibold text-gray-700">
-              {showChat ? 'Chat' : 'Private Notes'}
-            </h3>
-            <button
-              onClick={showChat ? handleToggleChat : handleToggleNotes}
-              className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
-              title="Close Panel"
-            >
-              <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-            </button>
-          </div>
-
-          {showChat && (
+      {/* Chat Panel (Left) */}
+      <AnimatePresence>
+        {showChat && (
+          <motion.div
+            key="chat-sidebar"
+            initial={{ x: '-100%' }}
+            animate={{ x: '0%' }}
+            exit={{ x: '-100%' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="w-1/3 h-screen flex flex-col bg-white border-r border-gray-300 shadow-lg"
+          >
+            <div className="flex justify-between items-center p-3 border-b bg-gray-50">
+              <h3 className="text-lg font-semibold text-gray-700">Chat</h3>
+              <button
+                onClick={handleToggleChat}
+                className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+                title="Close Chat Panel"
+              >
+                <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+              </button>
+            </div>
             <div className="flex flex-col flex-grow overflow-hidden">
               <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-gray-100">
                 {chatMessages.length === 0 ? (
@@ -521,9 +520,43 @@ const CallInterface = () => {
                 </form>
               </div>
             </div>
-          )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-          {showNotes && (
+      {/* Main Call Content Area */}
+      <div
+        className={`flex flex-col h-screen transition-all duration-300 ease-in-out ${showChat && showNotes
+          ? 'w-1/3'
+          : showChat || showNotes
+            ? 'w-2/3'
+            : 'w-full'
+          }`}
+      >
+        {renderCallContent()}
+      </div>
+
+      {/* Notes Panel (Right) */}
+      <AnimatePresence>
+        {showNotes && (
+          <motion.div
+            key="notes-sidebar"
+            initial={{ x: '100%' }}
+            animate={{ x: '0%' }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="w-1/3 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg"
+          >
+            <div className="flex justify-between items-center p-3 border-b bg-gray-50">
+              <h3 className="text-lg font-semibold text-gray-700">Private Notes</h3>
+              <button
+                onClick={handleToggleNotes}
+                className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+                title="Close Notes Panel"
+              >
+                <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+              </button>
+            </div>
             <div className="flex flex-col flex-grow overflow-hidden p-4">
               <textarea
                 value={noteContent}
@@ -540,9 +573,9 @@ const CallInterface = () => {
                 Save Notes
               </button>
             </div>
-          )}
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {showManualLeaveToast && (
         <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-pulse z-60">

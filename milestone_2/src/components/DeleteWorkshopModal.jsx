@@ -3,12 +3,13 @@
 import React from 'react';
 import GenericModal from './GenericModal';
 
-const DeleteWorkshopModal = ({ isOpen, onClose, onDelete, workshopTitle }) => {
+const DeleteWorkshopModal = ({ isOpen, onClose, onDelete, workshopTitle, slideDirection = 'center' }) => {
   return (
     <GenericModal
       isOpen={isOpen}
       onClose={onClose}
       title="Delete Workshop"
+      slideDirection={slideDirection}
       primaryButton={{
         text: "Delete",
         onClick: onDelete,

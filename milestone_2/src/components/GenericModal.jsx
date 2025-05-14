@@ -13,6 +13,7 @@ const GenericModal = ({
   primaryButton = null,  // { text, onClick, color }
   secondaryButton = null, // { text, onClick, color }
   width = 'max-w-md', // default width, can be overridden
+  slideDirection = 'center', // 'center' (default) or 'left'
 }) => {
   if (!isOpen) return null;
 
@@ -31,14 +32,23 @@ const GenericModal = ({
         />
 
         {/* Modal Content Wrapper */}
-        <div className="flex items-center justify-center min-h-screen px-4 py-8 text-center sm:p-0">
+        <div className={`flex items-center justify-center min-h-screen px-4 py-8 text-center sm:p-0 ${slideDirection === 'left' ? 'justify-start' : ''}`}>
           <motion.div
             key="modal-content"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className={`relative w-full ${width} bg-metallica-blue-50 rounded-2xl overflow-hidden shadow-2xl transform sm:my-8 text-left`}
+            initial={slideDirection === 'left'
+              ? { opacity: 0, x: -300 }
+              : { opacity: 0, scale: 0.95 }
+            }
+            animate={slideDirection === 'left'
+              ? { opacity: 1, x: 0 }
+              : { opacity: 1, scale: 1 }
+            }
+            exit={slideDirection === 'left'
+              ? { opacity: 0, x: -300 }
+              : { opacity: 0, scale: 0.95 }
+            }
+            transition={{ duration: 0.3 }}
+            className={`relative w-full ${width} bg-metallica-blue-50 rounded-2xl overflow-hidden shadow-2xl transform sm:my-8 text-left ${slideDirection === 'left' ? 'sm:ml-8' : ''}`}
             onClick={e => e.stopPropagation()}
           >
             {/* Close button */}

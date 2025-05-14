@@ -198,6 +198,7 @@ export default function WorkshopManager() {
         onClose={() => setConfirmDelete(null)}
         onDelete={() => handleDeleteWorkshop(confirmDelete)}
         workshopTitle={workshopToDelete?.title}
+        slideDirection="left"
       />
     </div>
   );
