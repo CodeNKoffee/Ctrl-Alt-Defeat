@@ -3,6 +3,13 @@ import { useState } from "react";
 import { mockStudents } from '../../constants/mockData';
 import InternRow from './InternRow';
 
+// Status colors
+const statusColors = {
+  current: 'bg-blue-100 text-blue-800 border-2 border-blue-400',
+  completed: 'bg-green-100 text-green-800 border-2 border-green-400',
+  evaluated: 'bg-purple-100 text-purple-800 border-2 border-purple-400',
+};
+
 // Helper to infer internship status from period
 const inferStatus = (period) => {
   if (!period) return 'current';
@@ -84,7 +91,7 @@ export default function CurrentInterns() {
   return (
     <div className="max-w-3xl mx-auto p-4 mb-4 flex flex-col items-start">
       <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative mb-6 w-full">
-        My Interns
+        MY INTERNS
         <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
       </h1>
       <div className="flex flex-col gap-4 mb-6 w-full">
@@ -104,7 +111,7 @@ export default function CurrentInterns() {
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
                 ${activeTab === tab
-                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                  ? `${statusColors[tab] || 'bg-white text-gray-600 border-2 border-gray-300'} text-[#2a5f74]`
                   : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
                 }`}
             >

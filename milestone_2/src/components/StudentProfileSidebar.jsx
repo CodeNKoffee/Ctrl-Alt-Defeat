@@ -49,9 +49,11 @@ export default function StudentProfileSidebar({ student, onClose }) {
                       className="object-cover"
                     />
                   </div>
-                  <span className="absolute -top-2 -right-2 px-3 py-1 bg-white rounded-full text-xs font-medium text-[#2a5f74] border border-[#3298BA]">
-                    {student.status}
-                  </span>
+                {student.status === 'PRO' && (
+                <span className="absolute -top-2 -right-2 px-2 py-1 bg-white rounded-full text-xs font-medium text-[#2a5f74] border border-[#3298BA]">
+                {student.status}
+                </span>
+                )}
                 </div>
                 <h2 className="text-2xl font-bold text-[#3298BA] mb-1">{student.name}</h2>
                 {student.email && (

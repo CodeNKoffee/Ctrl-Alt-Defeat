@@ -4,6 +4,11 @@ import Student from "./Student";
 import SearchBar from "./shared/SearchBar";
 import StudentProfileSidebar from "./StudentProfileSidebar";
 
+const statusColors = {
+  current: 'bg-blue-100 text-blue-800 border-2 border-blue-400',
+  completed: 'bg-green-100 text-green-800 border-2 border-green-400',
+};
+
 export default function StudentList({ students }) {
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,8 +17,8 @@ export default function StudentList({ students }) {
   // Updated tabs to filter by internshipStatus
   const tabs = [
     { id: 'all', label: 'ALL' },
-    { id: 'Current', label: 'CURRENT' },
-    { id: 'Completed', label: 'COMPLETED' }
+    { id: 'current', label: 'CURRENT' },
+    { id: 'completed', label: 'COMPLETED' }
   ];
 
   const filterStudents = (students) => {
@@ -44,6 +49,14 @@ export default function StudentList({ students }) {
     setSelectedStudent(null);
   };
 
+  // Get the active tab's status color
+  const getTabStatusColor = (tabId) => {
+    if (tabId === 'all') {
+      return 'bg-white text-gray-600 border-2 border-gray-300';  // Make sure ALL tab is consistent
+    }
+    return statusColors[tabId] || 'bg-white text-gray-600 border-2 border-gray-300';
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-6 relative">
       {/* Title Section */}
@@ -62,11 +75,7 @@ export default function StudentList({ students }) {
               key={id}
               onClick={() => setActiveTab(id)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-                ${
-                  activeTab === id
-                    ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                    : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                }`}
+                ${activeTab === id ? `${getTabStatusColor(id)} text-[#2a5f74]` : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'}`}
             >
               {label}
             </button>
