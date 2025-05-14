@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit, faTrash, faSearch, faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
 import WorkshopList from './WorkshopList';
 import WorkshopForm from './WorkshopForm';
+import DeleteWorkshopModal from './DeleteWorkshopModal';
 import { sampleWorkshops } from '../../constants/mockData';
 
 export default function WorkshopManager() {
@@ -50,6 +51,9 @@ export default function WorkshopManager() {
     }
     setIsFormOpen(false);
   };
+
+  // Find the workshop title for the delete modal
+  const workshopToDelete = confirmDelete ? workshops.find(w => w.id === confirmDelete) : null;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -188,31 +192,13 @@ export default function WorkshopManager() {
         />
       )}
 
-      {/* Delete Confirmation Modal */}
-      {confirmDelete && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">Delete Workshop</h3>
-            <p className="text-gray-600 mb-6">
-              Are you sure you want to delete this workshop? This action cannot be undone.
-            </p>
-            <div className="flex justify-end space-x-3">
-              <button
-                onClick={() => setConfirmDelete(null)}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => handleDeleteWorkshop(confirmDelete)}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Delete Workshop Modal */}
+      <DeleteWorkshopModal
+        isOpen={confirmDelete !== null}
+        onClose={() => setConfirmDelete(null)}
+        onDelete={() => handleDeleteWorkshop(confirmDelete)}
+        workshopTitle={workshopToDelete?.title}
+      />
     </div>
   );
 } 
