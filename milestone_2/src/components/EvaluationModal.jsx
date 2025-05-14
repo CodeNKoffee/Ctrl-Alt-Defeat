@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Save } from 'lucide-react';
 
-export default function EvaluationModal({ isOpen, onClose, onSubmit, mockReviews = [] }) {
+export default function EvaluationModal({ isOpen, onClose, onSubmit, mockReviews = [], evaluationToEdit = null }) {
   const [form, setForm] = useState({
     supervisorName: "",
     supervisorEmail: "",
@@ -11,6 +11,29 @@ export default function EvaluationModal({ isOpen, onClose, onSubmit, mockReviews
     rating: 0,
   });
   const [submitting, setSubmitting] = useState(false);
+  const isEditMode = !!evaluationToEdit;
+
+  // Pre-fill form when editing an existing evaluation
+  useEffect(() => {
+    if (evaluationToEdit) {
+      setForm({
+        supervisorName: evaluationToEdit.supervisorName || "",
+        supervisorEmail: evaluationToEdit.supervisorEmail || "",
+        tasks: evaluationToEdit.tasks || "",
+        environment: evaluationToEdit.environment || "",
+        rating: evaluationToEdit.rating || 0,
+      });
+    } else {
+      // Reset form when modal is opened for a new evaluation
+      setForm({
+        supervisorName: "",
+        supervisorEmail: "",
+        tasks: "",
+        environment: "",
+        rating: 0,
+      });
+    }
+  }, [evaluationToEdit, isOpen]);
 
   if (!isOpen) return null;
 
@@ -24,7 +47,14 @@ export default function EvaluationModal({ isOpen, onClose, onSubmit, mockReviews
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitting(true);
-    onSubmit(form);
+    
+    // Pass the original evaluation ID when in edit mode
+    const submitData = isEditMode 
+      ? { ...form, id: evaluationToEdit.id } 
+      : form;
+      
+    onSubmit(submitData, isEditMode);
+    
     setTimeout(() => {
       setSubmitting(false);
       onClose();
@@ -84,8 +114,10 @@ export default function EvaluationModal({ isOpen, onClose, onSubmit, mockReviews
           </div>
         </div>
         {/* Right: Evaluation Form */}
-        <form className="flex-1 min-w-[300px]" onSubmit={handleSubmit}>
-          <h2 className="text-xl font-bold text-[#2A5F74] mb-4">Your Evaluation</h2>
+        <form className="flex-1 min-w-[300px] z-50" onSubmit={handleSubmit}>
+          <h2 className="text-xl font-bold text-[#2A5F74] mb-4">
+            {isEditMode ? "Edit Your Evaluation" : "Your Evaluation"}
+          </h2>
           <div className="mb-3">
             <label className="block text-sm font-medium text-[#2A5F74] mb-1">Company Supervisor Name</label>
             <input
@@ -136,19 +168,31 @@ export default function EvaluationModal({ isOpen, onClose, onSubmit, mockReviews
               className="flex-1 px-4 py-2 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67] transition text-sm border border-[#5DB2C7] shadow"
               disabled={submitting}
             >
-              {submitting ? "Submitting..." : "Submit Evaluation"}
+              {submitting ? "Submitting..." : isEditMode ? "Update Evaluation" : "Submit Evaluation"}
             </button>
-            <button
-              type="button"
-              className="flex-1 px-4 py-2 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67] transition text-sm border border-[#5DB2C7] shadow"
-              disabled={submitting}
-              onClick={() => {
-                onSubmit({ ...form, draft: true });
-                onClose();
-              }}
-            >
-              Save as Draft
-            </button>
+            {!isEditMode && (
+              <button
+                type="button"
+                className="flex-1 px-4 py-2 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67] transition text-sm border border-[#5DB2C7] shadow"
+                disabled={submitting}
+                onClick={() => {
+                  onSubmit({ ...form, draft: true });
+                  onClose();
+                }}
+              >
+                Save as Draft
+              </button>
+            )}
+            {isEditMode && (
+              <button
+                type="button"
+                className="flex-1 px-4 py-2 text-white bg-[#3c5e66] rounded-lg font-semibold hover:bg-[#2a5c67] transition text-sm border border-[#5DB2C7] shadow"
+                disabled={submitting}
+                onClick={onClose}
+              >
+                Cancel
+              </button>
+            )}
           </div>
         </form>
       </div>

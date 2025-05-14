@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
-import Student from "@/components/Student";
-import SearchBar from "@/components/shared/SearchBar";
+import Student from "./Student";
+import SearchBar from "./shared/SearchBar";
+import StudentProfileSidebar from "./StudentProfileSidebar";
 
 export default function StudentList({ students }) {
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   const tabs = [
     { id: 'all', label: 'All' },
@@ -16,12 +18,10 @@ export default function StudentList({ students }) {
   const filterStudents = (students) => {
     if (!students) return [];
     
-    // First filter by status
     let filtered = activeTab === 'all' 
       ? students 
       : students.filter(student => student.status.toLowerCase() === activeTab.toLowerCase());
     
-    // Then filter by student ID
     if (searchTerm.trim()) {
       filtered = filtered.filter(student =>
         student.id.toLowerCase().includes(searchTerm.toLowerCase())
@@ -33,11 +33,19 @@ export default function StudentList({ students }) {
 
   const filteredStudents = filterStudents(students);
 
+  const handleViewProfile = (student) => {
+    setSelectedStudent(student);
+  };
+
+  const closeSidebar = () => {
+    setSelectedStudent(null);
+  };
+
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-6">
+    <div className="w-full max-w-7xl mx-auto px-4 py-6 relative">
       {/* Title Section */}
       <div className="mb-6">
-      <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
+        <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
           STUDENT PROFILES
           <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
         </h1>
@@ -73,13 +81,24 @@ export default function StudentList({ students }) {
         </div>
       </div>
 
-      {/* Grid Container */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {filteredStudents.map((student) => (
-          <div key={student.id}>
-            <Student student={student} />
-          </div>
-        ))}
+      {/* Grid Container - Adjusted for sidebar */}
+      <div className={`transition-all duration-300 ${
+        selectedStudent ? 'w-[calc(100%-33%)]' : 'w-full'
+      }`}>
+        <div className={`grid gap-8 ${
+          selectedStudent
+            ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3'
+            : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'
+        }`}>
+          {filteredStudents.map((student) => (
+            <div key={student.id}>
+              <Student 
+                student={student} 
+                onViewProfile={() => handleViewProfile(student)} 
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Empty State */}
@@ -88,6 +107,12 @@ export default function StudentList({ students }) {
           No students found
         </div>
       )}
+
+      {/* Sidebar */}
+      <StudentProfileSidebar
+        student={selectedStudent}
+        onClose={closeSidebar}
+      />
     </div>
   );
 }

@@ -43,7 +43,6 @@ export default function ReportDashboard(){
 
     return (
         <>
-            <Header text="My Reports" size="text-6xl" />
             <StudentReportCards />
             {editIndex !== null && (
                 <ReportEdit
