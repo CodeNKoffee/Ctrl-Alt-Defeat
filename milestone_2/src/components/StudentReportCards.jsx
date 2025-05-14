@@ -3,25 +3,53 @@ import { facultyScadReports } from "../../constants/mockData";
 import ReportViewer from "@/components/ReportViewer";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import ReportStatistics from "@/components/ReportStatistics";
+import ReportCreationDashboard from "./ReportCreationDashboard";
 
 export default function StudentReportCards() {
   const [selectedReport, setSelectedReport] = useState(null);
   const [activeTab, setActiveTab] = useState("submitted");
   const [editIndex, setEditIndex] = useState(null);
   const [deleteIndex, setDeleteIndex] = useState(null);
+  const [editingDraftIndex, setEditingDraftIndex] = useState(null);
+  const [editingDraftData, setEditingDraftData] = useState(null);
 
   // Use one accepted and one pending as drafts, rest as submitted
   const reports = Object.values(facultyScadReports);
   const acceptedDraft = reports.find(r => r.status === 'accepted');
   const pendingDraft = reports.find(r => r.status === 'pending');
-  const draftReports = [
+  const [draftReports, setDraftReports] = useState([
     acceptedDraft ? { ...acceptedDraft, status: 'draft' } : null,
     pendingDraft ? { ...pendingDraft, status: 'draft' } : null
-  ].filter(Boolean);
+  ].filter(Boolean));
   const submittedReports = reports.filter(r =>
     !(acceptedDraft && r.id === acceptedDraft.id) &&
     !(pendingDraft && r.id === pendingDraft.id)
   );
+
+  // Handler for saving edited draft
+  const handleSaveDraft = (updatedDraft) => {
+    setDraftReports(prev => prev.map((r, i) => i === editingDraftIndex ? updatedDraft : r));
+    setEditingDraftIndex(null);
+    setEditingDraftData(null);
+  };
+
+  // Handler for canceling edit
+  const handleCancelEdit = () => {
+    setEditingDraftIndex(null);
+    setEditingDraftData(null);
+  };
+
+  if (editingDraftIndex !== null && editingDraftData) {
+    return (
+      <ReportCreationDashboard
+        onAddTile={handleSaveDraft}
+        onCancel={handleCancelEdit}
+        initialReport={editingDraftData}
+        hideTitle={true}
+        showSaveDraftButton={true}
+      />
+    );
+  }
 
   return (
     <div className="p-8 flex justify-center">
@@ -130,7 +158,7 @@ export default function StudentReportCards() {
                   style={{ minHeight: '200px', width: '100%' }}
                 >
                   <div className="absolute top-4 right-4 flex gap-2 z-10">
-                    <button className="text-metallica-blue-600 hover:text-metallica-blue-800 bg-metallica-blue-50 hover:bg-metallica-blue-100 p-1 rounded-full transition" title="Edit" onClick={() => setEditIndex(idx)}>
+                    <button className="text-metallica-blue-600 hover:text-metallica-blue-800 bg-metallica-blue-50 hover:bg-metallica-blue-100 p-1 rounded-full transition" title="Edit" onClick={() => { setEditingDraftIndex(idx); setEditingDraftData(report); }}>
                       <FaEdit size={18} />
                     </button>
                     <button className="text-[#C41E3A] hover:text-white bg-red-100 hover:bg-[#C41E3A] p-1 rounded-full transition" title="Delete" onClick={() => setDeleteIndex(idx)}>
