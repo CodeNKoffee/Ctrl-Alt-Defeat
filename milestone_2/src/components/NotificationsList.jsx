@@ -125,7 +125,7 @@ const ProUpgradePrompt = ({ durationCompleted, durationRequired = 12 }) => {
   );
 };
 
-export default function NotificationsList({ selectedCompanies = [] }) {
+export default function NotificationsList({ selectedCompanies = [], hideFilters = false }) {
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -233,143 +233,136 @@ export default function NotificationsList({ selectedCompanies = [] }) {
   return (
     <div className="container mx-auto py-4">
       <div className="w-full mx-auto">
-        {/* Filters section */}
-        <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
-          <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
-            <div className="flex-1 w-full md:w-auto md:max-w-md">
-              <div className="relative w-full flex justify-center items-center">
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search notifications..."
-                  className="w-full py-3 pl-10 pr-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
-                />
-                <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-                  <FontAwesomeIcon
-                    icon={faSearch}
-                    className="h-4 w-4 text-[#5DB2C7]"
+        {/* Filters section - conditionally render based on hideFilters prop */}
+        {!hideFilters && (
+          <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
+            <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
+              <div className="flex-1 w-full md:w-auto md:max-w-md">
+                <div className="relative w-full flex justify-center items-center">
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search notifications..."
+                    className="w-full py-3 pl-10 pr-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
                   />
-                </div>
-                {searchTerm && (
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-3.5 flex items-center p-1 rounded-full hover:bg-[#B8E1E9]/50 transition-colors duration-200"
-                    onClick={clearSearch}
-                  >
+                  <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
                     <FontAwesomeIcon
-                      icon={faXmark}
-                      className="w-4 h-4 text-[#5DB2C7] hover:text-[#2a5f74]"
+                      icon={faSearch}
+                      className="h-4 w-4 text-[#5DB2C7]"
+                    />
+                  </div>
+                  {searchTerm && (
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-3.5 flex items-center p-1 rounded-full hover:bg-[#B8E1E9]/50 transition-colors duration-200"
+                      onClick={clearSearch}
+                    >
+                      <FontAwesomeIcon
+                        icon={faXmark}
+                        className="w-4 h-4 text-[#5DB2C7] hover:text-[#2a5f74]"
+                      />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex space-x-2">
+                <div className="relative">
+                  <button
+                    onClick={() => setIsFilterOpen(!isFilterOpen)}
+                    className="appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-2 px-4 rounded-full shadow-md focus:outline-none transition-all duration-300 flex items-center gap-2 filter-button"
+                  >
+                    <FontAwesomeIcon icon={faFilter} className="h-4 w-4 text-[#5DB2C7]" />
+                    <span>Filter</span>
+                    <FontAwesomeIcon
+                      icon={faChevronDown}
+                      className={`h-3 w-3 text-[#5DB2C7] transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`}
                     />
                   </button>
-                )}
-              </div>
-            </div>
 
-            <div className="flex space-x-2">
-              {/* {(isPro || userData?.role !== 'student') && (
-                <button className="appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-2 px-4 rounded-full shadow-md focus:outline-none transition-all duration-300 flex items-center gap-2">
-                  <FontAwesomeIcon icon={faFilter} className="h-4 w-4 text-[#5DB2C7]" />
-                  <span>Filter</span>
-                </button>
-              )} */}
+                  {isFilterOpen && (
+                    <div className="absolute right-0 mt-2 w-60 bg-white/95 backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-10 animate-dropdown focus:outline-none p-3 space-y-2 filter-dropdown">
+                      <div className="px-3 py-2 text-sm font-medium text-[#2a5f74] border-b border-gray-100 pb-2 mb-1 flex items-center justify-between">
+                        <span>Filter Options</span>
+                        <button
+                          onClick={() => setIsFilterOpen(false)}
+                          className="text-gray-400 hover:text-gray-600"
+                        >
+                          <FontAwesomeIcon icon={faXmark} className="w-4 h-4" />
+                        </button>
+                      </div>
+                      {/* Date Range Option */}
+                      <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
+                        <span className="mr-2">Last 7 days</span>
+                        {!isPro && userData?.role === 'student' && (
+                          <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
+                        )}
+                      </div>
 
-              {/* Replace simple ellipsis button with filter dropdown */}
-              <div className="relative">
-                <button
-                  onClick={() => setIsFilterOpen(!isFilterOpen)}
-                  className="appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-2 px-4 rounded-full shadow-md focus:outline-none transition-all duration-300 flex items-center gap-2 filter-button"
-                >
-                  <FontAwesomeIcon icon={faFilter} className="h-4 w-4 text-[#5DB2C7]" />
-                  <span>Filter</span>
-                  <FontAwesomeIcon
-                    icon={faChevronDown}
-                    className={`h-3 w-3 text-[#5DB2C7] transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`}
-                  />
-                </button>
+                      <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
+                        <span className="mr-2">Last 30 days</span>
+                        {!isPro && userData?.role === 'student' && (
+                          <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
+                        )}
+                      </div>
 
-                {isFilterOpen && (
-                  <div className="absolute right-0 mt-2 w-60 bg-white/95 backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-10 animate-dropdown focus:outline-none p-3 space-y-2 filter-dropdown">
-                    <div className="px-3 py-2 text-sm font-medium text-[#2a5f74] border-b border-gray-100 pb-2 mb-1 flex items-center justify-between">
-                      <span>Filter Options</span>
-                      <button
-                        onClick={() => setIsFilterOpen(false)}
-                        className="text-gray-400 hover:text-gray-600"
-                      >
-                        <FontAwesomeIcon icon={faXmark} className="w-4 h-4" />
-                      </button>
+                      <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
+                        <span className="mr-2">All time</span>
+                      </div>
+
+                      {/* Type Options */}
+                      <div className="border-t border-gray-100 my-1 pt-1"></div>
+
+                      <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
+                        <span className="mr-2">Read notifications</span>
+                        {!isPro && userData?.role === 'student' && (
+                          <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
+                        )}
+                      </div>
+
+                      <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
+                        <span className="mr-2">Unread notifications</span>
+                        {!isPro && userData?.role === 'student' && (
+                          <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
+                        )}
+                      </div>
+
+                      {/* Actions */}
+                      <div className="border-t border-gray-100 my-1 pt-1"></div>
+
+                      <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200">
+                        Mark all as read
+                      </div>
                     </div>
-
-                    {/* Date Range Option */}
-                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
-                      <span className="mr-2">Last 7 days</span>
-                      {!isPro && userData?.role === 'student' && (
-                        <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
-                      )}
-                    </div>
-
-                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
-                      <span className="mr-2">Last 30 days</span>
-                      {!isPro && userData?.role === 'student' && (
-                        <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
-                      )}
-                    </div>
-
-                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
-                      <span className="mr-2">All time</span>
-                    </div>
-
-                    {/* Type Options */}
-                    <div className="border-t border-gray-100 my-1 pt-1"></div>
-
-                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
-                      <span className="mr-2">Read notifications</span>
-                      {!isPro && userData?.role === 'student' && (
-                        <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
-                      )}
-                    </div>
-
-                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200 flex items-center">
-                      <span className="mr-2">Unread notifications</span>
-                      {!isPro && userData?.role === 'student' && (
-                        <FontAwesomeIcon icon={faLock} className="text-gray-400 ml-auto" />
-                      )}
-                    </div>
-
-                    {/* Actions */}
-                    <div className="border-t border-gray-100 my-1 pt-1"></div>
-
-                    <div className="px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#F8FCFD] rounded-lg cursor-pointer transition-colors duration-200">
-                      Mark all as read
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Active filters display */}
-          <div className="w-full flex flex-wrap gap-3 items-center mt-4 pt-4 border-t border-[#B8E1E9]/50">
-            {searchTerm ? (
-              <>
-                <span className="text-sm text-[#2a5f74] font-medium">Active Filters:</span>
-                <div className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group">
-                  <span className="mr-1.5">Search:</span>
-                  <span className="font-semibold italic mr-1.5">"{searchTerm}"</span>
-                  <button
-                    className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
-                    onClick={clearSearch}
-                    aria-label="Remove search term"
-                  >
-                    <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
-                  </button>
+                  )}
                 </div>
-              </>
-            ) : (
-              <p className="text-sm text-gray-500 italic">No filters currently applied.</p>
-            )}
+              </div>
+            </div>
+
+            {/* Active filters display */}
+            <div className="w-full flex flex-wrap gap-3 items-center mt-4 pt-4 border-t border-[#B8E1E9]/50">
+              {searchTerm ? (
+                <>
+                  <span className="text-sm text-[#2a5f74] font-medium">Active Filters:</span>
+                  <div className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group">
+                    <span className="mr-1.5">Search:</span>
+                    <span className="font-semibold italic mr-1.5">"{searchTerm}"</span>
+                    <button
+                      className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
+                      onClick={clearSearch}
+                      aria-label="Remove search term"
+                    >
+                      <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <p className="text-sm text-gray-500 italic">No filters currently applied.</p>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Main content with tabs */}
         <div className="bg-white p-0 rounded-lg shadow space-y-4">
