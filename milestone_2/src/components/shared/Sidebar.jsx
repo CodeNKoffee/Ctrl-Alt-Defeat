@@ -260,8 +260,32 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
       {/* User Profile Section at bottom */}
       <div className="mt-auto px-3 py-2">
-        <div className="flex items-center bg-[#5DB2C7]/20 rounded-lg p-3 shadow-sm hover:bg-[#5DB2C7]/30 transition-all duration-200 cursor-pointer">
-          <div className="flex-shrink-0 mr-3">
+        {isExpanded ? (
+          <div className="flex items-center bg-[#5DB2C7]/20 rounded-lg p-3 shadow-sm hover:bg-[#5DB2C7]/30 transition-all duration-200 cursor-pointer">
+            <div className="flex-shrink-0 mr-3">
+              <ProfileIcon
+                src={currentUser?.profileImage}
+                alt={currentUser?.name || ""}
+                size="md"
+                showStatus={false}
+              />
+            </div>
+            <div className="flex flex-col overflow-hidden">
+              <div className="flex items-center gap-2">
+                {currentUser && (
+                  <span className="font-semibold text-[#2a5f74] text-base truncate">
+                    {currentUser.name}
+                  </span>
+                )}
+                {currentUser?.accountType === 'PRO' && <ProBadge size="sm" />}
+              </div>
+              <span className="text-gray-500 text-xs capitalize truncate">
+                {userType}
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center p-3">
             <ProfileIcon
               src={currentUser?.profileImage}
               alt={currentUser?.name || ""}
@@ -269,14 +293,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
               showStatus={false}
             />
           </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              {currentUser && <span className="font-semibold text-[#2a5f74] text-base">{currentUser.name}</span>}
-              {currentUser?.accountType === 'PRO' && <ProBadge size="sm" />}
-            </div>
-            <span className="text-gray-500 text-xs capitalize">{userType}</span>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Sidebar Footer (Logout Button) */}
