@@ -529,10 +529,10 @@ const CallInterface = () => {
         layout
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className={`flex flex-col h-screen ${showChat && showNotes
-            ? 'w-1/3'
-            : showChat || showNotes
-              ? 'w-2/3'
-              : 'w-full'
+          ? 'w-1/3'
+          : showChat || showNotes
+            ? 'w-2/3'
+            : 'w-full'
           }`}
       >
         {renderCallContent()}
