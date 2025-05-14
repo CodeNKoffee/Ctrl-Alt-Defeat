@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
+import { mockStudents } from '../../constants/mockData';
 import InternRow from './InternRow';
-//import { mockStudents } from '../../../../constants/mockData';
 
 // Helper to infer internship status from period
 const inferStatus = (period) => {
@@ -12,22 +12,43 @@ const inferStatus = (period) => {
   return 'current';
 };
 
+// Calculate end date (3 months after start date)
+const calculateEndDate = (period) => {
+  if (!period) return null;
+  const yearMatch = period.match(/\d{4}/);
+  if (!yearMatch) return null;
+  const year = parseInt(yearMatch[0], 10);
+  const month = period.toLowerCase().includes('summer') ? 6 : 0; // July (6) or January (0)
+  const startDate = new Date(year, month, 1);
+  const endDate = new Date(startDate);
+  endDate.setMonth(startDate.getMonth() + 3); // Add 3 months
+  return `${endDate.getMonth() + 1} ${endDate.getFullYear()}`; // Format as "Month Year"
+};
+
 // Transform mockStudents into intern data
 const transformStudentsToInterns = (students) => {
+  if (!Array.isArray(students)) {
+    console.error('transformStudentsToInterns: students is not an array', students);
+    return [];
+  }
   return students
     .filter(student => student.internships && student.internships.length > 0)
     .map(student => {
       const internship = student.internships[0]; // Use first internship
+      const status = inferStatus(internship.period);
       return {
         id: student.id,
         name: student.name,
         jobTitle: internship.title,
-        status: inferStatus(internship.period),
+        status: status,
         company: internship.company,
         profilePic: student.photo,
-        gender: student.photo.includes('girl') ? 'female' : 'male',
         skills: student.skills,
+        degree: student.education[0]?.degree,
+        period: student.education[0]?.period,
+        jobInterests: student.jobInterests,
         startDate: internship.period,
+        endDate: (status === 'completed' || status === 'evaluated') ? calculateEndDate(internship.period) : null,
         description: internship.description,
       };
     });
@@ -36,7 +57,7 @@ const transformStudentsToInterns = (students) => {
 export default function CurrentInterns() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("all");
-  const [interns, setInterns] = useState(transformStudentsToInterns(mockStudents));
+  const [interns, setInterns] = useState(mockStudents ? transformStudentsToInterns(mockStudents) : []);
 
   const handleSelectIntern = (id) => {
     console.log(`Selected intern with id: ${id}`);
@@ -61,15 +82,13 @@ export default function CurrentInterns() {
   });
 
   return (
-    <div className="max-w-4xl mx-auto p-4 mb-4">
-      <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative mb-6">
+    <div className="max-w-3xl mx-auto p-4 mb-4 flex flex-col items-start">
+      <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative mb-6 w-full">
         My Interns
         <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
       </h1>
-      
-      {/* Search and Tabs Section */}
-      <div className="flex flex-col gap-4 mb-6">
-        <div className="flex-1">
+      <div className="flex flex-col gap-4 mb-6 w-full">
+        <div className="w-full">
           <input
             type="text"
             placeholder="Search interns by name or job title..."
@@ -78,9 +97,7 @@ export default function CurrentInterns() {
             className="w-full p-2 pl-4 pr-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-transparent text-sm"
           />
         </div>
-        
-        {/* Status Tabs */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 w-full">
           {['all', 'current', 'completed', 'evaluated'].map((tab) => (
             <button
               key={tab}
@@ -96,9 +113,7 @@ export default function CurrentInterns() {
           ))}
         </div>
       </div>
-
-      {/* Interns List */}
-      <div className="space-y-4">
+      <div className="w-full space-y-4">
         {filteredInterns.map((intern) => (
           <InternRow
             key={intern.id}
@@ -107,9 +122,8 @@ export default function CurrentInterns() {
             onEvaluate={handleEvaluateIntern}
           />
         ))}
-
         {filteredInterns.length === 0 && (
-          <div className="text-center text-gray-500 py-8">
+          <div className="text-center text-gray-500 py-8 w-full">
             No interns found matching your criteria
           </div>
         )}
