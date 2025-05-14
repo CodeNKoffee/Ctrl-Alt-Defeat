@@ -70,7 +70,7 @@ export default function StudentCard({ isOpen, toggleDetails, onEditProfile, stud
     >
       <div 
         className="card-top"
-        style={{ background: cardBackgroundGradient }}
+        style={{ background: "#F0F9FB" }} // Remove the blue gradient, set to plain white
       >
         <div className="profile-image-container">
           <img 
@@ -91,7 +91,8 @@ export default function StudentCard({ isOpen, toggleDetails, onEditProfile, stud
       </div>
       <div className="card-content">
         <h2 className="student-name" style={nameStyle}>{studentData.name}</h2>
-        <p className="student-handle" style={handleStyle}>{studentData.handle}</p>
+        <p className="student-handle" style={handleStyle}>{studentData.email}</p>
+        <p className="student-bio" style={bioStyle}>{studentData.bio}</p>
         <div className="social-links">
           <a href={studentData.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={socialIconStyle}>
             <svg className="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -109,7 +110,6 @@ export default function StudentCard({ isOpen, toggleDetails, onEditProfile, stud
             </svg>
           </a>
         </div>
-        <p className="student-bio" style={bioStyle}>{studentData.bio}</p>
       </div>
     </div>
   );

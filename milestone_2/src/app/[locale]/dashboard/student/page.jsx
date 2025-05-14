@@ -263,44 +263,7 @@ function AppliedInternshipsView() {
   );
 }
 
-function MyInternshipsView({ onSetTitle }) {
-  const [isCreatingReport, setIsCreatingReport] = useState(false);
-  const [selectedInternship, setSelectedInternship] = useState(null);
-
-  useEffect(() => {
-    if (!isCreatingReport) {
-      onSetTitle("MY INTERNSHIPS");
-    }
-  }, []);
-
-  const handleReportCreation = (internship) => {
-    setSelectedInternship(internship);
-    setIsCreatingReport(true);
-    onSetTitle("Create Internship Report");
-  };
-
-  const handleReportCancel = () => {
-    setIsCreatingReport(false);
-    setSelectedInternship(null);
-    onSetTitle("MY INTERNSHIPS");
-  };
-
-  const handleReportSubmit = (reportData) => {
-    console.log('Report submitted:', reportData);
-    setIsCreatingReport(false);
-    setSelectedInternship(null);
-    onSetTitle("MY INTERNSHIPS");
-  };
-
-  if (isCreatingReport) {
-    return (
-      <Report
-        onAddTile={handleReportSubmit}
-        onCancel={handleReportCancel}
-      />
-    );
-  }
-
+function MyInternshipsView({ onTriggerReportCreate }) {
   return (
     <div className="container mx-auto px-4 pt-0 pb-8">
       <InternshipList
@@ -308,7 +271,7 @@ function MyInternshipsView({ onSetTitle }) {
         internships={getMyInternships()}
         type="my"
         statuses={['current', 'completed', 'evaluated']}
-        onTriggerReportCreate={handleReportCreation}
+        onTriggerReportCreate={onTriggerReportCreate}
       />
     </div>
   );
@@ -333,6 +296,8 @@ const viewComponents = {
 
 export default function StudentDashboardPage() {
   const [appliedIdsSet, setAppliedIdsSet] = useState(new Set());
+  const [isCreatingReport, setIsCreatingReport] = useState(false);
+  const [selectedInternship, setSelectedInternship] = useState(null);
 
   const handleApplicationCompleted = (internshipId) => {
     setAppliedIdsSet(prevSet => new Set(prevSet).add(internshipId));
@@ -364,35 +329,82 @@ export default function StudentDashboardPage() {
         return "RECOMMENDED OPPORTUNITIES";
     }
   };
+
+  // Base title is determined by the current view
   const [currentTitle, setCurrentTitle] = useState(() => getInitialTitle(currentView));
 
-  const handleViewChange = (viewId) => {
-    setCurrentView(viewId);
-    setCurrentTitle(getInitialTitle(viewId));
+  // Report creation handlers (moved up from MyInternshipsView)
+  const handleReportCreation = (internship) => {
+    setSelectedInternship(internship);
+    setIsCreatingReport(true);
+    // Directly set the title here
+    setCurrentTitle("Create Internship Report");
   };
 
-  const handleSetSpecificTitle = (title) => {
-    setCurrentTitle(title);
+  const handleReportCancel = () => {
+    setIsCreatingReport(false);
+    setSelectedInternship(null);
+    // Reset the title when returning to the list
+    setCurrentTitle("MY INTERNSHIPS");
+  };
+
+  const handleReportSubmit = (reportData) => {
+    console.log('Report submitted:', reportData);
+    setIsCreatingReport(false);
+    setSelectedInternship(null);
+    // Reset the title when returning to the list
+    setCurrentTitle("MY INTERNSHIPS");
+  };
+
+  const handleViewChange = (viewId) => {
+    // Only change view if we're not in report creation mode
+    // This prevents losing the report form when clicking on sidebar navigation
+    if (!isCreatingReport) {
+      setCurrentView(viewId);
+      setCurrentTitle(getInitialTitle(viewId));
+    }
   };
 
   useEffect(() => {
-    setCurrentTitle(getInitialTitle(currentView));
-  }, [currentView]);
+    // When currentView changes, set the title (but not if we're creating a report)
+    if (!isCreatingReport) {
+      setCurrentTitle(getInitialTitle(currentView));
+    }
+  }, [currentView, isCreatingReport]);
 
   useEffect(() => {
     const handleHashChange = () => {
       if (typeof window !== 'undefined') {
         const hash = window.location.hash.replace('#', '');
-        if (hash && viewComponents[hash] && hash !== currentView) {
-          handleViewChange(hash);
+        // Only change view based on hash if we're not in report creation mode
+        if (hash && viewComponents[hash] && hash !== currentView && !isCreatingReport) {
+          setCurrentView(hash);
         }
       }
     };
-
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [currentView, isCreatingReport]);
 
+  // Special case: If we're on the My Internships view and creating a report,
+  // render the Report component directly instead of the CurrentViewComponent
+  if (currentView === 'my-internships' && isCreatingReport) {
+    return (
+      <DashboardLayout
+        userType="student"
+        title={currentTitle}
+        currentViewId={currentView}
+        onViewChange={handleViewChange}
+      >
+        <Report
+          onAddTile={handleReportSubmit}
+          onCancel={handleReportCancel}
+        />
+      </DashboardLayout>
+    );
+  }
+
+  // Normal case: render the current view based on navigation
   const CurrentViewComponent = viewComponents[currentView];
 
   let viewProps = {};
@@ -402,8 +414,10 @@ export default function StudentDashboardPage() {
       appliedInternshipIds: appliedIdsSet,
     };
   }
+
+  // For My Internships view, pass the report trigger function
   if (currentView === 'my-internships') {
-    viewProps.onSetTitle = handleSetSpecificTitle;
+    viewProps.onTriggerReportCreate = handleReportCreation;
   }
 
   return (
