@@ -18,7 +18,7 @@ import {
   faVideo,
   faVideoSlash,
   faDesktop,
-  faPhoneSlash,
+  faPhone,
   faUserCircle,
   faComments,
   faNoteSticky,
@@ -446,11 +446,99 @@ const CallInterface = () => {
             className={`${baseButtonClass} ${redButtonClass}`}
             title="End Call"
           >
-            <FontAwesomeIcon icon={faPhoneSlash} className="h-4 w-4 sm:h-5 sm:w-5" />
+            <FontAwesomeIcon icon={faPhone} className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
         </div>
       </div>
     </>
+  );
+
+  // Helper component for Chat Panel Content
+  const ChatPanelContent = () => (
+    <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg">
+      <div className="flex justify-between items-center p-3 border-b bg-gray-50">
+        <h3 className="text-lg font-semibold text-gray-700">Chat</h3>
+        <button
+          onClick={handleToggleChat}
+          className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+          title="Close Chat Panel"
+        >
+          <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="flex flex-col flex-grow overflow-hidden">
+        <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-gray-200">
+          {chatMessages.length === 0 ? (
+            <p className="text-center text-sm text-gray-500 py-4">No messages yet.</p>
+          ) : (
+            chatMessages.map(message => (
+              <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] rounded-lg px-3 py-2 shadow-sm ${message.isSelf
+                  ? 'bg-metallica-blue-700 text-white rounded-br-none'
+                  : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'
+                  }`}>
+                  <p className="text-sm">{message.content}</p>
+                  <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100' : 'text-gray-400'} ${message.isSelf ? 'text-right' : 'text-left'}`}>
+                    {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+        <div className="p-3 border-t bg-white">
+          <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+            <input
+              type="text"
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 text-sm"
+              placeholder="Type your message..."
+            />
+            <button
+              type="submit"
+              className={`w-10 h-10 rounded-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''}`}
+              disabled={!currentMessage.trim()}
+              title="Send Message"
+            >
+              <FontAwesomeIcon icon={faPaperPlane} />
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Helper component for Notes Panel Content
+  const NotesPanelContent = () => (
+    <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg">
+      <div className="flex justify-between items-center p-3 border-b bg-gray-50">
+        <h3 className="text-lg font-semibold text-gray-700">Private Notes</h3>
+        <button
+          onClick={handleToggleNotes}
+          className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+          title="Close Notes Panel"
+        >
+          <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="flex flex-col flex-grow overflow-hidden p-4">
+        <textarea
+          value={noteContent}
+          onChange={(e) => setNoteContent(e.target.value)}
+          className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 resize-none text-sm mb-4"
+          placeholder="Write your private notes here..."
+        />
+        <button
+          onClick={handleSaveNotes}
+          className="w-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-2 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors"
+          title="Save Notes (logs to console)"
+        >
+          <FontAwesomeIcon icon={faSave} />
+          Save Notes
+        </button>
+      </div>
+    </div>
   );
 
   return (
@@ -461,122 +549,47 @@ const CallInterface = () => {
         preload="auto"
       />
 
-      {/* Chat Panel (Left) */}
-      <AnimatePresence>
-        {showChat && (
-          <motion.div
-            key="chat-sidebar"
-            initial={{ x: '-100%' }}
-            animate={{ x: '0%' }}
-            exit={{ x: '-100%' }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-1/4 h-screen flex flex-col bg-white border-r border-gray-300 shadow-lg"
-          >
-            <div className="flex justify-between items-center p-3 border-b bg-gray-50 rounded-t-lg">
-              <h3 className="text-lg font-semibold text-gray-700">Chat</h3>
-              <button
-                onClick={handleToggleChat}
-                className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
-                title="Close Chat Panel"
-              >
-                <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="flex flex-col flex-grow overflow-hidden">
-              <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-gray-100">
-                {chatMessages.length === 0 ? (
-                  <p className="text-center text-sm text-gray-500 py-4">No messages yet.</p>
-                ) : (
-                  chatMessages.map(message => (
-                    <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[80%] rounded-lg px-3 py-2 shadow-sm ${message.isSelf
-                        ? 'bg-metallica-blue-700 text-white rounded-br-none'
-                        : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'
-                        }`}>
-                        <p className="text-sm">{message.content}</p>
-                        <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100' : 'text-gray-400'} ${message.isSelf ? 'text-right' : 'text-left'}`}>
-                          {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </p>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-              <div className="p-3 border-t bg-white">
-                <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={currentMessage}
-                    onChange={(e) => setCurrentMessage(e.target.value)}
-                    className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 text-sm"
-                    placeholder="Type your message..."
-                  />
-                  <button
-                    type="submit"
-                    className={`w-10 h-10 rounded-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''}`}
-                    disabled={!currentMessage.trim()}
-                    title="Send Message"
-                  >
-                    <FontAwesomeIcon icon={faPaperPlane} />
-                  </button>
-                </form>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Main Call Content Area */}
       <motion.div
         layout
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className={`flex flex-col h-screen ${showChat && showNotes
-          ? 'w-1/2'
-          : showChat || showNotes
-            ? 'w-3/4'
-            : 'w-full'
-          }`}
+        className={`flex flex-col h-screen ${showChat || showNotes
+          ? 'w-3/4' // Main content takes 3/4 if any sidebar is open
+          : 'w-full' // Main content takes full width if no sidebars
+          }`
+        }
       >
         {renderCallContent()}
       </motion.div>
 
-      {/* Notes Panel (Right) */}
+      {/* Right Sidebar Area (for Chat and/or Notes) */}
       <AnimatePresence>
-        {showNotes && (
+        {(showChat || showNotes) && (
           <motion.div
-            key="notes-sidebar"
+            key="right-sidebar"
             initial={{ x: '100%' }}
             animate={{ x: '0%' }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-1/4 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg"
+            className="w-1/4 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg" // Sidebar takes 1/4
           >
-            <div className="flex justify-between items-center p-3 border-b bg-gray-50">
-              <h3 className="text-lg font-semibold text-gray-700">Private Notes</h3>
-              <button
-                onClick={handleToggleNotes}
-                className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
-                title="Close Notes Panel"
-              >
-                <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="flex flex-col flex-grow overflow-hidden p-4">
-              <textarea
-                value={noteContent}
-                onChange={(e) => setNoteContent(e.target.value)}
-                className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 resize-none text-sm mb-4"
-                placeholder="Write your private notes here..."
-              />
-              <button
-                onClick={handleSaveNotes}
-                className="w-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-2 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors"
-                title="Save Notes (logs to console)"
-              >
-                <FontAwesomeIcon icon={faSave} />
-                Save Notes
-              </button>
-            </div>
+            {showNotes && showChat ? (
+              // Both Notes and Chat are open: Notes (1/2 height), Chat (1/2 height)
+              <>
+                <div className="h-1/2">
+                  <NotesPanelContent />
+                </div>
+                <div className="h-1/2 border-t border-gray-300">
+                  <ChatPanelContent />
+                </div>
+              </>
+            ) : showNotes ? (
+              // Only Notes is open
+              <NotesPanelContent />
+            ) : showChat ? (
+              // Only Chat is open
+              <ChatPanelContent />
+            ) : null}
           </motion.div>
         )}
       </AnimatePresence>
