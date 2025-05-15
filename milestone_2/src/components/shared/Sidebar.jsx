@@ -21,7 +21,7 @@ import {
   faRightFromBracket,
   faBell
 } from '@fortawesome/free-solid-svg-icons';
-import ActionButton from './ActionButton';
+import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
 import { LOGOUT_USER } from '@/store/authReducer';
 import ProfileIcon from './ProfileIcon';
@@ -299,26 +299,17 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       {/* Sidebar Footer (Logout Button) */}
       <div className={`w-full p-3 border-t border-[#5DB2C7] transition-all duration-300 ease-in-out flex ${isExpanded ? 'justify-start' : 'justify-center'}`}>
         {isExpanded ? (
-          <ActionButton
-            buttonType="reject"
+          <CustomButton
+            variant="danger"
             onClick={handleLogout}
             icon={faRightFromBracket}
             text="Logout"
-            buttonClassName="flex items-center justify-center p-2.5 text-sm font-bold"
-            iconClassName="mr-2"
-            style={{
-              backgroundColor: '#e74c3c',
-              color: 'white',
-              border: 'none',
-              borderRadius: '9999px',
-              width: '100%'
-            }}
+            fullWidth
           />
         ) : (
           <button
             onClick={handleLogout}
-            className="p-2.5 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out hover:bg-red-700/20"
-            style={{ color: '#e74c3c' }}
+            className="p-2.5 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out bg-red-600 text-white hover:bg-red-700"
             aria-label="Logout"
           >
             <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
