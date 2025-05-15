@@ -132,7 +132,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
         });
       }
     }
-  }, [currentView, pathname, isExpanded, localizedItems]);
+  }, [currentView, pathname, isExpanded]);
 
   // Close sidebar when view changes
   useEffect(() => {

@@ -341,6 +341,9 @@ function AppliedInternshipsView() {
 }
 
 function MyInternshipsView({ onTriggerReportCreate }) {
+  const { currentUser } = useSelector(state => state.auth);
+  const userMajor = currentUser?.major || 'Computer Science';
+
   return (
     <div className="w-full px-6 py-4">
       <InternshipList

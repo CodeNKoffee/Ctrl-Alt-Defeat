@@ -2,7 +2,11 @@
 
 // Import tools we need: React hooks to manage state and refs, and lottie-web to show animations
 import React, { useState, useRef, useEffect } from 'react';
-import Lottie from 'lottie-react';
+import dynamic from 'next/dynamic';
+
+// Import Lottie dynamically with SSR disabled
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
+
 // import animationData from '../../public/animted-cloud.json'; // Your Lottie JSON
 import animationData from '../../public/cloud-icon.json'; // Your Lottie JSON
 import { motion, AnimatePresence } from 'framer-motion';
