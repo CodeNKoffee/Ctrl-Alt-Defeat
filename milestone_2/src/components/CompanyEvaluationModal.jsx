@@ -40,6 +40,7 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
   });
   const [submitting, setSubmitting] = useState(false);
   const [draftStatus, setDraftStatus] = useState("");
+  const [activeTab, setActiveTab] = useState('skills');
   const isEditMode = !!evaluationToEdit;
 
   useEffect(() => {
@@ -108,87 +109,114 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
           &times;
         </button>
         <form onSubmit={handleSubmit} className="flex flex-col h-[70vh]">
-          <div className="flex-1 overflow-y-auto pr-2">
-            <h2 className="text-2xl font-bold text-[#2A5F74] mb-6 text-left">Skills & Professional Attributes</h2>
-            <div className="space-y-6 mb-8">
-              {skillAttributes.map((skill) => (
-                <div key={skill} className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold text-[#2A5F74] text-base">{skill}</span>
-                    <span className="text-xs text-[#4C798B]">{ratingLabels[form.skillRatings[skill]]}</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs text-[#4C798B] w-24">Unsatisfactory</span>
-                    <div className="flex-1 flex justify-center gap-2">
-                      {[1, 2, 3, 4, 5].map((rating) => (
-                        <label key={rating} className="cursor-pointer group">
-                          <input
-                            type="radio"
-                            name={`skill-${skill}`}
-                            value={rating}
-                            checked={form.skillRatings[skill] === rating}
-                            onChange={() => handleSkillRating(skill, rating)}
-                            className="sr-only"
-                          />
-                          <div
-                            className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-base border-2 transition-all duration-200
-                              ${form.skillRatings[skill] === rating
-                                ? 'bg-[#4796a8] text-white border-[#4796a8] scale-110 shadow-md'
-                                : 'bg-white text-[#4796a8] border-[#E2F4F7] group-hover:bg-[#E2F4F7] group-hover:border-[#4796a8]'}
-                            `}
-                          >
-                            {rating}
-                          </div>
-                        </label>
-                      ))}
-                    </div>
-                    <span className="text-xs text-[#4C798B] w-24 text-right">Excellent</span>
-                  </div>
-                </div>
-              ))}
-              <div className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
-                <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor="skillOther">Other:</label>
-                <textarea
-                  id="skillOther"
-                  name="skillOther"
-                  value={form.skillOther}
-                  onChange={handleChange}
-                  className="w-full border border-[#E2F4F7] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#4796a8] bg-white text-[#2A5F74] text-sm"
-                  rows={2}
-                  placeholder="Add any other feedback on skills..."
-                />
-              </div>
-            </div>
+          {/* Tabs */}
+          <div className="flex mb-6 border-b border-[#E2F4F7]">
+            <button
+              type="button"
+              className={`px-6 py-2 font-semibold text-base rounded-t-lg focus:outline-none transition-colors duration-200
+                ${activeTab === 'skills' ? 'bg-white text-[#2A5F74] border-x border-t border-[#E2F4F7] -mb-px' : 'text-[#4C798B] bg-[#F8FAFB] hover:bg-white'}`}
+              onClick={() => setActiveTab('skills')}
+            >
+              Skills & Professional Attributes
+            </button>
+            <button
+              type="button"
+              className={`px-6 py-2 font-semibold text-base rounded-t-lg focus:outline-none transition-colors duration-200
+                ${activeTab === 'technical' ? 'bg-white text-[#2A5F74] border-x border-t border-[#E2F4F7] -mb-px' : 'text-[#4C798B] bg-[#F8FAFB] hover:bg-white'}`}
+              onClick={() => setActiveTab('technical')}
+            >
+              Technical
+            </button>
+          </div>
 
-            <h2 className="text-2xl font-bold text-[#2A5F74] mb-6 text-left">Technical</h2>
-            <div className="space-y-6 mb-8">
-              {technicalAttributes.map((attr) => (
-                <div key={attr} className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
-                  <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor={attr}>{attr}</label>
-                  <textarea
-                    id={attr}
-                    name={attr}
-                    value={form.technical[attr]}
-                    onChange={handleChange}
-                    className="w-full border border-[#E2F4F7] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#4796a8] bg-white text-[#2A5F74] text-sm"
-                    rows={2}
-                    placeholder={`Add feedback on ${attr.toLowerCase()}...`}
-                  />
+          <div className="flex-1 overflow-y-auto pr-2">
+            {activeTab === 'skills' && (
+              <>
+                <h2 className="text-2xl font-bold text-[#2A5F74] mb-6 text-left">Skills & Professional Attributes</h2>
+                <div className="space-y-6 mb-8">
+                  {skillAttributes.map((skill) => (
+                    <div key={skill} className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="font-semibold text-[#2A5F74] text-base">{skill}</span>
+                        <span className="text-xs text-[#4C798B]">{ratingLabels[form.skillRatings[skill]]}</span>
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs text-[#4C798B] w-24">Unsatisfactory</span>
+                        <div className="flex-1 flex justify-center gap-2">
+                          {[1, 2, 3, 4, 5].map((rating) => (
+                            <label key={rating} className="cursor-pointer group">
+                              <input
+                                type="radio"
+                                name={`skill-${skill}`}
+                                value={rating}
+                                checked={form.skillRatings[skill] === rating}
+                                onChange={() => handleSkillRating(skill, rating)}
+                                className="sr-only"
+                              />
+                              <div
+                                className={`w-10 h-10 flex items-center justify-center font-bold text-base border-2 transition-all duration-200
+                                  ${form.skillRatings[skill] === rating
+                                    ? 'bg-[#4796a8] text-white border-[#4796a8] scale-110 shadow-md rounded-full'
+                                    : 'bg-white text-[#4796a8] border-[#E2F4F7] group-hover:bg-[#E2F4F7] group-hover:border-[#4796a8] rounded-lg'}
+                                `}
+                              >
+                                {rating}
+                              </div>
+                            </label>
+                          ))}
+                        </div>
+                        <span className="text-xs text-[#4C798B] w-24 text-right">Excellent</span>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
+                    <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor="skillOther">Other:</label>
+                    <textarea
+                      id="skillOther"
+                      name="skillOther"
+                      value={form.skillOther}
+                      onChange={handleChange}
+                      className="w-full border border-[#E2F4F7] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#4796a8] bg-white text-[#2A5F74] text-sm"
+                      rows={2}
+                      placeholder="Add any other feedback on skills..."
+                    />
+                  </div>
                 </div>
-              ))}
-              <div className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
-                <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor="technicalOther">Other:</label>
-                <textarea
-                  id="technicalOther"
-                  name="technicalOther"
-                  value={form.technicalOther}
-                  onChange={handleChange}
-                  className="w-full border border-[#E2F4F7] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#4796a8] bg-white text-[#2A5F74] text-sm"
-                  rows={2}
-                  placeholder="Add any other technical feedback..."
-                />
-              </div>
-            </div>
+              </>
+            )}
+            {activeTab === 'technical' && (
+              <>
+                <h2 className="text-2xl font-bold text-[#2A5F74] mb-6 text-left">Technical</h2>
+                <div className="space-y-6 mb-8">
+                  {technicalAttributes.map((attr) => (
+                    <div key={attr} className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
+                      <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor={attr}>{attr}</label>
+                      <textarea
+                        id={attr}
+                        name={attr}
+                        value={form.technical[attr]}
+                        onChange={handleChange}
+                        className="w-full border border-[#E2F4F7] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#4796a8] bg-white text-[#2A5F74] text-sm"
+                        rows={2}
+                        placeholder={`Add feedback on ${attr.toLowerCase()}...`}
+                      />
+                    </div>
+                  ))}
+                  <div className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
+                    <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor="technicalOther">Other:</label>
+                    <textarea
+                      id="technicalOther"
+                      name="technicalOther"
+                      value={form.technicalOther}
+                      onChange={handleChange}
+                      className="w-full border border-[#E2F4F7] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#4796a8] bg-white text-[#2A5F74] text-sm"
+                      rows={2}
+                      placeholder="Add any other technical feedback..."
+                    />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
           <div className="flex gap-2 mt-2 w-full">
             <button
