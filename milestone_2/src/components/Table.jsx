@@ -1,4 +1,5 @@
 "use client";
+
 import SearchBar from './shared/SearchBar';
 import React from "react";
 

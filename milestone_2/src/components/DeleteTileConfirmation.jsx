@@ -11,4 +11,3 @@ export default function DeleteTileConfirmation({ type, onConfirm, onCancel }) {
       </div> 
     );
   }
-  

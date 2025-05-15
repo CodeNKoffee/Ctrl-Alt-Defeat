@@ -3,18 +3,17 @@ import CompanyPost from './CompanyPost';
 import CompanyCreatePost from './CompanyCreatePost';
 import DeleteTileConfirmation from './DeleteTileConfirmation';
 
-export default function PostTiles() {
+export default function PostTiles({ searchOverride, filterOverride }) {
   const [posts, setPosts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [deletingPostIndex, setDeletingPostIndex] = useState(null);
-  const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
     jobType: [],
-    jobSetting: []
+    jobSetting: [],
+    paymentStatus: []
   });
-  const filterRef = useRef(null);
   const [postPreview, setPostPreview] = useState({
     title: '',
     description: '',
@@ -28,17 +27,24 @@ export default function PostTiles() {
     skills: [],
   });
 
-  // Close filters dropdown when clicking outside
+  // Use searchOverride if provided by parent component
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (filterRef.current && !filterRef.current.contains(event.target)) {
-        setShowFilters(false);
-      }
+    if (searchOverride !== undefined) {
+      setSearchQuery(searchOverride);
     }
+  }, [searchOverride]);
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [filterRef]);
+  // Use filterOverride if provided by parent component
+  useEffect(() => {
+    if (filterOverride) {
+      setFilters(prevFilters => ({
+        ...prevFilters,
+        jobType: filterOverride.jobType || [],
+        jobSetting: filterOverride.jobSetting || [],
+        paymentStatus: filterOverride.paymentStatus || []
+      }));
+    }
+  }, [filterOverride]);
 
   const formatDate = (dateString) => {
     if (!dateString) return "Not specified";
@@ -82,8 +88,16 @@ export default function PostTiles() {
     );
 
     if (postIndex !== -1) {
+      // Create a deep copy of the post to ensure we're passing a complete object
+      const postToEdit = JSON.parse(JSON.stringify(posts[postIndex]));
+      
+      // First set the preview to match the post we're editing
+      setPostPreview(postToEdit);
+      
+      // Then mark this post as the one being edited
       setEditingPost(postIndex);
-      setPostPreview(post);
+      
+      // Finally show the form
       setShowForm(true);
     }
   };
@@ -130,10 +144,6 @@ export default function PostTiles() {
     setShowForm(!showForm);
   };
 
-  const toggleFilter = () => {
-    setShowFilters(!showFilters);
-  };
-
   const handleFilterChange = (category, value) => {
     setFilters(prevFilters => {
       const updatedFilters = { ...prevFilters };
@@ -153,7 +163,8 @@ export default function PostTiles() {
   const clearFilters = () => {
     setFilters({
       jobType: [],
-      jobSetting: []
+      jobSetting: [],
+      paymentStatus: []
     });
   };
 
@@ -173,194 +184,16 @@ export default function PostTiles() {
       return false;
     }
 
+    // Filter by payment status
+    if (filters.paymentStatus.length > 0 && !filters.paymentStatus.includes(post.paid)) {
+      return false;
+    }
+
     return true;
   });
 
-  // Available filter options
-  const jobTypeOptions = ['Full-time', 'Part-time', 'Internship'];
-  const jobSettingOptions = ['Remote', 'On-site', 'Hybrid'];
-
   return (
     <div className="container mx-auto px-4 pt-0 pb-8">
-      <h1 className="text-2xl font-bold text-[var(--metallica-blue-800)] mb-6">Internship Posts</h1>
-
-      {/* Search and Actions Bar */}
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-        <div className="flex items-center w-full sm:w-2/3">
-          {/* Search Bar */}
-          <div className="relative flex-grow mr-2">
-            <div className="flex items-center border-2 border-[var(--metallica-blue-300)] focus-within:border-[var(--metallica-blue-600)] transition-colors duration-200 rounded-md overflow-hidden bg-white shadow-sm">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 ml-3 text-[var(--metallica-blue-500)]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-              <input
-                type="text"
-                placeholder="Search posts by title..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full py-2.5 px-3 focus:outline-none text-[var(--metallica-blue-800)] placeholder:text-[var(--metallica-blue-400)]"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="p-2 mr-1 text-[var(--metallica-blue-500)] hover:text-[var(--metallica-blue-700)] transition-colors"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Filter Button */}
-          <div className="relative" ref={filterRef}>
-            <button
-              onClick={toggleFilter}
-              className={`flex items-center justify-center p-2 rounded-md transition-colors ${Object.values(filters).some(arr => arr.length > 0)
-                ? "bg-[var(--metallica-blue-600)] text-white"
-                : "bg-[var(--metallica-blue-100)] text-[var(--metallica-blue-800)] hover:bg-[var(--metallica-blue-200)]"
-                }`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-                />
-              </svg>
-
-              {/* Show badge if filters are active */}
-              {Object.values(filters).some(arr => arr.length > 0) && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                  {filters.jobType.length + filters.jobSetting.length}
-                </span>
-              )}
-            </button>
-
-            {/* Filter dropdown */}
-            {showFilters && (
-              <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg z-10 border border-gray-200">
-                <div className="p-4">
-                  <div className="flex justify-between items-center mb-3">
-                    <h3 className="font-medium text-[var(--metallica-blue-800)]">Filters</h3>
-                    <button
-                      onClick={clearFilters}
-                      className="text-xs text-[var(--metallica-blue-600)] hover:text-[var(--metallica-blue-800)]"
-                    >
-                      Clear all
-                    </button>
-                  </div>
-
-                  {/* Job Type filters */}
-                  <div className="mb-4">
-                    <h4 className="text-sm font-medium mb-2 text-gray-700">Job Type</h4>
-                    <div className="space-y-1">
-                      {jobTypeOptions.map(type => (
-                        <label key={type} className="flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            className="form-checkbox h-4 w-4 text-[var(--metallica-blue-600)] rounded border-gray-300"
-                            checked={filters.jobType.includes(type)}
-                            onChange={() => handleFilterChange('jobType', type)}
-                          />
-                          <span className="ml-2 text-sm text-gray-700">{type}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Job Setting filters */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-2 text-gray-700">Job Setting</h4>
-                    <div className="space-y-1">
-                      {jobSettingOptions.map(setting => (
-                        <label key={setting} className="flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            className="form-checkbox h-4 w-4 text-[var(--metallica-blue-600)] rounded border-gray-300"
-                            checked={filters.jobSetting.includes(setting)}
-                            onChange={() => handleFilterChange('jobSetting', setting)}
-                          />
-                          <span className="ml-2 text-sm text-gray-700">{setting}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Create Post Button */}
-        <button
-          onClick={toggleCreatePost}
-          className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md shadow-sm transition-colors font-medium w-full sm:w-auto"
-        >
-          {showForm ? 'Cancel' : 'Create New Post'}
-        </button>
-      </div>
-
-      {/* Active filters display */}
-      {Object.values(filters).some(arr => arr.length > 0) && (
-        <div className="flex flex-wrap items-center gap-2 mb-4">
-          <span className="text-sm text-[var(--metallica-blue-700)]">Active filters:</span>
-          {filters.jobType.map(type => (
-            <span
-              key={type}
-              className="bg-[var(--metallica-blue-100)] text-[var(--metallica-blue-800)] px-2 py-1 rounded-full text-xs flex items-center"
-            >
-              {type}
-              <button
-                onClick={() => handleFilterChange('jobType', type)}
-                className="ml-1 hover:text-[var(--metallica-blue-600)]"
-              >
-                &times;
-              </button>
-            </span>
-          ))}
-          {filters.jobSetting.map(setting => (
-            <span
-              key={setting}
-              className="bg-[var(--metallica-blue-100)] text-[var(--metallica-blue-800)] px-2 py-1 rounded-full text-xs flex items-center"
-            >
-              {setting}
-              <button
-                onClick={() => handleFilterChange('jobSetting', setting)}
-                className="ml-1 hover:text-[var(--metallica-blue-600)]"
-              >
-                &times;
-              </button>
-            </span>
-          ))}
-          <button
-            onClick={clearFilters}
-            className="text-xs text-[var(--metallica-blue-600)] hover:underline"
-          >
-            Clear all
-          </button>
-        </div>
-      )}
-
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center backdrop-blur-sm overflow-auto py-8">
           <div className="bg-white rounded-lg shadow-xl w-[90%] max-w-6xl max-h-[90vh] overflow-hidden">
@@ -493,33 +326,81 @@ export default function PostTiles() {
         />
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-        {filteredPosts.length > 0 ? (
-          filteredPosts.map((post, index) => (
-            <div key={index} className="max-w-sm w-full">
-              <CompanyPost
-                post={post}
-                onUpdateClick={handleUpdateClick}
-                onDeleteClick={handleDeleteClick}
-                compact={true}
-              />
+      {/* Post grid with conditional create button */}
+      <div className="relative">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+          {filteredPosts.length > 0 ? (
+            <>
+              {/* Create post button positioned inside the first white container - only shown when there are posts */}
+              <div className="col-span-full mb-4 flex justify-end">
+                <button
+                  onClick={toggleCreatePost}
+                  className="relative z-10 bg-[#5DB2C7] hover:bg-[#4AA0B5] text-white rounded-full shadow-md transition-all duration-500 flex items-center overflow-hidden group h-10"
+                  aria-label="Create new post"
+                >
+                  {/* Plus icon in its own circular bubble - lighter with outline */}
+                  <span className="flex items-center justify-center w-10 h-10 bg-white rounded-full z-10 border-2 border-[#B8E1E9]">
+                    <span className="text-xl font-bold text-[#5DB2C7]">+</span>
+                  </span>
+                  
+                  {/* Text part that expands on hover - now with bold text and slower transition */}
+                  <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
+                    <span className="font-semibold">Create Post</span>
+                  </span>
+                </button>
+              </div>
+              
+              {/* Posts display */}
+              {filteredPosts.map((post, index) => (
+                <div key={index} className="max-w-sm w-full">
+                  <CompanyPost
+                    post={post}
+                    onUpdateClick={handleUpdateClick}
+                    onDeleteClick={handleDeleteClick}
+                    compact={true}
+                  />
+                </div>
+              ))}
+            </>
+          ) : (
+            <div className="col-span-full text-center py-12 bg-white rounded-lg shadow-sm p-8 border border-[var(--metallica-blue-100)]">
+              {/* Only show the "+ Post" button when we have posts but filtering returns none */}
+              {posts.length > 0 && (
+                <div className="flex justify-end mb-4">
+                  <button
+                    onClick={toggleCreatePost}
+                    className="relative z-10 bg-[#5DB2C7] hover:bg-[#4AA0B5] text-white rounded-full shadow-md transition-all duration-500 flex items-center overflow-hidden group h-10"
+                    aria-label="Create new post"
+                  >
+                    {/* Plus icon in its own circular bubble - lighter with outline */}
+                    <span className="flex items-center justify-center w-10 h-10 bg-white rounded-full z-10 border-2 border-[#B8E1E9]">
+                      <span className="text-xl font-bold text-[#5DB2C7]">+</span>
+                    </span>
+                    
+                    {/* Text part that expands on hover - now with bold text and slower transition */}
+                    <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
+                      <span className="font-semibold">Create Post</span>
+                    </span>
+                  </button>
+                </div>
+              )}
+              
+              <p className="text-[var(--metallica-blue-600)] text-lg mb-4">
+                {posts.length > 0 ? 'No posts match your search' : 'No internship posts yet.'}
+              </p>
+              
+              {/* Only show "Create Your First Post" button when there are no posts at all */}
+              {!showForm && posts.length === 0 && (
+                <button
+                  onClick={toggleCreatePost}
+                  className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md shadow-sm transition-colors font-medium"
+                >
+                  Create Your First Post
+                </button>
+              )}
             </div>
-          ))
-        ) : (
-          <div className="col-span-full text-center py-12 bg-white rounded-lg shadow-sm p-8 border border-[var(--metallica-blue-100)]">
-            <p className="text-[var(--metallica-blue-600)] text-lg mb-4">
-              {posts.length > 0 ? 'No posts match your search' : 'No internship posts yet.'}
-            </p>
-            {!showForm && posts.length === 0 && (
-              <button
-                onClick={toggleCreatePost}
-                className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md shadow-sm transition-colors font-medium"
-              >
-                Create Your First Post
-              </button>
-            )}
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

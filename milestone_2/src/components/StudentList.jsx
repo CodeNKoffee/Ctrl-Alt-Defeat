@@ -1,7 +1,8 @@
 "use client";
+
 import { useState } from "react";
-import Student from "@/components/Student";
-import SearchBar from "@/components/shared/SearchBar";
+import Student from "./Student";
+import SearchBar from "./Shared/SearchBar";
 
 export default function StudentList({ students }) {
   const [activeTab, setActiveTab] = useState('all');

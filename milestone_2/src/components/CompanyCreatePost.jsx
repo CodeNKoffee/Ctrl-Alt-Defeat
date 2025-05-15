@@ -19,12 +19,17 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
   const [paidValidation, setPaid] = useState(true);
   const [skillInput, setSkillInput] = useState('');
 
-  // Initialize form with post data if editing
+  // Initialize form with post data if editing - with proper dependency tracking
   useEffect(() => {
-    if (isEditing && initialPost) {
+    if (initialPost) {
       setForm(initialPost);
+      
+      // Also update the preview immediately when initialPost changes
+      if (onFormChange) {
+        onFormChange(initialPost);
+      }
     }
-  }, [isEditing, initialPost]);
+  }, [initialPost, onFormChange]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
