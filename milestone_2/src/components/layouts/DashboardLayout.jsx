@@ -4,12 +4,6 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { FaCalendarAlt } from 'react-icons/fa';
-import CallButton from '@/components/CallButton';
-import CallInterface from '@/components/CallInterface';
-import NotificationButton from '@/components/NotificationButton';
 
 export default function DashboardLayout({
   children,
@@ -21,270 +15,60 @@ export default function DashboardLayout({
 }) {
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const router = useRouter();
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [isCycleSet, setIsCycleSet] = useState(false);
 
   // Authentication check
   useEffect(() => {
+    // Check session storage as fallback
     const userSessionData = sessionStorage.getItem('userSession') || localStorage.getItem('userSession');
 
-    /* 
-    // PROBLEM: This check might run *after* logout is initiated but *before* the 
-    // redirect to the home page completes, causing a redirect back to login.
-    // Relying on Sidebar.jsx logout redirect and potentially middleware/page-level guards.
     if (!isAuthenticated && !userSessionData) {
       router.push(`/en/auth/login?userType=${userType}`);
       return;
     }
-    */
 
+    // If we have user data in session
     if (userSessionData) {
       const userData = JSON.parse(userSessionData);
 
+      // Verify user role
       if (userData.role !== userType) {
         router.push('/en');
         return;
       }
     } else if (isAuthenticated && currentUser?.role !== userType) {
+      // Verify Redux user role
       router.push('/en');
       return;
     }
   }, [isAuthenticated, currentUser, router, userType]);
 
-  // Get user data for conditional rendering
-  const getUserData = () => {
-    if (currentUser) return currentUser;
-
-    // Get from session/local storage as fallback
-    const userSessionData = typeof window !== 'undefined' ?
-      sessionStorage.getItem('userSession') || localStorage.getItem('userSession') : null;
-
-    if (userSessionData) {
-      try {
-        return JSON.parse(userSessionData);
-      } catch (e) {
-        console.error('Error parsing user data', e);
-        return null;
-      }
-    }
-
-    return null;
+  // Determine content based on whether view components are provided
+  const renderContent = () => {
+    return children;
   };
-
-  // Handle date range selection
-  const handleDateChange = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-    if (end) {
-      setIsDatePickerOpen(false); // Close picker after both start and end are selected
-      setIsCycleSet(true); // Mark cycle as set to prevent re-editing
-    }
-  };
-
-  // Format dates for display
-  const formatDate = (date) => date ? date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
-
-  const userData = getUserData();
-  const showCallButton = userData &&
-    (userData.role === 'scad' || (userData.role === 'student' && userData.accountType === 'PRO'));
 
   return (
-    <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white relative">
-      <style jsx global>{`
-        .react-datepicker {
-          font-family: 'IBM Plex Sans', sans-serif;
-          border: 1px solid #2A5F74;
-          border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          background: #FFFFFF;
-        }
-        .react-datepicker__header {
-          background: #2A5F74;
-          color: white;
-          border-bottom: none;
-          padding: 12px 0;
-          border-radius: 8px 8px 0 0;
-        }
-        .react-datepicker__current-month,
-        .react-datepicker__day-name {
-          color: white;
-          font-weight: 500;
-        }
-        .react-datepicker__day {
-          color: #2A5F74;
-          border-radius: 4px;
-        }
-        .react-datepicker__day:hover,
-        .react-datepicker__day--today:hover {
-          background: #D9F0F4;
-          color: #FFFFFF; /* Make the number visible when hovering over today */
-        }
-        .react-datepicker__day--selected,
-        .react-datepicker__day--in-selecting-range,
-        .react-datepicker__day--in-range,
-        .react-datepicker__day--today.react-datepicker__day--selected {
-          background: #318FA8;
-          color: #FFFFFF; /* Ensure text is visible against the blue background */
-        }
-        .react-datepicker__day--today {
-          font-weight: 500;
-          color: #2A5F74;
-        }
-        .react-datepicker__navigation-icon::before {
-          border-color: white;
-        }
-        .date-tooltip {
-          position: absolute;
-          bottom: -40px;
-          right: 50%;
-          transform: translateX(50%);
-          background: #2A5F74;
-          color: white;
-          padding: 6px 12px;
-          border-radius: 4px;
-          font-size: 12px;
-          white-space: nowrap;
-          opacity: 0;
-          transition: opacity 0.2s ease-in-out;
-          pointer-events: none;
-          z-index: 60;
-        }
-        .date-tooltip::after {
-          content: '';
-          position: absolute;
-          top: -5px;
-          left: 50%;
-          transform: translateX(-50%);
-          border-left: 5px solid transparent;
-          border-right: 5px solid transparent;
-          border-bottom: 5px solid #2A5F74;
-        }
-        .date-picker-button:hover .date-tooltip {
-          opacity: 1;
-        }
-        .date-picker-button.locked button {
-          cursor: default;
-        }
-        .internship-cycle-box {
-          background: linear-gradient(135deg, #F0F8FA 0%, #D9F0F4 100%);
-          border: 1px solid #2A5F74;
-          border-radius: 8px;
-          padding: 8px 12px;
-          box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-          font-family: 'IBM Plex Sans', sans-serif;
-        }
-        .internship-cycle-box .title {
-          font-size: 14px;
-          font-weight: 600;
-          color: #2A5F74;
-          margin-bottom: 4px;
-        }
-        .internship-cycle-box .date-item {
-          font-size: 12px;
-          color: #2A5F74;
-          margin: 2px 0;
-        }
-        .internship-cycle-box .date-item strong {
-          color: #318FA8;
-        }
-        .date-picker-button:not(.locked) button:hover {
-          animation: radial-glow 1.2s infinite ease-in-out;
-        }
-        @keyframes radial-glow {
-          0% {
-            box-shadow: 0 0 5px rgba(49, 143, 168, 0.3);
-          }
-          50% {
-            box-shadow: 0 0 15px rgba(49, 143, 168, 0.7);
-          }
-          100% {
-            box-shadow: 0 0 5px rgba(49, 143, 168, 0.3);
-          }
-        }
-      `}</style>
+    <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white">
+      {showSidebar && (
+        <Sidebar
+          userType={userType}
+          onViewChange={onViewChange}
+          currentView={currentViewId}
+        />
+      )}
 
-      <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white overflow-x-hidden">
-        {showSidebar && (
-          <Sidebar
-            userType={userType}
-            onViewChange={onViewChange}
-            currentView={currentViewId}
-            currentUser={userData}
-          />
-        )}
-
-        <div className="flex-1 overflow-auto overflow-x-hidden">
-          <div className="p-4 md:p-6 min-h-screen flex flex-col">
-            <div className="mb-6 flex justify-between items-center">
-              <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
-                {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
-              </h1>
-
-              <div className="flex flex-row items-center gap-4">
-                <div className="relative">
-                  <div className={`date-picker-button ${isCycleSet ? 'locked' : ''} relative`}>
-                    <button
-                      onClick={isCycleSet ? undefined : () => setIsDatePickerOpen(!isDatePickerOpen)}
-                      className="text-[#2A5F74] text-2xl bg-[#F0F8FA] border border-[#2A5F74] rounded-full p-2 shadow-sm transition-all duration-300 ease-in-out"
-                      aria-label="Open Date Picker"
-                    >
-                      <FaCalendarAlt />
-                    </button>
-                    {!startDate && !endDate && (
-                      <span className="date-tooltip">Set internship cycle</span>
-                    )}
-                  </div>
-                  {isDatePickerOpen && !isCycleSet && (
-                    <div className="absolute top-full right-0 mt-2 z-50">
-                      <DatePicker
-                        selected={startDate}
-                        onChange={handleDateChange}
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
-                        inline
-                        dateFormat="MMMM d, yyyy"
-                        className="text-[11px] text-[#2A5F74] bg-white border border-[#2A5F74] rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-[#2A5F74] transition duration-150 ease-in-out"
-                        placeholderText="Select date range"
-                        onClickOutside={() => setIsDatePickerOpen(false)}
-                        open={isDatePickerOpen}
-                      />
-                    </div>
-                  )}
-                  {(startDate || endDate) && (
-                    <div className="mt-2 internship-cycle-box">
-                      <div className="title">Internship Cycle</div>
-                      <div className="date-item"><strong>Start:</strong> {formatDate(startDate)}</div>
-                      <div className="date-item"><strong>End:</strong> {formatDate(endDate)}</div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <NotificationButton />
-              {/* Call button prominently displayed for eligible users */}
-              {showCallButton && (
-                <div className="flex items-center">
-                  <span className="mr-2 text-sm font-medium text-gray-600 hidden sm:inline">
-                    {userData.role === 'scad' ? 'Call PRO Students' : 'Call SCAD Admin'}
-                  </span>
-                  <div className="relative">
-                    <CallButton />
-                    {/* Animated pulse effect to draw attention */}
-                    <span className="absolute -inset-1 rounded-full animate-ping bg-indigo-300 opacity-75" style={{ animationDuration: '3s' }}></span>
-                  </div>
-                </div>
-              )}
-            </div>
+      <div className="flex-1 overflow-auto">
+        <div className="p-4 md:p-6 min-h-screen flex flex-col">
+          <div className="mb-6">
+            <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
+              {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
+            </h1>
           </div>
 
           <div className="bg-metallica-blue-50 rounded-xl shadow-sm overflow-hidden border border-gray-200 flex-1">
             {title && (
-              <div className="w-full px-6 pt-6 pb-2">
-                <div className="w-full mx-auto">
+              <div className="w-full px-4 pt-6 pb-2">
+                <div className="w-full max-w-3xl mx-auto">
                   <h2 className="text-3xl font-bold text-left text-[#2a5f74] relative">
                     {title}
                     <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
@@ -292,13 +76,10 @@ export default function DashboardLayout({
                 </div>
               </div>
             )}
-            {children}
+            {renderContent()}
           </div>
         </div>
       </div>
-
-      {/* Global call components - only CallInterface needed */}
-      <CallInterface />
     </div>
   );
-}
+} 
