@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { incomingCall } from '../store/callReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBug } from '@fortawesome/free-solid-svg-icons';
 
 const IncomingCallTester = () => {
   const dispatch = useDispatch();
@@ -49,13 +49,17 @@ const IncomingCallTester = () => {
   }
 
   return (
-    <button
-      onClick={simulateIncomingCall}
-      className="fixed bottom-1/4 left-0 bg-purple-600 hover:bg-purple-700 text-white font-bold p-3 rounded-full shadow-lg z-50 flex items-center justify-center transition-transform transform hover:scale-105 h-12 w-12"
-      title="Simulate Incoming Call from Alien X (Test Feature)"
-    >
-      <FontAwesomeIcon icon={faBell} className="h-5 w-5" />
-    </button>
+    <div className="relative z-30">
+      <button
+        onClick={simulateIncomingCall}
+        className="relative w-11 h-11 rounded-full bg-gray-50 text-purple-700 flex items-center justify-center shadow-md hover:bg-purple-100 hover:-translate-y-0.5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all duration-150 ease-in"
+        aria-label="Simulate Incoming Call"
+        title="Simulate Incoming Call from Alien X (Test Feature)"
+        type="button"
+      >
+        <FontAwesomeIcon icon={faBug} className="h-6 w-6 pointer-events-none" />
+      </button>
+    </div>
   );
 };
 

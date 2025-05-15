@@ -19,7 +19,8 @@ import {
   faList,
   faFolder,
   faRightFromBracket,
-  faBell
+  faBell,
+  faVideo
 } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
@@ -33,6 +34,10 @@ const iconMap = {
   browse: faSearch,
   applied: faClipboardList,
   'my-internships': faBriefcase,
+  'my-reports': faChartBar,
+  'my-evaluations': faClipboardList,
+  workshops: faGraduationCap,
+  'live-workshops': faVideo,
   profile: faUser,
   students: faGraduationCap,
   reports: faChartBar,
@@ -40,7 +45,8 @@ const iconMap = {
   listings: faList,
   applications: faFolder,
   logout: faRightFromBracket,
-  notifications: faBell
+  notifications: faBell,
+  'online-assessments': faChartBar
 };
 
 // Map of sidebar items for different user types
@@ -50,7 +56,12 @@ const sidebarConfig = {
     { id: 'browse', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/student/browse-internships', isPage: false },
     { id: 'applied', iconId: 'applied', label: 'Applied Internships', path: '/dashboard/student/applied-internships', isPage: false },
     { id: 'my-internships', iconId: 'my-internships', label: 'My Internships', path: '/dashboard/student/my-internships', isPage: false },
+    { id: 'my-reports', iconId: 'my-reports', label: 'My Reports', path: '/dashboard/student/my-reports', isPage: false },
+    { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/student/my-evaluations', isPage: false },
+    { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/student/workshops', isPage: false },
+    { id: 'live-workshops', iconId: 'live-workshops', label: 'Live Workshops', path: '/dashboard/student/live-workshops', isPage: false },
     { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/student/notifications', isPage: false },
+    { id: 'online-assessments', iconId: 'online-assessments', label: 'Online Assessments', path: '/dashboard/student/online-assessments', isPage: false },
     { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/student/profile', isPage: false },
   ],
   faculty: [
