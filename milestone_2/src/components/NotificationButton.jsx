@@ -38,7 +38,7 @@ export default function NotificationButton() {
       <button
         ref={buttonRef}
         onClick={togglePanel}
-        className="relative p-2 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white transition-colors shadow-md cursor-pointer"
+        className="relative w-11 h-11 rounded-full bg-gray-50 text-metallica-blue-700 flex items-center justify-center shadow-md hover:bg-metallica-blue-50 hover:-translate-y-0.5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2 transition-all duration-150 ease-in"
         aria-label="Notifications"
         title="Notifications"
         type="button"
