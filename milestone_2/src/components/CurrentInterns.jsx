@@ -148,7 +148,7 @@ export default function CurrentInterns() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full p-2 pl-4 pr-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-transparent text-sm"
           />
-        </div>
+       </div>
         <div className="flex flex-wrap gap-2 w-full">
           {['all', 'current', 'completed', 'evaluated'].map((tab) => (
 <button
