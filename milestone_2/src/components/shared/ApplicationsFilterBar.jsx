@@ -29,7 +29,7 @@ export default function ApplicationsFilterBar({
   }, []);
 
   return (
-    <div className="w-full z-[1000px] bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
+    <div className="w-full z-[9999] bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl relative">
       <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
         {/* Search box */}
         <div className="flex-1 w-full md:w-auto md:max-w-md">
@@ -68,7 +68,7 @@ export default function ApplicationsFilterBar({
           </button>
 
           {isCombinedFilterPopoverOpen && (
-            <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-30 combined-filter-popover animate-dropdown focus:outline-none p-4 space-y-4">
+            <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-[10000] combined-filter-popover animate-dropdown focus:outline-none p-4 space-y-4">
               {/* Internship Filter Section */}
               <div className="z-50">
                 <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Internship Position</h4>

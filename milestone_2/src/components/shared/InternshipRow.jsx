@@ -112,7 +112,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
   return (
     <div className="mb-3 w-full">
       {/* Header Row (Click to Expand) */}
-      <div className="relative">
+      <div className="relative z-0">
         <button
           onClick={handleToggle}
           className={`group flex flex-col p-4 w-full bg-[#E2F4F7] rounded-lg border-2 border-[#5DB2C7] hover:shadow-md transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] gap-4 relative font-['IBM_Plex_Sans']
