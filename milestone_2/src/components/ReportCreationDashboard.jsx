@@ -102,9 +102,20 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
     }, [major])
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="w-full min-h-screen bg-[#f4fafd]">
             <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between">
                 <div className="flex flex-col mb-4 md:mb-0">
+                    {/* Back button */}
+                    {onCancel && (
+                        <button
+                            type="button"
+                            className="mb-4 flex items-center text-metallica-blue-700 hover:text-metallica-blue-900 transition-colors font-semibold text-base"
+                            onClick={onCancel}
+                        >
+                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                            Back
+                        </button>
+                    )}
                     {!hideTitle && (
                         <>
                             <h2 className="text-3xl md:text-4xl font-bold text-metallica-blue-800 mb-2">
@@ -119,17 +130,17 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                     )}
                 </div>
                 {onCancel && (
-                  <button
-                    className="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg border border-gray-300 hover:bg-gray-200 transition"
-                    onClick={onCancel}
-                  >
-                    Cancel
-                  </button>
+                    <button
+                        className="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg border border-gray-300 hover:bg-gray-200 transition hidden md:block"
+                        onClick={onCancel}
+                    >
+                        Cancel
+                    </button>
                 )}
             </div>
-            <div className="bg-white rounded-lg shadow-md p-8 flex flex-col lg:flex-row gap-8">
-                {/* Left: Form */}
-                <div className="w-full lg:w-1/2 flex flex-col items-center justify-center overflow-y-auto">
+            <div className="bg-white rounded-lg shadow-md flex flex-col lg:flex-row gap-0 mx-auto" style={{height: '700px', minHeight: '500px', maxWidth: '1400px'}}>
+                {/* Left: Form, scrollable and full height */}
+                <div className="w-full lg:w-1/2 flex flex-col items-center justify-start overflow-y-auto h-full max-h-full p-8 border-r border-gray-200">
                     <form className="space-y-6 w-full max-w-md mx-auto" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 gap-6">
                             <div>
@@ -207,10 +218,10 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                         </div>
                     </form>
                 </div>
-                {/* Right: Preview styled like faculty report viewer */}
-                <div className="w-full lg:w-1/2 p-8 bg-gray-50 flex flex-col items-center justify-center overflow-y-auto border-t lg:border-t-0 lg:border-l border-gray-200">
+                {/* Right: Preview styled like faculty report viewer, full height */}
+                <div className="w-full lg:w-1/2 p-8 bg-gray-50 flex flex-col items-center justify-start h-full max-h-full overflow-y-auto">
                     <h3 className="text-lg font-bold text-gray-800 mb-4">Preview</h3>
-                    <div className="w-full max-w-2xl mx-auto bg-white rounded-xl shadow p-8 border border-gray-100 min-h-[500px]">
+                    <div className="w-full max-w-2xl mx-auto bg-white rounded-xl shadow p-8 border border-gray-100 min-h-[500px] h-full max-h-full overflow-y-auto">
                         <div className="flex flex-wrap gap-2 mb-6">
                             <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">Major: {major || 'N/A'}</span>
                             <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">Company: {filledReport.companyOrgName || 'N/A'}</span>

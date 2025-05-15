@@ -97,77 +97,79 @@ export default function Report({ onAddTile, onCancel }) {
                   </button>
                 )}
             </div>
-            <div className="bg-white rounded-lg shadow-md p-8 flex flex-col lg:flex-row gap-8">
-                {/* Left: Form */}
-                <div className="w-full lg:w-1/2 flex flex-col items-center justify-center overflow-y-auto">
-                    <form className="space-y-6 w-full max-w-md mx-auto" onSubmit={handleSubmit}>
-                        <div className="grid grid-cols-1 gap-6">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Title:</label>
-                                <input required name="internshipTitle" onChange={handleChange} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Select your major:</label>
-                                <select required onChange={handleMajorChange} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2">
-                                    <option value="" disabled selected>Select your major</option>
-                                    <option value="CSEN">CSEN</option>
-                                    <option value="DMET">DMET</option>
-                                    <option value="BioTechnology">Biotechnology</option>
-                                    <option value="Law">Law</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Add courses that helped you during your internship:</label>
-                                <select onChange={handleCourseSelect} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2">
-                                    <option value="" disabled selected>Select a course</option>
-                                    {courses.map((course, index) => (
-                                        <option key={index} value={course}>{course}</option>
-                                    ))}
-                                </select>
-                                <div className="flex flex-wrap gap-2 mt-2">
-                                    {selectedCourses.map((course, index) => (
-                                        <span key={index} className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium border border-green-200 cursor-pointer" onClick={() => handleCourseRemove(course)}>{course}</span>
-                                    ))}
+            <div className="bg-white rounded-lg shadow-md flex flex-col lg:flex-row gap-0 mx-auto" style={{height: '700px', minHeight: '500px', maxWidth: '1400px'}}>
+                {/* Left: Form, scrollable to match preview height */}
+                <div className="w-full lg:w-1/2 flex flex-col items-center justify-center" style={{height: '100%'}}>
+                    <div className="w-full h-full overflow-y-auto flex flex-col justify-center">
+                        <form className="space-y-6 w-full max-w-md mx-auto" onSubmit={handleSubmit}>
+                            <div className="grid grid-cols-1 gap-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Title:</label>
+                                    <input required name="internshipTitle" onChange={handleChange} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Select your major:</label>
+                                    <select required onChange={handleMajorChange} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2">
+                                        <option value="" disabled selected>Select your major</option>
+                                        <option value="CSEN">CSEN</option>
+                                        <option value="DMET">DMET</option>
+                                        <option value="BioTechnology">Biotechnology</option>
+                                        <option value="Law">Law</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Add courses that helped you during your internship:</label>
+                                    <select onChange={handleCourseSelect} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2">
+                                        <option value="" disabled selected>Select a course</option>
+                                        {courses.map((course, index) => (
+                                            <option key={index} value={course}>{course}</option>
+                                        ))}
+                                    </select>
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                        {selectedCourses.map((course, index) => (
+                                            <span key={index} className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium border border-green-200 cursor-pointer" onClick={() => handleCourseRemove(course)}>{course}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Company/Organization Name:</label>
+                                    <input required name="companyOrgName" onChange={handleChange} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Introduction:</label>
+                                    <textarea required name="introduction" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Company/Organization Description:</label>
+                                    <textarea required name="companyDesc" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Internship Performed Tasks:</label>
+                                    <textarea required name="tasks" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Conclusion:</label>
+                                    <textarea required name="conclusion" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">References:</label>
+                                    <p className="text-sm text-gray-500">(If any external sources are used, provide references for any information quoted)</p>
+                                    <textarea name="references" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Appendencies:</label>
+                                    <p className="text-sm text-gray-500">(Upon availability, charts, pictures, etc.)</p>
+                                    <textarea name="appendencies" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Company/Organization Name:</label>
-                                <input required name="companyOrgName" onChange={handleChange} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2" />
+                                <button type="submit" className="w-full inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Submit Report</button>
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Introduction:</label>
-                                <textarea required name="introduction" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Company/Organization Description:</label>
-                                <textarea required name="companyDesc" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Internship Performed Tasks:</label>
-                                <textarea required name="tasks" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Conclusion:</label>
-                                <textarea required name="conclusion" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">References:</label>
-                                <p className="text-sm text-gray-500">(If any external sources are used, provide references for any information quoted)</p>
-                                <textarea name="references" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Appendencies:</label>
-                                <p className="text-sm text-gray-500">(Upon availability, charts, pictures, etc.)</p>
-                                <textarea name="appendencies" onChange={handleChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
-                            </div>
-                        </div>
-                        <div>
-                            <button type="submit" className="w-full inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Submit Report</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-                {/* Right: Preview styled like faculty report viewer */}
-                <div className="w-full lg:w-1/2 p-8 bg-gray-50 flex flex-col items-center justify-center overflow-y-auto border-t lg:border-t-0 lg:border-l border-gray-200">
+                {/* Right: Preview styled like faculty report viewer, controls height */}
+                <div className="w-full lg:w-1/2 p-8 bg-gray-50 flex flex-col items-center justify-center border-t lg:border-t-0 lg:border-l border-gray-200" style={{height: '100%'}}>
                     <h3 className="text-lg font-bold text-gray-800 mb-4">Preview</h3>
                     <div className="w-full max-w-2xl mx-auto bg-white rounded-xl shadow p-8 border border-gray-100 min-h-[500px]">
                         <div className="flex flex-wrap gap-2 mb-6">
