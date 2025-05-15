@@ -191,18 +191,18 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}
     >
       {/* Sidebar Header */}
-      <div className="p-3 border-b border-[#5DB2C7]/30 flex items-center justify-between">
+      <div className="p-3 border-b border-[#5DB2C7]/30 flex items-center justify-between relative">
         {/* Logo and Optional Portal Text */}
-        <div className={`flex items-center transition-all duration-300 ease-in-out ${isExpanded ? 'justify-start' : 'justify-center flex-grow'}`}>
+        <div className={`flex items-center transition-all duration-300 ease-in-out ${isExpanded ? 'justify-start w-full opacity-100' : 'opacity-0 w-0 overflow-hidden'}`}>
           <Image
             src="/logos/internhub-logo.png"
             alt="InternHub Logo"
             width={32}
             height={32}
-            className={`transition-all duration-300 ease-in-out ${isExpanded ? 'mr-2' : 'mr-0'}`}
+            className="transition-all duration-300 ease-in-out object-contain"
           />
           <div
-            className={`font-young-serif font-bold whitespace-nowrap transition-all duration-300 ease-in-out text-lg ${isExpanded ? 'opacity-100 max-w-xs' : 'opacity-0 max-w-0 overflow-hidden'}`}
+            className={`font-young-serif font-bold whitespace-nowrap transition-all duration-300 ease-in-out text-lg ml-2`}
           >
             <span className="text-[#B0BEC5]">Intern</span>
             <span className="text-[#2a5f74]">Hub</span>
@@ -212,7 +212,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
         {/* Toggle Button */}
         <button
           onClick={toggleSidebar}
-          className="w-8 h-8 flex items-center justify-center rounded-full text-metallica-blue-700 bg-white hover:bg-metallica-blue-50 hover:-translate-y-0.5 hover:scale-105 transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2"
+          className={`w-10 h-10 flex items-center justify-center rounded-full text-metallica-blue-700 bg-white hover:bg-metallica-blue-50 hover:-translate-y-0.5 hover:scale-105 transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2 ${!isExpanded ? 'absolute left-1/2 -translate-x-1/2' : ''}`}
           aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
         >
           <FontAwesomeIcon
@@ -337,12 +337,13 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center p-3 bg-[#f5fbfd] mx-2 rounded-lg">
+          <div className="flex items-center justify-center">
             <ProfileIcon
               src={currentUser?.profileImage}
               alt={currentUser?.name || ""}
-              size="md"
+              size="lg"
               showStatus={false}
+              className="transform scale-110"
             />
           </div>
         )}

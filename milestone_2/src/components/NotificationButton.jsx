@@ -5,12 +5,40 @@ import NotificationsList from './NotificationsList';
 
 export default function NotificationButton() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const panelRef = useRef(null);
   const buttonRef = useRef(null);
+  const animationTimerRef = useRef(null);
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
   };
+
+  // Handle animation timing
+  useEffect(() => {
+    // Function to start animation
+    const startAnimation = () => {
+      setIsAnimating(true);
+
+      // Stop animation after 2 seconds
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 2000);
+    };
+
+    // Initial animation after 3 seconds
+    const initialTimer = setTimeout(startAnimation, 3000);
+
+    // Set up periodic animation
+    animationTimerRef.current = setInterval(() => {
+      startAnimation();
+    }, 30000); // Vibrate every 30 seconds
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(animationTimerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -43,7 +71,10 @@ export default function NotificationButton() {
         title="Notifications"
         type="button"
       >
-        <FontAwesomeIcon icon={faBell} className="h-6 w-6" />
+        <FontAwesomeIcon
+          icon={faBell}
+          className={`h-6 w-6 ${isAnimating ? 'animate-bell-ring' : ''}`}
+        />
       </button>
 
       {isPanelOpen && (
