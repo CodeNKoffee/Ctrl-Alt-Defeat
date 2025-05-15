@@ -373,7 +373,7 @@ export default function InternshipList({
                   searchPlaceholder={`Search ${type === 'my' ? 'my' : ''} internships...`}
 
                   // Industry filtering
-                  primaryFilterName="Industry"
+                  primaryFilterName="Filter"
                   selectedPrimaryFilter={selectedIndustry}
                   onPrimaryFilterChange={setSelectedIndustry}
                   primaryFilterOptions={industries}

@@ -213,13 +213,94 @@ function CompanyPostsView() {
 }
 
 function BrowseInternshipsView() {
-  // ...copy and tailor logic from student BrowseInternshipsView...
-  // For company, this could show all internships posted by the company, or all available internships for management.
-  // For now, you can use a placeholder or reuse the InternshipList component with company-specific props.
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [selectedInternship, setSelectedInternship] = useState('all');
+
+  // Mock statuses for BrowseInternshipsView
+  const STATUS_CONFIG = {
+    pending: {
+      label: "PENDING",
+      color: "bg-yellow-100 text-yellow-800 border border-yellow-400",
+      badgeColor: "bg-yellow-600",
+    },
+    accepted: {
+      label: "ACCEPTED",
+      color: "bg-green-100 text-green-800 border border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    rejected: {
+      label: "REJECTED",
+      color: "bg-red-100 text-red-800 border border-red-400",
+      badgeColor: "bg-red-600",
+    },
+    finalized: {
+      label: "FINALIZED",
+      color: "bg-purple-100 text-purple-800 border border-purple-400",
+      badgeColor: "bg-purple-600",
+    }
+  };
+
+  const clearFilters = () => {
+    setSearchTerm('');
+    setSelectedStatus('all');
+    setSelectedInternship('all');
+  };
+
   return (
-    <div className="w-full px-6 py-4">
-      {/* TODO: Implement company-specific internships browsing/management */}
-      <div className="text-center text-gray-500 py-20">Browse/Manage all internships (Company View) - To be implemented</div>
+    <div className="min-h-screen bg-gray-50 p-4 isolate">
+      <div className="container mx-auto px-4 py-8">
+        <div className="w-full max-w-6xl mx-auto">
+          <div className="dropdown-overlay">
+            <ApplicationsFilterBar
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              searchPlaceholder="Search by position, department, or skills..."
+              selectedStatus={selectedStatus}
+              onStatusChange={setSelectedStatus}
+              statusConfig={STATUS_CONFIG}
+              onClearFilters={clearFilters}
+            />
+          </div>
+
+          {/* Status Filter Pills */}
+          <div className="w-full max-w-6xl mx-auto mb-6">
+            <div className="flex flex-wrap gap-2 items-center">
+              <button
+                onClick={() => setSelectedStatus('all')}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${selectedStatus === 'all'
+                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                  : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
+                  }`}
+              >
+                All
+              </button>
+
+              {/* Status pills */}
+              {Object.keys(STATUS_CONFIG).map((status) => (
+                <button
+                  key={status}
+                  onClick={() => setSelectedStatus(status)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${selectedStatus === status
+                    ? STATUS_CONFIG[status].color
+                    : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
+                    }`}
+                >
+                  <div className="flex items-center">
+                    {selectedStatus === status && (
+                      <span className={`inline-block w-2 h-2 rounded-full ${STATUS_CONFIG[status].badgeColor} mr-1.5`}></span>
+                    )}
+                    {STATUS_CONFIG[status].label}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Internship content will go here */}
+          <div className="text-center text-gray-500 py-20">Browse/Manage all internships (Company View) - To be implemented</div>
+        </div>
+      </div>
     </div>
   );
 }
