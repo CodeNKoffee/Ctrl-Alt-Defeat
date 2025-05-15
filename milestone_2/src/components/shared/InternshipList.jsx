@@ -10,6 +10,7 @@ import StatusBadge from './StatusBadge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faFilter, faTimes, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import InternshipVideoSidebar from './InternshipVideoSidebar';
+import ReportCreationDashboard from '../ReportCreationDashboard';
 
 const statusColors = {
   // Applied internship statuses
@@ -264,10 +265,10 @@ export default function InternshipList({
   return (
     <>
       {reportingInternship ? (
-        <Report
-          isOpen={true}
-          onClose={handleReportClose}
+        <ReportCreationDashboard
           onAddTile={handleReportAddTile}
+          onCancel={handleReportClose}
+          initialReport={reportingInternship}
         />
       ) : (
         <div className="w-full px-4 py-6 space-y-4">

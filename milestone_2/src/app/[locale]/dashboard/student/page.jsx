@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faXmark, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import { getRegularInternships, getRecommendedInternships, getAppliedInternships, getMyInternships } from '../../../../../constants/internshipData';
-import Report from '../../../../../src/components/Report';
 
 // Video Sidebar Component
 function InternshipVideoSidebar({ userMajor }) {
@@ -559,10 +558,10 @@ export default function StudentDashboardPage() {
         currentViewId={currentView}
         onViewChange={handleViewChange}
       >
-        <Report
+        {/* <Report
           onAddTile={handleReportSubmit}
           onCancel={handleReportCancel}
-        />
+        /> */}
       </DashboardLayout>
     );
   }
