@@ -752,7 +752,8 @@ export const MOCK_EVALUATIONS = [
     rating: 5,
     startDate: "2024-06-01",
     endDate: "2024-08-31",
-    avatar: "/images/girl2.png"
+    avatar: "/images/girl2.png",
+     status: "submitted"
   },
   {
     studentName: "Hatem Soliman",
@@ -765,7 +766,8 @@ export const MOCK_EVALUATIONS = [
     rating: 4,
     startDate: "2024-07-01",
     endDate: "2024-09-15",
-    avatar: "/images/boy2.png"
+    avatar: "/images/boy2.png",
+    status: "submitted"
   },
   {
     studentName: "Salma Tarek",
@@ -778,7 +780,8 @@ export const MOCK_EVALUATIONS = [
     rating: 5,
     startDate: "2024-06-15",
     endDate: "2024-09-01",
-    avatar: "/images/girl1.png"
+    avatar: "/images/girl1.png",
+    status: "saved"
   },
    {
     studentName: "Salma Tarek",
@@ -791,7 +794,8 @@ export const MOCK_EVALUATIONS = [
     rating: 3,
     startDate: "2024-06-15",
     endDate: "2024-09-01",
-    avatar: "/images/girl1.png"
+    avatar: "/images/girl1.png",
+    status: "saved"
   },
    {
     studentName: "Salma Tarek",
@@ -804,7 +808,8 @@ export const MOCK_EVALUATIONS = [
     rating: 2,
     startDate: "2024-06-15",
     endDate: "2024-09-01",
-    avatar: "/images/girl1.png"
+    avatar: "/images/girl1.png",
+    status: "saved"
   }
 ];
 
@@ -1801,4 +1806,195 @@ export const mockStudents = [
     ]
   }
 
+];
+
+export const MOCK_COMPANY_EVALUATIONS = [
+  // Submitted
+  {
+    id: 1,
+    status: 'submitted',
+    studentName: 'Sarah Johnson',
+    internshipTitle: 'Frontend Developer Intern',
+    company: 'Tawabiry',
+    date: '2025-04-10',
+    skillRatings: {
+      'Ability to adapt to change': 4,
+      'Analytical skills': 5,
+      'Collecting data/ research data skills': 4,
+      'Creativity': 5,
+      'Follow up skills': 4,
+      'Interpersonal skills with peers, supervisors, and clients': 5,
+      'Problem solving': 4,
+      'Punctuality': 5,
+      'Reporting skills': 4,
+      'Responsibility and accountability': 5,
+      'Stress handling': 4,
+      'Taking initiatives': 5,
+      'Teamwork': 5,
+      'Time management': 4
+    },
+    skillOther: 'Great at adapting to new tech.',
+    technical: {
+      'Technical Background': 'Strong background in React and JS.',
+      'Technical Knowledge': 'Excellent understanding of frontend frameworks.',
+      'Compatibility of technical skills with the job': 'Perfect fit for the role.'
+    },
+    technicalOther: 'No additional comments.'
+  },
+  {
+    id: 2,
+    status: 'submitted',
+    studentName: 'Mohammed Ahmed',
+    internshipTitle: 'UI/UX Design Intern',
+    company: 'Vodafone Egypt',
+    date: '2025-04-12',
+    skillRatings: {
+      'Ability to adapt to change': 3,
+      'Analytical skills': 4,
+      'Collecting data/ research data skills': 3,
+      'Creativity': 5,
+      'Follow up skills': 4,
+      'Interpersonal skills with peers, supervisors, and clients': 4,
+      'Problem solving': 4,
+      'Punctuality': 4,
+      'Reporting skills': 3,
+      'Responsibility and accountability': 4,
+      'Stress handling': 3,
+      'Taking initiatives': 4,
+      'Teamwork': 5,
+      'Time management': 4
+    },
+    skillOther: 'Very creative and a team player.',
+    technical: {
+      'Technical Background': 'Good with Figma and design tools.',
+      'Technical Knowledge': 'Solid UI/UX principles.',
+      'Compatibility of technical skills with the job': 'Well matched.'
+    },
+    technicalOther: 'Could improve reporting.'
+  },
+  {
+    id: 3,
+    status: 'submitted',
+    studentName: 'Fatma Mostafa',
+    internshipTitle: 'Backend Developer Intern',
+    company: 'Juhayna Food Industries',
+    date: '2025-04-15',
+    skillRatings: {
+      'Ability to adapt to change': 5,
+      'Analytical skills': 5,
+      'Collecting data/ research data skills': 5,
+      'Creativity': 4,
+      'Follow up skills': 5,
+      'Interpersonal skills with peers, supervisors, and clients': 5,
+      'Problem solving': 5,
+      'Punctuality': 5,
+      'Reporting skills': 5,
+      'Responsibility and accountability': 5,
+      'Stress handling': 5,
+      'Taking initiatives': 5,
+      'Teamwork': 5,
+      'Time management': 5
+    },
+    skillOther: 'Outstanding performance.',
+    technical: {
+      'Technical Background': 'Excellent with Node.js and databases.',
+      'Technical Knowledge': 'Deep backend knowledge.',
+      'Compatibility of technical skills with the job': 'Highly compatible.'
+    },
+    technicalOther: 'No issues.'
+  },
+  // Saved as Draft
+  {
+    id: 4,
+    status: 'saved',
+    studentName: 'Ali Hassan',
+    internshipTitle: 'Data Analyst Intern',
+    company: 'Nestlé Egypt',
+    date: '2025-04-18',
+    skillRatings: {
+      'Ability to adapt to change': 3,
+      'Analytical skills': 4,
+      'Collecting data/ research data skills': 4,
+      'Creativity': 3,
+      'Follow up skills': 3,
+      'Interpersonal skills with peers, supervisors, and clients': 4,
+      'Problem solving': 4,
+      'Punctuality': 4,
+      'Reporting skills': 3,
+      'Responsibility and accountability': 4,
+      'Stress handling': 3,
+      'Taking initiatives': 3,
+      'Teamwork': 4,
+      'Time management': 4
+    },
+    skillOther: 'Needs to work on punctuality.',
+    technical: {
+      'Technical Background': 'Good with Excel and data tools.',
+      'Technical Knowledge': 'Solid data analysis skills.',
+      'Compatibility of technical skills with the job': 'Good fit.'
+    },
+    technicalOther: 'Should learn Python.'
+  },
+  {
+    id: 5,
+    status: 'saved',
+    studentName: 'Nour Mohamed',
+    internshipTitle: 'Marketing Intern',
+    company: 'Valeo Egypt',
+    date: '2025-04-20',
+    skillRatings: {
+      'Ability to adapt to change': 4,
+      'Analytical skills': 3,
+      'Collecting data/ research data skills': 3,
+      'Creativity': 4,
+      'Follow up skills': 4,
+      'Interpersonal skills with peers, supervisors, and clients': 4,
+      'Problem solving': 3,
+      'Punctuality': 4,
+      'Reporting skills': 3,
+      'Responsibility and accountability': 4,
+      'Stress handling': 3,
+      'Taking initiatives': 4,
+      'Teamwork': 4,
+      'Time management': 4
+    },
+    skillOther: 'Creative but needs to improve analytical skills.',
+    technical: {
+      'Technical Background': 'Basic marketing tools knowledge.',
+      'Technical Knowledge': 'Knows social media marketing.',
+      'Compatibility of technical skills with the job': 'Sufficient.'
+    },
+    technicalOther: 'Should take advanced marketing courses.'
+  },
+  {
+    id: 6,
+    status: 'saved',
+    studentName: 'Omar Farouq',
+    internshipTitle: 'Software Engineer Intern',
+    company: 'Fawry',
+    date: '2025-04-22',
+    skillRatings: {
+      'Ability to adapt to change': 4,
+      'Analytical skills': 4,
+      'Collecting data/ research data skills': 4,
+      'Creativity': 4,
+      'Follow up skills': 4,
+      'Interpersonal skills with peers, supervisors, and clients': 4,
+      'Problem solving': 4,
+      'Punctuality': 4,
+      'Reporting skills': 4,
+      'Responsibility and accountability': 4,
+      'Stress handling': 4,
+      'Taking initiatives': 4,
+      'Teamwork': 4,
+      'Time management': 4
+    },
+    skillOther: 'Consistent performer.',
+    technical: {
+      'Technical Background': 'Good with Java and Spring.',
+      'Technical Knowledge': 'Solid software engineering principles.',
+      'Compatibility of technical skills with the job': 'Good match.'
+    },
+    technicalOther: 'Could improve documentation.'
+  }
 ];

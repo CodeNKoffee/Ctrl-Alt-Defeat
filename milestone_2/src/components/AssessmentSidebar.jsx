@@ -116,20 +116,28 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
                 <div key={index} className="flex flex-col items-center mb-8">
                   <p className="text-center text-base font-medium text-gray-800 mb-2">{question.question}</p>
                   <div className="flex justify-center gap-8 mt-2">
-                    {likertOptions.map(option => (
-                      <div key={option.id} className="flex flex-col items-center">
-                        <div
-                          className={`w-12 h-12 rounded-full flex items-center justify-center mb-1
-                            ${answers[index] === option.id
-                              ? option.selected + ' border-2'
-                              : option.color + ' border'}
-                            transition-all duration-200 cursor-pointer
-                          `}
+                  {likertOptions.map(option => (
+                  <div key={option.id} className="flex flex-col items-center">
+                    <motion.div
+                      whileTap={{ scale: 0.9 }}  // Apply shrinking effect when clicked
+                      whileHover={{ 
+                        scale: 1.1, // Slight scaling effect on hover
+                        borderWidth: '3px', // Match border thickness on hover
+                        boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)' // Add a subtle shadow to match the selected state on hover
+                      }}
+                      animate={answers[index] === option.id ? { scale: 1.15, borderWidth: '3px', boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)' } : { scale: 1 }}
+                      transition={{ type: 'spring', stiffness: 250, damping: 18 }}
                           onClick={() => handleAnswerChange(index, option.id)}
+                          className={`w-8 h-8 rounded-full flex items-center justify-center mb-1
+                            ${answers[index] === option.id
+                              ? option.selected + ' border-[3px] shadow-md'
+                              : option.color + ' border'}
+                            cursor-pointer transition-all duration-100 ease-in-out // Faster transition
+                          `}
                         />
-                        <span className="text-xs text-gray-600 text-center w-16">{option.text}</span>
+                        <span className="text-[10px] text-gray-600 text-center w-16">{option.text}</span>
                       </div>
-                    ))}
+                ))}
                   </div>
                 </div>
               ))}

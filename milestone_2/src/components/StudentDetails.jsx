@@ -64,36 +64,6 @@ export default function StudentDetails({ isOpen, studentData }) {
     backgroundColor: theme.background,
     color: theme.text
   };
-  const majorsAndSemesters = [
-    {
-      value:"Media Engineering and Technology (MET)",
-      sem:10
-    },
-    {
-      value:"Information Engineering Technology (IET)",
-      sem:10
-    },
-    {
-      value:"Mechatronics Engineering",
-      sem:10
-    },
-    {
-      value:"Buisiness Informatics",
-      sem:8
-    },
-    {
-      value:"Management",
-      sem:8
-    },
-    {
-      value:"Pharmacy",
-      sem:12
-    },
-    {
-      value:"Applied Arts",
-      sem:10
-    },
-  ]
 
   return (
     <div className={`student-details ${isOpen ? 'expanded' : ''}`} style={themeStyle}>
@@ -205,4 +175,3 @@ export default function StudentDetails({ isOpen, studentData }) {
     </div>
   );
 }
-

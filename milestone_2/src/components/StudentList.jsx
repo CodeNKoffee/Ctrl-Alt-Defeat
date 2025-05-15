@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import Student from "./Student";
 import SearchBar from "./shared/SearchBar";
@@ -15,7 +14,6 @@ const hoverStatusColors = {
   completed: 'hover:bg-green-100 hover:text-green-800 hover:border-green-400',
   all: 'hover:bg-gray-100 hover:text-gray-800 hover:border-gray-400'
 };
-
 
 export default function StudentList({ students }) {
   const [activeTab, setActiveTab] = useState('all');

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import CardTable from './CardTable';
+import CardTable from './shared/CardTable';
 import DatePicker from '../DatePicker';
 import InternshipRow from './InternshipRow';
 import NoResults from './NoResults';
@@ -28,6 +28,9 @@ export default function InternshipList({
   onApplicationCompleted,
   appliedInternshipIds = new Set(),
   showDatePicker = true,
+  showSidebar = false,
+  userMajor = "Computer Science",
+  isRecommended = false,
   onTriggerReportCreate, // Accept this prop from parent
 }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -97,100 +100,71 @@ export default function InternshipList({
     // You might want to trigger a data refresh or navigation here
   };
 
-  // Only render the Report component if we're using the internal state approach
+  // Only render the ReportCreationDashboard as a modal if we're using the internal state approach
   // (i.e., parent didn't provide onTriggerReportCreate)
   if (reportingInternship && !onTriggerReportCreate) {
     return (
-      <Report
-        // Pass the internship data to the Report component if it needs it
-        // internshipData={reportingInternship} 
-        isOpen={true} // If reportingInternship is not null, the report is open
-        onClose={handleReportClose}
-        onAddTile={handleReportAddTile}
-      />
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+        <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative">
+          <button
+            className="absolute top-4 right-4 text-gray-500 hover:text-metallica-blue-700 text-2xl font-bold"
+            onClick={() => setReportingInternship(null)}
+            aria-label="Close"
+          >
+            &times;
+          </button>
+          <ReportCreationDashboard
+            onAddTile={handleReportAddTile}
+            onCancel={() => setReportingInternship(null)}
+            initialReport={reportingInternship}
+          />
+        </div>
+      </div>
     );
   }
 
+  // Build filterConfig and searchConfig for CardTable
+  const searchConfig = {
+    searchTerm,
+    onSearchChange: setSearchTerm,
+    selectedInternship: undefined, // You can add internship filter if needed
+    onInternshipChange: undefined, // You can add internship filter if needed
+    hideSearchBar: false,
+  };
+
+  const filterConfig = {
+    showFilter: true,
+    selectedFilter: activeTab,
+    onFilterChange: setActiveTab,
+    statusConfig: statusColors, // or your status config object for color
+    internships: [], // You can pass internship list if you want internship filter
+    onClearFilters: () => {
+      setSearchTerm('');
+      setActiveTab('all');
+      setSelectedDate(null);
+    },
+  };
+
   return (
-    <div className="w-full px-4 py-6 space-y-4">
-      <div className="w-full max-w-3xl mx-auto">
-        {/* First CardTable for Search Bar only */}
-        <CardTable
-          title=""
-          data={[]}
-          filterFunction={() => true}
-          emptyMessage=""
-          searchConfig={{
-            searchTerm: searchTerm,
-            onSearchChange: setSearchTerm,
-            placeholder: 'Search by job title, company, or skills...',
-            hideSearchBar: false
-          }}
-          filterConfig={{ showFilter: false }}
-          renderCard={() => null}
-        />
-
-        {/* Custom Filter Panel (e.g., All/Recommended) */}
-        {customFilterPanel && (
-          <div className="py-2 mb-4">{customFilterPanel}</div>
+    <div className="w-full">
+      <CardTable
+        title={title}
+        data={internships}
+        filterFunction={filterFunction}
+        searchConfig={searchConfig}
+        filterConfig={filterConfig}
+        renderCard={(internship) => (
+          <InternshipRow
+            key={internship.id}
+            internship={internship}
+            type={type}
+            statusColors={statusColors}
+            onApplicationCompleted={onApplicationCompleted}
+            isApplied={appliedInternshipIds.has(internship.id)}
+            onTriggerReportCreate={handleTriggerReportCreate} // Pass the handler down
+          />
         )}
-
-        {/* Status Tabs and Date Picker Row */}
-        {displayStatuses.length > 0 && (
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2 mb-4">
-            {/* Status Tabs */}
-            <div className="flex flex-wrap gap-2">
-              {['all', ...displayStatuses].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-                    ${activeTab === tab
-                      ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                      : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                    }`}
-                >
-                  {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </button>
-              ))}
-            </div>
-
-            {showDatePicker && (
-              <DatePicker
-                selectedDate={selectedDate}
-                onDateChange={setSelectedDate}
-              />
-            )}
-          </div>
-        )}
-
-        {/* Internship Cards */}
-        <CardTable
-          data={internships}
-          filterFunction={filterFunction}
-          emptyMessage={
-            <NoResults
-              mainMessage={`No internships found matching your criteria`}
-              subMessage="Try adjusting your search or filter"
-            />
-          }
-          searchConfig={{
-            hideSearchBar: true
-          }}
-          filterConfig={{ showFilter: false }}
-          renderCard={(internship) => (
-            <InternshipRow
-              key={internship.id}
-              internship={internship}
-              type={type}
-              statusColors={statusColors}
-              onApplicationCompleted={onApplicationCompleted}
-              isApplied={appliedInternshipIds.has(internship.id)}
-              onTriggerReportCreate={handleTriggerReportCreate} // Pass the handler down
-            />
-          )}
-        />
-      </div>
+      />
     </div>
   );
-} 
+}

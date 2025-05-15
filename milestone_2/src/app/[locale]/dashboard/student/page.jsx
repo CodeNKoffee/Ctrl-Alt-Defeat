@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faXmark, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import { getRegularInternships, getRecommendedInternships, getAppliedInternships, getMyInternships } from '../../../../../constants/internshipData';
-import Report from '../../../../../src/components/Report';
 
 // Video Sidebar Component
 function InternshipVideoSidebar({ userMajor }) {
@@ -53,6 +52,9 @@ function InternshipVideoSidebar({ userMajor }) {
 // Dashboard Home View Component
 function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
   const [personalizedInternships, setPersonalizedInternships] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
+  const [selectedDate, setSelectedDate] = useState(null);
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const userMajor = currentUser?.major || 'Computer Science';
 
@@ -86,24 +88,21 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
 
   return (
     <div className="w-full px-6 py-4">
-      {/* Recommendation explanation subtitle */}
-      <div className="mb-6 bg-[#D9F0F4]/60 rounded-lg p-4 border border-[#5DB2C7] shadow-sm">
-        <p className="text-[#2a5f74] text-sm">
-          These opportunities are personalized based on your <span className="font-medium">job interests</span>,
-          <span className="font-medium"> industry preferences</span>, and
-          <span className="font-medium"> recommendations from past interns</span> with similar profiles.
-        </p>
-      </div>
-
       <InternshipList
         title=""
         internships={personalizedInternships}
-        type="regular"
+        type={"recommended"}
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
         userMajor={userMajor}
-        isRecommended={true} // Add this prop to indicate these are recommended internships
+        isRecommended={true}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </div>
   );
@@ -119,6 +118,9 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     isPaid: null
   });
   const [filteredInternships, setFilteredInternships] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
+  const [selectedDate, setSelectedDate] = useState(null);
   const { currentUser } = useSelector(state => state.auth);
   const userMajor = currentUser?.major || 'Computer Science';
 
@@ -211,7 +213,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       <InternshipList
         title=""
         internships={hasActiveFilters ? filteredInternships : baseInternships}
-        type="regular"
+        type="browsing"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
@@ -308,6 +310,12 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
             )}
           </div>
         }
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
 
       {/* Filter Modal */}
@@ -323,7 +331,34 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 
 function AppliedInternshipsView() {
   const { currentUser } = useSelector(state => state.auth);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
+  const [selectedDate, setSelectedDate] = useState(null);
   const userMajor = currentUser?.major || 'Computer Science';
+
+  // Mock statuses for AppliedInternshipsView
+  const APPLIED_INTERNSHIP_STATUSES = {
+    pending: {
+      label: "PENDING",
+      color: "bg-yellow-100 text-yellow-800 border border-yellow-400",
+      badgeColor: "bg-yellow-600",
+    },
+    accepted: {
+      label: "ACCEPTED",
+      color: "bg-green-100 text-green-800 border border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    rejected: {
+      label: "REJECTED",
+      color: "bg-red-100 text-red-800 border border-red-400",
+      badgeColor: "bg-red-600",
+    },
+    finalized: {
+      label: "FINALIZED",
+      color: "bg-purple-100 text-purple-800 border border-purple-400",
+      badgeColor: "bg-purple-600",
+    }
+  };
 
   return (
     <div className="w-full px-6 py-4">
@@ -335,6 +370,12 @@ function AppliedInternshipsView() {
         showDatePicker={false}
         showSidebar={true}
         userMajor={userMajor}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </div>
   );
@@ -342,7 +383,29 @@ function AppliedInternshipsView() {
 
 function MyInternshipsView({ onTriggerReportCreate }) {
   const { currentUser } = useSelector(state => state.auth);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
+  const [selectedDate, setSelectedDate] = useState(null);
   const userMajor = currentUser?.major || 'Computer Science';
+
+  // Mock statuses for MyInternshipsView
+  const MY_INTERNSHIP_STATUSES = {
+    current: {
+      label: "CURRENT",
+      color: "bg-blue-100 text-blue-800 border border-blue-400",
+      badgeColor: "bg-blue-600",
+    },
+    completed: {
+      label: "COMPLETED",
+      color: "bg-green-100 text-green-800 border border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    evaluated: {
+      label: "EVALUATED",
+      color: "bg-purple-100 text-purple-800 border border-purple-400",
+      badgeColor: "bg-purple-600",
+    }
+  };
 
   return (
     <div className="w-full px-6 py-4">
@@ -354,6 +417,12 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         onTriggerReportCreate={onTriggerReportCreate}
         showSidebar={true}
         userMajor={userMajor}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </div>
   );
@@ -489,10 +558,10 @@ export default function StudentDashboardPage() {
         currentViewId={currentView}
         onViewChange={handleViewChange}
       >
-        <Report
+        {/* <Report
           onAddTile={handleReportSubmit}
           onCancel={handleReportCancel}
-        />
+        /> */}
       </DashboardLayout>
     );
   }

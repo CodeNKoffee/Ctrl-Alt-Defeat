@@ -1,7 +1,6 @@
 "use client";
 import { useState } from 'react';
-import SearchBar from './SearchBar';
-import Filter from '../Filter';
+import ApplicationsFilterBar from './ApplicationsFilterBar';
 
 export default function CardTable({
   title = "",
@@ -56,26 +55,19 @@ export default function CardTable({
         </h1>
       )}
 
-      {/* Search Bar */}
-      {!hideSearchBar && (
+      {/* Combined Search & Filter Bar */}
+      {(!hideSearchBar || showFilter) && (
         <div className="w-full mb-4">
-          <SearchBar
+          <ApplicationsFilterBar
             searchTerm={searchTerm}
-            setSearchTerm={onSearchChange}
-            placeholder={placeholder}
-          />
-        </div>
-      )}
-
-      {/* Filter Bar */}
-      {showFilter && (
-        <div className="w-full mb-4">
-          <Filter
-            options={filterOptions}
-            selectedValue={selectedFilter}
-            onChange={onFilterChange}
-            label={filterLabel}
-            placeholder="Select an option"
+            onSearchChange={onSearchChange}
+            selectedStatus={filterConfig.selectedFilter || 'all'}
+            onStatusChange={filterConfig.onFilterChange || (() => {})}
+            selectedInternship={searchConfig.selectedInternship || 'all'}
+            onInternshipChange={searchConfig.onInternshipChange || (() => {})}
+            statusConfig={filterConfig.statusConfig || {}}
+            internships={filterConfig.internships || []}
+            onClearFilters={filterConfig.onClearFilters || (() => {})}
           />
         </div>
       )}

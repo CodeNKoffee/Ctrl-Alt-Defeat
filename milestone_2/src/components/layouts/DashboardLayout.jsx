@@ -86,7 +86,7 @@ export default function DashboardLayout({
 
       <div className="flex-1 overflow-auto">
         <div className="p-4 md:p-6 min-h-screen flex flex-col">
-          <div className="mb-6">
+          <div className="mb-6 flex flex-row justify-between items-center">
             <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
               {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
             </h1>

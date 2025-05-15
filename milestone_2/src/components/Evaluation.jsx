@@ -75,7 +75,7 @@ export default function Evaluation({
         )}
         
         {isDraft && stakeholder === "student" && (
-          <div className="absolute top-0 left-0 bg-amber-100 text-amber-800 px-2 py-1 text-xs font-medium z-40">
+          <div className="absolute top-0 left-0 bg-amber-100 text-amber-800 px-2 py-1 text-xs font-medium z-40 rounded-tl-xl rounded-br-xl">
             Draft
           </div>
         )}
