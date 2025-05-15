@@ -330,32 +330,6 @@ export default function InternshipList({
             </div>
           </div>
 
-          {/* Tab buttons section - Only show in browse view, not in home/recommended */}
-          {shouldShowTabs && !customFilterPanel && (
-            <div className="w-full max-w-6xl mx-auto mb-4">
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => setActiveTab('all')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
-                    ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                    : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                    }`}
-                >
-                  All
-                </button>
-                <button
-                  onClick={() => setActiveTab('recent')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recent'
-                    ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                    : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                    }`}
-                >
-                  Recent
-                </button>
-              </div>
-            </div>
-          )}
-
           {/* Filter and Search Section */}
           <div className="w-full max-w-6xl mx-auto">
             {/* Custom Filter Panel (if provided) */}
@@ -400,6 +374,32 @@ export default function InternshipList({
               </div>
             )}
 
+            {/* Tab buttons section - Only show in browse view, not in home/recommended */}
+            {shouldShowTabs && !customFilterPanel && (
+              <div className="w-full max-w-6xl mx-auto mb-6">
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setActiveTab('all')}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
+                      ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                      : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                      }`}
+                  >
+                    ALL
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('recent')}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recent'
+                      ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                      : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                      }`}
+                  >
+                    RECOMMENDED
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Status Filter Pills - Only for applied and my internships */}
             {shouldShowStatusFilters && (
               <div className="w-full max-w-6xl mx-auto mb-6">
@@ -411,7 +411,7 @@ export default function InternshipList({
                       : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
                       }`}
                   >
-                    All
+                    ALL
                   </button>
 
                   {/* Status pills based on type */}
