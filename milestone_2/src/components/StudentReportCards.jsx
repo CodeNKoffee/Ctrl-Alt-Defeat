@@ -204,11 +204,16 @@ export default function StudentReportCards() {
                   className="bg-white rounded-2xl shadow-md p-5 flex flex-col gap-2 border border-gray-100 hover:shadow-lg transition relative min-h-[180px] w-full max-w-[320px] mx-auto"
                   style={{ minHeight: '200px', width: '100%' }}
                 >
+                  {/* Draft badge at top-left */}
+                  <div className="absolute top-0 left-0 bg-amber-100 text-amber-800 px-3 py-1 text-xs font-semibold z-20 rounded-tl-xl rounded-br-xl shadow-sm select-none">
+                    Draft
+                  </div>
+                  {/* Edit/Delete icons at top-right, styled like evaluation cards */}
                   <div className="absolute top-4 right-4 flex gap-2 z-10">
-                    <button className="text-metallica-blue-600 hover:text-metallica-blue-800 bg-metallica-blue-50 hover:bg-metallica-blue-100 p-1 rounded-full transition" title="Edit" onClick={() => { setEditingDraftIndex(idx); setEditingDraftData(report); }}>
+                    <button className="text-[#3298BA] hover:text-[#65bedc] p-1" title="Edit" onClick={() => { setEditingDraftIndex(idx); setEditingDraftData(report); }}>
                       <FaEdit size={18} />
                     </button>
-                    <button className="text-[#C41E3A] hover:text-white bg-red-100 hover:bg-[#C41E3A] p-1 rounded-full transition" title="Delete" onClick={() => setDeleteIndex(idx)}>
+                    <button className="text-red-500 hover:text-red-700 p-1" title="Delete" onClick={() => setDeleteIndex(idx)}>
                       <FaTrash size={18} />
                     </button>
                   </div>
