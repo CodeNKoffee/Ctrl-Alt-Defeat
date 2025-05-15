@@ -83,14 +83,23 @@ export default function CompanyApplicationsPage() {
             {/* Filter Bar Component */}
             <div className="dropdown-overlay">
               <ApplicationsFilterBar
+                // Search props
                 searchTerm={searchTerm}
                 onSearchChange={setSearchTerm}
+                searchPlaceholder="Search by name, email, or position..."
+
+                // Status filter props
                 selectedStatus={selectedStatus}
                 onStatusChange={setSelectedStatus}
-                selectedInternship={selectedInternship}
-                onInternshipChange={setSelectedInternship}
                 statusConfig={STATUS_CONFIG}
-                internships={MOCK_INTERNSHIPS}
+
+                // Primary filter (internships) props
+                primaryFilterName="Internship Position"
+                selectedPrimaryFilter={selectedInternship}
+                onPrimaryFilterChange={setSelectedInternship}
+                primaryFilterOptions={MOCK_INTERNSHIPS}
+
+                // Filter actions
                 onClearFilters={clearFilters}
               />
             </div>

@@ -1,67 +1,28 @@
 "use client";
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardTable from './CardTable';
 import DatePicker from '../DatePicker';
 import InternshipRow from './InternshipRow';
 import NoResults from './NoResults';
 import Report from "../Report";
+import ApplicationsFilterBar from './ApplicationsFilterBar';
+import StatusBadge from './StatusBadge';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faFilter, faTimes, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import InternshipVideoSidebar from './InternshipVideoSidebar';
 
 const statusColors = {
   // Applied internship statuses
-  pending: 'bg-yellow-100 text-yellow-800 border-yellow-400',
-  accepted: 'bg-green-100 text-green-800 border-green-400',
-  finalized: 'bg-purple-100 text-purple-800 border-purple-400',
-  rejected: 'bg-red-100 text-red-800 border-red-400',
+  pending: 'bg-yellow-100 text-yellow-800 border-2 border-yellow-400',
+  accepted: 'bg-green-100 text-green-800 border-2 border-green-400',
+  finalized: 'bg-purple-100 text-purple-800 border-2 border-purple-400',
+  rejected: 'bg-red-100 text-red-800 border-2 border-red-400',
 
   // My internship statuses
-  current: 'bg-blue-100 text-blue-800 border-blue-400',
-  completed: 'bg-green-100 text-green-800 border-green-400',
-  evaluated: 'bg-purple-100 text-purple-800 border-purple-400',
+  current: 'bg-blue-100 text-blue-800 border-2 border-blue-400',
+  completed: 'bg-green-100 text-green-800 border-2 border-green-400',
+  evaluated: 'bg-purple-100 text-purple-800 border-2 border-purple-400',
 };
-
-// Video Sidebar Component
-function InternshipVideoSidebar({ userMajor }) {
-  return (
-    <div className="bg-white rounded-2xl shadow-md p-4 sticky top-4">
-      <h3 className="text-lg font-semibold text-[#2a5f74] mb-3">Internship Requirements</h3>
-      <div className="space-y-3">
-        <div className="relative rounded-lg overflow-hidden aspect-video group">
-          <iframe
-            width="100%"
-            height="100%"
-            src="https://www.youtube.com/embed/KPD8C7c6P1w?si=46fIIWYEYW58AoJO"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            className="absolute top-0 left-0 w-full h-full"
-          ></iframe>
-          <div className="absolute bottom-0 left-0 right-0 bg-[#2a5f74]/70 text-white text-xs py-2 px-3 pointer-events-none">
-            Watch: Internships for {userMajor || 'Your Major'}
-          </div>
-        </div>
-        <p className="text-sm text-gray-600">
-          Learn which internships count toward your graduation requirements based on your major and academic plan.
-        </p>
-        <div className="border-t pt-3">
-          <h4 className="font-medium text-[#2a5f74] mb-2">Quick Resources</h4>
-          <ul className="text-sm space-y-2">
-            <li>
-              <a href="#" className="text-[#3298BA] hover:underline">Academic Requirements Guide</a>
-            </li>
-            <li>
-              <a href="#" className="text-[#3298BA] hover:underline">Contact Academic Advisor</a>
-            </li>
-            <li>
-              <a href="#" className="text-[#3298BA] hover:underline">FAQs About Internships</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function InternshipList({
   title = "INTERNSHIPS",
@@ -71,12 +32,12 @@ export default function InternshipList({
   customFilterPanel,
   onApplicationCompleted,
   appliedInternshipIds = new Set(),
-  showDatePicker = true,
+  showDatePicker = false,
   showSidebar = false,
   userMajor = "Computer Science",
   isRecommended = false,
   // New: allow parent to control search/filter state
- 
+
   searchTerm: controlledSearchTerm,
   setSearchTerm: controlledSetSearchTerm,
   activeTab: controlledActiveTab,
@@ -84,11 +45,16 @@ export default function InternshipList({
   selectedDate: controlledSelectedDate,
   setSelectedDate: controlledSetSelectedDate,
 }) {
+  const [filteredInternships, setFilteredInternships] = useState([]);
+  const [selectedIndustry, setSelectedIndustry] = useState('all');
+  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [reportingInternship, setReportingInternship] = useState(false);
+
   // Use controlled state if provided, otherwise fallback to internal state
   const [internalSearchTerm, internalSetSearchTerm] = useState('');
   const [internalActiveTab, internalSetActiveTab] = useState('all');
   const [internalSelectedDate, internalSetSelectedDate] = useState(null);
- const [reportingInternship, setReportingInternship] = useState(false);
+
   const searchTerm = controlledSearchTerm !== undefined ? controlledSearchTerm : internalSearchTerm;
   const setSearchTerm = controlledSetSearchTerm || internalSetSearchTerm;
   const activeTab = controlledActiveTab !== undefined ? controlledActiveTab : internalActiveTab;
@@ -102,38 +68,155 @@ export default function InternshipList({
       type === "applied" ? ['pending', 'accepted', 'finalized', 'rejected'] :
         [];
 
-  const filterFunction = (internship) => {
-    const searchLower = searchTerm.toLowerCase();
-    const matchesSearch =
-      internship.title.toLowerCase().includes(searchLower) ||
-      internship.company.toLowerCase().includes(searchLower) ||
-      (internship.skills && internship.skills.some(skill =>
-        skill.toLowerCase().includes(searchLower))
+  // Status configuration for different internship types
+  const STATUS_CONFIG = {
+    // For applied internships
+    pending: {
+      label: "PENDING",
+      color: "bg-yellow-100 text-yellow-800 border-2 border-yellow-400",
+      badgeColor: "bg-yellow-600",
+    },
+    accepted: {
+      label: "ACCEPTED",
+      color: "bg-green-100 text-green-800 border-2 border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    rejected: {
+      label: "REJECTED",
+      color: "bg-red-100 text-red-800 border-2 border-red-400",
+      badgeColor: "bg-red-600",
+    },
+    finalized: {
+      label: "FINALIZED",
+      color: "bg-purple-100 text-purple-800 border-2 border-purple-400",
+      badgeColor: "bg-purple-600",
+    },
+    // For my internships
+    current: {
+      label: "CURRENT INTERN",
+      color: "bg-blue-100 text-blue-800 border-2 border-blue-400",
+      badgeColor: "bg-blue-600",
+    },
+    completed: {
+      label: "COMPLETED",
+      color: "bg-green-100 text-green-800 border-2 border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    evaluated: {
+      label: "EVALUATED",
+      color: "bg-purple-100 text-purple-800 border-2 border-purple-400",
+      badgeColor: "bg-purple-600",
+    }
+  };
+
+  // Generate status config for the current type view
+  const getFilterStatusConfig = () => {
+    const config = {};
+
+    if (type === 'applied') {
+      ['pending', 'accepted', 'rejected', 'finalized'].forEach(status => {
+        if (STATUS_CONFIG[status]) {
+          config[status] = STATUS_CONFIG[status];
+        }
+      });
+    } else if (type === 'my') {
+      ['current', 'completed', 'evaluated'].forEach(status => {
+        if (STATUS_CONFIG[status]) {
+          config[status] = STATUS_CONFIG[status];
+        }
+      });
+    }
+
+    return config;
+  };
+
+  // Get the active status config for the current type
+  const activeStatusConfig = getFilterStatusConfig();
+
+  // Get unique industries from internships
+  const industries = React.useMemo(() => {
+    const uniqueIndustries = [...new Set(internships.map(internship => internship.industry))];
+    return uniqueIndustries
+      .filter(Boolean)
+      .map(industry => ({ id: industry, title: industry }));
+  }, [internships]);
+
+  // Filter internships based on search term, status, industry, and date
+  useEffect(() => {
+    let results = [...internships];
+
+    // Filter by search term
+    if (searchTerm) {
+      const searchTermLower = searchTerm.toLowerCase();
+      results = results.filter(internship =>
+        internship.title?.toLowerCase().includes(searchTermLower) ||
+        internship.company?.toLowerCase().includes(searchTermLower) ||
+        internship.industry?.toLowerCase().includes(searchTermLower) ||
+        internship.locationType?.toLowerCase().includes(searchTermLower)
       );
-
-    const matchesStatus =
-      activeTab === 'all' ||
-      internship.status?.toLowerCase() === activeTab;
-
-    const matchesDate = !selectedDate || (
-      (type === "applied" && internship.appliedDate && new Date(internship.appliedDate).toDateString() === new Date(selectedDate).toDateString()) ||
-      (type !== "applied" && internship.startDate && new Date(internship.startDate).toDateString() === new Date(selectedDate).toDateString())
-    );
-
-    // For "applied" type, only show internships with applied statuses
-    if (type === "applied") {
-      const isApplied = displayStatuses.includes(internship.status?.toLowerCase());
-      return matchesSearch && matchesStatus && matchesDate && isApplied;
     }
 
-    // For "my" type, only show internships with my statuses
-    if (type === "my") {
-      const isMine = displayStatuses.includes(internship.status?.toLowerCase());
-      return matchesSearch && matchesStatus && matchesDate && isMine;
+    // Filter by status for applied/my internships
+    if (selectedStatus !== 'all' && (type === 'applied' || type === 'my')) {
+      results = results.filter(internship => internship.status === selectedStatus);
     }
 
-    // For regular internships, show all
-    return matchesSearch && matchesStatus && matchesDate;
+    // Filter by industry
+    if (selectedIndustry !== 'all') {
+      results = results.filter(internship => internship.industry === selectedIndustry);
+    }
+
+    // Filter by date
+    if (selectedDate) {
+      const dateToCheck = new Date(selectedDate);
+      results = results.filter(internship => {
+        let internshipDate;
+
+        if (type === 'applied') {
+          internshipDate = new Date(internship.appliedDate);
+        } else if (type === 'my') {
+          internshipDate = new Date(internship.startDate);
+        } else {
+          internshipDate = new Date(internship.postedDate);
+        }
+
+        return (
+          internshipDate.getDate() === dateToCheck.getDate() &&
+          internshipDate.getMonth() === dateToCheck.getMonth() &&
+          internshipDate.getFullYear() === dateToCheck.getFullYear()
+        );
+      });
+    }
+
+    // Apply tab filtering (recent vs all)
+    if (activeTab === 'recent' && type !== 'applied' && type !== 'my') {
+      const now = new Date();
+      // Consider recent as posted within the last 14 days
+      const twoWeeksAgo = new Date(now.setDate(now.getDate() - 14));
+
+      results = results.filter(internship => {
+        const postedDate = new Date(internship.postedDate);
+        return postedDate >= twoWeeksAgo;
+      });
+    }
+
+    setFilteredInternships(results);
+  }, [internships, searchTerm, selectedStatus, selectedIndustry, selectedDate, activeTab, type]);
+
+  // Determine the appropriate date field label
+  const getDateFieldLabel = () => {
+    if (type === 'applied') return "Applied Date";
+    if (type === 'my') return "Start Date";
+    return "Posted Date";
+  };
+
+  // Handle clearing all filters
+  const clearFilters = () => {
+    setSearchTerm('');
+    setSelectedStatus('all');
+    setSelectedIndustry('all');
+    setSelectedDate(null);
+    setActiveTab('all');
   };
 
   const handleTriggerReportCreate = (internship) => {
@@ -172,6 +255,12 @@ export default function InternshipList({
     },
   };
 
+  // Only show tabs in browser view, not in home/recommended view
+  const shouldShowTabs = !isRecommended && type !== 'applied' && type !== 'my';
+
+  // Only show status filters for applied and my internships
+  const shouldShowStatusFilters = type === 'applied' || type === 'my';
+
   return (
     <>
       {reportingInternship ? (
@@ -182,109 +271,210 @@ export default function InternshipList({
         />
       ) : (
         <div className="w-full px-4 py-6 space-y-4">
-          <div className="w-full max-w-5xl mx-auto px-2 md:px-6">
-            <div className="bg-white p-6 rounded-lg shadow-md mb-8 border border-metallica-blue-200">
-              <div className="flex items-center gap-4 w-full md:w-auto">
+          {/* Info Card */}
+          <div className="w-full mx-auto">
+            <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
+              <div className="flex items-start gap-4 w-full md:w-auto">
                 <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
                 </div>
-                <div>
+                <div className="text-left">
                   <p className="text-sm text-gray-400"></p>
-                  <div className="text-2xl font-semibold text-[#2a5f74] mb-4"> {type=="my"?"Your Internships  Dashboard": type=="applied"?"Track Your Internship Applications":type=="recommended"?"Your Personalized Internship Matches":"Browse Career-Building Internships"}</div>
-                  {type=="my"? <div className="text-gray-700 mb-2"> Manage all your internships in one place.
-                  <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
-                  <li> Current internships are ongoing</li>
-                  <li> Completed internships are awaiting your report and evaluation submissions</li>
-                  <li> Evaluated ones have been reviewed by your supervisor</li>
-                  </ul> 
-                <p className="text-metallica-blue-700 font-medium">
-                 Use the filters to sort through your internship history or search for specific opportunities.
-                 </p>
-                 </div>
-                 :type=="applied"?<div className="text-gray-700 mb-2">Welcome to your personal internship tracking dashboard. Here you can monitor the status of all your internship applications in real-time.
-                  <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
-                  <li><span className="text-metallica-blue-700 font-medium">Pending: </span> Your application has been submitted and is under review</li>
-                  <li><span className="text-metallica-blue-700 font-medium">Finalized: </span> Your application has been reviewed and you've been shortlisted as one of the top candidates</li>
-                  <li><span className="text-metallica-blue-700 font-medium">Accepted: </span> Congratulations! Your application has been approved</li>
-                  <li><span className="text-metallica-blue-700 font-medium">Rejected: </span> Unfortunately, your application was not selected this time</li>
-                  </ul> 
-                <p className="text-metallica-blue-700 font-medium">
-                 Need help with your pending applications? Contact your career advisor for guidance on follow-up strategies or preparation for upcoming interviews.
-                </p>
-                  </div>: type=="recommended"?<div className="text-gray-700 mb-2">This page showcases internship opportunities specifically curated for you based on your unique profile and preferences.
-                  <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
-                  <p className="text-metallica-blue-700 font-medium">How These Recommendations Work:</p>
-                  <li>Matched to your specified job interests and career goals</li>
-                  <li> Filtered by your preferred industries and work environments</li>
-                  <li>Includes positions highly rated by previous SCAD interns</li>
-                  <li>Updated regularly as new opportunities become available</li>
-                  </ul> 
-                <p className="text-metallica-blue-700 font-medium">
-                 Take time to explore these tailored suggestions—they represent opportunities where your specific talents and interests could truly shine. 
-                </p>
-                  </div>:<div className="text-gray-700 mb-2"> Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.
-                  <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
-                    <p className="text-metallica-blue-700 font-medium">Why These Opportunities Matter:</p>
-                  <li>Potential for academic credit and professional references</li>
-                  <li> Networking connections that could lead to full-time employment</li>
-                  <li>Portfolio-building projects to showcase your skills</li>
-                  </ul> 
-                <p className="text-metallica-blue-700 font-medium">
-                  Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience and ensure it contributes meaningfully to your academic requirements.
-                </p>
-                  </div>}
-                  
+                  <div className="text-2xl font-semibold text-[#2a5f74] mb-4"> {type == "my" ? "Your Internships Dashboard" : type == "applied" ? "Track Your Internship Applications" : type == "recommended" ? "Your Personalized Internship Matches" : "Browse Career-Building Internships"}</div>
+                  {type == "my" ? <div className="text-gray-700 mb-2"> Manage all your internships in one place.
+                    <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+                      <li> Current internships are ongoing</li>
+                      <li> Completed internships are awaiting your report and evaluation submissions</li>
+                      <li> Evaluated ones have been reviewed by your supervisor</li>
+                    </ul>
+                    <p className="text-metallica-blue-700 font-medium">
+                      Use the filters to sort through your internship history or search for specific opportunities.
+                    </p>
+                  </div>
+                    : type == "applied" ? <div className="text-gray-700 mb-2">Welcome to your personal internship tracking dashboard. Here you can monitor the status of all your internship applications in real-time.
+                      <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+                        <li><span className="text-metallica-blue-700 font-medium">Pending: </span> Your application has been submitted and is under review</li>
+                        <li><span className="text-metallica-blue-700 font-medium">Finalized: </span> Your application has been reviewed and you've been shortlisted as one of the top candidates</li>
+                        <li><span className="text-metallica-blue-700 font-medium">Accepted: </span> Congratulations! Your application has been approved</li>
+                        <li><span className="text-metallica-blue-700 font-medium">Rejected: </span> Unfortunately, your application was not selected this time</li>
+                      </ul>
+                      <p className="text-metallica-blue-700 font-medium">
+                        Need help with your pending applications? Contact your career advisor for guidance on follow-up strategies or preparation for upcoming interviews.
+                      </p>
+                    </div> : type == "recommended" ? <div className="text-gray-700 mb-2">This page showcases internship opportunities specifically curated for you based on your unique profile and preferences.
+                      <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+                        <p className="text-metallica-blue-700 font-medium">How These Recommendations Work:</p>
+                        <li>Matched to your specified job interests and career goals</li>
+                        <li>Filtered by your preferred industries and work environments</li>
+                        <li>Includes positions highly rated by previous SCAD interns</li>
+                        <li>Updated regularly as new opportunities become available</li>
+                      </ul>
+                      <p className="text-metallica-blue-700 font-medium">
+                        Take time to explore these tailored suggestions—they represent opportunities where your specific talents and interests could truly shine.
+                      </p>
+                    </div> : <div className="text-gray-700 mb-2"> Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.
+                      <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+                        <p className="text-metallica-blue-700 font-medium">Why These Opportunities Matter:</p>
+                        <li>Potential for academic credit and professional references</li>
+                        <li>Networking connections that could lead to full-time employment</li>
+                        <li>Portfolio-building projects to showcase your skills</li>
+                      </ul>
+                      <p className="text-metallica-blue-700 font-medium">
+                        Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience and ensure it contributes meaningfully to your academic requirements.
+                      </p>
+                    </div>}
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-full max-w-3xl mx-auto">
-            {/* Unified CardTable with ApplicationsFilterBar for search and filter */}
-            <CardTable
-              title=""
-              data={internships}
-              filterFunction={filterFunction}
-              emptyMessage={
-                <NoResults
-                  mainMessage={`No internships found matching your criteria`}
-                  subMessage="Try adjusting your search or filter"
-                />
-              }
-              searchConfig={searchConfig}
-              filterConfig={filterConfig}
-              renderCard={(internship) => (
-                <InternshipRow
-                  key={internship.id}
-                  internship={internship}
-                  type={type}
-                  statusColors={statusColors}
-                  onApplicationCompleted={onApplicationCompleted}
-                  isApplied={appliedInternshipIds.has(internship.id)}
-                  isRecommended={isRecommended}
-                  onTriggerReportCreate={handleTriggerReportCreate}
-                />
-              )}
-            />
-            {/* Custom Filter Panel (optional, if you want to keep it) */}
+
+          {/* Tab buttons section - Only show in browse view, not in home/recommended */}
+          {shouldShowTabs && !customFilterPanel && (
+            <div className="w-full max-w-6xl mx-auto mb-4">
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => setActiveTab('all')}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
+                    ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                    : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                    }`}
+                >
+                  All
+                </button>
+                <button
+                  onClick={() => setActiveTab('recent')}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recent'
+                    ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                    : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                    }`}
+                >
+                  Recent
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Filter and Search Section */}
+          <div className="w-full max-w-6xl mx-auto">
+            {/* Custom Filter Panel (if provided) */}
             {customFilterPanel && (
-              <div className="w-full mb-4">{customFilterPanel}</div>
+              <div className="mb-4">{customFilterPanel}</div>
             )}
-            {/* Date Picker (optional, if you want to keep it) */}
-            {showDatePicker && (
-              <div className="w-full flex justify-end mb-4">
-                <DatePicker
+
+            {/* ApplicationsFilterBar - Simplified with just search and filter */}
+            {!customFilterPanel && (
+              <div className="mb-6 relative isolation-auto">
+                <ApplicationsFilterBar
+                  // Search functionality
+                  searchTerm={searchTerm}
+                  onSearchChange={setSearchTerm}
+                  searchPlaceholder={`Search ${type === 'my' ? 'my' : ''} internships...`}
+
+                  // Industry filtering
+                  primaryFilterName="Industry"
+                  selectedPrimaryFilter={selectedIndustry}
+                  onPrimaryFilterChange={setSelectedIndustry}
+                  primaryFilterOptions={industries}
+
+                  // Status filtering (only for applied/my)
+                  selectedStatus={(type === 'applied' || type === 'my') ? selectedStatus : undefined}
+                  onStatusChange={(type === 'applied' || type === 'my') ? setSelectedStatus : undefined}
+                  statusConfig={(type === 'applied' || type === 'my') ? activeStatusConfig : {}}
+
+                  // Date filtering
+                  showDatePicker={showDatePicker}
                   selectedDate={selectedDate}
                   onDateChange={setSelectedDate}
+
+                  // Disable tabs within the filter bar
+                  showTabs={false}
+
+                  // Filter actions
+                  onClearFilters={clearFilters}
+
+                  // UI customization
+                  bgColor="bg-[#D9F0F4]/60"
                 />
               </div>
             )}
+
+            {/* Status Filter Pills - Only for applied and my internships */}
+            {shouldShowStatusFilters && (
+              <div className="w-full max-w-6xl mx-auto mb-6">
+                <div className="flex flex-wrap gap-2 items-center">
+                  <button
+                    onClick={() => setSelectedStatus('all')}
+                    className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${selectedStatus === 'all'
+                      ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                      : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
+                      }`}
+                  >
+                    All
+                  </button>
+
+                  {/* Status pills based on type */}
+                  {displayStatuses.map((status) => (
+                    <button
+                      key={status}
+                      onClick={() => setSelectedStatus(status)}
+                      className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${selectedStatus === status
+                        ? STATUS_CONFIG[status].color
+                        : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
+                        }`}
+                    >
+                      <div className="flex items-center">
+                        {selectedStatus === status && (
+                          <span className={`inline-block w-2 h-2 rounded-full ${STATUS_CONFIG[status].badgeColor} mr-1.5`}></span>
+                        )}
+                        {STATUS_CONFIG[status].label}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-          {/* Sidebar */}
-          {showSidebar && (
-            <div className="w-full lg:w-1/3">
-              <InternshipVideoSidebar userMajor={userMajor} />
+
+          {/* Main content area with grid layout for sidebar and internship list */}
+          <div className="w-full max-w-6xl mx-auto">
+            <div className="flex flex-col lg:flex-row gap-6">
+              {/* Main content (internship list) */}
+              <div className={`${showSidebar ? 'lg:w-2/3' : 'w-full'}`}>
+
+                {/* Internship List */}
+                <div className="space-y-3 relative">
+                  {filteredInternships.length === 0 ? (
+                    <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+                      <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                        <FontAwesomeIcon icon={faTimes} className="text-gray-400 text-xl" />
+                      </div>
+                      <h3 className="text-lg font-medium text-gray-700 mb-1">No internships found</h3>
+                      <p className="text-gray-500 text-sm">Try adjusting your filters or search terms</p>
+                    </div>
+                  ) : (
+                    filteredInternships.map(internship => (
+                      <InternshipRow
+                        key={internship.id}
+                        internship={internship}
+                        type={type}
+                        onApplicationCompleted={onApplicationCompleted}
+                        isApplied={appliedInternshipIds?.has(internship.id)}
+                        onTriggerReportCreate={handleTriggerReportCreate}
+                        isRecommended={isRecommended}
+                      />
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Sidebar (only shown if showSidebar is true) */}
+              {showSidebar && (
+                <div className="lg:w-1/3">
+                  <InternshipVideoSidebar userMajor={userMajor} />
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       )}
     </>

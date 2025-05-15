@@ -337,6 +337,30 @@ function AppliedInternshipsView() {
   const [selectedDate, setSelectedDate] = useState(null);
   const userMajor = currentUser?.major || 'Computer Science';
 
+  // Mock statuses for AppliedInternshipsView
+  const APPLIED_INTERNSHIP_STATUSES = {
+    pending: {
+      label: "PENDING",
+      color: "bg-yellow-100 text-yellow-800 border border-yellow-400",
+      badgeColor: "bg-yellow-600",
+    },
+    accepted: {
+      label: "ACCEPTED",
+      color: "bg-green-100 text-green-800 border border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    rejected: {
+      label: "REJECTED",
+      color: "bg-red-100 text-red-800 border border-red-400",
+      badgeColor: "bg-red-600",
+    },
+    finalized: {
+      label: "FINALIZED",
+      color: "bg-purple-100 text-purple-800 border border-purple-400",
+      badgeColor: "bg-purple-600",
+    }
+  };
+
   return (
     <div className="w-full px-6 py-4">
       <InternshipList
@@ -364,6 +388,25 @@ function MyInternshipsView({ onTriggerReportCreate }) {
   const [activeTab, setActiveTab] = useState('all');
   const [selectedDate, setSelectedDate] = useState(null);
   const userMajor = currentUser?.major || 'Computer Science';
+
+  // Mock statuses for MyInternshipsView
+  const MY_INTERNSHIP_STATUSES = {
+    current: {
+      label: "CURRENT",
+      color: "bg-blue-100 text-blue-800 border border-blue-400",
+      badgeColor: "bg-blue-600",
+    },
+    completed: {
+      label: "COMPLETED",
+      color: "bg-green-100 text-green-800 border border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    evaluated: {
+      label: "EVALUATED",
+      color: "bg-purple-100 text-purple-800 border border-purple-400",
+      badgeColor: "bg-purple-600",
+    }
+  };
 
   return (
     <div className="w-full px-6 py-4">
