@@ -100,17 +100,26 @@ export default function InternshipList({
     // You might want to trigger a data refresh or navigation here
   };
 
-  // Only render the Report component if we're using the internal state approach
+  // Only render the ReportCreationDashboard as a modal if we're using the internal state approach
   // (i.e., parent didn't provide onTriggerReportCreate)
   if (reportingInternship && !onTriggerReportCreate) {
     return (
-      <Report
-        // Pass the internship data to the Report component if it needs it
-        // internshipData={reportingInternship} 
-        isOpen={true} // If reportingInternship is not null, the report is open
-        onClose={handleReportClose}
-        onAddTile={handleReportAddTile}
-      />
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+        <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative">
+          <button
+            className="absolute top-4 right-4 text-gray-500 hover:text-metallica-blue-700 text-2xl font-bold"
+            onClick={() => setReportingInternship(null)}
+            aria-label="Close"
+          >
+            &times;
+          </button>
+          <ReportCreationDashboard
+            onAddTile={handleReportAddTile}
+            onCancel={() => setReportingInternship(null)}
+            initialReport={reportingInternship}
+          />
+        </div>
+      </div>
     );
   }
 
