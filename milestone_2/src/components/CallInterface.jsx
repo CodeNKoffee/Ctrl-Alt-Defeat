@@ -38,8 +38,8 @@ const ChatPanelContent = memo(({
   handleToggleChat,
   chatScrollRef
 }) => (
-  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg">
-    <div className="flex justify-between items-center p-3 border-b bg-gray-50">
+  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg rounded-3xl overflow-hidden">
+    <div className="flex justify-between items-center p-3 border-b bg-gray-100">
       <h3 className="text-lg font-semibold text-gray-700">Chat</h3>
       <button
         onClick={handleToggleChat}
@@ -50,7 +50,7 @@ const ChatPanelContent = memo(({
       </button>
     </div>
     <div className="flex flex-col flex-grow overflow-hidden">
-      <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-gray-200">
+      <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-white">
         {chatMessages.length === 0 ? (
           <p className="text-center text-sm text-gray-500 py-4">No messages yet.</p>
         ) : (
@@ -58,7 +58,7 @@ const ChatPanelContent = memo(({
             <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[80%] rounded-lg px-3 py-2 shadow-sm ${message.isSelf
                 ? 'bg-metallica-blue-700 text-white rounded-br-none'
-                : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'
+                : 'bg-gray-100 text-gray-800 border border-gray-200 rounded-bl-none'
                 }`}>
                 <p className="text-sm">{message.content}</p>
                 <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100' : 'text-gray-400'} ${message.isSelf ? 'text-right' : 'text-left'}`}>
@@ -99,8 +99,8 @@ const NotesPanelContent = memo(({
   handleSaveNotes,
   handleToggleNotes
 }) => (
-  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg">
-    <div className="flex justify-between items-center p-3 border-b bg-gray-50">
+  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg rounded-xl overflow-hidden">
+    <div className="flex justify-between items-center p-3 border-b bg-gray-100">
       <h3 className="text-lg font-semibold text-gray-700">Private Notes</h3>
       <button
         onClick={handleToggleNotes}
@@ -110,7 +110,7 @@ const NotesPanelContent = memo(({
         <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
       </button>
     </div>
-    <div className="flex flex-col flex-grow overflow-hidden p-4">
+    <div className="flex flex-col flex-grow overflow-hidden p-4 bg-white">
       <textarea
         value={noteContent}
         onChange={(e) => setNoteContent(e.target.value)}
@@ -637,12 +637,12 @@ const CallInterface = () => {
             animate={{ x: '0%' }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-1/4 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg" // Sidebar takes 1/4
+            className="w-1/4 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg p-1"
           >
             {showNotes && showChat ? (
               // Both Notes and Chat are open: Notes (1/2 height), Chat (1/2 height)
               <>
-                <div className="h-1/2">
+                <div className="h-1/2 pb-1">
                   <NotesPanelContent
                     noteContent={noteContent}
                     setNoteContent={setNoteContent}
@@ -650,7 +650,7 @@ const CallInterface = () => {
                     handleToggleNotes={handleToggleNotes}
                   />
                 </div>
-                <div className="h-1/2 border-t border-gray-300">
+                <div className="h-1/2 pt-1">
                   <ChatPanelContent
                     chatMessages={chatMessages}
                     currentMessage={currentMessage}
