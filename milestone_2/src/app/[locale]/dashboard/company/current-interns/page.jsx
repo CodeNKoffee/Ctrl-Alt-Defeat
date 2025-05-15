@@ -1,6 +1,6 @@
 "use client";
 
-import CurrentInterns from '@/components/CurrentInterns';
+import CurrentInterns from "@/components/CurrentInterns";
 
 export default function CurrentInternsPage() {
   return (

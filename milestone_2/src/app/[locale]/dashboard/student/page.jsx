@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faXmark, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import { getRegularInternships, getRecommendedInternships, getAppliedInternships, getMyInternships } from '../../../../../constants/internshipData';
+import Report from '../../../../../src/components/Report';
 
 // Video Sidebar Component
 function InternshipVideoSidebar({ userMajor }) {
@@ -309,9 +310,43 @@ function AppliedInternshipsView() {
   );
 }
 
-function MyInternshipsView() {
-  const { currentUser } = useSelector(state => state.auth);
-  const userMajor = currentUser?.major || 'Computer Science';
+function MyInternshipsView({ onSetTitle }) {
+  const [isCreatingReport, setIsCreatingReport] = useState(false);
+  const [selectedInternship, setSelectedInternship] = useState(null);
+
+  useEffect(() => {
+    if (!isCreatingReport) {
+      onSetTitle("MY INTERNSHIPS");
+    }
+  }, []);
+
+  const handleReportCreation = (internship) => {
+    setSelectedInternship(internship);
+    setIsCreatingReport(true);
+    onSetTitle("Create Internship Report");
+  };
+
+  const handleReportCancel = () => {
+    setIsCreatingReport(false);
+    setSelectedInternship(null);
+    onSetTitle("MY INTERNSHIPS");
+  };
+
+  const handleReportSubmit = (reportData) => {
+    console.log('Report submitted:', reportData);
+    setIsCreatingReport(false);
+    setSelectedInternship(null);
+    onSetTitle("MY INTERNSHIPS");
+  };
+
+  if (isCreatingReport) {
+    return (
+      <Report
+        onAddTile={handleReportSubmit}
+        onCancel={handleReportCancel}
+      />
+    );
+  }
 
   return (
     <div className="w-full px-6 py-4">
@@ -320,6 +355,7 @@ function MyInternshipsView() {
         internships={getMyInternships()}
         type="my"
         statuses={['current', 'completed', 'evaluated']}
+        onTriggerReportCreate={handleReportCreation}
         showSidebar={true}
         userMajor={userMajor}
       />
@@ -395,6 +431,14 @@ export default function StudentDashboardPage() {
     setCurrentTitle(getInitialTitle(viewId));
   };
 
+  const handleSetSpecificTitle = (title) => {
+    setCurrentTitle(title);
+  };
+
+  useEffect(() => {
+    setCurrentTitle(getInitialTitle(currentView));
+  }, [currentView]);
+
   useEffect(() => {
     const handleHashChange = () => {
       if (typeof window !== 'undefined') {
@@ -407,17 +451,19 @@ export default function StudentDashboardPage() {
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [currentView]);
+  }, []);
 
   const CurrentViewComponent = viewComponents[currentView];
 
-  // Prepare props for the current view component
   let viewProps = {};
   if (currentView === 'home' || currentView === 'browse') {
     viewProps = {
       onApplicationCompleted: handleApplicationCompleted,
       appliedInternshipIds: appliedIdsSet,
     };
+  }
+  if (currentView === 'my-internships') {
+    viewProps.onSetTitle = handleSetSpecificTitle;
   }
 
   return (
