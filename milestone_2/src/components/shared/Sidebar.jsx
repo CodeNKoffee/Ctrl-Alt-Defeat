@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -81,6 +81,9 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
   const [isExpanded, setIsExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [prevView, setPrevView] = useState(currentView);
+  const [activeItemPosition, setActiveItemPosition] = useState(null);
+  const itemRefs = useRef({});
+
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -115,10 +118,27 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Update indicator position when active item changes
+  useEffect(() => {
+    if (isExpanded) {
+      const currentActiveItem = localizedItems.find(item => getIsActive(item));
+      if (currentActiveItem && itemRefs.current[currentActiveItem.id]) {
+        const element = itemRefs.current[currentActiveItem.id];
+        const rect = element.getBoundingClientRect();
+        const sidebarRect = element.closest('.sidebar-content').getBoundingClientRect();
+        setActiveItemPosition({
+          top: rect.top - sidebarRect.top,
+          height: rect.height,
+        });
+      }
+    }
+  }, [currentView, pathname, isExpanded, localizedItems]);
+
   // Close sidebar when view changes
   useEffect(() => {
     if (currentView !== prevView) {
-      setIsExpanded(false);
+      // Remove auto-collapse on view change
+      // setIsExpanded(false);
       setPrevView(currentView);
     }
   }, [currentView, prevView]);
@@ -134,8 +154,8 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       onViewChange(itemId);
     }
 
-    // Auto-collapse sidebar after navigation
-    setIsExpanded(false);
+    // Remove auto-collapse sidebar after navigation
+    // setIsExpanded(false);
   };
 
   // Determine active item based on current pathname or view
@@ -167,11 +187,11 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
   return (
     <div
-      className={`bg-[#E2F4F7] h-screen flex flex-col border-r border-[#5DB2C7] sticky top-0 transform transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-20'}`}
+      className={`bg-[#E2F4F7] h-screen flex flex-col sticky top-0 transform transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-20'}`}
       style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}
     >
       {/* Sidebar Header */}
-      <div className="p-3 border-b border-[#5DB2C7] flex items-center justify-between">
+      <div className="p-3 border-b border-[#5DB2C7]/30 flex items-center justify-between">
         {/* Logo and Optional Portal Text */}
         <div className={`flex items-center transition-all duration-300 ease-in-out ${isExpanded ? 'justify-start' : 'justify-center flex-grow'}`}>
           <Image
@@ -192,7 +212,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
         {/* Toggle Button */}
         <button
           onClick={toggleSidebar}
-          className="text-[#5DB2C7] hover:bg-[#D9F0F4] p-2 rounded-full transition-all duration-300 hover:scale-105 ml-2 flex-shrink-0"
+          className="w-8 h-8 flex items-center justify-center rounded-full text-metallica-blue-700 bg-white hover:bg-metallica-blue-50 hover:-translate-y-0.5 hover:scale-105 transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2"
           aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
         >
           <FontAwesomeIcon
@@ -204,21 +224,51 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       </div>
 
       {/* Sidebar Content (Navigation Items) */}
-      <div className="flex-1 overflow-y-auto pt-2 overflow-x-hidden">
-        <ul className="space-y-1 px-2">
+      <div className="flex-1 overflow-y-auto pt-2 overflow-x-hidden mt-2 relative sidebar-content">
+        {/* Moving background indicator */}
+        {isExpanded && activeItemPosition && (
+          <>
+            {/* Border overlay (behind tab content) */}
+            <div
+              className="absolute left-1.5 right-0 border border-[#5DB2C7] rounded-l-full z-0 transition-all duration-300 ease-in-out"
+              style={{
+                top: `${activeItemPosition.top}px`,
+                height: `${activeItemPosition.height}px`,
+                borderRight: "none"
+              }}
+            />
+
+            {/* Content background (above border) */}
+            <div
+              className="absolute left-2 right-0 bg-[#f5fbfd] rounded-l-full z-[1] transition-all duration-300 ease-in-out"
+              style={{
+                top: `${activeItemPosition.top + 1}px`,
+                height: `${activeItemPosition.height - 2}px`
+              }}
+            />
+          </>
+        )}
+
+        <ul className="space-y-1 relative z-10">
           {localizedItems.map(item => {
             const isActive = getIsActive(item);
             const icon = iconMap[item.iconId] || faHome;
 
-            const commonClasses = "w-full flex items-center p-3 rounded-lg transition-all duration-300 ease-in-out text-sm";
-            const activeClasses = "bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA] shadow-md";
-            const inactiveClasses = "hover:bg-[#D9F0F4] text-[#2a5f74] hover:shadow-sm";
+            const commonClasses = "w-full flex items-center p-3 transition-all duration-300 ease-in-out text-sm relative z-10";
+            const activeClasses = isExpanded
+              ? "text-[#2a5f74] font-medium"
+              : "bg-[#f5fbfd] text-[#2a5f74] rounded-lg shadow-sm";
+            const inactiveClasses = "text-[#2a5f74] hover:bg-[#f5fbfd]/70 rounded-lg";
             const alignmentClass = isExpanded ? "justify-start" : "justify-center";
 
             const itemContent = (
               <>
-                <span className={`flex-shrink-0 flex items-center ${isExpanded ? 'w-6' : 'w-auto'} justify-center`}>
-                  <FontAwesomeIcon icon={icon} size="lg" className={`transition-all duration-300 ease-in-out ${isActive ? 'text-[#3298BA]' : 'text-[#2a5f74]'}`} />
+                <span className={`flex-shrink-0 flex items-center ${isExpanded ? 'w-6 ml-1' : 'w-auto'} justify-center`}>
+                  <FontAwesomeIcon
+                    icon={icon}
+                    size="lg"
+                    className={`transition-all duration-300 ease-in-out ${isActive ? 'text-[#2a5f74]' : 'text-[#2a5f74]/70'}`}
+                  />
                 </span>
                 <span
                   className={`whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'ml-3 opacity-100 max-w-[150px]' : 'ml-0 opacity-0 max-w-0'
@@ -236,6 +286,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     href={item.path}
                     className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
                     onClick={() => !isExpanded && setIsExpanded(false)} // Keep expanded if clicking on mobile for views, collapse for pages
+                    ref={el => itemRefs.current[item.id] = el}
                   >
                     {itemContent}
                   </Link>
@@ -247,6 +298,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                   <button
                     onClick={() => handleViewChange(item.id)} // handleViewChange already collapses sidebar
                     className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
+                    ref={el => itemRefs.current[item.id] = el}
                   >
                     {itemContent}
                   </button>
@@ -261,7 +313,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       {/* User Profile Section at bottom */}
       <div className="mt-auto px-3 py-2">
         {isExpanded ? (
-          <div className="flex items-center bg-[#5DB2C7]/20 rounded-lg p-3 shadow-sm hover:bg-[#5DB2C7]/30 transition-all duration-200 cursor-pointer">
+          <div className="flex items-center bg-[#f5fbfd] rounded-lg p-3 shadow-sm hover:bg-[#f5fbfd]/80 transition-all duration-200 cursor-pointer">
             <div className="flex-shrink-0 mr-3">
               <ProfileIcon
                 src={currentUser?.profileImage}
@@ -285,7 +337,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center p-3">
+          <div className="flex items-center justify-center p-3 bg-[#f5fbfd] mx-2 rounded-lg">
             <ProfileIcon
               src={currentUser?.profileImage}
               alt={currentUser?.name || ""}
@@ -297,7 +349,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       </div>
 
       {/* Sidebar Footer (Logout Button) */}
-      <div className={`w-full p-3 border-t border-[#5DB2C7] transition-all duration-300 ease-in-out flex ${isExpanded ? 'justify-start' : 'justify-center'}`}>
+      <div className={`w-full p-3 border-t border-[#5DB2C7]/30 transition-all duration-300 ease-in-out flex ${isExpanded ? 'justify-start' : 'justify-center'}`}>
         {isExpanded ? (
           <CustomButton
             variant="danger"
@@ -309,7 +361,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
         ) : (
           <button
             onClick={handleLogout}
-            className="p-2.5 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out bg-red-600 text-white hover:bg-red-700"
+            className="p-2.5 w-11 h-11 rounded-full flex items-center justify-center bg-white text-red-600 hover:bg-red-50 hover:-translate-y-0.5 hover:scale-105 transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
             aria-label="Logout"
           >
             <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
