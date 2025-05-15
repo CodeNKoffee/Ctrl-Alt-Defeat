@@ -15,6 +15,7 @@ import { faFilter, faXmark, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import { getRegularInternships, getRecommendedInternships, getAppliedInternships, getMyInternships } from '../../../../../constants/internshipData';
 import Report from '../../../../../src/components/Report';
+import ReportCreationDashboard from '@/components/ReportCreationDashboard';
 
 // Video Sidebar Component
 function InternshipVideoSidebar({ userMajor }) {
@@ -416,6 +417,8 @@ export default function StudentDashboardPage() {
   const [appliedIdsSet, setAppliedIdsSet] = useState(new Set());
   const [isCreatingReport, setIsCreatingReport] = useState(false);
   const [selectedInternship, setSelectedInternship] = useState(null);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [modalInitialReport, setModalInitialReport] = useState(null);
 
   const handleApplicationCompleted = (internshipId) => {
     setAppliedIdsSet(prevSet => new Set(prevSet).add(internshipId));
@@ -506,25 +509,6 @@ export default function StudentDashboardPage() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [currentView, isCreatingReport]);
 
-  // Special case: If we're on the My Internships view and creating a report,
-  // render the Report component directly instead of the CurrentViewComponent
-  if (currentView === 'my-internships' && isCreatingReport) {
-    return (
-      <DashboardLayout
-        userType="student"
-        title={currentTitle}
-        currentViewId={currentView}
-        onViewChange={handleViewChange}
-      >
-        <Report
-          onAddTile={handleReportSubmit}
-          onCancel={handleReportCancel}
-        />
-      </DashboardLayout>
-    );
-  }
-
-  // Normal case: render the current view based on navigation
   const CurrentViewComponent = viewComponents[currentView];
 
   let viewProps = {};
@@ -535,9 +519,11 @@ export default function StudentDashboardPage() {
     };
   }
 
-  // For My Internships view, pass the report trigger function
   if (currentView === 'my-internships') {
-    viewProps.onTriggerReportCreate = handleReportCreation;
+    viewProps.onTriggerReportCreate = (internship) => {
+      setModalInitialReport({}); // Optionally pass internship info
+      setShowReportModal(true);
+    };
   }
 
   return (
@@ -548,6 +534,16 @@ export default function StudentDashboardPage() {
       onViewChange={handleViewChange}
     >
       {CurrentViewComponent && <CurrentViewComponent {...viewProps} />}
+      {showReportModal && (
+        <ReportCreationDashboard
+          onAddTile={(reportData) => {
+            handleReportSubmit(reportData);
+            setShowReportModal(false);
+          }}
+          onCancel={() => setShowReportModal(false)}
+          initialReport={modalInitialReport}
+        />
+      )}
     </DashboardLayout>
   );
 }
