@@ -5,12 +5,40 @@ import NotificationsList from './NotificationsList';
 
 export default function NotificationButton() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const panelRef = useRef(null);
   const buttonRef = useRef(null);
+  const animationTimerRef = useRef(null);
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
   };
+
+  // Handle animation timing
+  useEffect(() => {
+    // Function to start animation
+    const startAnimation = () => {
+      setIsAnimating(true);
+
+      // Stop animation after 2 seconds
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 2000);
+    };
+
+    // Initial animation after 3 seconds
+    const initialTimer = setTimeout(startAnimation, 3000);
+
+    // Set up periodic animation
+    animationTimerRef.current = setInterval(() => {
+      startAnimation();
+    }, 30000); // Vibrate every 30 seconds
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(animationTimerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -38,12 +66,15 @@ export default function NotificationButton() {
       <button
         ref={buttonRef}
         onClick={togglePanel}
-        className="relative p-2 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white transition-colors shadow-md cursor-pointer"
+        className="relative w-11 h-11 rounded-full bg-gray-50 text-metallica-blue-700 flex items-center justify-center shadow-md hover:bg-metallica-blue-50 hover:-translate-y-0.5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2 transition-all duration-150 ease-in"
         aria-label="Notifications"
         title="Notifications"
         type="button"
       >
-        <FontAwesomeIcon icon={faBell} className="h-6 w-6" />
+        <FontAwesomeIcon
+          icon={faBell}
+          className={`h-6 w-6 ${isAnimating ? 'animate-bell-ring' : ''}`}
+        />
       </button>
 
       {isPanelOpen && (

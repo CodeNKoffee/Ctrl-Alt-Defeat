@@ -1,14 +1,14 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { 
+import {
   FaPen, FaComments, FaStar, FaDownload,
   FaMicrophone, FaVideo, FaDesktop, FaUsers,
   FaPlay, FaPause, FaStop, FaBell, FaPhoneSlash,
   FaArrowRight, FaClosedCaptioning
 } from "react-icons/fa";
 import BackButton from "./shared/BackButton";
-import ActionButton from "./shared/ActionButton";
+import CustomButton from "./shared/CustomButton";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import WorkshopFeedback from './WorkshopFeedback';
@@ -83,10 +83,10 @@ const WorkshopInterface = ({ workshop }) => {
     if (newMessage.trim()) {
       const now = new Date();
       setMessages([
-        ...messages, 
-        { 
-          text: newMessage, 
-          sender: "You", 
+        ...messages,
+        {
+          text: newMessage,
+          sender: "You",
           time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
       ]);
@@ -123,12 +123,12 @@ const WorkshopInterface = ({ workshop }) => {
         unit: "mm",
         format: "a4",
       });
-      
+
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
       pdf.save(`${workshop.title}_certificate.pdf`);
-      
+
       document.body.removeChild(certificateDiv);
       setCertificateUrl(URL.createObjectURL(pdf.output("blob")));
     });
@@ -200,7 +200,7 @@ const WorkshopInterface = ({ workshop }) => {
 
   const handleSaveNotes = () => {
     const element = document.createElement("a");
-    const file = new Blob([notes], {type: 'text/plain'});
+    const file = new Blob([notes], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
     element.download = "workshop-notes.txt";
     document.body.appendChild(element);
@@ -234,13 +234,13 @@ const WorkshopInterface = ({ workshop }) => {
   };
 
   // Update participantsGridStyle to center content
-const participantsGridStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: "10px",
-  width: "100%",
-};
+  const participantsGridStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "10px",
+    width: "100%",
+  };
 
   const participantStyle = {
     position: "relative",
@@ -268,34 +268,34 @@ const participantsGridStyle = {
   };
 
   // Update containerStyle to handle content alignment
-const containerStyle = {
-  display: 'flex',
-  height: '100vh',
-  padding: '20px',
-  position: 'relative',
-  overflow: 'hidden',
-  transition: 'all 0.3s ease-in-out',
-};
+  const containerStyle = {
+    display: 'flex',
+    height: '100vh',
+    padding: '20px',
+    position: 'relative',
+    overflow: 'hidden',
+    transition: 'all 0.3s ease-in-out',
+  };
 
   // Update panelStyle to maintain proper width and margins
-const panelStyle = {
-  padding: "20px",
-  border: "2px solid #318FA8",
-  borderRadius: "10px",
-  backgroundColor: "white",
-  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-  display: "flex",
-  flexDirection: "column",
-  height: "calc(100vh - 40px)",
-  transition: 'all 0.3s ease-in-out',
-  flex: 1, // Add this to make it take remaining space
-  position: 'relative',
-  zIndex: 2,
-  marginLeft: isChatOpen ? '300px' : '0',
-  marginRight: isNotesOpen ? '300px' : '0',
-  width: `calc(100% - ${isChatOpen ? '300px' : '0'} - ${isNotesOpen ? '300px' : '0'})`,
-  overflow: 'hidden', // Add this
-};
+  const panelStyle = {
+    padding: "20px",
+    border: "2px solid #318FA8",
+    borderRadius: "10px",
+    backgroundColor: "white",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+    display: "flex",
+    flexDirection: "column",
+    height: "calc(100vh - 40px)",
+    transition: 'all 0.3s ease-in-out',
+    flex: 1, // Add this to make it take remaining space
+    position: 'relative',
+    zIndex: 2,
+    marginLeft: isChatOpen ? '300px' : '0',
+    marginRight: isNotesOpen ? '300px' : '0',
+    width: `calc(100% - ${isChatOpen ? '300px' : '0'} - ${isNotesOpen ? '300px' : '0'})`,
+    overflow: 'hidden', // Add this
+  };
 
   const chatPanelStyle = {
     position: 'fixed',
@@ -528,7 +528,7 @@ const panelStyle = {
 
   const NavButton = ({ icon: Icon, tooltip, onClick, active }) => (
     <div className="tooltip-container">
-      <button 
+      <button
         onClick={onClick}
         style={{
           ...navButtonStyle,
@@ -611,116 +611,116 @@ const panelStyle = {
   );
 
   // Update VideoControls component
-const VideoControls = () => {
-  if (!isClient) return null;
-  
-  return (
-    <div style={controlsContainerStyle}>
-      {/* Participant rectangle */}
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        width: "100%",
-      }}>
+  const VideoControls = () => {
+    if (!isClient) return null;
+
+    return (
+      <div style={controlsContainerStyle}>
+        {/* Participant rectangle */}
         <div style={{
-          ...participantStyle,
-          width: "190px",
-          height: "120px",
+          display: "flex",
+          alignItems: "center",
+          width: "100%",
         }}>
-          <Image 
-            src="/images/default-avatar.png"
-            alt="Default Avatar"
-            width={24}
-            height={24}
-            style={avatarStyle}
+          <div style={{
+            ...participantStyle,
+            width: "190px",
+            height: "120px",
+          }}>
+            <Image
+              src="/images/default-avatar.png"
+              alt="Default Avatar"
+              width={24}
+              height={24}
+              style={avatarStyle}
+            />
+            <span style={participantNameStyle}>John Doe</span>
+          </div>
+        </div>
+
+        {/* Video controls */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '15px',
+          padding: '8px 15px',
+          background: '#D9F0F4',
+          borderRadius: '10px',
+          width: 'fit-content',
+          margin: '0 auto',
+          marginBottom: '50px',
+        }}>
+          <NavButton
+            icon={FaMicrophone}
+            tooltip="Microphone"
+            onClick={toggleMicrophone}
+            active={isMicOn}
           />
-          <span style={participantNameStyle}>John Doe</span>
+          <NavButton
+            icon={FaVideo}
+            tooltip="Camera"
+            onClick={toggleCamera}
+            active={isCameraOn}
+          />
+          <NavButton
+            icon={FaDesktop}
+            tooltip="Share Screen"
+            onClick={toggleScreenShare}
+            active={isScreenSharing}
+          />
+        </div>
+
+        {/* Subtitles container */}
+        <div style={{
+          width: "fit-content",
+          height: "120px",
+          padding: '8px',
+          background: showSubtitles ? 'white' : 'transparent',
+          borderRadius: '10px',
+          border: showSubtitles ? '1px solid #318FA8' : 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#2A5F74',
+          transition: 'all 0.3s ease-in-out',
+          opacity: showSubtitles ? 1 : 0,
+          visibility: showSubtitles ? 'visible' : 'hidden',
+          overflow: 'hidden',
+        }}>
+          {showSubtitles && (
+            <p style={{
+              margin: 0,
+              padding: '4px',
+              textAlign: 'center',
+              fontSize: '13px',
+              width: '100%',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              wordWrap: 'break-word',
+            }}>
+              Live subtitles will appear here...
+            </p>
+          )}
         </div>
       </div>
-
-      {/* Video controls */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '15px',
-        padding: '8px 15px',
-        background: '#D9F0F4',
-        borderRadius: '10px',
-        width: 'fit-content',
-        margin: '0 auto',
-        marginBottom: '50px',
-      }}>
-        <NavButton 
-          icon={FaMicrophone} 
-          tooltip="Microphone" 
-          onClick={toggleMicrophone} 
-          active={isMicOn} 
-        />
-        <NavButton 
-          icon={FaVideo} 
-          tooltip="Camera" 
-          onClick={toggleCamera} 
-          active={isCameraOn} 
-        />
-        <NavButton 
-          icon={FaDesktop} 
-          tooltip="Share Screen" 
-          onClick={toggleScreenShare} 
-          active={isScreenSharing} 
-        />
-      </div>
-
-      {/* Subtitles container */}
-      <div style={{
-        width: "fit-content",
-        height: "120px",
-        padding: '8px',
-        background: showSubtitles ? 'white' : 'transparent',
-        borderRadius: '10px',
-        border: showSubtitles ? '1px solid #318FA8' : 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#2A5F74',
-        transition: 'all 0.3s ease-in-out',
-        opacity: showSubtitles ? 1 : 0,
-        visibility: showSubtitles ? 'visible' : 'hidden',
-        overflow: 'hidden',
-      }}>
-        {showSubtitles && (
-          <p style={{ 
-            margin: 0, 
-            padding: '4px', 
-            textAlign: 'center',
-            fontSize: '13px',
-            width: '100%',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            display: '-webkit-box',
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: 'vertical',
-            wordWrap: 'break-word',
-          }}>
-            Live subtitles will appear here...
-          </p>
-        )}
-      </div>
-    </div>
-  );
-};
+    );
+  };
 
   // Add controlsContainerStyle for the bottom section
-const controlsContainerStyle = {
-  display: "grid",
-  gridTemplateColumns: "195px 1fr 200px", // Increased last column width
-  gap: "15px",
-  alignItems: "center",
-  width: "100%",
-  maxWidth: "100%",
-  overflow: "hidden",
-  padding: "10px",
-  marginBottom: "150px", // Add space above circular nav
-};
+  const controlsContainerStyle = {
+    display: "grid",
+    gridTemplateColumns: "195px 1fr 200px", // Increased last column width
+    gap: "15px",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: "100%",
+    overflow: "hidden",
+    padding: "10px",
+    marginBottom: "150px", // Add space above circular nav
+  };
 
   const certificateStyle = `
   <style>
@@ -746,7 +746,7 @@ const controlsContainerStyle = {
   </style>
 `;
 
-const certificateHtml = `
+  const certificateHtml = `
   <div class="certificate">
     <div class="certificate-title">Certificate of Completion</div>
     <div class="certificate-content">
@@ -756,8 +756,8 @@ const certificateHtml = `
   </div>
 `;
 
-// Add tooltip styles
-const tooltipStyles = `
+  // Add tooltip styles
+  const tooltipStyles = `
   .tooltip-container {
     position: relative;
   }
@@ -784,208 +784,208 @@ const tooltipStyles = `
   }
 `;
 
-// Add this with your other style definitions
-const avatarStyle = {
-  width: "24px",
-  height: "24px",
-  borderRadius: "50%",
-  objectFit: "cover",
-  border: "2px solid #318FA8",
-};
+  // Add this with your other style definitions
+  const avatarStyle = {
+    width: "24px",
+    height: "24px",
+    borderRadius: "50%",
+    objectFit: "cover",
+    border: "2px solid #318FA8",
+  };
 
-// Add this if missing
-const downloadCertificateStyle = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: "8px",
-  padding: "10px 20px",
-  background: "#D9F0F4",
-  border: "2px solid #318FA8",
-  borderRadius: "5px",
-  color: "#2A5F74",
-  textDecoration: "none",
-  cursor: "pointer",
-  marginTop: "10px"
-};
+  // Add this if missing
+  const downloadCertificateStyle = {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "8px",
+    padding: "10px 20px",
+    background: "#D9F0F4",
+    border: "2px solid #318FA8",
+    borderRadius: "5px",
+    color: "#2A5F74",
+    textDecoration: "none",
+    cursor: "pointer",
+    marginTop: "10px"
+  };
 
-// Add the new chat styles here
-const chatHeaderStyle = {
-  padding: '20px',
-  background: '#318FA8',
-  color: 'white',
-  fontSize: '18px',
-  fontWeight: '500',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between'
-};
+  // Add the new chat styles here
+  const chatHeaderStyle = {
+    padding: '20px',
+    background: '#318FA8',
+    color: 'white',
+    fontSize: '18px',
+    fontWeight: '500',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  };
 
-const chatMessageStyle = {
-  display: 'flex',
-  gap: '10px',
-  alignItems: 'flex-start',
-  marginBottom: '15px',
-  padding: '12px',
-  borderRadius: '12px',
-  backgroundColor: '#f8f9fa',
-  margin: '10px',
-};
+  const chatMessageStyle = {
+    display: 'flex',
+    gap: '10px',
+    alignItems: 'flex-start',
+    marginBottom: '15px',
+    padding: '12px',
+    borderRadius: '12px',
+    backgroundColor: '#f8f9fa',
+    margin: '10px',
+  };
 
-const sendButtonStyle = {
-  background: '#318FA8',
-  color: 'white',
-  width: '40px',
-  height: '40px',
-  borderRadius: '50%',
-  border: 'none',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-};
+  const sendButtonStyle = {
+    background: '#318FA8',
+    color: 'white',
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    border: 'none',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
 
-// Update saveButtonStyle to use the project's color palette
-const saveButtonStyle = {
-  padding: '12px 24px',
-  background: '#318FA8',
-  color: 'white',
-  border: 'none',
-  borderRadius: '25px',
-  cursor: 'pointer',
-  marginTop: '15px',
-  fontWeight: '500',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  transition: 'all 0.3s ease',
-  boxShadow: '0 2px 8px rgba(49, 143, 168, 0.2)',
-  '&:hover': {
-    background: '#2A5F74',
-    boxShadow: '0 4px 12px rgba(49, 143, 168, 0.3)',
-  },
-};
+  // Update saveButtonStyle to use the project's color palette
+  const saveButtonStyle = {
+    padding: '12px 24px',
+    background: '#318FA8',
+    color: 'white',
+    border: 'none',
+    borderRadius: '25px',
+    cursor: 'pointer',
+    marginTop: '15px',
+    fontWeight: '500',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 2px 8px rgba(49, 143, 168, 0.2)',
+    '&:hover': {
+      background: '#2A5F74',
+      boxShadow: '0 4px 12px rgba(49, 143, 168, 0.3)',
+    },
+  };
 
-// Update the return statement to include the styles
-return (
-  <>
-    <style>{tooltipStyles}</style>
-    {isClient && (
-      <div style={containerStyle}>
-        {/* Chat Panel */}
-        <div style={chatPanelStyle}>
-          <div style={chatHeaderStyle}>Chat</div>
-          <div style={{ flex: 1, overflowY: 'auto', padding: '15px' }}>
-            {messages.map((msg, index) => (
-              <div key={index} style={chatMessageStyle}>
-                <div style={{ flex: 1 }}>
-                  <strong>{msg.sender}</strong>
-                  <p>{msg.text}</p>
+  // Update the return statement to include the styles
+  return (
+    <>
+      <style>{tooltipStyles}</style>
+      {isClient && (
+        <div style={containerStyle}>
+          {/* Chat Panel */}
+          <div style={chatPanelStyle}>
+            <div style={chatHeaderStyle}>Chat</div>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '15px' }}>
+              {messages.map((msg, index) => (
+                <div key={index} style={chatMessageStyle}>
+                  <div style={{ flex: 1 }}>
+                    <strong>{msg.sender}</strong>
+                    <p>{msg.text}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div style={chatInputContainerStyle}>
+              <input
+                value={newMessage}
+                onChange={handleMessageChange}
+                onKeyPress={handleKeyPress}
+                placeholder="Type a message..."
+                style={chatInputStyle}
+              />
+              <button style={sendButtonStyle} onClick={handleSendMessage}>
+                <FaArrowRight />
+              </button>
+            </div>
           </div>
-          <div style={chatInputContainerStyle}>
-            <input
-              value={newMessage}
-              onChange={handleMessageChange}
-              onKeyPress={handleKeyPress}
-              placeholder="Type a message..."
-              style={chatInputStyle}
+
+          {/* Main Content */}
+          <div style={panelStyle}>
+            <BackButton />
+            <div style={videoGridStyle}>
+              <div style={mainVideoStyle}>
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                  muted={isMicOn}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+              <VideoControls />
+            </div>
+          </div>
+
+          {/* Notes Panel */}
+          <div style={notesPanelStyle}>
+            <h3 style={notesTitleStyle}>Notes</h3>
+            <textarea
+              value={notes}
+              onChange={handleNoteChange}
+              placeholder="Take notes here..."
+              style={notesInputStyle}
             />
-            <button style={sendButtonStyle} onClick={handleSendMessage}>
-              <FaArrowRight />
+            <button
+              onClick={handleSaveNotes}
+              style={saveButtonStyle}
+            >
+              <FaDownload /> Save Notes
             </button>
           </div>
-        </div>
 
-        {/* Main Content */}
-        <div style={panelStyle}>
-          <BackButton />
-          <div style={videoGridStyle}>
-            <div style={mainVideoStyle}>
-              <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                muted={isMicOn}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            </div>
-            <VideoControls />
+          {/* Circular Navigation */}
+          <div style={circularNavStyle}>
+            <NavButton
+              icon={FaComments}
+              tooltip="Chat"
+              onClick={() => setIsChatOpen(!isChatOpen)}
+              active={isChatOpen}
+            />
+            <NavButton
+              icon={FaPen}
+              tooltip="Notes"
+              onClick={() => setIsNotesOpen(!isNotesOpen)}
+              active={isNotesOpen}
+            />
+            <NavButton
+              icon={FaClosedCaptioning}
+              tooltip="Subtitles"
+              onClick={() => setShowSubtitles(!showSubtitles)}
+              active={showSubtitles}
+            />
           </div>
-        </div>
 
-        {/* Notes Panel */}
-        <div style={notesPanelStyle}>
-          <h3 style={notesTitleStyle}>Notes</h3>
-          <textarea
-            value={notes}
-            onChange={handleNoteChange}
-            placeholder="Take notes here..."
-            style={notesInputStyle}
-          />
-          <button 
-            onClick={handleSaveNotes} 
-            style={saveButtonStyle}
+          {/* Test Button */}
+          <button
+            style={{
+              position: 'absolute',
+              bottom: '100px',
+              right: '20px',
+              padding: '10px 20px',
+              background: '#318FA8',
+              color: 'white',
+              border: 'none',
+              borderRadius: '25px',
+              cursor: 'pointer',
+              zIndex: 1000,
+            }}
+            onClick={handleWorkshopEnd}
           >
-            <FaDownload /> Save Notes
+            End Workshop & Show Feedback
           </button>
+
+          {showFeedback && (
+            <WorkshopFeedback
+              isOpen={showFeedback}
+              onClose={() => setShowFeedback(false)}
+              workshopTitle={workshop?.title || 'Workshop'}
+              studentName="John Doe" // Replace with actual student name
+              workshopEnded={workshopEnded}
+            />
+          )}
         </div>
-
-        {/* Circular Navigation */}
-        <div style={circularNavStyle}>
-          <NavButton 
-            icon={FaComments} 
-            tooltip="Chat" 
-            onClick={() => setIsChatOpen(!isChatOpen)} 
-            active={isChatOpen}
-          />
-          <NavButton 
-            icon={FaPen} 
-            tooltip="Notes" 
-            onClick={() => setIsNotesOpen(!isNotesOpen)} 
-            active={isNotesOpen}
-          />
-          <NavButton 
-            icon={FaClosedCaptioning} 
-            tooltip="Subtitles" 
-            onClick={() => setShowSubtitles(!showSubtitles)} 
-            active={showSubtitles}
-          />
-        </div>
-
-       {/* Test Button */}
-        <button 
-          style={{
-            position: 'absolute',
-            bottom: '100px',
-            right: '20px',
-            padding: '10px 20px',
-            background: '#318FA8',
-            color: 'white',
-            border: 'none',
-            borderRadius: '25px',
-            cursor: 'pointer',
-            zIndex: 1000,
-          }} 
-          onClick={handleWorkshopEnd}
-        >
-          End Workshop & Show Feedback
-        </button>
-
-        {showFeedback && (
-  <WorkshopFeedback 
-    isOpen={showFeedback}
-    onClose={() => setShowFeedback(false)}
-    workshopTitle={workshop?.title || 'Workshop'}
-    studentName="John Doe" // Replace with actual student name
-    workshopEnded={workshopEnded}
-  />
-)}
-      </div>
-    )}
-  </>
-);
+      )}
+    </>
+  );
 };
 
 export default WorkshopInterface;

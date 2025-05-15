@@ -63,6 +63,23 @@ export default function DashboardLayout({
             <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
               {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
             </h1>
+            
+            <div className="flex flex-row items-center gap-4">
+              {/* Call button prominently displayed for eligible users */}
+              {showCallButton && (
+                <div className="flex items-center">
+                  <span className="mr-2 text-sm font-medium text-gray-600 hidden sm:inline">
+                    {userData.role === 'scad' ? 'Call PRO Students' : 'Call SCAD Admin'}
+                  </span>
+                  <div className="relative">
+                    <CallButton />
+                    {/* Animated pulse effect to draw attention */}
+                    <span className="absolute -inset-1 rounded-full animate-ping bg-indigo-300 opacity-75" style={{ animationDuration: '3s' }}></span>
+                  </div>
+                </div>
+              )}
+              <NotificationButton />
+            </div>
           </div>
 
           <div className="bg-metallica-blue-50 rounded-xl shadow-sm overflow-hidden border border-gray-200 flex-1">

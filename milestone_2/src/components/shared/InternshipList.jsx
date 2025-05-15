@@ -22,7 +22,7 @@ const statusColors = {
 // Video Sidebar Component
 function InternshipVideoSidebar({ userMajor }) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 sticky top-4">
+    <div className="bg-white rounded-2xl shadow-md p-4 sticky top-4">
       <h3 className="text-lg font-semibold text-[#2a5f74] mb-3">Internship Requirements</h3>
       <div className="space-y-3">
         <div className="relative rounded-lg overflow-hidden aspect-video group">
@@ -74,6 +74,7 @@ export default function InternshipList({
   showDatePicker = true,
   showSidebar = false,
   userMajor = "Computer Science",
+  isRecommended = false,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -274,6 +275,31 @@ export default function InternshipList({
             <InternshipVideoSidebar userMajor={userMajor} />
           </div>
         )}
+
+        {/* Internship Cards */}
+        <CardTable
+          data={internships}
+          filterFunction={filterFunction}
+          emptyMessage={
+            <NoResults
+              mainMessage={`No internships found matching your criteria`}
+              subMessage="Try adjusting your search or filter"
+            />
+          }
+          searchConfig={{ hideSearchBar: true }} // Search is handled by the CardTable above
+          filterConfig={{ showFilter: false }}
+          renderCard={(internship) => (
+            <InternshipRow
+              key={internship.id}
+              internship={internship}
+              type={type}
+              statusColors={statusColors}
+              onApplicationCompleted={onApplicationCompleted}
+              isApplied={appliedInternshipIds.has(internship.id)}
+              isRecommended={isRecommended}
+            />
+          )}
+        />
       </div>
       }
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   endCall,
@@ -18,7 +18,7 @@ import {
   faVideo,
   faVideoSlash,
   faDesktop,
-  faPhoneSlash,
+  faPhone,
   faUserCircle,
   faComments,
   faNoteSticky,
@@ -28,6 +28,106 @@ import {
   faExpand
 } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
+
+// Extract ChatPanelContent to be outside of CallInterface
+const ChatPanelContent = memo(({
+  chatMessages = [],
+  currentMessage = '',
+  setCurrentMessage,
+  handleSendMessage,
+  handleToggleChat,
+  chatScrollRef
+}) => (
+  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg rounded-3xl overflow-hidden">
+    <div className="flex justify-between items-center p-3 border-b bg-gray-100">
+      <h3 className="text-lg font-semibold text-gray-700">Chat</h3>
+      <button
+        onClick={handleToggleChat}
+        className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+        title="Close Chat Panel"
+      >
+        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+      </button>
+    </div>
+    <div className="flex flex-col flex-grow overflow-hidden">
+      <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-white">
+        {chatMessages.length === 0 ? (
+          <p className="text-center text-sm text-gray-500 py-4">No messages yet.</p>
+        ) : (
+          chatMessages.map(message => (
+            <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
+              <div className={`max-w-[80%] rounded-lg px-3 py-2 shadow-sm ${message.isSelf
+                ? 'bg-metallica-blue-700 text-white rounded-br-none'
+                : 'bg-gray-100 text-gray-800 border border-gray-200 rounded-bl-none'
+                }`}>
+                <p className="text-sm">{message.content}</p>
+                <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100' : 'text-gray-400'} ${message.isSelf ? 'text-right' : 'text-left'}`}>
+                  {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+      <div className="p-3 border-t bg-white">
+        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+          <input
+            type="text"
+            value={currentMessage}
+            onChange={(e) => setCurrentMessage(e.target.value)}
+            className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 text-sm"
+            placeholder="Type your message..."
+          />
+          <button
+            type="submit"
+            className={`w-10 h-10 rounded-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''}`}
+            disabled={!currentMessage.trim()}
+            title="Send Message"
+          >
+            <FontAwesomeIcon icon={faPaperPlane} />
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+));
+
+// Extract NotesPanelContent to be outside of CallInterface
+const NotesPanelContent = memo(({
+  noteContent = '',
+  setNoteContent,
+  handleSaveNotes,
+  handleToggleNotes
+}) => (
+  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg rounded-xl overflow-hidden">
+    <div className="flex justify-between items-center p-3 border-b bg-gray-100">
+      <h3 className="text-lg font-semibold text-gray-700">Private Notes</h3>
+      <button
+        onClick={handleToggleNotes}
+        className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+        title="Close Notes Panel"
+      >
+        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+      </button>
+    </div>
+    <div className="flex flex-col flex-grow overflow-hidden p-4 bg-white">
+      <textarea
+        value={noteContent}
+        onChange={(e) => setNoteContent(e.target.value)}
+        className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 resize-none text-sm mb-4"
+        placeholder="Write your private notes here..."
+      />
+      <button
+        onClick={handleSaveNotes}
+        className="w-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-2 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors"
+        title="Save Notes (logs to console)"
+      >
+        <FontAwesomeIcon icon={faSave} />
+        Save Notes
+      </button>
+    </div>
+  </div>
+));
 
 const CallInterface = () => {
   const dispatch = useDispatch();
@@ -53,6 +153,7 @@ const CallInterface = () => {
   const answerAudioRef = useRef(null);
   const [showConnectingOverlay, setShowConnectingOverlay] = useState(true);
   const [showManualLeaveToast, setShowManualLeaveToast] = useState(false);
+  const [otherPartyCameraOn, setOtherPartyCameraOn] = useState(false);
 
   const [showChat, setShowChat] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
@@ -71,6 +172,7 @@ const CallInterface = () => {
 
   useEffect(() => {
     setShowConnectingOverlay(true);
+    setOtherPartyCameraOn(false); // Reset camera state when call setup begins
     let isMounted = true;
     const setupInstanceId = instanceId;
     console.log(`[CallInterface ${setupInstanceId}] Setup useEffect running. isInCall: ${isInCall}, otherPartyId: ${otherPartyId}, userId: ${currentUser?.id}`);
@@ -256,6 +358,21 @@ const CallInterface = () => {
     }
   }, [chatMessages]);
 
+  useEffect(() => {
+    let cameraTimer = null;
+    if (isInCall && !showConnectingOverlay && !otherPartyCameraOn) {
+      cameraTimer = setTimeout(() => {
+        setOtherPartyCameraOn(true);
+      }, 6000); // Increased to 6 seconds (after connecting overlay disappears)
+    }
+
+    return () => {
+      if (cameraTimer) {
+        clearTimeout(cameraTimer);
+      }
+    };
+  }, [isInCall, showConnectingOverlay, otherPartyCameraOn]);
+
   const handleEndCall = () => {
     console.log("handleEndCall: User clicked end call button.");
     if (otherPartyId) {
@@ -336,17 +453,65 @@ const CallInterface = () => {
   const renderCallContent = () => (
     <>
       <div className="flex-1 flex relative bg-apple-gray-900">
-        <video
-          ref={remoteVideoRef}
-          className="w-full h-full object-contain"
-          autoPlay
-          playsInline
-        />
+        {/* Main video area - only show when camera is on */}
+        {otherPartyCameraOn && (
+          <video
+            ref={remoteVideoRef}
+            className="w-full h-full object-contain"
+            autoPlay
+            playsInline
+          />
+        )}
 
-        {!isVideoEnabled && !isScreenSharing && (
+        {/* Display a different status message based on the current state */}
+        <div className="absolute top-4 left-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-lg flex items-center text-xs sm:text-sm shadow">
+          {showConnectingOverlay ? (
+            <>Connecting to {otherPartyName}...</>
+          ) : otherPartyCameraOn ? (
+            <>Call in progress with {otherPartyName}</>
+          ) : (
+            <>Connected with {otherPartyName} (camera off)</>
+          )}
+          <button
+            onClick={triggerLeaveToast}
+            className="ml-2 text-xs bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
+            title="Simulate other party leaving"
+          >
+            Sim Leave
+          </button>
+          {/* Debug button to toggle camera */}
+          <button
+            onClick={() => setOtherPartyCameraOn(prev => !prev)}
+            className="ml-2 text-xs bg-blue-500 hover:bg-blue-600 text-white font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
+            title="Toggle camera state"
+          >
+            Toggle Cam
+          </button>
+        </div>
+
+        {/* Camera ON notification */}
+        {otherPartyCameraOn && !showConnectingOverlay && (
+          <div className="absolute bottom-8 left-0 right-0 text-center">
+            <p className="text-lg sm:text-xl text-white bg-black bg-opacity-50 py-2 px-4 inline-block rounded-lg">
+              {otherPartyName}'s camera is off
+            </p>
+          </div>
+        )}
+
+        {/* Camera off placeholder with image - show when camera is off and we're connected */}
+        {!otherPartyCameraOn && !showConnectingOverlay && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-apple-gray-800 text-white p-4">
-            <FontAwesomeIcon icon={faUserCircle} className="text-apple-gray-500 text-6xl sm:text-8xl mb-2 sm:mb-4" />
-            <p className="text-lg sm:text-xl text-center">{otherPartyName}'s video is off</p>
+            <img
+              src="https://printler.com/media/photo/176171-1.jpg"
+              alt="Call placeholder"
+              className="w-full h-full object-cover"
+              style={{ objectPosition: 'center top' }}
+            />
+            <div className="absolute bottom-8 left-0 right-0 text-center">
+              <p className="text-lg sm:text-xl text-white bg-black bg-opacity-50 py-2 px-4 inline-block rounded-lg">
+                {otherPartyName}'s camera is on
+              </p>
+            </div>
           </div>
         )}
 
@@ -361,17 +526,6 @@ const CallInterface = () => {
             {otherPartyName} has left the call
           </div>
         )}
-
-        <div className="absolute top-4 left-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-lg flex items-center text-xs sm:text-sm shadow">
-          {isCallConnected ? 'Connected' : 'Connecting'} with {otherPartyName}
-          <button
-            onClick={triggerLeaveToast}
-            className="ml-2 text-xs bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
-            title="Simulate other party leaving"
-          >
-            Sim Leave
-          </button>
-        </div>
 
         <div className="absolute right-4 bottom-24 w-1/4 sm:w-1/5 max-w-[150px] sm:max-w-xs aspect-video bg-apple-gray-700 border border-apple-gray-500 overflow-hidden rounded-md sm:rounded-lg shadow-lg flex items-center justify-center">
           {isVideoEnabled ? (
@@ -446,7 +600,7 @@ const CallInterface = () => {
             className={`${baseButtonClass} ${redButtonClass}`}
             title="End Call"
           >
-            <FontAwesomeIcon icon={faPhoneSlash} className="h-4 w-4 sm:h-5 sm:w-5" />
+            <FontAwesomeIcon icon={faPhone} className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
         </div>
       </div>
@@ -461,122 +615,71 @@ const CallInterface = () => {
         preload="auto"
       />
 
-      {/* Chat Panel (Left) */}
-      <AnimatePresence>
-        {showChat && (
-          <motion.div
-            key="chat-sidebar"
-            initial={{ x: '-100%' }}
-            animate={{ x: '0%' }}
-            exit={{ x: '-100%' }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-1/4 h-screen flex flex-col bg-white border-r border-gray-300 shadow-lg"
-          >
-            <div className="flex justify-between items-center p-3 border-b bg-gray-50 rounded-t-lg">
-              <h3 className="text-lg font-semibold text-gray-700">Chat</h3>
-              <button
-                onClick={handleToggleChat}
-                className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
-                title="Close Chat Panel"
-              >
-                <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="flex flex-col flex-grow overflow-hidden">
-              <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-gray-100">
-                {chatMessages.length === 0 ? (
-                  <p className="text-center text-sm text-gray-500 py-4">No messages yet.</p>
-                ) : (
-                  chatMessages.map(message => (
-                    <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[80%] rounded-lg px-3 py-2 shadow-sm ${message.isSelf
-                        ? 'bg-metallica-blue-700 text-white rounded-br-none'
-                        : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'
-                        }`}>
-                        <p className="text-sm">{message.content}</p>
-                        <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100' : 'text-gray-400'} ${message.isSelf ? 'text-right' : 'text-left'}`}>
-                          {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </p>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-              <div className="p-3 border-t bg-white">
-                <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={currentMessage}
-                    onChange={(e) => setCurrentMessage(e.target.value)}
-                    className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 text-sm"
-                    placeholder="Type your message..."
-                  />
-                  <button
-                    type="submit"
-                    className={`w-10 h-10 rounded-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''}`}
-                    disabled={!currentMessage.trim()}
-                    title="Send Message"
-                  >
-                    <FontAwesomeIcon icon={faPaperPlane} />
-                  </button>
-                </form>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Main Call Content Area */}
       <motion.div
         layout
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className={`flex flex-col h-screen ${showChat && showNotes
-          ? 'w-1/2'
-          : showChat || showNotes
-            ? 'w-3/4'
-            : 'w-full'
-          }`}
+        className={`flex flex-col h-screen ${showChat || showNotes
+          ? 'w-3/4' // Main content takes 3/4 if any sidebar is open
+          : 'w-full' // Main content takes full width if no sidebars
+          }`
+        }
       >
         {renderCallContent()}
       </motion.div>
 
-      {/* Notes Panel (Right) */}
+      {/* Right Sidebar Area (for Chat and/or Notes) */}
       <AnimatePresence>
-        {showNotes && (
+        {(showChat || showNotes) && (
           <motion.div
-            key="notes-sidebar"
+            key="right-sidebar"
             initial={{ x: '100%' }}
             animate={{ x: '0%' }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-1/4 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg"
+            className="w-1/4 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg p-1"
           >
-            <div className="flex justify-between items-center p-3 border-b bg-gray-50">
-              <h3 className="text-lg font-semibold text-gray-700">Private Notes</h3>
-              <button
-                onClick={handleToggleNotes}
-                className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
-                title="Close Notes Panel"
-              >
-                <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="flex flex-col flex-grow overflow-hidden p-4">
-              <textarea
-                value={noteContent}
-                onChange={(e) => setNoteContent(e.target.value)}
-                className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 resize-none text-sm mb-4"
-                placeholder="Write your private notes here..."
+            {showNotes && showChat ? (
+              // Both Notes and Chat are open: Notes (1/2 height), Chat (1/2 height)
+              <>
+                <div className="h-1/2 pb-1">
+                  <NotesPanelContent
+                    noteContent={noteContent}
+                    setNoteContent={setNoteContent}
+                    handleSaveNotes={handleSaveNotes}
+                    handleToggleNotes={handleToggleNotes}
+                  />
+                </div>
+                <div className="h-1/2 pt-1">
+                  <ChatPanelContent
+                    chatMessages={chatMessages}
+                    currentMessage={currentMessage}
+                    setCurrentMessage={setCurrentMessage}
+                    handleSendMessage={handleSendMessage}
+                    handleToggleChat={handleToggleChat}
+                    chatScrollRef={chatScrollRef}
+                  />
+                </div>
+              </>
+            ) : showNotes ? (
+              // Only Notes is open
+              <NotesPanelContent
+                noteContent={noteContent}
+                setNoteContent={setNoteContent}
+                handleSaveNotes={handleSaveNotes}
+                handleToggleNotes={handleToggleNotes}
               />
-              <button
-                onClick={handleSaveNotes}
-                className="w-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-2 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors"
-                title="Save Notes (logs to console)"
-              >
-                <FontAwesomeIcon icon={faSave} />
-                Save Notes
-              </button>
-            </div>
+            ) : showChat ? (
+              // Only Chat is open
+              <ChatPanelContent
+                chatMessages={chatMessages}
+                currentMessage={currentMessage}
+                setCurrentMessage={setCurrentMessage}
+                handleSendMessage={handleSendMessage}
+                handleToggleChat={handleToggleChat}
+                chatScrollRef={chatScrollRef}
+              />
+            ) : null}
           </motion.div>
         )}
       </AnimatePresence>

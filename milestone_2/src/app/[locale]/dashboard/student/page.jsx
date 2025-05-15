@@ -19,7 +19,7 @@ import Report from '../../../../../src/components/Report';
 // Video Sidebar Component
 function InternshipVideoSidebar({ userMajor }) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 h-fit sticky top-4">
+    <div className="bg-white rounded-2xl shadow-md p-4 h-fit sticky top-4">
       <h3 className="text-lg font-semibold text-[#2a5f74] mb-3">Internship Requirements</h3>
       <div className="space-y-3">
         <div className="relative bg-[#D9F0F4] rounded-lg overflow-hidden aspect-video flex items-center justify-center cursor-pointer group">
@@ -59,13 +59,42 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
   useEffect(() => {
     const userData = currentUser || JSON.parse(sessionStorage.getItem('userSession') || localStorage.getItem('userSession') || '{}');
     if (userData) {
-      const recommendations = getRecommendedInternshipsForStudent(userData);
-      setPersonalizedInternships(recommendations);
+      // Add mock job interests and industries if not present in userData
+      // In a real app, these would come from the user profile database
+      const enhancedUserData = {
+        ...userData,
+        jobInterests: userData.jobInterests || ['Developer', 'Engineer', 'Data', 'UX'],
+        industries: userData.industries || ['Technology', 'Media Engineering']
+      };
+
+      const recommendations = getRecommendedInternshipsForStudent(enhancedUserData);
+
+      // Add mock ratings from past interns (in a real app, this would come from the backend)
+      const recommendationsWithRatings = recommendations.map(internship => ({
+        ...internship,
+        pastInternRating: Math.floor(Math.random() * 3) + 3, // Randomly assign 3-5 star ratings
+        recommendedReason: internship.industry === enhancedUserData.industries?.[0]
+          ? 'industry match'
+          : (enhancedUserData.jobInterests?.some(interest =>
+            internship.title.toLowerCase().includes(interest.toLowerCase())
+          ) ? 'job interest match' : 'recommended by past interns')
+      }));
+
+      setPersonalizedInternships(recommendationsWithRatings);
     }
   }, [currentUser]);
 
   return (
     <div className="w-full px-6 py-4">
+      {/* Recommendation explanation subtitle */}
+      <div className="mb-6 bg-[#D9F0F4]/60 rounded-lg p-4 border border-[#5DB2C7] shadow-sm">
+        <p className="text-[#2a5f74] text-sm">
+          These opportunities are personalized based on your <span className="font-medium">job interests</span>,
+          <span className="font-medium"> industry preferences</span>, and
+          <span className="font-medium"> recommendations from past interns</span> with similar profiles.
+        </p>
+      </div>
+
       <InternshipList
         title=""
         internships={personalizedInternships}
@@ -74,6 +103,7 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
         userMajor={userMajor}
+        isRecommended={true} // Add this prop to indicate these are recommended internships
       />
     </div>
   );

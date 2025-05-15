@@ -7,6 +7,9 @@ import { Tooltip } from 'react-tooltip';
 import UploadDocuments from '../UploadDocuments';
 import EvaluationModal from '../EvaluationModal';
 import { mockCompanyReviews } from '../../../constants/mockData';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";
@@ -46,7 +49,7 @@ const appliedStatusTooltipMessages = {
   rejected: "Unfortunately, your application was not selected for this position this time.",
 };
 
-export default function InternshipRow({ internship, type, onApplicationCompleted, isApplied, onTriggerReportCreate }) {
+export default function InternshipRow({ internship, type, onApplicationCompleted, isApplied, onTriggerReportCreate, isRecommended }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
@@ -91,6 +94,21 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
     // Potentially refresh data or give feedback if an upload happened - handled by parent
   };
 
+  // Function to render stars based on rating
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={i <= rating ? faStarSolid : faStarRegular}
+          className={i <= rating ? "text-amber-400" : "text-gray-300"}
+        />
+      );
+    }
+    return stars;
+  };
+
   return (
     <div className="mb-3 w-full">
       {/* Header Row (Click to Expand) */}
@@ -106,6 +124,13 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             <div className="flex flex-col items-center w-24 flex-shrink-0 space-y-3">
               <div className="w-12 h-12 rounded-full bg-gray-300"></div>
               <p className="text-sm font-medium text-gray-500 text-center">{internship.company}</p>
+
+              {/* Show star rating for recommended internships */}
+              {isRecommended && internship.pastInternRating && (
+                <div className="flex text-xs space-x-1">
+                  {renderStars(internship.pastInternRating)}
+                </div>
+              )}
             </div>
 
             {/* Center: Job Details */}
@@ -118,6 +143,13 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-800">
                       {internship.locationType}
                     </span>
+
+                    {/* Show recommendation reason badge */}
+                    {isRecommended && internship.recommendedReason && (
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800 border border-pink-400 ml-2">
+                        {internship.recommendedReason.toUpperCase()}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
