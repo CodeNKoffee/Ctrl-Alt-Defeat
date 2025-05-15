@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CSEN_Courses, DMET_Courses, BioTech_Courses, Law_Courses } from "../../constants/mockData";
 
-export default function ReportCreationDashboard({ onAddTile, onCancel, initialReport, hideTitle = false, showSaveDraftButton = true }) {
+export default function ReportCreationDashboard({ onAddTile, onCancel, initialReport, hideTitle = false, showSaveDraftButton = true, isEditMode = false }) {
   const [filledReport, setReport] = useState({
     internshipTitle: '',
     introduction: '',
@@ -93,7 +93,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
               </svg>
-              Create Internship Report
+              {isEditMode ? "Edit Internship Report" : "Create Internship Report"}
             </h2>
 
             <form className="space-y-4" onSubmit={handleModalSubmit}>
@@ -208,7 +208,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                   type="submit"
                   className="flex-1 px-4 py-3 mt-4 text-white bg-[#318FA8] rounded-full font-semibold hover:bg-[#2a5c67] transition-all text-sm border border-[#5DB2C7] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
                 >
-                  {initialReport && initialReport.status === 'draft' ? 'Save Changes' : 'Submit Report'}
+                  {isEditMode ? "Submit" : "Submit Report"}
                 </button>
                 {showSaveDraftButton && (
                   <button
@@ -229,7 +229,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                       }`}
                     disabled={draftStatus === 'saving' || draftStatus === 'saved'}
                   >
-                    {draftStatus === 'saving' ? 'Saving...' : draftStatus === 'saved' ? '✓ Saved!' : 'Save Draft'}
+                    {draftStatus === 'saving' ? 'Saving...' : draftStatus === 'saved' ? '✓ Saved!' : (isEditMode ? 'Save Changes' : 'Save Draft')}
                   </button>
                 )}
               </div>

@@ -269,6 +269,7 @@ export default function InternshipList({
           onAddTile={handleReportAddTile}
           onCancel={handleReportClose}
           initialReport={reportingInternship}
+          isEditMode={false}
         />
       ) : (
         <div className="w-full px-4 py-6 space-y-4">

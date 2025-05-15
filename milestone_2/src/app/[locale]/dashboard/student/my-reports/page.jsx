@@ -9,7 +9,7 @@ import StatusBadge from "@/components/shared/StatusBadge"
 import ReportCreationDashboard from "@/components/ReportCreationDashboard"
 import StudentReportCards from "@/components/StudentReportCards"
 
-export default function ReportDashboard(){
+export default function ReportDashboard() {
     const [reports, setReports] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
     const [deleteIndex, setDeleteIndex] = useState(null);
@@ -21,7 +21,7 @@ export default function ReportDashboard(){
 
     const handleUpdateReport = (updatedReport) => {
         setReports((prev) =>
-        prev.map((Report, i) => (i === editIndex ? updatedReport : Report))
+            prev.map((Report, i) => (i === editIndex ? updatedReport : Report))
         );
         setEditIndex(null);
     };
@@ -38,6 +38,8 @@ export default function ReportDashboard(){
                 setIsCreating(false);
             }}
             onCancel={() => setIsCreating(false)}
+            initialReport={{}}
+            isEditMode={false}
         />;
     }
 
@@ -45,10 +47,11 @@ export default function ReportDashboard(){
         <>
             <StudentReportCards />
             {editIndex !== null && (
-                <ReportEdit
-                    report={reports[editIndex]}
-                    onSave={handleUpdateReport}
+                <ReportCreationDashboard
+                    initialReport={reports[editIndex]}
+                    onAddTile={handleUpdateReport}
                     onCancel={() => setEditIndex(null)}
+                    isEditMode={true}
                 />
             )}
             {deleteIndex !== null && (
