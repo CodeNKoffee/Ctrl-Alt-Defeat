@@ -144,10 +144,57 @@ export default function InternshipList({
         onAddTile={handleReportAddTile}
       />
     ) : (
-      <div className="w-full flex flex-col lg:flex-row gap-5 items-start">
-        {/* Main Content Column */}
-        <div className="w-full lg:w-2/3 flex flex-col items-start">
-          {/* Search Bar */}
+
+      <div className="w-full px-4 py-6 space-y-4">
+      
+        {  <div className="w-full max-w-5xl mx-auto px-2 md:px-6">
+           
+      <div className="bg-white p-6 rounded-lg shadow-md mb-8 border border-metallica-blue-200">
+        <div className="flex items-center gap-4 w-full md:w-auto">
+          <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
+          </div>
+          <div>
+            <p className="text-sm text-gray-400"></p>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-4"> {type=="my"?"Your Internships  Dashboard": type=="applied"?"Track Your Internship Applications":"Browse Career-Building Internships"}</div>
+            {type=="my"? <div className="text-gray-700 mb-2"> Manage all your internships in one place.
+            <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+            <li> Current internships are ongoing</li>
+            <li> Completed internships are awaiting your report and evaluation submissions</li>
+            <li> Evaluated ones have been reviewed by your supervisor</li>
+            </ul> 
+          <p className="text-metallica-blue-700 font-medium">
+           Use the filters to sort through your internship history or search for specific opportunities.
+           </p>
+           </div>
+           :type=="applied"?<div className="text-gray-700 mb-2">Welcome to your personal internship tracking dashboard. Here you can monitor the status of all your internship applications in real-time.
+            <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+            <li><span className="text-metallica-blue-700 font-medium">Pending: </span> Your application has been submitted and is under review</li>
+            <li><span className="text-metallica-blue-700 font-medium">Finalized: </span> Your application has been reviewed and you've been shortlisted as one of the top candidates</li>
+            <li><span className="text-metallica-blue-700 font-medium">Accepted: </span> Congratulations! Your application has been approved</li>
+            <li><span className="text-metallica-blue-700 font-medium">Rejected: </span> Unfortunately, your application was not selected this time</li>
+            </ul> 
+          <p className="text-metallica-blue-700 font-medium">
+           Need help with your pending applications? Contact your career advisor for guidance on follow-up strategies or preparation for upcoming interviews.
+          </p>
+            </div>:<div className="text-gray-700 mb-2"> Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.
+            <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+              <p className="text-metallica-blue-700 font-medium">Why These Opportunities Matter:</p>
+            <li>Potential for academic credit and professional references</li>
+            <li> Networking connections that could lead to full-time employment</li>
+            <li>Portfolio-building projects to showcase your skills</li>
+            </ul> 
+          <p className="text-metallica-blue-700 font-medium">
+            Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience and ensure it contributes meaningfully to your academic requirements.
+          </p>
+            </div>}
+            
+          </div>
+        </div>
+      </div>
+       
+        <div className="w-full max-w-3xl mx-auto">
+          {/* First CardTable for Search Bar only */}
           <CardTable
             title=""
             data={[]}
@@ -228,7 +275,10 @@ export default function InternshipList({
           </div>
         )}
       </div>
+      }
+      </div>
     )}
-  </>
-);
-} 
+    </>
+  );
+}
+

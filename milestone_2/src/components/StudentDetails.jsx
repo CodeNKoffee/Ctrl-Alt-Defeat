@@ -198,24 +198,7 @@ export default function StudentDetails({ isOpen, studentData }) {
                 ))}
               </div>
             </div>
-            
-            <div className="details-section frustrations-section">
-              <h3 style={sectionTitleStyle}>Frustrations</h3>
-              <div className="frustration-container">
-                <div className="frustration-item">
-                  <div className="frustration-dot"></div>
-                  <p style={textStyle}>Difficulty finding internships related to specific interests</p>
-                </div>
-                <div className="frustration-item">
-                  <div className="frustration-dot"></div>
-                  <p style={textStyle}>Balancing coursework with building practical experience</p>
-                </div>
-                <div className="frustration-item">
-                  <div className="frustration-dot"></div>
-                  <p style={textStyle}>Keeping up with rapidly changing technologies</p>
-                </div>
-              </div>
-            </div>
+  
           </div>
         </div>
       </div>
