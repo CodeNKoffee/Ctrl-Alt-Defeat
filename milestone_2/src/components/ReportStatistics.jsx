@@ -1,4 +1,5 @@
-import { DocumentTextIcon, ClockIcon, CheckCircleIcon, FlagIcon } from '@heroicons/react/24/outline';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileLines, faClock, faCircleCheck, faFlag } from '@fortawesome/free-solid-svg-icons';
 
 export default function ReportStatistics({
   total = 0,
@@ -11,7 +12,7 @@ export default function ReportStatistics({
       {/* Total Reports Card */}
       <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center h-full">
         <div className="flex-shrink-0 rounded-full bg-blue-50 text-blue-600 p-3 mr-3 h-12 w-12 flex items-center justify-center">
-          <DocumentTextIcon className="w-5 h-5" />
+          <FontAwesomeIcon icon={faFileLines} className="w-5 h-5" />
         </div>
         <div className="min-w-0">
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Total Reports</h3>
@@ -21,7 +22,7 @@ export default function ReportStatistics({
       {/* Accepted Reports Card */}
       <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center h-full">
         <div className="flex-shrink-0 rounded-full bg-green-50 text-green-600 p-3 mr-3 h-12 w-12 flex items-center justify-center">
-          <CheckCircleIcon className="w-5 h-5" />
+          <FontAwesomeIcon icon={faCircleCheck} className="w-5 h-5" />
         </div>
         <div className="min-w-0">
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Accepted Reports</h3>
@@ -31,7 +32,7 @@ export default function ReportStatistics({
       {/* Pending Reports Card */}
       <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center h-full">
         <div className="flex-shrink-0 rounded-full bg-yellow-50 text-yellow-600 p-3 mr-3 h-12 w-12 flex items-center justify-center">
-          <ClockIcon className="w-5 h-5" />
+          <FontAwesomeIcon icon={faClock} className="w-5 h-5" />
         </div>
         <div className="min-w-0">
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Pending Reports</h3>
@@ -41,7 +42,7 @@ export default function ReportStatistics({
       {/* Flagged Reports Card */}
       <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center h-full">
         <div className="flex-shrink-0 rounded-full bg-orange-50 text-orange-600 p-3 mr-3 h-12 w-12 flex items-center justify-center">
-          <FlagIcon className="w-5 h-5" />
+          <FontAwesomeIcon icon={faFlag} className="w-5 h-5" />
         </div>
         <div className="min-w-0">
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Flagged Reports</h3>

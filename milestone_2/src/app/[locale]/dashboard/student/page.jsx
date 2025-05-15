@@ -318,13 +318,9 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         internships={getMyInternships()}
         type="my"
         statuses={['current', 'completed', 'evaluated']}
-<<<<<<< HEAD
-        onTriggerReportCreate={handleReportCreation}
+        onTriggerReportCreate={onTriggerReportCreate}
         showSidebar={true}
         userMajor={userMajor}
-=======
-        onTriggerReportCreate={onTriggerReportCreate}
->>>>>>> origin/evaluations
       />
     </div>
   );
