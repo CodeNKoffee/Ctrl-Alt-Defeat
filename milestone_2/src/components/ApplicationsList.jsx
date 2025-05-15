@@ -229,7 +229,7 @@ export default function ApplicationsList() {
         </h1>
 
         {/* Filters section - MODIFIED for modern/futuristic look */}
-        <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
+        <div className="w-full z-30 bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
           {/* Added Title for Filter Options */}
           {/* <h3 className="text-lg font-semibold text-[#2a5f74] mb-5 text-left">Filter Options</h3> */}
 

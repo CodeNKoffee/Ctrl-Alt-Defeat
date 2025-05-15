@@ -17,7 +17,7 @@ export default function BrowseInternshipsPage() {
       <InternshipList
         title="INTERNSHIP OPPORTUNITIES"
         internships={internshipsToDisplay}
-        type="regular"
+        type={"recommended" | "browsing"}
         customFilterPanel={
           <div className="flex flex-wrap gap-2 mb-4">
             <button

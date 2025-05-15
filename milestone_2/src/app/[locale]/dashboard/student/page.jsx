@@ -53,6 +53,9 @@ function InternshipVideoSidebar({ userMajor }) {
 // Dashboard Home View Component
 function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
   const [personalizedInternships, setPersonalizedInternships] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
+  const [selectedDate, setSelectedDate] = useState(null);
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const userMajor = currentUser?.major || 'Computer Science';
 
@@ -86,24 +89,21 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
 
   return (
     <div className="w-full px-6 py-4">
-      {/* Recommendation explanation subtitle */}
-      <div className="mb-6 bg-[#D9F0F4]/60 rounded-lg p-4 border border-[#5DB2C7] shadow-sm">
-        <p className="text-[#2a5f74] text-sm">
-          These opportunities are personalized based on your <span className="font-medium">job interests</span>,
-          <span className="font-medium"> industry preferences</span>, and
-          <span className="font-medium"> recommendations from past interns</span> with similar profiles.
-        </p>
-      </div>
-
       <InternshipList
         title=""
         internships={personalizedInternships}
-        type="regular"
+        type={"recommended"}
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
         userMajor={userMajor}
-        isRecommended={true} // Add this prop to indicate these are recommended internships
+        isRecommended={true}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </div>
   );
@@ -119,6 +119,9 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     isPaid: null
   });
   const [filteredInternships, setFilteredInternships] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
+  const [selectedDate, setSelectedDate] = useState(null);
   const { currentUser } = useSelector(state => state.auth);
   const userMajor = currentUser?.major || 'Computer Science';
 
@@ -211,7 +214,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       <InternshipList
         title=""
         internships={hasActiveFilters ? filteredInternships : baseInternships}
-        type="regular"
+        type="browsing"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
@@ -308,6 +311,12 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
             )}
           </div>
         }
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
 
       {/* Filter Modal */}
@@ -323,6 +332,9 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 
 function AppliedInternshipsView() {
   const { currentUser } = useSelector(state => state.auth);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
+  const [selectedDate, setSelectedDate] = useState(null);
   const userMajor = currentUser?.major || 'Computer Science';
 
   return (
@@ -335,6 +347,12 @@ function AppliedInternshipsView() {
         showDatePicker={false}
         showSidebar={true}
         userMajor={userMajor}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </div>
   );
@@ -342,6 +360,9 @@ function AppliedInternshipsView() {
 
 function MyInternshipsView({ onTriggerReportCreate }) {
   const { currentUser } = useSelector(state => state.auth);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
+  const [selectedDate, setSelectedDate] = useState(null);
   const userMajor = currentUser?.major || 'Computer Science';
 
   return (
@@ -354,6 +375,12 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         onTriggerReportCreate={onTriggerReportCreate}
         showSidebar={true}
         userMajor={userMajor}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </div>
   );

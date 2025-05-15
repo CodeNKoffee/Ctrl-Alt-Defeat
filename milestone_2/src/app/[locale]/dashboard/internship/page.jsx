@@ -8,7 +8,7 @@ export default function InternshipsPage() {
       <InternshipList
         title="INTERNSHIP OPPORTUNITIES"
         internships={getRegularInternships()}
-        type="regular"
+        type={"recommended" | "browsing"}
       />
     </div>
   );
