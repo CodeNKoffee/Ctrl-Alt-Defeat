@@ -87,6 +87,10 @@ export default function DashboardLayout({
   // Format dates for display
   const formatDate = (date) => date ? date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
 
+  const userData = getUserData();
+  const showCallButton = userData &&
+    (userData.role === 'scad' || (userData.role === 'student' && userData.accountType === 'PRO'));
+
   return (
     <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white relative">
       <style jsx global>{`
@@ -202,70 +206,64 @@ export default function DashboardLayout({
         }
       `}</style>
 
-  const userData = getUserData();
-  const showCallButton = userData &&
-    (userData.role === 'scad' || (userData.role === 'student' && userData.accountType === 'PRO'));
+      <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white overflow-x-hidden">
+        {showSidebar && (
+          <Sidebar
+            userType={userType}
+            onViewChange={onViewChange}
+            currentView={currentViewId}
+            currentUser={userData}
+          />
+        )}
 
-  return (
-    <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white overflow-x-hidden">
-      {showSidebar && (
-        <Sidebar
-          userType={userType}
-          onViewChange={onViewChange}
-          currentView={currentViewId}
-          currentUser={userData}
-        />
-      )}
+        <div className="flex-1 overflow-auto overflow-x-hidden">
+          <div className="p-4 md:p-6 min-h-screen flex flex-col">
+            <div className="mb-6 flex justify-between items-center">
+              <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
+                {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
+              </h1>
 
-      <div className="flex-1 overflow-auto overflow-x-hidden">
-        <div className="p-4 md:p-6 min-h-screen flex flex-col">
-          <div className="mb-6 flex justify-between items-center">
-            <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
-              {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
-            </h1>
-            
-            <div className="flex flex-row items-center gap-4">
-            <div className="relative">
-              <div className={`date-picker-button ${isCycleSet ? 'locked' : ''} relative`}>
-                <button
-                  onClick={isCycleSet ? undefined : () => setIsDatePickerOpen(!isDatePickerOpen)}
-                  className="text-[#2A5F74] text-2xl bg-[#F0F8FA] border border-[#2A5F74] rounded-full p-2 shadow-sm transition-all duration-300 ease-in-out"
-                  aria-label="Open Date Picker"
-                >
-                  <FaCalendarAlt />
-                </button>
-                {!startDate && !endDate && (
-                  <span className="date-tooltip">Set internship cycle</span>
-                )}
-              </div>
-              {isDatePickerOpen && !isCycleSet && (
-                <div className="absolute top-full right-0 mt-2 z-50">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={
-                    }
-                    startDate={startDate}
-                    endDate={endDate}
-                    selectsRange
-                    inline
-                    dateFormat="MMMM d, yyyy"
-                    className="text-[11px] text-[#2A5F74] bg-white border border-[#2A5F74] rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-[#2A5F74] transition duration-150 ease-in-out"
-                    placeholderText="Select date range"
-                    onClickOutside={() => setIsDatePickerOpen(false)}
-                    open={isDatePickerOpen}
-                  />
-                </div>
-              )}
-              {(startDate || endDate) && (
-                <div className="mt-2 internship-cycle-box">
-                  <div className="title">Internship Cycle</div>
-                  <div className="date-item"><strong>Start:</strong> {formatDate(startDate)}</div>
-                  <div className="date-item"><strong>End:</strong> {formatDate(endDate)}</div>
+              <div className="flex flex-row items-center gap-4">
+                <div className="relative">
+                  <div className={`date-picker-button ${isCycleSet ? 'locked' : ''} relative`}>
+                    <button
+                      onClick={isCycleSet ? undefined : () => setIsDatePickerOpen(!isDatePickerOpen)}
+                      className="text-[#2A5F74] text-2xl bg-[#F0F8FA] border border-[#2A5F74] rounded-full p-2 shadow-sm transition-all duration-300 ease-in-out"
+                      aria-label="Open Date Picker"
+                    >
+                      <FaCalendarAlt />
+                    </button>
+                    {!startDate && !endDate && (
+                      <span className="date-tooltip">Set internship cycle</span>
+                    )}
                   </div>
+                  {isDatePickerOpen && !isCycleSet && (
+                    <div className="absolute top-full right-0 mt-2 z-50">
+                      <DatePicker
+                        selected={startDate}
+                        onChange={handleDateChange}
+                        startDate={startDate}
+                        endDate={endDate}
+                        selectsRange
+                        inline
+                        dateFormat="MMMM d, yyyy"
+                        className="text-[11px] text-[#2A5F74] bg-white border border-[#2A5F74] rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-[#2A5F74] transition duration-150 ease-in-out"
+                        placeholderText="Select date range"
+                        onClickOutside={() => setIsDatePickerOpen(false)}
+                        open={isDatePickerOpen}
+                      />
+                    </div>
                   )}
-                  </div>
-                  </div>
-                  
+                  {(startDate || endDate) && (
+                    <div className="mt-2 internship-cycle-box">
+                      <div className="title">Internship Cycle</div>
+                      <div className="date-item"><strong>Start:</strong> {formatDate(startDate)}</div>
+                      <div className="date-item"><strong>End:</strong> {formatDate(endDate)}</div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               <NotificationButton />
               {/* Call button prominently displayed for eligible users */}
               {showCallButton && (
