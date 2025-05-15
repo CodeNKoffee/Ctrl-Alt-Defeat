@@ -1,11 +1,2 @@
-'use client';
-
-import Stats from '@/components/Stats';
-
-export default function Page() {
-  return (
-    <main className="min-h-screen p-8">
-      <Stats />
-    </main>
-  );
-}
+// Statistics is now handled as a view in the main SCAD dashboard page.
+// This file is intentionally left blank.
