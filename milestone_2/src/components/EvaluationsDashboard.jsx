@@ -448,9 +448,6 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                     onUpdate={handleUpdateEvaluation}
                     onDelete={handleDeleteEvaluation}
                   >
-                    {stakeholder === "student" && activeTab === "saved" && (
-                      <span className="absolute top-0 left-0 rounded-tl-xl rounded-br-xl bg-amber-100 text-amber-800 px-2 py-1 text-xs font-medium z-40" style={{boxShadow: '0 2px 6px 0 rgba(0,0,0,0.04)'}}>Draft</span>
-                    )}
                   </Evaluation>
                 )}
               </div>
