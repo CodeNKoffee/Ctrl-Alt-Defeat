@@ -619,6 +619,7 @@ export const mockStudents = [
     major: "DMET",
     semester: "4",
     status: "Regular",
+    internshipStatus: "Completed",
     gpa: 1.3,
     email: "FaridKhaled@student.guc.edu.eg",
     bio: "DMET student with a strong interest in embedded systems and robotics.",
@@ -674,6 +675,7 @@ export const mockStudents = [
     major: "Mechatronics Engineering",
     semester: "8",
     status: "Regular",
+    internshipStatus: "Current",
     gpa: 2.3,
     email: "SalmaTarek@student.guc.edu.eg",
     bio: "Final-year Mechatronics student focused on industrial automation.",
@@ -723,12 +725,108 @@ export const mockStudents = [
     ]
   },
   {
+    id: "55-6188",
+    name: "Hatem Soliman",
+    photo: "/images/boy4.png",
+    major: "MET",
+    semester: "6",
+    status: "PRO",
+    internshipStatus: "Current",
+    gpa: 1.7,
+    email: "HatemSoliman@student.guc.edu.eg",
+    bio: "Computer Science student passionate about web development and AI.",
+    profileImage: "/images/student.png",
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/johndoe",
+      github: "https://github.com/johndoe",
+      portfolio: "https://johndoe.dev"
+    },
+    personalityTraits: [
+      { trait: "Openness", rating: 4 },
+      { trait: "Conscientiousness", rating: 5 },
+      { trait: "Extraversion", rating: 4 },
+      { trait: "Agreeableness", rating: 3 }
+    ],
+    education: [
+      {
+        degree: "B.S. in Computer Science and Engineering",
+        institution: "German University in Cairo",
+        period: "2022 - Present"
+      },
+      {
+        faculty: "Media Engineering and Technology (MET)",
+        semester: 6
+      }
+    ],
+    skills: [
+      "Java", "Python", "React", "Node.js", 
+      "UI/UX Design", "Problem Solving", "Team Leadership"
+    ],
+    jobInterests: [
+      {
+        title: "Software Development Engineer",
+        description: "Passionate about building scalable web applications with modern frameworks. Looking for opportunities to work on user-facing features that make a difference."
+      },
+      {
+        title: "Data Science",
+        description: "Intrigued by the power of data to drive decision-making. Eager to apply machine learning techniques to solve real-world problems."
+      },
+      {
+        title: "Product Management",
+        description: "Interested in bridging the gap between technical and business aspects. Aspires to lead product development from conception to launch."
+      }
+    ],
+    experience: [
+      {
+        title: "Software Engineering Intern",
+        company: "Tech Innovators Inc.",
+        duration: "Summer 2023",
+        responsibilities: [
+          "Developed features for the company's web application",
+          "Collaborated with the UX team to improve user experience",
+          "Fixed bugs and improved application performance"
+        ]
+      },
+      {
+        title: "Research Assistant",
+        company: "University AI Lab",
+        duration: "2022 - Present",
+        responsibilities: [
+          "Assisted in data collection and analysis for AI research",
+          "Implemented algorithms for pattern recognition",
+          "Co-authored a research paper on machine learning applications"
+        ]
+      }
+    ],
+    internships: [
+      {
+        title: "Software Engineering Intern",
+        company: "Google",
+        period: "Summer 2024 (Upcoming)",
+        description: "Will be working on Google Maps features using React and Node.js. Selected from over 500 applicants through a rigorous interview process."
+      },
+      {
+        title: "Research Assistant",
+        company: "Michigan State AI Lab",
+        period: "Fall 2023",
+        description: "Worked on developing machine learning algorithms for image recognition. Presented findings at the campus research exhibition."
+      },
+      {
+        title: "Mobile Development Intern",
+        company: "Local Startup",
+        period: "Summer 2023",
+        description: "Developed features for an iOS app using Swift. Implemented user authentication and real-time chat functionality."
+      }
+    ]
+  },
+  {
     id: "58-16143",
     name: "Amr Baher",
     photo: "/images/boy2.png",
     major: "Business Management",
     semester: "6",
     status: "PRO",
+    internshipStatus: "Current",
     gpa: 1.7,
     email: "AmrBaher@student.guc.edu.eg",
     bio: "Business student with a focus on digital transformation and analytics.",
@@ -788,6 +886,7 @@ export const mockStudents = [
     major: "Product Design",
     semester: "8",
     status: "PRO",
+    internshipStatus: "Completed",
     gpa: 2.7,
     email: "LaylaKhaled@student.guc.edu.eg",
     bio: "Passionate product designer blending aesthetics and functionality.",
@@ -847,6 +946,7 @@ export const mockStudents = [
     major: "IET",
     semester: "2",
     status: "Regular",
+    internshipStatus: "Completed",
     gpa: 3.0,
     email: "KhaledAhmed@student.guc.edu.eg",
     bio: "Early IET student exploring the intersections of electrical engineering and computing.",
@@ -884,6 +984,7 @@ export const mockStudents = [
     major: "Pharmacy",
     semester: "6",
     status: "PRO",
+    internshipStatus: "Current",
     gpa: 1.0,
     email: "HabibaMahmoud@student.guc.edu.eg",
     bio: "Pharmacy student interested in clinical research and pharmacovigilance.",
@@ -942,6 +1043,7 @@ export const mockStudents = [
     major: "Business Informatics",
     semester: "4",
     status: "Regular",
+    internshipStatus: "Completed",
     gpa: 2.0,
     email: "HalaKhaled@student.guc.edu.eg",
     bio: "Business Informatics student passionate about data-driven solutions and ERP systems.",

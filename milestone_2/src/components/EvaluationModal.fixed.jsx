@@ -47,7 +47,6 @@ export default function EvaluationModal({
     otherComments: ""
   });
   const [submitting, setSubmitting] = useState(false);
-  const [draftStatus, setDraftStatus] = useState("");
   const isEditMode = !!evaluationToEdit;
 
   // Pre-fill form when editing an existing evaluation
@@ -185,31 +184,26 @@ export default function EvaluationModal({
               </>
             ) : (
               <>
-                <h2 className="text-xl font-bold text-[#2A5F74] mb-6 text-center">
+                <h2 className="text-xl font-bold text-[#2A5F74] mb-4 text-center">
                   Skills & Professional Attributes
                 </h2>
-                  <div className="mt-6 p-4 bg-[#F8FAFB] rounded-lg border border-[#D9F0F4] text-xs text-center">
-                    <p className="text-[#2A5F74] font-medium mb-2">Rating Scale</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-[#4C798B]">1: Unsatisfactory</span>
-                      <span className="text-[#4C798B]">2: Below Average</span>
-                      <span className="text-[#4C798B]">3: Satisfactory</span>
-                      <span className="text-[#4C798B]">4: Above Average</span>
-                      <span className="text-[#4C798B]">5: Excellent</span>
-                    </div>
-                  </div>
                 <div className="overflow-auto max-h-[500px] pr-2">
-                  <div className="space-y-6">
-                    {skillAttributes.map((skill) => (
-                      <div key={skill} className="bg-white rounded-lg p-4 shadow-sm border border-[#E2F4F7]">
-                        <div className="mb-3">
-                          <h3 className="text-md font-semibold text-[#2A5F74]">{skill}</h3>
-                        </div>
-                        <div className="flex items-center">
-                          <span className="text-xs font-medium text-[#4C798B] w-28">Unsatisfactory</span>
-                          <div className="flex-1 flex justify-between items-center mx-2">
-                            {[1, 2, 3, 4, 5].map((rating) => (
-                              <label key={rating} className="cursor-pointer">
+                  <table className="w-full">
+                    <thead>
+                      <tr>
+                        <th className="text-left p-2 text-[#2A5F74]">Skills</th>
+                        {[1, 2, 3, 4, 5].map((rating) => (
+                          <th key={rating} className="text-center p-2 w-12 text-[#2A5F74]">{rating}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {skillAttributes.map((skill) => (
+                        <tr key={skill} className="border-b border-[#D9F0F4]">
+                          <td className="py-3 px-2 text-[#2A5F74]">{skill}</td>
+                          {[1, 2, 3, 4, 5].map((rating) => (
+                            <td key={rating} className="text-center">
+                              <label className="cursor-pointer inline-block w-full h-full">
                                 <input
                                   type="radio"
                                   name={`skill-${skill}`}
@@ -218,19 +212,25 @@ export default function EvaluationModal({
                                   onChange={() => handleSkillRating(skill, rating)}
                                   className="sr-only"
                                 />
-                                <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 
-                                  ${form.skillRatings[skill] === rating 
-                                    ? 'bg-[#318FA8] font-bold text-white scale-110 shadow-md border-2 border-[#318FA8]' 
-    : 'border-[#3298BA] border-2 text-[#3298BA] hover:bg-[#E2F4F7] hover:text-[#2A5F74] hover:border-[#2A5F74]'}`}>
+                                <div className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center transition-all duration-200 ${form.skillRatings[skill] === rating 
+                                  ? 'bg-[#3298BA] text-white scale-110' 
+                                  : 'bg-[#E2F4F7] text-[#2A5F74] hover:bg-[#D9F0F4]'}`}>
                                   {rating}
                                 </div>
                               </label>
-                            ))}
-                          </div>
-                          <span className="text-xs font-medium text-[#4C798B] w-28 text-right">Excellent</span>
-                        </div>
-                      </div>
-                    ))}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  
+                  <div className="flex justify-between mt-4 px-2 text-xs text-[#2A5F74]">
+                    <span>1: Unsatisfactory</span>
+                    <span>2: Below Average</span>
+                    <span>3: Satisfactory</span>
+                    <span>4: Above Average</span>
+                    <span>5: Excellent</span>
                   </div>
                 </div>
               </>
@@ -346,25 +346,14 @@ export default function EvaluationModal({
             {!isEditMode && (
               <button
                 type="button"
-                className={`flex-1 px-4 py-2 mt-9 text-sm border shadow font-semibold transition rounded-lg ${
-                  draftStatus === 'saved' 
-                    ? 'bg-green-100 text-green-800 border-green-500' 
-                    : 'text-[#318FA8] bg-metallica-blue-100 border-[#5DB2C7] hover:bg-metallica-blue-300 hover:text-metallica-blue-50'
-                }`}
-                disabled={submitting || draftStatus === 'saving' || draftStatus === 'saved'}
-                onClick={async () => {
-                  setDraftStatus('saving');
-                  await new Promise(res => setTimeout(res, 800));
+                className="flex-1 px-4 py-2 text-[#5DB2C7] bg-metallica-blue-100 rounded-lg font-semibold mt-9 hover:bg-metallica-blue-300 hover:text-metallica-blue-50 transition text-sm border border-[#5DB2C7] shadow"
+                disabled={submitting}
+                onClick={() => {
                   onSubmit({ ...form, draft: true });
-                  setDraftStatus('saved');
-                  // Keep "Saved!" visible for 1.5 seconds before closing
-                  setTimeout(() => {
-                    setDraftStatus("");
-                    onClose();
-                  }, 1500);
+                  onClose();
                 }}
               >
-                {draftStatus === 'saving' ? 'Saving...' : draftStatus === 'saved' ? '✓ Saved!' : 'Save as Draft'}
+                Save as Draft
               </button>
             )}
             {isEditMode && (

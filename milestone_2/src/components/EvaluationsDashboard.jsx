@@ -5,8 +5,7 @@ import SearchBar from "./shared/SearchBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faTimesCircle, faCalendar } from '@fortawesome/free-solid-svg-icons';
 
-export default function EvaluationsDashboard({ evaluations, stakeholder = "other" }) {
-  // Only one expanded at a time, like ReportTiles
+export default function EvaluationsDashboard({ evaluations: initialEvaluations, stakeholder = "other" }) {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("submitted");
@@ -15,6 +14,11 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
   const [isFiltersActive, setIsFiltersActive] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [evaluations, setEvaluations] = useState([]);
+
+  useEffect(() => {
+    setEvaluations(initialEvaluations || []);
+  }, [initialEvaluations]);
 
   const handleExpand = (idx) => {
     setExpandedIndex(expandedIndex === idx ? null : idx);
@@ -35,7 +39,6 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
     setEndDate('');
   };
 
-  // Format date for display in filter bubbles
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -46,12 +49,10 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
     });
   };
 
-  // Update isFiltersActive when any filter changes
   useEffect(() => {
     setIsFiltersActive(searchTerm.trim() !== '' || startDate !== '' || endDate !== '');
   }, [searchTerm, startDate, endDate]);
 
-  // Process evaluations based on tab and filters
   useEffect(() => {
     if (!evaluations || evaluations.length === 0) {
       setFilteredEvaluations([]);
@@ -60,10 +61,7 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
 
     let tabEvaluations = [...evaluations];
     
-    // For student view, filter by tab first
     if (stakeholder === "student") {
-      // Distribute evaluations between tabs (for demo)
-      // First 3 in submitted, last 2 in saved as draft
       if (activeTab === "submitted") {
         tabEvaluations = evaluations.slice(0, 3);
       } else {
@@ -71,7 +69,6 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
       }
     }
 
-    // Apply search filter
     if (searchTerm.trim() !== '') {
       const search = searchTerm.toLowerCase();
       tabEvaluations = tabEvaluations.filter(evaluation => 
@@ -81,7 +78,6 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
       );
     }
     
-    // Apply date filters
     if (startDate) {
       const start = new Date(startDate);
       tabEvaluations = tabEvaluations.filter(evaluation => {
@@ -92,7 +88,6 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
     
     if (endDate) {
       const end = new Date(endDate);
-      // Set time to end of day for inclusive filtering
       end.setHours(23, 59, 59, 999);
       tabEvaluations = tabEvaluations.filter(evaluation => {
         const evalDate = new Date(evaluation.submissionDate || evaluation.date);
@@ -103,9 +98,20 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
     setFilteredEvaluations(tabEvaluations);
   }, [evaluations, activeTab, searchTerm, startDate, endDate, stakeholder]);
 
+  const handleUpdateEvaluation = (updatedEvaluation) => {
+    const updatedEvaluations = evaluations.map(item => 
+      item.id === updatedEvaluation.id ? updatedEvaluation : item
+    );
+    setEvaluations(updatedEvaluations);
+  };
+
+  const handleDeleteEvaluation = (evaluationId) => {
+    const updatedEvaluations = evaluations.filter(item => item.id !== evaluationId);
+    setEvaluations(updatedEvaluations);
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto px-2 md:px-6">
-      {/* Info box at the top, styled like CompanyPost */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-8 border border-metallica-blue-200">
         <div className="flex items-center gap-4 w-full md:w-auto">
           <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
@@ -114,13 +120,12 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
           <div>
             <p className="text-sm text-gray-400"></p>
             <div className="text-2xl font-semibold text-[#2a5f74] mb-4">{stakeholder === "student" ? "Your Company Internship Evaluations": "Student Evaluations"}</div>
-            <div className="text-gray-700 mb-2">{stakeholder === "student" ? " Below are the evaluations you submitted for the companies where you completed internships and evaluations you have saved as drafts and are awaiting your submission.": "Below are the evaluations of students that have completed theor internships at the various companies they have access to."}
+            <div className="text-gray-700 mb-2">{stakeholder === "student" ? " Below are the evaluations you submitted for the companies where you completed internships and evaluations you have saved as drafts and are awaiting your submission.": "Below are the evaluations of students that have completed their internships at the various companies they have access to through the system."}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Tabs for student view only */}
       {stakeholder === "student" && (
         <div className="flex justify-start mb-6 px-4 gap-10">
           <div className="inline-flex rounded-full bg-gray-100 p-1">
@@ -148,14 +153,12 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
         </div>
       )}
 
-      {/* Search bar for non-student stakeholders */}
       {stakeholder !== "student" && (
         <div className="mt-8 bg-white shadow-md rounded-lg p-6 mb-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
             <h2 className="text-2xl text-metallica-blue-800 font-semibold mb-4 md:mb-0">Student Evaluations</h2>
           </div>
           
-          {/* Always visible search bar with filter button */}
           <div className="flex items-center gap-3 mb-4">
             <div className="relative flex-grow">
               <SearchBar 
@@ -190,7 +193,6 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
             )}
           </div>
           
-          {/* Show active filters as bubbles */}
           {isFiltersActive && (
             <div className="flex flex-wrap gap-2 mb-4">
               {searchTerm && (
@@ -231,7 +233,6 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
             </div>
           )}
           
-          {/* Filter options when filter button is clicked */}
           {showFilters && (
             <div className="mb-6 p-4 bg-metallica-blue-50 rounded-lg border border-metallica-blue-200">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -257,7 +258,7 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
                         id="endDate"
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
-                        min={startDate} // Prevent selecting end date before start date
+                        min={startDate}
                         className="w-full px-3 py-2 border border-metallica-blue-200 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
                       />
                     </div>
@@ -277,7 +278,6 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
         </div>
       )}
             
-      {/* Evaluations grid with spacing for expanded cards */}
       <div className="w-full flex flex-wrap justify-start gap-6 relative bg-[#f4fafd] rounded-2xl shadow-md p-6">
         {filteredEvaluations && filteredEvaluations.length > 0 ? (
           filteredEvaluations.map((evaluation, idx) => (
@@ -291,6 +291,8 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
                 onExpand={() => handleExpand(idx)}
                 stakeholder={stakeholder}
                 isDraft={stakeholder === "student" && activeTab === "saved"}
+                onUpdate={handleUpdateEvaluation}
+                onDelete={handleDeleteEvaluation}
               />
             </div>
           ))
@@ -306,7 +308,6 @@ export default function EvaluationsDashboard({ evaluations, stakeholder = "other
         )}
       </div>
       
-      {/* Overlay for background when card is expanded */}
       {expandedIndex !== null && (
         <div 
           className="fixed inset-0 bg-black/20 z-10" 
