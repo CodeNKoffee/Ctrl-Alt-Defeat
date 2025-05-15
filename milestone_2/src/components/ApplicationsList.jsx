@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faUser, faBuilding, faXmark, faChevronDown, faChevronUp, faEnvelope, faPhone, faCalendarAlt, faMapMarkerAlt, faGraduationCap, faLink, faCheckCircle, faTimesCircle, faClock } from '@fortawesome/free-solid-svg-icons';
 import StatusBadge from './shared/StatusBadge';
-import ActionButton from './shared/ActionButton';
+import CustomButton from './shared/CustomButton';
 
 // Mock applications data
 const MOCK_APPLICATIONS = [
@@ -220,7 +220,7 @@ export default function ApplicationsList() {
     };
   }, []);
 
-  return ( 
+  return (
     <div className="container mx-auto px-4 py-8">
       <div className="w-full max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
@@ -575,14 +575,14 @@ export default function ApplicationsList() {
                       {/* Status transition buttons */}
                       <div className="flex flex-col items-center space-y-3 w-full">
                         {STATUS_CONFIG[application.status].transitions.map(nextStatus => (
-                          <ActionButton
+                          <CustomButton
                             key={nextStatus}
-                            buttonType={nextStatus === 'rejected' ? 'reject' : 'accept'}
+                            variant={nextStatus === 'rejected' ? 'danger' : 'primary'}
                             text={`Mark as ${STATUS_CONFIG[nextStatus].label}`}
                             icon={nextStatus === 'rejected' ? faTimesCircle :
                               (nextStatus === 'completed' ? faCheckCircle : faClock)}
                             onClick={() => handleStatusChange(application.id, nextStatus)}
-                            buttonClassName="!w-full text-sm py-3 hover:scale-102 transition-transform duration-300"
+                            fullWidth
                           />
                         ))}
 

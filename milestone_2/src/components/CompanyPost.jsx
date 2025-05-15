@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
-import ActionButton from './shared/ActionButton';
+import CustomButton from './shared/CustomButton';
 
 export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compact = false }) {
   const [expanded, setExpanded] = useState(false);
-  
+
   // Mock data for applicants count - in real app this would come from post prop
   const applicantsCount = post.applicantsCount || Math.floor(Math.random() * 20);
-  
+
   const formatDate = (dateString) => {
     if (!dateString) return "Not specified";
-    
+
     try {
       const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric'  
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       });
     } catch (error) {
       return dateString;
@@ -29,7 +29,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
       onUpdateClick(post);
     }
   };
-  
+
   const handleDeleteClick = () => {
     if (onDeleteClick) {
       onDeleteClick(post);
@@ -58,7 +58,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
     };
     return types[jobType] || 'bg-gray-100 text-gray-700 border-gray-200';
   };
-  
+
   // Get background color based on job setting
   const getJobSettingBg = (setting) => {
     const settings = {
@@ -70,14 +70,14 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
   };
 
   // Classes that change based on compact mode
-  const containerClasses = compact 
-    ? `bg-white rounded-lg shadow-md p-4 border mb-0 ${expanded ? 'absolute z-10 w-full min-w-[280px] max-w-md' : 'h-[320px]'} flex flex-col` 
+  const containerClasses = compact
+    ? `bg-white rounded-lg shadow-md p-4 border mb-0 ${expanded ? 'absolute z-10 w-full min-w-[280px] max-w-md' : 'h-[320px]'} flex flex-col`
     : "bg-white rounded-lg shadow-md p-6 border mb-4";
-  
-  const titleClasses = compact 
-    ? "text-lg font-bold text-[var(--metallica-blue-800)] line-clamp-1" 
+
+  const titleClasses = compact
+    ? "text-lg font-bold text-[var(--metallica-blue-800)] line-clamp-1"
     : "text-xl font-bold text-[var(--metallica-blue-800)]";
-  
+
   const descriptionClasses = compact && !expanded
     ? "text-gray-700 mb-3 text-xs line-clamp-2 h-10 overflow-hidden"
     : (compact ? "text-gray-700 mb-3 text-xs" : "text-gray-700 mb-4 text-sm");
@@ -112,7 +112,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
                   {post.jobSetting}
                 </span>
               )}
-              
+
               {post.jobType && (
                 <span className={`px-2.5 py-1 text-xs rounded-full font-medium border ${getJobTypeBg(post.jobType)} flex items-center`}>
                   {post.jobType === 'Full-time' && (
@@ -139,7 +139,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
 
           {/* Edit button now positioned inside the card but at the topmost position */}
           <div className="flex flex-col items-end">
-            <button 
+            <button
               onClick={handleUpdateClick}
               className="bg-[#5DB2C7] hover:bg-[#4AA0B5] text-white rounded-full w-7 h-7 flex items-center justify-center shadow-sm transition-all duration-200 hover:scale-105 border border-[#B8E1E9] mb-2"
               aria-label="Edit post"
@@ -155,7 +155,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
                 {post.salary}
               </p>
             )}
-            
+
             <div className={`flex items-center mt-2 px-2 py-1 rounded-full ${getApplicantPulseClass()}`}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -164,7 +164,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
             </div>
           </div>
         </div>
-        
+
         <div className="border-t border-gray-200 pt-3 mb-3 flex-grow overflow-hidden">
           <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">Description</h4>
           <p className={descriptionClasses}>
@@ -208,13 +208,13 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
             <p className="text-gray-700 text-sm">{post.requirements}</p>
           </div>
         )}
-        
+
         {(!compact || expanded) && post.skills && post.skills.length > 0 && (
           <div className="mb-3">
             <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">Skills</h4>
             <div className="flex flex-wrap gap-1">
               {post.skills.map((skill, index) => (
-                <span 
+                <span
                   key={index}
                   className="bg-[var(--metallica-blue-100)] text-[var(--metallica-blue-800)] px-2 py-0.5 rounded-full text-xs"
                 >
@@ -237,8 +237,8 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
                 <div>
                   <h4 className="text-sm font-medium text-[var(--metallica-blue-800)]">Applicants</h4>
                   <p className="text-xs text-gray-600">
-                    {applicantsCount === 0 
-                      ? "Be the first to apply!" 
+                    {applicantsCount === 0
+                      ? "Be the first to apply!"
                       : `${applicantsCount} ${applicantsCount === 1 ? 'person has' : 'people have'} applied`}
                   </p>
                 </div>
@@ -249,7 +249,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
             </div>
           </div>
         )}
-        
+
         {/* Modified footer with only delete button */}
         <div className="flex flex-col mt-auto pt-3 border-t border-gray-200">
           <div className="flex justify-between items-center">
@@ -261,9 +261,9 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
                 {expanded ? 'See less' : 'See more'}
               </button>
             )}
-            
+
             {/* Smaller delete button with updated colors to match theme */}
-            <button 
+            <button
               onClick={handleDeleteClick}
               className="bg-white hover:bg-red-50 text-red-500 rounded-full w-6 h-6 flex items-center justify-center shadow-sm transition-all duration-200 hover:scale-105 ml-auto border border-red-200"
               aria-label="Delete post"
@@ -273,10 +273,10 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
           </div>
         </div>
       </div>
-      
+
       {/* Add overlay when expanded to handle clicks outside */}
       {compact && expanded && (
-        <div 
+        <div
           className="fixed inset-0 z-0 bg-black bg-opacity-20"
           onClick={toggleExpanded}
         ></div>

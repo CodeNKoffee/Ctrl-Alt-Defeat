@@ -4,6 +4,7 @@ import CardTable from './CardTable';
 import DatePicker from '../DatePicker';
 import InternshipRow from './InternshipRow';
 import NoResults from './NoResults';
+import Report from "../Report";
 
 const statusColors = {
   // Applied internship statuses
@@ -18,6 +19,50 @@ const statusColors = {
   evaluated: 'bg-purple-100 text-purple-800 border-purple-400',
 };
 
+// Video Sidebar Component
+function InternshipVideoSidebar({ userMajor }) {
+  return (
+    <div className="bg-white rounded-2xl shadow-md p-4 sticky top-4">
+      <h3 className="text-lg font-semibold text-[#2a5f74] mb-3">Internship Requirements</h3>
+      <div className="space-y-3">
+        <div className="relative rounded-lg overflow-hidden aspect-video group">
+          <iframe
+            width="100%"
+            height="100%"
+            src="https://www.youtube.com/embed/KPD8C7c6P1w?si=46fIIWYEYW58AoJO"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            className="absolute top-0 left-0 w-full h-full"
+          ></iframe>
+          <div className="absolute bottom-0 left-0 right-0 bg-[#2a5f74]/70 text-white text-xs py-2 px-3 pointer-events-none">
+            Watch: Internships for {userMajor || 'Your Major'}
+          </div>
+        </div>
+        <p className="text-sm text-gray-600">
+          Learn which internships count toward your graduation requirements based on your major and academic plan.
+        </p>
+        <div className="border-t pt-3">
+          <h4 className="font-medium text-[#2a5f74] mb-2">Quick Resources</h4>
+          <ul className="text-sm space-y-2">
+            <li>
+              <a href="#" className="text-[#3298BA] hover:underline">Academic Requirements Guide</a>
+            </li>
+            <li>
+              <a href="#" className="text-[#3298BA] hover:underline">Contact Academic Advisor</a>
+            </li>
+            <li>
+              <a href="#" className="text-[#3298BA] hover:underline">FAQs About Internships</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function InternshipList({
   title = "INTERNSHIPS",
   internships = [],
@@ -27,10 +72,14 @@ export default function InternshipList({
   onApplicationCompleted,
   appliedInternshipIds = new Set(),
   showDatePicker = true,
+  showSidebar = false,
+  userMajor = "Computer Science",
+  isRecommended = false,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedDate, setSelectedDate] = useState(null);
+  const [reportingInternship, setReportingInternship] = useState(false);
 
   // Default statuses if none provided
   const displayStatuses = statuses.length > 0 ? statuses :
@@ -72,56 +121,158 @@ export default function InternshipList({
     return matchesSearch && matchesStatus && matchesDate;
   };
 
+  const handleTriggerReportCreate = (internship) => {
+    setReportingInternship(internship);
+  };
+
+  const handleReportClose = () => {
+    setReportingInternship(null);
+  };
+
+  const handleReportAddTile = (data) => {
+    // Handle any data submission from the report if necessary
+    // For now, just closes the report view
+    setReportingInternship(null);
+    // You might want to trigger a data refresh or navigation here
+  };
+
   return (
-    <div className="w-full px-4 py-6 space-y-4">
-      <div className="w-full max-w-3xl mx-auto">
-        {/* First CardTable for Search Bar only */}
-        <CardTable
-          title=""
-          data={[]}
-          filterFunction={() => true}
-          emptyMessage=""
-          searchConfig={{
-            searchTerm: searchTerm,
-            onSearchChange: setSearchTerm,
-            placeholder: 'Search by job title, company, or skills...',
-            hideSearchBar: false
-          }}
-          filterConfig={{ showFilter: false }}
-          renderCard={() => null}
-        />
+  <>
+    {reportingInternship ? (
+      <Report
+        isOpen={true}
+        onClose={handleReportClose}
+        onAddTile={handleReportAddTile}
+      />
+    ) : (
 
-        {/* Custom Filter Panel (e.g., All/Recommended) */}
-        {customFilterPanel && (
-          <div className="py-2 mb-4">{customFilterPanel}</div>
-        )}
+      <div className="w-full px-4 py-6 space-y-4">
+      
+        {  <div className="w-full max-w-5xl mx-auto px-2 md:px-6">
+           
+      <div className="bg-white p-6 rounded-lg shadow-md mb-8 border border-metallica-blue-200">
+        <div className="flex items-center gap-4 w-full md:w-auto">
+          <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
+          </div>
+          <div>
+            <p className="text-sm text-gray-400"></p>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-4"> {type=="my"?"Your Internships  Dashboard": type=="applied"?"Track Your Internship Applications":"Browse Career-Building Internships"}</div>
+            {type=="my"? <div className="text-gray-700 mb-2"> Manage all your internships in one place.
+            <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+            <li> Current internships are ongoing</li>
+            <li> Completed internships are awaiting your report and evaluation submissions</li>
+            <li> Evaluated ones have been reviewed by your supervisor</li>
+            </ul> 
+          <p className="text-metallica-blue-700 font-medium">
+           Use the filters to sort through your internship history or search for specific opportunities.
+           </p>
+           </div>
+           :type=="applied"?<div className="text-gray-700 mb-2">Welcome to your personal internship tracking dashboard. Here you can monitor the status of all your internship applications in real-time.
+            <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+            <li><span className="text-metallica-blue-700 font-medium">Pending: </span> Your application has been submitted and is under review</li>
+            <li><span className="text-metallica-blue-700 font-medium">Finalized: </span> Your application has been reviewed and you've been shortlisted as one of the top candidates</li>
+            <li><span className="text-metallica-blue-700 font-medium">Accepted: </span> Congratulations! Your application has been approved</li>
+            <li><span className="text-metallica-blue-700 font-medium">Rejected: </span> Unfortunately, your application was not selected this time</li>
+            </ul> 
+          <p className="text-metallica-blue-700 font-medium">
+           Need help with your pending applications? Contact your career advisor for guidance on follow-up strategies or preparation for upcoming interviews.
+          </p>
+            </div>:<div className="text-gray-700 mb-2"> Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.
+            <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+              <p className="text-metallica-blue-700 font-medium">Why These Opportunities Matter:</p>
+            <li>Potential for academic credit and professional references</li>
+            <li> Networking connections that could lead to full-time employment</li>
+            <li>Portfolio-building projects to showcase your skills</li>
+            </ul> 
+          <p className="text-metallica-blue-700 font-medium">
+            Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience and ensure it contributes meaningfully to your academic requirements.
+          </p>
+            </div>}
+            
+          </div>
+        </div>
+      </div>
+       
+        <div className="w-full max-w-3xl mx-auto">
+          {/* First CardTable for Search Bar only */}
+          <CardTable
+            title=""
+            data={[]}
+            filterFunction={() => true}
+            emptyMessage=""
+            searchConfig={{
+              searchTerm: searchTerm,
+              onSearchChange: setSearchTerm,
+              placeholder: 'Search by job title, company, or skills...',
+              hideSearchBar: false
+            }}
+            filterConfig={{ showFilter: false }}
+            renderCard={() => null}
+          />
 
-        {/* Status Tabs and Date Picker Row */}
-        {displayStatuses.length > 0 && (
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2 mb-4">
-            {/* Status Tabs */}
-            <div className="flex flex-wrap gap-2">
-              {['all', ...displayStatuses].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-                    ${activeTab === tab
-                      ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
-                      : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                    }`}
-                >
-                  {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </button>
-              ))}
+          {/* Custom Filter Panel */}
+          {customFilterPanel && (
+            <div className="w-full mb-4">{customFilterPanel}</div>
+          )}
+
+          {/* Status Tabs and Date Picker */}
+          {displayStatuses.length > 0 && (
+            <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+              <div className="flex flex-wrap gap-2">
+                {['all', ...displayStatuses].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
+                      ${activeTab === tab
+                        ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#3298BA]'
+                        : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                      }`}
+                  >
+                    {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  </button>
+                ))}
+              </div>
+              {showDatePicker && (
+                <DatePicker
+                  selectedDate={selectedDate}
+                  onDateChange={setSelectedDate}
+                />
+              )}
             </div>
+          )}
 
-            {showDatePicker && (
-              <DatePicker
-                selectedDate={selectedDate}
-                onDateChange={setSelectedDate}
+          {/* Internship Cards */}
+          <CardTable
+            data={internships}
+            filterFunction={filterFunction}
+            emptyMessage={
+              <NoResults
+                mainMessage={`No internships found matching your criteria`}
+                subMessage="Try adjusting your search or filter"
+              />
+            }
+            searchConfig={{ hideSearchBar: true }}
+            filterConfig={{ showFilter: false }}
+            renderCard={(internship) => (
+              <InternshipRow
+                key={internship.id}
+                internship={internship}
+                type={type}
+                statusColors={statusColors}
+                onApplicationCompleted={onApplicationCompleted}
+                isApplied={appliedInternshipIds.has(internship.id)}
+                onTriggerReportCreate={handleTriggerReportCreate} // <-- from reportFlagging
               />
             )}
+          />
+        </div>
+
+        {/* Sidebar */}
+        {showSidebar && (
+          <div className="w-full lg:w-1/3">
+            <InternshipVideoSidebar userMajor={userMajor} />
           </div>
         )}
 
@@ -135,9 +286,7 @@ export default function InternshipList({
               subMessage="Try adjusting your search or filter"
             />
           }
-          searchConfig={{
-            hideSearchBar: true
-          }}
+          searchConfig={{ hideSearchBar: true }} // Search is handled by the CardTable above
           filterConfig={{ showFilter: false }}
           renderCard={(internship) => (
             <InternshipRow
@@ -147,10 +296,15 @@ export default function InternshipList({
               statusColors={statusColors}
               onApplicationCompleted={onApplicationCompleted}
               isApplied={appliedInternshipIds.has(internship.id)}
+              isRecommended={isRecommended}
             />
           )}
         />
       </div>
-    </div>
+      }
+      </div>
+    )}
+    </>
   );
-} 
+}
+

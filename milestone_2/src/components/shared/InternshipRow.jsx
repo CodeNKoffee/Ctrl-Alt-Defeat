@@ -5,6 +5,11 @@ import { useRouter } from 'next/navigation';
 import StatusBadge from './StatusBadge';
 import { Tooltip } from 'react-tooltip';
 import UploadDocuments from '../UploadDocuments';
+import EvaluationModal from '../EvaluationModal';
+import { mockCompanyReviews } from '../../../constants/mockData';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";
@@ -44,11 +49,12 @@ const appliedStatusTooltipMessages = {
   rejected: "Unfortunately, your application was not selected for this position this time.",
 };
 
-export default function InternshipRow({ internship, type, onApplicationCompleted, isApplied }) {
+export default function InternshipRow({ internship, type, onApplicationCompleted, isApplied, onTriggerReportCreate, isRecommended }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [showEvaluation, setShowEvaluation] = useState(false);
   const router = useRouter();
 
   const handleToggle = () => {
@@ -88,8 +94,23 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
     // Potentially refresh data or give feedback if an upload happened - handled by parent
   };
 
+  // Function to render stars based on rating
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={i <= rating ? faStarSolid : faStarRegular}
+          className={i <= rating ? "text-amber-400" : "text-gray-300"}
+        />
+      );
+    }
+    return stars;
+  };
+
   return (
-    <div className="mb-3 w-full max-w-3xl mx-auto">
+    <div className="mb-3 w-full">
       {/* Header Row (Click to Expand) */}
       <div className="relative">
         <button
@@ -103,6 +124,13 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             <div className="flex flex-col items-center w-24 flex-shrink-0 space-y-3">
               <div className="w-12 h-12 rounded-full bg-gray-300"></div>
               <p className="text-sm font-medium text-gray-500 text-center">{internship.company}</p>
+
+              {/* Show star rating for recommended internships */}
+              {isRecommended && internship.pastInternRating && (
+                <div className="flex text-xs space-x-1">
+                  {renderStars(internship.pastInternRating)}
+                </div>
+              )}
             </div>
 
             {/* Center: Job Details */}
@@ -115,6 +143,13 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-800">
                       {internship.locationType}
                     </span>
+
+                    {/* Show recommendation reason badge */}
+                    {isRecommended && internship.recommendedReason && (
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800 border border-pink-400 ml-2">
+                        {internship.recommendedReason.toUpperCase()}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -249,6 +284,23 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                 {type === 'regular' && timeAgo(internship.postedDate)}
               </p>
             </div>
+            {/* Only show Create Report for completed status in 'my' internships, remove all other buttons */}
+            {type === 'my' && internship.status === 'completed' && (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => onTriggerReportCreate(internship)}
+                  className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#E2F4F7] text-[#4d98ab] border border-[#4d98ab] hover:bg-[#aedae5] transition duration-200"
+                >
+                  Create Report
+                </button>
+                <button
+                  onClick={() => setShowEvaluation(true)}
+                  className=" px-3 py-1 text-sm rounded-full font-medium bg-green-100 text-green-800 border-green-400 border hover:bg-green-200 "
+                >
+                  Evaluate Company
+                </button>
+              </div>
+            )}
             {type === 'regular' ? (
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
@@ -260,21 +312,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
               >
                 {isApplied ? 'Applied' : 'Apply'}
               </button>
-            ) : internship.appliedDate ? (
-              <button
-                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
-                onClick={() => router.push(`/dashboard/student/applied-internships/${internship.id}`)}
-              >
-                View Application
-              </button>
-            ) : (
-              <button
-                onClick={handleOpenUploadModal}
-                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796a8] transition w-full sm:w-auto text-sm"
-              >
-                Apply
-              </button>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
@@ -286,6 +324,17 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         open={isUploadModalOpen}
         onClose={handleCloseUploadModal}
         internshipId={internship.id}
+      />
+
+      {/* Evaluation Modal */}
+      <EvaluationModal
+        isOpen={showEvaluation}
+        onClose={() => setShowEvaluation(false)}
+        onSubmit={(data) => {
+          // You can handle the evaluation submission here (e.g., API call or state update)
+          setShowEvaluation(false);
+        }}
+        mockReviews={mockCompanyReviews}
       />
     </div>
   );

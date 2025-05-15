@@ -1,6 +1,8 @@
 "use client";
 import { useState } from 'react';
-import Filter from './Filter'; // Add this import
+import Filter from './Filter';
+import StatusBadge from './shared/StatusBadge';
+import { facultyScadReports } from '../../constants/mockData';
 
 export default function InternshipReport() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,29 +12,22 @@ export default function InternshipReport() {
   const [showAppealModal, setShowAppealModal] = useState(false);
   const [appealMessage, setAppealMessage] = useState("");
 
-  const [reports] = useState([
-    {
-      id: 1,
-      internName: "David Lee",
-      internshipTitle: "Backend Developer",
-      status: "flagged",
-      comments: "Report needs more detailed documentation of implemented features."
-    },
-    {
-      id: 2, 
-      internName: "Sarah Wilson",
-      internshipTitle: "Frontend Developer",
-      status: "rejected",
-      comments: "Missing essential project milestones and outcomes."
-    },
-    {
-      id: 3,
-      internName: "John Smith",
-      internshipTitle: "Full Stack Developer",
-      status: "accepted",
-      comments: "Excellent work and detailed documentation."
-    }
-  ]);
+  // Status badge colors based on report status
+  const statusColors = {
+    'flagged': 'bg-orange-100 text-orange-800 border border-orange-400',
+    'rejected': 'bg-red-100 text-red-800 border border-red-400',
+    'accepted': 'bg-green-100 text-green-800 border border-green-400',
+    'pending': 'bg-yellow-100 text-yellow-800 border border-yellow-400'
+  };
+
+  // Use reports from mockData
+  const [reports, setReports] = useState(Object.values(facultyScadReports).map((r, idx) => ({
+    id: idx + 1,
+    internName: r.studentName,
+    internshipTitle: r.title,
+    status: r.status,
+    comments: r.body.slice(0, 80) + '...'
+  })));
 
   const filteredReports = reports.filter(report => {
     const matchesSearch = 
@@ -179,9 +174,11 @@ export default function InternshipReport() {
             <div className="report-info">
               <h3 className="text-lg font-semibold text-[#2A5F74]">{report.internName}</h3>
               <p className="text-gray-600">{report.internshipTitle}</p>
-              <p className={`status ${report.status}`}>
+              
+              <StatusBadge className={statusColors[report.status]}>
                 {report.status.toUpperCase()}
-              </p>
+              </StatusBadge>
+
             </div>
             <div className="report-actions">
               {(report.status === "flagged" || report.status === "rejected") && (

@@ -2,14 +2,18 @@
 
 // Import tools we need: React hooks to manage state and refs, and lottie-web to show animations
 import React, { useState, useRef, useEffect } from 'react';
-import Lottie from 'lottie-react';
+import dynamic from 'next/dynamic';
+
+// Import Lottie dynamically with SSR disabled
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
+
 // import animationData from '../../public/animted-cloud.json'; // Your Lottie JSON
 import animationData from '../../public/cloud-icon.json'; // Your Lottie JSON
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudArrowUp, faXmark, faTimes, faCheckCircle, faTimesCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
-import ActionButton from './shared/ActionButton';
+import CustomButton from './shared/CustomButton';
 
 // Create the main component for uploading documents
 const UploadDocuments = ({ open, onClose, internshipId }) => {
@@ -215,7 +219,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
       <div style={{ width: '48%', display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>
           <label style={{ color: '#2A5F74', fontSize: '16px', fontWeight: '600', display: 'block', textAlign: 'left' }}>
-            {title} {isRequired && <span style={{ color: '#D32F2F'}}>*</span>}
+            {title} {isRequired && <span style={{ color: '#D32F2F' }}>*</span>}
           </label>
 
           {type === 'resume' && resumeError && (

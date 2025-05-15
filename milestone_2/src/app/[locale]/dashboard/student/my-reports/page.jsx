@@ -5,15 +5,15 @@ import Header from "@/components/Header"
 import ReportTiles from "@/components/ReportTiles"
 import ReportEdit from "@/components/ReportEdit"
 import DeleteTileConfirmation from "@/components/DeleteTileConfirmation"
+import StatusBadge from "@/components/shared/StatusBadge"
+import ReportCreationDashboard from "@/components/ReportCreationDashboard"
+import StudentReportCards from "@/components/StudentReportCards"
 
 export default function ReportDashboard(){
     const [reports, setReports] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
     const [deleteIndex, setDeleteIndex] = useState(null);
-
-    //const handleAddReport = (ReportData) => {
-      //  setReports((prev) => [...prev, ReportData]);
-    //};
+    const [isCreating, setIsCreating] = useState(false);
 
     const handleAddReport = (newReport) => {
         setReports((prev) => [...prev, newReport]);
@@ -31,29 +31,33 @@ export default function ReportDashboard(){
         setDeleteIndex(null);
     };
 
-    return(
-        <div>
-            <Header text="My Reports" size="text-6xl"></Header>
-            <ReportTiles 
-                tiles={reports} 
-                onEditClick={(index) => setEditIndex(index)}
-                onDeleteClick={(index) => setDeleteIndex(index)}>  
-            </ReportTiles>
-            <Report onAddTile={handleAddReport}></Report>
+    if (isCreating) {
+        return <ReportCreationDashboard
+            onAddTile={(newReport) => {
+                handleAddReport(newReport);
+                setIsCreating(false);
+            }}
+            onCancel={() => setIsCreating(false)}
+        />;
+    }
+
+    return (
+        <>
+            <StudentReportCards />
             {editIndex !== null && (
                 <ReportEdit
-                report={reports[editIndex]}
-                onSave={handleUpdateReport}
-                onCancel={() => setEditIndex(null)}
+                    report={reports[editIndex]}
+                    onSave={handleUpdateReport}
+                    onCancel={() => setEditIndex(null)}
                 />
             )}
             {deleteIndex !== null && (
                 <DeleteTileConfirmation
-                type="report"
-                onConfirm={handleDeleteReport}
-                onCancel={() => setDeleteIndex(null)}
+                    type="report"
+                    onConfirm={handleDeleteReport}
+                    onCancel={() => setDeleteIndex(null)}
                 />
             )}
-        </div>
-    )
+        </>
+    );
 }

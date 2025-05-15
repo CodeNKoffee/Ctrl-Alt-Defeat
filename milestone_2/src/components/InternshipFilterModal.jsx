@@ -5,7 +5,7 @@ import { INDUSTRIES } from '../../constants';
 import SearchableSelect from './SearchableSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
-import ActionButton from './shared/ActionButton';
+import CustomButton from './shared/CustomButton';
 
 // Updated slider configuration with 1-month steps
 const DURATION_CONFIG = {
@@ -329,17 +329,15 @@ export default function InternshipFilterModal({ open, onClose, initialFilters, o
 
           {/* Action Buttons */}
           <div className="flex justify-end gap-4 mt-8">
-            <ActionButton
-              buttonType="reject"
+            <CustomButton
+              variant="danger"
               text="Reset All Filters"
               onClick={handleResetFilters}
-              buttonClassName="w-fit"
             />
-            <ActionButton
-              buttonType="accept"
+            <CustomButton
+              variant="primary"
               text="Apply Filters"
               onClick={handleApplyFilters}
-              buttonClassName="w-fit"
             />
           </div>
         </div>

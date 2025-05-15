@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
-import CallButton from '@/components/CallButton';
-import CallInterface from '@/components/CallInterface';
+import CallButton from '../CallButton';
+import NotificationButton from "../NotificationButton";
 
 export default function DashboardLayout({
   children,
@@ -69,12 +69,13 @@ export default function DashboardLayout({
     return null;
   };
 
+
   const userData = getUserData();
   const showCallButton = userData &&
     (userData.role === 'scad' || (userData.role === 'student' && userData.accountType === 'PRO'));
 
   return (
-    <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white overflow-x-hidden">
+    <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white">
       {showSidebar && (
         <Sidebar
           userType={userType}
@@ -83,26 +84,29 @@ export default function DashboardLayout({
         />
       )}
 
-      <div className="flex-1 overflow-auto overflow-x-hidden">
+      <div className="flex-1 overflow-auto">
         <div className="p-4 md:p-6 min-h-screen flex flex-col">
-          <div className="mb-6 flex justify-between items-center">
+          <div className="mb-6">
             <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
               {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
             </h1>
 
-            {/* Call button prominently displayed for eligible users */}
-            {showCallButton && (
-              <div className="flex items-center">
-                <span className="mr-2 text-sm font-medium text-gray-600 hidden sm:inline">
-                  {userData.role === 'scad' ? 'Call PRO Students' : 'Call SCAD Admin'}
-                </span>
-                <div className="relative">
-                  <CallButton />
-                  {/* Animated pulse effect to draw attention */}
-                  <span className="absolute -inset-1 rounded-full animate-ping bg-indigo-300 opacity-75" style={{ animationDuration: '3s' }}></span>
+            <div className="flex flex-row items-center gap-4">
+              {/* Call button prominently displayed for eligible users */}
+              {showCallButton && (
+                <div className="flex items-center">
+                  <span className="mr-2 text-sm font-medium text-gray-600 hidden sm:inline">
+                    {userData.role === 'scad' ? 'Call PRO Students' : 'Call SCAD Admin'}
+                  </span>
+                  <div className="relative">
+                    <CallButton />
+                    {/* Animated pulse effect to draw attention */}
+                    <span className="absolute -inset-1 rounded-full animate-ping bg-indigo-300 opacity-75" style={{ animationDuration: '3s' }}></span>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+              <NotificationButton />
+            </div>
           </div>
 
           <div className="bg-metallica-blue-50 rounded-xl shadow-sm overflow-hidden border border-gray-200 flex-1">
@@ -120,9 +124,6 @@ export default function DashboardLayout({
           </div>
         </div>
       </div>
-
-      {/* Global call components - only CallInterface needed */}
-      <CallInterface />
     </div>
   );
-}
+} 

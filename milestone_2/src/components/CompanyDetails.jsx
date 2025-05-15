@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { INDUSTRY_ICONS } from "../../constants";
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ActionButton from "./shared/ActionButton";
+import CustomButton from "./shared/CustomButton";
 
 export default function CompanyDetails({
   companyName,
@@ -106,14 +106,14 @@ export default function CompanyDetails({
           <CompanySizeCard size={size} />
           <CompanyDocumentsCard documents={docs} />
           <div className="companydetails-action-row">
-            <ActionButton
-              buttonType="accept"
+            <CustomButton
+              variant="primary"
               onClick={handleAccept}
               icon={faCheck}
               text="Accept"
             />
-            <ActionButton
-              buttonType="reject"
+            <CustomButton
+              variant="danger"
               onClick={handleReject}
               icon={faTimes}
               text="Reject"
