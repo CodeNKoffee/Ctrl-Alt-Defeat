@@ -93,7 +93,6 @@ export default function DashboardLayout({
             </h1>
             
             <div className="flex flex-row items-center gap-4">
-              <NotificationButton />
               {/* Call button prominently displayed for eligible users */}
               {showCallButton && (
                 <div className="flex items-center">
@@ -107,6 +106,7 @@ export default function DashboardLayout({
                   </div>
                 </div>
               )}
+              <NotificationButton />
             </div>
           </div>
 

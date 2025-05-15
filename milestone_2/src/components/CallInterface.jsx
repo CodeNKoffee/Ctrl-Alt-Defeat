@@ -153,6 +153,7 @@ const CallInterface = () => {
   const answerAudioRef = useRef(null);
   const [showConnectingOverlay, setShowConnectingOverlay] = useState(true);
   const [showManualLeaveToast, setShowManualLeaveToast] = useState(false);
+  const [otherPartyCameraOn, setOtherPartyCameraOn] = useState(false);
 
   const [showChat, setShowChat] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
@@ -171,6 +172,7 @@ const CallInterface = () => {
 
   useEffect(() => {
     setShowConnectingOverlay(true);
+    setOtherPartyCameraOn(false); // Reset camera state when call setup begins
     let isMounted = true;
     const setupInstanceId = instanceId;
     console.log(`[CallInterface ${setupInstanceId}] Setup useEffect running. isInCall: ${isInCall}, otherPartyId: ${otherPartyId}, userId: ${currentUser?.id}`);
@@ -356,6 +358,21 @@ const CallInterface = () => {
     }
   }, [chatMessages]);
 
+  useEffect(() => {
+    let cameraTimer = null;
+    if (isInCall && !showConnectingOverlay && !otherPartyCameraOn) {
+      cameraTimer = setTimeout(() => {
+        setOtherPartyCameraOn(true);
+      }, 6000); // Increased to 6 seconds (after connecting overlay disappears)
+    }
+
+    return () => {
+      if (cameraTimer) {
+        clearTimeout(cameraTimer);
+      }
+    };
+  }, [isInCall, showConnectingOverlay, otherPartyCameraOn]);
+
   const handleEndCall = () => {
     console.log("handleEndCall: User clicked end call button.");
     if (otherPartyId) {
@@ -436,17 +453,65 @@ const CallInterface = () => {
   const renderCallContent = () => (
     <>
       <div className="flex-1 flex relative bg-apple-gray-900">
-        <video
-          ref={remoteVideoRef}
-          className="w-full h-full object-contain"
-          autoPlay
-          playsInline
-        />
+        {/* Main video area - only show when camera is on */}
+        {otherPartyCameraOn && (
+          <video
+            ref={remoteVideoRef}
+            className="w-full h-full object-contain"
+            autoPlay
+            playsInline
+          />
+        )}
 
-        {!isVideoEnabled && !isScreenSharing && (
+        {/* Display a different status message based on the current state */}
+        <div className="absolute top-4 left-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-lg flex items-center text-xs sm:text-sm shadow">
+          {showConnectingOverlay ? (
+            <>Connecting to {otherPartyName}...</>
+          ) : otherPartyCameraOn ? (
+            <>Call in progress with {otherPartyName}</>
+          ) : (
+            <>Connected with {otherPartyName} (camera off)</>
+          )}
+          <button
+            onClick={triggerLeaveToast}
+            className="ml-2 text-xs bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
+            title="Simulate other party leaving"
+          >
+            Sim Leave
+          </button>
+          {/* Debug button to toggle camera */}
+          <button
+            onClick={() => setOtherPartyCameraOn(prev => !prev)}
+            className="ml-2 text-xs bg-blue-500 hover:bg-blue-600 text-white font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
+            title="Toggle camera state"
+          >
+            Toggle Cam
+          </button>
+        </div>
+
+        {/* Camera ON notification */}
+        {otherPartyCameraOn && !showConnectingOverlay && (
+          <div className="absolute bottom-8 left-0 right-0 text-center">
+            <p className="text-lg sm:text-xl text-white bg-black bg-opacity-50 py-2 px-4 inline-block rounded-lg">
+              {otherPartyName}'s camera is off
+            </p>
+          </div>
+        )}
+
+        {/* Camera off placeholder with image - show when camera is off and we're connected */}
+        {!otherPartyCameraOn && !showConnectingOverlay && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-apple-gray-800 text-white p-4">
-            <FontAwesomeIcon icon={faUserCircle} className="text-apple-gray-500 text-6xl sm:text-8xl mb-2 sm:mb-4" />
-            <p className="text-lg sm:text-xl text-center">{otherPartyName}'s video is off</p>
+            <img
+              src="https://printler.com/media/photo/176171-1.jpg"
+              alt="Call placeholder"
+              className="w-full h-full object-cover"
+              style={{ objectPosition: 'center top' }}
+            />
+            <div className="absolute bottom-8 left-0 right-0 text-center">
+              <p className="text-lg sm:text-xl text-white bg-black bg-opacity-50 py-2 px-4 inline-block rounded-lg">
+                {otherPartyName}'s camera is on
+              </p>
+            </div>
           </div>
         )}
 
@@ -461,17 +526,6 @@ const CallInterface = () => {
             {otherPartyName} has left the call
           </div>
         )}
-
-        <div className="absolute top-4 left-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-lg flex items-center text-xs sm:text-sm shadow">
-          {isCallConnected ? 'Connected' : 'Connecting'} with {otherPartyName}
-          <button
-            onClick={triggerLeaveToast}
-            className="ml-2 text-xs bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
-            title="Simulate other party leaving"
-          >
-            Sim Leave
-          </button>
-        </div>
 
         <div className="absolute right-4 bottom-24 w-1/4 sm:w-1/5 max-w-[150px] sm:max-w-xs aspect-video bg-apple-gray-700 border border-apple-gray-500 overflow-hidden rounded-md sm:rounded-lg shadow-lg flex items-center justify-center">
           {isVideoEnabled ? (
