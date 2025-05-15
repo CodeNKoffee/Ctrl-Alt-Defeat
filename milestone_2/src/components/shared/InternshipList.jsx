@@ -137,7 +137,7 @@ export default function InternshipList({
               <p className="text-metallica-blue-700 font-medium">Why These Opportunities Matter:</p>
             <li>Potential for academic credit and professional references</li>
             <li> Networking connections that could lead to full-time employment</li>
-            <li>Portfolio-building projects to showcase your skillsr</li>
+            <li>Portfolio-building projects to showcase your skills</li>
             </ul> 
           <p className="text-metallica-blue-700 font-medium">
             Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience and ensure it contributes meaningfully to your academic requirements.
