@@ -67,7 +67,7 @@ const sidebarConfig = {
   ],
   faculty: [
     { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },
-    { id: 'student-evals', iconId: 'my-evaluations', label: 'Student Evaluations', path: '/dashboard/faculty/student-evals', isPage: false },
+    { id: 'student-evals', iconId: 'my-evaluations', label: 'Evaluations', path: '/dashboard/faculty/student-evals', isPage: false },
     { id: 'statistics', iconId: 'reports', label: 'Statistics', path: '/dashboard/faculty/statistics', isPage: false },
   ],
   company: [

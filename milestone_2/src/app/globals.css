@@ -771,9 +771,9 @@ button:hover {
 }
 
 .companyrow-root.selected, .companyrow-root:hover {
-  background: linear-gradient(to right,  #e7e8ec, #f3f4f6, #e7e8ec);
-  box-shadow: 0 2px 8px 0 rgba(16,30,54,0.08);
-  border: 2px solid var(--metallica-blue-200);
+  background: linear-gradient(90deg, var(--metallica-blue-100) 0%, var(--metallica-blue-200) 100%);
+  box-shadow: 0 2px 8px 0 rgba(49,143,168,0.08);
+  border: 2px solid var(--metallica-blue-400);
 }
 
 .companyrow-root:active {

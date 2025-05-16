@@ -60,10 +60,6 @@ export default function WorkshopManager() {
       <div className="w-full max-w-7xl mx-auto">
         {/* Title and Add Workshop Button */}
         <div className="flex flex-wrap justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
-            MANAGE WORKSHOPS
-            <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-          </h1>
           <button
             onClick={handleCreateWorkshop}
             className="mt-4 sm:mt-0 bg-[#2a5f74] hover:bg-[#1a3f54] text-white px-4 py-2 rounded-lg shadow-md flex items-center transition-colors duration-300"
