@@ -120,7 +120,7 @@ export default function ReportsPage() {
 
                       className="inline-flex items-center justify-center w-32 min-w-[8rem] px-0 py-2 rounded-full font-medium shadow-sm bg-metallica-blue-500 text-metallica-blue-100 border border-metallica-blue-200 hover:bg-metallica-blue-900 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
                     >
-                      Close
+                      CTEMOlose
                     </button>
                   </div>
                   {reviewSubmitted && (

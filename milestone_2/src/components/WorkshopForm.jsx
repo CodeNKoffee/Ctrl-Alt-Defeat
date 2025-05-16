@@ -22,10 +22,20 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
     maxAttendees: 25,
   };
 
-  const [formData, setFormData] = useState({
-    ...defaultWorkshop,
-    ...(workshop || {}),
-    agenda: (workshop && workshop.agenda) || []
+  const [formData, setFormData] = useState(() => {
+    if (workshop) { // Edit mode with a workshop provided
+      return {
+        ...defaultWorkshop, // Start with all default fields
+        ...workshop,        // Override with properties from the workshop prop
+        startDate: workshop.startDate ? new Date(workshop.startDate) : defaultWorkshop.startDate, // Ensure startDate is a Date
+        endDate: workshop.endDate ? new Date(workshop.endDate) : defaultWorkshop.endDate,       // Ensure endDate is a Date
+        agenda: workshop.agenda || [] // Ensure agenda is an array
+      };
+    }
+    // Create mode or workshop is initially null/undefined
+    return {
+      ...defaultWorkshop, // Use all defaults (dates are Date objects, agenda is [])
+    };
   });
   const [agendaItem, setAgendaItem] = useState('');
   const [previewVisible, setPreviewVisible] = useState(true);
@@ -33,10 +43,18 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
 
   // Reset form when workshop changes (for edit mode)
   useEffect(() => {
-    if (workshop) {
+    if (workshop) { // Workshop prop is present (edit mode or switched to an existing workshop)
       setFormData({
-        ...workshop,
-        agenda: workshop.agenda || []
+        ...defaultWorkshop, // Start with all default fields
+        ...workshop,        // Override with properties from the workshop prop
+        startDate: workshop.startDate ? new Date(workshop.startDate) : defaultWorkshop.startDate, // Ensure startDate is a Date
+        endDate: workshop.endDate ? new Date(workshop.endDate) : defaultWorkshop.endDate,       // Ensure endDate is a Date
+        agenda: workshop.agenda || [] // Ensure agenda is an array
+      });
+    } else { // Workshop prop is null/undefined (create mode or workshop cleared)
+      setFormData({
+        ...defaultWorkshop,
+        // agenda is already correctly [] in defaultWorkshop
       });
     }
   }, [workshop]);
