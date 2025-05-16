@@ -535,10 +535,10 @@ function WorkshopsView({ sidebarExpanded }) {
   );
 }
 
-function OnlineAssessmentsView() {
+function OnlineAssessmentsView({ sidebarExpanded }) {
   return (
-    <div className="w-full px-6 py-4">
-      <AssessmentList />
+    <div className="w-full h-full px-6 py-4">
+      <AssessmentList sidebarExpanded={sidebarExpanded} />
     </div>
   );
 }
@@ -886,7 +886,9 @@ export default function StudentDashboardPage() {
           {CurrentViewComponent &&
             (currentView === 'workshops' ?
               <WorkshopsView sidebarExpanded={sidebarExpanded} /> :
-              <CurrentViewComponent {...viewProps} />
+              currentView === 'online-assessments' ?
+                <OnlineAssessmentsView sidebarExpanded={sidebarExpanded} /> :
+                <CurrentViewComponent {...viewProps} />
             )
           }
         </>
