@@ -139,7 +139,7 @@ export default function WorkshopSidebar({ workshop, onClose }) {
           <div className="sticky bottom-0 bg-white py-4 px-6 border-t border-gray-100">
             <button 
               onClick={handleRegister}
-              className="w-full bg-[#3298BA] text-white py-2 px-4 rounded-md
+              className="w-full bg-[#3298BA] text-white py-2 px-4 rounded-full
                       hover:bg-[#267a8c] transition-colors duration-200"
               disabled={registrationFeedback === 'success'}
             >

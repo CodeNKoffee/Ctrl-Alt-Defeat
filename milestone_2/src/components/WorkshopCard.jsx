@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
-export default function WorkshopCard({ workshop, onClick }) {
+export default function WorkshopCard({ workshop, onClick, className = "" }) {
   // Format date for display
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString); // Ensure dateString is parsed correctly
@@ -18,7 +18,7 @@ export default function WorkshopCard({ workshop, onClick }) {
   return (
     <div
       onClick={() => onClick(workshop)}
-      className="bg-white border-2 border-[#B8E1E9] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden transform hover:scale-[1.02] hover:border-[#5DB2C7] flex flex-col h-full"
+      className={`bg-white border-2 border-[#B8E1E9] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden transform hover:scale-[1.02] hover:border-[#5DB2C7] flex flex-col h-full ${className}`}
     >
       {/* Workshop Image */}
       <div className="relative h-48">

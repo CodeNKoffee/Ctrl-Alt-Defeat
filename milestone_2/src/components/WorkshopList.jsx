@@ -50,12 +50,13 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
       <div className="relative">
         {/* Workshop grid - will adjust width when sidebar is open */}
         <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? "pr-0 lg:pr-[33%]" : "pr-0"}`}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
             {workshops.map((ws) => (
               <WorkshopCard
                 key={ws.id}
                 workshop={ws}
                 onClick={handleWorkshopClick}
+                className={selectedWorkshop ? "w-full transition-all duration-300 transform scale-[0.85] m-1" : "w-full"}
               />
             ))}
           </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CSEN_Courses, DMET_Courses, BioTech_Courses, Law_Courses } from "../../constants/mockData";
 
-export default function ReportCreationDashboard({ onAddTile, onCancel, initialReport, hideTitle = false, showSaveDraftButton = true }) {
+export default function ReportCreationDashboard({ onAddTile, onCancel, initialReport, hideTitle = false, showSaveDraftButton = true, isEditMode = false }) {
   const [filledReport, setReport] = useState({
     internshipTitle: '',
     introduction: '',
@@ -9,19 +9,22 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
     conclusion: '',
     courses: [],
     major: '',
+    company: '',
   });
   const [courses, setCourses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
+  const [draftStatus, setDraftStatus] = useState("");
 
   useEffect(() => {
     if (initialReport) {
       setReport({
-        internshipTitle: initialReport.internshipTitle || '',
+        internshipTitle: initialReport.internshipTitle || initialReport.title || '',
         introduction: initialReport.introduction || '',
         body: initialReport.body || '',
         conclusion: initialReport.conclusion || '',
         courses: initialReport.courses || [],
         major: initialReport.major || '',
+        company: initialReport.company || '',
       });
       setSelectedCourses(initialReport.courses || []);
       if (initialReport.major === 'CSEN') setCourses(CSEN_Courses);
@@ -42,6 +45,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
     else if (major === 'Law') setCourses(Law_Courses);
     else setCourses([]);
   };
+
   const handleCourseSelect = (e) => {
     const selectedCourse = e.target.value;
     if (selectedCourse && !selectedCourses.includes(selectedCourse)) {
@@ -50,14 +54,17 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
     }
     e.target.value = "";
   };
+
   const handleCourseRemove = (course) => {
     setSelectedCourses((prev) => prev.filter((c) => c !== course));
     setCourses((prev) => [...prev, course]);
   };
+
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setReport((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleModalSubmit = (e) => {
     e.preventDefault();
     onAddTile({ ...filledReport, courses: selectedCourses });
@@ -68,74 +75,249 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
   };
 
   return (
-    <div className="relative bg-white rounded-xl shadow-lg max-w-lg w-full p-8 border border-gray-200">
-      <button
-        className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl font-bold focus:outline-none"
-        onClick={onCancel}
-        aria-label="Close"
-        type="button"
-      >
-        &times;
-      </button>
-      <h2 className="text-2xl font-bold text-metallica-blue-800 mb-4 text-center">
-        {initialReport && initialReport.status === 'draft' ? 'Edit Draft Report' : 'Create Internship Report'}
-      </h2>
-      <form className="space-y-4" onSubmit={handleModalSubmit}>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-          <input required name="internshipTitle" value={filledReport.internshipTitle} onChange={handleFormChange} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Select your major</label>
-          <select required value={filledReport.major} onChange={handleMajorChange} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2">
-            <option value="" disabled>Select your major</option>
-            <option value="CSEN">CSEN</option>
-            <option value="DMET">DMET</option>
-            <option value="BioTechnology">Biotechnology</option>
-            <option value="Law">Law</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Add courses that helped you during your internship</label>
-          <select onChange={handleCourseSelect} className="mt-1 block w-full rounded-full border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2">
-            <option value="" disabled>Select a course</option>
-            {courses.map((course, index) => (
-              <option key={index} value={course}>{course}</option>
-            ))}
-          </select>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {selectedCourses.map((course, index) => (
-              <span key={index} className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium border border-green-200 cursor-pointer" onClick={() => handleCourseRemove(course)}>{course}</span>
-            ))}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(21,43,55,0.55)] backdrop-blur-sm overflow-auto py-8">
+      <div className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-6xl max-h-[90vh] overflow-hidden border-2 border-[#2A5F74] animate-fade-in relative">
+        {/* Close button styled like CallModal.jsx */}
+        <button
+          className="absolute top-3 right-3 z-20 flex items-center justify-center w-7 h-7 rounded-full shadow-sm bg-gray-200/70 hover:bg-gray-300/90 transition-colors"
+          onClick={onCancel}
+          aria-label="Close modal"
+        >
+          <span className="text-xl text-gray-500 font-normal">&times;</span>
+        </button>
+
+        <div className="flex flex-col lg:flex-row h-[calc(90vh)]">
+          {/* Left side - Form */}
+          <div className="lg:w-1/2 p-6 overflow-y-auto bg-[#F0F9FB]">
+            <h2 className="text-xl font-bold text-[#2A5F74] mb-6 text-left flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
+              {isEditMode ? "Edit Internship Report" : "Create Internship Report"}
+            </h2>
+
+            <form className="space-y-4" onSubmit={handleModalSubmit}>
+              <div>
+                <label className="block text-sm font-medium text-[#2A5F74] mb-1">Report Title</label>
+                <input
+                  required
+                  name="internshipTitle"
+                  value={filledReport.internshipTitle}
+                  onChange={handleFormChange}
+                  placeholder="Enter a descriptive title for your report"
+                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 transition-all duration-300 hover:shadow-md"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[#2A5F74] mb-1">Company/Organization Name</label>
+                <input
+                  name="company"
+                  value={filledReport.company}
+                  onChange={handleFormChange}
+                  placeholder="Where did you complete your internship?"
+                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 transition-all duration-300 hover:shadow-md"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[#2A5F74] mb-1">Select your major</label>
+                <select
+                  required
+                  value={filledReport.major}
+                  onChange={handleMajorChange}
+                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 transition-all duration-300 hover:shadow-md"
+                >
+                  <option value="" disabled>Select your major</option>
+                  <option value="CSEN">CSEN</option>
+                  <option value="DMET">DMET</option>
+                  <option value="BioTechnology">Biotechnology</option>
+                  <option value="Law">Law</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[#2A5F74] mb-1">Add courses that helped you during your internship</label>
+                <select
+                  onChange={handleCourseSelect}
+                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 transition-all duration-300 hover:shadow-md"
+                >
+                  <option value="" disabled>Select a course</option>
+                  {courses.map((course, index) => (
+                    <option key={index} value={course}>{course}</option>
+                  ))}
+                </select>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {selectedCourses.map((course, index) => (
+                    <span
+                      key={index}
+                      className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium border border-green-200 cursor-pointer hover:bg-green-200 transition-colors duration-300 flex items-center"
+                      onClick={() => handleCourseRemove(course)}
+                    >
+                      {course}
+                      <span className="ml-1 text-sm">&times;</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 p-4 bg-[#D9F0F4] rounded-lg border-2 border-[#86CBDA] text-xs">
+                <p className="text-[#2A5F74] font-medium mb-2 text-center">Report Structure Guidelines</p>
+                <div className="text-[#2A5F74] space-y-1">
+                  <p>• Introduction: Describe the company and your initial expectations</p>
+                  <p>• Body: Detail your responsibilities, projects, and key learning experiences</p>
+                  <p>• Conclusion: Summarize your experience and what you gained from it</p>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#2A5F74] mb-1">Introduction</label>
+                <textarea
+                  required
+                  name="introduction"
+                  value={filledReport.introduction}
+                  onChange={handleFormChange}
+                  placeholder="Introduce the company and your role..."
+                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 resize-y transition-all duration-300 hover:shadow-md"
+                  rows="3"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[#2A5F74] mb-1">Body</label>
+                <textarea
+                  required
+                  name="body"
+                  value={filledReport.body}
+                  onChange={handleFormChange}
+                  placeholder="Detail your responsibilities and experiences..."
+                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 resize-y transition-all duration-300 hover:shadow-md"
+                  rows="3"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[#2A5F74] mb-1">Conclusion</label>
+                <textarea
+                  required
+                  name="conclusion"
+                  value={filledReport.conclusion}
+                  onChange={handleFormChange}
+                  placeholder="Summarize what you learned and gained..."
+                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 resize-y transition-all duration-300 hover:shadow-md"
+                  rows="3"
+                />
+              </div>
+              <div className="flex gap-2 mt-6">
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-3 mt-4 text-white bg-[#318FA8] rounded-full font-semibold hover:bg-[#2a5c67] transition-all text-sm border border-[#5DB2C7] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                >
+                  {isEditMode ? "Submit" : "Submit Report"}
+                </button>
+                {showSaveDraftButton && (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      setDraftStatus('saving');
+                      await new Promise(res => setTimeout(res, 800));
+                      onAddTile({ ...filledReport, courses: selectedCourses, status: 'draft' });
+                      setDraftStatus('saved');
+                      setTimeout(() => {
+                        setDraftStatus("");
+                        if (onCancel) onCancel();
+                      }, 1500);
+                    }}
+                    className={`flex-1 px-4 py-3 mt-4 rounded-full font-semibold text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all ${draftStatus === 'saved'
+                      ? 'bg-green-100 text-green-800 border border-green-500'
+                      : 'text-[#318FA8] bg-metallica-blue-100 border border-[#5DB2C7] hover:bg-metallica-blue-300 hover:text-metallica-blue-50'
+                      }`}
+                    disabled={draftStatus === 'saving' || draftStatus === 'saved'}
+                  >
+                    {draftStatus === 'saving' ? 'Saving...' : draftStatus === 'saved' ? '✓ Saved!' : (isEditMode ? 'Save Changes' : 'Save Draft')}
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
+
+          {/* Right side - Preview */}
+          <div className="lg:w-1/2 p-6 overflow-y-auto bg-white">
+            <h2 className="text-xl font-bold text-[#2A5F74] mb-6 text-left flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+              </svg>
+              Report Preview
+            </h2>
+
+            <div className="bg-white rounded-2xl shadow-md p-6 border border-[#D9F0F4] hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-[#F0F9FB] rounded-t-xl p-4 -m-6 mb-6 border-b border-[#D9F0F4]">
+                <h3 className="text-xl font-bold text-[#2A5F74] text-center">
+                  {filledReport.internshipTitle || "Your Report Title"}
+                </h3>
+
+                <div className="mt-2 flex justify-center">
+                  <span className="bg-[#318FA8] text-white text-xs px-3 py-1 rounded-full">
+                    {filledReport.company || "Company Name"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mb-6 border-b border-[#E2F4F7] pb-4">
+                <div className="bg-[#F8FAFB] rounded-lg p-3 border border-[#D9F0F4]">
+                  <h4 className="font-medium mb-1 text-[#2A5F74] text-sm">Major</h4>
+                  <p className="text-[#4C798B] font-medium">
+                    {filledReport.major || "Not specified"}
+                  </p>
+                </div>
+                <div className="bg-[#F8FAFB] rounded-lg p-3 border border-[#D9F0F4]">
+                  <h4 className="font-medium mb-1 text-[#2A5F74] text-sm">Submitted By</h4>
+                  <p className="text-[#4C798B] font-medium">
+                    Student Name
+                  </p>
+                </div>
+              </div>
+
+              {selectedCourses.length > 0 && (
+                <div className="mb-6 border-b border-[#E2F4F7] pb-4">
+                  <h4 className="font-medium mb-2 text-[#2A5F74]">Relevant Courses</h4>
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {selectedCourses.map((course, index) => (
+                      <span key={index} className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium border border-green-200">{course}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="mb-6 border-b border-[#E2F4F7] pb-4">
+                <h4 className="font-medium mb-2 text-[#2A5F74] flex items-center">
+                  <span className="inline-block w-2 h-2 bg-[#318FA8] rounded-full mr-2"></span>
+                  Introduction
+                </h4>
+                <div className="bg-[#F8FAFB] rounded-lg p-3 border border-[#D9F0F4]">
+                  <p className="text-[#4C798B]">{filledReport.introduction || "Not provided"}</p>
+                </div>
+              </div>
+
+              <div className="mb-6 border-b border-[#E2F4F7] pb-4">
+                <h4 className="font-medium mb-2 text-[#2A5F74] flex items-center">
+                  <span className="inline-block w-2 h-2 bg-[#318FA8] rounded-full mr-2"></span>
+                  Body
+                </h4>
+                <div className="bg-[#F8FAFB] rounded-lg p-3 border border-[#D9F0F4]">
+                  <p className="text-[#4C798B]">{filledReport.body || "Not provided"}</p>
+                </div>
+              </div>
+
+              <div className="mb-2">
+                <h4 className="font-medium mb-2 text-[#2A5F74] flex items-center">
+                  <span className="inline-block w-2 h-2 bg-[#318FA8] rounded-full mr-2"></span>
+                  Conclusion
+                </h4>
+                <div className="bg-[#F8FAFB] rounded-lg p-3 border border-[#D9F0F4]">
+                  <p className="text-[#4C798B]">{filledReport.conclusion || "Not provided"}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Introduction</label>
-          <textarea required name="introduction" value={filledReport.introduction} onChange={handleFormChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Body</label>
-          <textarea required name="body" value={filledReport.body} onChange={handleFormChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Conclusion</label>
-          <textarea required name="conclusion" value={filledReport.conclusion} onChange={handleFormChange} className="mt-1 block w-full rounded-2xl border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 resize-y" rows="3" />
-        </div>
-        <div className="flex gap-2 mt-6">
-          <button type="submit" className="w-full inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            {initialReport && initialReport.status === 'draft' ? 'Save Changes' : 'Submit Report'}
-          </button>
-          {showSaveDraftButton && (
-            <button
-              type="button"
-              onClick={() => { onAddTile({ ...filledReport, courses: selectedCourses, status: 'draft' }); if (onCancel) onCancel(); }}
-              className="w-full inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-full text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              {initialReport && initialReport.status === 'draft' ? 'Save Draft' : 'Save Draft'}
-            </button>
-          )}
-        </div>
-      </form>
+      </div>
     </div>
   );
 }
