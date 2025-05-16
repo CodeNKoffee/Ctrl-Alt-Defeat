@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
@@ -20,6 +20,11 @@ export default function DashboardLayout({
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const router = useRouter();
   const [sidebarExpanded, setSidebarExpanded] = useState(true);
+  const [showCycleModal, setShowCycleModal] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [cycleType, setCycleType] = useState('Winter');
+  const [cycleYear, setCycleYear] = useState(new Date().getFullYear());
+  const [formOpen, setFormOpen] = useState(false);
 
   const handleSidebarToggle = (isExpanded) => {
     setSidebarExpanded(isExpanded);
@@ -81,6 +86,12 @@ export default function DashboardLayout({
   const showCallButton = userData &&
     (userData.role === 'scad' || (userData.role === 'student' && userData.accountType === 'PRO'));
 
+  // Format cycle string
+  const getCycleString = () => {
+    const shortYear = String(cycleYear).slice(-2);
+    return `${cycleType}'${shortYear}`;
+  };
+
   return (
     <div className="flex h-screen bg-gradient-to-b from-metallica-blue-50 to-white">
       {showSidebar && (
@@ -101,6 +112,64 @@ export default function DashboardLayout({
             </h1>
 
             <div className="flex flex-row items-center gap-4">
+              {/* SCAD internship cycle */}
+              {userData?.role === 'scad' && (
+                <div
+                  className="relative"
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => { setHovered(false); if (!formOpen) setShowCycleModal(false); }}
+                >
+                  <button
+                    className={`rounded-full bg-[#3298BA] text-white px-4 py-2 font-semibold shadow transition-all duration-300 ${hovered || formOpen ? 'w-56' : 'w-12'} overflow-hidden flex items-center justify-center`}
+                    onClick={() => { setFormOpen(!formOpen); setShowCycleModal(true); }}
+                    style={{ minWidth: hovered || formOpen ? 180 : 48 }}
+                  >
+                    <span className={`transition-all duration-300 ${hovered || formOpen ? 'opacity-100 ml-2' : 'opacity-0 ml-0'} whitespace-nowrap`}>
+                      Set Internship Cycle
+                    </span>
+                    <span className="ml-2">{!formOpen && <svg width="18" height="18" fill="none"><circle cx="9" cy="9" r="8" stroke="white" strokeWidth="2" /></svg>}</span>
+                  </button>
+                  {/* Modal/Form */}
+                  {(hovered || formOpen) && showCycleModal && (
+                    <div className={`absolute top-12 left-0 bg-white rounded-xl shadow-lg p-4 z-50 w-64 transition-all duration-300 ${formOpen ? 'block' : 'hidden'}`}>
+                      <div className="mb-2 font-semibold text-[#2a5f74]">Set Internship Cycle</div>
+                      <form
+                        onSubmit={e => { e.preventDefault(); setFormOpen(false); setShowCycleModal(false); }}
+                        className="flex flex-col gap-2"
+                      >
+                        <label className="text-sm font-medium">Cycle</label>
+                        <select
+                          value={cycleType}
+                          onChange={e => setCycleType(e.target.value)}
+                          className="rounded px-2 py-1 border"
+                        >
+                          <option value="Winter">Winter</option>
+                          <option value="Summer">Summer</option>
+                        </select>
+                        <label className="text-sm font-medium">Year</label>
+                        <input
+                          type="number"
+                          min={2020}
+                          max={2100}
+                          value={cycleYear}
+                          onChange={e => setCycleYear(e.target.value)}
+                          className="rounded px-2 py-1 border"
+                        />
+                        <div className="mt-2 text-sm text-gray-700">
+                          <span className="font-semibold">Cycle: </span>
+                          <span className="text-[#3298BA]">{getCycleString()}</span>
+                        </div>
+                        <button
+                          type="submit"
+                          className="mt-2 bg-[#3298BA] text-white rounded-full px-4 py-2 font-semibold hover:bg-[#267a8c] transition"
+                        >
+                          Save
+                        </button>
+                      </form>
+                    </div>
+                  )}
+                </div>
+              )}
               {/* Call button prominently displayed for eligible users */}
               {showCallButton && (
                 <div className="flex items-center">
