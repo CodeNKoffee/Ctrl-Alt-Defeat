@@ -90,7 +90,7 @@ topCourses: [
   };
 
   return (
-    <div className="p-0 min-h-screen">
+    <div className="py-4 min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center mb-6 px-4">
         <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
@@ -100,9 +100,9 @@ topCourses: [
       <PDFDownloadLink
         document={<ReportPDF data={dashboardData} dateRange={dateRange} />}
         fileName={`stats_report_${dateRange.start.toDateString()}_to_${dateRange.end.toDateString()}.pdf`}
-        className="border border-[#2A5F74] text-[#2A5F74] px-3 py-2 rounded-full flex items-center gap-1 hover:bg-[#2A5F74] hover:text-white transition-colors text-sm font-medium"
+        className="text-white bg-[#2A5F74] px-4 py-3 rounded-full flex items-center gap-2 hover:cursor-pointer transition-colors text-sm font-bold"
       >
-        <FiDownload size={16} />
+        <FiDownload size={16} className="font-bold" />
         Generate Report
       </PDFDownloadLink>
       </div>

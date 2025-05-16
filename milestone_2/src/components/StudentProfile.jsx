@@ -8,10 +8,10 @@ import './styles/StudentProfile.css'; // Importing CSS for styling
 export default function Student() {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  
+
   // Default student data
   const defaultStudentData = {
-    name: "Salma Soliman",
+    name: "Salma Tarek Soliman",
     email: "SalmaSoliman@student.guc.edu.eg",
     bio: "Computer Science student passionate about web development and AI.",
     major: "Computer Science and Engineering",
@@ -38,7 +38,7 @@ export default function Student() {
         faculty: "Media Engineering and Technology (MET)",
         semester: 6
       }
-    ], 
+    ],
     skills: ["Java", "Python", "React", "Node.js", "UI/UX Design", "Problem Solving", "Team Leadership"],
     jobInterests: [
       {
@@ -97,17 +97,17 @@ export default function Student() {
       }
     ],
     theme: {
-      primary: "#318FA8", 
+      primary: "#318FA8",
       secondary: "#256980",
       accent: "#41B9D9",
       text: "#1A4857",
       background: "#E8F4F8"
     }
   };
-  
+
   // Load student data from localStorage on component mount
   const [studentData, setStudentData] = useState(defaultStudentData);
-  
+
   useEffect(() => {
     const loadStudentData = () => {
       try {
@@ -119,7 +119,7 @@ export default function Student() {
         console.error("Error loading student data from localStorage:", error);
       }
     };
-    
+
     loadStudentData();
   }, []);
 
@@ -138,44 +138,40 @@ export default function Student() {
   // Function to update student data from edit form
   const handleProfileUpdate = (updatedData) => {
     setStudentData(updatedData);
-    
+
     // Save the updated data to localStorage
     try {
       localStorage.setItem('studentProfileData', JSON.stringify(updatedData));
     } catch (error) {
       console.error("Error saving student data to localStorage:", error);
     }
-    
+
     closeEditModal();
-    
+
     // In a real application, you would send the data to your backend here
     console.log("Updated profile data:", updatedData);
   };
 
   return (
-    <div className="container-fluid overflow-x-hidden"> {/* Added overflow-x-hidden to prevent horizontal scrolling using Tailwind CSS */}
-      <div className="row">
-        <div className="main">
-          <div className="student-profile">
-            <StudentCard 
-              isOpen={isDetailsOpen} 
-              toggleDetails={toggleDetails}
-              onEditProfile={openEditModal}
-              studentData={studentData}
-            />
-            <StudentDetails 
-              isOpen={isDetailsOpen}
-              studentData={studentData}
-            />
-            <UpdateProfileS 
-              isOpen={isEditModalOpen}
-              onClose={closeEditModal}
-              studentData={studentData}
-              onProfileUpdate={handleProfileUpdate}
-            />
-          </div>
-        </div>
+    <div className="w-full h-full relative profile-container">
+      <div className={`student-profile-wrapper ${isDetailsOpen ? 'expanded' : ''}`}>
+        <StudentCard
+          isOpen={isDetailsOpen}
+          toggleDetails={toggleDetails}
+          onEditProfile={openEditModal}
+          studentData={studentData}
+        />
+        <StudentDetails
+          isOpen={isDetailsOpen}
+          studentData={studentData}
+        />
       </div>
+      <UpdateProfileS
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        studentData={studentData}
+        onProfileUpdate={handleProfileUpdate}
+      />
     </div>
   );
 }

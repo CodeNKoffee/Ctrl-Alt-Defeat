@@ -105,18 +105,20 @@ export default function CompanyDetails({
           </div>
           <CompanySizeCard size={size} />
           <CompanyDocumentsCard documents={docs} />
-          <div className="companydetails-action-row">
+          <div className="w-full flex gap-4 justify-center mt-6">
             <CustomButton
               variant="primary"
               onClick={handleAccept}
               icon={faCheck}
               text="Accept"
+              className="w-1/2"
             />
             <CustomButton
               variant="danger"
               onClick={handleReject}
               icon={faTimes}
               text="Reject"
+              className="w-1/2"
             />
           </div>
         </>

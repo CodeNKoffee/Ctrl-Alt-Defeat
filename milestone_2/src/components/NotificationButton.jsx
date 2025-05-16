@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCheckCircle, faUsers } from '@fortawesome/free-solid-svg-icons';
 import NotificationsList from './NotificationsList';
+import { useSelector } from 'react-redux';
 
 export default function NotificationButton() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -9,6 +10,10 @@ export default function NotificationButton() {
   const panelRef = useRef(null);
   const buttonRef = useRef(null);
   const animationTimerRef = useRef(null);
+
+  // Get user type from Redux store if available
+  const { currentUser } = useSelector(state => state.auth || {});
+  const isCompany = currentUser?.userType === 'company';
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -39,6 +44,32 @@ export default function NotificationButton() {
       clearInterval(animationTimerRef.current);
     };
   }, []);
+
+  // Add company-specific notifications
+  useEffect(() => {
+    if (isCompany) {
+      // Custom notifications for companies
+      const event = new CustomEvent('addNotification', {
+        detail: [
+          {
+            id: 'company-accepted',
+            icon: faCheckCircle,
+            title: 'Your company has been accepted on the system',
+            time: '3 days ago',
+            isUnread: true
+          },
+          {
+            id: 'applications-backend',
+            icon: faUsers,
+            title: '67 applications have been received for the Backend Developer Intern role',
+            time: '1 day ago',
+            isUnread: true
+          }
+        ]
+      });
+      document.dispatchEvent(event);
+    }
+  }, [isCompany]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {

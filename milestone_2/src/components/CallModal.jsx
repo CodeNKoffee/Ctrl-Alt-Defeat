@@ -186,7 +186,7 @@ const CallModal = ({ isOpen, onClose }) => {
   // --- Appointment Handlers ---
   const handleOpenScheduler = (targetUserId) => {
     setSchedulingForUserId(targetUserId);
-    setPendingDateTime(new Date()); // Default to now, or fetch availability later
+    setPendingDateTime(null); // Don't default to now, let user select explicitly
   };
 
   const handleCancelScheduling = () => {
@@ -328,8 +328,8 @@ const CallModal = ({ isOpen, onClose }) => {
 
                 {/* Header Tab */}
                 <div className="relative z-10">
-                  <div className="inline-block bg-metallica-blue-600 text-white px-6 py-3 rounded-tl-2xl rounded-br-xl shadow-md">
-                    <h3 className="text-xl font-young-serif font-medium">Video Calls & Appointments</h3>
+                  <div className="inline-block text-metallica-blue-700 px-6 py-3 rounded-tl-2xl rounded-br-xl">
+                    <h3 className="text-xl font-bold pt-2">Video Calls & Appointments</h3>
                   </div>
                 </div>
 
@@ -437,13 +437,17 @@ const CallModal = ({ isOpen, onClose }) => {
                                     className="pt-3 border-t border-gray-200"
                                   >
                                     <div className="flex flex-col sm:flex-row items-center gap-3">
-                                      <DatePicker
-                                        selectedDate={pendingDateTime}
-                                        onDateChange={setPendingDateTime}
-                                      />
+                                      <div className="flex-1 w-full sm:w-auto">
+                                        <DatePicker
+                                          selectedDate={pendingDateTime}
+                                          onDateChange={setPendingDateTime}
+                                          disabled={false}
+                                          className="px-3 py-1.5 h-9 text-xs"
+                                        />
+                                      </div>
                                       <button
                                         onClick={() => handleConfirmAppointmentRequest(user)}
-                                        className="bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-2 px-4 rounded-full text-sm font-medium flex items-center justify-center shadow-sm transition-colors h-9 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-1.5 px-4 rounded-full text-xs font-medium flex items-center justify-center shadow-sm transition-colors h-9 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                                         disabled={!pendingDateTime}
                                         title="Confirm Appointment Request"
                                       >

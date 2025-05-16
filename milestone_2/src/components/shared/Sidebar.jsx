@@ -19,7 +19,9 @@ import {
   faList,
   faFolder,
   faRightFromBracket,
-  faBell
+  faBell,
+  faVideo,
+  faLock
 } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
@@ -33,6 +35,10 @@ const iconMap = {
   browse: faSearch,
   applied: faClipboardList,
   'my-internships': faBriefcase,
+  'my-reports': faChartBar,
+  'my-evaluations': faClipboardList,
+  workshops: faGraduationCap,
+  'live-workshops': faVideo,
   profile: faUser,
   students: faGraduationCap,
   reports: faChartBar,
@@ -40,7 +46,9 @@ const iconMap = {
   listings: faList,
   applications: faFolder,
   logout: faRightFromBracket,
-  notifications: faBell
+  notifications: faBell,
+  'online-assessments': faChartBar,
+  statistics: faChartBar
 };
 
 // Map of sidebar items for different user types
@@ -50,34 +58,37 @@ const sidebarConfig = {
     { id: 'browse', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/student/browse-internships', isPage: false },
     { id: 'applied', iconId: 'applied', label: 'Applied Internships', path: '/dashboard/student/applied-internships', isPage: false },
     { id: 'my-internships', iconId: 'my-internships', label: 'My Internships', path: '/dashboard/student/my-internships', isPage: false },
+    { id: 'my-reports', iconId: 'my-reports', label: 'My Reports', path: '/dashboard/student/my-reports', isPage: false },
+    { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/student/my-evaluations', isPage: false },
+    { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/student/workshops', isPage: false, requiresPro: true },
     { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/student/notifications', isPage: false },
+    { id: 'online-assessments', iconId: 'online-assessments', label: 'Online Assessments', path: '/dashboard/student/online-assessments', isPage: false, requiresPro: true },
     { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/student/profile', isPage: false },
   ],
   faculty: [
-    { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },
-    { id: 'students', iconId: 'students', label: 'Students', path: '/dashboard/faculty/students', isPage: false },
-    { id: 'reports', iconId: 'reports', label: 'Reports', path: '/dashboard/faculty/reports', isPage: false },
-    { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/faculty/notifications', isPage: false },
-    { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/faculty/profile', isPage: false },
+    { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },
+    { id: 'student-evals', iconId: 'my-evaluations', label: 'Student Evaluations', path: '/dashboard/faculty/student-evals', isPage: false },
+    { id: 'statistics', iconId: 'reports', label: 'Statistics', path: '/dashboard/faculty/statistics', isPage: false },
   ],
   company: [
-    { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/company', isPage: false },
-    { id: 'listings', iconId: 'listings', label: 'Internship Listings', path: '/dashboard/company/listings', isPage: false },
+    { id: 'companyposts', iconId: 'listings', label: 'Company Posts', path: '/dashboard/company/companyposts', isPage: false },
+    { id: 'browse-internships', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/company/browse-internships', isPage: false },
     { id: 'applications', iconId: 'applications', label: 'Applications', path: '/dashboard/company/applications', isPage: false },
-    { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/company/notifications', isPage: false },
-    { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/company/profile', isPage: false },
+    { id: 'current-interns', iconId: 'my-internships', label: 'Current Interns', path: '/dashboard/company/current-interns', isPage: false },
+    { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/company/my-evaluations', isPage: false },
   ],
   scad: [
-    { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/scad', isPage: false },
-    { id: 'companies', iconId: 'companies', label: 'Companies', path: '/dashboard/scad/companies', isPage: false },
-    { id: 'students', iconId: 'students', label: 'Students', path: '/dashboard/scad/students', isPage: false },
+    { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/scad', isPage: false },
+    { id: 'student-list', iconId: 'students', label: 'Student List', path: '/dashboard/scad/student-list', isPage: false },
+    { id: 'browse-internships', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/scad/browse-internships', isPage: false },
+    { id: 'student-evals', iconId: 'my-evaluations', label: 'Student Evaluations', path: '/dashboard/scad/student-evals', isPage: false },
+    { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/scad/statistics', isPage: false },
     { id: 'reports', iconId: 'reports', label: 'Reports', path: '/dashboard/scad/reports', isPage: false },
-    { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/scad/notifications', isPage: false },
-    { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/scad/profile', isPage: false },
+    { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/scad/workshops', isPage: false },
   ],
 };
 
-export default function Sidebar({ userType, onViewChange, currentView, currentUser }) {
+export default function Sidebar({ userType, onViewChange, currentView, currentUser, onToggle }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [prevView, setPrevView] = useState(currentView);
@@ -144,7 +155,11 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
   }, [currentView, prevView]);
 
   const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
+    const newExpandedState = !isExpanded;
+    setIsExpanded(newExpandedState);
+    if (onToggle) {
+      onToggle(newExpandedState);
+    }
   };
 
   // Handle view change with auto-collapse
@@ -168,6 +183,12 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       return currentView === item.id;
     }
     return false;
+  };
+
+  // Check if user has access to a PRO feature
+  const hasProAccess = (item) => {
+    if (!item.requiresPro) return true;
+    return currentUser?.accountType === 'PRO';
   };
 
   // Handle logout
@@ -253,12 +274,14 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
           {localizedItems.map(item => {
             const isActive = getIsActive(item);
             const icon = iconMap[item.iconId] || faHome;
+            const isAccessible = hasProAccess(item);
 
             const commonClasses = "w-full flex items-center p-3 transition-all duration-300 ease-in-out text-sm relative z-10";
             const activeClasses = isExpanded
               ? "text-[#2a5f74] font-medium"
               : "bg-[#f5fbfd] text-[#2a5f74] rounded-lg shadow-sm";
             const inactiveClasses = "text-[#2a5f74] hover:bg-[#f5fbfd]/70 rounded-lg";
+            const disabledClasses = "text-gray-400 cursor-not-allowed";
             const alignmentClass = isExpanded ? "justify-start" : "justify-center";
 
             const itemContent = (
@@ -267,7 +290,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                   <FontAwesomeIcon
                     icon={icon}
                     size="lg"
-                    className={`transition-all duration-300 ease-in-out ${isActive ? 'text-[#2a5f74]' : 'text-[#2a5f74]/70'}`}
+                    className={`transition-all duration-300 ease-in-out ${isActive ? 'text-[#2a5f74]' : isAccessible ? 'text-[#2a5f74]/70' : 'text-gray-400'}`}
                   />
                 </span>
                 <span
@@ -276,32 +299,58 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                 >
                   {item.label}
                 </span>
+
+                {item.requiresPro && !isAccessible && isExpanded && (
+                  <span className="ml-auto">
+                    <FontAwesomeIcon icon={faLock} className="text-gray-400 h-3 w-3" />
+                  </span>
+                )}
               </>
             );
 
             if (item.isPage) {
               return (
                 <li key={item.id}>
-                  <Link
-                    href={item.path}
-                    className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
-                    onClick={() => !isExpanded && setIsExpanded(false)} // Keep expanded if clicking on mobile for views, collapse for pages
-                    ref={el => itemRefs.current[item.id] = el}
-                  >
-                    {itemContent}
-                  </Link>
+                  {isAccessible ? (
+                    <Link
+                      href={item.path}
+                      className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
+                      onClick={() => !isExpanded && setIsExpanded(false)}
+                      ref={el => itemRefs.current[item.id] = el}
+                    >
+                      {itemContent}
+                    </Link>
+                  ) : (
+                    <div
+                      className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
+                      ref={el => itemRefs.current[item.id] = el}
+                      title="PRO feature"
+                    >
+                      {itemContent}
+                    </div>
+                  )}
                 </li>
               );
             } else if (onViewChange) {
               return (
                 <li key={item.id}>
-                  <button
-                    onClick={() => handleViewChange(item.id)} // handleViewChange already collapses sidebar
-                    className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
-                    ref={el => itemRefs.current[item.id] = el}
-                  >
-                    {itemContent}
-                  </button>
+                  {isAccessible ? (
+                    <button
+                      onClick={() => handleViewChange(item.id)}
+                      className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
+                      ref={el => itemRefs.current[item.id] = el}
+                    >
+                      {itemContent}
+                    </button>
+                  ) : (
+                    <div
+                      className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
+                      ref={el => itemRefs.current[item.id] = el}
+                      title="PRO feature"
+                    >
+                      {itemContent}
+                    </div>
+                  )}
                 </li>
               );
             }
@@ -311,9 +360,9 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       </div>
 
       {/* User Profile Section at bottom */}
-      <div className="mt-auto px-3 py-2">
+      <div className="mt-auto px-3 py-2 mb-2">
         {isExpanded ? (
-          <div className="flex items-center bg-[#f5fbfd] rounded-lg p-3 shadow-sm hover:bg-[#f5fbfd]/80 transition-all duration-200 cursor-pointer">
+          <div className="flex items-center bg-[#f5fbfd] rounded-xl p-3 shadow-sm hover:bg-[#f5fbfd]/80 transition-all duration-200 cursor-pointer">
             <div className="flex-shrink-0 mr-3">
               <ProfileIcon
                 src={currentUser?.profileImage}
@@ -357,7 +406,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             onClick={handleLogout}
             icon={faRightFromBracket}
             text="Logout"
-            fullWidth
+            width="w-full"
           />
         ) : (
           <button

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { mockStudents } from '../../constants/mockData';
 import InternRow from './InternRow';
 import CompanyEvaluationModal from './CompanyEvaluationModal';
+import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
 
 // Basic styling for tabs (default state)
 const statusColors = {
@@ -12,65 +13,6 @@ const statusColors = {
   evaluated: 'bg-white text-gray-600 border-2 border-gray-300',
 };
 
-
-// // Mock data for interns (replace with API call or database data)
-// const initialInternsData = [
-//   {
-//     id: 1,
-//     name: "John Doe",
-//     jobTitle: "Software Engineer",
-//     status: "current",
-//     company: "Tech Corp",
-//     profilePic: "/public/icons8-avatar-50.png",
-//     gender: "male"
-//   },
-//   { 
-//     id: 2, 
-//     name: "Jane Smith", 
-//     jobTitle: "Marketing Intern", 
-//     status: "completed", 
-//     company: "Marketing Co",
-//     profilePic: "/public/icons8-avatar-50 (1).png",
-//     gender: "female"
-//   },
-//   {
-//     id: 3,
-//     name: "Bob Johnson",
-//     jobTitle: "Data Analyst",
-//     status: "current",
-//     company: "Data Inc",
-//     profilePic: "/public/icons8-avatar-50.png",
-//     gender: "male"
-//   },
-//   {
-//     id: 4,
-//     name: "Alice Brown",
-//     jobTitle: "UI/UX Designer",
-//     status: "evaluated",
-//     company: "Design Studio",
-//     profilePic: "/public/icons8-avatar-50 (1).png",
-//     gender: "female"
-//   },
-//   {
-//     id: 5,
-//     name: "Charlie Wilson",
-//     jobTitle: "DevOps Intern",
-//     status: "current",
-//     company: "Cloud Tech",
-//     profilePic: "/public/icons8-avatar-50.png",
-//     gender: "male"
-//   },
-//   {
-//     id: 6,
-//     name: "Emma Davis",
-//     jobTitle: "Product Manager",
-//     status: "evaluated",
-//     company: "Product Co",
-//     profilePic: "/public/icons8-avatar-50 (1).png",
-//     gender: "female"
-//   },
-// ];
-
 // Hover effect for tabs
 const hoverStatusColors = {
   current: 'hover:bg-blue-100 hover:text-blue-800 hover:border-blue-400',
@@ -78,7 +20,6 @@ const hoverStatusColors = {
   evaluated: 'hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400',
   all: 'hover:bg-gray-100 hover:text-gray-700 hover:border-gray-400', // Hover effect for "All" tab
 };
-
 
 // Active tab styling
 const activeTabStyles = {
@@ -88,7 +29,6 @@ const activeTabStyles = {
   all: 'bg-white text-gray-600 border-2 border-gray-300', // Active "All" tab styling
 };
 
-
 // Helper to infer internship status from period
 const inferStatus = (period) => {
   if (!period) return 'current';
@@ -97,7 +37,6 @@ const inferStatus = (period) => {
   if (is2023) return isEvaluated ? 'evaluated' : 'completed';
   return 'current';
 };
-
 
 // Calculate end date (3 months after start date)
 const calculateEndDate = (period) => {
@@ -186,7 +125,7 @@ export default function CurrentInterns() {
   });
 
   return (
-    <div className="max-w-3xl mx-auto p-4 mb-4 flex flex-col items-start">
+    <div className="mx-auto py-4 mb-4 flex flex-col items-start">
       {/* Evaluation Modal */}
       {evaluationModalOpen && selectedIntern && (
         <CompanyEvaluationModal
@@ -196,13 +135,8 @@ export default function CurrentInterns() {
           evaluationToEdit={null}
         />
       )}
-      
-      <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative mb-6 w-full">
-        MY INTERNS
-        <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-      </h1>
-      <div className="flex flex-col gap-4 mb-6 w-full">
-        <div className="w-full">
+      <div className="flex flex-col gap-0 mb-6 w-full">
+        {/* <div className="w-full">
           <input
             type="text"
             placeholder="Search interns by name or job title..."
@@ -210,7 +144,15 @@ export default function CurrentInterns() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full p-2 pl-4 pr-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-transparent text-sm"
           />
-       </div>
+      </div> */}
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search by student, company or supervisor..."
+          selectedStatus={activeTab}
+          onStatusChange={setActiveTab}
+          primaryFilterName="Filters"
+        />
         <div className="flex flex-wrap gap-2 w-full">
           {['all', 'current', 'completed', 'evaluated'].map((tab) => (
 <button
@@ -229,47 +171,6 @@ export default function CurrentInterns() {
       </div>
       <div className="w-full space-y-4">
         {filteredInterns.map((intern) => (
-
-          // <div 
-          //   key={intern.id} 
-          //   className="bg-white p-6 rounded-xl border-2 border-[#318FA8] flex justify-between items-center hover:shadow-lg hover:transform hover:translate-y-[-2px] transition-all duration-300 hover:bg-gray-50"
-          //   onClick={() => handleSelectIntern(intern.id)}
-          // >
-          //   <div className="flex items-center gap-4">
-          //     <AvatarImage gender={intern.gender} />
-          //     <div>
-          //       <h3 className="text-lg font-semibold text-[#2A5F74]">{intern.name}</h3>
-          //       <div className="flex items-center gap-2">
-          //         <p className="text-gray-600 text-sm">{intern.jobTitle}</p>
-          //       </div>
-          //     </div>
-          //   </div>
-          //   {/* Right side: Status and Action */}
-          //   <div className="flex flex-col items-end gap-2">
-          //     <span className={`
-          //       px-3 py-1.5 rounded-full text-xs font-medium border
-          //       ${statusColors[intern.status]}
-          //     `}>
-          //       {intern.status.toUpperCase()}
-          //     </span>
-
-          //     {intern.status === "completed" && (
-          //       <button
-          //         onClick={(e) => {
-          //           e.stopPropagation();
-          //           console.log(`Evaluating intern with id: ${intern.id}`);
-          //         }}
-          //         className="px-4 py-1.5 bg-[#318FA8] text-white text-xs font-medium
-          //         rounded-full hover:bg-[#2A5F74] transition-all duration-300
-          //         border-2 border-[#318FA8] hover:border-[#2A5F74] shadow-sm
-          //         hover:shadow-md hover:transform hover:translate-y-[-1px]"
-          //       >
-          //         EVALUATE
-          //       </button>
-          //     )}
-          //   </div>
-          // </div>
-
           <InternRow
             key={intern.id}
             intern={intern}

@@ -90,13 +90,13 @@ export default function PostTiles({ searchOverride, filterOverride }) {
     if (postIndex !== -1) {
       // Create a deep copy of the post to ensure we're passing a complete object
       const postToEdit = JSON.parse(JSON.stringify(posts[postIndex]));
-      
+
       // First set the preview to match the post we're editing
       setPostPreview(postToEdit);
-      
+
       // Then mark this post as the one being edited
       setEditingPost(postIndex);
-      
+
       // Finally show the form
       setShowForm(true);
     }
@@ -193,30 +193,32 @@ export default function PostTiles({ searchOverride, filterOverride }) {
   });
 
   return (
-    <div className="container mx-auto px-4 pt-0 pb-8">
+    <div className="container mx-auto pt-0 pb-8">
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center backdrop-blur-sm overflow-auto py-8">
           <div className="bg-white rounded-lg shadow-xl w-[90%] max-w-6xl max-h-[90vh] overflow-hidden">
             <div className="relative">
               {/* Header bar */}
-              <div className="bg-[var(--metallica-blue-700)] text-white py-3 px-6 flex justify-between items-center">
+              <div className="bg-[var(--metallica-blue-50)] text-[var(--metallica-blue-700)] py-3 px-6 flex justify-between items-center">
                 <h2 className="text-xl font-semibold">
                   {editingPost !== null ? 'Update Post' : 'Create New Post'}
                 </h2>
                 <button
                   onClick={toggleCreatePost}
-                  className="text-white hover:text-[var(--metallica-blue-100)] transition-colors"
+                  className="p-1 rounded-full hover:bg-[var(--metallica-blue-100)] transition"
+                  aria-label="Close"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="12" fill="#E8F7FB" />
+                    <path d="M15.3 8.7L12 12M12 12L8.7 15.3M12 12L15.3 15.3M12 12L8.7 8.7" stroke="#2A5F74" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
               </div>
 
               <div className="flex flex-col lg:flex-row h-[calc(90vh-56px)]">
                 {/* Left side - Form - This div will be scrollable */}
-                <div className="lg:w-1/2 p-6 overflow-y-auto bg-[var(--metallica-blue-50)]">
-                  <div className="bg-[var(--metallica-blue-50)] rounded-lg border border-[var(--metallica-blue-200)] p-6">
+                <div className="lg:w-1/2 p-6 overflow-y-auto bg-[var(--metallica-blue-50)] min-h-full h-full flex flex-col">
+                  <div className="bg-[var(--metallica-blue-50)] rounded-lg border border-[var(--metallica-blue-200)] p-6 flex-1 flex flex-col">
                     <CompanyCreatePost
                       onAddPost={handleAddPost}
                       onFormChange={handleFormChange}
@@ -227,9 +229,9 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                 </div>
 
                 {/* Right side - Live Preview - This div will NOT scroll with the form */}
-                <div className="lg:w-1/2 p-6 overflow-y-auto bg-white">
-                  <h2 className="text-xl font-semibold mb-4 text-[var(--metallica-blue-700)]">Post Preview</h2>
-                  <div className="bg-white rounded-lg shadow-md p-6 border border-[var(--metallica-blue-100)]">
+                <div className="lg:w-1/2 p-6 overflow-y-auto bg-white min-h-full h-full flex flex-col">
+                  <h2 className="text-xl font-semibold mb-4 text-[var(--metallica-blue-700)] bg-white">Post Preview</h2>
+                  <div className="bg-white rounded-lg shadow-md p-6 border border-[var(--metallica-blue-100)] flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <h3 className="text-xl font-bold text-[var(--metallica-blue-800)]">
@@ -320,7 +322,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
       {deletingPostIndex !== null && (
         <DeleteTileConfirmation
-          type="post" 
+          type="post"
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
         />
@@ -342,14 +344,14 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                   <span className="flex items-center justify-center w-10 h-10 bg-white rounded-full z-10 border-2 border-[#B8E1E9]">
                     <span className="text-xl font-bold text-[#5DB2C7]">+</span>
                   </span>
-                  
+
                   {/* Text part that expands on hover - now with bold text and slower transition */}
                   <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
                     <span className="font-semibold">Create Post</span>
                   </span>
                 </button>
               </div>
-              
+
               {/* Posts display */}
               {filteredPosts.map((post, index) => (
                 <div key={index} className="max-w-sm w-full">
@@ -376,7 +378,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                     <span className="flex items-center justify-center w-10 h-10 bg-white rounded-full z-10 border-2 border-[#B8E1E9]">
                       <span className="text-xl font-bold text-[#5DB2C7]">+</span>
                     </span>
-                    
+
                     {/* Text part that expands on hover - now with bold text and slower transition */}
                     <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
                       <span className="font-semibold">Create Post</span>
@@ -384,11 +386,11 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                   </button>
                 </div>
               )}
-              
+
               <p className="text-[var(--metallica-blue-600)] text-lg mb-4">
                 {posts.length > 0 ? 'No posts match your search' : 'No internship posts yet.'}
               </p>
-              
+
               {/* Only show "Create Your First Post" button when there are no posts at all */}
               {!showForm && posts.length === 0 && (
                 <button

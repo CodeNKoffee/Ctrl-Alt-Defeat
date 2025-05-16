@@ -5,7 +5,7 @@ import { Calendar as CalendarIcon, X } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 
-export default function DatePicker({ selectedDate, onDateChange, disabled }) {
+export default function DatePicker({ selectedDate, onDateChange, disabled, className }) {
   const [internalDate, setInternalDate] = React.useState(null);
   const [popoverOpen, setPopoverOpen] = React.useState(false);
 
@@ -62,16 +62,17 @@ export default function DatePicker({ selectedDate, onDateChange, disabled }) {
         <button
           type="button"
           disabled={disabled}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center justify-between w-full sm:w-auto min-w-[180px]
+          className={`rounded-full text-sm font-medium transition-colors flex items-center justify-between w-full sm:w-auto 
+            ${className ? className : 'px-4 py-3 min-w-[180px] h-[46px]'}
             ${disabled ? 'bg-gray-200 text-gray-500 cursor-not-allowed' :
               internalDate
-                ? "bg-metallica-blue-100 text-metallica-blue-600 border border-metallica-blue-300 hover:bg-metallica-blue-200"
-                : "bg-white text-gray-600 border border-gray-300 hover:bg-gray-50"
-            }`}
+                ? "bg-white/90 backdrop-blur-sm text-[#1a3f54] border-2 border-[#B8E1E9] hover:border-[#5DB2C7]"
+                : "bg-white/90 backdrop-blur-sm text-[#1a3f54] border-2 border-[#B8E1E9] hover:border-[#5DB2C7]"
+            } shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300`}
         >
           <div className="flex items-center">
-            <CalendarIcon className="mr-2 h-4 w-4 text-metallica-blue-500" />
-            <span className={internalDate ? 'text-metallica-blue-700' : 'text-gray-500'}>
+            <CalendarIcon className={`text-[#5DB2C7] ${className ? 'h-3 w-3 mr-1.5' : 'h-4 w-4 mr-2'}`} />
+            <span className={internalDate ? 'text-[#1a3f54]' : 'text-gray-500'}>
               {internalDate && isValid(internalDate)
                 ? format(internalDate, displayFormat)
                 : "Select a date"
@@ -80,7 +81,7 @@ export default function DatePicker({ selectedDate, onDateChange, disabled }) {
           </div>
           {internalDate && !disabled && (
             <X
-              className="ml-2 h-4 w-4 text-gray-400 hover:text-metallica-blue-700 flex-shrink-0"
+              className={`text-[#5DB2C7] hover:text-[#2a5f74] ${className ? 'h-3 w-3 ml-1.5' : 'h-4 w-4 ml-2'}`}
               onClick={(e) => {
                 e.stopPropagation();
                 setInternalDate(null);

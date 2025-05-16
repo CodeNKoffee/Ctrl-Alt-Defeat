@@ -5,18 +5,18 @@ export default function StudentDetails({ isOpen, studentData }) {
   const renderStars = (rating) => {
     const stars = [];
     const maxStars = 5;
-    
+
     for (let i = 1; i <= maxStars; i++) {
       stars.push(
-        <span 
-          key={i} 
+        <span
+          key={i}
           className={`trait-star ${i <= rating ? 'filled' : 'empty'}`}
         >
           ★
         </span>
       );
     }
-    
+
     return (
       <div className="trait-stars">
         {stars}
@@ -26,7 +26,7 @@ export default function StudentDetails({ isOpen, studentData }) {
 
   // Get theme colors if available
   const theme = studentData.theme || {
-    primary: "#318FA8", 
+    primary: "#318FA8",
     secondary: "#256980",
     accent: "#41B9D9",
     text: "#1A4857",
@@ -41,39 +41,42 @@ export default function StudentDetails({ isOpen, studentData }) {
     "--user-text": theme.text,
     "--user-background": theme.background,
   };
-  
+
   // Text styles based on theme
   const sectionTitleStyle = {
     color: theme.text
   };
-  
+
   const headingStyle = {
     color: theme.text
   };
-  
+
   const textStyle = {
     color: theme.secondary
   };
-  
+
   const lightTextStyle = {
     color: theme.secondary,
     opacity: 0.8
   };
-  
+
   const skillTagStyle = {
     backgroundColor: theme.background,
     color: theme.text
   };
 
   return (
-    <div className={`student-details ${isOpen ? 'expanded' : ''}`} style={themeStyle}>
-      <div className="details-content">
-        <div className="grid-layout">
+    <div
+      className={`student-details-container bg-white rounded-xl shadow-lg overflow-hidden border-2 border-[#318FA8]`}
+      style={themeStyle}
+    >
+      <div className="details-content w-full">
+        <div className="grid-layout grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="grid-column">
             <div className="details-section personality-traits-section">
               <h3 style={sectionTitleStyle}>Personality Traits</h3>
               <div className="personality-traits">
-                {studentData.personalityTraits.map((trait, index) => (
+                {studentData.personalityTraits && studentData.personalityTraits.map((trait, index) => (
                   <div key={index} className="trait-item">
                     <div className="trait-header-inline">
                       <span className="trait-label" style={textStyle}>{trait.trait}</span>
@@ -83,18 +86,18 @@ export default function StudentDetails({ isOpen, studentData }) {
                 ))}
               </div>
             </div>
-            
+
             <div className="details-section education-section">
               <h3 style={sectionTitleStyle}>Education</h3>
               <div className="education-content">
-                {studentData.education[0] && (
+                {studentData.education && studentData.education[0] && (
                   <div className="education-item">
                     <h4 style={headingStyle}>{studentData.education[0].degree}</h4>
                     <p style={textStyle}>{studentData.education[0].institution}</p>
                     <p className="year" style={lightTextStyle}>{studentData.education[0].period}</p>
                   </div>
                 )}
-                {studentData.education[1] && (
+                {studentData.education && studentData.education[1] && (
                   <div className="education-item">
                     <h4 style={headingStyle}>Faculty</h4>
                     <p style={textStyle}>{studentData.education[1].faculty}</p>
@@ -103,20 +106,20 @@ export default function StudentDetails({ isOpen, studentData }) {
                 )}
               </div>
             </div>
-            
+
             <div className="details-section skills-section">
               <h3 style={sectionTitleStyle}>Skills</h3>
               <div className="skills-container">
-                {studentData.skills.map((skill, index) => (
+                {studentData.skills && studentData.skills.map((skill, index) => (
                   <span key={index} className="skill-tag" style={skillTagStyle}>{skill}</span>
                 ))}
               </div>
             </div>
-            
+
             <div className="details-section job-interests-section">
               <h3 style={sectionTitleStyle}>Job Interests</h3>
               <div className="job-interests-container">
-                {studentData.jobInterests.map((interest, index) => (
+                {studentData.jobInterests && studentData.jobInterests.map((interest, index) => (
                   <div key={index} className="job-interest-item">
                     <h4 style={headingStyle}>{interest.title}</h4>
                     <div className="job-interest-separator"></div>
@@ -128,19 +131,19 @@ export default function StudentDetails({ isOpen, studentData }) {
               </div>
             </div>
           </div>
-          
+
           <div className="grid-column">
             <div className="details-section experience-section">
               <h3 style={sectionTitleStyle}>Experience</h3>
               <div className="experience-content">
-                {studentData.experience.map((exp, index) => (
+                {studentData.experience && studentData.experience.map((exp, index) => (
                   <div key={index} className="experience-item">
                     <h4 style={headingStyle}>{exp.title}</h4>
                     <p className="company" style={textStyle}>{exp.company}</p>
                     <p className="duration" style={lightTextStyle}>{exp.duration}</p>
-                    
+
                     <ul className="responsibilities">
-                      {exp.responsibilities.map((resp, respIdx) => (
+                      {exp.responsibilities && exp.responsibilities.map((resp, respIdx) => (
                         <li key={respIdx} style={textStyle}>{resp}</li>
                       ))}
                     </ul>
@@ -148,11 +151,11 @@ export default function StudentDetails({ isOpen, studentData }) {
                 ))}
               </div>
             </div>
-            
+
             <div className="details-section internships-section">
               <h3 style={sectionTitleStyle}>Internships</h3>
               <div className="internships-container">
-                {studentData.internships.map((internship, index) => (
+                {studentData.internships && studentData.internships.map((internship, index) => (
                   <div key={index} className="internship-item">
                     <div className="internship-header">
                       <div className="internship-icon">📋</div>
@@ -168,7 +171,7 @@ export default function StudentDetails({ isOpen, studentData }) {
                 ))}
               </div>
             </div>
-  
+
           </div>
         </div>
       </div>

@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import CustomButton from "./shared/CustomButton";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const skillAttributes = [
   "Ability to adapt to change",
@@ -103,10 +106,11 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(44,63,80,0.60)]">
       <div className="bg-[#F8FAFB] rounded-2xl shadow-2xl max-w-xl w-full p-8 relative flex flex-col gap-4 border-2 border-[#2A5F74]">
         <button
-          className="absolute top-4 right-4 text-[#2A5F74] hover:text-[#3298BA] text-2xl font-bold"
+          className="absolute top-3 right-3 z-20 flex items-center justify-center w-7 h-7 rounded-full shadow-sm bg-gray-200/70 hover:bg-gray-300/90 transition-colors"
           onClick={onClose}
+          aria-label="Close modal"
         >
-          &times;
+          <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
         </button>
         <form onSubmit={handleSubmit} className="flex flex-col h-[70vh]">
           {/* Tabs */}
@@ -219,42 +223,45 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
             )}
           </div>
           <div className="flex gap-2 mt-2 w-full">
-            <button
+            <CustomButton
+              variant="primary"
+              type="submit"
+              text="Submit Evaluation"
+              isLoading={draftStatus === 'saving'}
+              loadingText="Saving..."
+              disabled={submitting}
+              onClick={onClose}
+              width="w-full"
+            />
+            {/* <button
               type="submit"
               className="flex-1 px-4 py-2 mt-9 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67] transition text-sm border border-[#5DB2C7] shadow"
               disabled={submitting}
             >
               {submitting ? "Submitting..." : isEditMode ? "Save Changes" : "Submit Evaluation"}
-            </button>
-            {!isEditMode && (
-              <button
+            </button> */}
+            {(
+              <CustomButton
+                variant="secondary"
                 type="button"
-                className="flex-1 px-4 py-2 text-[#318FA8] bg-metallica-blue-100 rounded-lg font-semibold mt-9 hover:bg-metallica-blue-300 hover:text-metallica-blue-50 transition text-sm border border-[#5DB2C7] shadow relative"
-                disabled={submitting || draftStatus === 'saving'}
-                onClick={async () => {
-                  setDraftStatus('saving');
-                  await new Promise(res => setTimeout(res, 800));
-                  onSubmit({ ...form, draft: true });
-                  setDraftStatus('saved');
-                  setTimeout(() => {
-                    setDraftStatus("");
-                    onClose();
-                  }, 1200); // Increased to 1200ms for better visibility
-                }}
-              >
-                {draftStatus === 'saving' ? 'Saving...' : draftStatus === 'saved' ? 'Saved!' : 'Save as Draft'}
-              </button>
-            )}
-            {isEditMode && (
-              <button
-                type="button"
-                className="flex-1 px-4 py-2 mt-9 bg-red-200 text-red-800 border border-red-800 rounded-lg hover:bg-red-300 transition-colors"
+                text={isEditMode ? "Save Changes" : "Save as Draft"}
+                isLoading={draftStatus === 'saving'}
+                loadingText="Saving..."
                 disabled={submitting}
                 onClick={onClose}
-              >
-                Cancel
-              </button>
+                width="w-full"
+              />
+
             )}
+            {/* {isEditMode && (
+              <CustomButton
+                variant="danger"
+                type="button"
+                text="Cancel"
+                disabled={submitting}
+                onClick={onClose}
+              />
+            )} */}
           </div>
         </form>
       </div>

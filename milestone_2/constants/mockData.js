@@ -21,7 +21,7 @@ export const MOCK_USERS = {
   company: {
     email: "company@example.com",
     password: "company123",
-    name: "Company Representative",
+    name: "Tawabiry",
     firstName: "Company",
     lastName: "Representative",
     role: "company",
@@ -753,7 +753,21 @@ export const MOCK_EVALUATIONS = [
     startDate: "2024-06-01",
     endDate: "2024-08-31",
     avatar: "/images/girl2.png",
-     status: "submitted"
+    status: "submitted"
+  },
+  {
+    studentName: "Hatem Soliman",
+    major: "Media Engineering & Technology",
+    companyName: "Vodafone Egypt",
+    supervisorName: "Ms. Laila Hassan",
+    supervisorEmail: "laila.hassan@vodafone.com.eg",
+    tasks: "Designed UI/UX for mobile app and participated in frontend sprints.",
+    environment: "Fast-paced, innovative, and fun.",
+    rating: 4,
+    startDate: "2024-07-01",
+    endDate: "2024-09-15",
+    avatar: "/images/boy2.png",
+    status: "submitted"
   },
   {
     studentName: "Hatem Soliman",
@@ -783,7 +797,7 @@ export const MOCK_EVALUATIONS = [
     avatar: "/images/girl1.png",
     status: "saved"
   },
-   {
+  {
     studentName: "Salma Tarek",
     major: "Computer Science",
     companyName: "Nestlé Egypt",
@@ -797,7 +811,7 @@ export const MOCK_EVALUATIONS = [
     avatar: "/images/girl1.png",
     status: "saved"
   },
-   {
+  {
     studentName: "Salma Tarek",
     major: "Computer Science",
     companyName: "Nestlé Egypt",
@@ -857,6 +871,7 @@ export const sampleWorkshops = [
     instructorImage: "/images/boy3.png",
     imageUrl: "/images/Workshop5.jpeg",
     seatsAvailable: 25,
+    type: "regular",
     prerequisites: "Basic knowledge of statistics and Python is recommended."
   },
   {
@@ -871,6 +886,7 @@ export const sampleWorkshops = [
     instructorImage: "/images/girl3.png",
     imageUrl: "/images/Workshop1.jpeg",
     seatsAvailable: 30,
+    type: "regular",
     prerequisites: "No prior experience needed, but familiarity with basic programming is a plus."
   },
   {
@@ -885,6 +901,7 @@ export const sampleWorkshops = [
     instructorImage: "/images/boy2.png",
     imageUrl: "/images/Workshop4.jpeg",
     seatsAvailable: 20,
+    type: "regular",
     prerequisites: "Participants should have Python installed and basic programming knowledge."
   },
   {
@@ -899,6 +916,7 @@ export const sampleWorkshops = [
     instructorImage: "/images/girl2.png",
     imageUrl: "/images/Workshop.jpeg",
     seatsAvailable: 18,
+    type: "regular",
     prerequisites: "Bring your laptop. No prior design experience required."
   },
   {
@@ -913,6 +931,7 @@ export const sampleWorkshops = [
     instructorImage: "/images/boy1.png",
     imageUrl: "/images/Workshop2.jpeg",
     seatsAvailable: 40,
+    type: "regular",
     prerequisites: "Ideal for entrepreneurs, marketers, and small business owners."
   },
   {
@@ -927,8 +946,99 @@ export const sampleWorkshops = [
     instructorImage: "/images/girl1.png",
     imageUrl: "/images/Workshop3.jpeg",
     seatsAvailable: 35,
+    type: "regular",
     prerequisites: "No prior knowledge needed; open to all skill levels."
-  }
+  },
+  {
+    id: 7,
+    title: "Introduction to Web Design",
+    date: "2023-11-15",
+    time: "10:00 AM - 12:00 PM",
+    location: "Online",
+    description: "Learn the basics of web design and user experience.",
+    instructor: "Dr. Fatma Ali",
+    instructorBio: "Dr. Fatima is a freelance designer, motion and graphic design enthusiast",
+    instructorImage: "/images/girl1.png",
+    imageUrl: "/images/Workshop1.jpeg",
+    seatsAvailable: 15,
+    type: "live",
+    prerequisites: "Basic computer skills",
+  },
+  {
+    id: 8,
+    title: "Advanced React Techniques",
+    date: "2023-11-16",
+    time: "2:00 PM - 4:00 PM",
+    location: "Online",
+    description: "Deep dive into React hooks and performance optimization.",
+    instructor: "Mr. Omar Hassan",
+    instructorImage: "/images/boy1.png",
+    instructorBio: "Mr. Omar Hassan is a senior developer with 10+ years of experience",
+    imageUrl: "/images/Workshop2.jpeg",
+    seatsAvailable: 20,
+    type: "live",
+    prerequisites: "Intermediate React knowledge",
+  },
+  {
+    id: 9,
+    title: "Introduction to Web Fundamentals",
+    date: "2023-11-10",
+    time: "1:00 PM - 3:00 PM",
+    location: "Online",
+    description: "Learn the basics of web design and user experience.",
+    instructor: "Dr. Layla Ahmed",
+    instructorBio: "Dr. Layla Ahmed is a freelance designer, motion and graphic design enthusiast",
+    instructorImage: "/images/girl1.png",
+    imageUrl: "/images/Workshop1.jpeg",
+    seatsAvailable: 15,
+    type: "live",
+    prerequisites: "No prior knowledge needed; open to all skill levels."
+  },
+  {
+    id: 10,
+    title: "Advanced Next.js Techniques",
+    date: "2023-11-10",
+    time: "1:00 PM - 3:00 PM",
+    location: "Prerecorded",
+    description: "Learn the basics of Next.js and user experience.",
+    instructor: "Dr. Layla Ahmed",
+    instructorBio: "Dr. Layla Ahmed is a freelance designer, motion and graphic design enthusiast",
+    instructorImage: "/images/girl1.png",
+    imageUrl: "/images/Workshop1.jpeg",
+    seatsAvailable: 15,
+    type: "prerecorded",
+    prerequisites: "No prior knowledge needed; open to all skill levels."
+  },
+  {
+    id: 11,
+    title: "Introduction to Web Fundamentals",
+    date: "2023-11-10",
+    time: "5:00 PM - 6:00 PM",
+    location: "Prerecorded",
+    description: "Learn the basics of web design and user experience.",
+    instructor: "Dr. Layla Ahmed",
+    instructorBio: "Dr. Layla Ahmed is a freelance designer, motion and graphic design enthusiast",
+    instructorImage: "/images/girl1.png",
+    imageUrl: "/images/Workshop1.jpeg",
+    seatsAvailable: 15,
+    type: "prerecorded",
+    prerequisites: "No prior knowledge needed; open to all skill levels."
+  },
+  {
+    id: 12,
+    title: "Advanced React Hooks",
+    date: "2023-11-10",
+    time: "4:00 PM - 6:00 PM",
+    location: "Prerecorded",
+    description: "Master React Hooks and build efficient, powerful components.",
+    instructor: "Dr. Layla Ahmed",
+    instructorBio: "Dr. Layla Ahmed is a freelance designer, motion and graphic design enthusiast",
+    instructorImage: "/images/girl1.png",
+    imageUrl: "/images/Workshop1.jpeg",
+    seatsAvailable: 15,
+    type: "prerecorded",
+    prerequisites: "No prior knowledge needed; open to all skill levels."
+  },
 ];
 
 export const mockAssessments = [
@@ -1468,7 +1578,7 @@ export const mockStudents = [
       }
     ],
     skills: [
-      "Java", "Python", "React", "Node.js", 
+      "Java", "Python", "React", "Node.js",
       "UI/UX Design", "Problem Solving", "Team Leadership"
     ],
     jobInterests: [
@@ -1998,3 +2108,70 @@ export const MOCK_COMPANY_EVALUATIONS = [
     technicalOther: 'Could improve documentation.'
   }
 ];
+
+export const TawabiryInternships = [
+  {
+    id: 1,
+    title: "Frontend Developer Intern",
+    company: "Tawabiry",
+    type: "Full-time",
+    locationType: "REMOTE",
+    jobSetting: "Remote",
+    paid: true,
+    rate: "$20/hr",
+    postedDate: "2 days ago",
+    appliedDate: "2024-04-15",
+    startDate: "2025-01-15",
+    industry: "Technology",
+    duration: "3 months",
+    skills: ["JavaScript", "React", "TypeScript", "Redux", "HTML5", "CSS3", "REST APIs"],
+    description: "Join our team to work on exciting projects and gain hands-on experience in frontend development.",
+    details: "Tawabiry leads in software development, pioneering web technology innovation for over a decade with cutting-edge solutions.",
+    requirements: "Applicants should be pursuing a Computer Science degree with basic JavaScript/React knowledge...",
+    status: "current", // For my-internships
+    applicationStatus: "accepted", // For applied-internships
+    isRecommended: true
+  },
+  {
+    id: 2,
+    title: "Marketing & Growth Lead",
+    company: "Tawabiry",
+    type: "Full-time",
+    jobType: "Full-time",
+    jobSetting: "Remote",
+    paid: false,
+    rate: "$0/hr",
+    jobSetting: "Remote",
+    appliedDate: "2021-06-03",
+    startDate: "2025-01-15",
+    duration: "3 months",
+    skills: ["Marketing", "Growth", "Leadership", "Communication", "Project Management"],
+    description: "Join our team to work on exciting projects and gain hands-on experience in frontend development.",
+    details: "Tawabiry leads in software development, pioneering web technology innovation for over a decade with cutting-edge solutions.",
+    requirements: "Applicants should be pursuing a Computer Science degree with basic JavaScript/React knowledge...",
+    status: "current", // For my-internships
+    applicationStatus: "accepted", // For applied-internships
+    isRecommended: true
+  },
+  {
+    id: 3,
+    title: "Backend Developer Intern",
+    company: "Tawabiry",
+    type: "Full-time",
+    jobType: "Full-time",
+    jobSetting: "Remote",
+    paid: false,
+    jobSetting: "Remote",
+    rate: "$0/hr",
+    appliedDate: "2021-06-03",
+    startDate: "2025-01-15",
+    duration: "3 months",
+    skills: ["Java Springboot", "Docker", "MySQL", "Git", "CI/CD", "AWS"],
+    description: "Join our team to work on exciting projects and gain hands-on experience in backend development.",
+    details: "Tawabiry leads in software development, pioneering web technology innovation for over a decade with cutting-edge solutions.",
+    requirements: "Applicants should be pursuing a Computer Science degree with basic JavaScript/React knowledge...",
+    status: "current", // For my-internships
+    applicationStatus: "accepted", // For applied-internships
+    isRecommended: true
+  },
+]

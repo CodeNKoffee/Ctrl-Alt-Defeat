@@ -12,7 +12,7 @@ export default function Student({ student, onViewProfile }) {
   const { id, name, photo, major, semester, status, internshipStatus} = student;
 
   return (
-    <div className="bg-[#F0F9FB] rounded-lg p-6 w-[280px] shadow-sm border-2 border-[#5DB2C7]
+    <div className="bg-[#F0F9FB] rounded-lg p-6 shadow-sm border-2 border-[#5DB2C7]
       transform transition-all duration-300 ease-in-out cursor-pointer
       hover:scale-110 hover:shadow-2xl hover:border-[#3298BA]">
 

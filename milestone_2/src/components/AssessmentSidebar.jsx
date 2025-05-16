@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';// Correct import path
-
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';// Correct import path
+import CustomButton from "../components/shared/CustomButton";
 
 const likertOptions = [
   { id: 1, text: 'Strongly Disagree', color: 'border-[#FCA5A5] bg-[#FEE2E2]', selected: 'border-[#EF4444] bg-[#FCA5A5]/40' },
@@ -85,12 +85,12 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
             </div>
           </div>
           <div className="sticky bottom-0 left-0 w-full bg-white px-6 pb-6 pt-3 border-t border-gray-100 z-20">
-            <button
+            <CustomButton
               onClick={() => setTestStarted(true)}
-              className="w-full bg-[#3298BA] text-white py-2 px-4 rounded-full hover:bg-[#267a8c] transition-colors duration-200"
-            >
-              Take the Test
-            </button>
+              variant="primary"
+              text="Take the Test"
+              width="w-full"
+            />
           </div>
         </div>
       )}
@@ -116,17 +116,17 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
                 <div key={index} className="flex flex-col items-center mb-8">
                   <p className="text-center text-base font-medium text-gray-800 mb-2">{question.question}</p>
                   <div className="flex justify-center gap-8 mt-2">
-                  {likertOptions.map(option => (
-                  <div key={option.id} className="flex flex-col items-center">
-                    <motion.div
-                      whileTap={{ scale: 0.9 }}  // Apply shrinking effect when clicked
-                      whileHover={{ 
-                        scale: 1.1, // Slight scaling effect on hover
-                        borderWidth: '3px', // Match border thickness on hover
-                        boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)' // Add a subtle shadow to match the selected state on hover
-                      }}
-                      animate={answers[index] === option.id ? { scale: 1.15, borderWidth: '3px', boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)' } : { scale: 1 }}
-                      transition={{ type: 'spring', stiffness: 250, damping: 18 }}
+                    {likertOptions.map(option => (
+                      <div key={option.id} className="flex flex-col items-center">
+                        <motion.div
+                          whileTap={{ scale: 0.9 }}  // Apply shrinking effect when clicked
+                          whileHover={{
+                            scale: 1.1, // Slight scaling effect on hover
+                            borderWidth: '3px', // Match border thickness on hover
+                            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)' // Add a subtle shadow to match the selected state on hover
+                          }}
+                          animate={answers[index] === option.id ? { scale: 1.15, borderWidth: '3px', boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)' } : { scale: 1 }}
+                          transition={{ type: 'spring', stiffness: 250, damping: 18 }}
                           onClick={() => handleAnswerChange(index, option.id)}
                           className={`w-8 h-8 rounded-full flex items-center justify-center mb-1
                             ${answers[index] === option.id
@@ -137,7 +137,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
                         />
                         <span className="text-[10px] text-gray-600 text-center w-16">{option.text}</span>
                       </div>
-                ))}
+                    ))}
                   </div>
                 </div>
               ))}
@@ -153,48 +153,48 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
       )}
 
       {testCompleted && (
-  <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
-    <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
-      <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
-    </div>
-    <div className="flex-1 flex items-center justify-center px-4 pb-8">
-      <div className="bg-white rounded-xl shadow p-8 w-full max-w-md flex flex-col items-center">
-        <div className="bg-green-50 rounded-full flex items-center justify-center mb-6" style={{ width: 72, height: 72 }}>
-          <FontAwesomeIcon icon={faCheck} className="text-green-500 text-3xl" />
-        </div>
-        <h3 className="text-2xl font-bold text-gray-800 mb-2 text-center">Test Completed!</h3>
-        <p className="text-gray-600 mb-4 text-center">
-          Thank you for completing the test! Your results are being processed and will be available shortly. <br />
-          You will receive your detailed results via email within the next few minutes.
-        </p>
-        {sharing === null ? (
-          <>
-            <p className="text-center text-gray-700 mb-4">Do you want to share your results?</p>
-            <div className="flex justify-center gap-4 mb-2">
-              <button
-                onClick={() => {
-                  setSharing('yes');
-                  setTimeout(() => onClose(), 1000);
-                }}
-                className="py-2 px-8 rounded-full font-semibold border border-[#3298BA] text-[#3298BA] bg-transparent hover:bg-[#3298BA]/10 transition-colors duration-200 shadow-none"
-              >
-                Yes
-              </button>
-              <button
-                onClick={() => onClose()}
-                className="py-2 px-8 rounded-full font-semibold border border-[#d9534f] text-[#d9534f] bg-transparent hover:bg-[#d9534f]/10 transition-colors duration-200 shadow-none"
-              >
-                No
-              </button>
+        <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
+          <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+          </div>
+          <div className="flex-1 flex items-center justify-center px-4 pb-8">
+            <div className="bg-white rounded-xl shadow p-8 w-full max-w-md flex flex-col items-center">
+              <div className="bg-green-50 rounded-full flex items-center justify-center mb-6" style={{ width: 72, height: 72 }}>
+                <FontAwesomeIcon icon={faCheck} className="text-green-500 text-3xl" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2 text-center">Test Completed!</h3>
+              <p className="text-gray-600 mb-4 text-center">
+                Thank you for completing the test! Your results are being processed and will be available shortly. <br />
+                You will receive your detailed results via email within the next few minutes.
+              </p>
+              {sharing === null ? (
+                <>
+                  <p className="text-center text-gray-700 mb-4">Do you want to share your results?</p>
+                  <div className="flex justify-center gap-4 mb-2">
+                    <button
+                      onClick={() => {
+                        setSharing('yes');
+                        setTimeout(() => onClose(), 1000);
+                      }}
+                      className="py-2 px-8 rounded-full font-semibold border border-[#3298BA] text-[#3298BA] bg-transparent hover:bg-[#3298BA]/10 transition-colors duration-200 shadow-none"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      onClick={() => onClose()}
+                      className="py-2 px-8 rounded-full font-semibold border border-[#d9534f] text-[#d9534f] bg-transparent hover:bg-[#d9534f]/10 transition-colors duration-200 shadow-none"
+                    >
+                      No
+                    </button>
+                  </div>
+                </>
+              ) : sharing === 'yes' ? (
+                <p className="text-center text-green-600 font-semibold">Posted to Profile!</p>
+              ) : null}
             </div>
-          </>
-        ) : sharing === 'yes' ? (
-          <p className="text-center text-green-600 font-semibold">Posted to Profile!</p>
-        ) : null}
-      </div>
-    </div>
-  </div>
-)}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

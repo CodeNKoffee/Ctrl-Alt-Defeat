@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
+import CustomButton from './shared/CustomButton';
 
 // Status colors configuration
 const statusColors = {
@@ -163,12 +164,13 @@ const InternRow = ({ intern, onSelect, onEvaluate }) => {
               )}
             </p>
             {intern.status === "completed" && (
-              <button
+              <CustomButton
+                variant="primary"
                 onClick={() => onEvaluate(intern.id)}
-                className="px-4 py-2 bg-[#5DB2C7] text-white rounded-lg hover:bg-[#4796A8] transition w-full sm:w-auto text-sm"
-              >
-                Evaluate Intern
-              </button>
+                text="Evaluate Intern"
+                width="w-fit sm:w-auto"
+                className="py-2"
+              />
             )}
           </div>
         </div>

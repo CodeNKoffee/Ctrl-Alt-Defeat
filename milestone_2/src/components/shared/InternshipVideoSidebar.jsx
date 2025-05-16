@@ -20,7 +20,7 @@ export default function InternshipVideoSidebar({ userMajor }) {
             allowFullScreen
             className="absolute top-0 left-0 w-full h-full"
           ></iframe>
-          <div className="absolute bottom-0 left-0 right-0 bg-[#2a5f74]/70 text-white text-sm py-2 px-3 pointer-events-none backdrop-blur-sm">
+          <div className="absolute bottom-0 left-0 right-0 bg-[#2a5f74]/70 text-white text-sm py-2 px-3 pointer-events-none backdrop-blur-sm rounded-b-lg">
             Watch: Internships for {userMajor || 'Your Major'}
           </div>
         </div>

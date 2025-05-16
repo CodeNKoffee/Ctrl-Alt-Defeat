@@ -5,6 +5,8 @@ import SearchBar from "./shared/SearchBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faTimesCircle, faCalendar, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import CompanyEvaluationModal from "./CompanyEvaluationModal";
+import CustomButton from './shared/CustomButton';
+import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
 
 export default function EvaluationsDashboard({ evaluations: initialEvaluations, stakeholder = "other" }) {
   const [expandedIndex, setExpandedIndex] = useState(null);
@@ -18,6 +20,8 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
   const [evaluations, setEvaluations] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [evaluationToEdit, setEvaluationToEdit] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [evaluationToDelete, setEvaluationToDelete] = useState(null);
 
   useEffect(() => {
     setEvaluations(initialEvaluations || []);
@@ -101,6 +105,13 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
   const handleDeleteEvaluation = (evaluationId) => {
     const updatedEvaluations = evaluations.filter(item => item.id !== evaluationId);
     setEvaluations(updatedEvaluations);
+    setShowDeleteConfirm(false);
+    setEvaluationToDelete(null);
+  };
+
+  const confirmDelete = (evaluationId) => {
+    setEvaluationToDelete(evaluationId);
+    setShowDeleteConfirm(true);
   };
 
   const handleEditEvaluation = (evaluation) => {
@@ -122,30 +133,40 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
   return (
     <>
       <div className="w-full max-w-7xl mx-auto px-2 md:px-6">
-        <div className="bg-white p-6 rounded-lg shadow-md mb-8 border border-metallica-blue-200">
-          <div className="flex items-center gap-4 w-full md:w-auto">
-            <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
-            </div>
-            <div>
-              <p className="text-sm text-gray-400"></p>
-              <div className="text-2xl font-semibold text-[#2a5f74] mb-4">
-                {stakeholder === "student"
-                  ? "Your Company Internship Evaluations"
-                  : stakeholder === "company"
-                  ? "Your Student Evaluations"
-                  : "Student Evaluations"}
+          {/* <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
+            <div className="flex items-center gap-4 w-full md:w-auto">
+              <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
               </div>
-              <div className="text-gray-700 mb-2">
-                {stakeholder === "student"
-                  ? " Below are the evaluations you submitted for the companies where you completed internships and evaluations you have saved as drafts and are awaiting your submission."
-                  : stakeholder === "company"
-                  ? "Below are the evaluations you submitted for your interns. You can view both submitted and draft evaluations."
-                  : "Below are the evaluations of students that have completed their internships at the various companies they have access to through the system."}
+              <div>
+                <p className="text-sm text-gray-400"></p>
+                <div className="text-2xl font-semibold text-[#2a5f74] mb-4">
+                  {stakeholder === "student"
+                    ? "Your Company Internship Evaluations"
+                    : stakeholder === "company"
+                    ? "Your Student Evaluations"
+                    : "Student Evaluations"}
+                </div>
+                <div className="text-gray-700 mb-2">
+                  {stakeholder === "student"
+                    ? " Below are the evaluations you submitted for the companies where you completed internships and evaluations you have saved as drafts and are awaiting your submission."
+                    : stakeholder === "company"
+                    ? "Below are the evaluations you submitted for your interns. You can view both submitted and draft evaluations."
+                    : "Below are the evaluations of students that have completed their internships at the various companies they have access to through the system."}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </div> */}
+
+        <ApplicationsFilterBar 
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search by student, company or supervisor..."
+          selectedStatus={activeTab}
+          onStatusChange={setActiveTab}
+          // customFilterSections={customFilterSections}
+          primaryFilterName="Filters"
+        />
 
         {(stakeholder === "student" || stakeholder === "company") && (
           <div className="flex justify-start mb-6 px-4 gap-10">
@@ -174,7 +195,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
           </div>
         )}
 
-        {stakeholder !== "student" && (
+        {/* {stakeholder !== "student" && (
           <div className="mt-8 bg-white shadow-md rounded-lg p-6 mb-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
               <h2 className="text-2xl text-metallica-blue-800 font-semibold mb-4 md:mb-0">Student Evaluations</h2>
@@ -297,9 +318,10 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
               </div>
             )}
           </div>
-        )}
-              
-        <div className="w-full flex flex-wrap justify-start gap-6 relative bg-[#f4fafd] rounded-2xl shadow-md p-6">
+        )} */}
+
+
+        <div className="w-full flex flex-wrap justify-between gap-2 relative bg-[#f4fafd] rounded-2xl shadow-md p-6">
           {filteredEvaluations && filteredEvaluations.length > 0 ? (
             filteredEvaluations.map((evaluation, idx) => (
               <div
@@ -325,7 +347,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                         <button
                           className="text-red-500 hover:text-red-700 p-1"
                           title="Delete Evaluation"
-                          onClick={() => handleDeleteEvaluation(evaluation.id)}
+                          onClick={() => confirmDelete(evaluation.id)}
                         >
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
@@ -484,6 +506,40 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
           onSubmit={handleModalSubmit}
           evaluationToEdit={evaluationToEdit}
         />
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500/75 backdrop-blur-sm">
+          <div className="relative w-full max-w-md bg-white rounded-2xl overflow-hidden shadow-2xl transform text-left p-6">
+            {/* Close button */}
+            <button
+              className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
+              onClick={() => setShowDeleteConfirm(false)}
+              aria-label="Close modal"
+            >
+              <FontAwesomeIcon icon={faTimesCircle} className="text-xl text-gray-500 font-normal" />
+            </button>
+            
+            <div className="mb-4">
+              <h3 className="text-xl font-semibold text-gray-800">Confirm Delete</h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-6">Are you sure you want to delete this evaluation draft? This action cannot be undone.</p>
+            <div className="flex justify-end gap-3">
+              <CustomButton
+                variant="primary"
+                text="Cancel"
+                onClick={() => setShowDeleteConfirm(false)}
+              />
+              <CustomButton
+                variant="danger"
+                text="Delete"
+                onClick={() => handleDeleteEvaluation(evaluationToDelete)}
+                icon={faTrash}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

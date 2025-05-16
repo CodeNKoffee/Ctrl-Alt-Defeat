@@ -41,6 +41,10 @@ export default function LiveWorkshopsPage() {
     // Client-side initialization if needed
   }, []);
 
+  const handleBackFromWorkshop = () => {
+    setSelectedWorkshop(null);
+  };
+
   if (typeof window === "undefined") {
     return <div>Loading...</div>; // Fallback for SSR
   }
@@ -75,9 +79,9 @@ export default function LiveWorkshopsPage() {
                   <img
                     src={workshop.imageUrl}
                     alt={workshop.title}
-                    style={{ 
-                      width: "100%", 
-                      height: "100%", 
+                    style={{
+                      width: "100%",
+                      height: "100%",
                       objectFit: "cover",
                       borderTopLeftRadius: "8px",
                       borderTopRightRadius: "8px"
@@ -102,11 +106,11 @@ export default function LiveWorkshopsPage() {
                       {workshop.instructor}
                     </span>
                   </div>
-                  <h3 style={{ 
-                    fontSize: "18px", 
-                    fontWeight: "600", 
+                  <h3 style={{
+                    fontSize: "18px",
+                    fontWeight: "600",
                     color: "#2A5F74",
-                    marginBottom: "8px" 
+                    marginBottom: "8px"
                   }}>
                     {workshop.title}
                   </h3>
@@ -119,7 +123,7 @@ export default function LiveWorkshopsPage() {
 
       {/* Workshop Interface - Shown when a workshop is selected */}
       {selectedWorkshop && (
-        <WorkshopInterface workshop={selectedWorkshop} />
+        <WorkshopInterface workshop={selectedWorkshop} onBack={handleBackFromWorkshop} />
       )}
     </div>
   );

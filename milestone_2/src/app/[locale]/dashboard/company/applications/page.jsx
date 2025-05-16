@@ -94,7 +94,7 @@ export default function CompanyApplicationsPage() {
                 statusConfig={STATUS_CONFIG}
 
                 // Primary filter (internships) props
-                primaryFilterName="Internship Position"
+                primaryFilterName="Filter"
                 selectedPrimaryFilter={selectedInternship}
                 onPrimaryFilterChange={setSelectedInternship}
                 primaryFilterOptions={MOCK_INTERNSHIPS}
