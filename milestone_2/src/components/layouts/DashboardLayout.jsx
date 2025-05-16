@@ -196,7 +196,10 @@ export default function DashboardLayout({
                       {(hovered || formOpen) ? (
                         <span className="flex items-center justify-center w-full">
                           <FontAwesomeIcon icon={faSuitcase} className="text-xl text-white mr-3" />
-                          <span className={`font-semibold text-white text-base text-center transition-opacity duration-300 ${((hovered || formOpen) ? 'opacity-300 delay-500' : 'opacity-0')}`}>Set Internship Cycle</span>
+                          <span className={`font-semibold text-white text-base text-center transition-all duration-300 overflow-hidden ${((hovered || formOpen) ? 'max-w-xs opacity-100 delay-300' : 'max-w-0 opacity-0')}`}
+                            style={{ display: 'inline-block' }}>
+                            Set Internship Cycle
+                          </span>
                         </span>
                       ) : (
                         <span className="flex items-center justify-center w-10 h-10">
