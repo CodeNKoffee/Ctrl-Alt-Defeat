@@ -374,7 +374,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
               {isNotesOpen && isChatOpen ? (
                 // Both Notes and Chat are open
                 <>
-                  <div className="h-1/2 pb-1">
+                  <div className="h-3/5 pb-1">
                     <NotesPanelContent
                       notes={notes}
                       setNotes={setNotes}
@@ -382,7 +382,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
                       handleToggleNotes={handleToggleNotes}
                     />
                   </div>
-                  <div className="h-1/2 pt-1">
+                  <div className="h-2/5 pt-1">
                     <ChatPanelContent
                       chatMessages={messages}
                       currentMessage={newMessage}
