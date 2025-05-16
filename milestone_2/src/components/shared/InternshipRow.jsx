@@ -362,5 +362,6 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         mockReviews={mockCompanyReviews}
       />
     </div>
+    </div>
   );
 }
