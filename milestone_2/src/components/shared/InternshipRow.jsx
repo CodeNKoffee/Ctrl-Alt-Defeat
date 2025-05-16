@@ -278,7 +278,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
               <p className="text-base font-bold text-gray-800">
                 {internship.rate || "Rate not specified"}
               </p>
-              <p className="text-xs text-gray-500 mt-0.5">
+              {/* <p className="text-xs text-gray-500 mt-0.5">
                 {type === 'my' && `started on ${formatDate(internship.startDate)}`}
                 {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
                 {(type === 'browsing' || type === 'recommended') && timeAgo(internship.postedDate)}
@@ -304,7 +304,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             {type === 'recommended' || type === 'browsing' ? (
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
-                className={`px-4 py-2 text-white rounded-lg transition w-full sm:w-auto text-sm ${isApplied
+                className={`px-4 py-2 text-white rounded-full transition w-full sm:w-auto text-sm  hover:-translate-y-0.5 ${isApplied
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-[#5DB2C7] hover:bg-[#4796a8]'
                   }`}
@@ -317,7 +317,32 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         </div>
       </div>
       {/* Tooltip component instance - only needed if type='applied' might be rendered */}
-      {type === 'applied' && <Tooltip id="status-tooltip" style={{ zIndex: 50 }} />}
+      {type === 'applied' && (
+        <Tooltip
+          id="status-tooltip"
+          className="!bg-[#2a5f74] !text-white !border-0 !rounded-xl !shadow-xl !px-4 !py-2 !text-sm !font-normal !leading-snug !min-w-[200px] !max-w-[260px] !transition-all"
+          style={{
+            background: '#2a5f74',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '0.75rem',
+            boxShadow: '0 8px 32px 0 rgba(42,95,116,0.18)',
+            padding: '0.5rem 1rem',
+            fontSize: '0.95rem',
+            minWidth: '200px',
+            maxWidth: '260px',
+            fontWeight: 400,
+            zIndex: 9999
+          }}
+          arrowColor="#2a5f74"
+          render={({ content }) => (
+            <div className="flex flex-col">
+              <span className="font-semibold text-base mb-1">Status Info</span>
+              <span className="text-white text-sm font-normal">{content}</span>
+            </div>
+          )}
+        />
+      )}
 
       {/* Upload Documents Modal */}
       <UploadDocuments

@@ -255,8 +255,9 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
           <div className="flex justify-between items-center">
             {compact && (
               <button
+              // className="w-full bg-metallica-blue-600 text-white font-semibold rounded-full py-2 mt-2 shadow-md hover:bg-metallica-blue-700 transition hover:-translate-y-0.5"
                 onClick={toggleExpanded}
-                className="text-[var(--metallica-blue-600)] hover:text-[var(--metallica-blue-800)] text-xs font-medium"
+                className="text-[var(--metallica-blue-600)] hover:text-[var(--metallica-blue-800)] text-xs font-medium hover:-translate-y-0.5"
               >
                 {expanded ? 'See less' : 'See more'}
               </button>

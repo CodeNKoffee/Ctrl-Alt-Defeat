@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { CSEN_Courses, DMET_Courses, BioTech_Courses, Law_Courses } from "../../constants/mockData";
+import CustomButton from "./shared/CustomButton";
 
 export default function ReportCreationDashboard({ onAddTile, onCancel, initialReport, hideTitle = false, showSaveDraftButton = true, isEditMode = false }) {
   const [filledReport, setReport] = useState({
@@ -67,7 +68,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
-    onAddTile({ ...filledReport, courses: selectedCourses });
+    onAddTile({ ...filledReport, courses: selectedCourses, status: isEditMode ? 'updated' : 'submitted' });
     if (onCancel) onCancel();
     setReport({ internshipTitle: '', introduction: '', body: '', conclusion: '', courses: [], major: '' });
     setSelectedCourses([]);
@@ -75,7 +76,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(21,43,55,0.55)] backdrop-blur-sm overflow-auto py-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-[2px] overflow-auto py-8">
       <div className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-6xl max-h-[90vh] overflow-hidden border-2 border-[#2A5F74] animate-fade-in relative">
         {/* Close button styled like CallModal.jsx */}
         <button
@@ -89,12 +90,12 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
         <div className="flex flex-col lg:flex-row h-[calc(90vh)]">
           {/* Left side - Form */}
           <div className="lg:w-1/2 p-6 overflow-y-auto bg-[#F0F9FB]">
-            <h2 className="text-xl font-bold text-[#2A5F74] mb-6 text-left flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-              </svg>
-              {isEditMode ? "Edit Internship Report" : "Create Internship Report"}
-            </h2>
+              <h2 className="text-xl font-bold text-[#2A5F74] mb-6 text-left flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+                {isEditMode ? "Edit Internship Report" : "Create Internship Report"}
+              </h2>
 
             <form className="space-y-4" onSubmit={handleModalSubmit}>
               <div>
@@ -204,33 +205,43 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                 />
               </div>
               <div className="flex gap-2 mt-6">
-                <button
+                <CustomButton
                   type="submit"
-                  className="flex-1 px-4 py-3 mt-4 text-white bg-[#318FA8] rounded-full font-semibold hover:bg-[#2a5c67] transition-all text-sm border border-[#5DB2C7] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-                >
-                  {isEditMode ? "Submit" : "Submit Report"}
-                </button>
+                  variant="primary"
+                  text={isEditMode ? "Submit" : "Submit Report"}
+                  fullWidth
+                />
                 {showSaveDraftButton && (
-                  <button
+                  <CustomButton
                     type="button"
+                    variant="secondary"
+                    text={
+                      draftStatus === 'saving'
+                        ? 'Saving...'
+                        : draftStatus === 'saved'
+                        ? '✓ Saved!'
+                        : (isEditMode ? 'Save Changes' : 'Save Draft')
+                    }
+                    fullWidth
+                    disabled={draftStatus === 'saving' || draftStatus === 'saved'}
+                    isLoading={draftStatus === 'saving'}
+                    loadingText="Saving..."
                     onClick={async () => {
                       setDraftStatus('saving');
                       await new Promise(res => setTimeout(res, 800));
-                      onAddTile({ ...filledReport, courses: selectedCourses, status: 'draft' });
+                      setReport({ ...filledReport, courses: selectedCourses }); 
+                      onAddTile({ 
+                        ...filledReport, 
+                        courses: selectedCourses, 
+                        status: isEditMode ? 'updated_draft' : 'draft' 
+                      });
                       setDraftStatus('saved');
                       setTimeout(() => {
                         setDraftStatus("");
                         if (onCancel) onCancel();
                       }, 1500);
                     }}
-                    className={`flex-1 px-4 py-3 mt-4 rounded-full font-semibold text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all ${draftStatus === 'saved'
-                      ? 'bg-green-100 text-green-800 border border-green-500'
-                      : 'text-[#318FA8] bg-metallica-blue-100 border border-[#5DB2C7] hover:bg-metallica-blue-300 hover:text-metallica-blue-50'
-                      }`}
-                    disabled={draftStatus === 'saving' || draftStatus === 'saved'}
-                  >
-                    {draftStatus === 'saving' ? 'Saving...' : draftStatus === 'saved' ? '✓ Saved!' : (isEditMode ? 'Save Changes' : 'Save Draft')}
-                  </button>
+                  />
                 )}
               </div>
             </form>

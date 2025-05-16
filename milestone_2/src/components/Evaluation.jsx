@@ -127,7 +127,7 @@ export default function Evaluation({
           })}
         </div>
         <button
-          className="w-full bg-[#3298BA] text-white font-semibold rounded-full py-2 mt-2 shadow-md hover:bg-[#65bedc] transition"
+          className="w-full bg-metallica-blue-600 text-white font-semibold rounded-full py-2 mt-2 shadow-md hover:bg-metallica-blue-700 transition hover:-translate-y-0.5"
           onClick={onExpand}
           onKeyDown={(e) => e.key === 'Enter' && onExpand()}
           aria-expanded={expanded}
@@ -188,7 +188,7 @@ export default function Evaluation({
             {/* Modal Footer with CustomButtons */}
             <div className="flex justify-end gap-3">
               <CustomButton
-                variant="secondary"
+                variant="primary"
                 text="Cancel"
                 onClick={() => setShowDeleteConfirm(false)}
               />
