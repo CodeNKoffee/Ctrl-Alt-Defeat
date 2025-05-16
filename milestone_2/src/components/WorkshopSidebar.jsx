@@ -21,7 +21,8 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
         setRegistrationFeedback('success');
         setTimeout(() => {
           setRegistrationFeedback(null);
-          // Add any post-registration logic here if needed
+          // Close the sidebar after showing success message
+          if (onClose) onClose();
         }, 1500);
         break;
     }

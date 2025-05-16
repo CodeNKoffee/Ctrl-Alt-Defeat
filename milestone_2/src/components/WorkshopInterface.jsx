@@ -317,14 +317,6 @@ export default function WorkshopInterface({ workshop, onBack }) {
 
       {/* Main content area - video section */}
       <div className="flex-grow flex relative overflow-hidden">
-        {/* Back button overlay in top-left corner */}
-        <button
-          onClick={onBack}
-          className="absolute top-4 left-4 z-10 bg-black/50 text-white hover:bg-black/70 p-2 rounded-full transition-colors"
-        >
-          <FontAwesomeIcon icon={faArrowLeft} /> Back to Workshops
-        </button>
-
         {/* Main video area */}
         <video
           ref={videoRef}

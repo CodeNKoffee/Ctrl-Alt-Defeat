@@ -71,7 +71,7 @@ button {
 }
 
 button:hover {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .font-ibm-plex-sans {
