@@ -328,7 +328,7 @@ const CallModal = ({ isOpen, onClose }) => {
 
                 {/* Header Tab */}
                 <div className="relative z-10">
-                  <div className="inline-block bg-metallica-blue-600 text-white px-6 py-3 rounded-tl-2xl rounded-br-xl shadow-md">
+                  <div className="inline-block text-metallica-950 px-6 py-3 rounded-tl-2xl rounded-br-xl">
                     <h3 className="text-xl font-young-serif font-medium">Video Calls & Appointments</h3>
                   </div>
                 </div>

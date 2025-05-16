@@ -58,7 +58,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
     if (file) {
       setSelectedImage(file);
       setFieldValue('profileImage', file);
-      
+
       // Create preview URL
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -74,11 +74,11 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
     const r = parseInt(baseColor.slice(1, 3), 16);
     const g = parseInt(baseColor.slice(3, 5), 16);
     const b = parseInt(baseColor.slice(5, 7), 16);
-    
+
     // Create lighter and darker variants for gradient
     const lighterColor = `rgb(${Math.min(r + 40, 255)}, ${Math.min(g + 40, 255)}, ${Math.min(b + 40, 255)})`;
     const darkerColor = `rgb(${Math.max(r - 40, 0)}, ${Math.max(g - 40, 0)}, ${Math.max(b - 40, 0)})`;
-    
+
     return `linear-gradient(135deg, ${lighterColor} 0%, ${darkerColor} 100%)`;
   };
 
@@ -88,46 +88,46 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
     const r = parseInt(baseColor.slice(1, 3), 16);
     const g = parseInt(baseColor.slice(3, 5), 16);
     const b = parseInt(baseColor.slice(5, 7), 16);
-    
+
     // Create color variations for the theme
     const primary = baseColor;
-    
+
     // Darker variation for secondary color (30% darker)
     const secondaryR = Math.max(r * 0.7, 0);
     const secondaryG = Math.max(g * 0.7, 0);
     const secondaryB = Math.max(b * 0.7, 0);
     const secondary = `#${Math.round(secondaryR).toString(16).padStart(2, '0')}${Math.round(secondaryG).toString(16).padStart(2, '0')}${Math.round(secondaryB).toString(16).padStart(2, '0')}`;
-    
+
     // Lighter variation for accent color (20% lighter)
     const accentR = Math.min(r * 1.3, 255);
     const accentG = Math.min(g * 1.3, 255);
     const accentB = Math.min(b * 1.3, 255);
     const accent = `#${Math.round(accentR).toString(16).padStart(2, '0')}${Math.round(accentG).toString(16).padStart(2, '0')}${Math.round(accentB).toString(16).padStart(2, '0')}`;
-    
+
     // Very dark variation for text (60% darker)
     const textR = Math.max(r * 0.4, 0);
     const textG = Math.max(g * 0.4, 0);
     const textB = Math.max(b * 0.4, 0);
     const text = `#${Math.round(textR).toString(16).padStart(2, '0')}${Math.round(textG).toString(16).padStart(2, '0')}${Math.round(textB).toString(16).padStart(2, '0')}`;
-    
+
     // Very light variation for background (90% lighter with some opacity)
     const backgroundR = Math.min(255, r + (255 - r) * 0.9);
     const backgroundG = Math.min(255, g + (255 - g) * 0.9);
     const backgroundB = Math.min(255, b + (255 - b) * 0.9);
     const background = `#${Math.round(backgroundR).toString(16).padStart(2, '0')}${Math.round(backgroundG).toString(16).padStart(2, '0')}${Math.round(backgroundB).toString(16).padStart(2, '0')}`;
-    
+
     return { primary, secondary, accent, text, background };
   };
 
   const handleSubmit = (values) => {
     // Create a copy of the values to handle special cases (like the image)
     const updatedProfileData = { ...values };
-    
+
     // If we have a new image selected with a preview URL, use it
     if (selectedImage) {
       updatedProfileData.profileImage = imagePreview;
     }
-    
+
     onProfileUpdate(updatedProfileData);
   };
 
@@ -135,11 +135,11 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
   const renderStarRating = (name, value, onChange) => {
     const maxStars = 5;
     const stars = [];
-    
+
     for (let i = 1; i <= maxStars; i++) {
       stars.push(
-        <span 
-          key={i} 
+        <span
+          key={i}
           className={`trait-star ${i <= value ? 'filled' : 'empty'}`}
           onClick={() => onChange(name, i)}
         >
@@ -147,7 +147,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
         </span>
       );
     }
-    
+
     return (
       <div className="trait-stars">
         {stars}
@@ -160,13 +160,28 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
   return (
     <div className="update-profile-modal">
       <div className="update-profile-content">
-        <div className="modal-header">
-          Edit Profile
-          <button 
-            className="modal-close-btn"
+        {/* New header style inspired by UploadDocuments.jsx */}
+        <div style={{
+          position: "relative",
+          padding: "24px 32px",
+          marginBottom: "4px"
+        }}>
+          <h1 style={{
+            color: "#2A5F74",
+            fontSize: "22px",
+            fontWeight: "600",
+            textAlign: "left"
+          }}>
+            Edit Profile
+          </h1>
+
+          {/* Close button from CallModal.jsx */}
+          <button
+            className="absolute top-3 right-3 z-20 flex items-center justify-center w-7 h-7 rounded-full shadow-sm bg-gray-200/70 hover:bg-gray-300/90 transition-colors"
             onClick={onClose}
+            aria-label="Close modal"
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
           </button>
         </div>
 
@@ -219,11 +234,11 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                       <label htmlFor="cardColor" className="color-picker-label">
                         <FontAwesomeIcon icon={faPalette} /> Profile Color Theme
                       </label>
-                                            <div className="color-picker-wrapper">
+                      <div className="color-picker-wrapper">
                         <div className="color-picker-clickable">
-                          <input 
-                            type="color" 
-                            id="cardColor" 
+                          <input
+                            type="color"
+                            id="cardColor"
                             name="cardColor"
                             value={values.cardColor}
                             onChange={(e) => {
@@ -240,9 +255,9 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                           </div>
                         </div>
                         <div className="theme-preview-container">
-                          <div 
+                          <div
                             className="color-preview"
-                            style={{ 
+                            style={{
                               background: generateGradient(values.cardColor)
                             }}
                           >
@@ -306,8 +321,8 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                   placeholder="Trait name"
                                   className="trait-name-input"
                                 />
-                                <button 
-                                  type="button" 
+                                <button
+                                  type="button"
                                   className="remove-button"
                                   onClick={() => remove(index)}
                                 >
@@ -383,8 +398,8 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                   name={`skills.${index}`}
                                   className="skill-input"
                                 />
-                                <button 
-                                  type="button" 
+                                <button
+                                  type="button"
                                   className="remove-skill"
                                   onClick={() => remove(index)}
                                 >
