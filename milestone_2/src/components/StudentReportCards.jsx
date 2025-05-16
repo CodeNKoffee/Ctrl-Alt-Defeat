@@ -81,9 +81,9 @@ export default function StudentReportCards() {
 
   return (
     <div className="p-8 flex justify-center">
-      <div className="w-full max-w-6xl">
+      <div className="w-full max-w-6xl px-2">
         {/* System info box like SCAD reports */}
-        <div className="bg-white p-6 rounded-lg shadow-md mb-8 border border-metallica-blue-200">
+        <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
           <h2 className="text-2xl font-semibold text-[#2a5f74] mb-4">Student Report Management System</h2>
           <p className="text-gray-700 mb-2">
             Welcome to your Student Report Dashboard. Here you can:
