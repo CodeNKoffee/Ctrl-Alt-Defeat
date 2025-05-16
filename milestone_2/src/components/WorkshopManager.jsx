@@ -56,7 +56,7 @@ export default function WorkshopManager() {
   const workshopToDelete = confirmDelete ? workshops.find(w => w.id === confirmDelete) : null;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto py-4">
       <div className="w-full max-w-7xl mx-auto">
         {/* Title and Add Workshop Button */}
         <div className="flex flex-wrap justify-between items-center mb-8">
