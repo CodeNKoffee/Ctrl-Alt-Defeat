@@ -87,7 +87,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
       <div className={containerClasses}>
         {/* Edit/Delete Icon Buttons (top-right, only here) */}
         <div
-          className="absolute top-4 right-4 flex items-center gap-2 z-10"
+          className="absolute top-2 right-4 flex items-center gap-2 z-10"
           style={{ backgroundColor: 'rgba(255,255,255,0.8)', padding: '4px', borderRadius: '4px' }}
           onClick={e => e.stopPropagation()}
         >
@@ -169,7 +169,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
           </p>
 
           {(!compact || expanded) && (
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="flex flex-col gap-2 mb-6">
               <div>
                 <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">Start Date</h4>
                 <p className="text-gray-700 text-sm">
@@ -186,10 +186,10 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
           )}
 
           {compact && !expanded && (
-            <div className="flex justify-between text-xs mb-2">
+            <div className="flex flex-col text-xs mb-2 space-y-1">
               <div className="truncate pr-1">
                 <span className="font-medium text-[var(--metallica-blue-700)]">Start:</span>{' '}
-                {post.startDate ? new Date(post.startDate).toLocaleDateString() : "Not specified"}
+                {post.startDate ? formatDate(post.startDate) : "Not specified"}
               </div>
               <div className="truncate">
                 <span className="font-medium text-[var(--metallica-blue-700)]">Duration:</span>{' '}

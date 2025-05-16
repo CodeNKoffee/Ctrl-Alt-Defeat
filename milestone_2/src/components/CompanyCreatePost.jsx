@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import DatePicker from './DatePicker';
 import { format, isBefore, startOfDay, isValid, parseISO } from 'date-fns';
+import CustomButton from './shared/CustomButton';
+import DatePicker from './DatePicker';
 
 export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost, isEditing, onClose }) {
   const [form, setForm] = useState({
@@ -42,15 +43,15 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
     }
   };
 
-  const handleDateChange = (date) => {
-    const updatedForm = { ...form, startDate: date };
-    setForm(updatedForm);
+  // const handleDateChange = (date) => {
+  //   const updatedForm = { ...form, startDate: date };
+  //   setForm(updatedForm);
 
-    // Send updated form data to parent for live preview
-    if (onFormChange) {
-      onFormChange(updatedForm);
-    }
-  };
+  //   // Send updated form data to parent for live preview
+  //   if (onFormChange) {
+  //     onFormChange(updatedForm);
+  //   }
+  // };
 
   const handleSkillInputChange = (e) => {
     setSkillInput(e.target.value);
@@ -90,6 +91,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!form.startDate) return;
     onAddPost(form);
     const resetForm = {
       title: '',
@@ -189,12 +191,28 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Start Date</label>
+        <label className={labelClasses}>Start Date <span className="text-red-500">*</span></label>
         <div className="mt-1">
-          <DatePicker 
-            selectedDate={form.startDate}
-            onDateChange={handleDateChange}
-            disabled={disablePastDates}
+          <DatePicker
+            selectedDate={form.startDate ? new Date(form.startDate) : null}
+            onDateChange={date => {
+              if (date && isValid(date)) {
+                const formatted = format(date, 'yyyy-MM-dd');
+                setForm(f => ({ ...f, startDate: formatted }));
+                if (onFormChange) onFormChange({ ...form, startDate: formatted });
+              } else {
+                setForm(f => ({ ...f, startDate: '' }));
+                if (onFormChange) onFormChange({ ...form, startDate: '' });
+              }
+            }}
+            value={form.startDate}
+            disabled={false}
+            inputProps={{
+              readOnly: false,
+              placeholder: 'Select a date',
+              className: inputClasses + ' cursor-pointer bg-white',
+              onFocus: e => e.target.blur && e.target.blur(), // Remove if DatePicker handles focus
+            }}
           />
         </div>
         {!form.startDate && (
@@ -226,7 +244,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">Full-time</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">Full-time</span>
           </label>
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -237,7 +255,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">Part-time</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">Part-time</span>
           </label>
         </div>
       </div>
@@ -254,7 +272,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">Remote</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">Remote</span>
           </label>
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -265,7 +283,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">On-site</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">On-site</span>
           </label>
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -276,7 +294,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">Hybrid</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">Hybrid</span>
           </label>
         </div>
       </div>
@@ -358,21 +376,19 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
 
       <div className="pt-2">
         {isEditing ? (
-          <CustomSaveButton
+          <CustomButton
             type="submit"
             variant="secondary"
             loadingText="Saving"
-          >
-            Save Changes
-          </CustomSaveButton>
+            text="Save Changes"
+          />
         ) : (
-          <CustomCreateButton
+          <CustomButton
             type="submit"
             variant="primary"
             loadingText="Creating"
-          >
-            Create Post
-          </CustomCreateButton>
+            text="Create Post"
+          />
         )}
       </div>
     </form>
