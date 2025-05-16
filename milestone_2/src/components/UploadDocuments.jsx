@@ -483,48 +483,23 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '30px' }}>
-          <button
+          <CustomButton
             onClick={handleCancelAndClose}
-            style={{
-              backgroundColor: '#C41E3A',
-              color: 'white',
-              padding: '12px 40px',
-              borderRadius: '50px',
-              border: 'none',
-              fontSize: '16px',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              width: '200px',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              transition: 'background-color 0.2s ease'
-            }}
-            onMouseOver={(e) => e.target.style.backgroundColor = '#A01830'}
-            onMouseOut={(e) => e.target.style.backgroundColor = '#C41E3A'}
-          >
-            Cancel
-          </button>
-          <button
+            variant="danger"
+            text="Cancel"
+            style={{ width: '200px' }}
+          />
+          <CustomButton
             onClick={handleActualSubmit}
+            variant="primary"
+            text="Upload"
             disabled={!resumeFile || !resumeUploadComplete || isResumeUploading}
-            style={{
-              backgroundColor: '#318FA8',
-              color: 'white',
-              padding: '12px 40px',
-              borderRadius: '50px',
-              border: 'none',
-              fontSize: '16px',
-              fontWeight: 'bold',
-              cursor: !resumeFile || !resumeUploadComplete || isResumeUploading ? 'not-allowed' : 'pointer',
+            isLoading={isResumeUploading}
+            style={{ 
               width: '200px',
-              opacity: (!resumeFile || !resumeUploadComplete || isResumeUploading) ? 0.7 : 1,
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              transition: 'background-color 0.2s ease'
+              opacity: (!resumeFile || !resumeUploadComplete || isResumeUploading) ? 0.7 : 1
             }}
-            onMouseOver={(e) => !e.target.disabled && (e.target.style.backgroundColor = '#287A8F')} // Darker shade for hover
-            onMouseOut={(e) => !e.target.disabled && (e.target.style.backgroundColor = '#318FA8')}
-          >
-            Upload
-          </button>
+          />
         </div>
       </div>
     </div>
