@@ -140,7 +140,7 @@ export default function CompanyPost() {
                   <div>
                     <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Job Type</h4>
                     <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      {[{ label: 'All Types', value: 'all' }, { label: 'Full-time', value: 'Full-time' }, { label: 'Part-time', value: 'Part-time' }, { label: 'Internship', value: 'Internship' }].map(option => (
+                      {[{ label: 'All Types', value: 'all' }, { label: 'Full-time', value: 'Full-time' }, { label: 'Part-time', value: 'Part-time' }, { label: 'Internship', value: 'Internship' }, { label: 'Contract (dummy)', value: 'Contract' }].map(option => (
                         <label key={option.value} className="flex items-center space-x-3 cursor-pointer px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-[#D9F0F4]">
                           <input
                             type="radio"
@@ -148,7 +148,7 @@ export default function CompanyPost() {
                             value={option.value}
                             checked={option.value === 'all' ? activeFilters.jobType.length === 0 : activeFilters.jobType[0] === option.value}
                             onChange={() => handleFilterClick('jobType', option.value)}
-                            className="h-4 w-4 text-metallica-blue-off-charts focus:ring-metallica-blue-off-charts"
+                            className="h-4 w-4 accent-[#3298BA] border-[#3298BA] focus:ring-2 focus:ring-[#3298BA] focus:ring-opacity-25"
                           />
                           <span className={`text-sm text-[#2a5f74] ${option.value === 'all' && activeFilters.jobType.length === 0 ? 'font-semibold' : ''} ${activeFilters.jobType[0] === option.value ? 'font-semibold' : ''}`}>{option.label}</span>
                         </label>
@@ -160,7 +160,7 @@ export default function CompanyPost() {
                   <div>
                     <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Job Setting</h4>
                     <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      {[{ label: 'All Settings', value: 'all' }, { label: 'Remote', value: 'Remote' }, { label: 'On-site', value: 'On-site' }, { label: 'Hybrid', value: 'Hybrid' }].map(option => (
+                      {[{ label: 'All Settings', value: 'all' }, { label: 'Remote', value: 'Remote' }, { label: 'On-site', value: 'On-site' }, { label: 'Hybrid', value: 'Hybrid' }, { label: 'Flexible (dummy)', value: 'Flexible' }].map(option => (
                         <label key={option.value} className="flex items-center space-x-3 cursor-pointer px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-[#D9F0F4]">
                           <input
                             type="radio"
@@ -168,7 +168,7 @@ export default function CompanyPost() {
                             value={option.value}
                             checked={option.value === 'all' ? activeFilters.jobSetting.length === 0 : activeFilters.jobSetting[0] === option.value}
                             onChange={() => handleFilterClick('jobSetting', option.value)}
-                            className="h-4 w-4 text-metallica-blue-off-charts focus:ring-metallica-blue-off-charts"
+                            className="h-4 w-4 accent-[#3298BA] border-[#3298BA] focus:ring-2 focus:ring-[#3298BA] focus:ring-opacity-25"
                           />
                           <span className={`text-sm text-[#2a5f74] ${option.value === 'all' && activeFilters.jobSetting.length === 0 ? 'font-semibold' : ''} ${activeFilters.jobSetting[0] === option.value ? 'font-semibold' : ''}`}>{option.label}</span>
                         </label>
@@ -180,7 +180,7 @@ export default function CompanyPost() {
                   <div>
                     <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Payment Status</h4>
                     <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      {[{ label: 'All Statuses', value: 'all' }, { label: 'Paid', value: 'Paid' }, { label: 'Unpaid', value: 'Unpaid' }].map(option => (
+                      {[{ label: 'All Statuses', value: 'all' }, { label: 'Paid', value: 'Paid' }, { label: 'Unpaid', value: 'Unpaid' }, { label: 'Partially Paid (dummy)', value: 'Partially Paid' }].map(option => (
                         <label key={option.value} className="flex items-center space-x-3 cursor-pointer px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-[#D9F0F4]">
                           <input
                             type="radio"
@@ -188,7 +188,7 @@ export default function CompanyPost() {
                             value={option.value}
                             checked={option.value === 'all' ? activeFilters.paymentStatus.length === 0 : activeFilters.paymentStatus[0] === option.value}
                             onChange={() => handleFilterClick('paymentStatus', option.value)}
-                            className="h-4 w-4 text-metallica-blue-off-charts focus:ring-metallica-blue-off-charts"
+                            className="h-4 w-4 accent-[#3298BA] border-[#3298BA] focus:ring-2 focus:ring-[#3298BA] focus:ring-opacity-25"
                           />
                           <span className={`text-sm text-[#2a5f74] ${option.value === 'all' && activeFilters.paymentStatus.length === 0 ? 'font-semibold' : ''} ${activeFilters.paymentStatus[0] === option.value ? 'font-semibold' : ''}`}>{option.label}</span>
                         </label>

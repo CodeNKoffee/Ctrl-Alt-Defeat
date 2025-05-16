@@ -556,7 +556,7 @@ function ApplicationsView() {
               selectedStatus={selectedStatus}
               onStatusChange={setSelectedStatus}
               statusConfig={STATUS_CONFIG}
-              primaryFilterName="Internship Position"
+              primaryFilterName="Filter"
               selectedPrimaryFilter={selectedInternship}
               onPrimaryFilterChange={setSelectedInternship}
               primaryFilterOptions={MOCK_INTERNSHIPS}

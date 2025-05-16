@@ -193,7 +193,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
   });
 
   return (
-    <div className="container mx-auto px-4 pt-0 pb-8">
+    <div className="container mx-auto pt-0 pb-8">
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center backdrop-blur-sm overflow-auto py-8">
           <div className="bg-white rounded-lg shadow-xl w-[90%] max-w-6xl max-h-[90vh] overflow-hidden">

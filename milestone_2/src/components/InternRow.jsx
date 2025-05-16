@@ -169,6 +169,7 @@ const InternRow = ({ intern, onSelect, onEvaluate }) => {
                 onClick={() => onEvaluate(intern.id)}
                 text="Evaluate Intern"
                 width="w-fit sm:w-auto"
+                className="py-2"
               />
             )}
           </div>

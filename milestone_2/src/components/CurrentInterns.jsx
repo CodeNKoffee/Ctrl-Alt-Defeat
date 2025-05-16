@@ -3,6 +3,7 @@ import { useState } from "react";
 import { mockStudents } from '../../constants/mockData';
 import InternRow from './InternRow';
 import CompanyEvaluationModal from './CompanyEvaluationModal';
+import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
 
 // Basic styling for tabs (default state)
 const statusColors = {
@@ -124,7 +125,7 @@ export default function CurrentInterns() {
   });
 
   return (
-    <div className="max-w-3xl mx-auto p-4 mb-4 flex flex-col items-start">
+    <div className="mx-auto py-4 mb-4 flex flex-col items-start">
       {/* Evaluation Modal */}
       {evaluationModalOpen && selectedIntern && (
         <CompanyEvaluationModal
@@ -134,8 +135,8 @@ export default function CurrentInterns() {
           evaluationToEdit={null}
         />
       )}
-      <div className="flex flex-col gap-4 mb-6 w-full">
-        <div className="w-full">
+      <div className="flex flex-col gap-0 mb-6 w-full">
+        {/* <div className="w-full">
           <input
             type="text"
             placeholder="Search interns by name or job title..."
@@ -143,7 +144,15 @@ export default function CurrentInterns() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full p-2 pl-4 pr-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-transparent text-sm"
           />
-       </div>
+      </div> */}
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search by student, company or supervisor..."
+          selectedStatus={activeTab}
+          onStatusChange={setActiveTab}
+          primaryFilterName="Filters"
+        />
         <div className="flex flex-wrap gap-2 w-full">
           {['all', 'current', 'completed', 'evaluated'].map((tab) => (
 <button
