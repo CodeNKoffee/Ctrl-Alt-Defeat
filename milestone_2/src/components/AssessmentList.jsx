@@ -31,16 +31,13 @@ export default function AssessmentList() {
     return "grid-cols-4";
   };
 
-  // Card container width
+  // Card container width - adjusted to prevent overlap
   const getCardContainerClass = () => {
     const sidebarOpen = !!selectedAssessment;
-    if (sidebarOpen || windowWidth < 768) {
-      return "max-w-2xl w-full";
+    if (sidebarOpen) {
+      return "max-w-xl w-full";  // Smaller max-width when sidebar is open
     }
-    if (!sidebarOpen && windowWidth >= 768 && windowWidth < 1280) {
-      return "max-w-md w-full";
-    }
-    return "max-w-md w-full";
+    return "max-w-md w-full";    // Default size when sidebar is closed
   };
 
   return (
@@ -55,12 +52,12 @@ export default function AssessmentList() {
 
       {/* Main content area with relative positioning */}
       <div className="relative">
-        {/* Assessment grid - will adjust width when sidebar is open */}
-        <div className={`transition-all duration-300 ease-in-out ${selectedAssessment ? "md:pr-[50%] lg:pr-[33%]" : "pr-0"}`}>
-          <div className={`grid ${getGridColumns()} gap-5`}>
+        {/* Assessment grid - adjusted spacing when sidebar is open */}
+        <div className={`transition-all duration-300 ease-in-out ${selectedAssessment ? "md:pr-[calc(33%+24px)] lg:pr-[calc(33%+32px)]" : "pr-0"}`}>
+          <div className={`grid ${getGridColumns()} gap-6`}>
             {mockAssessments.map((assessment) => (
               <div key={assessment.id} className="flex justify-center">
-                <div className={`w-full ${getCardContainerClass()} pr-2`}>
+                <div className={`${getCardContainerClass()}`}>
                   <AssessmentCard
                     assessment={assessment}
                     onClick={setSelectedAssessment}
@@ -72,7 +69,7 @@ export default function AssessmentList() {
           </div>
         </div>
 
-        {/* Fixed sidebar */}
+        {/* Fixed sidebar - ensure it doesn't overlap with content */}
         <AssessmentSidebar
           assessment={selectedAssessment}
           onClose={() => setSelectedAssessment(null)}

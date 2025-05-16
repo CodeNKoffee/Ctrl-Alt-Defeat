@@ -297,11 +297,6 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     }`}
                 >
                   {item.label}
-                  {item.requiresPro && (
-                    <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
-                      PRO
-                    </span>
-                  )}
                 </span>
 
                 {item.requiresPro && !isAccessible && isExpanded && (
