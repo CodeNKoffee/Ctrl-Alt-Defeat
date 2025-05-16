@@ -3,89 +3,43 @@ import AssessmentCard from "./AssessmentCard";
 import AssessmentSidebar from "./AssessmentSidebar";
 import { mockAssessments } from "../../constants/mockData";
 
-export default function AssessmentList({ sidebarExpanded }) {
+export default function AssessmentList() {
   const [selectedAssessment, setSelectedAssessment] = useState(null);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
-  // Listen to window resize to adjust layout
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Reset the sidebar content when a new assessment is selected
-  useEffect(() => {
-    if (selectedAssessment) {
-      setSelectedAssessment(selectedAssessment);
-    }
-  }, [selectedAssessment]);
-
-  // Determine grid columns based on sidebars and screen width
+  // Responsive grid columns logic
   const getGridColumns = () => {
-    const mainSidebarOpen = sidebarExpanded !== false; // Default to true if prop not provided
-    const detailSidebarOpen = !!selectedAssessment;
-
-    // When both sidebars are open - always show 1 card per row
-    if (detailSidebarOpen && mainSidebarOpen) {
+    const sidebarOpen = !!selectedAssessment;
+    if (sidebarOpen && windowWidth >= 768) {
       return "grid-cols-1";
     }
-
-    // When only detail sidebar is open (main sidebar is closed)
-    if (detailSidebarOpen && !mainSidebarOpen) {
-      // For smaller screens still use 1 column
-      if (windowWidth < 1280) {
-        return "grid-cols-1";
-      }
-      // For larger screens use 2 columns
-      return "grid-cols-2";
-    }
-
-    // When only main sidebar is open (no detail sidebar)
-    if (!detailSidebarOpen && mainSidebarOpen) {
-      if (windowWidth < 768) {
-        return "grid-cols-1";
-      } else if (windowWidth < 1280) {
-        return "grid-cols-2";
-      } else {
-        return "grid-cols-3";
-      }
-    }
-
-    // When both sidebars are closed - maximum columns
-    if (windowWidth < 768) {
+    if (!sidebarOpen && windowWidth < 768) {
       return "grid-cols-1";
-    } else if (windowWidth < 1280) {
+    }
+    if (!sidebarOpen && windowWidth < 1280) {
       return "grid-cols-2";
-    } else if (windowWidth < 1536) {
+    }
+    if (!sidebarOpen && windowWidth < 1536) {
       return "grid-cols-3";
-    } else {
-      return "grid-cols-4";
     }
+    return "grid-cols-4";
   };
 
-  // Get container class for the card based on sidebar states
+  // Card container width
   const getCardContainerClass = () => {
-    const mainSidebarOpen = sidebarExpanded !== false;
-    const detailSidebarOpen = !!selectedAssessment;
-
-    // When only one card per row, make it wider
-    if ((detailSidebarOpen && mainSidebarOpen) || windowWidth < 768) {
+    const sidebarOpen = !!selectedAssessment;
+    if (sidebarOpen || windowWidth < 768) {
       return "max-w-2xl w-full";
     }
-
-    // Two cards per row
-    if ((detailSidebarOpen && !mainSidebarOpen) ||
-      (windowWidth >= 768 && windowWidth < 1280)) {
+    if (!sidebarOpen && windowWidth >= 768 && windowWidth < 1280) {
       return "max-w-md w-full";
     }
-
-    // For 3 or more cards per row
     return "max-w-md w-full";
   };
 
@@ -102,7 +56,7 @@ export default function AssessmentList({ sidebarExpanded }) {
       {/* Main content area with relative positioning */}
       <div className="relative">
         {/* Assessment grid - will adjust width when sidebar is open */}
-        <div className={`transition-all duration-300 ease-in-out ${selectedAssessment ? "md:pr-[55%] lg:pr-[38%]" : "pr-0"}`}>
+        <div className={`transition-all duration-300 ease-in-out ${selectedAssessment ? "md:pr-[50%] lg:pr-[33%]" : "pr-0"}`}>
           <div className={`grid ${getGridColumns()} gap-5`}>
             {mockAssessments.map((assessment) => (
               <div key={assessment.id} className="flex justify-center">
