@@ -105,7 +105,7 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
         <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-        
+
         <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
@@ -117,7 +117,7 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
             <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Personalized Internship Matches</div>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">This page showcases internship opportunities specifically curated for you based on your unique profile and preferences.</p>
-              
+
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
@@ -143,7 +143,7 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
                   </li>
                 </ul>
               </div>
-              
+
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 Take time to explore these tailored suggestions—they represent opportunities where your specific talents and interests could truly shine.
               </p>
@@ -311,7 +311,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-        
+
         <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
@@ -321,9 +321,9 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
               OPPORTUNITIES
             </div>
             <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Browse Career-Building Internships</div>
-            <div className="text-gray-700 mb-3 relative"> 
+            <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.</p>
-              
+
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
@@ -345,7 +345,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
                   </li>
                 </ul>
               </div>
-              
+
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience!
               </p>
@@ -450,7 +450,7 @@ function AppliedInternshipsView() {
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-        
+
         <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -464,7 +464,7 @@ function AppliedInternshipsView() {
             <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Internship Applications</div>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">Track and manage all your internship applications in one centralized dashboard.</p>
-              
+
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="flex justify-center space-x-4 mb-2 mx-auto">
@@ -504,7 +504,7 @@ function AppliedInternshipsView() {
                   </li>
                 </ul>
               </div>
-              
+
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 Use the filters to sort through your applications by company, position, or status!
               </p>
@@ -572,7 +572,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         <div className="absolute -left-12 -bottom-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-45 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute right-40 top-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute left-20 top-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-        
+
         <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -586,7 +586,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
             <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Internships Dashboard</div>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">Manage all your internships in one place.</p>
-              
+
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="flex space-x-4 mb-2">
@@ -618,7 +618,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
                   </li>
                 </ul>
               </div>
-              
+
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 Use the filters to sort through your internship history or search for specific opportunities.
               </p>
@@ -641,6 +641,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         statuses={['current', 'completed', 'evaluated']}
         onTriggerReportCreate={onTriggerReportCreate}
         showSidebar={true}
+        showDatePicker={true}
         userMajor={userMajor}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -662,7 +663,7 @@ function NotificationsView() {
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-        
+
         <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -676,7 +677,7 @@ function NotificationsView() {
             <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Notifications Center</h2>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">Stay informed and never miss important updates related to your professional development journey.</p>
-              
+
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <h3 className="font-medium text-[#2a5f74] mb-2">Your Notification Hub:</h3>
@@ -690,7 +691,7 @@ function NotificationsView() {
                     </div>
                     <p className="text-sm text-gray-600">Status changes and feedback on your internship applications</p>
                   </div>
-                  
+
                   <div className="p-3 rounded-lg border border-green-200 bg-green-50">
                     <div className="flex items-center gap-2 mb-1.5">
                       <div className="flex-shrink-0 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
@@ -700,7 +701,7 @@ function NotificationsView() {
                     </div>
                     <p className="text-sm text-gray-600">New comments or status changes on your submitted reports</p>
                   </div>
-                  
+
                   <div className="p-3 rounded-lg border border-purple-200 bg-purple-50">
                     <div className="flex items-center gap-2 mb-1.5">
                       <div className="flex-shrink-0 w-5 h-5 bg-purple-500 rounded-full flex items-center justify-center">
@@ -710,7 +711,7 @@ function NotificationsView() {
                     </div>
                     <p className="text-sm text-gray-600">Upcoming sessions you've registered for and last-minute availabilities</p>
                   </div>
-                  
+
                   <div className="p-3 rounded-lg border border-orange-200 bg-orange-50">
                     <div className="flex items-center gap-2 mb-1.5">
                       <div className="flex-shrink-0 w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center">
@@ -720,7 +721,7 @@ function NotificationsView() {
                     </div>
                     <p className="text-sm text-gray-600">Important dates for application submissions and report due dates</p>
                   </div>
-                  
+
                   <div className="p-3 rounded-lg border border-indigo-200 bg-indigo-50">
                     <div className="flex items-center gap-2 mb-1.5">
                       <div className="flex-shrink-0 w-5 h-5 bg-indigo-500 rounded-full flex items-center justify-center">
@@ -730,7 +731,7 @@ function NotificationsView() {
                     </div>
                     <p className="text-sm text-gray-600">New internships or workshops matching your profile</p>
                   </div>
-                  
+
                   <div className="p-3 rounded-lg border border-yellow-200 bg-yellow-50">
                     <div className="flex items-center gap-2 mb-1.5">
                       <div className="flex-shrink-0 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
@@ -775,7 +776,7 @@ function ProfileView() {
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-        
+
         <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -789,7 +790,7 @@ function ProfileView() {
             <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Student Profile Management</h2>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">Your professional profile is your digital portfolio and the foundation of your career development journey.</p>
-              
+
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <h3 className="font-medium text-[#2a5f74] mb-2">Why Your Profile Matters:</h3>
@@ -812,7 +813,7 @@ function ProfileView() {
                   </li>
                 </ul>
               </div>
-              
+
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 Remember: Update your profile regularly to reflect new skills, experiences, and career goals as you grow professionally.
               </p>
@@ -852,7 +853,7 @@ function WorkshopsView({ sidebarExpanded }) {
         <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute right-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute left-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-        
+
         <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -868,7 +869,7 @@ function WorkshopsView({ sidebarExpanded }) {
             </div>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">Enhance your skills and expand your professional knowledge through our comprehensive workshop center.</p>
-              
+
               {/* Workshop Types */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
@@ -923,7 +924,7 @@ function WorkshopsView({ sidebarExpanded }) {
                   </li>
                 </ul>
               </div>
-              
+
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 Each workshop is carefully designed to address critical skills and knowledge areas that complement your academic learning and prepare you for professional success.
               </p>
@@ -972,7 +973,7 @@ function OnlineAssessmentsView() {
         <div className="absolute -right-12 -bottom-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-45 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 top-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 top-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-        
+
         <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -988,7 +989,7 @@ function OnlineAssessmentsView() {
             </div>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">Discover your professional strengths and preferences through our comprehensive assessment tools.</p>
-              
+
               {/* Assessment Benefits */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
@@ -1046,7 +1047,7 @@ function OnlineAssessmentsView() {
                   </div>
                 </div>
               </div>
-              
+
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 Results are analyzed to create your personalized profile that helps tailor recommendations throughout the platform.
               </p>
@@ -1097,7 +1098,7 @@ function MyReportsView() {
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-        
+
         <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1111,7 +1112,7 @@ function MyReportsView() {
             <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Student Report Management System</h2>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">Welcome to your Student Report Dashboard. Here you can monitor and manage all your internship reports in one place.</p>
-              
+
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1122,7 +1123,7 @@ function MyReportsView() {
                     </div>
                     <p className="text-sm text-gray-600">Your report has been submitted but not yet reviewed. No action required.</p>
                   </div>
-                  
+
                   <div className="bg-orange-50 p-3 rounded-lg border border-orange-200">
                     <div className="flex items-center gap-2 mb-1.5">
                       <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs font-semibold">FLAGGED</span>
@@ -1130,7 +1131,7 @@ function MyReportsView() {
                     </div>
                     <p className="text-sm text-gray-600">Review faculty feedback and resubmit your updated report.</p>
                   </div>
-                  
+
                   <div className="bg-red-50 p-3 rounded-lg border border-red-200">
                     <div className="flex items-center gap-2 mb-1.5">
                       <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-semibold">REJECTED</span>
@@ -1138,7 +1139,7 @@ function MyReportsView() {
                     </div>
                     <p className="text-sm text-gray-600">Did not meet requirements. See faculty comments for guidance.</p>
                   </div>
-                  
+
                   <div className="bg-green-50 p-3 rounded-lg border border-green-200">
                     <div className="flex items-center gap-2 mb-1.5">
                       <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">ACCEPTED</span>
@@ -1148,7 +1149,7 @@ function MyReportsView() {
                   </div>
                 </div>
               </div>
-              
+
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 Remember to review feedback from faculty on your submitted reports to improve future submissions!
               </p>
@@ -1207,7 +1208,7 @@ function MyEvaluationsView() {
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-        
+
         <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1221,7 +1222,7 @@ function MyEvaluationsView() {
             <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Company Evaluation Management</h2>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">Manage your evaluations for companies where you completed internships. Track both submitted and draft evaluations here.</p>
-              
+
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1232,7 +1233,7 @@ function MyEvaluationsView() {
                     </div>
                     <p className="text-sm text-gray-600">Evaluations you have completed and submitted for your internship experiences.</p>
                   </div>
-                  
+
                   <div className="bg-purple-50 p-3 rounded-lg border border-purple-200">
                     <div className="flex items-center gap-2 mb-1.5">
                       <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-semibold">DRAFT</span>
@@ -1242,7 +1243,7 @@ function MyEvaluationsView() {
                   </div>
                 </div>
               </div>
-              
+
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 Your evaluations provide valuable feedback to companies and help future students make informed decisions.
               </p>
