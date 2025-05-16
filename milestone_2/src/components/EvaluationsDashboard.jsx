@@ -45,10 +45,10 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
     });
   };
 
@@ -63,7 +63,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
     }
 
     let tabEvaluations = [...evaluations];
-    
+
     if (stakeholder === "student" || stakeholder === "company") {
       tabEvaluations = tabEvaluations.filter(ev => ev.status === activeTab);
     }
@@ -76,23 +76,23 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
         (ev.company && ev.company.toLowerCase().includes(search))
       );
     }
-    
+
     if (startDate) {
       const start = new Date(startDate);
       tabEvaluations = tabEvaluations.filter(ev => new Date(ev.date) >= start);
     }
-    
+
     if (endDate) {
       const end = new Date(endDate);
       end.setHours(23, 59, 59, 999);
       tabEvaluations = tabEvaluations.filter(ev => new Date(ev.date) <= end);
     }
-    
+
     setFilteredEvaluations(tabEvaluations);
   }, [evaluations, activeTab, searchTerm, startDate, endDate, stakeholder]);
 
   const handleUpdateEvaluation = (updatedEvaluation) => {
-    const updatedEvaluations = evaluations.map(item => 
+    const updatedEvaluations = evaluations.map(item =>
       item.id === updatedEvaluation.id ? updatedEvaluation : item
     );
     setEvaluations(updatedEvaluations);
@@ -133,15 +133,15 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                 {stakeholder === "student"
                   ? "Your Company Internship Evaluations"
                   : stakeholder === "company"
-                  ? "Your Student Evaluations"
-                  : "Student Evaluations"}
+                    ? "Your Student Evaluations"
+                    : "Student Evaluations"}
               </div>
               <div className="text-gray-700 mb-2">
                 {stakeholder === "student"
                   ? " Below are the evaluations you submitted for the companies where you completed internships and evaluations you have saved as drafts and are awaiting your submission."
                   : stakeholder === "company"
-                  ? "Below are the evaluations you submitted for your interns. You can view both submitted and draft evaluations."
-                  : "Below are the evaluations of students that have completed their internships at the various companies they have access to through the system."}
+                    ? "Below are the evaluations you submitted for your interns. You can view both submitted and draft evaluations."
+                    : "Below are the evaluations of students that have completed their internships at the various companies they have access to through the system."}
               </div>
             </div>
           </div>
@@ -152,21 +152,19 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
             <div className="inline-flex rounded-full bg-gray-100 p-1">
               <button
                 onClick={() => setActiveTab("submitted")}
-                className={`px-6 py-2 rounded-full font-semibold transition-colors bg-[#eaf3f7] text-metallica-blue-700 ${
-                  activeTab === "submitted"
-                    ? "px-6 py-2 rounded-full font-semibold transition-colors bg-metallica-blue-600 text-white"
-                    : "px-6 py-2 rounded-full font-semibold transition-colors bg-[#eaf3f7] text-metallica-blue-700"
-                }`}
+                className={`px-6 py-2 rounded-full font-semibold transition-colors bg-[#eaf3f7] text-metallica-blue-700 ${activeTab === "submitted"
+                  ? "px-6 py-2 rounded-full font-semibold transition-colors bg-metallica-blue-600 text-white"
+                  : "px-6 py-2 rounded-full font-semibold transition-colors bg-[#eaf3f7] text-metallica-blue-700"
+                  }`}
               >
                 Submitted Evaluations
               </button>
               <button
                 onClick={() => setActiveTab("saved")}
-                className={`px-6 py-2 rounded-full font-semibold transition-colors bg-[#eaf3f7] text-metallica-blue-700 ${
-                  activeTab === "saved"
-                    ? "px-6 py-2 rounded-full font-semibold transition-colors bg-metallica-blue-600 text-white"
-                    : "px-6 py-2 rounded-full font-semibold transition-colors bg-[#eaf3f7] text-metallica-blue-700"
-                }`}
+                className={`px-6 py-2 rounded-full font-semibold transition-colors bg-[#eaf3f7] text-metallica-blue-700 ${activeTab === "saved"
+                  ? "px-6 py-2 rounded-full font-semibold transition-colors bg-metallica-blue-600 text-white"
+                  : "px-6 py-2 rounded-full font-semibold transition-colors bg-[#eaf3f7] text-metallica-blue-700"
+                  }`}
               >
                 Saved as Draft
               </button>
@@ -179,19 +177,19 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
               <h2 className="text-2xl text-metallica-blue-800 font-semibold mb-4 md:mb-0">Student Evaluations</h2>
             </div>
-            
+
             <div className="flex items-center gap-3 mb-4">
               <div className="relative flex-grow">
-                <SearchBar 
+                <SearchBar
                   searchTerm={searchTerm}
                   setSearchTerm={setSearchTerm}
                   placeholder="Search by student, company or supervisor..."
                   className="w-full"
                 />
               </div>
-              
-              <button 
-                onClick={() => setShowFilters(!showFilters)} 
+
+              <button
+                onClick={() => setShowFilters(!showFilters)}
                 className={`flex-shrink-0 flex items-center justify-center px-4 py-2.5 rounded-lg transition-colors ${isFiltersActive ? 'bg-metallica-blue-600 text-white' : 'bg-metallica-blue-100 text-metallica-blue-800'}`}
               >
                 <FontAwesomeIcon icon={faFilter} className={showFilters ? "mr-2" : ""} />
@@ -202,9 +200,9 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                   </span>
                 )}
               </button>
-              
+
               {isFiltersActive && (
-                <button 
+                <button
                   onClick={clearFilters}
                   className="flex-shrink-0 flex items-center justify-center px-4 py-2.5 bg-red-100 text-red-800 rounded-lg hover:bg-red-200 transition-colors"
                 >
@@ -213,13 +211,13 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                 </button>
               )}
             </div>
-            
+
             {isFiltersActive && (
               <div className="flex flex-wrap gap-2 mb-4">
                 {searchTerm && (
                   <span className="inline-flex items-center px-3 py-1 rounded-full bg-metallica-blue-100 text-metallica-blue-800 text-sm">
                     Search: {searchTerm}
-                    <button 
+                    <button
                       onClick={() => setSearchTerm('')}
                       className="ml-2 text-metallica-blue-800 hover:text-metallica-blue-600 focus:outline-none"
                     >
@@ -231,7 +229,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                   <span className="inline-flex items-center px-3 py-1 rounded-full bg-metallica-blue-100 text-metallica-blue-800 text-sm">
                     <FontAwesomeIcon icon={faCalendar} className="mr-1" />
                     From: {formatDate(startDate)}
-                    <button 
+                    <button
                       onClick={clearStartDate}
                       className="ml-2 text-metallica-blue-800 hover:text-metallica-blue-600 focus:outline-none"
                     >
@@ -243,7 +241,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                   <span className="inline-flex items-center px-3 py-1 rounded-full bg-metallica-blue-100 text-metallica-blue-800 text-sm">
                     <FontAwesomeIcon icon={faCalendar} className="mr-1" />
                     To: {formatDate(endDate)}
-                    <button 
+                    <button
                       onClick={clearEndDate}
                       className="ml-2 text-metallica-blue-800 hover:text-metallica-blue-600 focus:outline-none"
                     >
@@ -253,7 +251,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                 )}
               </div>
             )}
-            
+
             {showFilters && (
               <div className="mb-6 p-4 bg-metallica-blue-50 rounded-lg border border-metallica-blue-200">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -298,19 +296,19 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
             )}
           </div>
         )}
-              
+
         <div className="w-full flex flex-wrap justify-start gap-6 relative bg-[#f4fafd] rounded-2xl shadow-md p-6">
           {filteredEvaluations && filteredEvaluations.length > 0 ? (
             filteredEvaluations.map((evaluation, idx) => (
               <div
                 key={idx}
-                className="flex-shrink-0 flex-grow-0 basis-[23%] max-w-[23%] min-w-[270px] mb-16"
+                className="w-[270px] mb-6"
               >
                 {stakeholder === "company" ? (
                   <div className="bg-white rounded-xl shadow p-5 border border-[#E2F4F7] flex flex-col gap-3 h-full relative">
                     {/* Draft badge for company drafts, styled as absolute top-left corner */}
                     {activeTab === "saved" && (
-                      <span className="absolute top-0 left-0 bg-amber-100 text-amber-800 px-2 py-1 text-xs font-medium z-40 rounded-tl-xl rounded-br-xl" style={{boxShadow: '0 2px 6px 0 rgba(0,0,0,0.04)'}}>Draft</span>
+                      <span className="absolute top-0 left-0 bg-amber-100 text-amber-800 px-2 py-1 text-xs font-medium z-40 rounded-tl-xl rounded-br-xl" style={{ boxShadow: '0 2px 6px 0 rgba(0,0,0,0.04)' }}>Draft</span>
                     )}
                     {/* Edit & Delete icons only for drafts */}
                     {activeTab === "saved" && (
@@ -348,7 +346,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                     {/* Fun star rating if available */}
                     {typeof evaluation.overallRating === 'number' && (
                       <div className="flex items-center justify-center mb-2">
-                        {[1,2,3,4,5].map((star) => (
+                        {[1, 2, 3, 4, 5].map((star) => (
                           <svg
                             key={star}
                             className={`w-5 h-5 ${star <= (evaluation.overallRating || 0) ? 'text-yellow-400' : 'text-gray-200'}`}
@@ -399,7 +397,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                                 <li key={skill} className="flex items-center gap-2 bg-[#f4fafd] rounded-lg px-2 py-1 shadow-sm">
                                   <span className="text-xs font-medium text-[#2A5F74] flex-1">{skill}</span>
                                   <span className="inline-flex items-center gap-1 font-bold text-[#B58525] text-base">
-                                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#F8E7BE"/><text x="50%" y="55%" textAnchor="middle" fill="#B58525" fontSize="10" fontWeight="bold" dy=".3em">{rating}</text></svg>
+                                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#F8E7BE" /><text x="50%" y="55%" textAnchor="middle" fill="#B58525" fontSize="10" fontWeight="bold" dy=".3em">{rating}</text></svg>
                                   </span>
                                 </li>
                               ))}
@@ -467,16 +465,16 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
             </div>
           )}
         </div>
-        
+
         {stakeholder !== "company" && expandedIndex !== null && (
-          <div 
-            className="fixed inset-0 bg-black/20 z-10" 
+          <div
+            className="fixed inset-0 bg-black/20 z-10"
             onClick={() => setExpandedIndex(null)}
             aria-hidden="true"
           />
         )}
       </div>
-      
+
       {stakeholder === "company" && showEditModal && (
         <CompanyEvaluationModal
           isOpen={showEditModal}
