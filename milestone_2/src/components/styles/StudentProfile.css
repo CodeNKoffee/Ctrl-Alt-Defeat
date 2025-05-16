@@ -699,7 +699,7 @@
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  border: 3px solid var(--metallica-blue-200);
+  /* border: 3px solid var(--metallica-blue-200); */
 }
 
 .update-profile-form {
