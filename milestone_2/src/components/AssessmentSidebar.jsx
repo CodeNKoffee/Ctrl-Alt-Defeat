@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';// Correct import path
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';// Correct import path
 
 
 const likertOptions = [
@@ -63,7 +63,13 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
       {assessment && !testStarted && !testCompleted && (
         <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
           <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+            <button
+              className="flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
+              onClick={onClose}
+              aria-label="Close sidebar"
+            >
+              <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
+            </button>
           </div>
           <div className="overflow-y-auto flex-1 px-0">
             <div className="flex flex-col items-center">
@@ -98,7 +104,13 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
       {assessment && testStarted && !testCompleted && (
         <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative overflow-y-auto">
           <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+            <button
+              className="flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
+              onClick={onClose}
+              aria-label="Close sidebar"
+            >
+              <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
+            </button>
           </div>
           {/* Make progress bar sticky */}
           <div className="sticky top-0 z-10 bg-white px-6 pt-2 pb-4 border-b border-gray-100">
@@ -132,7 +144,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
                             ${answers[index] === option.id
                               ? option.selected + ' border-[3px] shadow-md'
                               : option.color + ' border'}
-                            cursor-pointer transition-all duration-100 ease-in-out // Faster transition
+                            cursor-pointer duration-100 ease-in-out // Faster transition
                           `}
                         />
                         <span className="text-[10px] text-gray-600 text-center w-16">{option.text}</span>
@@ -155,7 +167,13 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
       {testCompleted && (
         <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
           <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+            <button
+              className="flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
+              onClick={onClose}
+              aria-label="Close sidebar"
+            >
+              <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
+            </button>
           </div>
           <div className="flex-1 flex items-center justify-center px-4 pb-8">
             <div className="bg-white rounded-xl shadow p-8 w-full max-w-md flex flex-col items-center">

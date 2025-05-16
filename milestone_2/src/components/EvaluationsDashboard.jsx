@@ -122,30 +122,6 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
   return (
     <>
       <div className="w-full max-w-7xl mx-auto px-2 md:px-6">
-        <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
-          <div className="flex items-center gap-4 w-full md:w-auto">
-            <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
-            </div>
-            <div>
-              <p className="text-sm text-gray-400"></p>
-              <div className="text-2xl font-semibold text-[#2a5f74] mb-4">
-                {stakeholder === "student"
-                  ? "Your Company Internship Evaluations"
-                  : stakeholder === "company"
-                  ? "Your Student Evaluations"
-                  : "Student Evaluations"}
-              </div>
-              <div className="text-gray-700 mb-2">
-                {stakeholder === "student"
-                  ? " Below are the evaluations you submitted for the companies where you completed internships and evaluations you have saved as drafts and are awaiting your submission."
-                  : stakeholder === "company"
-                  ? "Below are the evaluations you submitted for your interns. You can view both submitted and draft evaluations."
-                  : "Below are the evaluations of students that have completed their internships at the various companies they have access to through the system."}
-              </div>
-            </div>
-          </div>
-        </div>
 
         {(stakeholder === "student" || stakeholder === "company") && (
           <div className="flex justify-start mb-6 px-4 gap-10">
