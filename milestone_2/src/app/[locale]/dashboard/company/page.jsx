@@ -8,7 +8,7 @@ import ApplicationsList from '@/components/ApplicationsList';
 import ApplicationsFilterBar from '@/components/shared/ApplicationsFilterBar';
 import CurrentInterns from '@/components/CurrentInterns';
 import EvaluationsDashboard from '@/components/EvaluationsDashboard';
-import { MOCK_COMPANY_EVALUATIONS, mockStudents } from '../../../../../constants/mockData';
+import { MOCK_COMPANY_EVALUATIONS, mockStudents, TawabiryInternships } from '../../../../../constants/mockData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faXmark, faChevronDown, faBriefcase, faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
 import { useState as useReactState, useEffect } from 'react';
@@ -121,9 +121,9 @@ function CompanyPostsView() {
           INTERNSHIP POSTS
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
-        
+
         <CompanyPostsInfoCard />
-        
+
         {/* Modern search and filter bar */}
         <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
           <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
@@ -413,10 +413,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   // Define the info card JSX/Component here for clarity
   const BrowseInternshipsInfoCard = () => (
     <div className="w-full max-w-6xl mx-auto">
-       <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
-          BROWSE INTERNSHIPS
-            <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
-          </h1>
+      <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+        BROWSE INTERNSHIPS
+        <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+      </h1>
       <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
@@ -463,7 +463,6 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     <div className='w-full px-6 py-4'>
       <div className="px-4 pt-6">
         <BrowseInternshipsInfoCard />
-
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
@@ -472,36 +471,11 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           customFilterSections={customFilterSections}
           primaryFilterName="Filters"
         />
-
-        {/* ALL / RECOMMENDED Tabs */}
-        <div className="w-full mx-auto">
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
-                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                }`}
-            >
-              ALL
-            </button>
-            <button
-              onClick={() => setActiveTab('recommended')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recommended'
-                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                }`}
-            >
-              RECOMMENDED
-            </button>
-          </div>
-        </div>
       </div>
-
       <InternshipList
         title=""
-        internships={hasActiveFilters ? filteredInternships : baseInternships}
-        type="browsing"
+        internships={TawabiryInternships}
+        type="company-view"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
@@ -571,9 +545,9 @@ function ApplicationsView() {
             APPLICATIONS MANAGEMENT
             <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
           </h1>
-          
+
           <ApplicationInfoCard />
-          
+
           <div className="dropdown-overlay">
             <ApplicationsFilterBar
               searchTerm={searchTerm}
@@ -606,10 +580,10 @@ function CurrentInternsView() {
   // Info card for Intern Management Dashboard
   const InternsInfoCard = () => (
     <div className="w-full max-w-6xl mx-auto">
-       <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
-            INTERN MANAGEMENT DASHBOARD
-            <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
-          </h1>
+      <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+        INTERN MANAGEMENT DASHBOARD
+        <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+      </h1>
       <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
