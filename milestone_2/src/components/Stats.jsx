@@ -90,7 +90,7 @@ topCourses: [
   };
 
   return (
-    <div className="p-0 min-h-screen">
+    <div className="py-4 min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center mb-6 px-4">
         <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">

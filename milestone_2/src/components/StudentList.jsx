@@ -62,7 +62,7 @@ export default function StudentList({ students }) {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-6 relative">
+    <div className="w-full mx-auto relative py-4">
       {/* Title */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
