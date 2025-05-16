@@ -127,7 +127,7 @@ export default function DashboardLayout({
             </div>
           </div>
 
-          <div className="bg-metallica-blue-50 rounded-xl shadow-sm overflow-hidden border border-gray-200 flex-1">
+          <div className="bg-metallica-blue-50 rounded-xl shadow-sm border border-gray-200">
             {title && (
               <div className="w-full px-10 pt-6 pb-2">
                 <div className="w-full max-w-6xl mx-auto">

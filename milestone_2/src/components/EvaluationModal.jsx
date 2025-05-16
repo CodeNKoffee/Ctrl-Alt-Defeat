@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Save } from 'lucide-react';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
+import CustomButton from "./shared/CustomButton";
 
 const skillAttributes = [
   "Ability to adapt to change",
@@ -49,23 +51,26 @@ export default function EvaluationModal({
   const [submitting, setSubmitting] = useState(false);
   const [draftStatus, setDraftStatus] = useState("");
   const isEditMode = !!evaluationToEdit;
+  const [initialFormState, setInitialFormState] = useState({});
 
-  // Pre-fill form when editing an existing evaluation
+  // Pre-fill form when editing an existing evaluation and store initial state
   useEffect(() => {
+    const newInitialState = {
+      supervisorName: evaluationToEdit?.supervisorName || "",
+      supervisorEmail: evaluationToEdit?.supervisorEmail || "",
+      tasks: evaluationToEdit?.tasks || "",
+      environment: evaluationToEdit?.environment || "",
+      rating: evaluationToEdit?.rating || 0,
+      recommend: evaluationToEdit?.recommend || "yes",
+      skillRatings: evaluationToEdit?.skillRatings || Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
+      otherComments: evaluationToEdit?.otherComments || ""
+    };
     if (evaluationToEdit) {
-      setForm({
-        supervisorName: evaluationToEdit.supervisorName || "",
-        supervisorEmail: evaluationToEdit.supervisorEmail || "",
-        tasks: evaluationToEdit.tasks || "",
-        environment: evaluationToEdit.environment || "",
-        rating: evaluationToEdit.rating || 0,
-        recommend: evaluationToEdit.recommend || "yes",
-        skillRatings: evaluationToEdit.skillRatings || Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
-        otherComments: evaluationToEdit.otherComments || ""
-      });
+      setForm(newInitialState);
+      setInitialFormState(newInitialState);
     } else {
-      // Reset form when modal is opened for a new evaluation
-      setForm({
+      // Reset form for new evaluation
+      const defaultState = {
         supervisorName: "",
         supervisorEmail: "",
         tasks: "",
@@ -74,9 +79,45 @@ export default function EvaluationModal({
         recommend: "yes",
         skillRatings: Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
         otherComments: ""
-      });
+      };
+      setForm(defaultState);
+      setInitialFormState(defaultState); // Also set initial state for new form for consistency
     }
   }, [evaluationToEdit, isOpen]);
+
+  // Check if form is dirty (only in edit mode)
+  const isFormDirty = () => {
+    if (!isEditMode) return false; // Not applicable if not editing
+    return JSON.stringify(form) !== JSON.stringify(initialFormState);
+  };
+
+  // Basic form validity check (customize as needed)
+  const isFormValid = () => {
+    if (evaluationType === "student") {
+      return (
+        form.supervisorName.trim() !== "" &&
+        form.supervisorEmail.trim() !== "" &&
+        form.tasks.trim() !== "" &&
+        form.environment.trim() !== "" &&
+        form.rating > 0
+      );
+    } else if (evaluationType === "company") {
+      // For company, all skill ratings are implicitly valid as they default to 3.
+      // Add other checks if there are specific required fields for company evals.
+      return true; 
+    }
+    return false;
+  };
+  
+  // Validity for saving as draft (can be less strict)
+  const isFormForDraftValid = () => {
+    // Example: only require supervisor name for student draft
+    if (evaluationType === "student") {
+        return form.supervisorName.trim() !== "";
+    }
+    // For company, perhaps allow saving draft anytime
+    return true;
+  };
 
   if (!isOpen) return null;
 
@@ -336,46 +377,45 @@ export default function EvaluationModal({
           )}
        
           <div className="flex gap-2 mt-2 w-full">
-            <button
+            <CustomButton
               type="submit"
-              className="flex-1 px-4 py-2 mt-9 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67] transition text-sm border border-[#5DB2C7] shadow"
-              disabled={submitting}
-            >
-              {submitting ? "Submitting..." : isEditMode ? "Save Changes" : "Submit Evaluation"}
-            </button>
+              variant="primary"
+              text={isEditMode ? "Save Changes" : "Submit Evaluation"}
+              isLoading={submitting}
+              loadingText="Submitting..."
+              disabled={submitting || (isEditMode && !isFormDirty()) || !isFormValid()}
+              fullWidth
+            />
             {!isEditMode && (
-              <button
-                type="button"
-                className={`flex-1 px-4 py-2 mt-9 text-sm border shadow font-semibold transition rounded-lg ${
-                  draftStatus === 'saved' 
-                    ? 'bg-green-100 text-green-800 border-green-500' 
-                    : 'text-[#318FA8] bg-metallica-blue-100 border-[#5DB2C7] hover:bg-metallica-blue-300 hover:text-metallica-blue-50'
-                }`}
-                disabled={submitting || draftStatus === 'saving' || draftStatus === 'saved'}
+              <CustomButton
+                variant="secondary"
+                text={draftStatus === 'saved' ? '✓ Saved!' : 'Save as Draft'}
                 onClick={async () => {
                   setDraftStatus('saving');
                   await new Promise(res => setTimeout(res, 800));
-                  onSubmit({ ...form, draft: true });
+                  onSubmit({ ...form, draft: true }, false);
                   setDraftStatus('saved');
-                  // Keep "Saved!" visible for 1.5 seconds before closing
                   setTimeout(() => {
                     setDraftStatus("");
                     onClose();
                   }, 1500);
                 }}
-              >
-                {draftStatus === 'saving' ? 'Saving...' : draftStatus === 'saved' ? '✓ Saved!' : 'Save as Draft'}
-              </button>
+                isLoading={draftStatus === 'saving'}
+                loadingText="Saving..."
+                disabled={submitting || draftStatus === 'saving' || draftStatus === 'saved' || !isFormForDraftValid()}
+                icon={faSave}
+                iconPosition="left"
+                fullWidth
+              />
             )}
             {isEditMode && (
-              <button
-                type="button"
-                className="flex-1 px-4 py-2 mt-9 bg-red-200 text-red-800 border border-red-800 rounded-lg hover:bg-red-300 transition-colors"
-                disabled={submitting}
+              <CustomButton
+                variant="danger"
+                text="Cancel"
                 onClick={onClose}
-              >
-                Cancel
-              </button>
+                disabled={submitting}
+                fullWidth
+              />
             )}
           </div>
         </form>
