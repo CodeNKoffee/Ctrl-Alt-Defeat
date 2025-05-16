@@ -33,6 +33,67 @@ import EvaluationsDashboard from '@/components/EvaluationsDashboard';
 import WorkshopInterface from '@/components/WorkshopInterface';
 import ApplicationsFilterBar from '@/components/shared/ApplicationsFilterBar';
 
+// Consistent SVG Icon for Info Cards
+const InfoCardIcon = () => (
+  <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
+  </div>
+);
+
+// Info Card for Recommended Opportunities / Dashboard Home
+const RecommendedInfoCard = () => (
+  <div className="w-full mx-auto">
+    <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
+      <div className="flex items-start gap-4 w-full md:w-auto">
+        <InfoCardIcon />
+        <div className="text-left">
+          <div className="text-2xl font-semibold text-[#2a5f74] mb-4">Your Personalized Internship Matches</div>
+          <div className="text-gray-700 mb-2 space-y-3">
+            <p>This page showcases internship opportunities specifically curated for you based on your unique profile and preferences.</p>
+            <div>
+              <p className="text-metallica-blue-700 font-medium mb-1">How These Recommendations Work:</p>
+              <ul className="list-disc pl-6 text-gray-700 space-y-1">
+                <li>Matched to your specified job interests and career goals</li>
+                <li>Filtered by your preferred industries and work environments</li>
+                <li>Includes positions highly rated by previous SCAD interns</li>
+                <li>Updated regularly as new opportunities become available</li>
+              </ul>
+            </div>
+            <p className="text-metallica-blue-700 font-medium">
+              Take time to explore these tailored suggestions—they represent opportunities where your specific talents and interests could truly shine.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Info Card for My Internships
+const MyInternshipsInfoCard = () => (
+  <div className="w-full mx-auto">
+    <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
+      <div className="flex items-start gap-4 w-full md:w-auto">
+        <InfoCardIcon />
+        <div className="text-left">
+          <div className="text-2xl font-semibold text-[#2a5f74] mb-4">Your Internships Dashboard</div>
+          <div className="text-gray-700 mb-2 space-y-3">
+            <p>Manage all your internships in one place.</p>
+            <ul className="list-disc pl-6 mb-2 text-gray-700 space-y-1">
+              <li>Current internships are ongoing</li>
+              <li>Completed internships are awaiting your report and evaluation submissions</li>
+              <li>Evaluated ones have been reviewed by your supervisor</li>
+            </ul>
+            <p className="text-metallica-blue-700 font-medium">
+              Use the filters to sort through your internship history or search for specific opportunities.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 // Video Sidebar Component
 function InternshipVideoSidebar({ userMajor }) {
   return (
@@ -69,58 +130,65 @@ function InternshipVideoSidebar({ userMajor }) {
 
 // Dashboard Home View Component
 function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
-  const [personalizedInternships, setPersonalizedInternships] = useState([]);
+  const [personalizedInternshipsData, setPersonalizedInternshipsData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState('all');
-  const [selectedDate, setSelectedDate] = useState(null);
-  const { currentUser, isAuthenticated } = useSelector(state => state.auth);
+  const { currentUser } = useSelector(state => state.auth);
   const userMajor = currentUser?.major || 'Computer Science';
 
   useEffect(() => {
     const userData = currentUser || JSON.parse(sessionStorage.getItem('userSession') || localStorage.getItem('userSession') || '{}');
     if (userData) {
-      // Add mock job interests and industries if not present in userData
-      // In a real app, these would come from the user profile database
       const enhancedUserData = {
         ...userData,
         jobInterests: userData.jobInterests || ['Developer', 'Engineer', 'Data', 'UX'],
         industries: userData.industries || ['Technology', 'Media Engineering']
       };
-
       const recommendations = getRecommendedInternshipsForStudent(enhancedUserData);
-
-      // Add mock ratings from past interns (in a real app, this would come from the backend)
       const recommendationsWithRatings = recommendations.map(internship => ({
         ...internship,
-        pastInternRating: Math.floor(Math.random() * 3) + 3, // Randomly assign 3-5 star ratings
+        pastInternRating: Math.floor(Math.random() * 3) + 3,
         recommendedReason: internship.industry === enhancedUserData.industries?.[0]
           ? 'industry match'
           : (enhancedUserData.jobInterests?.some(interest =>
             internship.title.toLowerCase().includes(interest.toLowerCase())
           ) ? 'job interest match' : 'recommended by past interns')
       }));
-
-      setPersonalizedInternships(recommendationsWithRatings);
+      setPersonalizedInternshipsData(recommendationsWithRatings);
     }
   }, [currentUser]);
 
+  const filteredRecommendedInternships = personalizedInternshipsData.filter(internship =>
+    searchTerm === '' ||
+    internship.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    internship.company?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const clearAllFilters = () => {
+    setSearchTerm('');
+  };
+
   return (
     <div className="w-full px-6 py-4">
+      <div className="px-4 pt-6">
+        <RecommendedInfoCard />
+      </div>
+      <ApplicationsFilterBar
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        searchPlaceholder="Search recommended internships..."
+        onClearFilters={clearAllFilters}
+        primaryFilterName="Search"
+      />
       <InternshipList
         title=""
-        internships={personalizedInternships}
+        internships={filteredRecommendedInternships}
         type={"recommended"}
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
         userMajor={userMajor}
         isRecommended={true}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
+        customFilterPanel={<></>}
       />
     </div>
   );
@@ -253,15 +321,15 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   // Define the info card JSX/Component here for clarity
   const BrowseInternshipsInfoCard = () => (
     <div className="w-full mx-auto">
-    <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
-      <div className="flex items-start gap-4 w-full md:w-auto">
-        <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
-        </div>
-        <div className="text-left">
-          <p className="text-sm text-gray-400"></p>
-          <div className="text-2xl font-semibold text-[#2a5f74] mb-4">Browse Career-Building Internships</div>
-          <div className="text-gray-700 mb-2"> Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
+        <div className="flex items-start gap-4 w-full md:w-auto">
+          <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
+          </div>
+          <div className="text-left">
+            <p className="text-sm text-gray-400"></p>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-4">Browse Career-Building Internships</div>
+            <div className="text-gray-700 mb-2"> Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.
               <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
                 <p className="text-metallica-blue-700 font-medium">Why These Opportunities Matter:</p>
                 <li>Potential for academic credit and professional references</li>
@@ -272,10 +340,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
                 Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience and ensure it contributes meaningfully to your academic requirements.
               </p>
             </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 
   return (
@@ -388,12 +456,13 @@ function AppliedInternshipsView() {
 function MyInternshipsView({ onTriggerReportCreate }) {
   const { currentUser } = useSelector(state => state.auth);
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState('all');
+  const [selectedStatus, setSelectedStatus] = useState('all');
   const [selectedDate, setSelectedDate] = useState(null);
   const userMajor = currentUser?.major || 'Computer Science';
 
   // Mock statuses for MyInternshipsView
   const MY_INTERNSHIP_STATUSES = {
+    all: { label: "ALL" },
     current: {
       label: "CURRENT",
       color: "bg-blue-100 text-blue-800 border border-blue-400",
@@ -410,23 +479,80 @@ function MyInternshipsView({ onTriggerReportCreate }) {
       badgeColor: "bg-purple-600",
     }
   };
+  const statusKeys = ['all', 'current', 'completed', 'evaluated'];
+
+  const allMyInternships = getMyInternships();
+
+  const filteredMyInternships = allMyInternships.filter(internship => {
+    const searchTermLower = searchTerm.toLowerCase();
+    const searchMatch = searchTerm === '' ||
+      internship.title?.toLowerCase().includes(searchTermLower) ||
+      internship.company?.toLowerCase().includes(searchTermLower);
+
+    const statusMatch = selectedStatus === 'all' || internship.status === selectedStatus;
+
+    const dateMatch = !selectedDate ||
+      (internship.startDate && new Date(internship.startDate).toDateString() === new Date(selectedDate).toDateString());
+
+    return searchMatch && statusMatch && dateMatch;
+  });
+
+  const clearAllFilters = () => {
+    setSearchTerm('');
+    setSelectedStatus('all');
+    setSelectedDate(null);
+  };
 
   return (
     <div className="w-full px-6 py-4">
+      <div className="px-4 pt-6">
+        <MyInternshipsInfoCard />
+      </div>
+      <ApplicationsFilterBar
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        searchPlaceholder="Search my internships..."
+        showDatePicker={true}
+        selectedDate={selectedDate}
+        onDateChange={setSelectedDate}
+        onClearFilters={clearAllFilters}
+        primaryFilterName="Filters"
+      />
+
+      <div className="w-full max-w-6xl mx-auto my-6">
+        <div className="flex flex-wrap gap-2 items-center">
+          {statusKeys.map((statusKey) => {
+            const statusConfig = MY_INTERNSHIP_STATUSES[statusKey];
+            const isActive = selectedStatus === statusKey;
+            return (
+              <button
+                key={statusKey}
+                onClick={() => setSelectedStatus(statusKey)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${isActive
+                    ? (statusKey === 'all' ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]' : `${statusConfig.color} border-2`)
+                    : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
+                  }`}
+              >
+                <div className="flex items-center">
+                  {isActive && statusKey !== 'all' && (
+                    <span className={`inline-block w-2 h-2 rounded-full ${statusConfig.badgeColor} mr-1.5`}></span>
+                  )}
+                  {statusConfig.label}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       <InternshipList
         title=""
-        internships={getMyInternships()}
+        internships={filteredMyInternships}
         type="my"
-        statuses={['current', 'completed', 'evaluated']}
         onTriggerReportCreate={onTriggerReportCreate}
         showSidebar={true}
         userMajor={userMajor}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
+        customFilterPanel={<></>}
       />
     </div>
   );
