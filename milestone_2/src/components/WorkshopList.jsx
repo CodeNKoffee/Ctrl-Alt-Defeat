@@ -138,17 +138,17 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
 
     // When only one card per row, make it wider
     if ((detailSidebarOpen && mainSidebarOpen) || windowWidth < 768) {
-      return "max-w-2xl";
+      return "max-w-2xl w-full";
     }
 
     // Two cards per row
     if ((detailSidebarOpen && !mainSidebarOpen) ||
       (windowWidth >= 768 && windowWidth < 1280)) {
-      return "max-w-md";
+      return "max-w-md w-full";
     }
 
     // For 3 or more cards per row
-    return "max-w-md";
+    return "max-w-md w-full";
   };
 
   if (showLiveInterface && selectedWorkshop) {
@@ -175,12 +175,12 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
       </div>
 
       {/* Filter buttons */}
-      <div className="flex flex-wrap items-center gap-2 mb-8">
+      <div className="flex flex-wrap items-center gap-2 mb-8 pl-2">
         <button
           onClick={() => setActiveFilter('all')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'all'
-            ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-            : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
             }`}
         >
           ALL
@@ -188,8 +188,8 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         <button
           onClick={() => setActiveFilter('upcoming')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'upcoming'
-            ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-            : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
             }`}
         >
           UPCOMING
@@ -197,8 +197,8 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         <button
           onClick={() => setActiveFilter('live')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'live'
-            ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-            : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
             }`}
         >
           LIVE
@@ -206,8 +206,8 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         <button
           onClick={() => setActiveFilter('prerecorded')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'prerecorded'
-            ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-            : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
             }`}
         >
           PRERECORDED
@@ -222,7 +222,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
           {/* Upcoming Workshops */}
           {filteredWorkshops.upcoming.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Upcoming Workshops</h2>
+              <h2 className="text-xl font-semibold text-[#2a5f74] mb-6 pl-2">Upcoming Workshops</h2>
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.upcoming.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
@@ -242,11 +242,11 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
           {/* Live Workshops */}
           {filteredWorkshops.live.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Live Workshops</h2>
+              <h2 className="text-xl font-semibold text-[#2a5f74] mb-6 pl-2">Live Workshops</h2>
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.live.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()} px-3`}>
+                    <div className={`w-full ${getCardContainerClass()} pr-2`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}
@@ -262,11 +262,11 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
           {/* Prerecorded Workshops */}
           {filteredWorkshops.prerecorded.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Prerecorded Workshops</h2>
+              <h2 className="text-xl font-semibold text-[#2a5f74] mb-6 pl-2">Prerecorded Workshops</h2>
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.prerecorded.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()} px-3`}>
+                    <div className={`w-full ${getCardContainerClass()} pr-2`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}

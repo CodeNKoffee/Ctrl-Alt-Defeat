@@ -56,11 +56,11 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
   return (
     <div
       onClick={() => onClick(workshop)}
-      className={`bg-white border-2 border-[#B8E1E9] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden transform hover:scale-[1.02] hover:border-[#5DB2C7] flex flex-col h-full ${className}`}
+      className={`bg-white border-2 border-[#B8E1E9] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden transform hover:scale-[1.02] hover:border-[#5DB2C7] flex flex-col h-full w-full ${className}`}
       style={{ maxWidth: "100%" }}
     >
       {/* Workshop Image */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-48 overflow-hidden w-full">
         <img
           src={workshop.imageUrl}
           alt={workshop.title}
@@ -72,7 +72,7 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
       </div>
 
       {/* Content Section */}
-      <div className="p-5 flex flex-col flex-grow">
+      <div className="p-5 flex flex-col flex-grow w-full">
         {/* Category Tag */}
         <span className="text-xs text-blue-600 font-medium mb-2 block">
           {workshop.type === "live" ? "LIVE WORKSHOP" :
