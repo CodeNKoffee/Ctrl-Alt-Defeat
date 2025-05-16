@@ -228,16 +228,16 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
         </div>
 
         <div style={{
-          border: '1px dashed #318FA8', 
+          border: '1px dashed #318FA8',
           borderRadius: '12px',
-          padding: '20px', 
-          textAlign: 'left', 
+          padding: '20px',
+          textAlign: 'left',
           backgroundColor: '#F8FAFB',
-          position: 'relative', 
-          display: 'flex', 
+          position: 'relative',
+          display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center', 
-          minHeight: '180px', 
+          justifyContent: 'center',
+          minHeight: '180px',
           width: '100%',
           boxShadow: '0 2px 5px rgba(0, 0, 0, 0.05) inset',
           transition: 'all 0.2s ease'
@@ -256,25 +256,25 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
 
           {!isUploading && uploadComplete && file && (
             <div style={{
-              backgroundColor: '#F0F9FB', 
-              padding: '8px 15px', 
+              backgroundColor: '#F0F9FB',
+              padding: '8px 15px',
               borderRadius: '14px',
-              fontSize: '14px', 
-              color: '#2A5F74', 
+              fontSize: '14px',
+              color: '#2A5F74',
               wordBreak: 'break-word',
-              border: '1px solid #D9F0F4', 
-              marginTop: '20px', 
+              border: '1px solid #D9F0F4',
+              marginTop: '20px',
               position: 'relative',
-              paddingRight: '35px', 
-              width: 'calc(100% - 60px)', 
-              textAlign: 'left', 
+              paddingRight: '35px',
+              width: 'calc(100% - 60px)',
+              textAlign: 'left',
               margin: '0 auto',
               boxShadow: '0 3px 10px rgba(0, 0, 0, 0.05)',
               display: 'flex',
               alignItems: 'center',
               gap: '6px'
             }}>
-              <div style={{ 
+              <div style={{
                 background: '#D9F0F4',
                 padding: '6px',
                 borderRadius: '8px',
@@ -289,14 +289,14 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
               </div>
               {file.name}
               <button onClick={() => handleRemoveFile(type)} style={{
-                position: 'absolute', 
-                top: '50%', 
-                right: '10px', 
+                position: 'absolute',
+                top: '50%',
+                right: '10px',
                 transform: 'translateY(-50%)',
                 background: '#E0E0E0',
-                border: 'none', 
-                cursor: 'pointer', 
-                color: '#2A5F74', 
+                border: 'none',
+                cursor: 'pointer',
+                color: '#2A5F74',
                 padding: 0,
                 width: '18px',
                 height: '18px',
@@ -306,8 +306,8 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
                 justifyContent: 'center',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
               }}
-              onMouseOver={(e) => e.target.style.backgroundColor = '#D0D0D0'}
-              onMouseOut={(e) => e.target.style.backgroundColor = '#E0E0E0'}>
+                onMouseOver={(e) => e.target.style.backgroundColor = '#D0D0D0'}
+                onMouseOut={(e) => e.target.style.backgroundColor = '#E0E0E0'}>
                 <FontAwesomeIcon icon={faXmark} style={{ width: '10px', height: '10px' }} />
               </button>
             </div>
@@ -333,14 +333,14 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
               boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05)',
               transition: 'all 0.2s ease'
             }}
-            onMouseOver={(e) => {
-              e.target.style.borderColor = '#3298BA';
-              e.target.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.borderColor = '#D9F0F4';
-              e.target.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.05)';
-            }}>
+              onMouseOver={(e) => {
+                e.target.style.borderColor = '#3298BA';
+                e.target.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.borderColor = '#D9F0F4';
+                e.target.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.05)';
+              }}>
               <FontAwesomeIcon icon={faCloudArrowUp} style={{ width: '28px', height: '28px', color: '#318FA8' }} />
               <span style={{ fontWeight: '600', fontSize: '14px' }}>Upload</span>
             </button>
@@ -361,7 +361,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
       backgroundColor: 'rgba(0, 0, 0, 0.6)', display: 'flex',
-      alignItems: 'center', justifyContent: 'center', zIndex: 1000,
+      alignItems: 'center', justifyContent: 'center', zIndex: 9999,
       backdropFilter: 'blur(2px)'
     }}>
       {/* Feedback overlay */}
@@ -377,7 +377,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              zIndex: 1100,
+              zIndex: 10000,
               background: 'rgba(42, 95, 116, 0.18)'
             }}
             initial={{ opacity: 0 }}
@@ -441,24 +441,24 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
 
       {/* Main modal content */}
       <div style={{
-        backgroundColor: '#FFFFFF', 
-        padding: '24px 32px', 
+        backgroundColor: '#FFFFFF',
+        padding: '24px 32px',
         borderRadius: '16px',
-        fontFamily: 'IBM Plex Sans, sans-serif', 
+        fontFamily: 'IBM Plex Sans, sans-serif',
         width: '900px',
-        margin: '0 auto', 
-        position: 'relative', 
-        maxHeight: '90vh', 
+        margin: '0 auto',
+        position: 'relative',
+        maxHeight: '90vh',
         overflowY: 'auto',
         boxShadow: '0 12px 28px rgba(0, 0, 0, 0.25), 0 4px 10px rgba(0, 0, 0, 0.1)',
         border: '1px solid rgba(0, 0, 0, 0.1)'
       }}>
         <button onClick={handleCancelAndClose} style={{
-          position: 'absolute', top: '20px', right: '20px', 
+          position: 'absolute', top: '20px', right: '20px',
           background: '#F0F0F0',
-          border: 'none', 
-          cursor: 'pointer', 
-          fontSize: '16px', 
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: '16px',
           color: '#2A5F74',
           width: '28px',
           height: '28px',
@@ -468,15 +468,15 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
           justifyContent: 'center',
           transition: 'background-color 0.2s ease'
         }}
-        onMouseOver={(e) => e.target.style.backgroundColor = '#E0E0E0'}
-        onMouseOut={(e) => e.target.style.backgroundColor = '#F0F0F0'}>
+          onMouseOver={(e) => e.target.style.backgroundColor = '#E0E0E0'}
+          onMouseOut={(e) => e.target.style.backgroundColor = '#F0F0F0'}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
-        <h1 style={{ 
-          color: '#2A5F74', 
-          fontSize: '22px', 
-          fontWeight: '600', 
-          marginBottom: '24px', 
+        <h1 style={{
+          color: '#2A5F74',
+          fontSize: '22px',
+          fontWeight: '600',
+          marginBottom: '24px',
           textAlign: 'left',
           borderBottom: '2px solid rgba(0, 0, 0, 0.1)',
           paddingBottom: '12px'
@@ -490,28 +490,28 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
         </div>
 
         <div style={{ marginBottom: '20px' }}>
-          <label style={{ 
-            color: '#2A5F74', 
-            fontSize: '16px', 
-            fontWeight: '600', 
-            marginBottom: '10px', 
-            display: 'block', 
-            textAlign: 'left' 
+          <label style={{
+            color: '#2A5F74',
+            fontSize: '16px',
+            fontWeight: '600',
+            marginBottom: '10px',
+            display: 'block',
+            textAlign: 'left'
           }}>Write your own Cover Letter</label>
-          <textarea 
-            value={coverLetterText} 
-            onChange={handleCoverLetterChange} 
-            placeholder="Type your cover letter here..." 
+          <textarea
+            value={coverLetterText}
+            onChange={handleCoverLetterChange}
+            placeholder="Type your cover letter here..."
             style={{
-              width: '100%', 
-              height: '120px', 
-              border: '1px solid #D9F0F4', 
+              width: '100%',
+              height: '120px',
+              border: '1px solid #D9F0F4',
               borderRadius: '12px',
-              padding: '12px', 
-              fontSize: '14px', 
-              color: '#2A5F74', 
+              padding: '12px',
+              fontSize: '14px',
+              color: '#2A5F74',
               resize: 'vertical',
-              fontFamily: 'IBM Plex Sans, sans-serif', 
+              fontFamily: 'IBM Plex Sans, sans-serif',
               backgroundColor: '#F8FAFB',
               outline: 'none',
               transition: 'border-color 0.2s ease, box-shadow 0.2s ease'
@@ -528,13 +528,13 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
         </div>
 
         <div style={{ marginBottom: '20px' }}>
-          <label style={{ 
-            color: '#2A5F74', 
-            fontSize: '16px', 
-            fontWeight: '600', 
-            display: 'block', 
-            marginBottom: '10px', 
-            textAlign: 'left' 
+          <label style={{
+            color: '#2A5F74',
+            fontSize: '16px',
+            fontWeight: '600',
+            display: 'block',
+            marginBottom: '10px',
+            textAlign: 'left'
           }}>Include a link to your GitHub profile and/or website</label>
           {links.map((link, index) => (
             <div
@@ -552,19 +552,19 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
               }}
             >
               <div className="relative w-2/3">
-                <input 
-                  type="text" 
-                  value={link.value} 
-                  onChange={(e) => handleLinkChange(link.id, e.target.value)} 
-                  placeholder="https://example.com" 
+                <input
+                  type="text"
+                  value={link.value}
+                  onChange={(e) => handleLinkChange(link.id, e.target.value)}
+                  placeholder="https://example.com"
                   style={{
-                    width: '100%', 
-                    border: '1px solid #D9F0F4', 
-                    borderRadius: '10px', 
+                    width: '100%',
+                    border: '1px solid #D9F0F4',
+                    borderRadius: '10px',
                     padding: '10px 12px',
-                    fontSize: '14px', 
-                    color: '#2A5F74', 
-                    fontFamily: 'IBM Plex Sans, sans-serif', 
+                    fontSize: '14px',
+                    color: '#2A5F74',
+                    fontFamily: 'IBM Plex Sans, sans-serif',
                     backgroundColor: '#F8FAFB',
                     outline: 'none',
                     transition: 'border-color 0.2s ease, box-shadow 0.2s ease'
@@ -644,7 +644,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
             text="Upload"
             disabled={!resumeFile || !resumeUploadComplete || isResumeUploading}
             isLoading={isResumeUploading}
-            style={{ 
+            style={{
               width: '200px',
               opacity: (!resumeFile || !resumeUploadComplete || isResumeUploading) ? 0.7 : 1
             }}

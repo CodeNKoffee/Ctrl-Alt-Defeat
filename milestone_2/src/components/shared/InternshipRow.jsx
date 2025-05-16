@@ -278,13 +278,14 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
               <p className="text-base font-bold text-gray-800">
                 {internship.rate || "Rate not specified"}
               </p>
-              {/* <p className="text-xs text-gray-500 mt-0.5">
+              <p className="text-xs text-gray-500 mt-0.5">
                 {type === 'my' && `started on ${formatDate(internship.startDate)}`}
                 {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
                 {(type === 'browsing' || type === 'recommended') && timeAgo(internship.postedDate)}
               </p>
             </div>
-            {/* Only show Create Report for completed status in 'my' internships, remove all other buttons */}
+
+            {/* Only show Create Report for completed status in 'my' internships */}
             {type === 'my' && internship.status === 'completed' && (
               <div className="flex gap-2">
                 <button
@@ -295,24 +296,24 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                 </button>
                 <button
                   onClick={() => setShowEvaluation(true)}
-                  className=" px-3 py-1 text-sm rounded-full font-medium bg-green-100 text-green-800 border-green-400 border hover:bg-green-200 "
+                  className="px-3 py-1 text-sm rounded-full font-medium bg-green-100 text-green-800 border-green-400 border hover:bg-green-200"
                 >
                   Evaluate Company
                 </button>
               </div>
             )}
-            {type === 'recommended' || type === 'browsing' ? (
+
+            {/* Apply button for recommended or browsing internships */}
+            {(type === 'recommended' || type === 'browsing') && (
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
-                className={`px-4 py-2 text-white rounded-full transition w-full sm:w-auto text-sm  hover:-translate-y-0.5 ${isApplied
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-[#5DB2C7] hover:bg-[#4796a8]'
+                className={`px-4 py-2 text-white rounded-full transition sm:w-auto text-sm hover:-translate-y-0.5 ${isApplied ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#5DB2C7] hover:bg-[#4796a8]'
                   }`}
                 disabled={isApplied}
               >
                 {isApplied ? 'Applied' : 'Apply'}
               </button>
-            ) : null}
+            )}
           </div>
         </div>
       </div>
@@ -361,7 +362,6 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         }}
         mockReviews={mockCompanyReviews}
       />
-    </div>
     </div>
   );
 }
