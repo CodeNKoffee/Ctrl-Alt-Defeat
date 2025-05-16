@@ -76,7 +76,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(21,43,55,0.55)] backdrop-blur-sm overflow-auto py-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-[2px] overflow-auto py-8">
       <div className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-6xl max-h-[90vh] overflow-hidden border-2 border-[#2A5F74] animate-fade-in relative">
         {/* Close button styled like CallModal.jsx */}
         <button
