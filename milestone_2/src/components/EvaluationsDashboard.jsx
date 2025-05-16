@@ -132,7 +132,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
 
   return (
     <>
-      <div className="w-full max-w-7xl mx-auto px-2 md:px-6">
+      <div className="w-full max-w-7xl mx-auto px-2 md:px-2">
           {/* <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
             <div className="flex items-center gap-4 w-full md:w-auto">
               <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
