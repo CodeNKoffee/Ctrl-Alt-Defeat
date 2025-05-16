@@ -86,7 +86,7 @@ const sidebarConfig = {
   ],
 };
 
-export default function Sidebar({ userType, onViewChange, currentView, currentUser }) {
+export default function Sidebar({ userType, onViewChange, currentView, currentUser, onToggle }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [prevView, setPrevView] = useState(currentView);
@@ -153,7 +153,11 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
   }, [currentView, prevView]);
 
   const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
+    const newExpandedState = !isExpanded;
+    setIsExpanded(newExpandedState);
+    if (onToggle) {
+      onToggle(newExpandedState);
+    }
   };
 
   // Handle view change with auto-collapse

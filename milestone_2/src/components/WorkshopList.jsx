@@ -1,5 +1,5 @@
 // WorkshopList.js
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import WorkshopCard from "./WorkshopCard";
 import WorkshopSidebar from "./WorkshopSidebar";
@@ -9,13 +9,26 @@ import { sampleWorkshops } from "../../constants/mockData";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSelectLive }) {
+export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSelectLive, sidebarExpanded }) {
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
   const [workshops, setWorkshops] = useState(sampleWorkshops);
   const [showLiveInterface, setShowLiveInterface] = useState(false);
   const [showPrerecordedInterface, setShowPrerecordedInterface] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const router = useRouter();
+
+  // Listen to window resize to adjust layout
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
 
   const handleWorkshopClick = (workshop) => {
     setSelectedWorkshop(workshop);
@@ -65,6 +78,79 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
 
   const filteredWorkshops = displayWorkshops();
 
+  // Determine grid columns based on sidebars and screen width
+  const getGridColumns = () => {
+    const mainSidebarOpen = sidebarExpanded !== false; // Default to true if prop not provided
+    const detailSidebarOpen = !!selectedWorkshop;
+
+    // When both sidebars are open - always show 1 card per row
+    if (detailSidebarOpen && mainSidebarOpen) {
+      return "grid-cols-1";
+    }
+
+    // When only detail sidebar is open (main sidebar is closed)
+    if (detailSidebarOpen && !mainSidebarOpen) {
+      // For smaller screens still use 1 column
+      if (windowWidth < 1280) {
+        return "grid-cols-1";
+      }
+      // For larger screens use 2 columns
+      return "grid-cols-2";
+    }
+
+    // When only main sidebar is open (no detail sidebar)
+    if (!detailSidebarOpen && mainSidebarOpen) {
+      if (windowWidth < 768) {
+        return "grid-cols-1";
+      } else if (windowWidth < 1280) {
+        return "grid-cols-2";
+      } else if (windowWidth < 1536) {
+        return "grid-cols-3";
+      } else {
+        return "grid-cols-3";
+      }
+    }
+
+    // When both sidebars are closed - maximum columns
+    if (windowWidth < 768) {
+      return "grid-cols-1";
+    } else if (windowWidth < 1280) {
+      return "grid-cols-2";
+    } else if (windowWidth < 1536) {
+      return "grid-cols-3";
+    } else {
+      return "grid-cols-4";
+    }
+  };
+
+  // Card scale based on sidebars
+  const getCardScale = () => {
+    if (selectedWorkshop) {
+      return "w-full transform scale-100";
+    }
+    return "w-full";
+  };
+
+  // Get container class for the card based on sidebar states
+  const getCardContainerClass = () => {
+    const mainSidebarOpen = sidebarExpanded !== false;
+    const detailSidebarOpen = !!selectedWorkshop;
+
+    // When only one card per row, make it wider
+    if ((detailSidebarOpen && mainSidebarOpen) || windowWidth < 768) {
+      return "max-w-2xl";
+    }
+
+    // Two cards per row
+    if ((detailSidebarOpen && !mainSidebarOpen) ||
+      (windowWidth >= 768 && windowWidth < 1280)) {
+      return "max-w-md";
+    }
+
+    // For 3 or more cards per row
+    return "max-w-md";
+  };
+
   if (showLiveInterface && selectedWorkshop) {
     return <WorkshopInterface workshop={selectedWorkshop} onBack={handleBackFromLive} />
   }
@@ -89,12 +175,12 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
       </div>
 
       {/* Filter buttons */}
-      <div className="flex items-center space-x-2 mb-8">
+      <div className="flex flex-wrap items-center gap-2 mb-8">
         <button
           onClick={() => setActiveFilter('all')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'all'
-              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+            : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
             }`}
         >
           ALL
@@ -102,8 +188,8 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         <button
           onClick={() => setActiveFilter('upcoming')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'upcoming'
-              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+            : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
             }`}
         >
           UPCOMING
@@ -111,8 +197,8 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         <button
           onClick={() => setActiveFilter('live')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'live'
-              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+            : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
             }`}
         >
           LIVE
@@ -120,8 +206,8 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         <button
           onClick={() => setActiveFilter('prerecorded')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'prerecorded'
-              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+            : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
             }`}
         >
           PRERECORDED
@@ -131,19 +217,23 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
       {/* Main content area with relative positioning */}
       <div className="relative">
         {/* Workshop grid - will adjust width when sidebar is open */}
-        <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? "pr-0 lg:pr-[33%]" : "pr-0"}`}>
+        <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? "md:pr-[50%] lg:pr-[33%]" : "pr-0"
+          }`}>
           {/* Upcoming Workshops */}
           {filteredWorkshops.upcoming.length > 0 && (
             <div className="mb-12">
               <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Upcoming Workshops</h2>
-              <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
+              <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.upcoming.map((ws) => (
-                  <WorkshopCard
-                    key={ws.id}
-                    workshop={ws}
-                    onClick={handleWorkshopClick}
-                    className={selectedWorkshop ? "w-full transition-all duration-300 transform scale-[0.85] m-1" : "w-full"}
-                  />
+                  <div key={ws.id} className="flex justify-center">
+                    <div className={`w-full ${getCardContainerClass()}`}>
+                      <WorkshopCard
+                        workshop={ws}
+                        onClick={handleWorkshopClick}
+                        className={getCardScale()}
+                      />
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -153,14 +243,17 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
           {filteredWorkshops.live.length > 0 && (
             <div className="mb-12">
               <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Live Workshops</h2>
-              <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
+              <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.live.map((ws) => (
-                  <WorkshopCard
-                    key={ws.id}
-                    workshop={ws}
-                    onClick={handleWorkshopClick}
-                    className={selectedWorkshop ? "w-full transition-all duration-300 transform scale-[0.85] m-1" : "w-full"}
-                  />
+                  <div key={ws.id} className="flex justify-center">
+                    <div className={`w-full ${getCardContainerClass()}`}>
+                      <WorkshopCard
+                        workshop={ws}
+                        onClick={handleWorkshopClick}
+                        className={getCardScale()}
+                      />
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -170,16 +263,26 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
           {filteredWorkshops.prerecorded.length > 0 && (
             <div className="mb-12">
               <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Prerecorded Workshops</h2>
-              <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
+              <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.prerecorded.map((ws) => (
-                  <WorkshopCard
-                    key={ws.id}
-                    workshop={ws}
-                    onClick={handleWorkshopClick}
-                    className={selectedWorkshop ? "w-full transition-all duration-300 transform scale-[0.85] m-1" : "w-full"}
-                  />
+                  <div key={ws.id} className="flex justify-center">
+                    <div className={`w-full ${getCardContainerClass()}`}>
+                      <WorkshopCard
+                        workshop={ws}
+                        onClick={handleWorkshopClick}
+                        className={getCardScale()}
+                      />
+                    </div>
+                  </div>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Show "No workshops found" when filtered list is empty */}
+          {!filteredWorkshops.upcoming.length && !filteredWorkshops.live.length && !filteredWorkshops.prerecorded.length && (
+            <div className="flex justify-center items-center py-16 bg-gray-50 rounded-lg">
+              <p className="text-gray-500 text-lg">No workshops found for this filter</p>
             </div>
           )}
         </div>

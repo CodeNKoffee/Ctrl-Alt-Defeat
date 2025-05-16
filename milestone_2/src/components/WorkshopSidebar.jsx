@@ -54,7 +54,7 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
 
   return (
     <div className={`fixed top-0 right-0 h-full transition-all duration-300 ease-in-out transform ${workshop ? "translate-x-0" : "translate-x-full"
-      } w-1/3 z-50`}>
+      } w-full md:w-1/2 lg:w-1/3 z-50`}>
       {workshop && (
         <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
           {/* Success Feedback Overlay */}

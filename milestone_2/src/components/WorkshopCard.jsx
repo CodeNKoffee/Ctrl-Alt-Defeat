@@ -57,9 +57,10 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
     <div
       onClick={() => onClick(workshop)}
       className={`bg-white border-2 border-[#B8E1E9] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden transform hover:scale-[1.02] hover:border-[#5DB2C7] flex flex-col h-full ${className}`}
+      style={{ maxWidth: "100%" }}
     >
       {/* Workshop Image */}
-      <div className="relative h-48">
+      <div className="relative h-48 overflow-hidden">
         <img
           src={workshop.imageUrl}
           alt={workshop.title}
