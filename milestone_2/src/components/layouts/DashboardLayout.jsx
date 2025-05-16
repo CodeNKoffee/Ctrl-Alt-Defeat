@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
 import CallButton from '../CallButton';
 import NotificationButton from "../NotificationButton";
+import ProfileIcon from '@/components/shared/ProfileIcon';
+import ProBadge from '@/components/shared/ProBadge';
 
 export default function DashboardLayout({
   children,
@@ -107,6 +109,21 @@ export default function DashboardLayout({
                 </div>
               )}
               <NotificationButton />
+              {/* Profile Icon and Badge Section */}
+              {userData && (
+                <div className="flex items-center ml-4 relative">
+                  <ProfileIcon
+                    src={userData.profileImage}
+                    alt={userData.name || 'User'}
+                    size="lg"
+                  />
+                  {userData.accountType === 'PRO' && (
+                    <div className="absolute top-[-4px] right-[-10px]">
+                      <ProBadge size="sm" />
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
