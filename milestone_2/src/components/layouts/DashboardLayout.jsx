@@ -189,14 +189,14 @@ export default function DashboardLayout({
                   >
                     <button
                       className={`group relative z-10 bg-[#5DB2C7] hover:bg-[#4AA0B5] text-white rounded-full shadow-md transition-all duration-500 flex items-center justify-center overflow-hidden h-10`}
-                      style={{ minWidth: 40, width: hovered ? 320 : 40 }}
+                      style={{ minWidth: 40, width: (hovered || formOpen) ? 320 : 40 }}
                       onClick={() => { setFormOpen(!formOpen); setShowCycleModal(true); }}
                       aria-label="Set Internship Cycle"
                     >
-                      {hovered ? (
+                      {(hovered || formOpen) ? (
                         <span className="flex items-center justify-center w-full">
                           <FontAwesomeIcon icon={faSuitcase} className="text-xl text-white mr-3" />
-                          <span className="font-semibold text-white text-base text-center">Set Internship Cycle</span>
+                          <span className={`font-semibold text-white text-base text-center transition-opacity duration-300 ${((hovered || formOpen) ? 'opacity-300 delay-500' : 'opacity-0')}`}>Set Internship Cycle</span>
                         </span>
                       ) : (
                         <span className="flex items-center justify-center w-10 h-10">
