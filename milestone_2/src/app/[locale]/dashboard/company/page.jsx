@@ -115,7 +115,7 @@ function CompanyPostsView() {
   const isFilterActive = (category, value) => activeFilters[category].includes(value);
   const hasActiveFilters = () => Object.values(activeFilters).some(arr => arr.length > 0) || searchTerm;
   return (
-    <div className="container mx-auto px-4 pb-8">
+    <div className="container mx-auto p-10">
       <div className="w-full max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
           INTERNSHIP POSTS
@@ -538,8 +538,8 @@ function ApplicationsView() {
     setSelectedInternship('all');
   };
   return (
-    <div className="min-h-screen bg-gray-50 p-4 isolate">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen p-4 isolate">
+      <div className="container mx-auto px-6 py-6">
         <div className="w-full max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
             APPLICATIONS MANAGEMENT
@@ -647,7 +647,7 @@ function CurrentInternsView() {
   );
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-6 font-['IBM_Plex_Sans']">
+    <div className="w-full max-w-6xl mx-auto p-10">
       <InternsInfoCard />
       <CurrentInterns />
     </div>
@@ -658,8 +658,13 @@ function MyEvaluationsView() {
   // StudentEvaluationsInfoCard component
   const StudentEvaluationsInfoCard = () => (
     <div className="w-full mx-auto">
-      <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
-        {/* Decorative elements */}
+      <div className="w-full max-w-6xl mx-auto px-6">
+      <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+        EVALUATION PORTAL
+        <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+      </h1>
+        <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+          {/* Decorative elements */}
         <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
@@ -709,6 +714,7 @@ function MyEvaluationsView() {
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 Evaluations remain confidential between your company and authorized faculty and SCAD members.
               </p>
+              </div>
             </div>
           </div>
         </div>
