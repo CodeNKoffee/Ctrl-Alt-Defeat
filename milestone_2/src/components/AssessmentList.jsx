@@ -15,14 +15,7 @@ export default function AssessmentList() {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8 min-h-screen flex flex-col">
-      {/* Title */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
-          AVAILABLE ASSESSMENTS
-          <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-        </h1>
-      </div>
-
+    
       {/* Main content area with relative positioning */}
       <div className="relative">
         {/* Assessment grid - will adjust width when sidebar is open */}

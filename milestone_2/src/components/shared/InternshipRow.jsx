@@ -317,7 +317,32 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         </div>
       </div>
       {/* Tooltip component instance - only needed if type='applied' might be rendered */}
-      {type === 'applied' && <Tooltip id="status-tooltip" />}
+      {type === 'applied' && (
+        <Tooltip
+          id="status-tooltip"
+          className="!bg-[#2a5f74] !text-white !border-0 !rounded-xl !shadow-xl !px-4 !py-2 !text-sm !font-normal !leading-snug !min-w-[200px] !max-w-[260px] !transition-all"
+          style={{
+            background: '#2a5f74',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '0.75rem',
+            boxShadow: '0 8px 32px 0 rgba(42,95,116,0.18)',
+            padding: '0.5rem 1rem',
+            fontSize: '0.95rem',
+            minWidth: '200px',
+            maxWidth: '260px',
+            fontWeight: 400,
+            zIndex: 9999
+          }}
+          arrowColor="#2a5f74"
+          render={({ content }) => (
+            <div className="flex flex-col">
+              <span className="font-semibold text-base mb-1">Status Info</span>
+              <span className="text-white text-sm font-normal">{content}</span>
+            </div>
+          )}
+        />
+      )}
 
       {/* Upload Documents Modal */}
       <UploadDocuments

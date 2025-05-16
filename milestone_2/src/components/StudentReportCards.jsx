@@ -7,8 +7,15 @@ import ReportCreationDashboard from "./ReportCreationDashboard";
 import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomButton from "./shared/CustomButton";
+import { Tooltip } from 'react-tooltip';
 
 export default function StudentReportCards() {
+  const reportStatusTooltipMessages = {
+  accepted: "Your report has been reviewed and approved by the faculty member. No further action is required for this submission.",
+  pending: "Your report has been submitted but not yet reviewed by the responsible faculty member. No action is required at this time.",
+  flagged: "Your report requires revisions based on faculty feedback. Review the comments provided and resubmit your updated report.",
+  rejected: "Your report did not meet the requirements and cannot be resubmitted. See faculty comments for explanation and guidance on next steps.",
+};
   const [selectedReport, setSelectedReport] = useState(null);
   const [activeTab, setActiveTab] = useState("submitted");
   const [editIndex, setEditIndex] = useState(null);
@@ -86,6 +93,7 @@ export default function StudentReportCards() {
         initialReport={editingDraftData}
         hideTitle={true}
         showSaveDraftButton={true}
+        isEditMode={true}
       />
     );
   }
@@ -143,15 +151,44 @@ export default function StudentReportCards() {
                   <div className="pt-8" />
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-lg font-bold text-metallica-blue-800 truncate max-w-[70%]">{report.title}</h3>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
-                      report.status === 'accepted' ? 'bg-green-100 text-green-700' :
-                      report.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-                      report.status === 'flagged' ? 'bg-orange-100 text-orange-700' :
-                      report.status === 'rejected' ? 'bg-red-100 text-red-700' :
-                      'bg-gray-100 text-gray-700'
-                    }`}>
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                        report.status === 'accepted' ? 'bg-green-100 text-green-700' :
+                        report.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
+                        report.status === 'flagged' ? 'bg-orange-100 text-orange-700' :
+                        report.status === 'rejected' ? 'bg-red-100 text-red-700' :
+                        'bg-gray-100 text-gray-700'
+                      }`}
+                      data-tooltip-id={`report-status-tooltip-${report.id}`}
+                      data-tooltip-content={reportStatusTooltipMessages[report.status]}
+                      style={{ cursor: 'pointer' }}
+                    >
                       {report.status?.toUpperCase()}
                     </span>
+                    <Tooltip
+                      id={`report-status-tooltip-${report.id}`}
+                      className="!bg-[#2a5f74] !text-white !border-0 !rounded-xl !shadow-xl !px-4 !py-2 !text-sm !font-normal !leading-snug !min-w-[200px] !max-w-[260px] !transition-all"
+                      style={{
+                        background: '#2a5f74',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '0.75rem',
+                        boxShadow: '0 8px 32px 0 rgba(42,95,116,0.18)',
+                        padding: '0.5rem 1rem',
+                        fontSize: '0.95rem',
+                        minWidth: '200px',
+                        maxWidth: '260px',
+                        fontWeight: 400,
+                        zIndex: 9999
+                      }}
+                      arrowColor="#2a5f74"
+                      render={({ content }) => (
+                        <div className="flex flex-col">
+                          <span className="font-semibold text-base mb-1">Status Info</span>
+                          <span className="text-white text-sm font-normal">{content}</span>
+                        </div>
+                      )}
+                    />
                   </div>
                   <div className="text-xs text-gray-600 mb-0.5">
                     <span className="font-medium">Company:</span> {report.companyName}

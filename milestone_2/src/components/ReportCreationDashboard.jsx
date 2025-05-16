@@ -68,7 +68,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
-    onAddTile({ ...filledReport, courses: selectedCourses });
+    onAddTile({ ...filledReport, courses: selectedCourses, status: isEditMode ? 'updated' : 'submitted' });
     if (onCancel) onCancel();
     setReport({ internshipTitle: '', introduction: '', body: '', conclusion: '', courses: [], major: '' });
     setSelectedCourses([]);
@@ -90,12 +90,12 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
         <div className="flex flex-col lg:flex-row h-[calc(90vh)]">
           {/* Left side - Form */}
           <div className="lg:w-1/2 p-6 overflow-y-auto bg-[#F0F9FB]">
-            <h2 className="text-xl font-bold text-[#2A5F74] mb-6 text-left flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-              </svg>
-              {isEditMode ? "Edit Internship Report" : "Create Internship Report"}
-            </h2>
+              <h2 className="text-xl font-bold text-[#2A5F74] mb-6 text-left flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+                {isEditMode ? "Edit Internship Report" : "Create Internship Report"}
+              </h2>
 
             <form className="space-y-4" onSubmit={handleModalSubmit}>
               <div>
@@ -230,7 +230,11 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                       setDraftStatus('saving');
                       await new Promise(res => setTimeout(res, 800));
                       setReport({ ...filledReport, courses: selectedCourses }); 
-                      onAddTile({ ...filledReport, courses: selectedCourses, status: 'draft' });
+                      onAddTile({ 
+                        ...filledReport, 
+                        courses: selectedCourses, 
+                        status: isEditMode ? 'updated_draft' : 'draft' 
+                      });
                       setDraftStatus('saved');
                       setTimeout(() => {
                         setDraftStatus("");
