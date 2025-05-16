@@ -57,7 +57,7 @@ const ChatPanelContent = ({
             type="text"
             value={currentMessage}
             onChange={(e) => setCurrentMessage(e.target.value)}
-            className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-[#318FA8] focus:border-[#318FA8] text-sm"
+            className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-[#318FA8] focus:border-[#318FA8] text-sm text-[#2a5f74]"
             placeholder="Type your message..."
           />
           <button
@@ -96,7 +96,7 @@ const NotesPanelContent = ({
       <textarea
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
-        className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#318FA8] focus:border-[#318FA8] resize-none text-sm mb-4"
+        className="text-[#2a5f74] flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#318FA8] focus:border-[#318FA8] resize-none text-sm mb-4"
         placeholder="Take workshop notes here..."
       />
       <button

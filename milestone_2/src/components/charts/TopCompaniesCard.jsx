@@ -45,7 +45,7 @@ export default function TopCompaniesCard({ companies = [] }) {
       </ul>
       <div className="mt-3 pt-3 border-t border-gray-100 text-center">
         <p className="text-xs text-gray-500">
-          Based on feedback from 200+ professionals
+          Based on feedback from 200+ students
         </p>
       </div>
     </div>

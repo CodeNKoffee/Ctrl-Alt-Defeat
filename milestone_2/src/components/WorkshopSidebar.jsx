@@ -3,6 +3,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from 'framer-motion';
+import CustomButton from "../components/shared/CustomButton"
 
 export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatchPrerecorded }) {
   const [registrationFeedback, setRegistrationFeedback] = useState(null);
@@ -193,14 +194,14 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
  
             {/* Action Button */}
             <div className="sticky bottom-0 bg-white py-4 px-6 border-t border-gray-100">
-              <button
+              <CustomButton
                 onClick={handleAction}
                 text={getButtonText()}
                 width="w-full"
                 disabled={registrationFeedback === 'success' && workshop.type !== 'live' && workshop.type !== 'prerecorded'}
               >
                 {getButtonText()}
-              </button>
+              </CustomButton>
             </div>
           </div>
         )}

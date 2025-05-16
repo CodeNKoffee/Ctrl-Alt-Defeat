@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { MOCK_COMPANIES, MOCK_EVALUATIONS } from '../../../../../constants/mockData';
 import CompanyTable from '@/components/CompanyTable';
 import StudentList from '@/components/StudentList';
@@ -16,9 +18,10 @@ import { mockStudents } from '../../../../../constants/mockData';
 import Header from '@/components/Header';
 import EvaluationsDashboard from '@/components/EvaluationsDashboard';
 import { facultyScadReports } from '../../../../../constants/mockData';
-import { getRegularInternships, getRecommendedInternshipsForStudent, getRecommendedInternships  } from '../../../../../constants/internshipData';
+import { getRegularInternships, getRecommendedInternshipsForStudent, getRecommendedInternships } from '../../../../../constants/internshipData';
 import InternshipList from '../../../../components/shared/InternshipList';
 import ApplicationsFilterBar from '../../../../components/shared/ApplicationsFilterBar';
+import CustomButton from '@/components/shared/CustomButton';
 
 function ScadDashboardView() {
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -38,7 +41,7 @@ function ScadDashboardView() {
 
   const CompanyPartnershipReviewPortalInfoCard = () => (
     <div className="w-full mx-auto">
-       <div className="w-full max-w-6xl mb-8 mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
         <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
           COMPANY APPLICATIONS
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
@@ -206,7 +209,7 @@ function StatisticsView() {
           <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
-      
+
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
@@ -281,6 +284,17 @@ function ReportsView() {
   const [modalOpen, setModalOpen] = useState(false);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
+  const handleExportPDF = () => {
+    toast.info('PDF export started. Your document will be downloaded shortly.', {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
   useEffect(() => {
     const reportsArray = Object.values(facultyScadReports).map(report => ({
       ...report,
@@ -314,7 +328,7 @@ function ReportsView() {
           <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
-      
+
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
@@ -372,7 +386,7 @@ function ReportsView() {
           </div>
         </div>
       </div>
-      
+
 
       <ReportStatistics
         total={reports.length}
@@ -406,17 +420,28 @@ function ReportsView() {
                 &times;
               </button>
               <div className="mb-4">
-                <h2 className="text-2xl font-bold text-metallica-blue-700">{selectedReport.title}</h2>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">
-                    Student: {selectedReport.studentName}
-                  </span>
-                  <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">
-                    Major: {selectedReport.studentMajor}
-                  </span>
-                  <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">
-                    Company: {selectedReport.companyName}
-                  </span>
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-2xl font-bold text-metallica-blue-700">{selectedReport.title}</h2>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">
+                      Student: {selectedReport.studentName}
+                    </span>
+                    <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">
+                      Major: {selectedReport.studentMajor}
+                    </span>
+                    <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">
+                      Company: {selectedReport.companyName}
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <button
+                      onClick={handleExportPDF}
+                      className="border-2 border-metallica-blue-700 text-metallica-blue-700 rounded-full px-4 py-2"
+                    >
+                      <FontAwesomeIcon icon={faFilePdf} className="pdf-icon" />
+                      Export
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="overflow-y-auto flex-grow" style={{ maxHeight: 'calc(90vh - 140px)' }}>

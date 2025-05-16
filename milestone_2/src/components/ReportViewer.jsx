@@ -353,13 +353,13 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           <div className="report-header">
             <h1 className="report-title">{reportData.title}</h1>
             <div className="report-actions">
-              <button
+              {/* <button
                 onClick={handleExportPDF}
                 className="export-pdf-tab"
               >
                 <FontAwesomeIcon icon={faFilePdf} className="pdf-icon" />
                 Export as PDF
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="report-section">
