@@ -51,23 +51,12 @@ topCourses: [
     rating: 4.0,
   },
   {
-    name: 'MGMT 2100 - Principles of Management',
-    count: 30,
-    testimonial: 'Provided a solid foundation in managing teams and projects.',
-    rating: 4.0,
-  },
-  {
     name: 'DESN 2200 - Introduction to Graphic Design',
     count: 26,
     testimonial: 'Great hands-on projects that built my design skills.',
     rating: 4.7,
   },
-  {
-    name: 'PHRM 3100 - Clinical Pharmacy Practice',
-    count: 20,
-    testimonial: 'Valuable real-world case studies in pharmacy practice.',
-    rating: 4.6,
-  },
+
 ],
     topCompanies: [
       { name: 'Ora', rating: 4.9 },
