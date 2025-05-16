@@ -99,56 +99,10 @@ export default function StudentReportCards() {
   }
 
   return (
-    <div className="p-8 flex justify-center">
-      <div className="w-full max-w-6xl px-2">
+    <div className="w-full mx-auto">
+      <div className="w-full">
         {/* System info box like SCAD reports */}
-        <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
-          <h2 className="text-2xl font-semibold text-[#2a5f74] mb-4">Student Report Management System</h2>
-          <p className="text-gray-700 mb-3">
-             Welcome to your Student Report Dashboard. Here you can monitor and manage all your internship reports in one place.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-xs font-semibold">PENDING</span>
-                <h3 className="font-medium text-yellow-700">Awaiting Review</h3>
-              </div>
-              <p className="text-sm text-gray-600">Your report has been submitted but not yet reviewed. No action required.</p>
-            </div>
-            
-            <div className="bg-orange-50 p-3 rounded-lg border border-orange-200">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs font-semibold">FLAGGED</span>
-                <h3 className="font-medium text-orange-700">Needs Revision</h3>
-              </div>
-              <p className="text-sm text-gray-600">Review faculty feedback and resubmit your updated report.</p>
-            </div>
-            
-            <div className="bg-red-50 p-3 rounded-lg border border-red-200">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-semibold">REJECTED</span>
-                <h3 className="font-medium text-red-700">Not Approved</h3>
-              </div>
-              <p className="text-sm text-gray-600">Did not meet requirements. See faculty comments for guidance.</p>
-            </div>
-            
-            <div className="bg-green-50 p-3 rounded-lg border border-green-200">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">ACCEPTED</span>
-                <h3 className="font-medium text-green-700">Approved</h3>
-              </div>
-              <p className="text-sm text-gray-600">Your report has been approved. No further action required.</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center mt-2">
-            <div className="h-1.5 w-1.5 rounded-full bg-orange-500 mr-2"></div>
-            <p className="text-[#2a5f74] font-medium">
-              {submittedReports.filter(r => r.status === 'flagged').length} reports flagged and {submittedReports.filter(r => r.status === 'rejected').length} rejected require your attention
-            </p>
-          </div>
-        </div>
+      
         {/* Statistics (no background) */}
         <ReportStatistics
           total={submittedReports.length}

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from 'framer-motion';
+import CustomButton from "./shared/CustomButton";
 
 export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatchPrerecorded }) {
   const [registrationFeedback, setRegistrationFeedback] = useState(null);
@@ -106,10 +107,11 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
             {/* Close button */}
             <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
               <button
+                className="flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
                 onClick={onClose}
-                className="text-gray-500 hover:text-gray-700 text-2xl"
+                aria-label="Close sidebar"
               >
-                ×
+                <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
               </button>
             </div>
 
@@ -190,17 +192,16 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
                 </div>
               </div>
             </div>
-
+ 
             {/* Action Button */}
             <div className="sticky bottom-0 bg-white py-4 px-6 border-t border-gray-100">
-              <button
+              <CustomButton
+                variant="primary"
                 onClick={handleAction}
-                className={`w-full bg-[#3298BA] text-white py-2 px-4 rounded-full
-                        transition-colors duration-200 ${registrationFeedback === 'success' && workshop.type !== 'live' && workshop.type !== 'prerecorded' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                text={getButtonText()}
+                fullWidth={true}
                 disabled={registrationFeedback === 'success' && workshop.type !== 'live' && workshop.type !== 'prerecorded'}
-              >
-                {getButtonText()}
-              </button>
+              />
             </div>
           </div>
         )}
