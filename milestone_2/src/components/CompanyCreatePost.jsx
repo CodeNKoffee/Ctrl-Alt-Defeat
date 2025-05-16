@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import DatePicker from './DatePicker';
 import { format, isBefore, startOfDay, isValid, parseISO } from 'date-fns';
 
-export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost, isEditing }) {
+export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost, isEditing, onClose }) {
   const [form, setForm] = useState({
     title: '',
     description: '',
@@ -147,6 +147,23 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
+      {onClose && (
+        <button
+          className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
+          onClick={onClose}
+          aria-label="Close modal"
+          type="button"
+        >
+          <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
+            className="svg-inline--fa fa-xmark text-xl text-gray-500 font-normal"
+            role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path fill="currentColor"
+              d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z">
+            </path>
+          </svg>
+        </button>
+      )}
+
       <div className={sectionClasses}>
         <label className={labelClasses}>Job Title</label>
         <input
@@ -340,12 +357,23 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
       </div>
 
       <div className="pt-2">
-        <button
-          type="submit"
-          className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md transition-colors shadow-sm font-medium"
-        >
-          {isEditing ? 'Save Changes' : 'Create Post'}
-        </button>
+        {isEditing ? (
+          <CustomSaveButton
+            type="submit"
+            variant="secondary"
+            loadingText="Saving"
+          >
+            Save Changes
+          </CustomSaveButton>
+        ) : (
+          <CustomCreateButton
+            type="submit"
+            variant="primary"
+            loadingText="Creating"
+          >
+            Create Post
+          </CustomCreateButton>
+        )}
       </div>
     </form>
   );
