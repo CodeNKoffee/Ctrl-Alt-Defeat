@@ -629,19 +629,19 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
               </div>
 
               <div className="form-actions" style={{ padding: "20px", display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "20px" }}>
-                <CustomButton
+                {/* <CustomButton
                   type="button"
                   variant="danger"
                   onClick={onClose}
                   text="Cancel"
                   icon={faTimes}
                   width="w-[200px]"
-                />
+                /> */}
                 <CustomButton
                   type="submit"
                   variant="primary"
                   text="Save Changes"
-                  icon={faSave}
+                  // icon={faSave}
                   width="w-[200px]"
                 />
               </div>

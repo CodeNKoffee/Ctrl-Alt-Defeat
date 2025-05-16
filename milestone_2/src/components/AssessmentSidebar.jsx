@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';// Correct import path
-
+import CustomButton from "../components/shared/CustomButton";
 
 const likertOptions = [
   { id: 1, text: 'Strongly Disagree', color: 'border-[#FCA5A5] bg-[#FEE2E2]', selected: 'border-[#EF4444] bg-[#FCA5A5]/40' },
