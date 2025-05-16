@@ -337,7 +337,7 @@ export default function InternshipList({
                   // Search functionality
                   searchTerm={searchTerm}
                   onSearchChange={setSearchTerm}
-                  searchPlaceholder={`Search ${type === 'my' ? 'my' : ''} internships...`}
+                  searchPlaceholder={type==='recommended'?"Search recommended internships":`Search your ${type === 'my' ? 'internships' : 'applications'} by job title or company name ......}`}
 
                   // Industry filtering
                   primaryFilterName="Filter"

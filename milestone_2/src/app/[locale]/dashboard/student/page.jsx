@@ -311,7 +311,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search internships..."
+          searchPlaceholder="Search internships by job title or company name ..."
           onClearFilters={clearAllFilters}
           customFilterSections={customFilterSections}
           primaryFilterName="Filters"
