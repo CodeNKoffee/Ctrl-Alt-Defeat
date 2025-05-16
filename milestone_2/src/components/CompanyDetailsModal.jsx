@@ -111,19 +111,18 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
       </AnimatePresence>
       {/* Main modal content (hidden when feedback is shown) */}
       {!feedback && (
-        <div className={`modal-inner ${BG} ${BORDER} ${ROUNDED}`} style={{ boxShadow: '0 2px 8px #49718410', maxHeight: '100vh', overflow: 'hidden' }}>
-          {/* Close button - styled like CompanyDetails */}
-          <div
-            className="absolute top-4 right-4 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow bg-white border border-gray-200 cursor-pointer transition hover:bg-gray-100"
+        <div className={`modal-inner ${BG} ${BORDER} rounded-2xl`} style={{ boxShadow: '0 2px 8px #49718410', maxHeight: '90vh', overflow: 'hidden', paddingBottom: '24px' }}>
+          {/* Close button - styled like EvaluationModal */}
+          <button
+            className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
             onClick={() => onClose && onClose(false)}
-            role="button"
-            tabIndex={0}
+            aria-label="Close modal"
           >
             <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
-          </div>
+          </button>
           {/* Tab Header */}
           <div className="modal-header">
-            Company Details
+            <h2 className="text-xl font-bold text-[#2A5F74]">Company Details</h2>
           </div>
           <div className="modal-content">
             {/* Top Row: Profile & Notepad */}
@@ -233,7 +232,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
             </div>
           </div>
           {/* Accept/Reject Buttons (outside main border, centered) */}
-          <div className="w-full flex gap-4 justify-center mt-6">
+          <div className="w-full flex gap-4 justify-center mt-8 mb-4 px-6">
             <CustomButton
               variant="primary"
               onClick={handleAccept}

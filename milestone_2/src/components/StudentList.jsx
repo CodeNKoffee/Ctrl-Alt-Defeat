@@ -124,12 +124,6 @@ export default function StudentList({ students, sidebarExpanded = true }) {
   return (
     <div className="w-full mx-auto relative py-4">
       {/* Title */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
-          STUDENT PROFILES
-          <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-        </h1>
-      </div>
 
       {/* Tabs & Search */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 pr-[2px]">
