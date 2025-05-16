@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faXmark, faChevronDown, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from '@/components/DatePicker';
 
 export default function ApplicationsFilterBar({
   // Search functionality
@@ -72,14 +71,14 @@ export default function ApplicationsFilterBar({
       {/* Main filter section with search and industry filter */}
       <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
         {/* Search box */}
-        <div className="flex-1 w-full md:w-auto md:max-w-[620px]">
+        <div className="flex-1 w-full md:w-auto md:max-w-[620px] flex items-center">
           <div className="relative w-full flex justify-center items-center">
             <input
               type="text"
               value={searchTerm}
               onChange={e => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              className="w-full py-3 pl-10 pr-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
+              className="w-full py-3 pl-10 pr-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500 h-[46px]"
             />
             <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
               <FontAwesomeIcon icon={faSearch} className="h-4 w-4 text-[#5DB2C7]" />
@@ -98,29 +97,12 @@ export default function ApplicationsFilterBar({
 
         {/* Date Picker (if enabled) */}
         {showDatePicker && (
-          <div className="relative w-full md:w-auto flex-shrink-0">
-            <div className="relative">
-              <DatePicker
-                selected={selectedDate}
-                onChange={onDateChange}
-                dateFormat="MMMM d, yyyy"
-                className="py-3 pl-10 pr-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500 w-full"
-                placeholderText="Filter by date"
-                id="date-select-button"
-              />
-              <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-                <FontAwesomeIcon icon={faCalendarAlt} className="h-4 w-4 text-[#5DB2C7]" />
-              </div>
-              {selectedDate && (
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-3.5 flex items-center p-1 rounded-full hover:bg-[#B8E1E9]/50 transition-colors duration-200"
-                  onClick={() => onDateChange(null)}
-                >
-                  <FontAwesomeIcon icon={faXmark} className="w-4 h-4 text-[#5DB2C7] hover:text-[#2a5f74]" />
-                </button>
-              )}
-            </div>
+          <div className="relative w-full md:w-auto flex-shrink-0 flex items-center h-[46px]">
+            <DatePicker
+              selectedDate={selectedDate}
+              onDateChange={onDateChange}
+              disabled={false}
+            />
           </div>
         )}
 

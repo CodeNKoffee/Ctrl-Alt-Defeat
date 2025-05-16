@@ -189,6 +189,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
+  const [selectedDate, setSelectedDate] = useState(null);
   const { currentUser } = useSelector(state => state.auth);
   const userMajor = currentUser?.major || 'Computer Science';
 
@@ -368,6 +369,9 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           onClearFilters={clearAllFilters}
           customFilterSections={customFilterSections}
           primaryFilterName="Filters"
+          showDatePicker={true}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
         />
 
         {/* ALL / RECOMMENDED Tabs */}
@@ -406,6 +410,12 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         userMajor={userMajor}
         customFilterPanel={<></>}
         padding="px-4 pt-2 pb-6"
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </div>
   );
@@ -525,7 +535,6 @@ function AppliedInternshipsView() {
         internships={getAppliedInternships()}
         type="applied"
         statuses={['pending', 'accepted', 'finalized', 'rejected']}
-        showDatePicker={false}
         showSidebar={true}
         userMajor={userMajor}
         searchTerm={searchTerm}
