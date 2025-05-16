@@ -195,8 +195,8 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
             <div className="sticky bottom-0 bg-white py-4 px-6 border-t border-gray-100">
               <button
                 onClick={handleAction}
-                className={`w-full bg-[#3298BA] text-white py-2 px-4 rounded-full hover:-translate-y-0.5 
-                        transition-colors duration-200 ${registrationFeedback === 'success' && workshop.type !== 'live' && workshop.type !== 'prerecorded' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                text={getButtonText()}
+                width="w-full"
                 disabled={registrationFeedback === 'success' && workshop.type !== 'live' && workshop.type !== 'prerecorded'}
               >
                 {getButtonText()}

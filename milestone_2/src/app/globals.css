@@ -900,7 +900,7 @@ button:hover {
   width: fit-content;
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
-  background: var(--metallica-blue-700);
+  /* background: var(--metallica-blue-700); */
   color: #fff;
   font-size: 1.125rem;
   font-weight: bold;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';// Correct import path
-
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';// Correct import path
+import CustomButton from "../components/shared/CustomButton";
 
 const likertOptions = [
   { id: 1, text: 'Strongly Disagree', color: 'border-[#FCA5A5] bg-[#FEE2E2]', selected: 'border-[#EF4444] bg-[#FCA5A5]/40' },
@@ -85,12 +85,12 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
             </div>
           </div>
           <div className="sticky bottom-0 left-0 w-full bg-white px-6 pb-6 pt-3 border-t border-gray-100 z-20">
-            <button
+            <CustomButton
               onClick={() => setTestStarted(true)}
-              className="w-full bg-[#3298BA] text-white py-2 px-4 rounded-full hover:bg-[#267a8c] transition-colors duration-200"
-            >
-              Take the Test
-            </button>
+              variant="primary"
+              text="Take the Test"
+              width="w-full"
+            />
           </div>
         </div>
       )}

@@ -360,9 +360,9 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       </div>
 
       {/* User Profile Section at bottom */}
-      <div className="mt-auto px-3 py-2">
+      <div className="mt-auto px-3 py-2 mb-2">
         {isExpanded ? (
-          <div className="flex items-center bg-[#f5fbfd] rounded-lg p-3 shadow-sm hover:bg-[#f5fbfd]/80 transition-all duration-200 cursor-pointer">
+          <div className="flex items-center bg-[#f5fbfd] rounded-xl p-3 shadow-sm hover:bg-[#f5fbfd]/80 transition-all duration-200 cursor-pointer">
             <div className="flex-shrink-0 mr-3">
               <ProfileIcon
                 src={currentUser?.profileImage}
@@ -406,7 +406,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             onClick={handleLogout}
             icon={faRightFromBracket}
             text="Logout"
-            fullWidth
+            width="w-full"
           />
         ) : (
           <button
