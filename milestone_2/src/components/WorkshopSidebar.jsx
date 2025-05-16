@@ -199,7 +199,7 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
                 variant="primary"
                 onClick={handleAction}
                 text={getButtonText()}
-                fullWidth={true}
+                width="w-full"
                 disabled={registrationFeedback === 'success' && workshop.type !== 'live' && workshop.type !== 'prerecorded'}
               />
             </div>
