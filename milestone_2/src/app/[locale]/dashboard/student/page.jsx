@@ -503,9 +503,34 @@ function ProfileView() {
 }
 
 function WorkshopsView() {
+  const [selectedLiveWorkshop, setSelectedLiveWorkshop] = useState(null);
+
+  const handleWorkshopSelection = (workshop) => {
+    if (workshop && workshop.type === 'live') {
+      setSelectedLiveWorkshop(workshop);
+    }
+  };
+
   return (
     <div className="w-full px-6 py-4">
-      <WorkshopList />
+      {selectedLiveWorkshop ? (
+        <>
+          <div className="mb-4">
+            <button
+              onClick={() => setSelectedLiveWorkshop(null)}
+              className="flex items-center text-[#2a5f74] hover:text-[#3298BA] transition-colors"
+            >
+              <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back to Workshops
+            </button>
+          </div>
+          <WorkshopInterface workshop={selectedLiveWorkshop} />
+        </>
+      ) : (
+        <WorkshopList onSelectLive={handleWorkshopSelection} />
+      )}
     </div>
   );
 }

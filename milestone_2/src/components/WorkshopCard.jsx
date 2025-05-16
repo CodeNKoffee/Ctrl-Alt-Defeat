@@ -5,8 +5,8 @@ import { faCalendarAlt, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons
 
 export default function WorkshopCard({ workshop, onClick }) {
   // Format date for display
-  const formatDate = (date) => {
-    const dateObj = new Date(date);
+  const formatDate = (dateString) => {
+    const dateObj = new Date(dateString); // Ensure dateString is parsed correctly
     return dateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
   };
 
@@ -18,7 +18,7 @@ export default function WorkshopCard({ workshop, onClick }) {
   return (
     <div
       onClick={() => onClick(workshop)}
-      className="bg-white border-2 border-[#B8E1E9] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden transform hover:scale-[1.02] hover:border-[#5DB2C7]"
+      className="bg-white border-2 border-[#B8E1E9] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden transform hover:scale-[1.02] hover:border-[#5DB2C7] flex flex-col h-full"
     >
       {/* Workshop Image */}
       <div className="relative h-48">
@@ -27,13 +27,18 @@ export default function WorkshopCard({ workshop, onClick }) {
           alt={workshop.title}
           className="w-full h-full object-cover"
         />
+        {workshop.type === "live" && (
+          <span className="absolute top-0 left-0 bg-red-500 text-white text-xs font-medium px-3 py-1 rounded-br-md">
+            Live
+          </span>
+        )}
       </div>
 
       {/* Content Section */}
-      <div className="p-5">
+      <div className="p-5 flex flex-col flex-grow">
         {/* Category Tag */}
         <span className="text-xs text-blue-600 font-medium mb-2 block">
-          {workshop.category || "WORKSHOP"}
+          {workshop.type === "live" ? "LIVE WORKSHOP" : "WORKSHOP"}
         </span>
 
         {/* Title */}
@@ -46,7 +51,7 @@ export default function WorkshopCard({ workshop, onClick }) {
           <div className="flex items-center text-sm text-gray-600">
             <FontAwesomeIcon icon={faCalendarAlt} className="h-4 w-4 text-[#5DB2C7] mr-2" />
             <span>
-              {formatDate(workshop.startDate)} • {formatTime(workshop.startDate)}
+              {formatDate(workshop.date)} • {workshop.time}
             </span>
           </div>
 

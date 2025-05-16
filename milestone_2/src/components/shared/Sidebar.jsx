@@ -59,7 +59,6 @@ const sidebarConfig = {
     { id: 'my-reports', iconId: 'my-reports', label: 'My Reports', path: '/dashboard/student/my-reports', isPage: false },
     { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/student/my-evaluations', isPage: false },
     { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/student/workshops', isPage: false },
-    { id: 'live-workshops', iconId: 'live-workshops', label: 'Live Workshops', path: '/dashboard/student/live-workshops', isPage: false },
     { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/student/notifications', isPage: false },
     { id: 'online-assessments', iconId: 'online-assessments', label: 'Online Assessments', path: '/dashboard/student/online-assessments', isPage: false },
     { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/student/profile', isPage: false },

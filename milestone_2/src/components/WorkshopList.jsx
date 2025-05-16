@@ -1,14 +1,30 @@
 // WorkshopList.js
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
 import WorkshopCard from "./WorkshopCard";
 import WorkshopSidebar from "./WorkshopSidebar";
 import { sampleWorkshops } from "../../constants/mockData";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-export default function WorkshopList({ canCreate = false, onCreateWorkshop }) {
+export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSelectLive }) {
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
   const [workshops, setWorkshops] = useState(sampleWorkshops);
+  const router = useRouter();
+
+  const handleWorkshopClick = (workshop) => {
+    if (workshop.type === 'live') {
+      if (onSelectLive) {
+        // If onSelectLive callback is provided, use it
+        onSelectLive(workshop);
+      } else {
+        // Fallback to router navigation if no callback provided
+        router.push(`/dashboard/student/workshops/live/${workshop.id}`);
+      }
+    } else {
+      setSelectedWorkshop(workshop);
+    }
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8">
@@ -39,7 +55,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop }) {
               <WorkshopCard
                 key={ws.id}
                 workshop={ws}
-                onClick={setSelectedWorkshop}
+                onClick={handleWorkshopClick}
               />
             ))}
           </div>
