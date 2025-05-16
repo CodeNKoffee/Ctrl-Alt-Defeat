@@ -274,55 +274,7 @@ export default function InternshipList({
         />
       ) : (
         <div className={`w-full ${padding} space-y-4`}>
-          {/* Info Card */}
-          {type == "my" || type == "applied" && (
-          <div className="w-full mx-auto">
-            <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
-              <div className="flex items-start gap-4 w-full md:w-auto">
-                <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
-                </div>
-                <div className="text-left">
-                  <p className="text-sm text-gray-400"></p>
-                  <div className="text-2xl font-semibold text-[#2a5f74] mb-4"> {type == "my" ? "Your Internships Dashboard" : type == "applied" ? "Track Your Internship Applications" : type == "recommended" && "Your Personalized Internship Matches"}</div>
-                  {type == "my" ? <div className="text-gray-700 mb-2"> Manage all your internships in one place.
-                    <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
-                      <li> Current internships are ongoing</li>
-                      <li> Completed internships are awaiting your report and evaluation submissions</li>
-                      <li> Evaluated ones have been reviewed by your supervisor</li>
-                    </ul>
-                    <p className="text-metallica-blue-700 font-medium">
-                      Use the filters to sort through your internship history or search for specific opportunities.
-                    </p>
-                  </div>
-                    : type == "applied" ? <div className="text-gray-700 mb-2">Welcome to your personal internship tracking dashboard. Here you can monitor the status of all your internship applications in real-time.
-                      <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
-                        <li><span className="text-metallica-blue-700 font-medium">Pending: </span> Your application has been submitted and is under review</li>
-                        <li><span className="text-metallica-blue-700 font-medium">Finalized: </span> Your application has been reviewed and you've been shortlisted as one of the top candidates</li>
-                        <li><span className="text-metallica-blue-700 font-medium">Accepted: </span> Congratulations! Your application has been approved</li>
-                        <li><span className="text-metallica-blue-700 font-medium">Rejected: </span> Unfortunately, your application was not selected this time</li>
-                      </ul>
-                      <p className="text-metallica-blue-700 font-medium">
-                        Need help with your pending applications? Contact your career advisor for guidance on follow-up strategies or preparation for upcoming interviews.
-                      </p>
-                    </div> : type == "recommended" && <div className="text-gray-700 mb-2">This page showcases internship opportunities specifically curated for you based on your unique profile and preferences.
-                      <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
-                        <p className="text-metallica-blue-700 font-medium">How These Recommendations Work:</p>
-                        <li>Matched to your specified job interests and career goals</li>
-                        <li>Filtered by your preferred industries and work environments</li>
-                        <li>Includes positions highly rated by previous SCAD interns</li>
-                        <li>Updated regularly as new opportunities become available</li>
-                      </ul>
-                      <p className="text-metallica-blue-700 font-medium">
-                        Take time to explore these tailored suggestions—they represent opportunities where your specific talents and interests could truly shine.
-                      </p>
-                    </div>}
-                </div>
-              </div>
-            </div>
-          </div>
-          )}
-
+       
           {/* Filter and Search Section */}
           <div className="w-full max-w-6xl mx-auto">
             {/* Custom Filter Panel (if provided) */}
