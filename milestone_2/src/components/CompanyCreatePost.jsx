@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import DatePicker from './DatePicker';
 import { format, isBefore, startOfDay, isValid, parseISO } from 'date-fns';
+import CustomButton from './shared/CustomButton';
+import DatePicker from './DatePicker';
 
-export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost, isEditing }) {
+export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost, isEditing, onClose }) {
   const [form, setForm] = useState({
     title: '',
     description: '',
@@ -42,15 +43,15 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
     }
   };
 
-  const handleDateChange = (date) => {
-    const updatedForm = { ...form, startDate: date };
-    setForm(updatedForm);
+  // const handleDateChange = (date) => {
+  //   const updatedForm = { ...form, startDate: date };
+  //   setForm(updatedForm);
 
-    // Send updated form data to parent for live preview
-    if (onFormChange) {
-      onFormChange(updatedForm);
-    }
-  };
+  //   // Send updated form data to parent for live preview
+  //   if (onFormChange) {
+  //     onFormChange(updatedForm);
+  //   }
+  // };
 
   const handleSkillInputChange = (e) => {
     setSkillInput(e.target.value);
@@ -90,6 +91,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!form.startDate) return;
     onAddPost(form);
     const resetForm = {
       title: '',
@@ -147,6 +149,23 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
+      {onClose && (
+        <button
+          className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
+          onClick={onClose}
+          aria-label="Close modal"
+          type="button"
+        >
+          <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
+            className="svg-inline--fa fa-xmark text-xl text-gray-500 font-normal"
+            role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path fill="currentColor"
+              d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z">
+            </path>
+          </svg>
+        </button>
+      )}
+
       <div className={sectionClasses}>
         <label className={labelClasses}>Job Title</label>
         <input
@@ -172,12 +191,28 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Start Date</label>
+        <label className={labelClasses}>Start Date <span className="text-red-500">*</span></label>
         <div className="mt-1">
-          <DatePicker 
-            selectedDate={form.startDate}
-            onDateChange={handleDateChange}
-            disabled={disablePastDates}
+          <DatePicker
+            selectedDate={form.startDate ? new Date(form.startDate) : null}
+            onDateChange={date => {
+              if (date && isValid(date)) {
+                const formatted = format(date, 'yyyy-MM-dd');
+                setForm(f => ({ ...f, startDate: formatted }));
+                if (onFormChange) onFormChange({ ...form, startDate: formatted });
+              } else {
+                setForm(f => ({ ...f, startDate: '' }));
+                if (onFormChange) onFormChange({ ...form, startDate: '' });
+              }
+            }}
+            value={form.startDate}
+            disabled={false}
+            inputProps={{
+              readOnly: false,
+              placeholder: 'Select a date',
+              className: inputClasses + ' cursor-pointer bg-white',
+              onFocus: e => e.target.blur && e.target.blur(), // Remove if DatePicker handles focus
+            }}
           />
         </div>
         {!form.startDate && (
@@ -209,7 +244,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">Full-time</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">Full-time</span>
           </label>
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -220,7 +255,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">Part-time</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">Part-time</span>
           </label>
         </div>
       </div>
@@ -237,7 +272,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">Remote</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">Remote</span>
           </label>
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -248,7 +283,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">On-site</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">On-site</span>
           </label>
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -259,7 +294,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700)]">Hybrid</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">Hybrid</span>
           </label>
         </div>
       </div>
@@ -340,12 +375,21 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
       </div>
 
       <div className="pt-2">
-        <button
-          type="submit"
-          className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md transition-colors shadow-sm font-medium"
-        >
-          {isEditing ? 'Save Changes' : 'Create Post'}
-        </button>
+        {isEditing ? (
+          <CustomButton
+            type="submit"
+            variant="secondary"
+            loadingText="Saving"
+            text="Save Changes"
+          />
+        ) : (
+          <CustomButton
+            type="submit"
+            variant="primary"
+            loadingText="Creating"
+            text="Create Post"
+          />
+        )}
       </div>
     </form>
   );

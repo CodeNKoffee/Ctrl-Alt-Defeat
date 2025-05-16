@@ -8,13 +8,71 @@ import ApplicationsList from '@/components/ApplicationsList';
 import ApplicationsFilterBar from '@/components/shared/ApplicationsFilterBar';
 import CurrentInterns from '@/components/CurrentInterns';
 import EvaluationsDashboard from '@/components/EvaluationsDashboard';
-import { MOCK_COMPANY_EVALUATIONS, mockStudents } from '../../../../constants/mockData';
+import { MOCK_COMPANY_EVALUATIONS, mockStudents } from '../../../../../constants/mockData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faSearch, faXmark, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faSearch, faXmark, faChevronDown, faBriefcase, faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
 import { useState as useReactState, useEffect } from 'react';
 import CompanyBrowseInternshipsView from './CompanyBrowseInternshipsView';
 import { getRegularInternships, getRecommendedInternships, getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import InternshipList from '../../../../components/shared/InternshipList';
+import ApplicationInfoCard from '@/components/ApplicationInfoCard';
+
+// CompanyPostsInfoCard component
+const CompanyPostsInfoCard = () => (
+  <div className="w-full max-w-6xl mx-auto">
+    <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+      {/* Decorative elements */}
+      <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
+      <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
+      <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
+
+      <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
+          <FontAwesomeIcon icon={faBriefcase} className="h-7 w-7 text-white" />
+        </div>
+        <div className="text-left">
+          <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
+            EMPLOYER PORTAL
+          </div>
+          <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Employer Internship Portal</div>
+          <div className="text-gray-700 mb-3 relative">
+            <p className="mb-3">Welcome to the Employer Dashboard where you can create and manage internship opportunities for talented SCAD students.</p>
+
+            {/* Card content with improved styling */}
+            <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+              <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
+                <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
+                Post New Opportunities:
+              </p>
+              <ul className="space-y-2 mb-2">
+                <li className="flex items-start">
+                  <span className="text-[#3298BA] mr-2">✓</span>
+                  <span>Create detailed internship listings with custom titles and descriptions</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#3298BA] mr-2">✓</span>
+                  <span>Specify required skills, qualifications, and preferred majors</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#3298BA] mr-2">✓</span>
+                  <span>Set clear timeframes, work settings (remote/hybrid/on-site), and compensation details</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#3298BA] mr-2">✓</span>
+                  <span>Add company information and supervisor contacts</span>
+                </li>
+              </ul>
+            </div>
+
+            <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
+              Our platform connects you directly with pre-screened, motivated students whose skills and interests align with your organization's needs.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 function CompanyPostsView() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -63,6 +121,9 @@ function CompanyPostsView() {
           INTERNSHIP POSTS
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
+        
+        <CompanyPostsInfoCard />
+        
         {/* Modern search and filter bar */}
         <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
           <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
@@ -109,7 +170,7 @@ function CompanyPostsView() {
                 )}
                 <FontAwesomeIcon
                   icon={faChevronDown}
-                  className={`h-4 w-4 ${hasActiveFilters() ? "text-white" : "text-[#5DB2C7]"} transition-transform duration-300 ${isCombinedFilterPopoverOpen ? 'rotate-180' : ''}`}
+                  className={`h-4 w-4 ${hasActiveFilters() ? "text-white" : "text-[#5DB2C7]"}} transition-transform duration-300 ${isCombinedFilterPopoverOpen ? 'rotate-180' : ''}`}
                 />
               </button>
               {isCombinedFilterPopoverOpen && (
@@ -351,49 +412,45 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 
   // Define the info card JSX/Component here for clarity
   const BrowseInternshipsInfoCard = () => (
-    <div className="w-full mx-auto">
-      <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+    <div className="w-full max-w-6xl mx-auto">
+       <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+          BROWSE INTERNSHIPS
+            <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+          </h1>
+      <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
-        <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
-        <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
-        <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-
+        <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
+        <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500 pointer-events-none"></div>
+        <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500 pointer-events-none"></div>
         <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
-          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
+          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
           </div>
-          <div className="text-left">
+          <div className="text-left w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              OPPORTUNITIES
+              INTERNSHIP EXPLORER
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Browse Career-Building Internships</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3">Company Internship Explorer</div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.</p>
-
-              {/* Card content with improved styling */}
+              <p className="mb-3">Browse internship opportunities posted by partner organizations across industries and locations.</p>
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Why These Opportunities Matter:
+                  Why Use This Explorer:
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Potential for academic credit and professional references</span>
+                    <span>This explorer helps you identify potential internship partners and examine their past engagement with SCAD students.</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Networking connections that could lead to full-time employment</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Portfolio-building projects to showcase your skills</span>
+                    <span>Discover industry leaders and hidden gems that align with your students' career interests.</span>
                   </li>
                 </ul>
               </div>
-
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience!
+                Note: All displayed companies have been vetted by SCAD and maintain active partnerships with our institution.
               </p>
             </div>
           </div>
@@ -514,6 +571,9 @@ function ApplicationsView() {
             APPLICATIONS MANAGEMENT
             <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
           </h1>
+          
+          <ApplicationInfoCard />
+          
           <div className="dropdown-overlay">
             <ApplicationsFilterBar
               searchTerm={searchTerm}
@@ -543,16 +603,148 @@ function ApplicationsView() {
 }
 
 function CurrentInternsView() {
+  // Info card for Intern Management Dashboard
+  const InternsInfoCard = () => (
+    <div className="w-full max-w-6xl mx-auto">
+       <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+            INTERN MANAGEMENT DASHBOARD
+            <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+          </h1>
+      <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+        {/* Decorative elements */}
+        <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
+        <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500 pointer-events-none"></div>
+        <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500 pointer-events-none"></div>
+        {/* Fun but subtle design: floating badge */}
+        {/* <div className="absolute left-8 top-8 bg-gradient-to-br from-[#B8E1E9] to-[#E8F7FB] rounded-full px-3 py-1 text-xs font-bold text-[#3298BA] shadow-md rotate-6 opacity-80 pointer-events-none">INTERN MANAGEMENT</div> */}
+        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+          </div>
+          <div className="text-left w-full">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
+              INTERN MANAGEMENT DASHBOARD
+            </div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3">Intern Management Dashboard</div>
+            <div className="text-gray-700 mb-3 relative">
+              <p className="mb-3">This comprehensive view displays all SCAD students who have interned with your organization across all programs and time periods.</p>
+              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
+                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
+                  View By Category:
+                </p>
+                <ul className="space-y-2 mb-2">
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">•</span>
+                    <span><b>Current Interns:</b> Students actively working in their positions</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">•</span>
+                    <span><b>Completed Internships:</b> Past interns awaiting evaluation</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">•</span>
+                    <span><b>Evaluated Interns:</b> Students with completed feedback assessments</span>
+                  </li>
+                </ul>
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center mt-4">
+                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
+                  Management Features:
+                </p>
+                <ul className="space-y-2 mb-2">
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>Filter students by department, position, time period, or evaluation status</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>Identify students with outstanding evaluations</span>
+                  </li>
+                </ul>
+              </div>
+              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
+                Note: Student information is protected and should be handled according to your confidentiality agreement with SCAD.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-6 font-['IBM_Plex_Sans']">
+    <div className="w-full max-w-6xl mx-auto px-4 py-6 font-['IBM_Plex_Sans']">
+      <InternsInfoCard />
       <CurrentInterns />
     </div>
   );
 }
 
 function MyEvaluationsView() {
+  // StudentEvaluationsInfoCard component
+  const StudentEvaluationsInfoCard = () => (
+    <div className="w-full mx-auto">
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+        {/* Decorative elements */}
+        <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
+        <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
+        <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
+
+        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
+            <FontAwesomeIcon icon={faClipboardCheck} className="h-7 w-7 text-white" />
+          </div>
+          <div className="text-left">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
+              EVALUATION PORTAL
+            </div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Student Evaluation Portal</div>
+            <div className="text-gray-700 mb-3 relative">
+              <p className="mb-3">Provide valuable feedback on interns who have completed positions at your organization. Your assessments help shape students' professional development and inform future placements.</p>
+
+              {/* Card content with improved styling */}
+              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
+                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
+                  Evaluation Components:
+                </p>
+                <ul className="space-y-2 mb-2">
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>Rate professional competencies (adaptability, communication, problem-solving)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>Assess technical skills relevant to the position</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>Provide specific examples of achievements and areas for growth</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>Answer structured questions about performance and potential</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>Add private comments for school administrators (optional)</span>
+                  </li>
+                </ul>
+              </div>
+
+              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
+                Evaluations remain confidential between your company and authorized faculty and SCAD members.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-[#f4fafd] py-10 px-4">
+      <StudentEvaluationsInfoCard />
       <EvaluationsDashboard evaluations={MOCK_COMPANY_EVALUATIONS} stakeholder={"company"} />
     </div>
   );

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import CustomButton from './shared/CustomButton';
 
 export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compact = false }) {
@@ -85,7 +85,29 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
   return (
     <div className="relative">
       <div className={containerClasses}>
-        {/* Header section with edit button moved inside at the top */}
+        {/* Edit/Delete Icon Buttons (top-right, only here) */}
+        <div
+          className="absolute top-2 right-4 flex items-center gap-2 z-10"
+          style={{ backgroundColor: 'rgba(255,255,255,0.8)', padding: '4px', borderRadius: '4px' }}
+          onClick={e => e.stopPropagation()}
+        >
+          <button
+            onClick={handleUpdateClick}
+            title="Edit post"
+            className="text-[#3298BA] hover:text-[#65bedc] p-1"
+          >
+            <FontAwesomeIcon icon={faEdit} className="w-4 h-4" />
+          </button>
+          <button
+            onClick={handleDeleteClick}
+            title="Delete post"
+            className="text-red-500 hover:text-red-700 p-1"
+          >
+            <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Header section (remove edit button from here) */}
         <div className="flex justify-between items-start mb-3">
           <div className="flex-grow">
             <h3 className={titleClasses}>
@@ -137,32 +159,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
             </div>
           </div>
 
-          {/* Edit button now positioned inside the card but at the topmost position */}
-          <div className="flex flex-col items-end">
-            <button
-              onClick={handleUpdateClick}
-              className="bg-[#5DB2C7] hover:bg-[#4AA0B5] text-white rounded-full w-7 h-7 flex items-center justify-center shadow-sm transition-all duration-200 hover:scale-105 border border-[#B8E1E9] mb-2"
-              aria-label="Edit post"
-            >
-              <FontAwesomeIcon icon={faPen} className="text-xs" />
-            </button>
-
-            <span className="inline-block bg-[var(--metallica-blue-100)] text-[var(--metallica-blue-800)] px-2 py-1 rounded text-xs">
-              {post.paid || "Payment Status"}
-            </span>
-            {post.paid === 'Paid' && post.salary && (
-              <p className="text-[var(--metallica-green-pop-color)] font-medium mt-1 text-xs">
-                {post.salary}
-              </p>
-            )}
-
-            <div className={`flex items-center mt-2 px-2 py-1 rounded-full ${getApplicantPulseClass()}`}>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              <span className="text-xs font-medium text-[var(--metallica-blue-800)]">{applicantsCount}</span>
-            </div>
-          </div>
+          {/* Remove edit button from here for single icon group */}
         </div>
 
         <div className="border-t border-gray-200 pt-3 mb-3 flex-grow overflow-hidden">
@@ -172,7 +169,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
           </p>
 
           {(!compact || expanded) && (
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="flex flex-col gap-2 mb-6">
               <div>
                 <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">Start Date</h4>
                 <p className="text-gray-700 text-sm">
@@ -189,10 +186,10 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
           )}
 
           {compact && !expanded && (
-            <div className="flex justify-between text-xs mb-2">
+            <div className="flex flex-col text-xs mb-2 space-y-1">
               <div className="truncate pr-1">
                 <span className="font-medium text-[var(--metallica-blue-700)]">Start:</span>{' '}
-                {post.startDate ? new Date(post.startDate).toLocaleDateString() : "Not specified"}
+                {post.startDate ? formatDate(post.startDate) : "Not specified"}
               </div>
               <div className="truncate">
                 <span className="font-medium text-[var(--metallica-blue-700)]">Duration:</span>{' '}
@@ -255,22 +252,12 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
           <div className="flex justify-between items-center">
             {compact && (
               <button
-              // className="w-full bg-metallica-blue-600 text-white font-semibold rounded-full py-2 mt-2 shadow-md hover:bg-metallica-blue-700 transition hover:-translate-y-0.5"
                 onClick={toggleExpanded}
-                className="text-[var(--metallica-blue-600)] hover:text-[var(--metallica-blue-800)] text-xs font-medium hover:-translate-y-0.5"
+                className="w-80 bg-metallica-blue-600 text-white font-semibold rounded-full py-2 mt-2 shadow-md hover:bg-metallica-blue-700 transition hover:-translate-y-0.5"
               >
                 {expanded ? 'See less' : 'See more'}
               </button>
             )}
-
-            {/* Smaller delete button with updated colors to match theme */}
-            <button
-              onClick={handleDeleteClick}
-              className="bg-white hover:bg-red-50 text-red-500 rounded-full w-6 h-6 flex items-center justify-center shadow-sm transition-all duration-200 hover:scale-105 ml-auto border border-red-200"
-              aria-label="Delete post"
-            >
-              <FontAwesomeIcon icon={faTrash} className="text-xs" />
-            </button>
           </div>
         </div>
       </div>

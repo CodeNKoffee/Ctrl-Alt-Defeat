@@ -527,9 +527,6 @@ function AppliedInternshipsView() {
 
   return (
     <div className="w-full px-6 py-4">
-      <div className="px-4 pt-6">
-        <AppliedInternshipsInfoCard />
-      </div>
       <InternshipList
         title=""
         internships={getAppliedInternships()}
@@ -766,12 +763,7 @@ function NotificationsView() {
 
   return (
     <div className="w-full px-6 py-4">
-      <div className="px-4 pt-6">
-        <NotificationsInfoCard />
-      </div>
-      <div className="px-4">
-        <NotificationsList />
-      </div>
+      <NotificationsList />
     </div>
   );
 }
@@ -835,12 +827,7 @@ function ProfileView() {
 
   return (
     <div className="w-full px-6 py-4">
-      <div className="px-4 pt-6">
-        <ProfileInfoCard />
-      </div>
-      <div className="px-4">
-        <StudentProfile />
-      </div>
+      <StudentProfile />
     </div>
   );
 }
@@ -962,12 +949,7 @@ function WorkshopsView({ sidebarExpanded }) {
           <WorkshopInterface workshop={selectedLiveWorkshop} onBack={() => setSelectedLiveWorkshop(null)} />
         </>
       ) : (
-        <>
-          <div className="px-4 pt-6">
-            <WorkshopsInfoCard />
-          </div>
-          <WorkshopList onSelectLive={handleWorkshopSelection} sidebarExpanded={sidebarExpanded} />
-        </>
+        <WorkshopList onSelectLive={handleWorkshopSelection} sidebarExpanded={sidebarExpanded} />
       )}
     </div>
   );
@@ -1069,9 +1051,6 @@ function OnlineAssessmentsView() {
 
   return (
     <div className="w-full px-6 py-4">
-      <div className="px-4 pt-6">
-        <OnlineAssessmentsInfoCard />
-      </div>
       <AssessmentList />
     </div>
   );
@@ -1182,13 +1161,8 @@ function MyReportsView() {
   }
 
   return (
-    <div className="w-full px-6 py-4">
-      <div className="px-4 pt-6">
-        <ReportInfoCard />
-      </div>
-      <div className="px-4">
-        <StudentReportCards />
-      </div>
+    <>
+      <StudentReportCards />
       {editIndex !== null && (
         <ReportCreationDashboard
           initialReport={reports[editIndex]}
@@ -1204,7 +1178,7 @@ function MyReportsView() {
           onCancel={() => setDeleteIndex(null)}
         />
       )}
-    </div>
+    </>
   );
 }
 
@@ -1264,13 +1238,8 @@ function MyEvaluationsView() {
   );
 
   return (
-    <div className="w-full px-6 py-4">
-      <div className="px-4 pt-6">
-        <EvaluationsInfoCard />
-      </div>
-      <div className="px-4">
-        <EvaluationsDashboard evaluations={MOCK_EVALUATIONS} stakeholder={"student"} />
-      </div>
+    <div className="min-h-screen bg-[#f4fafd] py-10 px-4">
+      <EvaluationsDashboard evaluations={MOCK_EVALUATIONS} stakeholder={"student"} />
     </div>
   );
 }
@@ -1447,8 +1416,6 @@ export default function StudentDashboardPage() {
         return "ONLINE ASSESSMENTS";
       case 'my-reports':
         return "MY REPORTS";
-      case 'my-evaluations':
-        return "MY COMPANY EVALUATIONS";
       default:
         return "RECOMMENDED OPPORTUNITIES";
     }
