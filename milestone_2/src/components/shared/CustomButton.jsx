@@ -20,9 +20,9 @@ export default function CustomButton({
 
   // Handle variants
   const variantClasses = {
-    primary: "bg-metallica-blue-off-charts text-white hover:bg-metallica-blue-950 focus:ring-metallica-blue-500",
-    secondary: "bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-gray-400 border border-gray-300",
-    danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
+    primary: "flex-1 px-4 py-3 mt-4 text-white bg-[#318FA8] rounded-full font-semibold hover:bg-[#2a5c67] transition-all text-sm border border-[#5DB2C7] shadow-md hover:shadow-lg transform hover:-translate-y-0.5",
+    secondary: "text-[#318FA8] bg-[#daedf0] border border-[#5DB2C7] hover:bg-[#D9F0F4] hover:-translate-y-0.5",
+    danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 transform hover:-translate-y-0.5",
   };
 
   // Handle width

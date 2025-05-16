@@ -157,7 +157,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
 
             {/* Right: Status Badge */}
             <div className="flex flex-col items-end w-28 flex-shrink-0 space-y-2">
-              {type === 'recommended'||type==='browsing' && (
+              {(type === 'recommended'||type==='browsing') && (
                 <StatusBadge color={internship.paid ? 'bg-green-100 text-green-800 border-green-400' : 'bg-gray-100 text-gray-600 border-gray-400'} className="border">
                   {internship.paid ? '$ Paid' : 'Unpaid'}
                 </StatusBadge>
@@ -204,7 +204,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             <span className="absolute bottom-2 right-2 text-xs text-gray-500">
               {type === 'my' && `started on ${formatDate(internship.startDate)}`}
               {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
-              {(type === 'recommnded' || type==='browsing') && timeAgo(internship.postedDate)}
+              {(type === 'recommended' || type==='browsing') && timeAgo(internship.postedDate)}
             </span>
           </div>
 
@@ -304,7 +304,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             {type === 'recommended'|| type==='browsing' ? (
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
-                className={`px-4 py-2 text-white rounded-lg transition w-full sm:w-auto text-sm ${isApplied
+                className={`px-4 py-2 text-white rounded-full transition w-full sm:w-auto text-sm  hover:-translate-y-0.5 ${isApplied
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-[#5DB2C7] hover:bg-[#4796a8]'
                   }`}

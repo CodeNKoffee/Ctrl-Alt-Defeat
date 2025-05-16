@@ -384,7 +384,7 @@ export default function EvaluationModal({
             <CustomButton
               type="submit"
               variant="primary"
-              text={isEditMode ? "Save Changes" : "Submit Evaluation"}
+              text={"Submit Evaluation"}
               isLoading={submitting}
               loadingText="Submitting..."
               disabled={submitting || (isEditMode && !isFormDirty()) || !isFormValid()}
@@ -406,16 +406,13 @@ export default function EvaluationModal({
                 }}
                 isLoading={draftStatus === 'saving'}
                 loadingText="Saving..."
-                disabled={submitting || draftStatus === 'saving' || draftStatus === 'saved' || !isFormForDraftValid()}
-                icon={faSave}
-                iconPosition="left"
-                fullWidth
+                disabled={submitting}
               />
             )}
             {isEditMode && (
               <CustomButton
-                variant="danger"
-                text="Cancel"
+                variant="secondary"
+                text="Save Changes"
                 onClick={onClose}
                 disabled={submitting}
                 fullWidth

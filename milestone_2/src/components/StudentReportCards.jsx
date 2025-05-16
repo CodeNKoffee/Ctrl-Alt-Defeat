@@ -4,6 +4,9 @@ import ReportViewer from "@/components/ReportViewer";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import ReportStatistics from "@/components/ReportStatistics";
 import ReportCreationDashboard from "./ReportCreationDashboard";
+import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CustomButton from "./shared/CustomButton";
 
 export default function StudentReportCards() {
   const [selectedReport, setSelectedReport] = useState(null);
@@ -14,6 +17,7 @@ export default function StudentReportCards() {
   const [editingDraftData, setEditingDraftData] = useState(null);
   const [showAppealModal, setShowAppealModal] = useState(false);
   const [appealMessage, setAppealMessage] = useState("");
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   // Use one accepted and one pending as drafts, rest as submitted
   const reports = Object.values(facultyScadReports);
@@ -65,6 +69,13 @@ export default function StudentReportCards() {
     setShowAppealModal(false);
     setAppealMessage("");
     setSelectedReport(prev => ({...prev, appealStatus: 'pending'}));
+  };
+
+  // Handler for deleting a report
+  const handleDeleteReport = () => {
+    setDraftReports(prev => prev.filter((_, i) => i !== deleteIndex));
+    setDeleteIndex(null);
+    setShowDeleteConfirm(false);
   };
 
   if (editingDraftIndex !== null && editingDraftData) {
@@ -155,7 +166,7 @@ export default function StudentReportCards() {
                     {report.introduction}
                   </div>
                   <button
-                    className="mt-2 self-end px-4 py-1 bg-metallica-blue-600 text-white rounded-full text-xs font-semibold hover:bg-metallica-blue-700 transition"
+                    className="mt-2 self-end px-4 py-1 bg-metallica-blue-600 text-white rounded-full text-xs font-semibold hover:bg-metallica-blue-700 transition hover:-translate-y-0.5"
                     onClick={() => setSelectedReport(report)}
                   >
                     See More
@@ -177,12 +188,12 @@ export default function StudentReportCards() {
                       {/* Add Make an Appeal button for flagged or rejected reports */}
                       {(selectedReport.status === "flagged" || selectedReport.status === "rejected") && !selectedReport.appealStatus && (
                         <div className="mt-6 flex justify-end">
-                          <button
+                          <CustomButton
                             onClick={() => handleAppeal(selectedReport)}
-                            className="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition shadow-sm hover:shadow-md flex items-center"
-                          >
-                            Make an Appeal
-                          </button>
+                            variant="danger"
+                            text="Make an Appeal"
+                            fullWidth={false}
+                          />
                         </div>
                       )}
                       {selectedReport.appealStatus === 'pending' && (
@@ -213,7 +224,7 @@ export default function StudentReportCards() {
                     <button className="text-[#3298BA] hover:text-[#65bedc] p-1" title="Edit" onClick={() => { setEditingDraftIndex(idx); setEditingDraftData(report); }}>
                       <FaEdit size={18} />
                     </button>
-                    <button className="text-red-500 hover:text-red-700 p-1" title="Delete" onClick={() => setDeleteIndex(idx)}>
+                    <button className="text-red-500 hover:text-red-700 p-1" title="Delete" onClick={() => setShowDeleteConfirm(true)}>
                       <FaTrash size={18} />
                     </button>
                   </div>
@@ -234,7 +245,7 @@ export default function StudentReportCards() {
                     {report.introduction}
                   </div>
                   <button
-                    className="mt-2 self-end px-4 py-1 bg-metallica-blue-600 text-white rounded-full text-xs font-semibold hover:bg-metallica-blue-700 transition"
+                    className="mt-2 self-end px-4 py-1 bg-metallica-blue-600 text-white rounded-full text-xs font-semibold hover:bg-metallica-blue-700 transition hover:-translate-y-0.5"
                     onClick={() => setSelectedReport({ ...report, _draft: true })}
                   >
                     See More
@@ -256,12 +267,12 @@ export default function StudentReportCards() {
                       {/* Add Make an Appeal button for flagged or rejected draft reports */}
                       {(selectedReport.status === "flagged" || selectedReport.status === "rejected") && !selectedReport.appealStatus && (
                         <div className="mt-6 flex justify-end">
-                          <button
+                          <CustomButton
                             onClick={() => handleAppeal(selectedReport)}
-                            className="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition shadow-sm hover:shadow-md flex items-center"
-                          >
-                            Make an Appeal
-                          </button>
+                            variant="danger"
+                            text="Make an Appeal"
+                            fullWidth={false}
+                          />
                         </div>
                       )}
                       {selectedReport.appealStatus === 'pending' && (
@@ -300,22 +311,55 @@ export default function StudentReportCards() {
               className="w-full p-4 border-2 border-metallica-blue-300 rounded-lg mb-4 resize-vertical min-h-[100px] focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
             />
             <div className="flex justify-end gap-3">
-              <button 
+              <CustomButton
                 onClick={() => {
                   setShowAppealModal(false);
                   setAppealMessage("");
                 }}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition"
-              >
-                Cancel
-              </button>
-              <button 
+                variant="danger"
+                text="Cancel"
+                fullWidth={false}
+              />
+              <CustomButton
                 onClick={handleSubmitAppeal}
                 disabled={!appealMessage.trim()}
-                className="px-4 py-2 bg-metallica-blue-600 text-white rounded-lg font-semibold hover:bg-metallica-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Submit Appeal
-              </button>
+                variant="primary"
+                text="Submit Appeal"
+                fullWidth={false}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500/75 backdrop-blur-sm">
+          <div className="relative w-full max-w-md bg-white rounded-2xl overflow-hidden shadow-2xl transform text-left p-6">
+            {/* Close button - styled like CallModal */}
+            <button
+              className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
+              onClick={() => setShowDeleteConfirm(false)}
+              aria-label="Close modal"
+            >
+              <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
+            </button>
+            <div className="mb-4">
+              <h3 className="text-xl font-semibold text-gray-800">Confirm Delete</h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-6">Are you sure you want to delete this report draft? This action cannot be undone.</p>
+            <div className="flex justify-end gap-3">
+              <CustomButton
+                variant="primary"
+                text="Cancel"
+                onClick={() => setShowDeleteConfirm(false)}
+              />
+              <CustomButton
+                variant="danger"
+                text="Delete"
+                onClick={handleDeleteReport}
+                icon={faTrash}
+              />
             </div>
           </div>
         </div>

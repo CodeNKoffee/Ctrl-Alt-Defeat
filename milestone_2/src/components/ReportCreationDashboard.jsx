@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { CSEN_Courses, DMET_Courses, BioTech_Courses, Law_Courses } from "../../constants/mockData";
+import CustomButton from "./shared/CustomButton";
 
 export default function ReportCreationDashboard({ onAddTile, onCancel, initialReport, hideTitle = false, showSaveDraftButton = true, isEditMode = false }) {
   const [filledReport, setReport] = useState({
@@ -204,18 +205,31 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                 />
               </div>
               <div className="flex gap-2 mt-6">
-                <button
+                <CustomButton
                   type="submit"
-                  className="flex-1 px-4 py-3 mt-4 text-white bg-[#318FA8] rounded-full font-semibold hover:bg-[#2a5c67] transition-all text-sm border border-[#5DB2C7] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-                >
-                  {isEditMode ? "Submit" : "Submit Report"}
-                </button>
+                  variant="primary"
+                  text={isEditMode ? "Submit" : "Submit Report"}
+                  fullWidth
+                />
                 {showSaveDraftButton && (
-                  <button
+                  <CustomButton
                     type="button"
+                    variant="secondary"
+                    text={
+                      draftStatus === 'saving'
+                        ? 'Saving...'
+                        : draftStatus === 'saved'
+                        ? '✓ Saved!'
+                        : (isEditMode ? 'Save Changes' : 'Save Draft')
+                    }
+                    fullWidth
+                    disabled={draftStatus === 'saving' || draftStatus === 'saved'}
+                    isLoading={draftStatus === 'saving'}
+                    loadingText="Saving..."
                     onClick={async () => {
                       setDraftStatus('saving');
                       await new Promise(res => setTimeout(res, 800));
+                      setReport({ ...filledReport, courses: selectedCourses }); 
                       onAddTile({ ...filledReport, courses: selectedCourses, status: 'draft' });
                       setDraftStatus('saved');
                       setTimeout(() => {
@@ -223,14 +237,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                         if (onCancel) onCancel();
                       }, 1500);
                     }}
-                    className={`flex-1 px-4 py-3 mt-4 rounded-full font-semibold text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all ${draftStatus === 'saved'
-                      ? 'bg-green-100 text-green-800 border border-green-500'
-                      : 'text-[#318FA8] bg-metallica-blue-100 border border-[#5DB2C7] hover:bg-metallica-blue-300 hover:text-metallica-blue-50'
-                      }`}
-                    disabled={draftStatus === 'saving' || draftStatus === 'saved'}
-                  >
-                    {draftStatus === 'saving' ? 'Saving...' : draftStatus === 'saved' ? '✓ Saved!' : (isEditMode ? 'Save Changes' : 'Save Draft')}
-                  </button>
+                  />
                 )}
               </div>
             </form>
