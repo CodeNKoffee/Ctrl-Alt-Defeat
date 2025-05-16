@@ -158,8 +158,8 @@ export default function StudentList({ students, sidebarExpanded = true }) {
       </div>
 
       {/* Responsive Grid for Student Cards */}
-      <div className={`transition-all duration-300 w-full`}>
-        <div className={`flex flex-row justify-between flex-wrap w-full`}>
+      <div className={`transition-all duration-300 w-full ${getContainerPadding()}`}>
+        <div className={`flex flex-row justify-start flex-wrap w-full gap-4`}>
           {filteredStudents.map((student) => (
             <div key={student.id} className="w-[245px] mb-6">
               <Student

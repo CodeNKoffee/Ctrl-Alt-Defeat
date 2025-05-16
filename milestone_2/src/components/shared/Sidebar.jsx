@@ -47,7 +47,8 @@ const iconMap = {
   applications: faFolder,
   logout: faRightFromBracket,
   notifications: faBell,
-  'online-assessments': faChartBar
+  'online-assessments': faChartBar,
+  statistics: faChartBar
 };
 
 // Map of sidebar items for different user types
@@ -81,7 +82,7 @@ const sidebarConfig = {
     { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/scad', isPage: false },
     { id: 'student-list', iconId: 'students', label: 'Student List', path: '/dashboard/scad/student-list', isPage: false },
     { id: 'student-evals', iconId: 'my-evaluations', label: 'Student Evaluations', path: '/dashboard/scad/student-evals', isPage: false },
-    { id: 'statistics', iconId: 'reports', label: 'Statistics', path: '/dashboard/scad/statistics', isPage: false },
+    { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/scad/statistics', isPage: false },
     { id: 'reports', iconId: 'reports', label: 'Reports', path: '/dashboard/scad/reports', isPage: false },
     { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/scad/workshops', isPage: false },
   ],
