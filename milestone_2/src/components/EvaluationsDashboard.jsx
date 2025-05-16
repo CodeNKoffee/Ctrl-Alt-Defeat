@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faTimesCircle, faCalendar, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import CompanyEvaluationModal from "./CompanyEvaluationModal";
 import CustomButton from './shared/CustomButton';
+import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
 
 export default function EvaluationsDashboard({ evaluations: initialEvaluations, stakeholder = "other" }) {
   const [expandedIndex, setExpandedIndex] = useState(null);
@@ -157,6 +158,16 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
             </div>
           </div> */}
 
+        <ApplicationsFilterBar 
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search by student, company or supervisor..."
+          selectedStatus={activeTab}
+          onStatusChange={setActiveTab}
+          // customFilterSections={customFilterSections}
+          primaryFilterName="Filters"
+        />
+
         {(stakeholder === "student" || stakeholder === "company") && (
           <div className="flex justify-start mb-6 px-4 gap-10">
             <div className="inline-flex rounded-full bg-gray-100 p-1">
@@ -184,7 +195,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
           </div>
         )}
 
-        {stakeholder !== "student" && (
+        {/* {stakeholder !== "student" && (
           <div className="mt-8 bg-white shadow-md rounded-lg p-6 mb-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
               <h2 className="text-2xl text-metallica-blue-800 font-semibold mb-4 md:mb-0">Student Evaluations</h2>
@@ -307,7 +318,8 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
               </div>
             )}
           </div>
-        )}
+        )} */}
+
 
         <div className="w-full flex flex-wrap justify-between gap-2 relative bg-[#f4fafd] rounded-2xl shadow-md p-6">
           {filteredEvaluations && filteredEvaluations.length > 0 ? (
