@@ -14,6 +14,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   const [workshops, setWorkshops] = useState(sampleWorkshops);
   const [showLiveInterface, setShowLiveInterface] = useState(false);
   const [showPrerecordedInterface, setShowPrerecordedInterface] = useState(false);
+  const [activeFilter, setActiveFilter] = useState('all');
   const router = useRouter();
 
   const handleWorkshopClick = (workshop) => {
@@ -47,6 +48,23 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   const liveWorkshops = workshops.filter(ws => ws.type === 'live');
   const prerecordedWorkshops = workshops.filter(ws => ws.type === 'prerecorded');
 
+  // Filter workshops based on activeFilter
+  const displayWorkshops = () => {
+    switch (activeFilter) {
+      case 'upcoming':
+        return { upcoming: upcomingWorkshops, live: [], prerecorded: [] };
+      case 'live':
+        return { upcoming: [], live: liveWorkshops, prerecorded: [] };
+      case 'prerecorded':
+        return { upcoming: [], live: [], prerecorded: prerecordedWorkshops };
+      case 'all':
+      default:
+        return { upcoming: upcomingWorkshops, live: liveWorkshops, prerecorded: prerecordedWorkshops };
+    }
+  };
+
+  const filteredWorkshops = displayWorkshops();
+
   if (showLiveInterface && selectedWorkshop) {
     return <WorkshopInterface workshop={selectedWorkshop} onBack={handleBackFromLive} />
   }
@@ -56,14 +74,9 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-8">
-      {/* Title */}
-      <div className="flex flex-wrap justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
-          WORKSHOPS
-          <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-        </h1>
-
+    <div className="w-full max-w-7xl mx-auto px-4 pb-8">
+      {/* Title and filter buttons */}
+      <div className="flex flex-wrap justify-between items-center mb-6">
         {canCreate && (
           <button
             onClick={onCreateWorkshop}
@@ -75,16 +88,56 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         )}
       </div>
 
+      {/* Filter buttons */}
+      <div className="flex items-center space-x-2 mb-8">
+        <button
+          onClick={() => setActiveFilter('all')}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'all'
+              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            }`}
+        >
+          ALL
+        </button>
+        <button
+          onClick={() => setActiveFilter('upcoming')}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'upcoming'
+              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            }`}
+        >
+          UPCOMING
+        </button>
+        <button
+          onClick={() => setActiveFilter('live')}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'live'
+              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            }`}
+        >
+          LIVE
+        </button>
+        <button
+          onClick={() => setActiveFilter('prerecorded')}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'prerecorded'
+              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            }`}
+        >
+          PRERECORDED
+        </button>
+      </div>
+
       {/* Main content area with relative positioning */}
       <div className="relative">
         {/* Workshop grid - will adjust width when sidebar is open */}
         <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? "pr-0 lg:pr-[33%]" : "pr-0"}`}>
           {/* Upcoming Workshops */}
-          {upcomingWorkshops.length > 0 && (
+          {filteredWorkshops.upcoming.length > 0 && (
             <div className="mb-12">
               <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Upcoming Workshops</h2>
               <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
-                {upcomingWorkshops.map((ws) => (
+                {filteredWorkshops.upcoming.map((ws) => (
                   <WorkshopCard
                     key={ws.id}
                     workshop={ws}
@@ -97,11 +150,11 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
           )}
 
           {/* Live Workshops */}
-          {liveWorkshops.length > 0 && (
+          {filteredWorkshops.live.length > 0 && (
             <div className="mb-12">
               <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Live Workshops</h2>
               <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
-                {liveWorkshops.map((ws) => (
+                {filteredWorkshops.live.map((ws) => (
                   <WorkshopCard
                     key={ws.id}
                     workshop={ws}
@@ -114,11 +167,11 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
           )}
 
           {/* Prerecorded Workshops */}
-          {prerecordedWorkshops.length > 0 && (
+          {filteredWorkshops.prerecorded.length > 0 && (
             <div className="mb-12">
               <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Prerecorded Workshops</h2>
               <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
-                {prerecordedWorkshops.map((ws) => (
+                {filteredWorkshops.prerecorded.map((ws) => (
                   <WorkshopCard
                     key={ws.id}
                     workshop={ws}
