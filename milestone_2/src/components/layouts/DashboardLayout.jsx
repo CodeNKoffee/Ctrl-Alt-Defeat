@@ -19,6 +19,11 @@ export default function DashboardLayout({
 }) {
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const router = useRouter();
+  const [sidebarExpanded, setSidebarExpanded] = useState(true);
+
+  const handleSidebarToggle = (isExpanded) => {
+    setSidebarExpanded(isExpanded);
+  };
 
   // Authentication check
   useEffect(() => {
@@ -84,6 +89,7 @@ export default function DashboardLayout({
           onViewChange={onViewChange}
           currentView={currentViewId}
           currentUser={userData}
+          onToggle={handleSidebarToggle}
         />
       )}
 
@@ -138,7 +144,9 @@ export default function DashboardLayout({
                 </div>
               </div>
             )}
-            {children}
+            {typeof children === 'function'
+              ? children({ sidebarExpanded })
+              : children}
           </div>
         </div>
       </div>

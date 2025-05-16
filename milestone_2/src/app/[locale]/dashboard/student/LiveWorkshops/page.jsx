@@ -41,6 +41,10 @@ export default function LiveWorkshopsPage() {
     // Client-side initialization if needed
   }, []);
 
+  const handleBackFromWorkshop = () => {
+    setSelectedWorkshop(null);
+  };
+
   if (typeof window === "undefined") {
     return <div>Loading...</div>; // Fallback for SSR
   }
@@ -50,12 +54,12 @@ export default function LiveWorkshopsPage() {
       {/* Workshop List - Shown when no workshop is selected */}
       {!selectedWorkshop && (
         <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "32px 16px" }}>
-          {/* <div style={{ marginBottom: "32px" }}>
+          <div style={{ marginBottom: "32px" }}>
             <h1 style={{ fontSize: "30px", fontWeight: "bold", textAlign: "left", color: "#2a5f74", position: "relative" }}>
               UPCOMING WORKSHOPS
               <span style={{ position: "absolute", bottom: "0", left: "0", width: "96px", height: "4px", backgroundColor: "#2a5f74" }}></span>
             </h1>
-          </div> */}
+          </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "24px" }}>
             {sampleWorkshops.map((workshop) => (
               <div
@@ -119,7 +123,7 @@ export default function LiveWorkshopsPage() {
 
       {/* Workshop Interface - Shown when a workshop is selected */}
       {selectedWorkshop && (
-        <WorkshopInterface workshop={selectedWorkshop} />
+        <WorkshopInterface workshop={selectedWorkshop} onBack={handleBackFromWorkshop} />
       )}
     </div>
   );

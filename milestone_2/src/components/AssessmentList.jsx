@@ -5,34 +5,63 @@ import { mockAssessments } from "../../constants/mockData";
 
 export default function AssessmentList() {
   const [selectedAssessment, setSelectedAssessment] = useState(null);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
-  // Reset the sidebar content when a new assessment is selected
   useEffect(() => {
-    if (selectedAssessment) {
-      setSelectedAssessment(selectedAssessment);
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Responsive grid columns logic
+  const getGridColumns = () => {
+    const sidebarOpen = !!selectedAssessment;
+    if (sidebarOpen && windowWidth >= 768) {
+      return "grid-cols-1";
     }
-  }, [selectedAssessment]);
+    if (!sidebarOpen && windowWidth < 768) {
+      return "grid-cols-1";
+    }
+    if (!sidebarOpen && windowWidth < 1280) {
+      return "grid-cols-2";
+    }
+    if (!sidebarOpen && windowWidth < 1536) {
+      return "grid-cols-3";
+    }
+    return "grid-cols-4";
+  };
+
+  // Card container width - adjusted to prevent overlap
+  const getCardContainerClass = () => {
+    const sidebarOpen = !!selectedAssessment;
+    if (sidebarOpen) {
+      return "max-w-xl w-full";  // Smaller max-width when sidebar is open
+    }
+    return "max-w-md w-full";    // Default size when sidebar is closed
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8 min-h-screen flex flex-col">
-    
       {/* Main content area with relative positioning */}
       <div className="relative">
-        {/* Assessment grid - will adjust width when sidebar is open */}
-        <div className={`transition-all duration-300 ease-in-out ${selectedAssessment ? "pr-0 lg:pr-[33%]" : "pr-0"}`}>
-          <div className={`grid grid-cols-1 ${selectedAssessment ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
+        {/* Assessment grid - adjusted spacing when sidebar is open */}
+        <div className={`transition-all duration-300 ease-in-out ${selectedAssessment ? "md:pr-[calc(33%+24px)] lg:pr-[calc(33%+32px)]" : "pr-0"}`}>
+          <div className={`grid ${getGridColumns()} gap-6`}>
             {mockAssessments.map((assessment) => (
-              <AssessmentCard
-                key={assessment.id}
-                assessment={assessment}
-                onClick={setSelectedAssessment}
-                className={selectedAssessment ? "w-full transition-all duration-300 transform scale-[0.85] m-1" : "w-full"}
-              />
+              <div key={assessment.id} className="flex justify-center">
+                <div className={`${getCardContainerClass()}`}>
+                  <AssessmentCard
+                    assessment={assessment}
+                    onClick={setSelectedAssessment}
+                    className="w-full"
+                  />
+                </div>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Fixed sidebar */}
+        {/* Fixed sidebar - ensure it doesn't overlap with content */}
         <AssessmentSidebar
           assessment={selectedAssessment}
           onClose={() => setSelectedAssessment(null)}

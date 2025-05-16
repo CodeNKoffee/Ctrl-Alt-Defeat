@@ -502,7 +502,7 @@ function ProfileView() {
   );
 }
 
-function WorkshopsView() {
+function WorkshopsView({ sidebarExpanded }) {
   const [selectedLiveWorkshop, setSelectedLiveWorkshop] = useState(null);
 
   const handleWorkshopSelection = (workshop) => {
@@ -526,10 +526,10 @@ function WorkshopsView() {
               Back to Workshops
             </button>
           </div>
-          <WorkshopInterface workshop={selectedLiveWorkshop} />
+          <WorkshopInterface workshop={selectedLiveWorkshop} onBack={() => setSelectedLiveWorkshop(null)} />
         </>
       ) : (
-        <WorkshopList onSelectLive={handleWorkshopSelection} />
+        <WorkshopList onSelectLive={handleWorkshopSelection} sidebarExpanded={sidebarExpanded} />
       )}
     </div>
   );
@@ -719,7 +719,7 @@ function LiveWorkshopsView() {
 
       {/* Workshop Interface - Shown when a workshop is selected */}
       {selectedWorkshop && (
-        <WorkshopInterface workshop={selectedWorkshop} />
+        <WorkshopInterface workshop={selectedWorkshop} onBack={() => setSelectedWorkshop(null)} />
       )}
     </div>
   );
@@ -881,7 +881,16 @@ export default function StudentDashboardPage() {
       currentViewId={currentView}
       onViewChange={handleViewChange}
     >
-      {CurrentViewComponent && <CurrentViewComponent {...viewProps} />}
+      {({ sidebarExpanded }) => (
+        <>
+          {CurrentViewComponent &&
+            (currentView === 'workshops' ?
+              <WorkshopsView sidebarExpanded={sidebarExpanded} /> :
+              <CurrentViewComponent {...viewProps} />
+            )
+          }
+        </>
+      )}
     </DashboardLayout>
   );
 }
