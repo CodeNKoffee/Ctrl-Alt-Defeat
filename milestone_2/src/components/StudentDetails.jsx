@@ -71,7 +71,7 @@ export default function StudentDetails({ isOpen, studentData }) {
       style={themeStyle}
     >
       <div className="details-content w-full">
-        <div className="grid-layout grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid-layout grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="grid-column">
             <div className="details-section personality-traits-section">
               <h3 style={sectionTitleStyle}>Personality Traits</h3>

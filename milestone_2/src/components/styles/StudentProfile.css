@@ -12,31 +12,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 1rem;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 .student-profile-wrapper {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0px;
   position: relative;
   width: 100%;
   max-width: 1200px;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.5s ease-in-out;
 }
 
 .student-profile-wrapper.expanded {
-  gap: 3rem;
+  gap: 5px;
 }
 
 /* Student Card */
 .student-card {
-  flex: 0 0 340px;
+  flex: 0 0 auto;
+  width: 320px;
+  height: 673px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -47,62 +49,38 @@
   border: 3px solid var(--user-primary);
   position: relative;
   z-index: 10;
-  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: all 0.4s ease;
   transform: translateZ(0);
+  margin: 0;
 }
 
 .student-card.active {
-  transform: translateZ(10px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Call to action for student card */
-.student-card::after {
-  content: "Click to view more";
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--user-secondary);
-  color: white;
-  border-radius: 1rem;
-  padding: 6px 15px;
-  font-size: 0.85rem;
-  opacity: 1;
-  transition: opacity 0.3s ease, background-color 0.3s ease;
-  pointer-events: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  white-space: nowrap;
-  z-index: 10;
+.action-indicator {
+  position: relative;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  text-align: center;
 }
 
-.student-card.active::after {
-  content: "Click to view less";
-  background-color: var(--user-accent);
-}
-
-/* Mouse pointer indicator */
-.student-card::before {
+.action-indicator::after {
   content: "";
   position: absolute;
+  bottom: 0;
+  left: 50%;
   width: 24px;
   height: 24px;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M7,2l12,11.2-5.8,0.5l3.3,7.3-2.2,1-3.2-7.4L7,18'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235DB2C7'%3E%3Cpath d='M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z'/%3E%3C/svg%3E");
   background-size: contain;
   background-repeat: no-repeat;
-  filter: var(--user-svg-filter, none);
-  opacity: 1;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  pointer-events: none;
-  z-index: 10;
+  transform: translateX(-50%);
+  transition: transform 0.3s ease;
 }
 
-.student-card.active::before {
+.student-card.active .action-indicator::after {
   transform: translateX(-50%) rotate(180deg);
-  bottom: 45px;
 }
 
 /* Profile Card Section */
@@ -112,24 +90,17 @@
   align-items: center;
   justify-content: flex-start;
   padding: 1rem;
-  margin-top: 2rem;
+  padding-top: 2.5rem;
   background: #FFFFFF;
   min-height: 200px;
   position: relative;
-}
-
-.card-top .edit-profile-button {
-  margin-bottom: 1rem;
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }
 
 .card-top .profile-image-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 .card-top .profile-image {
@@ -138,13 +109,13 @@
   object-fit: cover;
   background: #FFFFFF;
   border-radius: 50%;
-  margin-top: 0.5px;
   border: 4px solid var(--user-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card-content {
   text-align: center;
-  padding: 0.5rem 1.5rem 3rem;
+  padding: 0.5rem 1.5rem 0.5rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -244,24 +215,29 @@
 /* Student Details Section */
 .student-details-container {
   flex: 1;
-  max-width: 650px;
-  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-  transform: translateX(20px);
+  max-width: 0;
   opacity: 0;
-  display: none;
+  overflow: hidden;
+  border-radius: 20px;
+  height: 673px;
+  max-height: 673px;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 3px solid var(--user-primary);
 }
 
 .student-profile-wrapper.expanded .student-details-container {
-  transform: translateX(0);
+  max-width: 800px;
   opacity: 1;
-  display: flex;
+  overflow: visible;
+  margin-left: 0;
 }
 
 .details-content {
   padding: 1.5rem;
   width: 100%;
   overflow-y: auto;
-  max-height: 80vh;
+  max-height: 667px;
 }
 
 .details-section {
@@ -305,7 +281,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 6px 15px;
+  padding: 6px 12px;
   border-radius: 50px;
   background-color: white;
   color: var(--user-text);
@@ -339,17 +315,26 @@
   }
   
   .student-profile-wrapper.expanded {
-    gap: 2rem;
+    gap: 1rem;
   }
   
   .student-card {
     flex: 0 0 auto;
     width: 320px;
+    height: 673px;
+    margin-bottom: 1rem;
   }
   
   .student-details-container {
     max-width: 100%;
     width: 100%;
+    height: 673px;
+    max-height: 673px;
+  }
+  
+  .student-profile-wrapper.expanded .student-details-container {
+    max-width: 100%;
+    margin-top: 1rem;
   }
 }
 
