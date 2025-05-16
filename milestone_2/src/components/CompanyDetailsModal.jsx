@@ -233,18 +233,20 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
             </div>
           </div>
           {/* Accept/Reject Buttons (outside main border, centered) */}
-          <div className="modal-action-row">
+          <div className="w-full flex gap-4 justify-center mt-6">
             <CustomButton
               variant="primary"
               onClick={handleAccept}
               icon={faCheck}
               text="Accept"
+              className="flex-1"
             />
             <CustomButton
               variant="danger"
               onClick={handleReject}
               icon={faTimes}
               text="Reject"
+              className="flex-1"
             />
           </div>
         </div>

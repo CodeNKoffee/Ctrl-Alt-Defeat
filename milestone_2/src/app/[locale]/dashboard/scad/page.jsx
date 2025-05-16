@@ -40,10 +40,10 @@ function ScadDashboardView() {
   );
 }
 
-function StudentListView() {
+function StudentListView({ sidebarExpanded }) {
   return (
     <div className="w-full px-6 py-4">
-      <StudentList students={mockStudents} />
+      <StudentList students={mockStudents} sidebarExpanded={sidebarExpanded} />
     </div>
   );
 }

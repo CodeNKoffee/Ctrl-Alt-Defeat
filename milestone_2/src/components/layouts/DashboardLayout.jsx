@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
@@ -302,18 +302,16 @@ export default function DashboardLayout({
 
           <div className="bg-metallica-blue-50 rounded-xl shadow-sm border border-gray-200">
             {title && (
-              <div className="w-full px-10 pt-6 pb-2">
-                <div className="w-full max-w-6xl mx-auto">
-                  <h2 className="text-3xl font-bold text-left text-[#2a5f74] relative">
-                    {title}
-                    <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-                  </h2>
-                </div>
+              <div className="w-full pl-10 pt-6 pb-2">
+                <h2 className="text-3xl font-bold text-left text-[#2a5f74] relative">
+                  {title}
+                  <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
+                </h2>
               </div>
             )}
             {typeof children === 'function'
               ? children({ sidebarExpanded })
-              : children}
+              : React.cloneElement(children, { sidebarExpanded })}
           </div>
         </div>
       </div>

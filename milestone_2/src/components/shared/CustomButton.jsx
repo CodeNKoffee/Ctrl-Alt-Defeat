@@ -8,7 +8,7 @@ export default function CustomButton({
   onClick,
   icon,
   text,
-  fullWidth,
+  width = "w-full",
   disabled = false,
   isLoading = false,
   loadingText = "Loading...",
@@ -24,9 +24,6 @@ export default function CustomButton({
     secondary: "text-[#318FA8] bg-[#daedf0] border border-[#5DB2C7] hover:bg-[#D9F0F4] hover:-translate-y-0.5",
     danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 transform hover:-translate-y-0.5",
   };
-
-  // Handle width
-  const widthClasses = fullWidth ? "w-full" : "";
 
   // Handle disabled state (explicitly or due to loading)
   const isDisabled = disabled || isLoading;
@@ -45,7 +42,7 @@ export default function CustomButton({
       type={type}
       onClick={isDisabled ? undefined : onClick}
       disabled={isDisabled}
-      className={`${baseClasses} ${variantClasses[variant] || variantClasses.primary} ${widthClasses} ${disabledClasses}`}
+      className={`${baseClasses} ${variantClasses[variant] || variantClasses.primary} ${width} ${disabledClasses}`}
     >
       {iconPosition === 'left' && loadingIconMarkup}
       {iconPosition === 'left' && iconMarkup}

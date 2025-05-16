@@ -54,7 +54,7 @@ export default function StudentCard({ isOpen, toggleDetails, onEditProfile, stud
 
   return (
     <div
-      className={`student-card ${isOpen ? 'active' : ''}`}
+      className={`student-card w-[360px] ${isOpen ? 'active' : ''}`}
       onClick={toggleDetails}
       style={themeStyle}
     >
