@@ -29,11 +29,11 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8">
       {/* Title */}
-      <div className="flex flex-wrap justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
+      <div className="flex flex-wrap justify-between items-center">
+        {/* <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
           UPCOMING WORKSHOPS
           <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-        </h1>
+        </h1> */}
 
         {canCreate && (
           <button
