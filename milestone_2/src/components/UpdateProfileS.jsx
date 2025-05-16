@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import './styles/StudentProfile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faSave, faPlus, faTrash, faCamera, faPalette, faFont, faSquare, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import CustomButton from './shared/CustomButton';
 
 // Validation schema for student profile form
 const ProfileValidationSchema = Yup.object().shape({
@@ -336,13 +337,13 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                               )}
                             </div>
                           ))}
-                          <button
+                          <CustomButton
                             type="button"
-                            className="add-button"
+                            variant="secondary"
                             onClick={() => push({ trait: "", rating: 3 })}
-                          >
-                            <FontAwesomeIcon icon={faPlus} /> Add Trait
-                          </button>
+                            text="Add Trait"
+                            icon={faPlus}
+                          />
                         </>
                       )}
                     </FieldArray>
@@ -408,13 +409,13 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                               </div>
                             ))}
                           </div>
-                          <button
+                          <CustomButton
                             type="button"
-                            className="add-button"
+                            variant="secondary"
                             onClick={() => push("")}
-                          >
-                            <FontAwesomeIcon icon={faPlus} /> Add Skill
-                          </button>
+                            text="Add Skill"
+                            icon={faPlus}
+                          />
                         </div>
                       )}
                     </FieldArray>
@@ -447,23 +448,25 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                   rows="3"
                                 />
                               </div>
-                              <button
+                              <CustomButton
                                 type="button"
-                                className="remove-button"
+                                variant="danger"
                                 onClick={() => remove(index)}
-                              >
-                                <FontAwesomeIcon icon={faTrash} /> Remove Job Interest
-                              </button>
+                                text="Remove Job Interest"
+                                icon={faTrash}
+                                width="w-full md:w-auto"
+                              />
                               <hr className="section-divider" />
                             </div>
                           ))}
-                          <button
+                          <CustomButton
                             type="button"
-                            className="add-button"
+                            variant="secondary"
                             onClick={() => push({ title: "", description: "" })}
-                          >
-                            <FontAwesomeIcon icon={faPlus} /> Add Job Interest
-                          </button>
+                            text="Add Job Interest"
+                            icon={faPlus}
+                            width="w-full md:w-auto"
+                          />
                         </>
                       )}
                     </FieldArray>
@@ -522,34 +525,37 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                           </button>
                                         </div>
                                       ))}
-                                      <button
+                                      <CustomButton
                                         type="button"
-                                        className="add-responsibility"
+                                        variant="secondary"
                                         onClick={() => pushResp("")}
-                                      >
-                                        <FontAwesomeIcon icon={faPlus} /> Add Responsibility
-                                      </button>
+                                        text="Add Responsibility"
+                                        icon={faPlus}
+                                        width="w-auto"
+                                      />
                                     </>
                                   )}
                                 </FieldArray>
                               </div>
-                              <button
+                              <CustomButton
                                 type="button"
-                                className="remove-button"
+                                variant="danger"
                                 onClick={() => remove(index)}
-                              >
-                                <FontAwesomeIcon icon={faTrash} /> Remove Experience
-                              </button>
+                                text="Remove Experience"
+                                icon={faTrash}
+                                width="w-full md:w-auto"
+                              />
                               <hr className="section-divider" />
                             </div>
                           ))}
-                          <button
+                          <CustomButton
                             type="button"
-                            className="add-button"
+                            variant="secondary"
                             onClick={() => push({ title: "", company: "", duration: "", responsibilities: [""] })}
-                          >
-                            <FontAwesomeIcon icon={faPlus} /> Add Experience
-                          </button>
+                            text="Add Experience"
+                            icon={faPlus}
+                            width="w-full md:w-auto"
+                          />
                         </>
                       )}
                     </FieldArray>
@@ -596,23 +602,25 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                   rows="3"
                                 />
                               </div>
-                              <button
+                              <CustomButton
                                 type="button"
-                                className="remove-button"
+                                variant="danger"
                                 onClick={() => remove(index)}
-                              >
-                                <FontAwesomeIcon icon={faTrash} /> Remove Internship
-                              </button>
+                                text="Remove Internship"
+                                icon={faTrash}
+                                width="w-full md:w-auto"
+                              />
                               <hr className="section-divider" />
                             </div>
                           ))}
-                          <button
+                          <CustomButton
                             type="button"
-                            className="add-button"
+                            variant="secondary"
                             onClick={() => push({ title: "", company: "", period: "", description: "" })}
-                          >
-                            <FontAwesomeIcon icon={faPlus} /> Add Internship
-                          </button>
+                            text="Add Internship"
+                            icon={faPlus}
+                            width="w-full md:w-auto"
+                          />
                         </>
                       )}
                     </FieldArray>
@@ -620,13 +628,22 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                 </div>
               </div>
 
-              <div className="form-actions">
-                <button type="button" onClick={onClose} className="cancel-button">
-                  <FontAwesomeIcon icon={faTimes} /> Cancel
-                </button>
-                <button type="submit" className="save-button">
-                  <FontAwesomeIcon icon={faSave} /> Save Changes
-                </button>
+              <div className="form-actions" style={{ padding: "20px", display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "20px" }}>
+                <CustomButton
+                  type="button"
+                  variant="danger"
+                  onClick={onClose}
+                  text="Cancel"
+                  icon={faTimes}
+                  width="w-[200px]"
+                />
+                <CustomButton
+                  type="submit"
+                  variant="primary"
+                  text="Save Changes"
+                  icon={faSave}
+                  width="w-[200px]"
+                />
               </div>
             </Form>
           )}
