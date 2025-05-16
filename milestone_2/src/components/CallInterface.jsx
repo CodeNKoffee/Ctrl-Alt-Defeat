@@ -1,0 +1,696 @@
+'use client';
+
+import React, { useEffect, useRef, useState, useCallback, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  endCall,
+  toggleMute,
+  toggleVideo,
+  toggleScreenShare,
+  otherPartyLeft
+} from '../store/callReducer';
+import WebRTCService from '../services/WebRTCService';
+import SignalingService from '../services/SignalingService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faMicrophone,
+  faMicrophoneSlash,
+  faVideo,
+  faVideoSlash,
+  faDesktop,
+  faPhone,
+  faUserCircle,
+  faComments,
+  faNoteSticky,
+  faPaperPlane,
+  faSave,
+  faXmark,
+  faExpand
+} from '@fortawesome/free-solid-svg-icons';
+import { motion, AnimatePresence } from 'framer-motion';
+
+// Extract ChatPanelContent to be outside of CallInterface
+const ChatPanelContent = memo(({
+  chatMessages = [],
+  currentMessage = '',
+  setCurrentMessage,
+  handleSendMessage,
+  handleToggleChat,
+  chatScrollRef
+}) => (
+  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg rounded-3xl overflow-hidden">
+    <div className="flex justify-between items-center p-3 border-b bg-gray-100">
+      <h3 className="text-lg font-semibold text-gray-700">Chat</h3>
+      <button
+        onClick={handleToggleChat}
+        className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+        title="Close Chat Panel"
+      >
+        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+      </button>
+    </div>
+    <div className="flex flex-col flex-grow overflow-hidden">
+      <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-white">
+        {chatMessages.length === 0 ? (
+          <p className="text-center text-sm text-gray-500 py-4">No messages yet.</p>
+        ) : (
+          chatMessages.map(message => (
+            <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
+              <div className={`max-w-[80%] rounded-lg px-3 py-2 shadow-sm ${message.isSelf
+                ? 'bg-metallica-blue-700 text-white rounded-br-none'
+                : 'bg-gray-100 text-gray-800 border border-gray-200 rounded-bl-none'
+                }`}>
+                <p className="text-sm">{message.content}</p>
+                <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100' : 'text-gray-400'} ${message.isSelf ? 'text-right' : 'text-left'}`}>
+                  {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+      <div className="p-3 border-t bg-white">
+        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+          <input
+            type="text"
+            value={currentMessage}
+            onChange={(e) => setCurrentMessage(e.target.value)}
+            className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 text-sm"
+            placeholder="Type your message..."
+          />
+          <button
+            type="submit"
+            className={`w-10 h-10 rounded-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''}`}
+            disabled={!currentMessage.trim()}
+            title="Send Message"
+          >
+            <FontAwesomeIcon icon={faPaperPlane} />
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+));
+
+// Extract NotesPanelContent to be outside of CallInterface
+const NotesPanelContent = memo(({
+  noteContent = '',
+  setNoteContent,
+  handleSaveNotes,
+  handleToggleNotes
+}) => (
+  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg rounded-xl overflow-hidden">
+    <div className="flex justify-between items-center p-3 border-b bg-gray-100">
+      <h3 className="text-lg font-semibold text-gray-700">Private Notes</h3>
+      <button
+        onClick={handleToggleNotes}
+        className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+        title="Close Notes Panel"
+      >
+        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+      </button>
+    </div>
+    <div className="flex flex-col flex-grow overflow-hidden p-4 bg-white">
+      <textarea
+        value={noteContent}
+        onChange={(e) => setNoteContent(e.target.value)}
+        className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 resize-none text-sm mb-4"
+        placeholder="Write your private notes here..."
+      />
+      <button
+        onClick={handleSaveNotes}
+        className="w-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-2 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors"
+        title="Save Notes (logs to console)"
+      >
+        <FontAwesomeIcon icon={faSave} />
+        Save Notes
+      </button>
+    </div>
+  </div>
+));
+
+const CallInterface = () => {
+  const dispatch = useDispatch();
+  const instanceId = useRef(Math.random().toString(36).substring(2, 7)).current; // Unique ID for this instance
+  console.log(`[CallInterface ${instanceId}] Function body executing.`); // Log instance invocation
+
+  const {
+    isInCall,
+    isMuted,
+    isVideoEnabled,
+    isScreenSharing,
+    callerId,
+    calleeId,
+    callerName,
+    calleeName,
+    otherPartyLeft: hasOtherPartyLeft
+  } = useSelector((state) => state.call);
+
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const localVideoRef = useRef(null);
+  const remoteVideoRef = useRef(null);
+  const [isCallConnected, setIsCallConnected] = useState(false);
+  const answerAudioRef = useRef(null);
+  const [showConnectingOverlay, setShowConnectingOverlay] = useState(true);
+  const [showManualLeaveToast, setShowManualLeaveToast] = useState(false);
+  const [otherPartyCameraOn, setOtherPartyCameraOn] = useState(false);
+
+  const [showChat, setShowChat] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [noteContent, setNoteContent] = useState('');
+  const [currentMessage, setCurrentMessage] = useState('');
+  const chatScrollRef = useRef(null);
+
+  const isCallee = currentUser?.id === calleeId;
+  const otherPartyName = isCallee ? callerName : calleeName;
+  const otherPartyId = isCallee ? callerId : calleeId;
+
+  useEffect(() => {
+    console.log("CallInterface currentUser:", currentUser);
+  }, [currentUser]);
+
+  useEffect(() => {
+    setShowConnectingOverlay(true);
+    setOtherPartyCameraOn(false); // Reset camera state when call setup begins
+    let isMounted = true;
+    const setupInstanceId = instanceId;
+    console.log(`[CallInterface ${setupInstanceId}] Setup useEffect running. isInCall: ${isInCall}, otherPartyId: ${otherPartyId}, userId: ${currentUser?.id}`);
+
+    async function setupCall() {
+      if (!isInCall || !otherPartyId || !currentUser?.id) {
+        console.log(`[CallInterface ${setupInstanceId}] Setup useEffect: Aborting setup.`);
+        return;
+      }
+      console.log(`[CallInterface ${setupInstanceId}] Setup useEffect: Proceeding.`);
+
+      try {
+        if (answerAudioRef.current) {
+          answerAudioRef.current.currentTime = 0;
+          answerAudioRef.current.play().catch(e => console.error("Answer audio play error:", e));
+        }
+
+        SignalingService.init(currentUser.id);
+        SignalingService.addReceiverId(otherPartyId);
+
+        await WebRTCService.initialize(
+          (candidate) => SignalingService.sendIceCandidate(otherPartyId, candidate),
+          (stream) => {
+            if (remoteVideoRef.current && isMounted) {
+              remoteVideoRef.current.srcObject = stream;
+              remoteVideoRef.current.play().catch(console.error);
+            }
+          },
+          (connectionState) => {
+            if (isMounted) {
+              setIsCallConnected(connectionState === 'connected');
+              if (connectionState === 'connected') {
+                if (remoteVideoRef.current) remoteVideoRef.current.play().catch(console.error);
+                if (localVideoRef.current) localVideoRef.current.play().catch(console.error);
+              }
+            }
+          }
+        );
+
+        const localStream = await WebRTCService.getUserMedia(true, !isMuted);
+        if (localVideoRef.current && isMounted && localStream) {
+          localVideoRef.current.srcObject = localStream;
+          if (isVideoEnabled) localVideoRef.current.play().catch(console.error);
+        }
+
+        WebRTCService.addLocalStreamTracks();
+
+        SignalingService.on('offer', async ({ senderId, offer }) => {
+          if (senderId === otherPartyId && isMounted) {
+            await WebRTCService.setRemoteDescription(offer);
+            const answer = await WebRTCService.createAnswer();
+            SignalingService.sendAnswer(otherPartyId, answer);
+          }
+        });
+        SignalingService.on('answer', async ({ senderId, answer }) => {
+          if (senderId === otherPartyId && isMounted) {
+            await WebRTCService.setRemoteDescription(answer);
+          }
+        });
+        SignalingService.on('ice-candidate', async ({ senderId, candidate }) => {
+          if (senderId === otherPartyId && isMounted) {
+            await WebRTCService.addIceCandidate(candidate);
+          }
+        });
+        SignalingService.on('end-call', ({ senderId }) => {
+          if (senderId === otherPartyId && isMounted) dispatch(otherPartyLeft());
+        });
+
+        if (!isCallee) {
+          const offer = await WebRTCService.createOffer();
+          SignalingService.sendOffer(otherPartyId, offer);
+        }
+
+      } catch (error) {
+        console.error(`[CallInterface ${setupInstanceId}] Error setting up WebRTC:`, error);
+      }
+    }
+
+    setupCall();
+
+    return () => {
+      isMounted = false;
+      console.log(`[CallInterface ${setupInstanceId}] Cleanup running.`);
+      WebRTCService.close();
+      SignalingService.disconnect();
+      if (answerAudioRef.current) {
+        answerAudioRef.current.pause();
+        answerAudioRef.current.currentTime = 0;
+      }
+    };
+  }, [isInCall, otherPartyId, currentUser?.id, dispatch, isCallee, instanceId]);
+
+  useEffect(() => {
+    let timerId = null;
+    if (isInCall) {
+      timerId = setTimeout(() => {
+        setShowConnectingOverlay(false);
+      }, 2000);
+    }
+    return () => {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+    };
+  }, [isInCall]);
+
+  useEffect(() => {
+    if (isInCall) WebRTCService.toggleAudio(!isMuted);
+  }, [isMuted, isInCall]);
+
+  useEffect(() => {
+    if (isInCall) {
+      WebRTCService.toggleVideo(isVideoEnabled);
+
+      if (isVideoEnabled && localVideoRef.current && WebRTCService.localStream) {
+        console.log("CallInterface: Re-assigning srcObject to localVideoRef as video is enabled.");
+        localVideoRef.current.srcObject = WebRTCService.localStream;
+        localVideoRef.current.play().catch(err => {
+          console.error("CallInterface: Error trying to play local video ref:", err);
+        });
+      } else if (!isVideoEnabled && localVideoRef.current) {
+        // Optional: Clear srcObject when video is disabled to show avatar properly
+        // localVideoRef.current.srcObject = null;
+      }
+    }
+  }, [isVideoEnabled, isInCall]);
+
+  useEffect(() => {
+    let isEffectMounted = true;
+    async function handleScreenShare() {
+      if (!isEffectMounted) return;
+      if (isScreenSharing) {
+        try {
+          console.log("Attempting to start screen share...");
+          await WebRTCService.replaceVideoTrackWithScreenShare(() => {
+            if (isEffectMounted) {
+              console.log("Screen share stopped callback triggered.");
+              dispatch(toggleScreenShare());
+            }
+          });
+          console.log("Screen share started successfully.");
+        } catch (error) {
+          console.error('CallInterface: Error starting screen share:', error);
+          if (isEffectMounted) {
+            dispatch(toggleScreenShare());
+          }
+        }
+      } else if (WebRTCService.isCurrentlySharingScreen()) {
+        console.log("Attempting to stop screen share (isScreenSharing is false)...");
+        await WebRTCService.stopScreenShare(() => {
+          if (isEffectMounted) {
+            console.log("WebRTCService stopScreenShare completed.");
+          }
+        });
+      }
+    }
+
+    if (isInCall) {
+      handleScreenShare();
+    }
+
+    return () => {
+      isEffectMounted = false;
+      if (WebRTCService.isCurrentlySharingScreen()) {
+        console.log("CallInterface unmount: Stopping screen share.");
+        WebRTCService.stopScreenShare();
+      }
+    };
+  }, [isScreenSharing, isInCall, dispatch]);
+
+  useEffect(() => {
+    if (hasOtherPartyLeft) {
+      const timer = setTimeout(() => {
+        dispatch(endCall());
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasOtherPartyLeft, dispatch]);
+
+  useEffect(() => {
+    if (chatScrollRef && chatScrollRef.current) {
+      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
+    }
+  }, [chatMessages]);
+
+  useEffect(() => {
+    let cameraTimer = null;
+    if (isInCall && !showConnectingOverlay && !otherPartyCameraOn) {
+      cameraTimer = setTimeout(() => {
+        setOtherPartyCameraOn(true);
+      }, 6000); // Increased to 6 seconds (after connecting overlay disappears)
+    }
+
+    return () => {
+      if (cameraTimer) {
+        clearTimeout(cameraTimer);
+      }
+    };
+  }, [isInCall, showConnectingOverlay, otherPartyCameraOn]);
+
+  const handleEndCall = () => {
+    console.log("handleEndCall: User clicked end call button.");
+    if (otherPartyId) {
+      SignalingService.sendEndCall(otherPartyId);
+    }
+    WebRTCService.close();
+    dispatch(endCall());
+  };
+
+  const triggerLeaveToast = () => {
+    if (showManualLeaveToast) return;
+    console.log("CallInterface: Manually triggering leave toast.");
+    setShowManualLeaveToast(true);
+    setTimeout(() => setShowManualLeaveToast(false), 4000);
+  };
+
+  const handleToggleChat = useCallback(() => {
+    setShowChat(prev => !prev);
+  }, []);
+
+  const handleToggleNotes = useCallback(() => {
+    setShowNotes(prev => !prev);
+  }, []);
+
+  const getAutoResponse = (message) => {
+    const responses = [
+      "Okay, I understand.", "Got it.", "That makes sense.", "Thanks for the info.",
+      "Acknowledged.", "Will do.", "Interesting point."
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
+  };
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    const messageContent = currentMessage.trim();
+    if (!messageContent) return;
+
+    const newMessage = {
+      id: Date.now(),
+      sender: currentUser?.name || 'You',
+      content: messageContent,
+      timestamp: new Date(),
+      isSelf: true
+    };
+    setChatMessages(prev => [...prev, newMessage]);
+    setCurrentMessage('');
+
+    setTimeout(() => {
+      setChatMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        sender: otherPartyName || 'Other',
+        content: getAutoResponse(messageContent),
+        timestamp: new Date(),
+        isSelf: false
+      }]);
+    }, 1500);
+  };
+
+  const handleSaveNotes = () => {
+    console.log("Saving notes:", noteContent);
+    alert("Notes saved (logged to console).");
+  };
+
+  if (!isInCall) {
+    console.log(`[CallInterface ${instanceId}] Rendering null because isInCall is false.`); // Log null render
+    return null;
+  }
+
+  console.log(`[CallInterface ${instanceId}] Rendering UI.`); // Log UI render
+
+  const baseButtonClass = "flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-colors transition-shadow transition-transform duration-150 focus:outline-none shadow-[0_2px_8px_rgba(49,143,168,0.06)] hover:translate-y-[-2px] hover:scale-107 focus:ring-2 focus:ring-[#318FA8] focus:ring-offset-2 focus:ring-offset-metallica-blue-400";
+  const defaultButtonClass = "bg-gray-200 hover:bg-gray-300 text-[#2A5F74]";
+  const activeButtonClass = "bg-[#318FA8] hover:bg-[#2A5F74] text-white";
+  const activeNotesButtonClass = "bg-metallica-blue-100 hover:bg-metallica-blue-200 text-metallica-blue-700";
+  const redButtonClass = "bg-red-600 hover:bg-red-700 text-white";
+  const greenButtonClass = "bg-green-600 hover:bg-green-700 text-white";
+
+  const renderCallContent = () => (
+    <>
+      <div className="flex-1 flex relative bg-apple-gray-900">
+        {/* Main video area - only show when camera is on */}
+        {otherPartyCameraOn && (
+          <video
+            ref={remoteVideoRef}
+            className="w-full h-full object-contain"
+            autoPlay
+            playsInline
+          />
+        )}
+
+        {/* Display a different status message based on the current state */}
+        <div className="absolute top-4 left-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-lg flex items-center text-xs sm:text-sm shadow">
+          {showConnectingOverlay ? (
+            <>Connecting to {otherPartyName}...</>
+          ) : otherPartyCameraOn ? (
+            <>Call in progress with {otherPartyName}</>
+          ) : (
+            <>Connected with {otherPartyName} (camera off)</>
+          )}
+          <button
+            onClick={triggerLeaveToast}
+            className="ml-2 text-xs bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
+            title="Simulate other party leaving"
+          >
+            Sim Leave
+          </button>
+          {/* Debug button to toggle camera */}
+          <button
+            onClick={() => setOtherPartyCameraOn(prev => !prev)}
+            className="ml-2 text-xs bg-blue-500 hover:bg-blue-600 text-white font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
+            title="Toggle camera state"
+          >
+            Toggle Cam
+          </button>
+        </div>
+
+        {/* Camera ON notification */}
+        {otherPartyCameraOn && !showConnectingOverlay && (
+          <div className="absolute bottom-8 left-0 right-0 text-center">
+            <p className="text-lg sm:text-xl text-white bg-black bg-opacity-50 py-2 px-4 inline-block rounded-lg">
+              {otherPartyName}'s camera is off
+            </p>
+          </div>
+        )}
+
+        {/* Camera off placeholder with image - show when camera is off and we're connected */}
+        {!otherPartyCameraOn && !showConnectingOverlay && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-apple-gray-800 text-white p-4">
+            <img
+              src="https://printler.com/media/photo/176171-1.jpg"
+              alt="Call placeholder"
+              className="w-full h-full object-cover"
+              style={{ objectPosition: 'center top' }}
+            />
+            <div className="absolute bottom-8 left-0 right-0 text-center">
+              <p className="text-lg sm:text-xl text-white bg-black bg-opacity-50 py-2 px-4 inline-block rounded-lg">
+                {otherPartyName}'s camera is on
+              </p>
+            </div>
+          </div>
+        )}
+
+        {showConnectingOverlay && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
+            <div className="text-white text-lg sm:text-xl">Connecting...</div>
+          </div>
+        )}
+
+        {hasOtherPartyLeft && (
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-3 py-1 rounded shadow-md text-sm">
+            {otherPartyName} has left the call
+          </div>
+        )}
+
+        <div className="absolute right-4 bottom-24 w-1/4 sm:w-1/5 max-w-[150px] sm:max-w-xs aspect-video bg-apple-gray-700 border border-apple-gray-500 overflow-hidden rounded-md sm:rounded-lg shadow-lg flex items-center justify-center">
+          {isVideoEnabled ? (
+            <video
+              ref={localVideoRef}
+              className="w-full h-full object-cover"
+              autoPlay
+              playsInline
+              muted
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center text-white h-full w-full p-1 sm:p-2 bg-apple-gray-700">
+              <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-metallica-blue-600 flex items-center justify-center text-sm sm:text-xl font-bold mb-1 p-1 shrink-0">
+                {currentUser?.name?.charAt(0).toUpperCase() || 'U'}
+              </div>
+              <span className="text-xs font-semibold max-w-full truncate mt-0.5" title={currentUser?.name || 'User'}>{currentUser?.name || 'User'}</span>
+              {isMuted && (
+                <div className="mt-0.5 flex items-center text-red-400 text-xs scale-90">
+                  <FontAwesomeIcon icon={faMicrophoneSlash} className="h-2.5 w-2.5 mr-1" />
+                  Muted
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="h-24 flex items-center justify-center px-4 bg-gray-50">
+        <div className="bg-gray-100 p-3 rounded-full flex items-center justify-center gap-3 sm:gap-4">
+          <button
+            onClick={() => dispatch(toggleMute())}
+            className={`${baseButtonClass} ${isMuted ? redButtonClass : defaultButtonClass}`}
+            title={isMuted ? 'Unmute' : 'Mute'}
+          >
+            <FontAwesomeIcon icon={isMuted ? faMicrophoneSlash : faMicrophone} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
+
+          <button
+            onClick={() => dispatch(toggleVideo())}
+            className={`${baseButtonClass} ${!isVideoEnabled ? redButtonClass : defaultButtonClass}`}
+            title={isVideoEnabled ? 'Stop Video' : 'Start Video'}
+          >
+            <FontAwesomeIcon icon={isVideoEnabled ? faVideo : faVideoSlash} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
+
+          <button
+            onClick={handleToggleChat}
+            className={`${baseButtonClass} ${showChat ? activeButtonClass : defaultButtonClass}`}
+            title="Chat"
+          >
+            <FontAwesomeIcon icon={faComments} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
+
+          <button
+            onClick={handleToggleNotes}
+            className={`${baseButtonClass} ${showNotes ? activeNotesButtonClass : defaultButtonClass}`}
+            title="Notes"
+          >
+            <FontAwesomeIcon icon={faNoteSticky} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
+
+          <button
+            onClick={() => dispatch(toggleScreenShare())}
+            className={`${baseButtonClass} ${isScreenSharing ? greenButtonClass : defaultButtonClass}`}
+            title={isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
+          >
+            <FontAwesomeIcon icon={faDesktop} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
+
+          <button
+            onClick={handleEndCall}
+            className={`${baseButtonClass} ${redButtonClass}`}
+            title="End Call"
+          >
+            <FontAwesomeIcon icon={faPhone} className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
+        </div>
+      </div>
+    </>
+  );
+
+  return (
+    <div className="fixed inset-0 bg-black flex flex-row z-40">
+      <audio
+        ref={answerAudioRef}
+        src="/sounds/Facetime_Ring_and_Answer_Sound.mp3"
+        preload="auto"
+      />
+
+      {/* Main Call Content Area */}
+      <motion.div
+        layout
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={`flex flex-col h-screen ${showChat || showNotes
+          ? 'w-3/4' // Main content takes 3/4 if any sidebar is open
+          : 'w-full' // Main content takes full width if no sidebars
+          }`
+        }
+      >
+        {renderCallContent()}
+      </motion.div>
+
+      {/* Right Sidebar Area (for Chat and/or Notes) */}
+      <AnimatePresence>
+        {(showChat || showNotes) && (
+          <motion.div
+            key="right-sidebar"
+            initial={{ x: '100%' }}
+            animate={{ x: '0%' }}
+            exit={{ x: '100%' }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="w-1/4 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg p-1"
+          >
+            {showNotes && showChat ? (
+              // Both Notes and Chat are open: Notes (1/2 height), Chat (1/2 height)
+              <>
+                <div className="h-1/2 pb-1">
+                  <NotesPanelContent
+                    noteContent={noteContent}
+                    setNoteContent={setNoteContent}
+                    handleSaveNotes={handleSaveNotes}
+                    handleToggleNotes={handleToggleNotes}
+                  />
+                </div>
+                <div className="h-1/2 pt-1">
+                  <ChatPanelContent
+                    chatMessages={chatMessages}
+                    currentMessage={currentMessage}
+                    setCurrentMessage={setCurrentMessage}
+                    handleSendMessage={handleSendMessage}
+                    handleToggleChat={handleToggleChat}
+                    chatScrollRef={chatScrollRef}
+                  />
+                </div>
+              </>
+            ) : showNotes ? (
+              // Only Notes is open
+              <NotesPanelContent
+                noteContent={noteContent}
+                setNoteContent={setNoteContent}
+                handleSaveNotes={handleSaveNotes}
+                handleToggleNotes={handleToggleNotes}
+              />
+            ) : showChat ? (
+              // Only Chat is open
+              <ChatPanelContent
+                chatMessages={chatMessages}
+                currentMessage={currentMessage}
+                setCurrentMessage={setCurrentMessage}
+                handleSendMessage={handleSendMessage}
+                handleToggleChat={handleToggleChat}
+                chatScrollRef={chatScrollRef}
+              />
+            ) : null}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {showManualLeaveToast && (
+        <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-pulse z-60">
+          {otherPartyName || 'Other party'} has left the call (Simulated)
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CallInterface;
