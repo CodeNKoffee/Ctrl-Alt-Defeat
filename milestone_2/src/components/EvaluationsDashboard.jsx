@@ -454,7 +454,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
 
               {/* Add invisible spacers to maintain left alignment with justify-between */}
               {[...Array(4)].map((_, i) => (
-                <div key={`spacer-${i}`} className="w-[270px] mb-6 opacity-0"></div>
+                <div key={`spacer-${i}`} className="w-[320px] mb-6 opacity-0"></div>
               ))}
             </>
           ) : (
