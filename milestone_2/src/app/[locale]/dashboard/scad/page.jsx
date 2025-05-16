@@ -88,8 +88,11 @@ function ReportsView() {
   };
 
   return (
-    <div className="w-full px-6 py-4">
-      <Header text="Student Reports Review" size="text-4xl" className="mb-6" />
+    <div className="w-full px-6 py-8">
+      <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative mb-6">
+        STUDENT REPORTS REVIEW
+        <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
+      </h1>
       <div className="bg-white p-6 rounded-lg shadow-md mb-8 border border-metallica-blue-200">
         <h2 className="text-2xl font-semibold text-[#2a5f74] mb-4">SCAD Report Management System</h2>
         <p className="text-gray-700 mb-2">
