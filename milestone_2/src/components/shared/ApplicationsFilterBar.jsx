@@ -72,7 +72,7 @@ export default function ApplicationsFilterBar({
       {/* Main filter section with search and industry filter */}
       <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
         {/* Search box */}
-        <div className="flex-1 w-full md:w-auto md:max-w-md">
+        <div className="flex-1 w-full md:w-auto md:max-w-[620px]">
           <div className="relative w-full flex justify-center items-center">
             <input
               type="text"

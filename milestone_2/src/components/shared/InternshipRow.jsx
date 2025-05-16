@@ -278,11 +278,11 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
               <p className="text-base font-bold text-gray-800">
                 {internship.rate || "Rate not specified"}
               </p>
-              <p className="text-xs text-gray-500 mt-0.5">
+              {/* <p className="text-xs text-gray-500 mt-0.5">
                 {type === 'my' && `started on ${formatDate(internship.startDate)}`}
                 {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
                 {(type === 'browsing'||type==='recommended') && timeAgo(internship.postedDate)}
-              </p>
+              </p> */}
             </div>
             {/* Only show Create Report for completed status in 'my' internships, remove all other buttons */}
             {type === 'my' && internship.status === 'completed' && (
