@@ -3,6 +3,8 @@ import { IBM_Plex_Sans, Inter, Young_Serif } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "../components/ReduxProvider";
 import GlobalCallHandler from "../components/GlobalCallHandler";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,6 +39,7 @@ export default function RootLayout({
         <ReduxProvider>
           {children}
           <GlobalCallHandler />
+          <ToastContainer />
         </ReduxProvider>
       </body>
     </html>

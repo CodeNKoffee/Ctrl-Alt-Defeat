@@ -21,7 +21,7 @@ export const MOCK_USERS = {
   company: {
     email: "company@example.com",
     password: "company123",
-    name: "Company Representative",
+    name: "Tawabiry",
     firstName: "Company",
     lastName: "Representative",
     role: "company",
