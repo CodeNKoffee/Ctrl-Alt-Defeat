@@ -20,7 +20,8 @@ import {
   faFolder,
   faRightFromBracket,
   faBell,
-  faVideo
+  faVideo,
+  faLock
 } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
@@ -58,9 +59,9 @@ const sidebarConfig = {
     { id: 'my-internships', iconId: 'my-internships', label: 'My Internships', path: '/dashboard/student/my-internships', isPage: false },
     { id: 'my-reports', iconId: 'my-reports', label: 'My Reports', path: '/dashboard/student/my-reports', isPage: false },
     { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/student/my-evaluations', isPage: false },
-    { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/student/workshops', isPage: false },
+    { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/student/workshops', isPage: false, requiresPro: true },
     { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/student/notifications', isPage: false },
-    { id: 'online-assessments', iconId: 'online-assessments', label: 'Online Assessments', path: '/dashboard/student/online-assessments', isPage: false },
+    { id: 'online-assessments', iconId: 'online-assessments', label: 'Online Assessments', path: '/dashboard/student/online-assessments', isPage: false, requiresPro: true },
     { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/student/profile', isPage: false },
   ],
   faculty: [
@@ -183,6 +184,12 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
     return false;
   };
 
+  // Check if user has access to a PRO feature
+  const hasProAccess = (item) => {
+    if (!item.requiresPro) return true;
+    return currentUser?.accountType === 'PRO';
+  };
+
   // Handle logout
   const handleLogout = () => {
     dispatch({ type: LOGOUT_USER });
@@ -266,12 +273,14 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
           {localizedItems.map(item => {
             const isActive = getIsActive(item);
             const icon = iconMap[item.iconId] || faHome;
+            const isAccessible = hasProAccess(item);
 
             const commonClasses = "w-full flex items-center p-3 transition-all duration-300 ease-in-out text-sm relative z-10";
             const activeClasses = isExpanded
               ? "text-[#2a5f74] font-medium"
               : "bg-[#f5fbfd] text-[#2a5f74] rounded-lg shadow-sm";
             const inactiveClasses = "text-[#2a5f74] hover:bg-[#f5fbfd]/70 rounded-lg";
+            const disabledClasses = "text-gray-400 cursor-not-allowed";
             const alignmentClass = isExpanded ? "justify-start" : "justify-center";
 
             const itemContent = (
@@ -280,7 +289,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                   <FontAwesomeIcon
                     icon={icon}
                     size="lg"
-                    className={`transition-all duration-300 ease-in-out ${isActive ? 'text-[#2a5f74]' : 'text-[#2a5f74]/70'}`}
+                    className={`transition-all duration-300 ease-in-out ${isActive ? 'text-[#2a5f74]' : isAccessible ? 'text-[#2a5f74]/70' : 'text-gray-400'}`}
                   />
                 </span>
                 <span
@@ -288,33 +297,64 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     }`}
                 >
                   {item.label}
+                  {item.requiresPro && (
+                    <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
+                      PRO
+                    </span>
+                  )}
                 </span>
+
+                {item.requiresPro && !isAccessible && isExpanded && (
+                  <span className="ml-auto">
+                    <FontAwesomeIcon icon={faLock} className="text-gray-400 h-3 w-3" />
+                  </span>
+                )}
               </>
             );
 
             if (item.isPage) {
               return (
                 <li key={item.id}>
-                  <Link
-                    href={item.path}
-                    className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
-                    onClick={() => !isExpanded && setIsExpanded(false)} // Keep expanded if clicking on mobile for views, collapse for pages
-                    ref={el => itemRefs.current[item.id] = el}
-                  >
-                    {itemContent}
-                  </Link>
+                  {isAccessible ? (
+                    <Link
+                      href={item.path}
+                      className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
+                      onClick={() => !isExpanded && setIsExpanded(false)}
+                      ref={el => itemRefs.current[item.id] = el}
+                    >
+                      {itemContent}
+                    </Link>
+                  ) : (
+                    <div
+                      className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
+                      ref={el => itemRefs.current[item.id] = el}
+                      title="PRO feature"
+                    >
+                      {itemContent}
+                    </div>
+                  )}
                 </li>
               );
             } else if (onViewChange) {
               return (
                 <li key={item.id}>
-                  <button
-                    onClick={() => handleViewChange(item.id)} // handleViewChange already collapses sidebar
-                    className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
-                    ref={el => itemRefs.current[item.id] = el}
-                  >
-                    {itemContent}
-                  </button>
+                  {isAccessible ? (
+                    <button
+                      onClick={() => handleViewChange(item.id)}
+                      className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
+                      ref={el => itemRefs.current[item.id] = el}
+                    >
+                      {itemContent}
+                    </button>
+                  ) : (
+                    <div
+                      className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
+                      ref={el => itemRefs.current[item.id] = el}
+                      title="PRO feature"
+                    >
+                      {itemContent}
+                    </div>
+                  )}
                 </li>
               );
             }

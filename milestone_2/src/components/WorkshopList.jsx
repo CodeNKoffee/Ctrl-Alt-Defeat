@@ -179,8 +179,8 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         <button
           onClick={() => setActiveFilter('all')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'all'
-              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+            : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
             }`}
         >
           ALL
@@ -188,8 +188,8 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         <button
           onClick={() => setActiveFilter('upcoming')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'upcoming'
-              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            ? 'bg-green-100 text-green-800 border-2 border-green-600'
+            : 'bg-white text-gray-600 border border-gray-300 hover:bg-green-50 hover:text-green-800 hover:border-green-600'
             }`}
         >
           UPCOMING
@@ -197,8 +197,8 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         <button
           onClick={() => setActiveFilter('live')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'live'
-              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            ? 'bg-red-100 text-red-800 border-2 border-red-500'
+            : 'bg-white text-gray-600 border border-gray-300 hover:bg-red-50 hover:text-red-800 hover:border-red-500'
             }`}
         >
           LIVE
@@ -206,8 +206,8 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         <button
           onClick={() => setActiveFilter('prerecorded')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'prerecorded'
-              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-              : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+            ? 'bg-yellow-100 text-yellow-800 border-2 border-yellow-500'
+            : 'bg-white text-gray-600 border border-gray-300 hover:bg-yellow-50 hover:text-yellow-800 hover:border-yellow-500'
             }`}
         >
           PRERECORDED

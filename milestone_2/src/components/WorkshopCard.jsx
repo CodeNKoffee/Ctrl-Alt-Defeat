@@ -53,10 +53,22 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
 
   const typeLabel = getTypeLabel();
 
+  // Get border color based on workshop type
+  const getBorderHoverColor = () => {
+    switch (workshop.type) {
+      case "live":
+        return "hover:border-red-500";
+      case "prerecorded":
+        return "hover:border-yellow-500";
+      default: // regular/upcoming
+        return "hover:border-green-600";
+    }
+  };
+
   return (
     <div
       onClick={() => onClick(workshop)}
-      className={`bg-white border-2 border-[#B8E1E9] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden transform hover:scale-[1.02] hover:border-[#5DB2C7] flex flex-col h-full w-full ${className}`}
+      className={`bg-white border-2 border-[#B8E1E9] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden transform hover:scale-[1.02] ${getBorderHoverColor()} flex flex-col h-full w-full ${className}`}
       style={{ maxWidth: "100%" }}
     >
       {/* Workshop Image */}
@@ -74,7 +86,12 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
       {/* Content Section */}
       <div className="p-5 flex flex-col flex-grow w-full">
         {/* Category Tag */}
-        <span className="text-xs text-blue-600 font-medium mb-2 block">
+        <span className={`text-xs font-medium mb-2 block ${workshop.type === "live"
+          ? "text-red-600"
+          : workshop.type === "prerecorded"
+            ? "text-yellow-600"
+            : "text-green-600"
+          }`}>
           {workshop.type === "live" ? "LIVE WORKSHOP" :
             workshop.type === "prerecorded" ? "PRERECORDED WORKSHOP" : "WORKSHOP"}
         </span>
