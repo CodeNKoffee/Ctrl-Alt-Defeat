@@ -217,7 +217,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
       {/* Main content area with relative positioning */}
       <div className="relative">
         {/* Workshop grid - will adjust width when sidebar is open */}
-        <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? "md:pr-[50%] lg:pr-[33%]" : "pr-0"
+        <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? "md:pr-[55%] lg:pr-[38%]" : "pr-0"
           }`}>
           {/* Upcoming Workshops */}
           {filteredWorkshops.upcoming.length > 0 && (
@@ -226,7 +226,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.upcoming.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()}`}>
+                    <div className={`w-full ${getCardContainerClass()} pr-2`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}
@@ -246,7 +246,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.live.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()}`}>
+                    <div className={`w-full ${getCardContainerClass()} px-3`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}
@@ -266,7 +266,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.prerecorded.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()}`}>
+                    <div className={`w-full ${getCardContainerClass()} px-3`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}
