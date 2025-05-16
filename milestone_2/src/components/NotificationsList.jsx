@@ -129,9 +129,29 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [customNotifications, setCustomNotifications] = useState([]);
 
   // Get user data from Redux store
   const { currentUser } = useSelector(state => state.auth);
+
+  // Add event listener for custom notifications
+  useEffect(() => {
+    const handleAddNotification = (event) => {
+      if (event.detail && Array.isArray(event.detail)) {
+        setCustomNotifications(prev => {
+          // Filter out duplicates by id
+          const existingIds = prev.map(n => n.id);
+          const newNotifications = event.detail.filter(n => !existingIds.includes(n.id));
+          return [...prev, ...newNotifications];
+        });
+      }
+    };
+
+    document.addEventListener('addNotification', handleAddNotification);
+    return () => {
+      document.removeEventListener('addNotification', handleAddNotification);
+    };
+  }, []);
 
   // Add useEffect for click outside
   useEffect(() => {
@@ -173,7 +193,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
   const durationCompleted = userData?.durationCompleted || 0;
 
   // Sample notifications
-  const notifications = [
+  const baseNotifications = [
     {
       id: 1,
       icon: faBuilding,
@@ -196,6 +216,9 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
       isUnread: false
     }
   ];
+
+  // Combine base notifications with custom notifications
+  const notifications = [...baseNotifications, ...customNotifications];
 
   // Companies that viewed profile (mock data)
   const companyViews = MOCK_COMPANIES.slice(0, 5);

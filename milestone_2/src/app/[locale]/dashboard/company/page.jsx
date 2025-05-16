@@ -16,6 +16,7 @@ import CompanyBrowseInternshipsView from './CompanyBrowseInternshipsView';
 import { getRegularInternships, getRecommendedInternships, getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import InternshipList from '../../../../components/shared/InternshipList';
 import ApplicationInfoCard from '@/components/ApplicationInfoCard';
+import { toast } from 'react-toastify';
 
 // CompanyPostsInfoCard component
 const CompanyPostsInfoCard = () => (
@@ -493,6 +494,19 @@ function ApplicationsView() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [selectedInternship, setSelectedInternship] = useState('all');
+
+  // Show notification toast when component mounts
+  useEffect(() => {
+    toast.info('Receive a notification via email and on the system when somebody applies to an internship', {
+      position: 'bottom-right',
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true
+    });
+  }, []);
+
   const STATUS_CONFIG = {
     pending: {
       label: "PENDING",
@@ -659,61 +673,61 @@ function MyEvaluationsView() {
   const StudentEvaluationsInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mx-auto px-6">
-      <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
-        EVALUATION PORTAL
-        <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
-      </h1>
+        <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+          EVALUATION PORTAL
+          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
         <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
           {/* Decorative elements */}
-        <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
-        <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
-        <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
+          <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
+          <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
+          <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
-          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
-            <FontAwesomeIcon icon={faClipboardCheck} className="h-7 w-7 text-white" />
-          </div>
-          <div className="text-left">
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              EVALUATION PORTAL
+          <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+            <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
+              <FontAwesomeIcon icon={faClipboardCheck} className="h-7 w-7 text-white" />
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Student Evaluation Portal</div>
-            <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Provide valuable feedback on interns who have completed positions at your organization. Your assessments help shape students' professional development and inform future placements.</p>
-
-              {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
-                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Evaluation Components:
-                </p>
-                <ul className="space-y-2 mb-2">
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Rate professional competencies (adaptability, communication, problem-solving)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Assess technical skills relevant to the position</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Provide specific examples of achievements and areas for growth</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Answer structured questions about performance and potential</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Add private comments for school administrators (optional)</span>
-                  </li>
-                </ul>
+            <div className="text-left">
+              <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
+                EVALUATION PORTAL
               </div>
+              <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Student Evaluation Portal</div>
+              <div className="text-gray-700 mb-3 relative">
+                <p className="mb-3">Provide valuable feedback on interns who have completed positions at your organization. Your assessments help shape students' professional development and inform future placements.</p>
 
-              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Evaluations remain confidential between your company and authorized faculty and SCAD members.
-              </p>
+                {/* Card content with improved styling */}
+                <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                  <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
+                    <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
+                    Evaluation Components:
+                  </p>
+                  <ul className="space-y-2 mb-2">
+                    <li className="flex items-start">
+                      <span className="text-[#3298BA] mr-2">✓</span>
+                      <span>Rate professional competencies (adaptability, communication, problem-solving)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#3298BA] mr-2">✓</span>
+                      <span>Assess technical skills relevant to the position</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#3298BA] mr-2">✓</span>
+                      <span>Provide specific examples of achievements and areas for growth</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#3298BA] mr-2">✓</span>
+                      <span>Answer structured questions about performance and potential</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#3298BA] mr-2">✓</span>
+                      <span>Add private comments for school administrators (optional)</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
+                  Evaluations remain confidential between your company and authorized faculty and SCAD members.
+                </p>
               </div>
             </div>
           </div>
