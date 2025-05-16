@@ -244,7 +244,7 @@ function CompanyPostsView() {
                         className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${activeFilters.paymentStatus.length === 0 ? 'bg-[#D9F0F4] font-semibold' : ''}`}
                         onClick={() => handleFilterClick('paymentStatus', 'all')}
                       >
-                        All Statuses
+                        All Status
                       </div>
                       <div
                         className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('paymentStatus', 'Paid') ? 'bg-[#D9F0F4] font-semibold' : ''}`}

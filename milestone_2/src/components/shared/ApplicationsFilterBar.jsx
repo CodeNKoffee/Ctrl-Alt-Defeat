@@ -152,7 +152,7 @@ export default function ApplicationsFilterBar({
                       className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${selectedStatus === 'all' ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
                       onClick={() => onStatusChange('all')}
                     >
-                      All Statuses
+                      All Status
                     </div>
                     {Object.entries(statusConfig).map(([status, config]) => (
                       <div

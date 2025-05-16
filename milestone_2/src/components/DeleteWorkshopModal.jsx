@@ -8,7 +8,7 @@ const DeleteWorkshopModal = ({ isOpen, onClose, onDelete, workshopTitle, slideDi
     <GenericModal
       isOpen={isOpen}
       onClose={onClose}
-      title="Delete Workshop"
+      title="Confirm Delete Workshop"
       slideDirection={slideDirection}
       primaryButton={{
         text: "Delete",
