@@ -15,6 +15,7 @@ import { useState as useReactState, useEffect } from 'react';
 import CompanyBrowseInternshipsView from './CompanyBrowseInternshipsView';
 import { getRegularInternships, getRecommendedInternships, getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import InternshipList from '../../../../components/shared/InternshipList';
+import ApplicationInfoCard from '@/components/ApplicationInfoCard';
 
 // CompanyPostsInfoCard component
 const CompanyPostsInfoCard = () => (
@@ -412,6 +413,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   // Define the info card JSX/Component here for clarity
   const BrowseInternshipsInfoCard = () => (
     <div className="w-full max-w-6xl mx-auto">
+       <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+          BROWSE INTERNSHIPS
+            <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+          </h1>
       <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
@@ -566,6 +571,9 @@ function ApplicationsView() {
             APPLICATIONS MANAGEMENT
             <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
           </h1>
+          
+          <ApplicationInfoCard />
+          
           <div className="dropdown-overlay">
             <ApplicationsFilterBar
               searchTerm={searchTerm}
@@ -598,13 +606,17 @@ function CurrentInternsView() {
   // Info card for Intern Management Dashboard
   const InternsInfoCard = () => (
     <div className="w-full max-w-6xl mx-auto">
+       <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+            INTERN MANAGEMENT DASHBOARD
+            <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+          </h1>
       <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
         <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500 pointer-events-none"></div>
         <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500 pointer-events-none"></div>
         {/* Fun but subtle design: floating badge */}
-        <div className="absolute left-8 top-8 bg-gradient-to-br from-[#B8E1E9] to-[#E8F7FB] rounded-full px-3 py-1 text-xs font-bold text-[#3298BA] shadow-md rotate-6 opacity-80 pointer-events-none">INTERN MANAGEMENT</div>
+        {/* <div className="absolute left-8 top-8 bg-gradient-to-br from-[#B8E1E9] to-[#E8F7FB] rounded-full px-3 py-1 text-xs font-bold text-[#3298BA] shadow-md rotate-6 opacity-80 pointer-events-none">INTERN MANAGEMENT</div> */}
         <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>

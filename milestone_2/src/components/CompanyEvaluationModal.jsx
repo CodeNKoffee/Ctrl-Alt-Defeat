@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import CustomButton from "./shared/CustomButton";
 
 const skillAttributes = [
   "Ability to adapt to change",
@@ -219,42 +220,43 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
             )}
           </div>
           <div className="flex gap-2 mt-2 w-full">
-            <button
+              <CustomButton
+                variant="primary"
+                type="submit"
+                text="Submit Evaluation"
+                isLoading={draftStatus === 'saving'}
+                loadingText="Saving..."
+                disabled={submitting}
+                onClick={onClose}
+              />
+            {/* <button
               type="submit"
               className="flex-1 px-4 py-2 mt-9 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67] transition text-sm border border-[#5DB2C7] shadow"
               disabled={submitting}
             >
               {submitting ? "Submitting..." : isEditMode ? "Save Changes" : "Submit Evaluation"}
-            </button>
-            {!isEditMode && (
-              <button
+            </button> */}
+            {(
+               <CustomButton
+                variant="secondary"
                 type="button"
-                className="flex-1 px-4 py-2 text-[#318FA8] bg-metallica-blue-100 rounded-lg font-semibold mt-9 hover:bg-metallica-blue-300 hover:text-metallica-blue-50 transition text-sm border border-[#5DB2C7] shadow relative"
-                disabled={submitting || draftStatus === 'saving'}
-                onClick={async () => {
-                  setDraftStatus('saving');
-                  await new Promise(res => setTimeout(res, 800));
-                  onSubmit({ ...form, draft: true });
-                  setDraftStatus('saved');
-                  setTimeout(() => {
-                    setDraftStatus("");
-                    onClose();
-                  }, 1200); // Increased to 1200ms for better visibility
-                }}
-              >
-                {draftStatus === 'saving' ? 'Saving...' : draftStatus === 'saved' ? 'Saved!' : 'Save as Draft'}
-              </button>
-            )}
-            {isEditMode && (
-              <button
-                type="button"
-                className="flex-1 px-4 py-2 mt-9 bg-red-200 text-red-800 border border-red-800 rounded-lg hover:bg-red-300 transition-colors"
+                text={isEditMode? "Save Changes":"Save as Draft"}
+                isLoading={draftStatus === 'saving'}
+                loadingText="Saving..."
                 disabled={submitting}
                 onClick={onClose}
-              >
-                Cancel
-              </button>
+              />
+              
             )}
+            {/* {isEditMode && (
+              <CustomButton
+                variant="danger"
+                type="button"
+                text="Cancel"
+                disabled={submitting}
+                onClick={onClose}
+              />
+            )} */}
           </div>
         </form>
       </div>
