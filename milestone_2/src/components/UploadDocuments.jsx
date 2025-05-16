@@ -257,41 +257,58 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
           {!isUploading && uploadComplete && file && (
             <div style={{
               backgroundColor: '#F0F9FB', 
-              padding: '10px 15px', 
-              borderRadius: '8px',
+              padding: '8px 15px', 
+              borderRadius: '14px',
               fontSize: '14px', 
               color: '#2A5F74', 
               wordBreak: 'break-word',
               border: '1px solid #D9F0F4', 
-              marginTop: '10px', 
+              marginTop: '20px', 
               position: 'relative',
               paddingRight: '35px', 
-              width: 'calc(100% - 40px)', 
+              width: 'calc(100% - 60px)', 
               textAlign: 'left', 
               margin: '0 auto',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.04)'
+              boxShadow: '0 3px 10px rgba(0, 0, 0, 0.05)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
             }}>
+              <div style={{ 
+                background: '#D9F0F4',
+                padding: '6px',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '4px'
+              }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#318FA8">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM14 8h-3V4h3v4zM12 18.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5s3.5 1.6 3.5 3.5s-1.6 3.5-3.5 3.5z" />
+                </svg>
+              </div>
               {file.name}
               <button onClick={() => handleRemoveFile(type)} style={{
                 position: 'absolute', 
                 top: '50%', 
                 right: '10px', 
                 transform: 'translateY(-50%)',
-                background: '#F0F0F0',
+                background: '#E0E0E0',
                 border: 'none', 
                 cursor: 'pointer', 
                 color: '#2A5F74', 
                 padding: 0,
-                width: '20px',
-                height: '20px',
+                width: '18px',
+                height: '18px',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
               }}
-              onMouseOver={(e) => e.target.style.backgroundColor = '#E0E0E0'}
-              onMouseOut={(e) => e.target.style.backgroundColor = '#F0F0F0'}>
-                <FontAwesomeIcon icon={faXmark} style={{ width: '12px', height: '12px' }} />
+              onMouseOver={(e) => e.target.style.backgroundColor = '#D0D0D0'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#E0E0E0'}>
+                <FontAwesomeIcon icon={faXmark} style={{ width: '10px', height: '10px' }} />
               </button>
             </div>
           )}
@@ -614,7 +631,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
           ))}
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '30px' }}>
+        <div className="flex justify-end gap-3 mt-7">
           <CustomButton
             onClick={handleCancelAndClose}
             variant="danger"
