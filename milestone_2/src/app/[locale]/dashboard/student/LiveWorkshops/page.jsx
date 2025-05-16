@@ -41,6 +41,10 @@ export default function LiveWorkshopsPage() {
     // Client-side initialization if needed
   }, []);
 
+  const handleBackFromWorkshop = () => {
+    setSelectedWorkshop(null);
+  };
+
   if (typeof window === "undefined") {
     return <div>Loading...</div>; // Fallback for SSR
   }
@@ -119,7 +123,7 @@ export default function LiveWorkshopsPage() {
 
       {/* Workshop Interface - Shown when a workshop is selected */}
       {selectedWorkshop && (
-        <WorkshopInterface workshop={selectedWorkshop} />
+        <WorkshopInterface workshop={selectedWorkshop} onBack={handleBackFromWorkshop} />
       )}
     </div>
   );

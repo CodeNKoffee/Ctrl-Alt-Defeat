@@ -980,6 +980,51 @@ export const sampleWorkshops = [
     type: "live",
     prerequisites: "No prior knowledge needed; open to all skill levels."
   },
+  {
+    id: 10,
+    title: "Advanced Next.js Techniques",
+    date: "2023-11-10",
+    time: "1:00 PM - 3:00 PM",
+    location: "Prerecorded",
+    description: "Learn the basics of Next.js and user experience.",
+    instructor: "Dr. Layla Ahmed",
+    instructorBio: "Dr. Layla Ahmed is a freelance designer, motion and graphic design enthusiast",
+    instructorImage: "/images/girl1.png",
+    imageUrl: "/images/Workshop1.jpeg",
+    seatsAvailable: 15,
+    type: "prerecorded",
+    prerequisites: "No prior knowledge needed; open to all skill levels."
+  },
+  {
+    id: 11,
+    title: "Introduction to Web Fundamentals",
+    date: "2023-11-10",
+    time: "1:00 PM - 3:00 PM",
+    location: "Prerecorded",
+    description: "Learn the basics of web design and user experience.",
+    instructor: "Dr. Layla Ahmed",
+    instructorBio: "Dr. Layla Ahmed is a freelance designer, motion and graphic design enthusiast",
+    instructorImage: "/images/girl1.png",
+    imageUrl: "/images/Workshop1.jpeg",
+    seatsAvailable: 15,
+    type: "prerecorded",
+    prerequisites: "No prior knowledge needed; open to all skill levels."
+  },
+  {
+    id: 12,
+    title: "Advanced React Hooks",
+    date: "2023-11-10",
+    time: "1:00 PM - 3:00 PM",
+    location: "Prerecorded",
+    description: "Master React Hooks and build efficient, powerful components.",
+    instructor: "Dr. Layla Ahmed",
+    instructorBio: "Dr. Layla Ahmed is a freelance designer, motion and graphic design enthusiast",
+    instructorImage: "/images/girl1.png",
+    imageUrl: "/images/Workshop1.jpeg",
+    seatsAvailable: 15,
+    type: "prerecorded",
+    prerequisites: "No prior knowledge needed; open to all skill levels."
+  },
 ];
 
 export const mockAssessments = [

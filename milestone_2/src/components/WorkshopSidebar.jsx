@@ -4,21 +4,56 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function WorkshopSidebar({ workshop, onClose }) {
+export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatchPrerecorded }) {
   const [registrationFeedback, setRegistrationFeedback] = useState(null);
 
-  const handleRegister = () => {
-    setRegistrationFeedback('success');
-    setTimeout(() => {
-      setRegistrationFeedback(null);
-      // Add any post-registration logic here if needed
-    }, 1500);
+  const handleAction = () => {
+    if (!workshop) return;
+
+    switch (workshop.type) {
+      case 'live':
+        if (onJoinLive) onJoinLive(workshop);
+        break;
+      case 'prerecorded':
+        if (onWatchPrerecorded) onWatchPrerecorded(workshop);
+        break;
+      default: // regular/upcoming workshop
+        setRegistrationFeedback('success');
+        setTimeout(() => {
+          setRegistrationFeedback(null);
+          // Add any post-registration logic here if needed
+        }, 1500);
+        break;
+    }
+  };
+
+  const getButtonText = () => {
+    if (registrationFeedback === 'success') return 'Registered!';
+
+    switch (workshop?.type) {
+      case 'live':
+        return 'Join Now';
+      case 'prerecorded':
+        return 'Watch Now';
+      default:
+        return 'Register Now';
+    }
+  };
+
+  const getButtonColor = () => {
+    switch (workshop?.type) {
+      case 'live':
+        return 'bg-red-500 hover:bg-red-600';
+      case 'prerecorded':
+        return 'bg-yellow-500 hover:bg-yellow-600 text-gray-900';
+      default:
+        return 'bg-[#3298BA] hover:bg-[#267a8c]';
+    }
   };
 
   return (
-    <div className={`fixed top-0 right-0 h-full transition-all duration-300 ease-in-out transform ${
-      workshop ? "translate-x-0" : "translate-x-full"
-    } w-1/3 z-50`}>
+    <div className={`fixed top-0 right-0 h-full transition-all duration-300 ease-in-out transform ${workshop ? "translate-x-0" : "translate-x-full"
+      } w-1/3 z-50`}>
       {workshop && (
         <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
           {/* Success Feedback Overlay */}
@@ -43,9 +78,9 @@ export default function WorkshopSidebar({ workshop, onClose }) {
                     animate={{ scale: 1 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 15 }}
                   >
-                    <FontAwesomeIcon 
-                      icon={faCheck} 
-                      className="text-green-600 text-xl" 
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className="text-green-600 text-xl"
                     />
                   </motion.div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-1">
@@ -61,7 +96,7 @@ export default function WorkshopSidebar({ workshop, onClose }) {
 
           {/* Close button */}
           <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
-            <button 
+            <button
               onClick={onClose}
               className="text-gray-500 hover:text-gray-700 text-2xl"
             >
@@ -72,11 +107,23 @@ export default function WorkshopSidebar({ workshop, onClose }) {
           {/* Scrollable content */}
           <div className="overflow-y-auto flex-1 px-6">
             <div className="pr-2">
-              <img 
-                src={workshop.imageUrl} 
-                alt={workshop.title} 
-                className="w-full h-56 object-cover rounded-md mb-4" 
-              />
+              <div className="relative">
+                <img
+                  src={workshop.imageUrl}
+                  alt={workshop.title}
+                  className="w-full h-56 object-cover rounded-md mb-4"
+                />
+                {workshop.type && (
+                  <span className={`absolute top-2 left-2 px-3 py-1 rounded-md text-xs font-bold ${workshop.type === 'live' ? 'bg-red-500 text-white' :
+                    workshop.type === 'prerecorded' ? 'bg-yellow-500 text-gray-900' :
+                      'bg-green-600 text-white'
+                    }`}>
+                    {workshop.type === 'live' ? 'LIVE' :
+                      workshop.type === 'prerecorded' ? 'PRERECORDED' :
+                        'UPCOMING'}
+                  </span>
+                )}
+              </div>
               <h2 className="text-2xl font-bold text-[#3298BA] mb-4">{workshop.title}</h2>
 
               {/* Instructor Info */}
@@ -135,15 +182,15 @@ export default function WorkshopSidebar({ workshop, onClose }) {
             </div>
           </div>
 
-          {/* Register Button */}
+          {/* Action Button */}
           <div className="sticky bottom-0 bg-white py-4 px-6 border-t border-gray-100">
-            <button 
-              onClick={handleRegister}
-              className="w-full bg-[#3298BA] text-white py-2 px-4 rounded-full
-                      hover:bg-[#267a8c] transition-colors duration-200"
-              disabled={registrationFeedback === 'success'}
+            <button
+              onClick={handleAction}
+              className={`w-full bg-[#3298BA] text-white py-2 px-4 rounded-full
+                      transition-colors duration-200 ${registrationFeedback === 'success' && workshop.type !== 'live' && workshop.type !== 'prerecorded' ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={registrationFeedback === 'success' && workshop.type !== 'live' && workshop.type !== 'prerecorded'}
             >
-              {registrationFeedback === 'success' ? 'Registered!' : 'Register Now'}
+              {getButtonText()}
             </button>
           </div>
         </div>

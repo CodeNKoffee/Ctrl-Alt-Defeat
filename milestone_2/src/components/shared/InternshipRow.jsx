@@ -157,7 +157,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
 
             {/* Right: Status Badge */}
             <div className="flex flex-col items-end w-28 flex-shrink-0 space-y-2">
-              {type === 'recommended'||type==='browsing' && (
+              {type === 'recommended' || type === 'browsing' && (
                 <StatusBadge color={internship.paid ? 'bg-green-100 text-green-800 border-green-400' : 'bg-gray-100 text-gray-600 border-gray-400'} className="border">
                   {internship.paid ? '$ Paid' : 'Unpaid'}
                 </StatusBadge>
@@ -204,7 +204,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             <span className="absolute bottom-2 right-2 text-xs text-gray-500">
               {type === 'my' && `started on ${formatDate(internship.startDate)}`}
               {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
-              {(type === 'recommnded' || type==='browsing') && timeAgo(internship.postedDate)}
+              {(type === 'recommnded' || type === 'browsing') && timeAgo(internship.postedDate)}
             </span>
           </div>
 
@@ -281,7 +281,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
               <p className="text-xs text-gray-500 mt-0.5">
                 {type === 'my' && `started on ${formatDate(internship.startDate)}`}
                 {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
-                {(type === 'browsing'||type==='recommended') && timeAgo(internship.postedDate)}
+                {(type === 'browsing' || type === 'recommended') && timeAgo(internship.postedDate)}
               </p>
             </div>
             {/* Only show Create Report for completed status in 'my' internships, remove all other buttons */}
@@ -301,7 +301,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                 </button>
               </div>
             )}
-            {type === 'recommended'|| type==='browsing' ? (
+            {type === 'recommended' || type === 'browsing' ? (
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
                 className={`px-4 py-2 text-white rounded-lg transition w-full sm:w-auto text-sm ${isApplied
@@ -317,7 +317,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         </div>
       </div>
       {/* Tooltip component instance - only needed if type='applied' might be rendered */}
-      {type === 'applied' && <Tooltip id="status-tooltip" />}
+      {type === 'applied' && <Tooltip id="status-tooltip" style={{ zIndex: 50 }} />}
 
       {/* Upload Documents Modal */}
       <UploadDocuments

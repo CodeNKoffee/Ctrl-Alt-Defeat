@@ -15,6 +15,44 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
     return dateObj.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
   };
 
+  // Label based on workshop type
+  const getTypeLabel = () => {
+    switch (workshop.type) {
+      case "live":
+        return {
+          text: "Live",
+          bgColor: "bg-red-500",
+          textColor: "text-white"
+        };
+      case "prerecorded":
+        return {
+          text: "Prerecorded",
+          bgColor: "bg-yellow-500",
+          textColor: "text-gray-900"
+        };
+      default: // regular/upcoming
+        return {
+          text: "Upcoming",
+          bgColor: "bg-green-600",
+          textColor: "text-white"
+        };
+    }
+  };
+
+  // Button text based on workshop type
+  const getButtonText = () => {
+    switch (workshop.type) {
+      case "live":
+        return "Join Now";
+      case "prerecorded":
+        return "Watch Now";
+      default: // regular/upcoming
+        return "Register Now";
+    }
+  };
+
+  const typeLabel = getTypeLabel();
+
   return (
     <div
       onClick={() => onClick(workshop)}
@@ -27,18 +65,17 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
           alt={workshop.title}
           className="w-full h-full object-cover"
         />
-        {workshop.type === "live" && (
-          <span className="absolute top-0 left-0 bg-red-500 text-white text-xs font-medium px-3 py-1 rounded-br-md">
-            Live
-          </span>
-        )}
+        <span className={`absolute top-0 left-0 ${typeLabel.bgColor} ${typeLabel.textColor} text-xs font-medium px-3 py-1 rounded-br-md`}>
+          {typeLabel.text}
+        </span>
       </div>
 
       {/* Content Section */}
       <div className="p-5 flex flex-col flex-grow">
         {/* Category Tag */}
         <span className="text-xs text-blue-600 font-medium mb-2 block">
-          {workshop.type === "live" ? "LIVE WORKSHOP" : "WORKSHOP"}
+          {workshop.type === "live" ? "LIVE WORKSHOP" :
+            workshop.type === "prerecorded" ? "PRERECORDED WORKSHOP" : "WORKSHOP"}
         </span>
 
         {/* Title */}

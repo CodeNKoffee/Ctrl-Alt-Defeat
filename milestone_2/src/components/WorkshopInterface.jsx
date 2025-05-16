@@ -1,58 +1,142 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  FaPen, FaComments, FaStar, FaDownload,
-  FaMicrophone, FaVideo, FaDesktop, FaUsers,
-  FaPlay, FaPause, FaStop, FaBell, FaPhoneSlash,
-  FaArrowRight, FaClosedCaptioning
-} from "react-icons/fa";
-import BackButton from "./shared/BackButton";
-import CustomButton from "./shared/CustomButton";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+  faMicrophone, faMicrophoneSlash, faVideo, faVideoSlash,
+  faDesktop, faComments, faNoteSticky, faPhone,
+  faClosedCaptioning, faDownload, faUserCircle, faPaperPlane,
+  faSave, faXmark, faArrowLeft
+} from '@fortawesome/free-solid-svg-icons';
+import { motion, AnimatePresence } from 'framer-motion';
 import WorkshopFeedback from './WorkshopFeedback';
 
-const WORKSHOP_IMAGES = {
-  WORKSHOP_BG: '/images/workshop1.jpg',  // Update with your actual image name
-  INSTRUCTOR: '/images/instructor.jpg',   // Update with your actual image name
-  PARTICIPANT: '/images/participant.jpg'  // Update with your actual image name
-};
+// Extract ChatPanelContent to be outside of WorkshopInterface
+const ChatPanelContent = ({
+  chatMessages = [],
+  currentMessage = '',
+  setCurrentMessage,
+  handleSendMessage,
+  handleToggleChat,
+  chatScrollRef
+}) => (
+  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg rounded-3xl overflow-hidden">
+    <div className="flex justify-between items-center p-3 border-b bg-gray-100">
+      <h3 className="text-lg font-semibold text-gray-700">Chat</h3>
+      <button
+        onClick={handleToggleChat}
+        className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+        title="Close Chat Panel"
+      >
+        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+      </button>
+    </div>
+    <div className="flex flex-col flex-grow overflow-hidden">
+      <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-white">
+        {chatMessages.length === 0 ? (
+          <p className="text-center text-sm text-gray-500 py-4">No messages yet.</p>
+        ) : (
+          chatMessages.map(message => (
+            <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
+              <div className={`max-w-[80%] rounded-lg px-3 py-2 shadow-sm ${message.isSelf
+                ? 'bg-[#318FA8] text-white rounded-br-none'
+                : 'bg-gray-100 text-gray-800 border border-gray-200 rounded-bl-none'
+                }`}>
+                <p className="text-sm">{message.content}</p>
+                <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100' : 'text-gray-400'} ${message.isSelf ? 'text-right' : 'text-left'}`}>
+                  {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+      <div className="p-3 border-t bg-white">
+        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+          <input
+            type="text"
+            value={currentMessage}
+            onChange={(e) => setCurrentMessage(e.target.value)}
+            className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-[#318FA8] focus:border-[#318FA8] text-sm"
+            placeholder="Type your message..."
+          />
+          <button
+            type="submit"
+            className={`w-10 h-10 rounded-full bg-[#318FA8] hover:bg-[#2A5F74] text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''}`}
+            disabled={!currentMessage.trim()}
+            title="Send Message"
+          >
+            <FontAwesomeIcon icon={faPaperPlane} />
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+);
 
-const WorkshopInterface = ({ workshop }) => {
-  const [isLive, setIsLive] = useState(true);
+// Extract NotesPanelContent to be outside of WorkshopInterface
+const NotesPanelContent = ({
+  notes = '',
+  setNotes,
+  handleSaveNotes,
+  handleToggleNotes
+}) => (
+  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg rounded-xl overflow-hidden">
+    <div className="flex justify-between items-center p-3 border-b bg-gray-100">
+      <h3 className="text-lg font-semibold text-gray-700">Notes</h3>
+      <button
+        onClick={handleToggleNotes}
+        className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+        title="Close Notes Panel"
+      >
+        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+      </button>
+    </div>
+    <div className="flex flex-col flex-grow overflow-hidden p-4 bg-white">
+      <textarea
+        value={notes}
+        onChange={(e) => setNotes(e.target.value)}
+        className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#318FA8] focus:border-[#318FA8] resize-none text-sm mb-4"
+        placeholder="Take workshop notes here..."
+      />
+      <button
+        onClick={handleSaveNotes}
+        className="w-full bg-[#318FA8] hover:bg-[#2A5F74] text-white py-2 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors"
+        title="Save Notes"
+      >
+        <FontAwesomeIcon icon={faSave} />
+        Save Notes
+      </button>
+    </div>
+  </div>
+);
+
+export default function WorkshopInterface({ workshop, onBack }) {
   const [notes, setNotes] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [rating, setRating] = useState(0);
-  const [feedback, setFeedback] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
-  const [certificateUrl, setCertificateUrl] = useState("");
   const [isMicOn, setIsMicOn] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const videoRef = useRef(null);
+  const localVideoRef = useRef(null);
   const [workshopCompleted, setWorkshopCompleted] = useState(false);
   const [hasAttendedMinimumTime, setHasAttendedMinimumTime] = useState(false);
-  const [showNotes, setShowNotes] = useState(false);
-  const [isPreRecorded, setIsPreRecorded] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [unreadMessages, setUnreadMessages] = useState(0);
-  const [isChatSliderOpen, setIsChatSliderOpen] = useState(false);
-  const [workshopEnded, setWorkshopEnded] = useState(false);
-  const [isLeaving, setIsLeaving] = useState(false);
   const [showSubtitles, setShowSubtitles] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [workshopStartTime, setWorkshopStartTime] = useState(null);
+  const chatScrollRef = useRef(null);
+  const [workshopEnded, setWorkshopEnded] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {  // Add this check
+    if (typeof window !== 'undefined') {
       setWorkshopStartTime(new Date());
     }
   }, []);
@@ -77,68 +161,18 @@ const WorkshopInterface = ({ workshop }) => {
     }
   }, [workshopEnded, hasAttendedMinimumTime]);
 
-  const handleNoteChange = (e) => setNotes(e.target.value);
-  const handleMessageChange = (e) => setNewMessage(e.target.value);
-  const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      const now = new Date();
-      setMessages([
-        ...messages,
-        {
-          text: newMessage,
-          sender: "You",
-          time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        }
-      ]);
-      setNewMessage("");
+  useEffect(() => {
+    if (chatScrollRef && chatScrollRef.current) {
+      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
     }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
-  const handleRating = (rate) => setRating(rate);
-  const handleFeedbackChange = (e) => setFeedback(e.target.value);
-  const handleSubmitFeedback = () => {
-    console.log("Rating:", rating, "Feedback:", feedback);
-    generateCertificate();
-    setShowFeedback(false);
-  };
-
-  const generateCertificate = () => {
-    if (typeof window === "undefined") return;
-
-    const certificateDiv = document.createElement("div");
-    certificateDiv.innerHTML = certificateStyle + certificateHtml;
-    document.body.appendChild(certificateDiv);
-
-    html2canvas(certificateDiv.firstChild).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({
-        orientation: "landscape",
-        unit: "mm",
-        format: "a4",
-      });
-
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`${workshop.title}_certificate.pdf`);
-
-      document.body.removeChild(certificateDiv);
-      setCertificateUrl(URL.createObjectURL(pdf.output("blob")));
-    });
-  };
+  }, [messages]);
 
   const toggleMicrophone = async () => {
     try {
-      const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (!isMicOn) {
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+      }
       setIsMicOn(!isMicOn);
-      // Handle audio stream
     } catch (err) {
       console.error("Error accessing microphone:", err);
     }
@@ -146,9 +180,16 @@ const WorkshopInterface = ({ workshop }) => {
 
   const toggleCamera = async () => {
     try {
-      const videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
-      if (videoRef.current) {
-        videoRef.current.srcObject = videoStream;
+      if (!isCameraOn) {
+        const videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (localVideoRef.current) {
+          localVideoRef.current.srcObject = videoStream;
+        }
+      } else {
+        if (localVideoRef.current && localVideoRef.current.srcObject) {
+          localVideoRef.current.srcObject.getTracks().forEach(track => track.stop());
+          localVideoRef.current.srcObject = null;
+        }
       }
       setIsCameraOn(!isCameraOn);
     } catch (err) {
@@ -158,9 +199,16 @@ const WorkshopInterface = ({ workshop }) => {
 
   const toggleScreenShare = async () => {
     try {
-      const screenStream = await navigator.mediaDevices.getDisplayMedia();
-      if (videoRef.current) {
-        videoRef.current.srcObject = screenStream;
+      if (!isScreenSharing) {
+        const screenStream = await navigator.mediaDevices.getDisplayMedia();
+        if (videoRef.current) {
+          videoRef.current.srcObject = screenStream;
+        }
+      } else {
+        if (videoRef.current && videoRef.current.srcObject) {
+          videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+          videoRef.current.srcObject = null;
+        }
       }
       setIsScreenSharing(!isScreenSharing);
     } catch (err) {
@@ -168,34 +216,48 @@ const WorkshopInterface = ({ workshop }) => {
     }
   };
 
-  const handleNewMessage = (message) => {
-    setMessages(prev => [...prev, message]);
-    if (!isChatSliderOpen) {
-      setUnreadMessages(prev => prev + 1);
-    }
+  const handleToggleChat = () => {
+    setIsChatOpen(!isChatOpen);
   };
 
-  useEffect(() => {
-    if (isChatSliderOpen) {
-      setUnreadMessages(0);
-    }
-  }, [isChatSliderOpen]);
+  const handleToggleNotes = () => {
+    setIsNotesOpen(!isNotesOpen);
+  };
 
-  const handleLeaveWorkshop = () => {
-    if (!workshopEnded) {
-      const confirm = window.confirm(
-        'Are you sure you want to leave? You won\'t receive a certificate if you leave before the workshop ends.'
-      );
-      if (confirm) {
-        setIsLeaving(true);
-        setIsLive(false);
-      }
-    } else {
-      setIsLive(false);
-      if (hasAttendedMinimumTime) {
-        setShowFeedback(true);
-      }
-    }
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    const messageContent = newMessage.trim();
+    if (!messageContent) return;
+
+    const newMessageObj = {
+      id: Date.now(),
+      sender: "You",
+      content: messageContent,
+      timestamp: new Date(),
+      isSelf: true
+    };
+    setMessages(prev => [...prev, newMessageObj]);
+    setNewMessage("");
+
+    // Simulated response from instructor
+    setTimeout(() => {
+      const responses = [
+        "That's a great question!",
+        "Let me explain that concept in more detail.",
+        "Yes, you're on the right track.",
+        "Check out the additional resources I'll share after the workshop.",
+        "Anyone else have thoughts on this topic?"
+      ];
+      const responseText = responses[Math.floor(Math.random() * responses.length)];
+
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        sender: workshop?.instructor || "Instructor",
+        content: responseText,
+        timestamp: new Date(),
+        isSelf: false
+      }]);
+    }, 1500);
   };
 
   const handleSaveNotes = () => {
@@ -208,784 +270,238 @@ const WorkshopInterface = ({ workshop }) => {
     document.body.removeChild(element);
   };
 
-  // Add this function to handle workshop end
-  const handleWorkshopEnd = () => {
-    setWorkshopEnded(true);
-    setShowFeedback(true);
+  const handleLeaveWorkshop = () => {
+    // Immediately return to workshop list without feedback
+    console.log("Leave workshop clicked, attempting to navigate back");
+    if (onBack) {
+      onBack();
+    } else {
+      console.error("onBack function is not available");
+    }
   };
 
-  // Update videoGridStyle to use grid layout
-  const videoGridStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-    width: "100%",
-    marginBottom: "80px",
+  const handleFeedbackSubmit = (feedbackData) => {
+    console.log("Feedback submitted:", feedbackData);
+    // Here you would typically save the feedback to your backend
+
+    // Directly navigate back to workshop list without delay
+    if (onBack) {
+      onBack();
+    }
   };
 
-  const mainVideoStyle = {
-    width: "100%", // Keep this
-    height: "500px",
-    backgroundColor: "#2A5F74",
-    borderRadius: "10px",
-    overflow: "hidden",
-    position: "relative",
-    zIndex: 1,
+  const handleToggleSubtitles = () => {
+    setShowSubtitles(!showSubtitles);
   };
 
-  // Update participantsGridStyle to center content
-  const participantsGridStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "10px",
-    width: "100%",
-  };
+  const baseButtonClass = "flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-colors transition-shadow transition-transform duration-150 focus:outline-none shadow-[0_2px_8px_rgba(49,143,168,0.06)] hover:translate-y-[-2px] hover:scale-110 focus:ring-2 focus:ring-[#318FA8] focus:ring-offset-2";
+  const defaultButtonClass = "bg-gray-200 hover:bg-gray-300 text-[#2A5F74]";
+  const activeButtonClass = "bg-[#318FA8] hover:bg-[#2A5F74] text-white";
+  const activeNotesButtonClass = "bg-[#318FA8] hover:bg-[#2A5F74] text-white";
+  const redButtonClass = "bg-red-600 hover:bg-red-700 text-white";
+  const greenButtonClass = "bg-green-600 hover:bg-green-700 text-white";
 
-  const participantStyle = {
-    position: "relative",
-    width: "250px",
-    height: "130px",
-    backgroundColor: "#D9F0F4",
-    borderRadius: "10px",
-    overflow: "hidden",
-    border: "2px solid #318FA8",
-  };
+  if (!isClient) return null;
 
-  const thumbnailStyle = {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-  };
-
-  const participantNameStyle = {
-    position: "absolute",
-    bottom: "5px",
-    left: "5px",
-    color: "white",
-    fontSize: "12px",
-    textShadow: "0 1px 2px rgba(0,0,0,0.5)",
-  };
-
-  // Update containerStyle to handle content alignment
-  const containerStyle = {
-    display: 'flex',
-    height: '100vh',
-    padding: '20px',
-    position: 'relative',
-    overflow: 'hidden',
-    transition: 'all 0.3s ease-in-out',
-  };
-
-  // Update panelStyle to maintain proper width and margins
-  const panelStyle = {
-    padding: "20px",
-    border: "2px solid #318FA8",
-    borderRadius: "10px",
-    backgroundColor: "white",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-    display: "flex",
-    flexDirection: "column",
-    height: "calc(100vh - 40px)",
-    transition: 'all 0.3s ease-in-out',
-    flex: 1, // Add this to make it take remaining space
-    position: 'relative',
-    zIndex: 2,
-    marginLeft: isChatOpen ? '300px' : '0',
-    marginRight: isNotesOpen ? '300px' : '0',
-    width: `calc(100% - ${isChatOpen ? '300px' : '0'} - ${isNotesOpen ? '300px' : '0'})`,
-    overflow: 'hidden', // Add this
-  };
-
-  const chatPanelStyle = {
-    position: 'fixed',
-    left: 0,
-    top: 0,
-    height: '100vh',
-    width: '300px',
-    backgroundColor: '#fff',
-    boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
-    transform: `translateX(${isChatOpen ? '0' : '-300px'})`,
-    transition: 'transform 0.3s ease-in-out',
-    zIndex: 10,
-    display: 'flex',
-    flexDirection: 'column',
-    padding: 0,
-  };
-
-  const notesPanelStyle = {
-    position: 'fixed',
-    right: 0,
-    top: 0,
-    height: '100vh',
-    width: '300px',
-    backgroundColor: '#fff',
-    boxShadow: '-2px 0 10px rgba(0,0,0,0.1)',
-    transform: `translateX(${isNotesOpen ? '0' : '300px'})`,
-    transition: 'transform 0.3s ease-in-out',
-    zIndex: 10,
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '20px',
-  };
-
-  const videoPlaceholderStyle = {
-    textAlign: "center",
-    marginBottom: "10px",
-    position: "relative",
-  };
-
-  const videoTextStyle = {
-    color: "#2A5F74",
-    fontSize: "14px",
-    position: "absolute",
-    bottom: "5px",
-    left: "50%",
-    transform: "translateX(-50%)",
-  };
-
-  const controlsStyle = {
-    display: "flex",
-    justifyContent: "space-around",
-    marginTop: "10px",
-  };
-
-  const buttonStyle = {
-    padding: "10px",
-    background: "#D9F0F4",
-    border: "2px solid #318FA8",
-    borderRadius: "50%",
-    cursor: "pointer",
-    fontSize: "16px",
-  };
-
-  const titleStyle = {
-    color: "#2A5F74",
-    fontSize: "24px",
-    marginBottom: "20px",
-  };
-
-  const contentStyle = {
-    color: "#2A5F74",
-    fontSize: "16px",
-  };
-
-  const feedbackSectionStyle = {
-    marginTop: "20px",
-  };
-
-  const feedbackTitleStyle = {
-    color: "#2A5F74",
-    fontSize: "20px",
-    marginBottom: "10px",
-  };
-
-  const starsStyle = {
-    marginBottom: "10px",
-  };
-
-  const starStyle = {
-    fontSize: "20px",
-    margin: "0 5px",
-    cursor: "pointer",
-  };
-
-  const feedbackInputStyle = {
-    width: "100%",
-    height: "100px",
-    padding: "10px",
-    border: "2px solid #318FA8",
-    borderRadius: "5px",
-    marginTop: "10px",
-    fontFamily: "'IBM Plex Sans', sans-serif",
-  };
-
-  const submitButtonStyle = {
-    marginTop: "10px",
-    padding: "10px 20px",
-    background: "#D9F0F4",
-    border: "2px solid #318FA8",
-    borderRadius: "5px",
-    cursor: "pointer",
-  };
-
-  const rightPanelStyle = {
-    position: "relative",
-    height: "100%",
-  };
-
-  const chatToggleStyle = {
-    position: "absolute",
-    top: "10px",
-    right: "10px",
-    padding: "10px",
-    background: "#D9F0F4",
-    border: "2px solid #318FA8",
-    borderRadius: "50%",
-    cursor: "pointer",
-    zIndex: 10,
-  };
-
-  const notesSectionStyle = {
-    height: "100%",
-    overflowY: "auto",
-  };
-
-  const notesTitleStyle = {
-    color: "#2A5F74",
-    fontSize: "18px",
-    marginBottom: "10px",
-  };
-
-  const notesInputStyle = {
-    width: "100%",
-    height: "80%",
-    padding: "10px",
-    border: "2px solid #318FA8",
-    borderRadius: "5px",
-    marginTop: "10px",
-    fontFamily: "'IBM Plex Sans', sans-serif",
-  };
-
-  const chatSectionStyle = {
-    height: "100%",
-    overflowY: "auto",
-  };
-
-  const chatTitleStyle = {
-    color: "#2A5F74",
-    fontSize: "18px",
-    marginBottom: "10px",
-  };
-
-  const messagesStyle = {
-    height: "70%",
-    overflowY: "auto",
-    border: "2px solid #318FA8",
-    borderRadius: "5px",
-    padding: "10px",
-    marginBottom: "10px",
-  };
-
-  const messageStyle = {
-    margin: "5px 0",
-  };
-
-  const messageStrongStyle = {
-    color: "#2A5F74",
-  };
-
-  const chatInputContainerStyle = {
-    display: 'flex',
-    gap: '10px',
-    padding: '15px',
-    borderTop: '1px solid #eee',
-  };
-
-  const chatInputStyle = {
-    flex: 1,
-    padding: '12px',
-    border: '2px solid #318FA8',
-    borderRadius: '25px',
-    outline: 'none',
-  };
-
-  const circularNavStyle = {
-    position: "fixed",
-    bottom: "20px",
-    left: "50%",
-    transform: "translateX(-50%)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "linear-gradient(90deg, #D9F0F4, #318FA8)",
-    borderRadius: "30px",
-    padding: "10px 25px",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-    gap: "15px",
-    zIndex: 100,
-  };
-
-  const navButtonStyle = {
-    padding: "12px",
-    background: "white",
-    border: "2px solid #2A5F74",
-    borderRadius: "50%",
-    cursor: "pointer",
-    fontSize: "18px",
-    color: "#2A5F74",
-    transition: "all 0.3s ease",
-    width: "45px",
-    height: "45px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    "&:hover": {
-      transform: "scale(1.1)",
-      backgroundColor: "#D9F0F4",
-    },
-  };
-
-  const NavButton = ({ icon: Icon, tooltip, onClick, active }) => (
-    <div className="tooltip-container">
-      <button
-        onClick={onClick}
-        style={{
-          ...navButtonStyle,
-          backgroundColor: active ? "#318FA8" : "white",
-          color: active ? "white" : "#2A5F74",
-        }}
-      >
-        <Icon />
-      </button>
-      <span className="tooltip">
-        {tooltip}
-      </span>
-    </div>
-  );
-
-  const tooltipStyle = {
-    position: 'absolute',
-    bottom: '-25px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    backgroundColor: 'rgba(0,0,0,0.8)',
-    color: 'white',
-    padding: '4px 8px',
-    borderRadius: '4px',
-    fontSize: '12px',
-    whiteSpace: 'nowrap',
-    opacity: 0,
-    transition: 'opacity 0.2s',
-    pointerEvents: 'none',
-  };
-
-  const chatIconStyle = {
-    position: 'fixed',
-    top: '20px',
-    left: '20px',
-    padding: '12px',
-    background: 'white',
-    border: '2px solid #318FA8',
-    borderRadius: '50%',
-    cursor: 'pointer',
-    zIndex: 1000,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  };
-
-  const unreadBadgeStyle = {
-    position: 'absolute',
-    top: '-5px',
-    right: '-5px',
-    background: '#FF4444',
-    color: 'white',
-    borderRadius: '50%',
-    width: '20px',
-    height: '20px',
-    fontSize: '12px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  };
-
-  const SendMessageButton = () => (
-    <button
-      onClick={handleSendMessage}
-      style={{
-        background: '#318FA8',
-        border: 'none',
-        borderRadius: '50%',
-        width: '40px',
-        height: '40px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'pointer',
-        transition: 'background-color 0.2s',
-      }}
-    >
-      <FaArrowRight color="white" size={16} />
-    </button>
-  );
-
-  // Update VideoControls component
-  const VideoControls = () => {
-    if (!isClient) return null;
-
-    return (
-      <div style={controlsContainerStyle}>
-        {/* Participant rectangle */}
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-        }}>
-          <div style={{
-            ...participantStyle,
-            width: "190px",
-            height: "120px",
-          }}>
-            <Image
-              src="/images/default-avatar.png"
-              alt="Default Avatar"
-              width={24}
-              height={24}
-              style={avatarStyle}
-            />
-            <span style={participantNameStyle}>John Doe</span>
-          </div>
-        </div>
-
-        {/* Video controls */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '15px',
-          padding: '8px 15px',
-          background: '#D9F0F4',
-          borderRadius: '10px',
-          width: 'fit-content',
-          margin: '0 auto',
-          marginBottom: '50px',
-        }}>
-          <NavButton
-            icon={FaMicrophone}
-            tooltip="Microphone"
-            onClick={toggleMicrophone}
-            active={isMicOn}
-          />
-          <NavButton
-            icon={FaVideo}
-            tooltip="Camera"
-            onClick={toggleCamera}
-            active={isCameraOn}
-          />
-          <NavButton
-            icon={FaDesktop}
-            tooltip="Share Screen"
-            onClick={toggleScreenShare}
-            active={isScreenSharing}
-          />
-        </div>
-
-        {/* Subtitles container */}
-        <div style={{
-          width: "fit-content",
-          height: "120px",
-          padding: '8px',
-          background: showSubtitles ? 'white' : 'transparent',
-          borderRadius: '10px',
-          border: showSubtitles ? '1px solid #318FA8' : 'none',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#2A5F74',
-          transition: 'all 0.3s ease-in-out',
-          opacity: showSubtitles ? 1 : 0,
-          visibility: showSubtitles ? 'visible' : 'hidden',
-          overflow: 'hidden',
-        }}>
-          {showSubtitles && (
-            <p style={{
-              margin: 0,
-              padding: '4px',
-              textAlign: 'center',
-              fontSize: '13px',
-              width: '100%',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              display: '-webkit-box',
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: 'vertical',
-              wordWrap: 'break-word',
-            }}>
-              Live subtitles will appear here...
-            </p>
-          )}
+  return (
+    <div className="fixed inset-0 flex flex-col bg-gray-900 text-white z-50">
+      {/* Header with workshop title */}
+      <div className="bg-[#2A5F74] py-3 px-6 shadow-md">
+        <div>
+          <h1 className="text-xl font-bold">{workshop?.title || "Live Workshop"}</h1>
+          <p className="text-sm opacity-75">
+            {workshop?.instructor ? `Presenter: ${workshop.instructor}` : "Live Session"}
+          </p>
         </div>
       </div>
-    );
-  };
 
-  // Add controlsContainerStyle for the bottom section
-  const controlsContainerStyle = {
-    display: "grid",
-    gridTemplateColumns: "195px 1fr 200px", // Increased last column width
-    gap: "15px",
-    alignItems: "center",
-    width: "100%",
-    maxWidth: "100%",
-    overflow: "hidden",
-    padding: "10px",
-    marginBottom: "150px", // Add space above circular nav
-  };
+      {/* Main content area - video section */}
+      <div className="flex-grow flex relative overflow-hidden">
+        {/* Back button overlay in top-left corner */}
+        <button
+          onClick={onBack}
+          className="absolute top-4 left-4 z-10 bg-black/50 text-white hover:bg-black/70 p-2 rounded-full transition-colors"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} /> Back to Workshops
+        </button>
 
-  const certificateStyle = `
-  <style>
-    .certificate {
-      width: 800px;
-      height: 600px;
-      padding: 20px;
-      text-align: center;
-      border: 10px solid #318FA8;
-      background-color: white;
-    }
-    .certificate-title {
-      font-size: 50px;
-      color: #2A5F74;
-    }
-    .certificate-content {
-      margin: 20px;
-      font-size: 20px;
-    }
-    .tooltip-container {
-      position: relative;
-    }
-  </style>
-`;
+        {/* Main video area */}
+        <video
+          ref={videoRef}
+          className="w-full h-full object-contain"
+          autoPlay
+          playsInline
+        />
 
-  const certificateHtml = `
-  <div class="certificate">
-    <div class="certificate-title">Certificate of Completion</div>
-    <div class="certificate-content">
-      This is to certify that you have successfully completed the workshop:<br/>
-      <strong>${workshop?.title || 'Workshop'}</strong>
-    </div>
-  </div>
-`;
-
-  // Add tooltip styles
-  const tooltipStyles = `
-  .tooltip-container {
-    position: relative;
-  }
-  
-  .tooltip-container .tooltip {
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s, visibility 0.2s;
-  }
-
-  .tooltip-container:hover .tooltip {
-    opacity: 1;
-    visibility: visible;
-  }
-`;
-
-  // Add this with your other style definitions
-  const avatarStyle = {
-    width: "24px",
-    height: "24px",
-    borderRadius: "50%",
-    objectFit: "cover",
-    border: "2px solid #318FA8",
-  };
-
-  // Add this if missing
-  const downloadCertificateStyle = {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: "8px",
-    padding: "10px 20px",
-    background: "#D9F0F4",
-    border: "2px solid #318FA8",
-    borderRadius: "5px",
-    color: "#2A5F74",
-    textDecoration: "none",
-    cursor: "pointer",
-    marginTop: "10px"
-  };
-
-  // Add the new chat styles here
-  const chatHeaderStyle = {
-    padding: '20px',
-    background: '#318FA8',
-    color: 'white',
-    fontSize: '18px',
-    fontWeight: '500',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  };
-
-  const chatMessageStyle = {
-    display: 'flex',
-    gap: '10px',
-    alignItems: 'flex-start',
-    marginBottom: '15px',
-    padding: '12px',
-    borderRadius: '12px',
-    backgroundColor: '#f8f9fa',
-    margin: '10px',
-  };
-
-  const sendButtonStyle = {
-    background: '#318FA8',
-    color: 'white',
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    border: 'none',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  };
-
-  // Update saveButtonStyle to use the project's color palette
-  const saveButtonStyle = {
-    padding: '12px 24px',
-    background: '#318FA8',
-    color: 'white',
-    border: 'none',
-    borderRadius: '25px',
-    cursor: 'pointer',
-    marginTop: '15px',
-    fontWeight: '500',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    transition: 'all 0.3s ease',
-    boxShadow: '0 2px 8px rgba(49, 143, 168, 0.2)',
-    '&:hover': {
-      background: '#2A5F74',
-      boxShadow: '0 4px 12px rgba(49, 143, 168, 0.3)',
-    },
-  };
-
-  // Update the return statement to include the styles
-  return (
-    <>
-      <style>{tooltipStyles}</style>
-      {isClient && (
-        <div style={containerStyle}>
-          {/* Chat Panel */}
-          <div style={chatPanelStyle}>
-            <div style={chatHeaderStyle}>Chat</div>
-            <div style={{ flex: 1, overflowY: 'auto', padding: '15px' }}>
-              {messages.map((msg, index) => (
-                <div key={index} style={chatMessageStyle}>
-                  <div style={{ flex: 1 }}>
-                    <strong>{msg.sender}</strong>
-                    <p>{msg.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div style={chatInputContainerStyle}>
-              <input
-                value={newMessage}
-                onChange={handleMessageChange}
-                onKeyPress={handleKeyPress}
-                placeholder="Type a message..."
-                style={chatInputStyle}
-              />
-              <button style={sendButtonStyle} onClick={handleSendMessage}>
-                <FaArrowRight />
-              </button>
+        {/* Subtitles area */}
+        {showSubtitles && (
+          <div className="absolute bottom-24 left-0 right-0 text-center">
+            <div className="inline-block bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg max-w-2xl mx-auto text-base">
+              This is sample subtitle text that would appear here during the workshop...
             </div>
           </div>
+        )}
 
-          {/* Main Content */}
-          <div style={panelStyle}>
-            <BackButton />
-            <div style={videoGridStyle}>
-              <div style={mainVideoStyle}>
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  playsInline
-                  muted={isMicOn}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
+        {/* Your video (participant) */}
+        <div className="absolute right-4 bottom-24 w-1/4 sm:w-1/5 max-w-[200px] aspect-video bg-gray-700 border border-gray-500 overflow-hidden rounded-md shadow-lg flex items-center justify-center">
+          {isCameraOn ? (
+            <video
+              ref={localVideoRef}
+              className="w-full h-full object-cover"
+              autoPlay
+              playsInline
+              muted
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center text-white h-full w-full p-2 bg-gray-700">
+              <div className="w-10 h-10 rounded-full bg-[#318FA8] flex items-center justify-center text-xl font-bold mb-1">
+                <FontAwesomeIcon icon={faUserCircle} />
               </div>
-              <VideoControls />
+              <span className="text-xs font-semibold max-w-full truncate">You</span>
+              {!isMicOn && (
+                <div className="mt-1 flex items-center text-red-400 text-xs">
+                  <FontAwesomeIcon icon={faMicrophoneSlash} className="h-3 w-3 mr-1" />
+                  Muted
+                </div>
+              )}
             </div>
-          </div>
-
-          {/* Notes Panel */}
-          <div style={notesPanelStyle}>
-            <h3 style={notesTitleStyle}>Notes</h3>
-            <textarea
-              value={notes}
-              onChange={handleNoteChange}
-              placeholder="Take notes here..."
-              style={notesInputStyle}
-            />
-            <button
-              onClick={handleSaveNotes}
-              style={saveButtonStyle}
-            >
-              <FaDownload /> Save Notes
-            </button>
-          </div>
-
-          {/* Circular Navigation */}
-          <div style={circularNavStyle}>
-            <NavButton
-              icon={FaComments}
-              tooltip="Chat"
-              onClick={() => setIsChatOpen(!isChatOpen)}
-              active={isChatOpen}
-            />
-            <NavButton
-              icon={FaPen}
-              tooltip="Notes"
-              onClick={() => setIsNotesOpen(!isNotesOpen)}
-              active={isNotesOpen}
-            />
-            <NavButton
-              icon={FaClosedCaptioning}
-              tooltip="Subtitles"
-              onClick={() => setShowSubtitles(!showSubtitles)}
-              active={showSubtitles}
-            />
-          </div>
-
-          {/* Test Button */}
-          <button
-            style={{
-              position: 'absolute',
-              bottom: '100px',
-              right: '20px',
-              padding: '10px 20px',
-              background: '#318FA8',
-              color: 'white',
-              border: 'none',
-              borderRadius: '25px',
-              cursor: 'pointer',
-              zIndex: 1000,
-            }}
-            onClick={handleWorkshopEnd}
-          >
-            End Workshop & Show Feedback
-          </button>
-
-          {showFeedback && (
-            <WorkshopFeedback
-              isOpen={showFeedback}
-              onClose={() => setShowFeedback(false)}
-              workshopTitle={workshop?.title || 'Workshop'}
-              studentName="John Doe" // Replace with actual student name
-              workshopEnded={workshopEnded}
-            />
           )}
         </div>
-      )}
-    </>
-  );
-};
 
-export default WorkshopInterface;
+        {/* Right Sidebar Area (for Chat and/or Notes) */}
+        <AnimatePresence>
+          {(isChatOpen || isNotesOpen) && (
+            <motion.div
+              key="right-sidebar"
+              initial={{ x: '100%', opacity: 0 }}
+              animate={{ x: '0%', opacity: 1 }}
+              exit={{ x: '100%', opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="absolute top-0 right-0 bottom-20 w-1/4 min-w-[300px] flex flex-col bg-white border-l border-gray-300 shadow-lg"
+            >
+              {isNotesOpen && isChatOpen ? (
+                // Both Notes and Chat are open
+                <>
+                  <div className="h-1/2 pb-1">
+                    <NotesPanelContent
+                      notes={notes}
+                      setNotes={setNotes}
+                      handleSaveNotes={handleSaveNotes}
+                      handleToggleNotes={handleToggleNotes}
+                    />
+                  </div>
+                  <div className="h-1/2 pt-1">
+                    <ChatPanelContent
+                      chatMessages={messages}
+                      currentMessage={newMessage}
+                      setCurrentMessage={setNewMessage}
+                      handleSendMessage={handleSendMessage}
+                      handleToggleChat={handleToggleChat}
+                      chatScrollRef={chatScrollRef}
+                    />
+                  </div>
+                </>
+              ) : isNotesOpen ? (
+                // Only Notes is open
+                <NotesPanelContent
+                  notes={notes}
+                  setNotes={setNotes}
+                  handleSaveNotes={handleSaveNotes}
+                  handleToggleNotes={handleToggleNotes}
+                />
+              ) : isChatOpen ? (
+                // Only Chat is open
+                <ChatPanelContent
+                  chatMessages={messages}
+                  currentMessage={newMessage}
+                  setCurrentMessage={setNewMessage}
+                  handleSendMessage={handleSendMessage}
+                  handleToggleChat={handleToggleChat}
+                  chatScrollRef={chatScrollRef}
+                />
+              ) : null}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Control bar */}
+      <div className="h-20 bg-gray-800 flex items-center justify-center px-4 shadow-lg">
+        <div className="bg-gray-700 p-3 rounded-full flex items-center justify-center gap-4">
+          <button
+            onClick={toggleMicrophone}
+            className={`${baseButtonClass} ${!isMicOn ? redButtonClass : defaultButtonClass}`}
+            title={isMicOn ? 'Mute' : 'Unmute'}
+          >
+            <FontAwesomeIcon icon={isMicOn ? faMicrophone : faMicrophoneSlash} className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={toggleCamera}
+            className={`${baseButtonClass} ${!isCameraOn ? redButtonClass : defaultButtonClass}`}
+            title={isCameraOn ? 'Stop Video' : 'Start Video'}
+          >
+            <FontAwesomeIcon icon={isCameraOn ? faVideo : faVideoSlash} className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={toggleScreenShare}
+            className={`${baseButtonClass} ${isScreenSharing ? greenButtonClass : defaultButtonClass}`}
+            title={isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
+          >
+            <FontAwesomeIcon icon={faDesktop} className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={handleToggleChat}
+            className={`${baseButtonClass} ${isChatOpen ? activeButtonClass : defaultButtonClass}`}
+            title="Chat"
+          >
+            <FontAwesomeIcon icon={faComments} className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={handleToggleNotes}
+            className={`${baseButtonClass} ${isNotesOpen ? activeNotesButtonClass : defaultButtonClass}`}
+            title="Notes"
+          >
+            <FontAwesomeIcon icon={faNoteSticky} className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={handleToggleSubtitles}
+            className={`${baseButtonClass} ${showSubtitles ? activeButtonClass : defaultButtonClass}`}
+            title={showSubtitles ? 'Hide Subtitles' : 'Show Subtitles'}
+          >
+            <FontAwesomeIcon icon={faClosedCaptioning} className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={() => {
+              console.log("Disconnect button clicked");
+              handleLeaveWorkshop();
+            }}
+            className={`${baseButtonClass} ${redButtonClass}`}
+            title="Leave Workshop"
+          >
+            <FontAwesomeIcon icon={faPhone} className="h-5 w-5 transform rotate-135" />
+          </button>
+        </div>
+      </div>
+
+      {/* Workshop Feedback Modal */}
+      <WorkshopFeedback
+        isOpen={showFeedback}
+        onClose={() => {
+          setShowFeedback(false);
+          // Automatically return to workshop list when closing feedback modal
+          if (onBack) {
+            onBack();
+          }
+        }}
+        onSubmit={handleFeedbackSubmit}
+        workshop={workshop}
+      />
+    </div>
+  );
+}

@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import WorkshopCard from "./WorkshopCard";
 import WorkshopSidebar from "./WorkshopSidebar";
+import WorkshopInterface from "./WorkshopInterface";
+import PrerecordedWorkshopInterface from "./PrerecordedWorkshopInterface";
 import { sampleWorkshops } from "../../constants/mockData";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -10,30 +12,57 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSelectLive }) {
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
   const [workshops, setWorkshops] = useState(sampleWorkshops);
+  const [showLiveInterface, setShowLiveInterface] = useState(false);
+  const [showPrerecordedInterface, setShowPrerecordedInterface] = useState(false);
   const router = useRouter();
 
   const handleWorkshopClick = (workshop) => {
-    if (workshop.type === 'live') {
-      if (onSelectLive) {
-        // If onSelectLive callback is provided, use it
-        onSelectLive(workshop);
-      } else {
-        // Fallback to router navigation if no callback provided
-        router.push(`/dashboard/student/workshops/live/${workshop.id}`);
-      }
+    setSelectedWorkshop(workshop);
+  };
+
+  const handleJoinLive = (workshop) => {
+    if (onSelectLive) {
+      // If onSelectLive callback is provided, use it
+      onSelectLive(workshop);
     } else {
-      setSelectedWorkshop(workshop);
+      // Show live interface directly
+      setShowLiveInterface(true);
     }
   };
+
+  const handleWatchPrerecorded = (workshop) => {
+    setShowPrerecordedInterface(true);
+  };
+
+  const handleBackFromLive = () => {
+    setShowLiveInterface(false);
+  };
+
+  const handleBackFromPrerecorded = () => {
+    setShowPrerecordedInterface(false);
+  };
+
+  // Group workshops by type for better organization
+  const upcomingWorkshops = workshops.filter(ws => ws.type === 'regular' || !ws.type);
+  const liveWorkshops = workshops.filter(ws => ws.type === 'live');
+  const prerecordedWorkshops = workshops.filter(ws => ws.type === 'prerecorded');
+
+  if (showLiveInterface && selectedWorkshop) {
+    return <WorkshopInterface workshop={selectedWorkshop} onBack={handleBackFromLive} />
+  }
+
+  if (showPrerecordedInterface && selectedWorkshop) {
+    return <PrerecordedWorkshopInterface workshop={selectedWorkshop} onBack={handleBackFromPrerecorded} />
+  }
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8">
       {/* Title */}
-      <div className="flex flex-wrap justify-between items-center">
-        {/* <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
-          UPCOMING WORKSHOPS
+      <div className="flex flex-wrap justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
+          WORKSHOPS
           <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-        </h1> */}
+        </h1>
 
         {canCreate && (
           <button
@@ -50,22 +79,64 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
       <div className="relative">
         {/* Workshop grid - will adjust width when sidebar is open */}
         <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? "pr-0 lg:pr-[33%]" : "pr-0"}`}>
-          <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
-            {workshops.map((ws) => (
-              <WorkshopCard
-                key={ws.id}
-                workshop={ws}
-                onClick={handleWorkshopClick}
-                className={selectedWorkshop ? "w-full transition-all duration-300 transform scale-[0.85] m-1" : "w-full"}
-              />
-            ))}
-          </div>
+          {/* Upcoming Workshops */}
+          {upcomingWorkshops.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Upcoming Workshops</h2>
+              <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
+                {upcomingWorkshops.map((ws) => (
+                  <WorkshopCard
+                    key={ws.id}
+                    workshop={ws}
+                    onClick={handleWorkshopClick}
+                    className={selectedWorkshop ? "w-full transition-all duration-300 transform scale-[0.85] m-1" : "w-full"}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Live Workshops */}
+          {liveWorkshops.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Live Workshops</h2>
+              <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
+                {liveWorkshops.map((ws) => (
+                  <WorkshopCard
+                    key={ws.id}
+                    workshop={ws}
+                    onClick={handleWorkshopClick}
+                    className={selectedWorkshop ? "w-full transition-all duration-300 transform scale-[0.85] m-1" : "w-full"}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Prerecorded Workshops */}
+          {prerecordedWorkshops.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-xl font-semibold text-[#2a5f74] mb-6">Prerecorded Workshops</h2>
+              <div className={`grid grid-cols-1 ${selectedWorkshop ? "sm:grid-cols-1 lg:grid-cols-2 gap-0 -mx-1" : "sm:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
+                {prerecordedWorkshops.map((ws) => (
+                  <WorkshopCard
+                    key={ws.id}
+                    workshop={ws}
+                    onClick={handleWorkshopClick}
+                    className={selectedWorkshop ? "w-full transition-all duration-300 transform scale-[0.85] m-1" : "w-full"}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Fixed sidebar */}
         <WorkshopSidebar
           workshop={selectedWorkshop}
           onClose={() => setSelectedWorkshop(null)}
+          onJoinLive={handleJoinLive}
+          onWatchPrerecorded={handleWatchPrerecorded}
         />
       </div>
     </div>

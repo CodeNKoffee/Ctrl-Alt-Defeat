@@ -526,7 +526,7 @@ function WorkshopsView() {
               Back to Workshops
             </button>
           </div>
-          <WorkshopInterface workshop={selectedLiveWorkshop} />
+          <WorkshopInterface workshop={selectedLiveWorkshop} onBack={() => setSelectedLiveWorkshop(null)} />
         </>
       ) : (
         <WorkshopList onSelectLive={handleWorkshopSelection} />
@@ -719,7 +719,7 @@ function LiveWorkshopsView() {
 
       {/* Workshop Interface - Shown when a workshop is selected */}
       {selectedWorkshop && (
-        <WorkshopInterface workshop={selectedWorkshop} />
+        <WorkshopInterface workshop={selectedWorkshop} onBack={() => setSelectedWorkshop(null)} />
       )}
     </div>
   );
