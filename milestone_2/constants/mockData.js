@@ -21,7 +21,7 @@ export const MOCK_USERS = {
   company: {
     email: "company@example.com",
     password: "company123",
-    name: "Company Representative",
+    name: "Tawabiry",
     firstName: "Company",
     lastName: "Representative",
     role: "company",
@@ -2108,3 +2108,70 @@ export const MOCK_COMPANY_EVALUATIONS = [
     technicalOther: 'Could improve documentation.'
   }
 ];
+
+export const TawabiryInternships = [
+  {
+    id: 1,
+    title: "Frontend Developer Intern",
+    company: "Tawabiry",
+    type: "Full-time",
+    locationType: "REMOTE",
+    jobSetting: "Remote",
+    paid: true,
+    rate: "$20/hr",
+    postedDate: "2 days ago",
+    appliedDate: "2024-04-15",
+    startDate: "2025-01-15",
+    industry: "Technology",
+    duration: "3 months",
+    skills: ["JavaScript", "React", "TypeScript", "Redux", "HTML5", "CSS3", "REST APIs"],
+    description: "Join our team to work on exciting projects and gain hands-on experience in frontend development.",
+    details: "Tawabiry leads in software development, pioneering web technology innovation for over a decade with cutting-edge solutions.",
+    requirements: "Applicants should be pursuing a Computer Science degree with basic JavaScript/React knowledge...",
+    status: "current", // For my-internships
+    applicationStatus: "accepted", // For applied-internships
+    isRecommended: true
+  },
+  {
+    id: 2,
+    title: "Marketing & Growth Lead",
+    company: "Tawabiry",
+    type: "Full-time",
+    jobType: "Full-time",
+    jobSetting: "Remote",
+    paid: false,
+    rate: "$0/hr",
+    jobSetting: "Remote",
+    appliedDate: "2021-06-03",
+    startDate: "2025-01-15",
+    duration: "3 months",
+    skills: ["Marketing", "Growth", "Leadership", "Communication", "Project Management"],
+    description: "Join our team to work on exciting projects and gain hands-on experience in frontend development.",
+    details: "Tawabiry leads in software development, pioneering web technology innovation for over a decade with cutting-edge solutions.",
+    requirements: "Applicants should be pursuing a Computer Science degree with basic JavaScript/React knowledge...",
+    status: "current", // For my-internships
+    applicationStatus: "accepted", // For applied-internships
+    isRecommended: true
+  },
+  {
+    id: 3,
+    title: "Backend Developer Intern",
+    company: "Tawabiry",
+    type: "Full-time",
+    jobType: "Full-time",
+    jobSetting: "Remote",
+    paid: false,
+    jobSetting: "Remote",
+    rate: "$0/hr",
+    appliedDate: "2021-06-03",
+    startDate: "2025-01-15",
+    duration: "3 months",
+    skills: ["Java Springboot", "Docker", "MySQL", "Git", "CI/CD", "AWS"],
+    description: "Join our team to work on exciting projects and gain hands-on experience in backend development.",
+    details: "Tawabiry leads in software development, pioneering web technology innovation for over a decade with cutting-edge solutions.",
+    requirements: "Applicants should be pursuing a Computer Science degree with basic JavaScript/React knowledge...",
+    status: "current", // For my-internships
+    applicationStatus: "accepted", // For applied-internships
+    isRecommended: true
+  },
+]

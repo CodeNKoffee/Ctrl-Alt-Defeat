@@ -8,7 +8,7 @@ import ApplicationsList from '@/components/ApplicationsList';
 import ApplicationsFilterBar from '@/components/shared/ApplicationsFilterBar';
 import CurrentInterns from '@/components/CurrentInterns';
 import EvaluationsDashboard from '@/components/EvaluationsDashboard';
-import { MOCK_COMPANY_EVALUATIONS, mockStudents } from '../../../../../constants/mockData';
+import { MOCK_COMPANY_EVALUATIONS, mockStudents, TawabiryInternships } from '../../../../../constants/mockData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faXmark, faChevronDown, faBriefcase, faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
 import { useState as useReactState, useEffect } from 'react';
@@ -16,6 +16,7 @@ import CompanyBrowseInternshipsView from './CompanyBrowseInternshipsView';
 import { getRegularInternships, getRecommendedInternships, getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import InternshipList from '../../../../components/shared/InternshipList';
 import ApplicationInfoCard from '@/components/ApplicationInfoCard';
+import { toast } from 'react-toastify';
 
 // CompanyPostsInfoCard component
 const CompanyPostsInfoCard = () => (
@@ -115,15 +116,15 @@ function CompanyPostsView() {
   const isFilterActive = (category, value) => activeFilters[category].includes(value);
   const hasActiveFilters = () => Object.values(activeFilters).some(arr => arr.length > 0) || searchTerm;
   return (
-    <div className="container mx-auto px-4 pb-8">
+    <div className="container mx-auto p-10">
       <div className="w-full max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
           INTERNSHIP POSTS
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
-        
+
         <CompanyPostsInfoCard />
-        
+
         {/* Modern search and filter bar */}
         <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
           <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
@@ -413,10 +414,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   // Define the info card JSX/Component here for clarity
   const BrowseInternshipsInfoCard = () => (
     <div className="w-full max-w-6xl mx-auto">
-       <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
-          BROWSE INTERNSHIPS
-            <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
-          </h1>
+      <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+        BROWSE INTERNSHIPS
+        <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+      </h1>
       <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
@@ -463,7 +464,6 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     <div className='w-full px-6 py-4'>
       <div className="px-4 pt-6">
         <BrowseInternshipsInfoCard />
-
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
@@ -472,36 +472,11 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           customFilterSections={customFilterSections}
           primaryFilterName="Filters"
         />
-
-        {/* ALL / RECOMMENDED Tabs */}
-        <div className="w-full mx-auto">
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
-                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                }`}
-            >
-              ALL
-            </button>
-            <button
-              onClick={() => setActiveTab('recommended')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recommended'
-                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                }`}
-            >
-              RECOMMENDED
-            </button>
-          </div>
-        </div>
       </div>
-
       <InternshipList
         title=""
-        internships={hasActiveFilters ? filteredInternships : baseInternships}
-        type="browsing"
+        internships={TawabiryInternships}
+        type="company-view"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
@@ -519,6 +494,19 @@ function ApplicationsView() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [selectedInternship, setSelectedInternship] = useState('all');
+
+  // Show notification toast when component mounts
+  useEffect(() => {
+    toast.info('Receive a notification via email and on the system when somebody applies to an internship', {
+      position: 'bottom-right',
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true
+    });
+  }, []);
+
   const STATUS_CONFIG = {
     pending: {
       label: "PENDING",
@@ -564,16 +552,16 @@ function ApplicationsView() {
     setSelectedInternship('all');
   };
   return (
-    <div className="min-h-screen bg-gray-50 p-4 isolate">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen p-4 isolate">
+      <div className="container mx-auto px-6 py-6">
         <div className="w-full max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
             APPLICATIONS MANAGEMENT
             <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
           </h1>
-          
+
           <ApplicationInfoCard />
-          
+
           <div className="dropdown-overlay">
             <ApplicationsFilterBar
               searchTerm={searchTerm}
@@ -582,7 +570,7 @@ function ApplicationsView() {
               selectedStatus={selectedStatus}
               onStatusChange={setSelectedStatus}
               statusConfig={STATUS_CONFIG}
-              primaryFilterName="Internship Position"
+              primaryFilterName="Filter"
               selectedPrimaryFilter={selectedInternship}
               onPrimaryFilterChange={setSelectedInternship}
               primaryFilterOptions={MOCK_INTERNSHIPS}
@@ -606,10 +594,10 @@ function CurrentInternsView() {
   // Info card for Intern Management Dashboard
   const InternsInfoCard = () => (
     <div className="w-full max-w-6xl mx-auto">
-       <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
-            INTERN MANAGEMENT DASHBOARD
-            <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
-          </h1>
+      <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+        INTERN MANAGEMENT DASHBOARD
+        <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+      </h1>
       <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
@@ -673,7 +661,7 @@ function CurrentInternsView() {
   );
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-6 font-['IBM_Plex_Sans']">
+    <div className="w-full max-w-6xl mx-auto p-10">
       <InternsInfoCard />
       <CurrentInterns />
     </div>
@@ -684,57 +672,63 @@ function MyEvaluationsView() {
   // StudentEvaluationsInfoCard component
   const StudentEvaluationsInfoCard = () => (
     <div className="w-full mx-auto">
-      <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
-        {/* Decorative elements */}
-        <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
-        <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
-        <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
+      <div className="w-full max-w-6xl mx-auto px-6">
+        <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+          EVALUATION PORTAL
+          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+        <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+          {/* Decorative elements */}
+          <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
+          <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
+          <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
-          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
-            <FontAwesomeIcon icon={faClipboardCheck} className="h-7 w-7 text-white" />
-          </div>
-          <div className="text-left">
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              EVALUATION PORTAL
+          <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+            <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
+              <FontAwesomeIcon icon={faClipboardCheck} className="h-7 w-7 text-white" />
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Student Evaluation Portal</div>
-            <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Provide valuable feedback on interns who have completed positions at your organization. Your assessments help shape students' professional development and inform future placements.</p>
-
-              {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
-                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Evaluation Components:
-                </p>
-                <ul className="space-y-2 mb-2">
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Rate professional competencies (adaptability, communication, problem-solving)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Assess technical skills relevant to the position</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Provide specific examples of achievements and areas for growth</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Answer structured questions about performance and potential</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Add private comments for school administrators (optional)</span>
-                  </li>
-                </ul>
+            <div className="text-left">
+              <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
+                EVALUATION PORTAL
               </div>
+              <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Student Evaluation Portal</div>
+              <div className="text-gray-700 mb-3 relative">
+                <p className="mb-3">Provide valuable feedback on interns who have completed positions at your organization. Your assessments help shape students' professional development and inform future placements.</p>
 
-              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Evaluations remain confidential between your company and authorized faculty and SCAD members.
-              </p>
+                {/* Card content with improved styling */}
+                <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                  <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
+                    <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
+                    Evaluation Components:
+                  </p>
+                  <ul className="space-y-2 mb-2">
+                    <li className="flex items-start">
+                      <span className="text-[#3298BA] mr-2">✓</span>
+                      <span>Rate professional competencies (adaptability, communication, problem-solving)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#3298BA] mr-2">✓</span>
+                      <span>Assess technical skills relevant to the position</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#3298BA] mr-2">✓</span>
+                      <span>Provide specific examples of achievements and areas for growth</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#3298BA] mr-2">✓</span>
+                      <span>Answer structured questions about performance and potential</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#3298BA] mr-2">✓</span>
+                      <span>Add private comments for school administrators (optional)</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
+                  Evaluations remain confidential between your company and authorized faculty and SCAD members.
+                </p>
+              </div>
             </div>
           </div>
         </div>

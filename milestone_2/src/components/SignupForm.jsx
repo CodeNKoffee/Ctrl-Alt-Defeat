@@ -6,14 +6,45 @@ import FloatingLabelInput from "@/components/FloatingLabelInput";
 import { INDUSTRIES, COMPANY_SIZES, VERIFICATION_TYPES, ACCEPTED_FILE_TYPES } from "../../constants/index";
 import { capitalizeWords } from "../../utils/index";
 import SearchableSelect from "@/components/SearchableSelect";
+import { toast } from 'react-toastify';
 
 export default function SignupForm() {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       // TODO: Implement signup logic
       console.log('Form values:', values);
+
+      // Show success toast notification
+      toast.success('Application has been accepted! Please check your email.', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      });
+
+      // For demo purposes, you can uncomment this to show an error toast
+      // toast.error('Application has been rejected. Please check your email.', {
+      //   position: 'bottom-right',
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true
+      // });
     } catch (error) {
       console.error('Signup error:', error);
+
+      // Show error toast notification
+      toast.error('Application has been rejected. Please check your email.', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      });
     } finally {
       setSubmitting(false);
     }

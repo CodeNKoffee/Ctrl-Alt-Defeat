@@ -12,7 +12,7 @@ export default function CompanyPost() {
     jobSetting: [],
     paymentStatus: []
   });
-  
+
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -30,21 +30,21 @@ export default function CompanyPost() {
   // Handle filter selection
   const handleFilterClick = (category, value) => {
     setActiveFilters(prev => {
-      const newFilters = {...prev};
-      
+      const newFilters = { ...prev };
+
       // If "All" option is selected, clear other selections in the category
       if (value === 'all') {
         newFilters[category] = [];
         return newFilters;
       }
-      
+
       // If the value is already selected, remove it; otherwise, add it
       if (newFilters[category].includes(value)) {
         newFilters[category] = newFilters[category].filter(item => item !== value);
       } else {
         newFilters[category] = [...newFilters[category], value];
       }
-      
+
       return newFilters;
     });
   };
@@ -76,7 +76,7 @@ export default function CompanyPost() {
           INTERNSHIP POSTS
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
-        
+
         {/* Modern search and filter bar */}
         <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
           <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
@@ -116,8 +116,8 @@ export default function CompanyPost() {
               <button
                 onClick={() => setIsCombinedFilterPopoverOpen(!isCombinedFilterPopoverOpen)}
                 className={`appearance-none w-full md:w-auto backdrop-blur-sm border-2 text-sm py-3 px-4 rounded-full shadow-md transition-all duration-300 flex items-center justify-center gap-2 combined-filter-button min-w-[150px]
-                  ${hasActiveFilters() 
-                    ? "bg-[#5DB2C7] text-white border-[#5DB2C7] hover:bg-[#4AA0B5]" 
+                  ${hasActiveFilters()
+                    ? "bg-[#5DB2C7] text-white border-[#5DB2C7] hover:bg-[#4AA0B5]"
                     : "bg-white/90 text-[#1a3f54] border-[#B8E1E9] hover:border-[#5DB2C7]"
                   }`}
               >
@@ -128,9 +128,9 @@ export default function CompanyPost() {
                     {activeFilters.jobType.length + activeFilters.jobSetting.length + activeFilters.paymentStatus.length + (searchTerm ? 1 : 0)}
                   </span>
                 )}
-                <FontAwesomeIcon 
-                  icon={faChevronDown} 
-                  className={`h-4 w-4 ${hasActiveFilters() ? "text-white" : "text-[#5DB2C7]"} transition-transform duration-300 ${isCombinedFilterPopoverOpen ? 'rotate-180' : ''}`} 
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className={`h-4 w-4 ${hasActiveFilters() ? "text-white" : "text-[#5DB2C7]"} transition-transform duration-300 ${isCombinedFilterPopoverOpen ? 'rotate-180' : ''}`}
                 />
               </button>
 
@@ -140,30 +140,19 @@ export default function CompanyPost() {
                   <div>
                     <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Job Type</h4>
                     <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${activeFilters.jobType.length === 0 ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'all')}
-                      >
-                        All Types
-                      </div>
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobType', 'Full-time') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'Full-time')}
-                      >
-                        Full-time
-                      </div>
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobType', 'Part-time') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'Part-time')}
-                      >
-                        Part-time
-                      </div>
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobType', 'Internship') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'Internship')}
-                      >
-                        Internship
-                      </div>
+                      {[{ label: 'All Types', value: 'all' }, { label: 'Full-time', value: 'Full-time' }, { label: 'Part-time', value: 'Part-time' }, { label: 'Internship', value: 'Internship' }, { label: 'Contract (dummy)', value: 'Contract' }].map(option => (
+                        <label key={option.value} className="flex items-center space-x-3 cursor-pointer px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-[#D9F0F4]">
+                          <input
+                            type="radio"
+                            name="jobType"
+                            value={option.value}
+                            checked={option.value === 'all' ? activeFilters.jobType.length === 0 : activeFilters.jobType[0] === option.value}
+                            onChange={() => handleFilterClick('jobType', option.value)}
+                            className="h-4 w-4 accent-[#3298BA] border-[#3298BA] focus:ring-2 focus:ring-[#3298BA] focus:ring-opacity-25"
+                          />
+                          <span className={`text-sm text-[#2a5f74] ${option.value === 'all' && activeFilters.jobType.length === 0 ? 'font-semibold' : ''} ${activeFilters.jobType[0] === option.value ? 'font-semibold' : ''}`}>{option.label}</span>
+                        </label>
+                      ))}
                     </div>
                   </div>
 
@@ -171,30 +160,19 @@ export default function CompanyPost() {
                   <div>
                     <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Job Setting</h4>
                     <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${activeFilters.jobSetting.length === 0 ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'all')}
-                      >
-                        All Settings
-                      </div>
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobSetting', 'Remote') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'Remote')}
-                      >
-                        Remote
-                      </div>
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobSetting', 'On-site') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'On-site')}
-                      >
-                        On-site
-                      </div>
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobSetting', 'Hybrid') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'Hybrid')}
-                      >
-                        Hybrid
-                      </div>
+                      {[{ label: 'All Settings', value: 'all' }, { label: 'Remote', value: 'Remote' }, { label: 'On-site', value: 'On-site' }, { label: 'Hybrid', value: 'Hybrid' }, { label: 'Flexible (dummy)', value: 'Flexible' }].map(option => (
+                        <label key={option.value} className="flex items-center space-x-3 cursor-pointer px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-[#D9F0F4]">
+                          <input
+                            type="radio"
+                            name="jobSetting"
+                            value={option.value}
+                            checked={option.value === 'all' ? activeFilters.jobSetting.length === 0 : activeFilters.jobSetting[0] === option.value}
+                            onChange={() => handleFilterClick('jobSetting', option.value)}
+                            className="h-4 w-4 accent-[#3298BA] border-[#3298BA] focus:ring-2 focus:ring-[#3298BA] focus:ring-opacity-25"
+                          />
+                          <span className={`text-sm text-[#2a5f74] ${option.value === 'all' && activeFilters.jobSetting.length === 0 ? 'font-semibold' : ''} ${activeFilters.jobSetting[0] === option.value ? 'font-semibold' : ''}`}>{option.label}</span>
+                        </label>
+                      ))}
                     </div>
                   </div>
 
@@ -202,24 +180,19 @@ export default function CompanyPost() {
                   <div>
                     <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Payment Status</h4>
                     <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${activeFilters.paymentStatus.length === 0 ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('paymentStatus', 'all')}
-                      >
-                        All Statuses
-                      </div>
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('paymentStatus', 'Paid') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('paymentStatus', 'Paid')}
-                      >
-                        Paid
-                      </div>
-                      <div 
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('paymentStatus', 'Unpaid') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('paymentStatus', 'Unpaid')}
-                      >
-                        Unpaid
-                      </div>
+                      {[{ label: 'All Statuses', value: 'all' }, { label: 'Paid', value: 'Paid' }, { label: 'Unpaid', value: 'Unpaid' }, { label: 'Partially Paid (dummy)', value: 'Partially Paid' }].map(option => (
+                        <label key={option.value} className="flex items-center space-x-3 cursor-pointer px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-[#D9F0F4]">
+                          <input
+                            type="radio"
+                            name="paymentStatus"
+                            value={option.value}
+                            checked={option.value === 'all' ? activeFilters.paymentStatus.length === 0 : activeFilters.paymentStatus[0] === option.value}
+                            onChange={() => handleFilterClick('paymentStatus', option.value)}
+                            className="h-4 w-4 accent-[#3298BA] border-[#3298BA] focus:ring-2 focus:ring-[#3298BA] focus:ring-opacity-25"
+                          />
+                          <span className={`text-sm text-[#2a5f74] ${option.value === 'all' && activeFilters.paymentStatus.length === 0 ? 'font-semibold' : ''} ${activeFilters.paymentStatus[0] === option.value ? 'font-semibold' : ''}`}>{option.label}</span>
+                        </label>
+                      ))}
                     </div>
                   </div>
 
@@ -305,11 +278,11 @@ export default function CompanyPost() {
             </div>
           )}
         </div>
-        
+
         {/* Pass the searchTerm and filters to the PostTiles component */}
         <div>
-          <PostTiles 
-            searchOverride={searchTerm} 
+          <PostTiles
+            searchOverride={searchTerm}
             filterOverride={{
               jobType: activeFilters.jobType,
               jobSetting: activeFilters.jobSetting,

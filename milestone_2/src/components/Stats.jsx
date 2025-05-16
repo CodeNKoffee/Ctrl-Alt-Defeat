@@ -82,10 +82,6 @@ topCourses: [
     <div className="py-4 min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center mb-6 px-4">
-        <h1 className="text-3xl font-bold text-left text-[#2a5f74] relative">
-          STATISTICS
-          <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-        </h1>
       <PDFDownloadLink
         document={<ReportPDF data={dashboardData} dateRange={dateRange} />}
         fileName={`stats_report_${dateRange.start.toDateString()}_to_${dateRange.end.toDateString()}.pdf`}
