@@ -8,12 +8,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import InternshipList from '@/components/shared/InternshipList';
 import StudentProfile from '@/components/StudentProfile';
-import InternshipFilterModal from '@/components/InternshipFilterModal';
 import NotificationsList from '@/components/NotificationsList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faXmark, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
-import { getRegularInternships, getRecommendedInternships, getAppliedInternships, getMyInternships } from '../../../../../constants/internshipData';
+import { faFilter, faXmark, faPlay, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  getRecommendedInternshipsForStudent,
+  getRegularInternships,
+  getRecommendedInternships,
+  getAppliedInternships,
+  getMyInternships
+} from '../../../../../constants/internshipData';
 import WorkshopList from '@/components/WorkshopList';
 import AssessmentList from '@/components/AssessmentList';
 import Report from '@/components/Report';
@@ -124,8 +128,6 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
 
 // Using the actual page components for each view
 function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds }) {
-  const [filterType, setFilterType] = useState('all');
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [filters, setFilters] = useState({
     industry: '',
     duration: '',
@@ -134,15 +136,39 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedStatus, setSelectedStatus] = useState('all');
   const { currentUser } = useSelector(state => state.auth);
   const userMajor = currentUser?.major || 'Computer Science';
 
-  // Get internships based on "all" or "recommended" filter type
-  const baseInternships = filterType === 'all'
+  const internshipDataForFilters = getRegularInternships();
+  const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))];
+  const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))];
+
+  // Get internships based on active tab
+  const baseInternships = activeTab === 'all'
     ? getRegularInternships()
-    : getRecommendedInternships();
+    : (() => {
+      const userData = currentUser || JSON.parse(sessionStorage.getItem('userSession') || localStorage.getItem('userSession') || '{}');
+      const enhancedUserData = {
+        ...userData,
+        jobInterests: userData.jobInterests || ['Developer', 'Engineer', 'Data', 'UX'],
+        industries: userData.industries || ['Technology', 'Media Engineering'],
+        recommendedCompanies: userData.recommendedCompanies || [1, 2, 3, 4, 5]
+      };
+      const recommendations = getRecommendedInternshipsForStudent(enhancedUserData);
+      if (!recommendations || recommendations.length === 0) {
+        console.log('No personalized recommendations found, falling back to default recommendations for Browse tab');
+        return getRecommendedInternships();
+      }
+      return recommendations.map(internship => ({
+        ...internship,
+        pastInternRating: Math.floor(Math.random() * 3) + 3,
+        recommendedReason: internship.industry === enhancedUserData.industries?.[0]
+          ? 'industry match'
+          : (enhancedUserData.jobInterests?.some(interest =>
+            internship.title.toLowerCase().includes(interest.toLowerCase())
+          ) ? 'job interest match' : 'recommended by past interns')
+      }));
+    })();
 
   // Apply additional filters (industry, duration, paid/unpaid)
   useEffect(() => {
@@ -186,34 +212,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   }, [baseInternships, filters]);
 
   // Check if any filters are active
-  const hasActiveFilters = filters.industry || filters.duration || filters.isPaid !== null;
-
-  // Handle applying filters from modal
-  const handleApplyFilters = (newFilters) => {
-    setFilters(newFilters);
-  };
-
-  // Clear individual filters
-  const clearIndustryFilter = () => {
-    setFilters({
-      ...filters,
-      industry: ''
-    });
-  };
-
-  const clearDurationFilter = () => {
-    setFilters({
-      ...filters,
-      duration: ''
-    });
-  };
-
-  const clearPaidFilter = () => {
-    setFilters({
-      ...filters,
-      isPaid: null
-    });
-  };
+  const hasActiveFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
 
   const clearAllFilters = () => {
     setFilters({
@@ -222,11 +221,102 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       isPaid: null
     });
     setSearchTerm('');
-    setSelectedStatus('all');
   };
+
+  const customFilterSections = [
+    {
+      title: "Industry",
+      options: uniqueIndustries.map(ind => ({ label: ind, value: ind })),
+      isSelected: (option) => filters.industry === option.value,
+      onSelect: (option) => {
+        setFilters(prev => ({ ...prev, industry: prev.industry === option.value ? '' : option.value }));
+      }
+    },
+    {
+      title: "Duration",
+      options: uniqueDurations.map(dur => ({ label: dur, value: dur })),
+      isSelected: (option) => filters.duration === option.value,
+      onSelect: (option) => {
+        setFilters(prev => ({ ...prev, duration: prev.duration === option.value ? '' : option.value }));
+      }
+    },
+    {
+      title: "Payment",
+      options: [{ label: "Paid", value: true }, { label: "Unpaid", value: false }],
+      isSelected: (option) => filters.isPaid === option.value,
+      onSelect: (option) => {
+        setFilters(prev => ({ ...prev, isPaid: prev.isPaid === option.value ? null : option.value }));
+      }
+    }
+  ];
+
+  // Define the info card JSX/Component here for clarity
+  const BrowseInternshipsInfoCard = () => (
+    <div className="w-full mx-auto">
+    <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
+      <div className="flex items-start gap-4 w-full md:w-auto">
+        <div className="flex-shrink-0 bg-[var(--metallica-blue-100)] rounded-full p-3">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-[var(--metallica-blue-700)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
+        </div>
+        <div className="text-left">
+          <p className="text-sm text-gray-400"></p>
+          <div className="text-2xl font-semibold text-[#2a5f74] mb-4">Browse Career-Building Internships</div>
+          <div className="text-gray-700 mb-2"> Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.
+              <ul className="list-disc pl-6 mb-4 text-gray-700 space-y-1">
+                <p className="text-metallica-blue-700 font-medium">Why These Opportunities Matter:</p>
+                <li>Potential for academic credit and professional references</li>
+                <li>Networking connections that could lead to full-time employment</li>
+                <li>Portfolio-building projects to showcase your skills</li>
+              </ul>
+              <p className="text-metallica-blue-700 font-medium">
+                Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience and ensure it contributes meaningfully to your academic requirements.
+              </p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  );
 
   return (
     <div className='w-full px-6 py-4'>
+      <div className="px-4 pt-6">
+        <BrowseInternshipsInfoCard />
+
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search internships..."
+          onClearFilters={clearAllFilters}
+          customFilterSections={customFilterSections}
+          primaryFilterName="Filters"
+        />
+
+        {/* ALL / RECOMMENDED Tabs */}
+        <div className="w-full mx-auto">
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setActiveTab('all')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                }`}
+            >
+              ALL
+            </button>
+            <button
+              onClick={() => setActiveTab('recommended')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recommended'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                }`}
+            >
+              RECOMMENDED
+            </button>
+          </div>
+        </div>
+      </div>
+
       <InternshipList
         title=""
         internships={hasActiveFilters ? filteredInternships : baseInternships}
@@ -234,23 +324,11 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
-        showTabs={true}
+        showTabs={false}
         userMajor={userMajor}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        // customFilterPanel={null}
+        customFilterPanel={<></>}
+        padding="px-4 pt-2 pb-6"
       />
-
-      {/* <InternshipFilterModal
-        open={isFilterModalOpen}
-        onClose={() => setIsFilterModalOpen(false)}
-        initialFilters={filters}
-        onApplyFilters={handleApplyFilters}
-      /> */}
     </div>
   );
 }
