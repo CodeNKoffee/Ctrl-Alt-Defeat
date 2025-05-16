@@ -22,7 +22,11 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
     maxAttendees: 25,
   };
 
-  const [formData, setFormData] = useState(workshop || defaultWorkshop);
+  const [formData, setFormData] = useState({
+    ...defaultWorkshop,
+    ...(workshop || {}),
+    agenda: (workshop && workshop.agenda) || []
+  });
   const [agendaItem, setAgendaItem] = useState('');
   const [previewVisible, setPreviewVisible] = useState(true);
   const [errors, setErrors] = useState({});
@@ -30,7 +34,10 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
   // Reset form when workshop changes (for edit mode)
   useEffect(() => {
     if (workshop) {
-      setFormData(workshop);
+      setFormData({
+        ...workshop,
+        agenda: workshop.agenda || []
+      });
     }
   }, [workshop]);
 
@@ -70,7 +77,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
 
     setFormData(prev => ({
       ...prev,
-      agenda: [...prev.agenda, agendaItem]
+      agenda: [...(prev.agenda || []), agendaItem]
     }));
     setAgendaItem('');
   };
@@ -78,7 +85,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
   const removeAgendaItem = (index) => {
     setFormData(prev => ({
       ...prev,
-      agenda: prev.agenda.filter((_, i) => i !== index)
+      agenda: prev.agenda ? prev.agenda.filter((_, i) => i !== index) : []
     }));
   };
 
@@ -89,7 +96,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
     if (!formData.description.trim()) newErrors.description = 'Description is required';
     if (!formData.instructor.trim()) newErrors.instructor = 'Instructor name is required';
     if (!formData.instructorBio.trim()) newErrors.instructorBio = 'Instructor bio is required';
-    if (formData.agenda.length === 0) newErrors.agenda = 'At least one agenda item is required';
+    if (!formData.agenda || formData.agenda.length === 0) newErrors.agenda = 'At least one agenda item is required';
 
     // Ensure end date is after start date
     if (formData.endDate <= formData.startDate) {
@@ -322,7 +329,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
 
               {errors.agenda && <p className="mt-1 text-sm text-red-500">{errors.agenda}</p>}
 
-              {formData.agenda.length > 0 ? (
+              {formData.agenda && formData.agenda.length > 0 ? (
                 <ul className="bg-gray-50 rounded-lg p-3 space-y-2">
                   {formData.agenda.map((item, index) => (
                     <li key={index} className="flex justify-between items-center bg-white p-3 rounded border border-gray-200">
@@ -455,7 +462,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   <FontAwesomeIcon icon={faListUl} className="h-5 w-5 text-[#5DB2C7] mr-2" />
                   Workshop Agenda
                 </h4>
-                {formData.agenda.length > 0 ? (
+                {formData.agenda && formData.agenda.length > 0 ? (
                   <ul className="space-y-2">
                     {formData.agenda.map((item, index) => (
                       <li key={index} className="flex items-start">

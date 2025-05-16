@@ -147,6 +147,7 @@ export default function Evaluation({
             <div><span className="font-semibold">Supervisor Email:</span> {localEvaluation.supervisorEmail}</div>
             <div><span className="font-semibold">Tasks:</span> {localEvaluation.tasks}</div>
             <div><span className="font-semibold">Work Environment:</span> {localEvaluation.environment}</div>
+            <div><span className="font-semibold">Recommend to Others:</span> <span className={localEvaluation.recommend === "yes" ? "text-green-600 font-medium" : "text-red-600 font-medium"}>{localEvaluation.recommend === "yes" ? "Yes" : "No"}</span></div>
             <div><span className="font-semibold">Internship Start:</span> {localEvaluation.startDate}</div>
             <div><span className="font-semibold">Internship End:</span> {localEvaluation.endDate}</div>
           </div>
