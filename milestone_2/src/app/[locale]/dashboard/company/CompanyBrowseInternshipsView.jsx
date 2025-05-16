@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { getRegularInternships } from '../../../../../constants/internshipData'
 import InternshipList from '../../../../components/shared/InternshipList';
 import ApplicationsFilterBar from '../../../../components/shared/ApplicationsFilterBar';
@@ -13,6 +14,15 @@ export default function CompanyBrowseInternshipsView() {
   });
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Get current user from Redux store or fallback to empty object
+  let currentUser;
+  try {
+    currentUser = useSelector(state => state.auth.currentUser) || {};
+  } catch (error) {
+    console.warn("Redux store not available:", error);
+    currentUser = {};
+  }
 
   const internshipDataForFilters = getRegularInternships();
   const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))];

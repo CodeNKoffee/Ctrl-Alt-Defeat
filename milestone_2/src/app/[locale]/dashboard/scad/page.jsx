@@ -16,7 +16,7 @@ import { mockStudents } from '../../../../../constants/mockData';
 import Header from '@/components/Header';
 import EvaluationsDashboard from '@/components/EvaluationsDashboard';
 import { facultyScadReports } from '../../../../../constants/mockData';
-import { getRegularInternships } from '../../../../../constants/internshipData';
+import { getRegularInternships, getRecommendedInternshipsForStudent, getRecommendedInternships  } from '../../../../../constants/internshipData';
 import InternshipList from '../../../../components/shared/InternshipList';
 import ApplicationsFilterBar from '../../../../components/shared/ApplicationsFilterBar';
 

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import PostTiles from '@/components/PostTiles';
 import ApplicationsList from '@/components/ApplicationsList';
@@ -12,9 +13,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faXmark, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState as useReactState, useEffect } from 'react';
 import CompanyBrowseInternshipsView from './CompanyBrowseInternshipsView';
-import { getRegularInternships } from '../../../../../constants/internshipData';
+import { getRegularInternships, getRecommendedInternships, getRecommendedInternshipsForStudent } from '../../../../../constants/internshipData';
 import InternshipList from '../../../../components/shared/InternshipList';
-import ApplicationsFilterBar from '../../../../components/shared/ApplicationsFilterBar';
 
 function CompanyPostsView() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -226,7 +226,16 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
-  const { currentUser } = useSelector(state => state.auth);
+
+  // Get current user from Redux store or fallback to empty object
+  let currentUser = {};
+  try {
+    const reduxState = useSelector(state => state.auth);
+    currentUser = reduxState?.currentUser || {};
+  } catch (error) {
+    console.warn("Redux store not available:", error);
+  }
+
   const userMajor = currentUser?.major || 'Computer Science';
 
   const internshipDataForFilters = getRegularInternships();
