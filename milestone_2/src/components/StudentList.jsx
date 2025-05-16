@@ -161,7 +161,7 @@ export default function StudentList({ students, sidebarExpanded = true }) {
       <div className={`transition-all duration-300 w-full`}>
         <div className={`flex flex-row justify-between flex-wrap w-full`}>
           {filteredStudents.map((student) => (
-            <div key={student.id} className="w-[245px]">
+            <div key={student.id} className="w-[245px] mb-6">
               <Student
                 student={student}
                 onViewProfile={() => handleViewProfile(student)}

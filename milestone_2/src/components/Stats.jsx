@@ -100,9 +100,9 @@ topCourses: [
       <PDFDownloadLink
         document={<ReportPDF data={dashboardData} dateRange={dateRange} />}
         fileName={`stats_report_${dateRange.start.toDateString()}_to_${dateRange.end.toDateString()}.pdf`}
-        className="border border-[#2A5F74] text-[#2A5F74] px-3 py-2 rounded-full flex items-center gap-1 hover:bg-[#2A5F74] hover:text-white transition-colors text-sm font-medium"
+        className="text-white bg-[#2A5F74] px-4 py-3 rounded-full flex items-center gap-2 hover:cursor-pointer transition-colors text-sm font-bold"
       >
-        <FiDownload size={16} />
+        <FiDownload size={16} className="font-bold" />
         Generate Report
       </PDFDownloadLink>
       </div>
