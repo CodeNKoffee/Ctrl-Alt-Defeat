@@ -76,11 +76,11 @@ const sidebarConfig = {
     { id: 'applications', iconId: 'applications', label: 'Applications', path: '/dashboard/company/applications', isPage: false },
     { id: 'current-interns', iconId: 'my-internships', label: 'Current Interns', path: '/dashboard/company/current-interns', isPage: false },
     { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/company/my-evaluations', isPage: false },
-    { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/company/profile', isPage: false },
   ],
   scad: [
     { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/scad', isPage: false },
     { id: 'student-list', iconId: 'students', label: 'Student List', path: '/dashboard/scad/student-list', isPage: false },
+    { id: 'browse-internships', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/scad/browse-internships', isPage: false },
     { id: 'student-evals', iconId: 'my-evaluations', label: 'Student Evaluations', path: '/dashboard/scad/student-evals', isPage: false },
     { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/scad/statistics', isPage: false },
     { id: 'reports', iconId: 'reports', label: 'Reports', path: '/dashboard/scad/reports', isPage: false },

@@ -304,7 +304,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             )}
 
             {/* Apply button for recommended or browsing internships */}
-            {(type === 'recommended' || type === 'browsing') && (
+            {(type === 'recommended' || type === 'browsing') && type !== 'company-view' && (
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
                 className={`px-4 py-2 text-white rounded-full transition sm:w-auto text-sm hover:-translate-y-0.5 ${isApplied ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#5DB2C7] hover:bg-[#4796a8]'

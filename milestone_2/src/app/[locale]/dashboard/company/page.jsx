@@ -11,6 +11,10 @@ import { MOCK_COMPANY_EVALUATIONS, mockStudents } from '../../../../constants/mo
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faXmark, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState as useReactState, useEffect } from 'react';
+import CompanyBrowseInternshipsView from './CompanyBrowseInternshipsView';
+import { getRegularInternships } from '../../../../../constants/internshipData';
+import InternshipList from '../../../../components/shared/InternshipList';
+import ApplicationsFilterBar from '../../../../components/shared/ApplicationsFilterBar';
 
 function CompanyPostsView() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -212,95 +216,234 @@ function CompanyPostsView() {
   );
 }
 
-function BrowseInternshipsView() {
+// Using the actual page components for each view
+function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds }) {
+  const [filters, setFilters] = useState({
+    industry: '',
+    duration: '',
+    isPaid: null
+  });
+  const [filteredInternships, setFilteredInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('all');
-  const [selectedInternship, setSelectedInternship] = useState('all');
+  const [activeTab, setActiveTab] = useState('all');
+  const { currentUser } = useSelector(state => state.auth);
+  const userMajor = currentUser?.major || 'Computer Science';
 
-  // Mock statuses for BrowseInternshipsView
-  const STATUS_CONFIG = {
-    pending: {
-      label: "PENDING",
-      color: "bg-yellow-100 text-yellow-800 border border-yellow-400",
-      badgeColor: "bg-yellow-600",
-    },
-    accepted: {
-      label: "ACCEPTED",
-      color: "bg-green-100 text-green-800 border border-green-400",
-      badgeColor: "bg-green-600",
-    },
-    rejected: {
-      label: "REJECTED",
-      color: "bg-red-100 text-red-800 border border-red-400",
-      badgeColor: "bg-red-600",
-    },
-    finalized: {
-      label: "FINALIZED",
-      color: "bg-purple-100 text-purple-800 border border-purple-400",
-      badgeColor: "bg-purple-600",
+  const internshipDataForFilters = getRegularInternships();
+  const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))];
+  const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))];
+
+  // Get internships based on active tab
+  const baseInternships = activeTab === 'all'
+    ? getRegularInternships()
+    : (() => {
+      const userData = currentUser || JSON.parse(sessionStorage.getItem('userSession') || localStorage.getItem('userSession') || '{}');
+      const enhancedUserData = {
+        ...userData,
+        jobInterests: userData.jobInterests || ['Developer', 'Engineer', 'Data', 'UX'],
+        industries: userData.industries || ['Technology', 'Media Engineering'],
+        recommendedCompanies: userData.recommendedCompanies || [1, 2, 3, 4, 5]
+      };
+      const recommendations = getRecommendedInternshipsForStudent(enhancedUserData);
+      if (!recommendations || recommendations.length === 0) {
+        console.log('No personalized recommendations found, falling back to default recommendations for Browse tab');
+        return getRecommendedInternships();
+      }
+      return recommendations.map(internship => ({
+        ...internship,
+        pastInternRating: Math.floor(Math.random() * 3) + 3,
+        recommendedReason: internship.industry === enhancedUserData.industries?.[0]
+          ? 'industry match'
+          : (enhancedUserData.jobInterests?.some(interest =>
+            internship.title.toLowerCase().includes(interest.toLowerCase())
+          ) ? 'job interest match' : 'recommended by past interns')
+      }));
+    })();
+
+  // Apply additional filters (industry, duration, paid/unpaid)
+  useEffect(() => {
+    let result = [...baseInternships];
+
+    // Filter by industry
+    if (filters.industry) {
+      result = result.filter(internship =>
+        internship.industry === filters.industry
+      );
     }
-  };
 
-  const clearFilters = () => {
+    // Filter by duration
+    if (filters.duration) {
+      result = result.filter(internship => {
+        // Parse the duration value from the filter (e.g., "3 months" -> 3)
+        const filterDurationMatch = filters.duration.match(/(\d+)/);
+        const filterDurationMonths = filterDurationMatch ? parseInt(filterDurationMatch[1]) : 0;
+
+        // Parse the internship duration (e.g., "3 months", "6-8 months", etc.)
+        const internshipDurationMatch = internship.duration.match(/(\d+)/);
+        const internshipDurationMonths = internshipDurationMatch ? parseInt(internshipDurationMatch[1]) : 0;
+
+        // If we have valid numbers for both, compare them
+        if (filterDurationMonths > 0 && internshipDurationMonths > 0) {
+          return internshipDurationMonths === filterDurationMonths;
+        }
+
+        return true;
+      });
+    }
+
+    // Filter by paid status
+    if (filters.isPaid !== null) {
+      result = result.filter(internship =>
+        internship.paid === filters.isPaid
+      );
+    }
+
+    setFilteredInternships(result);
+  }, [baseInternships, filters]);
+
+  // Check if any filters are active
+  const hasActiveFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
+
+  const clearAllFilters = () => {
+    setFilters({
+      industry: '',
+      duration: '',
+      isPaid: null
+    });
     setSearchTerm('');
-    setSelectedStatus('all');
-    setSelectedInternship('all');
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 p-4 isolate">
-      <div className="container mx-auto px-4 py-8">
-        <div className="w-full max-w-6xl mx-auto">
-          <div className="dropdown-overlay">
-            <ApplicationsFilterBar
-              searchTerm={searchTerm}
-              onSearchChange={setSearchTerm}
-              searchPlaceholder="Search by position, department, or skills..."
-              selectedStatus={selectedStatus}
-              onStatusChange={setSelectedStatus}
-              statusConfig={STATUS_CONFIG}
-              onClearFilters={clearFilters}
-            />
+  const customFilterSections = [
+    {
+      title: "Industry",
+      options: uniqueIndustries.map(ind => ({ label: ind, value: ind })),
+      isSelected: (option) => filters.industry === option.value,
+      onSelect: (option) => {
+        setFilters(prev => ({ ...prev, industry: prev.industry === option.value ? '' : option.value }));
+      }
+    },
+    {
+      title: "Duration",
+      options: uniqueDurations.map(dur => ({ label: dur, value: dur })),
+      isSelected: (option) => filters.duration === option.value,
+      onSelect: (option) => {
+        setFilters(prev => ({ ...prev, duration: prev.duration === option.value ? '' : option.value }));
+      }
+    },
+    {
+      title: "Payment",
+      options: [{ label: "Paid", value: true }, { label: "Unpaid", value: false }],
+      isSelected: (option) => filters.isPaid === option.value,
+      onSelect: (option) => {
+        setFilters(prev => ({ ...prev, isPaid: prev.isPaid === option.value ? null : option.value }));
+      }
+    }
+  ];
+
+  // Define the info card JSX/Component here for clarity
+  const BrowseInternshipsInfoCard = () => (
+    <div className="w-full mx-auto">
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+        {/* Decorative elements */}
+        <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
+        <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
+        <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
+
+        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
           </div>
+          <div className="text-left">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
+              OPPORTUNITIES
+            </div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Browse Career-Building Internships</div>
+            <div className="text-gray-700 mb-3 relative">
+              <p className="mb-3">Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.</p>
 
-          {/* Status Filter Pills */}
-          <div className="w-full max-w-6xl mx-auto mb-6">
-            <div className="flex flex-wrap gap-2 items-center">
-              <button
-                onClick={() => setSelectedStatus('all')}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${selectedStatus === 'all'
-                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                  : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
-                  }`}
-              >
-                All
-              </button>
+              {/* Card content with improved styling */}
+              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
+                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
+                  Why These Opportunities Matter:
+                </p>
+                <ul className="space-y-2 mb-2">
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>Potential for academic credit and professional references</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>Networking connections that could lead to full-time employment</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>Portfolio-building projects to showcase your skills</span>
+                  </li>
+                </ul>
+              </div>
 
-              {/* Status pills */}
-              {Object.keys(STATUS_CONFIG).map((status) => (
-                <button
-                  key={status}
-                  onClick={() => setSelectedStatus(status)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${selectedStatus === status
-                    ? STATUS_CONFIG[status].color
-                    : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
-                    }`}
-                >
-                  <div className="flex items-center">
-                    {selectedStatus === status && (
-                      <span className={`inline-block w-2 h-2 rounded-full ${STATUS_CONFIG[status].badgeColor} mr-1.5`}></span>
-                    )}
-                    {STATUS_CONFIG[status].label}
-                  </div>
-                </button>
-              ))}
+              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
+                Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience!
+              </p>
             </div>
           </div>
-
-          {/* Internship content will go here */}
-          <div className="text-center text-gray-500 py-20">Browse/Manage all internships (Company View) - To be implemented</div>
         </div>
       </div>
+    </div>
+  );
+
+  return (
+    <div className='w-full px-6 py-4'>
+      <div className="px-4 pt-6">
+        <BrowseInternshipsInfoCard />
+
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search internships by job title or company name ..."
+          onClearFilters={clearAllFilters}
+          customFilterSections={customFilterSections}
+          primaryFilterName="Filters"
+        />
+
+        {/* ALL / RECOMMENDED Tabs */}
+        <div className="w-full mx-auto">
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setActiveTab('all')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                }`}
+            >
+              ALL
+            </button>
+            <button
+              onClick={() => setActiveTab('recommended')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recommended'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                }`}
+            >
+              RECOMMENDED
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <InternshipList
+        title=""
+        internships={hasActiveFilters ? filteredInternships : baseInternships}
+        type="browsing"
+        onApplicationCompleted={onApplicationCompleted}
+        appliedInternshipIds={appliedInternshipIds}
+        showSidebar={true}
+        showTabs={false}
+        userMajor={userMajor}
+        customFilterPanel={<></>}
+        padding="px-4 pt-2 pb-6"
+      />
     </div>
   );
 }
@@ -412,6 +555,7 @@ const viewComponents = {
   'applications': ApplicationsView,
   'current-interns': CurrentInternsView,
   'my-evaluations': MyEvaluationsView,
+  'company-browse-internships': CompanyBrowseInternshipsView,
 };
 
 export default function CompanyDashboard() {
