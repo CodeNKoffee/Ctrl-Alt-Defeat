@@ -14,6 +14,7 @@ export default function CustomButton({
   loadingText = "Loading...",
   iconPosition = "left",
   type = "button",
+  showIconOnLoading = false,
 }) {
   // Classes based on variant
   const variantStyles = {
@@ -36,7 +37,7 @@ export default function CustomButton({
         border
       `}
     >
-      {isLoading && iconPosition === 'left' && (
+      {isLoading && iconPosition === 'left' && showIconOnLoading && (
         <FontAwesomeIcon icon={faSpinner} className="animate-spin mr-2" />
       )}
 
@@ -50,7 +51,7 @@ export default function CustomButton({
         <FontAwesomeIcon icon={icon} className="ml-2" />
       )}
 
-      {isLoading && iconPosition === 'right' && (
+      {isLoading && iconPosition === 'right' && showIconOnLoading && (
         <FontAwesomeIcon icon={faSpinner} className="animate-spin ml-2" />
       )}
     </button>

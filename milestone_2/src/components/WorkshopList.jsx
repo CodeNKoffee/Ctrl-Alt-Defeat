@@ -7,7 +7,9 @@ import WorkshopInterface from "./WorkshopInterface";
 import PrerecordedWorkshopInterface from "./PrerecordedWorkshopInterface";
 import { sampleWorkshops } from "../../constants/mockData";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faCommentDots } from '@fortawesome/free-solid-svg-icons';
+import NotificationButton from "./NotificationButton";
+import WorkshopFeedback from "./WorkshopFeedback";
 
 export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSelectLive, sidebarExpanded }) {
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
@@ -16,6 +18,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   const [showPrerecordedInterface, setShowPrerecordedInterface] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const [showFeedback, setShowFeedback] = useState(false);
   const router = useRouter();
 
   // Listen to window resize to adjust layout
@@ -161,6 +164,23 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 pb-8">
+      {/* Flex row: WORKSHOPS title and feedback button */}
+      <div className="flex items-center justify-between mb-8">
+        <button
+          onClick={() => setShowFeedback(true)}
+          className="relative w-11 h-11 rounded-full bg-gray-50 text-metallica-blue-700 flex items-center justify-center shadow-md hover:bg-metallica-blue-50 hover:-translate-y-0.5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2 transition-all duration-150 ease-in"
+          aria-label="Workshop Feedback"
+          title="Workshop Feedback"
+          type="button"
+        >
+          <FontAwesomeIcon icon={faCommentDots} className="h-6 w-6" />
+        </button>
+      </div>
+      <WorkshopFeedback
+        isOpen={showFeedback}
+        onClose={() => setShowFeedback(false)}
+        onSubmit={() => setShowFeedback(false)}
+      />
       {/* Title and filter buttons */}
       <div className="flex flex-wrap justify-between items-center mb-6">
         {canCreate && (

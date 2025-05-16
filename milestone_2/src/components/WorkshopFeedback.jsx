@@ -38,16 +38,13 @@ export default function WorkshopFeedback({ isOpen, onClose, onSubmit, workshop }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(21,43,55,0.55)]">
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
-        Close button
         <button
-          className="absolute top-3 left-3 z-20 flex items-center justify-center w-10 h-10 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
+          className="absolute top-3 right-3 z-20 flex items-center justify-center w-10 h-10 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
           onClick={onClose}
           aria-label="Back to Workshops"
         >
           {/* Use the same back arrow icon as in PrerecordedWorkshopInterface */}
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-gray-600">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-          </svg>
+          <FontAwesomeIcon icon={faTimes} className="h-6 w-6 float-end" />
         </button>
         <form onSubmit={handleSubmit}>
           <h2 className="text-2xl font-bold text-[#2a5f74] mb-6 text-center">Workshop Feedback</h2>
@@ -89,7 +86,8 @@ export default function WorkshopFeedback({ isOpen, onClose, onSubmit, workshop }
               isLoading={submitting}
               loadingText="Submitting..."
               disabled={rating === 0}
-              fullWidth
+              width="w-full"
+              showIconOnLoading={false}
             />
           </div>
         </form>
