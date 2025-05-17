@@ -301,7 +301,6 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Payment Status</label>
         <SearchableSelect
           name="paid"
           label="Payment Status"
