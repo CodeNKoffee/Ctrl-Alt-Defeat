@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faEdit, faTrash, faSearch, faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEdit, faTrash, faSearch, faFilter, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { motion, AnimatePresence } from 'framer-motion';
 import WorkshopList from './WorkshopList';
 import WorkshopForm from './WorkshopForm';
 import DeleteWorkshopModal from './DeleteWorkshopModal';
@@ -12,6 +13,7 @@ export default function WorkshopManager() {
   const [currentWorkshop, setCurrentWorkshop] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [confirmDelete, setConfirmDelete] = useState(null);
+  const [successNotification, setSuccessNotification] = useState({ show: false, message: '' });
 
   // Filter workshops based on search term
   const filteredWorkshops = workshops.filter(workshop =>
@@ -40,6 +42,7 @@ export default function WorkshopManager() {
 
   // Save workshop (create or update)
   const handleSaveWorkshop = (workshopData) => {
+    const isUpdating = !!currentWorkshop;
     if (currentWorkshop) {
       // Update existing workshop
       setWorkshops(workshops.map(w =>
@@ -50,6 +53,13 @@ export default function WorkshopManager() {
       setWorkshops([...workshops, { ...workshopData, id: Date.now().toString() }]);
     }
     setIsFormOpen(false);
+    setSuccessNotification({
+      show: true,
+      message: isUpdating ? 'Workshop updated successfully!' : 'Workshop created successfully!'
+    });
+    setTimeout(() => {
+      setSuccessNotification({ show: false, message: '' });
+    }, 3000); // Hide after 3 seconds
   };
 
   // Find the workshop title for the delete modal
@@ -119,7 +129,7 @@ export default function WorkshopManager() {
                   <div className="flex-grow">
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
                       <div>
-                        <span className="text-xs text-blue-600 font-medium mb-1 block">
+                        <span className="text-xs text-metallica-blue-600 font-medium mb-1 block">
                           {workshop.category || "WORKSHOP"}
                         </span>
                         <h3 className="text-lg font-semibold text-gray-900 mb-1">
@@ -134,7 +144,7 @@ export default function WorkshopManager() {
                       <div className="flex space-x-2 mt-2 sm:mt-0">
                         <button
                           onClick={() => handleEditWorkshop(workshop)}
-                          className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="p-2 text-metallica-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           title="Edit Workshop"
                         >
                           <FontAwesomeIcon icon={faEdit} className="h-5 w-5" />
@@ -196,6 +206,44 @@ export default function WorkshopManager() {
         workshopTitle={workshopToDelete?.title}
         slideDirection="left"
       />
+
+      {/* Success Notification Overlay */}
+      <AnimatePresence>
+        {successNotification.show && (
+          <motion.div
+            className="fixed inset-0 bg-[rgba(42,95,116,0.18)] z-[100] flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-white p-6 md:p-8 rounded-xl shadow-2xl text-center max-w-md w-full mx-auto"
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            >
+              <motion.div
+                className="w-12 h-12 md:w-16 md:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6"
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15, delay: 0.1 }}
+              >
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  className="text-green-600 text-xl md:text-2xl"
+                />
+              </motion.div>
+              <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
+                Success!
+              </h3>
+              <p className="text-gray-600 text-sm md:text-base">
+                {successNotification.message}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 } 

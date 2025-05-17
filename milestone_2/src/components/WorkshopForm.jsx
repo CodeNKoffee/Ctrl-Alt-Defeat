@@ -22,10 +22,20 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
     maxAttendees: 25,
   };
 
-  const [formData, setFormData] = useState({
-    ...defaultWorkshop,
-    ...(workshop || {}),
-    agenda: (workshop && workshop.agenda) || []
+  const [formData, setFormData] = useState(() => {
+    if (workshop) { // Edit mode with a workshop provided
+      return {
+        ...defaultWorkshop, // Start with all default fields
+        ...workshop,        // Override with properties from the workshop prop
+        startDate: workshop.startDate ? new Date(workshop.startDate) : defaultWorkshop.startDate, // Ensure startDate is a Date
+        endDate: workshop.endDate ? new Date(workshop.endDate) : defaultWorkshop.endDate,       // Ensure endDate is a Date
+        agenda: workshop.agenda || [] // Ensure agenda is an array
+      };
+    }
+    // Create mode or workshop is initially null/undefined
+    return {
+      ...defaultWorkshop, // Use all defaults (dates are Date objects, agenda is [])
+    };
   });
   const [agendaItem, setAgendaItem] = useState('');
   const [previewVisible, setPreviewVisible] = useState(true);
@@ -33,10 +43,18 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
 
   // Reset form when workshop changes (for edit mode)
   useEffect(() => {
-    if (workshop) {
+    if (workshop) { // Workshop prop is present (edit mode or switched to an existing workshop)
       setFormData({
-        ...workshop,
-        agenda: workshop.agenda || []
+        ...defaultWorkshop, // Start with all default fields
+        ...workshop,        // Override with properties from the workshop prop
+        startDate: workshop.startDate ? new Date(workshop.startDate) : defaultWorkshop.startDate, // Ensure startDate is a Date
+        endDate: workshop.endDate ? new Date(workshop.endDate) : defaultWorkshop.endDate,       // Ensure endDate is a Date
+        agenda: workshop.agenda || [] // Ensure agenda is an array
+      });
+    } else { // Workshop prop is null/undefined (create mode or workshop cleared)
+      setFormData({
+        ...defaultWorkshop,
+        // agenda is already correctly [] in defaultWorkshop
       });
     }
   }, [workshop]);
@@ -58,18 +76,34 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
   };
 
   const handleDateChange = (name, date) => {
-    setFormData(prev => ({
-      ...prev,
+    // Preview the state after this change to make decisions based on the newest data
+    const newFormData = {
+      ...formData,
       [name]: date
-    }));
+    };
 
-    // Clear error for this field
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
+    setFormData(newFormData); // Update state with the new date
+
+    // Clear errors more intelligently
+    setErrors(prevErrors => {
+      const updatedErrors = { ...prevErrors };
+
+      // 1. Clear any error for the field being directly changed (e.g., if it was marked as required)
+      if (updatedErrors[name]) {
+        updatedErrors[name] = '';
+      }
+
+      // 2. Specifically check and clear the "End time must be after start time" error 
+      //    if the new combination of dates is now valid.
+      //    This error is stored on `errors.endDate`.
+      if (updatedErrors.endDate === 'End time must be after start time') {
+        // Check validity using the most up-to-date data from newFormData
+        if (newFormData.endDate && newFormData.startDate && newFormData.endDate > newFormData.startDate) {
+          updatedErrors.endDate = ''; // Clear the error as the dates are now in correct order
+        }
+      }
+      return updatedErrors;
+    });
   };
 
   const addAgendaItem = () => {
@@ -173,8 +207,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                 </label>
                 <DatePicker
                   selectedDate={formData.startDate}
-                  onChange={(date) => handleDateChange('startDate', date)}
-                  showTimeSelect
+                  onDateChange={(date) => handleDateChange('startDate', date)}
                   className={`w-full px-4 py-2 border ${errors.startDate ? 'border-red-500' : 'border-gray-300'} rounded-lg`}
                 />
                 {errors.startDate && <p className="mt-1 text-sm text-red-500">{errors.startDate}</p>}
@@ -186,8 +219,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                 </label>
                 <DatePicker
                   selectedDate={formData.endDate}
-                  onChange={(date) => handleDateChange('endDate', date)}
-                  showTimeSelect
+                  onDateChange={(date) => handleDateChange('endDate', date)}
                   className={`w-full px-4 py-2 border ${errors.endDate ? 'border-red-500' : 'border-gray-300'} rounded-lg`}
                 />
                 {errors.endDate && <p className="mt-1 text-sm text-red-500">{errors.endDate}</p>}

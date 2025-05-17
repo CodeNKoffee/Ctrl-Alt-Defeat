@@ -24,7 +24,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
   useEffect(() => {
     if (initialPost) {
       setForm(initialPost);
-      
+
       // Also update the preview immediately when initialPost changes
       if (onFormChange) {
         onFormChange(initialPost);
@@ -132,7 +132,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
   // Function to disable past dates
   const disablePastDates = (date) => {
     if (!isValid(date)) return true;
-    
+
     try {
       const today = startOfDay(new Date());
       return isBefore(date, today);

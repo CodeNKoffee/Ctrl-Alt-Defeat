@@ -2,7 +2,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment, faHighlighter, faSave, faTimes, faTrash, faPalette } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faHighlighter, faSave, faTimes, faTrash, faPalette, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
+import CustomButton from './shared/CustomButton';
 
 /**
  * ReportViewer Component
@@ -104,7 +106,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
       const range = selection.getRangeAt(0);
       const startNode = range.startContainer;
       const endNode = range.endContainer;
-      
+
       // Only allow selection within the report text elements
       if (textRef.current.contains(startNode) && textRef.current.contains(endNode)) {
         setSelectedText(selection.toString());
@@ -292,9 +294,21 @@ export default function ReportViewer({ report, userType = "faculty" }) {
     return result.length ? result : text;
   }
 
+  // Handle PDF export (just shows toast for now)
+  const handleExportPDF = () => {
+    toast.info('PDF export started. Your document will be downloaded shortly.', {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
   return (
     <div className="report-viewer-container">
-      <div className={`report-content-container ${showAnnotations ? 'with-sidebar' : ''}`}>  
+      <div className={`report-content-container ${showAnnotations ? 'with-sidebar' : ''}`}>
         {/* Floating annotation toolbar (hide for SCAD, Faculty, and Students) */}
         {!isReadOnly && toolbarPos.visible && (
           <div
@@ -336,7 +350,18 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           </div>
         )}
         <div className="report-content" onMouseUp={handleTextSelection} ref={textRef}>
-          <h1 className="report-title">{reportData.title}</h1>
+          <div className="report-header">
+            <h1 className="report-title">{reportData.title}</h1>
+            <div className="report-actions">
+              {/* <button
+                onClick={handleExportPDF}
+                className="export-pdf-tab"
+              >
+                <FontAwesomeIcon icon={faFilePdf} className="pdf-icon" />
+                Export as PDF
+              </button> */}
+            </div>
+          </div>
           <div className="report-section">
             <h2 className="report-section-title">Introduction</h2>
             <p className="report-text">{renderTextWithHighlights(reportData.introduction, 'introduction')}</p>
@@ -374,7 +399,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
             </div>
           </div>
         )}
-        
+
         {!isReadOnly && isSelectingHighlightColor && (
           <div className="highlight-color-form">
             <h3>Select Highlight Color</h3>
@@ -447,8 +472,8 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           <div className="annotations-list">
             {annotations.length > 0 ? (
               annotations.map(annotation => (
-                <div 
-                  key={annotation.id} 
+                <div
+                  key={annotation.id}
                   className={`annotation-item ${annotation.type} ${activeAnnotation === annotation.id ? 'active' : ''}`}
                   onClick={() => setActiveAnnotation(activeAnnotation === annotation.id ? null : annotation.id)}
                 >
@@ -459,7 +484,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
                     </span>
                     {/* Hide delete button in read-only mode */}
                     {!isReadOnly && (
-                      <button 
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
                           handleDeleteAnnotation(annotation.id);
@@ -471,7 +496,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
                       </button>
                     )}
                   </div>
-                  <div 
+                  <div
                     className="annotation-text"
                     style={annotation.type === 'highlight' ? { backgroundColor: annotation.color } : {}}
                   >
@@ -523,13 +548,25 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           max-height: 100%;
         }
         
+        .report-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          padding-bottom: 0.75rem;
+          border-bottom: 2px solid var(--metallica-blue-200);
+        }
+        
         .report-title {
           font-size: 1.5rem;
           font-weight: bold;
           color: var(--metallica-blue-800);
-          margin-bottom: 1.5rem;
-          padding-bottom: 0.75rem;
-          border-bottom: 2px solid var(--metallica-blue-200);
+          margin-bottom: 0;
+        }
+        
+        .report-actions {
+          display: flex;
+          gap: 1rem;
         }
         
         .report-section {
@@ -917,6 +954,12 @@ export default function ReportViewer({ report, userType = "faculty" }) {
             height: auto;
           }
           
+          .report-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+          
           .report-content-container {
             width: 100% !important;
             padding: 1rem;
@@ -928,6 +971,33 @@ export default function ReportViewer({ report, userType = "faculty" }) {
             border-top: 1px solid var(--metallica-blue-200);
             max-height: 300px;
           }
+        }
+        
+        .export-pdf-tab {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          background-color: #e7f4f8;
+          color: #318FA8;
+          font-weight: 500;
+          padding: 0.75rem 1.5rem;
+          border: none;
+          border-radius: 999px;
+          transition: all 0.2s ease;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+          font-size: 0.9rem;
+          cursor: pointer;
+        }
+        
+        .export-pdf-tab:hover {
+          background-color: #d3edf5;
+          transform: translateY(-1px);
+        }
+        
+        .pdf-icon {
+          color: #318FA8;
+          font-size: 1rem;
         }
       `}</style>
     </div>

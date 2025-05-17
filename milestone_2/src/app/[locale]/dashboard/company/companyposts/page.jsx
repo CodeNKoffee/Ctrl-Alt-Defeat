@@ -180,7 +180,7 @@ export default function CompanyPost() {
                   <div>
                     <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Payment Status</h4>
                     <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      {[{ label: 'All Statuses', value: 'all' }, { label: 'Paid', value: 'Paid' }, { label: 'Unpaid', value: 'Unpaid' }, { label: 'Partially Paid (dummy)', value: 'Partially Paid' }].map(option => (
+                      {[{ label: 'All Status', value: 'all' }, { label: 'Paid', value: 'Paid' }, { label: 'Unpaid', value: 'Unpaid' }, { label: 'Partially Paid (dummy)', value: 'Partially Paid' }].map(option => (
                         <label key={option.value} className="flex items-center space-x-3 cursor-pointer px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-[#D9F0F4]">
                           <input
                             type="radio"

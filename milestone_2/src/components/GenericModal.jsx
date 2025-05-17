@@ -63,8 +63,8 @@ const GenericModal = ({
             {/* Header Tab */}
             {title && (
               <div className="relative z-10">
-                <div className="inline-block bg-metallica-blue-600 text-white px-6 py-3 rounded-tl-2xl rounded-br-xl shadow-md">
-                  <h3 className="text-xl font-young-serif font-medium">{title}</h3>
+                <div className="inline-block text-metallica-blue-700 px-6 py-3 rounded-tl-2xl rounded-br-xl">
+                  <h3 className="text-xl font-bold">{title}</h3>
                 </div>
               </div>
             )}
@@ -79,7 +79,7 @@ const GenericModal = ({
                   {secondaryButton && (
                     <button
                       onClick={secondaryButton.onClick}
-                      className={`px-4 py-2 rounded-md text-sm font-medium shadow-sm ${secondaryButton.color || 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                      className={`px-4 py-2 rounded-full text-sm font-medium shadow-sm ${secondaryButton.color || 'bg-gray-200 hover:bg-gray-300 text-gray-700'
                         }`}
                     >
                       {secondaryButton.text}
@@ -89,7 +89,7 @@ const GenericModal = ({
                   {primaryButton && (
                     <button
                       onClick={primaryButton.onClick}
-                      className={`px-4 py-2 rounded-md text-sm font-medium shadow-sm ${primaryButton.color || 'bg-red-500 hover:bg-red-600 text-white'
+                      className={`px-4 py-2 rounded-full text-sm font-medium shadow-sm ${primaryButton.color || 'bg-red-500 hover:bg-red-600 text-white'
                         }`}
                     >
                       {primaryButton.text}

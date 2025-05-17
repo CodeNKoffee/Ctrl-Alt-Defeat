@@ -75,7 +75,7 @@ const ChatPanelContent = memo(({
             type="text"
             value={currentMessage}
             onChange={(e) => setCurrentMessage(e.target.value)}
-            className="flex-grow border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 text-sm"
+            className="flex-grow border text-black border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 text-sm"
             placeholder="Type your message..."
           />
           <button

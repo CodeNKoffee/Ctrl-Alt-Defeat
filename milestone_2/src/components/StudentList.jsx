@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Student from "./Student";
 import SearchBar from "./shared/SearchBar";
 import StudentProfileSidebar from "./StudentProfileSidebar";
+import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
 
 const statusColors = {
   current: 'bg-blue-100 text-blue-800 border-2 border-blue-400',
@@ -125,6 +126,14 @@ export default function StudentList({ students, sidebarExpanded = true }) {
     <div className="w-full mx-auto relative py-4">
       {/* Title */}
 
+      <ApplicationsFilterBar
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        searchPlaceholder="Search by student, company or supervisor..."
+        selectedStatus={activeTab}
+        onStatusChange={setActiveTab}
+        primaryFilterName="Filters"
+      />
       {/* Tabs & Search */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 pr-[2px]">
         <div className="flex flex-wrap gap-2">
@@ -142,13 +151,13 @@ export default function StudentList({ students, sidebarExpanded = true }) {
           ))}
         </div>
 
-        <div className="w-full sm:w-[280px]">
+        {/* <div className="w-full sm:w-[280px]">
           <SearchBar
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             placeholder="Search by Student ID ..."
           />
-        </div>
+        </div> */}
       </div>
 
       {/* Responsive Grid for Student Cards */}

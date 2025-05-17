@@ -238,14 +238,16 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
               onClick={handleAccept}
               icon={faCheck}
               text="Accept"
-              className="flex-1"
+              className="flex-1 w-full"
+              showIconOnLoading={false}
             />
             <CustomButton
               variant="danger"
               onClick={handleReject}
               icon={faTimes}
               text="Reject"
-              className="flex-1"
+              className="flex-1 w-full"
+              showIconOnLoading={false}
             />
           </div>
         </div>

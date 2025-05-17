@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';// Correct import path
+import { faCheck, faTimes, faShare } from '@fortawesome/free-solid-svg-icons';// Correct import path
 import CustomButton from "../components/shared/CustomButton";
-
+import { toast } from 'react-toastify';
 const likertOptions = [
   { id: 1, text: 'Strongly Disagree', color: 'border-[#FCA5A5] bg-[#FEE2E2]', selected: 'border-[#EF4444] bg-[#FCA5A5]/40' },
   { id: 2, text: 'Disagree', color: 'border-[#FDE68A] bg-[#FEF9C3]', selected: 'border-[#FBBF24] bg-[#FDE68A]/40' },
@@ -16,6 +16,9 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
   const [answers, setAnswers] = useState([]);
   const [testStarted, setTestStarted] = useState(false);
   const [testCompleted, setTestCompleted] = useState(false);
+  const [finalMockScore, setFinalMockScore] = useState(null);
+  const [animatedScore, setAnimatedScore] = useState(0);
+  const [isScoreAnimationDone, setIsScoreAnimationDone] = useState(false);
 
   const [postFeedback, setPostFeedback] = useState(null);
   const [sharing, setSharing] = useState(null);
@@ -42,6 +45,38 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
 
   const handleSubmitTest = () => {
     setTestCompleted(true);
+    try {
+      const calculatedScore = Math.floor(Math.random() * 31) + 70; // Example: score between 70 and 100
+      setFinalMockScore(calculatedScore); // Set the target score for animation
+      setAnimatedScore(0); // Reset animated score before starting
+      setIsScoreAnimationDone(false); // Reset animation done flag
+
+      // console.log('Form values:', values); // Assuming 'values' is not defined here or part of a larger context
+
+      // Show success toast notification with score
+      toast.info(`Your test score is ${calculatedScore}%. Please check your email for detailed results.`, {
+        position: 'bottom-right',
+        autoClose: 7000, // Increased duration for better readability
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      });
+    } catch (error) {
+      console.error('Error submitting test:', error);
+      toast.error('Error submitting test', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      });
+      // If there's an error, we might not want to show the score animation screen,
+      // or handle it differently. For now, it will still go to testCompleted view.
+    } finally {
+      // setSubmitting(false); // Assuming 'setSubmitting' is not defined here or handled elsewhere
+    }
   };
 
   const handlePostToProfile = () => {
@@ -57,6 +92,20 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
       onClose();
     }, 1000);
   };
+
+  // useEffect for score animation
+  useEffect(() => {
+    if (testCompleted && finalMockScore !== null) {
+      if (animatedScore < finalMockScore) {
+        const timer = setTimeout(() => {
+          setAnimatedScore(prevScore => Math.min(prevScore + 1, finalMockScore));
+        }, 20); // Adjust timing for animation speed
+        return () => clearTimeout(timer);
+      } else {
+        setIsScoreAnimationDone(true);
+      }
+    }
+  }, [testCompleted, finalMockScore, animatedScore]);
 
   return (
     <div className={`fixed top-0 right-0 h-full w-1/3 z-50 transition-all duration-300 ease-in-out transform ${assessment ? 'translate-x-0' : 'translate-x-full'}`}>
@@ -157,40 +206,50 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
           <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
             <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
           </div>
-          <div className="flex-1 flex items-center justify-center px-4 pb-8">
+          <div className="flex-1 flex flex-col items-center justify-center px-4 pb-8 text-center">
             <div className="bg-white rounded-xl shadow p-8 w-full max-w-md flex flex-col items-center">
               <div className="bg-green-50 rounded-full flex items-center justify-center mb-6" style={{ width: 72, height: 72 }}>
                 <FontAwesomeIcon icon={faCheck} className="text-green-500 text-3xl" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-2 text-center">Test Completed!</h3>
-              <p className="text-gray-600 mb-4 text-center">
-                Thank you for completing the test! Your results are being processed and will be available shortly. <br />
-                You will receive your detailed results via email within the next few minutes.
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Test Completed!</h3>
+
+              <p className="text-gray-700 text-xl mb-2">Your Score:</p>
+              <p className="text-5xl font-bold text-[#3298BA] mb-6">
+                {animatedScore}%
               </p>
-              {sharing === null ? (
+
+              {isScoreAnimationDone && (
                 <>
-                  <p className="text-center text-gray-700 mb-4">Do you want to share your results?</p>
-                  <div className="flex justify-center gap-4 mb-2">
-                    <button
-                      onClick={() => {
-                        setSharing('yes');
-                        setTimeout(() => onClose(), 1000);
-                      }}
-                      className="py-2 px-8 rounded-full font-semibold border border-[#3298BA] text-[#3298BA] bg-transparent hover:bg-[#3298BA]/10 transition-colors duration-200 shadow-none"
-                    >
-                      Yes
-                    </button>
-                    <button
-                      onClick={() => onClose()}
-                      className="py-2 px-8 rounded-full font-semibold border border-[#d9534f] text-[#d9534f] bg-transparent hover:bg-[#d9534f]/10 transition-colors duration-200 shadow-none"
-                    >
-                      No
-                    </button>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Detailed results have been sent to your email.
+                  </p>
+                  <div className="mb-4">
+                    <p className="text-base font-medium text-gray-800 mb-2">Would you like to share your score?</p>
+                    <div className="flex gap-4 justify-center">
+                      <CustomButton
+                        onClick={handlePostToProfile}
+                        variant="primary"
+                        text="Yes, post it"
+                        icon={faShare}
+                        width="w-40"
+                      />
+                      <CustomButton
+                        onClick={() => onClose()}
+                        variant="secondary"
+                        text="No, thanks"
+                        width="w-40"
+                      />
+                    </div>
                   </div>
+                  {postFeedback === 'success' && (
+                    <div className="text-green-600 font-medium mt-2">Score posted to your profile!</div>
+                  )}
                 </>
-              ) : sharing === 'yes' ? (
-                <p className="text-center text-green-600 font-semibold">Posted to Profile!</p>
-              ) : null}
+              )}
+
+              {/* The original sharing prompt is removed as per the request to replace it. */}
+              {/* If sharing is still needed, it can be added here, perhaps after isScoreAnimationDone is true. */}
+
             </div>
           </div>
         </div>

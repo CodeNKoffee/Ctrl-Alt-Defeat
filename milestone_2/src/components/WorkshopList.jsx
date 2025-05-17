@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import NotificationButton from "./NotificationButton";
 import WorkshopFeedback from "./WorkshopFeedback";
+import CertificateSimulatorButton from "./CertificateSimulatorButton";
 
 export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSelectLive, sidebarExpanded }) {
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
@@ -19,6 +20,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   const [activeFilter, setActiveFilter] = useState('all');
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showCertificateModal, setShowCertificateModal] = useState(false);
   const router = useRouter();
 
   // Listen to window resize to adjust layout
@@ -179,8 +181,15 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
       <WorkshopFeedback
         isOpen={showFeedback}
         onClose={() => setShowFeedback(false)}
-        onSubmit={() => setShowFeedback(false)}
+        onSubmit={(feedbackData) => {
+          // You can handle the feedbackData here if needed
+          // console.log('General feedback submitted:', feedbackData);
+          setShowFeedback(false); // Close feedback modal
+          setShowCertificateModal(true); // Open certificate modal
+        }}
       />
+      <CertificateSimulatorButton isOpen={showCertificateModal}
+        onClose={() => setShowCertificateModal(false)} />
       {/* Title and filter buttons */}
       <div className="flex flex-wrap justify-between items-center mb-6">
         {canCreate && (

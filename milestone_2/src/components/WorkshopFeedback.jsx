@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faDownload } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from "./shared/CustomButton";
 
 export default function WorkshopFeedback({ isOpen, onClose, onSubmit, workshop }) {
@@ -23,14 +23,17 @@ export default function WorkshopFeedback({ isOpen, onClose, onSubmit, workshop }
     setSubmitting(true);
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Call the onSubmit prop passed from the parent
+    // The parent will handle closing this modal and opening the certificate modal
     onSubmit({
       workshopId: workshop?.id,
       rating,
       feedback
     });
     setSubmitting(false);
-    // Always close and return to workshop list immediately
-    onClose();
+    // Removed setShowCertificateMessage(true);
+    // Removed onClose(); // Parent handles closing
   };
 
   if (!isOpen) return null;
@@ -40,12 +43,14 @@ export default function WorkshopFeedback({ isOpen, onClose, onSubmit, workshop }
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
         <button
           className="absolute top-3 right-3 z-20 flex items-center justify-center w-10 h-10 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
-          onClick={onClose}
-          aria-label="Back to Workshops"
+          onClick={onClose} // Keep this to allow closing via X button
+          aria-label="Close Feedback Modal"
         >
-          {/* Use the same back arrow icon as in PrerecordedWorkshopInterface */}
-          <FontAwesomeIcon icon={faTimes} className="h-6 w-6 float-end" />
+          <FontAwesomeIcon icon={faTimes} className="h-6 w-6" />
         </button>
+
+        {/* Removed conditional rendering for showCertificateMessage */}
+        {/* Always show feedback form when modal is open */}
         <form onSubmit={handleSubmit}>
           <h2 className="text-2xl font-bold text-[#2a5f74] mb-6 text-center">Workshop Feedback</h2>
           <div className="mb-6">

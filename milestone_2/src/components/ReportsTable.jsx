@@ -135,7 +135,7 @@ export default function ReportsTable({
                 onChange={(e) => setSelectedStatus(e.target.value)}
                 className="w-full px-3 py-2 border border-metallica-blue-200 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
               >
-                <option value="">All Statuses</option>
+                <option value="">All Status</option>
                 <option value="pending">PENDING</option>
                 <option value="flagged">FLAGGED</option>
                 <option value="rejected">REJECTED</option>
