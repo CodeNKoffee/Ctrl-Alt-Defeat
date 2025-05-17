@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faClock, faBell, faFilter, faEllipsisH, faSearch, faXmark, faLock, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faClock, faBell, faFilter, faEllipsisH, faSearch, faXmark, faLock, faChevronDown, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 
 // Mock data
 const MOCK_COMPANIES = [
@@ -194,62 +194,138 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
 
   // Sample notifications
   let baseNotifications = [
+    // Student notifications (All students - normal and PRO)
     {
       id: 1,
       icon: faBuilding,
       title: '<b>TechVision</b> posted a new internship that matches your skills',
       time: '2h',
-      isUnread: true
+      isUnread: true,
+      userType: ['student']
     },
     {
       id: 2,
       icon: faBell,
       title: 'Your internship application at <b>BrandBoost</b> was accepted',
       time: '1d',
-      isUnread: true
+      isUnread: true,
+      userType: ['student']
     },
     {
       id: 3,
       icon: faBell,
       title: 'Your <b>Frontend Developer</b> internship starts in 5 days',
       time: '3d',
-      isUnread: false
+      isUnread: false,
+      userType: ['student']
     },
-    // PRO student only notifications below
+    {
+      id: 13,
+      icon: faClipboardList,
+      title: 'Your internship report status has been updated by SCAD',
+      time: '6h',
+      isUnread: true,
+      userType: ['student']
+    },
+
+    // PRO student only notifications
     {
       id: 4,
       icon: faBell,
       title: 'SCAD Officer has accepted your appointment request',
       time: '3d',
-      isUnread: false
+      isUnread: false,
+      userType: ['student'],
+      requiresPro: true
     },
     {
       id: 5,
       icon: faBell,
       title: 'Alien X has accepted your appointment request',
       time: '3d',
-      isUnread: false
+      isUnread: false,
+      userType: ['student'],
+      requiresPro: true
     },
     {
       id: 6,
       icon: faBell,
       title: 'Upcoming workshop you have registered in',
       time: '3d',
-      isUnread: false
+      isUnread: false,
+      userType: ['student'],
+      requiresPro: true
     },
     {
       id: 7,
       icon: faBell,
       title: 'Alien X has sent you a message',
       time: '3d',
-      isUnread: false
+      isUnread: false,
+      userType: ['student'],
+      requiresPro: true
     },
+
+    // Company notifications
+    {
+      id: 8,
+      icon: faBuilding,
+      title: 'Your company application has been accepted',
+      time: '4h',
+      isUnread: true,
+      userType: ['company']
+    },
+    {
+      id: 9,
+      icon: faBell,
+      title: 'Account setup successful - check your email for details',
+      time: '12h',
+      isUnread: true,
+      userType: ['company']
+    },
+    {
+      id: 10,
+      icon: faBuilding,
+      title: '3 new applicants for your <b>Backend Developer</b> internship',
+      time: '1d',
+      isUnread: true,
+      userType: ['company']
+    },
+
+    // SCAD notifications
+    {
+      id: 11,
+      icon: faClipboardList,
+      title: '5 new student reports awaiting review',
+      time: '5h',
+      isUnread: true,
+      userType: ['scad']
+    },
+    {
+      id: 12,
+      icon: faBuilding,
+      title: '2 new company registrations pending verification',
+      time: '1d',
+      isUnread: true,
+      userType: ['scad']
+    }
   ];
 
-  // Only show the last 4 notifications if the user is a PRO student
-  if (!(isPro && userData?.role === 'student')) {
-    baseNotifications = baseNotifications.slice(0, 3);
-  }
+  // Filter notifications based on user type and PRO status
+  const filteredBaseNotifications = baseNotifications.filter(notification => {
+    // Check if notification is for this user type
+    const isForUserType = notification.userType && notification.userType.includes(userData?.role);
+
+    // Check if PRO is required (only matters for students)
+    const meetsProRequirement =
+      !notification.requiresPro ||
+      (userData?.role === 'student' && isPro && notification.requiresPro);
+
+    return isForUserType && meetsProRequirement;
+  });
+
+  // Only show the filtered notifications
+  baseNotifications = filteredBaseNotifications;
 
   // Combine base notifications with custom notifications
   const notifications = [...baseNotifications, ...customNotifications];
