@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';// Correct import path
+import { faCheck, faTimes, faShare } from '@fortawesome/free-solid-svg-icons';// Correct import path
 import CustomButton from "../components/shared/CustomButton";
 import { toast } from 'react-toastify';
 const likertOptions = [
@@ -219,9 +219,32 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
               </p>
 
               {isScoreAnimationDone && (
-                <p className="text-gray-600 text-sm mb-4">
-                  Detailed results have been sent to your email.
-                </p>
+                <>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Detailed results have been sent to your email.
+                  </p>
+                  <div className="mb-4">
+                    <p className="text-base font-medium text-gray-800 mb-2">Would you like to share your score?</p>
+                    <div className="flex gap-4 justify-center">
+                      <CustomButton
+                        onClick={handlePostToProfile}
+                        variant="primary"
+                        text="Yes, post it"
+                        icon={faShare}
+                        width="w-40"
+                      />
+                      <CustomButton
+                        onClick={() => onClose()}
+                        variant="secondary"
+                        text="No, thanks"
+                        width="w-40"
+                      />
+                    </div>
+                  </div>
+                  {postFeedback === 'success' && (
+                    <div className="text-green-600 font-medium mt-2">Score posted to your profile!</div>
+                  )}
+                </>
               )}
 
               {/* The original sharing prompt is removed as per the request to replace it. */}

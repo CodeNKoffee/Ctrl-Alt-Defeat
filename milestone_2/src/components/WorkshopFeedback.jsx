@@ -64,9 +64,9 @@ export default function WorkshopFeedback({ isOpen, onClose, onSubmit, workshop }
 
         {showCertificateMessage ? (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-[#2a5f74] mb-4">Certificate Awarded!</h2>
+            <h2 className="text-2xl font-bold text-[#2a5f74] mb-4">Congratulations!</h2>
             <p className="text-gray-700 mb-6">
-              Congratulations! You have successfully completed the workshop and received a certificate.
+              Here is your certificate.
             </p>
             <CustomButton
               onClick={handleDownloadCertificate}
