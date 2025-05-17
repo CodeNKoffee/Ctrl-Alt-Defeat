@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { format, isBefore, startOfDay, isValid, parseISO } from 'date-fns';
 import CustomButton from './shared/CustomButton';
 import DatePicker from './DatePicker';
+import SearchableSelect from './SearchableSelect';
 
 export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost, isEditing, onClose }) {
   const [form, setForm] = useState({
@@ -24,7 +25,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
   useEffect(() => {
     if (initialPost) {
       setForm(initialPost);
-      
+
       // Also update the preview immediately when initialPost changes
       if (onFormChange) {
         onFormChange(initialPost);
@@ -132,7 +133,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
   // Function to disable past dates
   const disablePastDates = (date) => {
     if (!isValid(date)) return true;
-    
+
     try {
       const today = startOfDay(new Date());
       return isBefore(date, today);
@@ -301,15 +302,20 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
 
       <div className={sectionClasses}>
         <label className={labelClasses}>Payment Status</label>
-        <select
+        <SearchableSelect
           name="paid"
+          label="Payment Status"
           value={form.paid}
+          options={[
+            { label: 'Paid', value: 'Paid' },
+            { label: 'Unpaid', value: 'Unpaid' }
+          ]}
           onChange={handleChange}
-          className={inputClasses}
-        >
-          <option value="Paid">Paid</option>
-          <option value="Unpaid">Unpaid</option>
-        </select>
+          onBlur={handleChange}
+          error={null}
+          touched={true}
+          placeholder="Select payment status"
+        />
       </div>
 
       {paidValidation && (

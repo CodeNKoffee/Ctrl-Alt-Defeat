@@ -1,8 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAward } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 export default function CertificateSimulatorButton({ isOpen, onClose }) {
   if (!isOpen) return null;
+
+  const handleDownloadCertificate = () => {
+    toast.success('Certificate downloaded successfully', {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    })
+  }
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center z-50">
@@ -25,8 +36,8 @@ export default function CertificateSimulatorButton({ isOpen, onClose }) {
         </div>
         <button
           // No actual download functionality needed as per requirements
-          onClick={() => alert("Download functionality not implemented.")}
-          className="w-full bg-metallica-blue-600 hover:bg-metallica-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:-translate-y-0.5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2 transition-all duration-150 ease-in-out"
+          onClick={() => handleDownloadCertificate()}
+          className="w-full bg-metallica-blue-600 hover:bg-metallica-blue-700 text-white font-semibold py-3 px-6 rounded-full shadow-md hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2 transition-all duration-150 ease-in-out"
         >
           Download Certificate
         </button>

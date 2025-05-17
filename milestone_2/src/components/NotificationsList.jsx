@@ -193,7 +193,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
   const durationCompleted = userData?.durationCompleted || 0;
 
   // Sample notifications
-  const baseNotifications = [
+  let baseNotifications = [
     {
       id: 1,
       icon: faBuilding,
@@ -214,8 +214,42 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
       title: 'Your <b>Frontend Developer</b> internship starts in 5 days',
       time: '3d',
       isUnread: false
-    }
+    },
+    // PRO student only notifications below
+    {
+      id: 4,
+      icon: faBell,
+      title: 'SCAD Officer has accepted your appointment request',
+      time: '3d',
+      isUnread: false
+    },
+    {
+      id: 5,
+      icon: faBell,
+      title: 'Alien X has accepted your appointment request',
+      time: '3d',
+      isUnread: false
+    },
+    {
+      id: 6,
+      icon: faBell,
+      title: 'Upcoming workshop you have registered in',
+      time: '3d',
+      isUnread: false
+    },
+    {
+      id: 7,
+      icon: faBell,
+      title: 'Alien X has sent you a message',
+      time: '3d',
+      isUnread: false
+    },
   ];
+
+  // Only show the last 4 notifications if the user is a PRO student
+  if (!(isPro && userData?.role === 'student')) {
+    baseNotifications = baseNotifications.slice(0, 3);
+  }
 
   // Combine base notifications with custom notifications
   const notifications = [...baseNotifications, ...customNotifications];
