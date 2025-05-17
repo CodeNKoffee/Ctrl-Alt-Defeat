@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { format, isBefore, startOfDay, isValid, parseISO } from 'date-fns';
 import CustomButton from './shared/CustomButton';
 import DatePicker from './DatePicker';
-import SearchableSelect from './SearchableSelect';
 
 export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost, isEditing, onClose }) {
   const [form, setForm] = useState({
@@ -301,20 +300,16 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
       </div>
 
       <div className={sectionClasses}>
-        <SearchableSelect
+        <label className={labelClasses}>Payment Status</label>
+        <select
           name="paid"
-          label="Payment Status"
           value={form.paid}
-          options={[
-            { label: 'Paid', value: 'Paid' },
-            { label: 'Unpaid', value: 'Unpaid' }
-          ]}
           onChange={handleChange}
-          onBlur={handleChange}
-          error={null}
-          touched={true}
-          placeholder="Select payment status"
-        />
+          className={inputClasses}
+        >
+          <option value="Paid">Paid</option>
+          <option value="Unpaid">Unpaid</option>
+        </select>
       </div>
 
       {paidValidation && (
