@@ -42,9 +42,10 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
 
   // Get appropriate animation class based on applicant count
   const getApplicantPulseClass = () => {
-    if (applicantsCount > 15) return "animate-pulse-fast bg-green-100";
-    if (applicantsCount > 5) return "animate-pulse bg-blue-100";
-    return "bg-[var(--metallica-blue-50)]";
+    if (applicantsCount > 15) return "bg-green-100 border border-green-200";
+    if (applicantsCount > 10) return "bg-blue-100 border border-blue-200";
+    if (applicantsCount > 5) return "bg-amber-100 border border-amber-200";
+    return "bg-[var(--metallica-blue-50)] border border-[var(--metallica-blue-100)]";
   };
 
   // Get background color based on job type
@@ -163,7 +164,18 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
         </div>
 
         <div className="border-t border-gray-200 pt-3 mb-3 flex-grow overflow-hidden">
-          <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">Description</h4>
+          <div className="flex justify-between items-start">
+            <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">Description</h4>
+            {/* Small applicants indicator in the top right corner */}
+            {compact && !expanded && (
+              <div className={`${getApplicantPulseClass()} flex items-center gap-1 px-2 py-1 rounded-full text-[var(--metallica-blue-800)] text-opacity-90`}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span className="text-xs font-medium">{applicantsCount}</span>
+              </div>
+            )}
+          </div>
           <p className={descriptionClasses}>
             {post.description || "No description provided"}
           </p>
@@ -224,7 +236,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
 
         {expanded && (
           <div className="mb-4">
-            <div className="flex items-center justify-between bg-[var(--metallica-blue-50)] rounded-lg p-3">
+            <div className="flex items-center justify-between bg-[var(--metallica-blue-50)] rounded-lg p-3 border border-[var(--metallica-blue-100)]">
               <div className="flex items-center">
                 <div className="mr-3 bg-[var(--metallica-blue-600)] rounded-full p-2">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -252,7 +264,10 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
           <div className="flex justify-between items-center">
             {compact && (
               <button
-                onClick={toggleExpanded}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleExpanded();
+                }}
                 className="w-80 bg-metallica-blue-600 text-white font-semibold rounded-full py-2 mt-2 shadow-md hover:bg-metallica-blue-700 transition hover:-translate-y-0.5"
               >
                 {expanded ? 'See less' : 'See more'}
