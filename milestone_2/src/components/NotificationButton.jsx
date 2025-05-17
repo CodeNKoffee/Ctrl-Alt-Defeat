@@ -1,21 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faBell,
-  faCheckCircle,
-  faUsers,
-  faCalendarAlt,
-  faAward,
-  faComments,
-  faCalendarCheck,
-  faClipboardCheck,
-  faClock,
-  faBriefcase,
-  faCalendarPlus,
-  faBuildingFlag,
-  faFlag,
-  faRocket
-} from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCheckCircle, faUsers } from '@fortawesome/free-solid-svg-icons';
 import NotificationsList from './NotificationsList';
 import { useSelector } from 'react-redux';
 

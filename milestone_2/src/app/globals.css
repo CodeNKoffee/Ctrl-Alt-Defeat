@@ -1202,3 +1202,77 @@ button:hover {
 .animate-slideUp {
   animation: slideUp 0.3s ease-out forwards;
 }
+
+/* Custom Radio Button Styles */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--metallica-blue-400);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+input[type="radio"]:hover {
+  border-color: var(--metallica-blue-700);
+  box-shadow: 0 0 0 2px var(--metallica-blue-100);
+}
+
+input[type="radio"]:checked {
+  border-color: var(--metallica-blue-700);
+  background-color: white;
+}
+
+input[type="radio"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--metallica-blue-700);
+  transition: all 0.2s ease;
+}
+
+input[type="radio"]:focus {
+  box-shadow: 0 0 0 3px var(--metallica-blue-100);
+}
+
+input[type="radio"]:disabled {
+  border-color: #CBD5E1;
+  background-color: #F1F5F9;
+  cursor: not-allowed;
+}
+
+input[type="radio"]:disabled:checked::after {
+  background-color: #CBD5E1;
+}
+
+/* Radio Button Label Styles */
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  color: #1e293b;
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.radio-label:hover {
+  color: var(--metallica-blue-700);
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
