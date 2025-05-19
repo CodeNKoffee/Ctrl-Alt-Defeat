@@ -274,7 +274,6 @@ export default function InternshipList({
         />
       ) : (
         <div className={`w-full ${padding} space-y-4`}>
-       
           {/* Filter and Search Section */}
           <div className="w-full max-w-6xl mx-auto">
             {/* Custom Filter Panel (if provided) */}
@@ -289,7 +288,7 @@ export default function InternshipList({
                   // Search functionality
                   searchTerm={searchTerm}
                   onSearchChange={setSearchTerm}
-                  searchPlaceholder={type==='recommended'?"Search recommended internships ....":`Search your ${type === 'my' ? 'internships' : 'applications'} by job title or company name ....`}
+                  searchPlaceholder={type === 'recommended' ? "Search recommended internships ...." : `Search your ${type === 'my' ? 'internships' : 'applications'} by job title or company name ....`}
 
                   // Industry filtering
                   primaryFilterName="Filter"

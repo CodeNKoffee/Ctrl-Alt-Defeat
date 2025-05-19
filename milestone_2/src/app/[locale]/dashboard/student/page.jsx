@@ -381,7 +381,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
               onClick={() => setActiveTab('all')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
                 ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50 hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
                 }`}
             >
               ALL
@@ -390,7 +390,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
               onClick={() => setActiveTab('recommended')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recommended'
                 ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50 hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
                 }`}
             >
               RECOMMENDED

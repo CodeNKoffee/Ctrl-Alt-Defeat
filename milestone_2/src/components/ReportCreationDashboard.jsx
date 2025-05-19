@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { CSEN_Courses, DMET_Courses, BioTech_Courses, Law_Courses } from "../../constants/mockData";
 import CustomButton from "./shared/CustomButton";
+import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default function ReportCreationDashboard({ onAddTile, onCancel, initialReport, hideTitle = false, showSaveDraftButton = true, isEditMode = false }) {
   const [filledReport, setReport] = useState({
@@ -15,6 +18,8 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
   const [courses, setCourses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [draftStatus, setDraftStatus] = useState("");
+  const [feedback, setFeedback] = useState(null);
+  const [feedbackType, setFeedbackType] = useState('');
 
   useEffect(() => {
     if (initialReport) {
@@ -68,15 +73,102 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
-    onAddTile({ ...filledReport, courses: selectedCourses, status: isEditMode ? 'updated' : 'submitted' });
-    if (onCancel) onCancel();
-    setReport({ internshipTitle: '', introduction: '', body: '', conclusion: '', courses: [], major: '' });
-    setSelectedCourses([]);
-    setCourses([]);
+
+    // Show success feedback
+    setFeedback('success');
+    setFeedbackType('submit');
+
+    // Wait for animation and then close
+    setTimeout(() => {
+      onAddTile({ ...filledReport, courses: selectedCourses, status: isEditMode ? 'updated' : 'submitted' });
+      setFeedback(null);
+      if (onCancel) onCancel();
+      setReport({ internshipTitle: '', introduction: '', body: '', conclusion: '', courses: [], major: '' });
+      setSelectedCourses([]);
+      setCourses([]);
+    }, 1500);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-[2px] overflow-auto py-8">
+      {/* Feedback success modal */}
+      <AnimatePresence>
+        {feedback && (
+          <motion.div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000,
+              background: 'rgba(42, 95, 116, 0.18)'
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              style={{
+                background: 'white',
+                padding: '25px',
+                borderRadius: '15px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+                maxWidth: '400px'
+              }}
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            >
+              <motion.div
+                style={{
+                  marginBottom: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+              >
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    background: '#318FA8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    style={{ fontSize: 32, color: 'white' }}
+                  />
+                </div>
+              </motion.div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
+                Success!
+              </div>
+              <div style={{ color: '#333', textAlign: 'center' }}>
+                {feedbackType === 'submit'
+                  ? `Your report has been successfully ${isEditMode ? 'updated' : 'submitted'}.`
+                  : `Your report has been successfully saved as a ${isEditMode ? 'draft update' : 'draft'}.`
+                }
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-6xl max-h-[90vh] overflow-hidden border-2 border-[#2A5F74] animate-fade-in relative">
         {/* Close button styled like CallModal.jsx */}
         <button
@@ -90,12 +182,12 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
         <div className="flex flex-col lg:flex-row h-[calc(90vh)]">
           {/* Left side - Form */}
           <div className="lg:w-1/2 p-6 overflow-y-auto bg-[#F0F9FB]">
-              <h2 className="text-xl font-bold text-[#2A5F74] mb-6 text-left flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                </svg>
-                {isEditMode ? "Edit Internship Report" : "Create Internship Report"}
-              </h2>
+            <h2 className="text-xl font-bold text-[#2A5F74] mb-6 text-left flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
+              {isEditMode ? "Edit Internship Report" : "Create Internship Report"}
+            </h2>
 
             <form className="space-y-4" onSubmit={handleModalSubmit}>
               <div>
@@ -219,8 +311,8 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                       draftStatus === 'saving'
                         ? 'Saving...'
                         : draftStatus === 'saved'
-                        ? '✓ Saved!'
-                        : (isEditMode ? 'Save Changes' : 'Save Draft')
+                          ? '✓ Saved!'
+                          : (isEditMode ? 'Save Changes' : 'Save Draft')
                     }
                     fullWidth
                     disabled={draftStatus === 'saving' || draftStatus === 'saved'}
@@ -229,15 +321,21 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                     onClick={async () => {
                       setDraftStatus('saving');
                       await new Promise(res => setTimeout(res, 800));
-                      setReport({ ...filledReport, courses: selectedCourses }); 
-                      onAddTile({ 
-                        ...filledReport, 
-                        courses: selectedCourses, 
-                        status: isEditMode ? 'updated_draft' : 'draft' 
+                      setReport({ ...filledReport, courses: selectedCourses });
+                      onAddTile({
+                        ...filledReport,
+                        courses: selectedCourses,
+                        status: isEditMode ? 'updated_draft' : 'draft'
                       });
-                      setDraftStatus('saved');
+
+                      // Show success feedback instead of just saved status
+                      setDraftStatus("");
+                      setFeedback('success');
+                      setFeedbackType('draft');
+
+                      // Wait for animation and then close
                       setTimeout(() => {
-                        setDraftStatus("");
+                        setFeedback(null);
                         if (onCancel) onCancel();
                       }, 1500);
                     }}
