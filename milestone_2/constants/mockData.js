@@ -102,7 +102,7 @@ export const MOCK_COMPANIES = [
     name: 'Vodafone Egypt',
     alt: 'Vodafone Egypt',
     email: 'contact@vodafone.com.eg',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/vodafone.png',
     industry: 'Telecommunications',
     size: 'Corporate (500+ employees)',
     documentation: [
@@ -115,7 +115,7 @@ export const MOCK_COMPANIES = [
     name: 'Juhayna Food Industries',
     alt: 'Juhayna Food Industries',
     email: 'contact@juhayna.com',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/juhayna.png',
     industry: 'Food Production',
     size: 'Large (101-500 employees)',
     documentation: [
@@ -129,7 +129,7 @@ export const MOCK_COMPANIES = [
     industry: 'Food & Beverages',
     size: 'Corporate (500+ employees)',
     email: 'contact@eg.nestle.com',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/nestle.webp',
     documentation: [
       { type: "registration", url: "/docs/company-registration.pdf" },
     ],
@@ -155,7 +155,7 @@ export const MOCK_COMPANIES = [
     industry: 'Financial Services',
     size: 'Medium (51-100 employees)',
     email: 'support@fawry.com',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/fawry.webp',
     documentation: [
       { type: "taxId", url: "/docs/tax-id.pdf" },
     ],
@@ -168,7 +168,7 @@ export const MOCK_COMPANIES = [
     industry: 'Internet',
     size: 'Medium (51-100 employees)',
     email: 'info@careem.com',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/careem.jpg',
     documentation: [
       { type: "registration", url: "/docs/company-registration.pdf" },
     ],
@@ -181,7 +181,7 @@ export const MOCK_COMPANIES = [
     industry: 'Food Production',
     size: 'Large (101-500 employees)',
     email: 'contact@edita.com.eg',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/edita.jpg',
     documentation: [
       { type: "taxCard", url: "/docs/tax-card.pdf" },
     ],
@@ -194,7 +194,7 @@ export const MOCK_COMPANIES = [
     industry: 'Consulting',
     size: 'Large (101-500 employees)',
     email: 'contact@deloitte.com.eg',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/deloittle.png',
     documentation: [
       { type: "registration", url: "/docs/company-registration.pdf" },
     ],
@@ -207,7 +207,7 @@ export const MOCK_COMPANIES = [
     industry: 'Consulting',
     size: 'Large (101-500 employees)',
     email: 'contact@kpmg.com.eg',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/kpmg.jpeg',
     documentation: [
       { type: "registration", url: "/docs/company-registration.pdf" },
     ],
@@ -220,7 +220,7 @@ export const MOCK_COMPANIES = [
     industry: 'Consulting',
     size: 'Large (101-500 employees)',
     email: 'contact@pwc.com.eg',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/pwc.png',
     documentation: [
       { type: "registration", url: "/docs/company-registration.pdf" },
     ],
@@ -233,7 +233,7 @@ export const MOCK_COMPANIES = [
     industry: 'Consulting',
     size: 'Large (101-500 employees)',
     email: 'contact@ey.com.eg',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/ey.jpg',
     documentation: [
       { type: "registration", url: "/docs/company-registration.pdf" },
     ],
@@ -246,7 +246,7 @@ export const MOCK_COMPANIES = [
     industry: 'Tourism',
     size: 'Small (1-50 employees)',
     email: 'contact@gates-of-egypt.com',
-    logo: '/logos/tawabiry.png',
+    logo: '/logos/goe.webp',
     documentation: [
       { type: "registration", url: "/docs/company-registration.pdf" },
     ],
