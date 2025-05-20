@@ -92,11 +92,11 @@ const NotesPanelContent = ({
         <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
       </button>
     </div>
-    <div className="flex flex-col flex-grow overflow-hidden p-4 bg-white">
+    <div className="flex flex-col flex-grow overflow-hidden p-4 bg-white h-full">
       <textarea
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
-        className="text-[#2a5f74] flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#318FA8] focus:border-[#318FA8] resize-none text-sm mb-4"
+        className="text-[#2a5f74] flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#318FA8] focus:border-[#318FA8] resize-none text-sm mb-4 h-full"
         placeholder="Take workshop notes here..."
       />
       <button
@@ -316,51 +316,52 @@ export default function WorkshopInterface({ workshop, onBack }) {
       </div>
 
       {/* Main content area - video section */}
-      <div className="flex-grow flex relative overflow-hidden">
+      <div className="flex flex-row h-full w-full overflow-hidden">
         {/* Main video area */}
-        <video
-          ref={videoRef}
-          className="w-full h-full object-contain"
-          autoPlay
-          playsInline
-        />
+        <div className={`flex-grow relative h-full`}>
+          <video
+            ref={videoRef}
+            className="w-full h-full object-contain"
+            autoPlay
+            playsInline
+          />
 
-        {/* Subtitles area */}
-        {showSubtitles && (
-          <div className="absolute bottom-24 left-0 right-0 text-center">
-            <div className="inline-block bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg max-w-2xl mx-auto text-base">
-              This is sample subtitle text that would appear here during the workshop...
-            </div>
-          </div>
-        )}
-
-        {/* Your video (participant) */}
-        <div className="absolute right-4 bottom-24 w-1/4 sm:w-1/5 max-w-[200px] aspect-video bg-gray-700 border border-gray-500 overflow-hidden rounded-md shadow-lg flex items-center justify-center">
-          {isCameraOn ? (
-            <video
-              ref={localVideoRef}
-              className="w-full h-full object-cover"
-              autoPlay
-              playsInline
-              muted
-            />
-          ) : (
-            <div className="flex flex-col items-center justify-center text-white h-full w-full p-2 bg-gray-700">
-              <div className="w-10 h-10 rounded-full bg-[#318FA8] flex items-center justify-center text-xl font-bold mb-1">
-                <FontAwesomeIcon icon={faUserCircle} />
+          {/* Subtitles area */}
+          {showSubtitles && (
+            <div className="absolute bottom-24 left-0 right-0 text-center">
+              <div className="inline-block bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg max-w-2xl mx-auto text-base">
+                This is sample subtitle text that would appear here during the workshop...
               </div>
-              <span className="text-xs font-semibold max-w-full truncate">You</span>
-              {!isMicOn && (
-                <div className="mt-1 flex items-center text-red-400 text-xs">
-                  <FontAwesomeIcon icon={faMicrophoneSlash} className="h-3 w-3 mr-1" />
-                  Muted
-                </div>
-              )}
             </div>
           )}
-        </div>
 
-        {/* Right Sidebar Area (for Chat and/or Notes) */}
+          {/* Your video (participant) */}
+          <div className="absolute right-4 bottom-24 w-1/4 sm:w-1/5 max-w-[200px] aspect-video bg-gray-700 border border-gray-500 overflow-hidden rounded-md shadow-lg flex items-center justify-center">
+            {isCameraOn ? (
+              <video
+                ref={localVideoRef}
+                className="w-full h-full object-cover"
+                autoPlay
+                playsInline
+                muted
+              />
+            ) : (
+              <div className="flex flex-col items-center justify-center text-white h-full w-full p-2 bg-gray-700">
+                <div className="w-10 h-10 rounded-full bg-[#318FA8] flex items-center justify-center text-xl font-bold mb-1">
+                  <FontAwesomeIcon icon={faUserCircle} />
+                </div>
+                <span className="text-xs font-semibold max-w-full truncate">You</span>
+                {!isMicOn && (
+                  <div className="mt-1 flex items-center text-red-400 text-xs">
+                    <FontAwesomeIcon icon={faMicrophoneSlash} className="h-3 w-3 mr-1" />
+                    Muted
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+        {/* Sidebar (Chat/Notes) */}
         <AnimatePresence>
           {(isChatOpen || isNotesOpen) && (
             <motion.div
@@ -369,12 +370,12 @@ export default function WorkshopInterface({ workshop, onBack }) {
               animate={{ x: '0%', opacity: 1 }}
               exit={{ x: '100%', opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute top-0 right-0 bottom-20 w-1/4 min-w-[300px] flex flex-col bg-white border-l border-gray-300 shadow-lg"
+              className="w-1/4 min-w-[300px] h-full flex flex-col bg-white border-l border-gray-300 shadow-lg"
             >
               {isNotesOpen && isChatOpen ? (
                 // Both Notes and Chat are open
                 <>
-                  <div className="h-3/5 pb-1">
+                  <div className="h-1/2 flex-grow overflow-hidden pb-1">
                     <NotesPanelContent
                       notes={notes}
                       setNotes={setNotes}
@@ -382,7 +383,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
                       handleToggleNotes={handleToggleNotes}
                     />
                   </div>
-                  <div className="h-2/5 pt-1">
+                  <div className="h-1/2 flex-grow overflow-hidden pt-1">
                     <ChatPanelContent
                       chatMessages={messages}
                       currentMessage={newMessage}
