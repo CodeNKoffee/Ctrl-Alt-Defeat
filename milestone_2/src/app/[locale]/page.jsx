@@ -12,7 +12,12 @@ import { createTypingAnimation } from "../../../utils";
 
 export default function Home() {
   const router = useRouter();
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('welcomeShown');
+    }
+    return true;
+  });
   const [animationState, setAnimationState] = useState(0);
 
   const textContent = [
@@ -45,6 +50,7 @@ export default function Home() {
       // After welcome animation completes, wait 1 second then show continue options
       const timer = setTimeout(() => {
         setShowWelcome(false);
+        sessionStorage.setItem('welcomeShown', 'true');
       }, 1000); // Reduced from 2000ms to 1000ms
       return () => clearTimeout(timer);
     }
