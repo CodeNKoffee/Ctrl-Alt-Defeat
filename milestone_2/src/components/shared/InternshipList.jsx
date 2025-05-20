@@ -39,7 +39,7 @@ export default function InternshipList({
   isRecommended = false,
   padding = "px-4 py-6",
   // New: allow parent to control search/filter state
-
+  videoSidebarProps = {},
   searchTerm: controlledSearchTerm,
   setSearchTerm: controlledSetSearchTerm,
   activeTab: controlledActiveTab,
@@ -416,7 +416,7 @@ export default function InternshipList({
               {/* Sidebar (only shown if showSidebar is true) */}
               {showSidebar && (
                 <div className="lg:w-1/3">
-                  <InternshipVideoSidebar userMajor={userMajor} />
+                  <InternshipVideoSidebar userMajor={userMajor} {...videoSidebarProps} />
                 </div>
               )}
             </div>

@@ -475,7 +475,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       </div>
       <InternshipList
         title=""
-        internships={TawabiryInternships}
+        internships={hasActiveFilters ? filteredInternships : getRegularInternships()}
         type="company-view"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
@@ -484,6 +484,11 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         userMajor={userMajor}
         customFilterPanel={<></>}
         padding="px-4 pt-2 pb-6"
+        videoSidebarProps={{
+          videoUrl: 'https://www.youtube.com/embed/1EQIXjvXKjM?si=zOgZsOew62AVOVDn',
+          videoTitle: 'Gen-Z Are Shaping the Future',
+          isCompany: true
+        }}
       />
     </div>
   );
