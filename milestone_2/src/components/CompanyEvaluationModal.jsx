@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CustomButton from "./shared/CustomButton";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const skillAttributes = [
   "Ability to adapt to change",
@@ -45,6 +46,7 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
   const [draftStatus, setDraftStatus] = useState("");
   const [activeTab, setActiveTab] = useState('skills');
   const isEditMode = !!evaluationToEdit;
+  const [feedback, setFeedback] = useState(null);
 
   useEffect(() => {
     if (evaluationToEdit) {
@@ -96,14 +98,92 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
     setSubmitting(true);
     const submitData = isEditMode ? { ...form, id: evaluationToEdit.id } : form;
     onSubmit(submitData, isEditMode);
+    setFeedback('submit');
     setTimeout(() => {
       setSubmitting(false);
+      setFeedback(null);
       onClose();
-    }, 800);
+    }, 1200);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(44,63,80,0.60)]">
+      {/* Feedback success modal */}
+      <AnimatePresence>
+        {feedback && (
+          <motion.div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000,
+              background: 'rgba(42, 95, 116, 0.18)'
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              style={{
+                background: 'white',
+                padding: '25px',
+                borderRadius: '15px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+                maxWidth: '400px'
+              }}
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            >
+              <motion.div
+                style={{
+                  marginBottom: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+              >
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    background: '#318FA8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faTimes}
+                    style={{ fontSize: 32, color: 'white' }}
+                  />
+                </div>
+              </motion.div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
+                Success!
+              </div>
+              <div style={{ color: '#333', textAlign: 'center' }}>
+                {feedback === 'submit'
+                  ? 'Your evaluation has been successfully submitted.'
+                  : 'Your evaluation has been successfully saved as a draft.'}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="bg-[#F8FAFB] rounded-2xl shadow-2xl max-w-xl w-full p-8 relative flex flex-col gap-4 border-2 border-[#2A5F74]">
         <button
           className="absolute top-3 right-3 z-20 flex items-center justify-center w-7 h-7 rounded-full shadow-sm bg-gray-200/70 hover:bg-gray-300/90 transition-colors"
@@ -233,13 +313,6 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
               onClick={onClose}
               width="w-full"
             />
-            {/* <button
-              type="submit"
-              className="flex-1 px-4 py-2 mt-9 text-white bg-[#4796a8] rounded-lg font-semibold hover:bg-[#2a5c67] transition text-sm border border-[#5DB2C7] shadow"
-              disabled={submitting}
-            >
-              {submitting ? "Submitting..." : isEditMode ? "Save Changes" : "Submit Evaluation"}
-            </button> */}
             {(
               <CustomButton
                 variant="secondary"
@@ -253,15 +326,6 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
               />
 
             )}
-            {/* {isEditMode && (
-              <CustomButton
-                variant="danger"
-                type="button"
-                text="Cancel"
-                disabled={submitting}
-                onClick={onClose}
-              />
-            )} */}
           </div>
         </form>
       </div>

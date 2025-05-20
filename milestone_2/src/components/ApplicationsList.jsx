@@ -388,10 +388,10 @@ export default function ApplicationsList({
                         key={nextStatus}
                         variant={nextStatus === 'rejected' ? 'danger' : 'primary'}
                         text={`Mark as ${STATUS_CONFIG[nextStatus].label}`}
-                        icon={nextStatus === 'rejected' ? faTimesCircle :
-                          (nextStatus === 'completed' ? faCheckCircle : faClock)}
+                        // icon={nextStatus === 'rejected' ? faTimesCircle :
+                        //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
                         onClick={() => handleStatusChange(application.id, nextStatus)}
-                        fullWidth
+                        width="w-full"
                       />
                     ))}
 
