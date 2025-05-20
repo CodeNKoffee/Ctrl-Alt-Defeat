@@ -162,6 +162,33 @@ function ScadDashboardView() {
 }
 
 function StudentListView({ sidebarExpanded }) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedMajor, setSelectedMajor] = useState('all');
+
+  // Get unique majors from mockStudents
+  const uniqueMajors = [
+    ...new Set(mockStudents.map(student => student.major))
+  ].filter(Boolean).map(major => ({ id: major, title: major }));
+
+  // Filter students by search and major
+  const filteredStudents = mockStudents.filter(student => {
+    const matchesSearch =
+      student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.major?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesMajor = selectedMajor === 'all' || student.major === selectedMajor;
+    return matchesSearch && matchesMajor;
+  });
+
+  const customFilterSections = [
+    {
+      title: 'Major',
+      options: [{ label: 'All Majors', value: 'all' }, ...uniqueMajors.map(m => ({ label: m.title, value: m.id }))],
+      isSelected: (option) => selectedMajor === option.value,
+      onSelect: (option) => setSelectedMajor(option.value)
+    }
+  ];
+
   const StudentDirectoryManagementInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
@@ -239,8 +266,15 @@ function StudentListView({ sidebarExpanded }) {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <StudentDirectoryManagementInfoCard />
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search students by name, email, or major ..."
+          onClearFilters={() => { setSearchTerm(''); setSelectedMajor('all'); }}
+          customFilterSections={customFilterSections}
+        />
       </div>
-      <StudentList students={mockStudents} sidebarExpanded={sidebarExpanded} />
+      <StudentList students={filteredStudents} sidebarExpanded={sidebarExpanded} />
     </div>
   );
 }
@@ -560,9 +594,21 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       }));
     })();
 
-  // Apply additional filters (industry, duration, paid/unpaid)
+  // Apply additional filters (industry, duration, paid/unpaid, search)
   useEffect(() => {
     let result = [...baseInternships];
+
+    // Filter by search term
+    if (searchTerm) {
+      const searchTermLower = searchTerm.toLowerCase();
+      result = result.filter(internship =>
+        internship.title?.toLowerCase().includes(searchTermLower) ||
+        internship.company?.toLowerCase().includes(searchTermLower) ||
+        internship.description?.toLowerCase().includes(searchTermLower) ||
+        internship.industry?.toLowerCase().includes(searchTermLower) ||
+        internship.locationType?.toLowerCase().includes(searchTermLower)
+      );
+    }
 
     // Filter by industry
     if (filters.industry) {
@@ -599,7 +645,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     }
 
     setFilteredInternships(result);
-  }, [baseInternships, filters]);
+  }, [baseInternships, filters, searchTerm]);
 
   // Check if any filters are active
   const hasActiveFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
@@ -713,7 +759,6 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     <div className='w-full px-6 py-4'>
       <div className="px-4 pt-6">
         <InternshipListingsManagementInfoCard />
-
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
@@ -722,30 +767,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           customFilterSections={customFilterSections}
           primaryFilterName="Filters"
         />
-
         {/* ALL / RECOMMENDED Tabs */}
-        <div className="w-full mx-auto">
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
-                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                }`}
-            >
-              ALL
-            </button>
-            <button
-              onClick={() => setActiveTab('recommended')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recommended'
-                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                }`}
-            >
-              RECOMMENDED
-            </button>
-          </div>
-        </div>
       </div>
 
       <InternshipList
@@ -759,6 +781,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         userMajor={userMajor}
         customFilterPanel={<></>}
         padding="px-4 pt-2 pb-6"
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
       />
     </div>
   );
@@ -869,6 +893,33 @@ function WorkshopsView() {
 }
 
 function StudentEvalsView() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('all');
+
+  // Get unique statuses from MOCK_EVALUATIONS
+  const uniqueStatuses = [
+    ...new Set(MOCK_EVALUATIONS.map(evalObj => evalObj.status))
+  ].filter(Boolean).map(status => ({ id: status, title: status }));
+
+  // Filter evaluations by search and status
+  const filteredEvals = MOCK_EVALUATIONS.filter(evalObj => {
+    const matchesSearch =
+      evalObj.studentName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      evalObj.companyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      evalObj.title?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = selectedStatus === 'all' || evalObj.status === selectedStatus;
+    return matchesSearch && matchesStatus;
+  });
+
+  const customFilterSections = [
+    {
+      title: 'Status',
+      options: [{ label: 'All Statuses', value: 'all' }, ...uniqueStatuses.map(s => ({ label: s.title, value: s.id }))],
+      isSelected: (option) => selectedStatus === option.value,
+      onSelect: (option) => setSelectedStatus(option.value)
+    }
+  ];
+
   const InternshipsEvaluationAnalyticsInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
@@ -943,8 +994,15 @@ function StudentEvalsView() {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <InternshipsEvaluationAnalyticsInfoCard />
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search evaluations by student, company, or title ..."
+          onClearFilters={() => { setSearchTerm(''); setSelectedStatus('all'); }}
+          customFilterSections={customFilterSections}
+        />
       </div>
-      <EvaluationsDashboard evaluations={MOCK_EVALUATIONS} stakeholder={"other"} />
+      <EvaluationsDashboard evaluations={filteredEvals} stakeholder={"other"} />
     </div>
   );
 }

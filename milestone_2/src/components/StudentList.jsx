@@ -126,14 +126,14 @@ export default function StudentList({ students, sidebarExpanded = true }) {
     <div className="w-full mx-auto relative py-4">
       {/* Title */}
 
-      <ApplicationsFilterBar
+      {/* <ApplicationsFilterBar
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
         searchPlaceholder="Search by student, company or supervisor..."
         selectedStatus={activeTab}
         onStatusChange={setActiveTab}
         primaryFilterName="Filters"
-      />
+      /> */}
       {/* Tabs & Search */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 pr-[2px]">
         <div className="flex flex-wrap gap-2">
