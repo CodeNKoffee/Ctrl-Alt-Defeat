@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faUser, faBuilding, faXmark, faChevronDown, faChevronUp, faEnvelope, faPhone, faCalendarAlt, faMapMarkerAlt, faGraduationCap, faLink, faCheckCircle, faTimesCircle, faClock } from '@fortawesome/free-solid-svg-icons';
 import StatusBadge from './shared/StatusBadge';
 import CustomButton from './shared/CustomButton';
+import { toast } from 'react-toastify';
 
 // Mock applications data
 const MOCK_APPLICATIONS = [
@@ -335,6 +336,19 @@ export default function ApplicationsList({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center text-metallica-blue-600 hover:text-metallica-blue-800 group"
+                      onClick={e => {
+                        e.preventDefault();
+                        toast.success('PDF download has started for the resume of the applicant', {
+                          position: 'bottom-right',
+                          autoClose: 3000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: 'light',
+                        });
+                      }}
                     >
                       <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center mr-2 transition-transform duration-300 group-hover:scale-110">
                         <FontAwesomeIcon icon={faLink} className="text-amber-500" />
@@ -347,6 +361,19 @@ export default function ApplicationsList({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center text-metallica-blue-600 hover:text-metallica-blue-800 group"
+                      onClick={e => {
+                        e.preventDefault();
+                        toast.success('PDF download has started for the cover letter of the applicant', {
+                          position: 'bottom-right',
+                          autoClose: 3000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: 'light',
+                        });
+                      }}
                     >
                       <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center mr-2 transition-transform duration-300 group-hover:scale-110">
                         <FontAwesomeIcon icon={faLink} className="text-amber-500" />
