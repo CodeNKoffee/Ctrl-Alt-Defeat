@@ -33,7 +33,7 @@ export default function ReportsTable({
 
   useEffect(() => {
     if (reports.length === 0) return;
-    
+
     let results = [...reports];
     if (selectedMajor) {
       results = results.filter(report => report.studentMajor === selectedMajor);
@@ -83,8 +83,8 @@ export default function ReportsTable({
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
         <h2 className="text-2xl text-metallica-blue-800 font-semibold mb-4 md:mb-0">Student Reports</h2>
         <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
-          <button 
-            onClick={() => setShowFilters(!showFilters)} 
+          <button
+            onClick={() => setShowFilters(!showFilters)}
             className={`flex items-center justify-center px-4 py-2 rounded-lg transition-colors ${isFiltersActive ? 'bg-metallica-blue-600 text-white' : 'bg-metallica-blue-100 text-metallica-blue-800'}`}
           >
             <FontAwesomeIcon icon={faFilter} className="mr-2" />
@@ -96,7 +96,7 @@ export default function ReportsTable({
             )}
           </button>
           {isFiltersActive && (
-            <button 
+            <button
               onClick={clearFilters}
               className="flex items-center justify-center px-4 py-2 bg-red-100 text-red-800 rounded-lg hover:bg-red-200 transition-colors"
             >
@@ -198,15 +198,15 @@ export default function ReportsTable({
                         <span className="w-full text-center">View Report</span>
                       </button>
                     ) : userType === "faculty" ? (
-                      <a
-                        href={`/en/dashboard/faculty/report-viewer?id=${report.id}`}
+                      <button
+                        onClick={() => onView && onView(report)}
                         className="inline-flex items-center justify-center w-32 min-w-[9rem] px-0 py-2 rounded-full font-medium shadow-sm bg-metallica-blue-500 text-metallica-blue-100 border border-metallica-blue-200 hover:bg-metallica-blue-900  hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
                         title={report.status === 'pending' ? 'Evaluate this report' : 'View this report'}
                       >
                         <span className="w-full text-center">
                           {report.status === 'pending' ? 'Evaluate Report' : 'View Report'}
                         </span>
-                      </a>
+                      </button>
                     ) : (
                       <button
                         onClick={() => onView && onView(report)}
@@ -222,11 +222,11 @@ export default function ReportsTable({
             ) : (
               <tr>
                 <td colSpan="8" className="py-8 text-center text-gray-500">
-                  {reports.length > 0 
-                    ? "No reports match the selected filters" 
+                  {reports.length > 0
+                    ? "No reports match the selected filters"
                     : "No reports available at the moment"}
                   {isFiltersActive && (
-                    <button 
+                    <button
                       onClick={clearFilters}
                       className="ml-2 text-metallica-blue-600 hover:text-metallica-blue-800 underline"
                     >

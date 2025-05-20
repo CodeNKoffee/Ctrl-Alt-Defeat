@@ -6,6 +6,7 @@ import ReportsTable from '@/components/ReportsTable';
 import { facultyScadReports, MOCK_EVALUATIONS } from '../../../../../constants/mockData';
 import EvaluationsDashboard from '@/components/EvaluationsDashboard';
 import Stats from '@/components/Stats';
+import FacultyReportViewer from './report-viewer/page';
 
 function ViewSection({ title, children }) {
   return (
@@ -21,6 +22,7 @@ function ViewSection({ title, children }) {
 
 function FacultyDashboardView() {
   const [reports, setReports] = useState([]);
+  const [selectedReportId, setSelectedReportId] = useState(null);
 
   useEffect(() => {
     const reportsArray = Object.values(facultyScadReports).map(report => ({
@@ -30,6 +32,20 @@ function FacultyDashboardView() {
     }));
     setReports(reportsArray);
   }, []);
+
+  const handleViewReport = (report) => {
+    setSelectedReportId(report.id);
+  };
+
+  const handleBackToDashboard = () => {
+    setSelectedReportId(null);
+  };
+
+  if (selectedReportId) {
+    return (
+      <FacultyReportViewer reportId={selectedReportId} onBack={handleBackToDashboard} />
+    );
+  }
 
   const ReportReviewCard = () => (
     <div className="w-full">
@@ -92,9 +108,9 @@ function FacultyDashboardView() {
 
   return (
     <div className="container mx-auto px-4 py-10 space-y-10">
-    <ViewSection title="FACULTY DASHBOARD">
-    <ReportReviewCard />
-    </ViewSection>
+      <ViewSection title="FACULTY DASHBOARD">
+        <ReportReviewCard />
+      </ViewSection>
       <ReportStatistics
         total={reports.length}
         accepted={reports.filter(r => r.status === 'accepted').length}
@@ -106,6 +122,7 @@ function FacultyDashboardView() {
       <ReportsTable
         reports={reports}
         userType="faculty"
+        onView={handleViewReport}
       />
     </div>
   );
@@ -174,9 +191,9 @@ function StudentEvalsView() {
 
   return (
     <div className="min-h-screen bg-[#f4fafd] px-6 py-10">
-    <ViewSection title="STUDENT EVALUATIONS">
-    <StudentEvaluationsInfoCard />
-    </ViewSection>
+      <ViewSection title="STUDENT EVALUATIONS">
+        <StudentEvaluationsInfoCard />
+      </ViewSection>
       <div>
         <EvaluationsDashboard evaluations={MOCK_EVALUATIONS} stakeholder={"other"} />
       </div>
@@ -246,12 +263,12 @@ function StatisticsView() {
 
   return (
     <main className="min-h-screen px-6 py-6">
-    <ViewSection title="STATISTICS DASHBOARD">
-    <ReportStatsCard />
-    </ViewSection>
-    <div>
-    <Stats />
-    </div>
+      <ViewSection title="STATISTICS DASHBOARD">
+        <ReportStatsCard />
+      </ViewSection>
+      <div>
+        <Stats />
+      </div>
     </main>
   );
 }
