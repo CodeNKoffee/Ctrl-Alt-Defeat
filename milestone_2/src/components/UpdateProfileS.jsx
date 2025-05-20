@@ -3,8 +3,9 @@ import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import './styles/StudentProfile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faSave, faPlus, faTrash, faCamera, faPalette, faFont, faSquare, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faSave, faPlus, faTrash, faCamera, faPalette, faFont, faSquare, faExclamationCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './shared/CustomButton';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Validation schema for student profile form
 const ProfileValidationSchema = Yup.object().shape({
@@ -37,6 +38,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
       background: "#E8F4F8"
     }
   });
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   // Update initial values when student data changes
   useEffect(() => {
@@ -130,6 +132,11 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
     }
 
     onProfileUpdate(updatedProfileData);
+    setShowSuccessModal(true);
+    setTimeout(() => {
+      setShowSuccessModal(false);
+      onClose();
+    }, 1500);
   };
 
   // Function to render star rating input
@@ -629,19 +636,10 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
               </div>
 
               <div className="form-actions" style={{ padding: "20px", display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "20px" }}>
-                {/* <CustomButton
-                  type="button"
-                  variant="danger"
-                  onClick={onClose}
-                  text="Cancel"
-                  icon={faTimes}
-                  width="w-[200px]"
-                /> */}
                 <CustomButton
                   type="submit"
                   variant="primary"
                   text="Save Changes"
-                  // icon={faSave}
                   width="w-[200px]"
                 />
               </div>
@@ -649,6 +647,80 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
           )}
         </Formik>
       </div>
+      <AnimatePresence>
+        {showSuccessModal && (
+          <motion.div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000,
+              background: 'rgba(42, 95, 116, 0.18)',
+              backdropFilter: 'blur(2px)'
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              style={{
+                background: 'white',
+                padding: '25px',
+                borderRadius: '15px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+                maxWidth: '400px'
+              }}
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            >
+              <motion.div
+                style={{
+                  marginBottom: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+              >
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    background: '#318FA8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    style={{ fontSize: 32, color: 'white' }}
+                  />
+                </div>
+              </motion.div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
+                Success!
+              </div>
+              <div style={{ color: '#333', textAlign: 'center' }}>
+                Your changes have been saved successfully.
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
