@@ -208,11 +208,11 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
   return (
     <div
-      className={`bg-white h-screen flex flex-col sticky top-0 transition-all duration-300 ease-in-out border-r border-[#E0ECF2]/70 ${isExpanded ? 'w-64' : 'w-20'}`}
-      style={{ boxShadow: 'none' }}
+      className={`bg-[#E2F4F7] h-screen flex flex-col border-r border-[#5DB2C7] sticky top-0 transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-20'}`}
+      style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}
     >
       {/* Sidebar Header */}
-      <div className="p-4 border-b border-[#E0ECF2] flex items-center justify-between bg-white">
+      <div className="p-4 border-b border-[#5DB2C7] flex items-center justify-between bg-[#E2F4F7]">
         {/* Logo and Portal Text */}
         <div className={`flex items-center transition-all duration-300 ${isExpanded ? 'justify-start w-full opacity-100' : 'opacity-0 w-0 overflow-hidden'}`}>
           <Image
@@ -230,7 +230,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
         {/* Toggle Button */}
         <button
           onClick={toggleSidebar}
-          className={`w-9 h-9 flex items-center justify-center rounded-full text-metallica-blue-700 bg-white border border-[#E0ECF2] hover:bg-[#F5FBFD] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2 ${!isExpanded ? 'absolute left-1/2 -translate-x-1/2' : ''}`}
+          className={`w-9 h-9 flex items-center justify-center rounded-full text-[#5DB2C7] bg-[#E2F4F7] border border-[#5DB2C7] hover:bg-[#D9F0F4] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:ring-offset-2 ${!isExpanded ? 'absolute left-1/2 -translate-x-1/2' : ''}`}
           aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
           style={{ boxShadow: 'none' }}
         >
@@ -250,8 +250,8 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             const isAccessible = hasProAccess(item);
 
             const commonClasses = "w-full flex items-center p-2.5 transition-all duration-200 text-base relative z-10 rounded-xl group";
-            const activeClasses = "text-[#2a5f74] font-semibold bg-[#F5FBFD]";
-            const inactiveClasses = "text-[#2a5f74] hover:bg-[#F5FBFD]";
+            const activeClasses = "text-[#2a5f74] font-semibold border border-[#3298BA] bg-transparent shadow-sm focus:ring-1 focus:ring-[#3298BA] px-1.5";
+            const inactiveClasses = "text-[#2a5f74] hover:bg-[#D9F0F4]";
             const disabledClasses = "text-gray-400 cursor-not-allowed opacity-60";
             const alignmentClass = isExpanded ? "justify-start" : "justify-center";
 
@@ -261,11 +261,12 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                   <FontAwesomeIcon
                     icon={icon}
                     size="lg"
-                    className={`transition-all duration-200 ${isActive ? 'text-[#2a5f74]' : isAccessible ? 'text-[#2a5f74]/70' : 'text-gray-400'}`}
+                    className={`transition-all duration-200 ${isActive ? 'text-[#3298BA]' : isAccessible ? 'text-[#2a5f74]/70' : 'text-gray-400'}`}
                   />
                 </span>
                 <span
-                  className={`whitespace-nowrap overflow-hidden transition-all duration-200 ${isExpanded ? 'ml-3 opacity-100 max-w-[140px]' : 'ml-0 opacity-0 max-w-0'} font-medium`}
+                  className={`whitespace-nowrap overflow-hidden transition-all duration-200 ${isExpanded ? 'ml-3 opacity-100 w-full' : 'ml-0 opacity-0 w-0'} font-medium text-left`}
+                  style={isExpanded ? { maxWidth: '100%' } : {}}
                 >
                   {item.label}
                 </span>
@@ -279,7 +280,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
             if (item.isPage) {
               return (
-                <li key={item.id}>
+                <li key={item.id} className="px-1.5">
                   {isAccessible ? (
                     <Link
                       href={item.path}
@@ -302,7 +303,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
               );
             } else if (onViewChange) {
               return (
-                <li key={item.id}>
+                <li key={item.id} className="px-1.5">
                   {isAccessible ? (
                     <button
                       onClick={() => handleViewChange(item.id)}
@@ -331,7 +332,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       {/* User Profile Section at bottom */}
       <div className="mt-auto px-4 py-4 mb-2">
         {isExpanded ? (
-          <div className="flex items-center bg-[#F5FBFD] rounded-xl p-3 transition-all duration-200 cursor-pointer gap-3 border border-[#E0ECF2]">
+          <div className="flex items-center bg-[#5DB2C7]/20 rounded-xl p-3 transition-all duration-200 cursor-pointer gap-3 border border-[#E0ECF2]">
             <div className="flex-shrink-0 mr-2">
               <ProfileIcon
                 src={currentUser?.profileImage}
@@ -367,7 +368,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       </div>
 
       {/* Sidebar Footer (Logout Button) */}
-      <div className={`w-full p-4 border-t border-[#E0ECF2] transition-all duration-200 flex ${isExpanded ? 'justify-start' : 'justify-center'}`}>
+      <div className={`w-full p-4 border-t border-[#5DB2C7] transition-all duration-200 flex ${isExpanded ? 'justify-start' : 'justify-center'}`}>
         {isExpanded ? (
           <CustomButton
             variant="danger"
@@ -380,7 +381,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
         ) : (
           <button
             onClick={handleLogout}
-            className="p-2.5 w-10 h-10 rounded-full flex items-center justify-center bg-white text-red-600 hover:bg-[#F5FBFD] transition-all duration-200 border border-[#E0ECF2] focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2"
+            className="p-2.5 w-10 h-10 rounded-full flex items-center justify-center bg-[#E2F4F7] text-red-600 hover:bg-red-100 transition-all duration-200 border border-[#E0ECF2] focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2"
             aria-label="Logout"
           >
             <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
@@ -389,4 +390,4 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       </div>
     </div>
   );
-} 
+}
