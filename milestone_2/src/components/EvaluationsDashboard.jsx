@@ -201,16 +201,17 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
               </div>
             </div>
           </div> */}
-
-        <ApplicationsFilterBar
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          searchPlaceholder={`Search ${activeTab === 'submitted' ? 'submitted' : 'draft'} evaluations by student, company or supervisor...`}
-          selectedStatus={activeTab}
-          onStatusChange={setActiveTab}
-          // customFilterSections={customFilterSections}
-          primaryFilterName="Filters"
-        />
+        {(stakeholder === "student" || stakeholder == "faculty") &&
+          <ApplicationsFilterBar
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            searchPlaceholder={`Search ${activeTab === 'submitted' ? 'submitted' : 'draft'} evaluations by student, company or supervisor...`}
+            selectedStatus={activeTab}
+            onStatusChange={setActiveTab}
+            // customFilterSections={customFilterSections}
+            primaryFilterName="Filters"
+          />
+        }
 
         {(stakeholder === "student" || stakeholder === "company") && (
           <div className="flex justify-start mb-6 px-4 gap-10">
