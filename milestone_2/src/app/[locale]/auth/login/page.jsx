@@ -54,7 +54,15 @@ export default function LoginPage() {
     }
 
     if (!mockUser) {
-      setError('Invalid email or password');
+      toast.error('Invalid email or password', {
+        position: 'top-right',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light',
+      });
       return;
     }
 
@@ -226,9 +234,6 @@ export default function LoginPage() {
                 className="hidden xl:block"
                 size="text-6xl"
               />
-              {error && (
-                <div className="text-red-500 text-sm text-center mb-4">{error}</div>
-              )}
               <LoginForm userType={userType} onSubmit={handleLogin} />
             </div>
           </div>

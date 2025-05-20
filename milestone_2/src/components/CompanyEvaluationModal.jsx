@@ -155,7 +155,7 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
                                 value={rating}
                                 checked={form.skillRatings[skill] === rating}
                                 onChange={() => handleSkillRating(skill, rating)}
-                                className="sr-only"
+                                className="hidden"
                               />
                               <div
                                 className={`w-10 h-10 flex items-center justify-center font-bold text-base border-2 transition-all duration-200
