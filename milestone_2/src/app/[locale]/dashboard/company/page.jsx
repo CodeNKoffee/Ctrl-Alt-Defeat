@@ -285,7 +285,6 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     duration: '',
     isPaid: null
   });
-  const [filteredInternships, setFilteredInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
 
@@ -331,9 +330,32 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       }));
     })();
 
-  // Apply additional filters (industry, duration, paid/unpaid)
+  // Initialize filteredInternships with baseInternships
+  const [filteredInternships, setFilteredInternships] = useState(baseInternships);
+
+  // Update filteredInternships when baseInternships changes (without depending on hasActiveFilters)
+  useEffect(() => {
+    const hasFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
+    if (!hasFilters) {
+      setFilteredInternships(baseInternships);
+    }
+  }, [baseInternships, filters, searchTerm]);
+
+  // Apply additional filters (industry, duration, paid/unpaid, search)
   useEffect(() => {
     let result = [...baseInternships];
+
+    // Apply search term filter
+    if (searchTerm) {
+      const searchTermLower = searchTerm.toLowerCase();
+      result = result.filter(internship =>
+        internship.title?.toLowerCase().includes(searchTermLower) ||
+        internship.company?.toLowerCase().includes(searchTermLower) ||
+        internship.description?.toLowerCase().includes(searchTermLower) ||
+        internship.industry?.toLowerCase().includes(searchTermLower) ||
+        internship.locationType?.toLowerCase().includes(searchTermLower)
+      );
+    }
 
     // Filter by industry
     if (filters.industry) {
@@ -370,7 +392,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     }
 
     setFilteredInternships(result);
-  }, [baseInternships, filters]);
+  }, [baseInternships, filters, searchTerm]);
 
   // Check if any filters are active
   const hasActiveFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
@@ -466,7 +488,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <BrowseInternshipsInfoCard />
         <ApplicationsFilterBar
           searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
+          onSearchChange={(value) => setSearchTerm(value)}
           searchPlaceholder="Search internships by job title or company name ..."
           onClearFilters={clearAllFilters}
           customFilterSections={customFilterSections}
@@ -475,7 +497,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       </div>
       <InternshipList
         title=""
-        internships={hasActiveFilters ? filteredInternships : getRegularInternships()}
+        internships={filteredInternships}
         type="company-view"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
@@ -486,9 +508,11 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         padding="px-4 pt-2 pb-6"
         videoSidebarProps={{
           videoUrl: 'https://www.youtube.com/embed/1EQIXjvXKjM?si=zOgZsOew62AVOVDn',
-          videoTitle: 'Gen-Z Are Shaping the Future',
+          videoTitle: 'Gen-Z are shaping the future',
           isCompany: true
         }}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
       />
     </div>
   );
