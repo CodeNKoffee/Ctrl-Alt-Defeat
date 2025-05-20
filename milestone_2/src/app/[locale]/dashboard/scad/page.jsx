@@ -20,12 +20,35 @@ import EvaluationsDashboard from '@/components/EvaluationsDashboard';
 import { facultyScadReports } from '../../../../../constants/mockData';
 import { getRegularInternships, getRecommendedInternshipsForStudent, getRecommendedInternships } from '../../../../../constants/internshipData';
 import InternshipList from '../../../../components/shared/InternshipList';
-import ApplicationsFilterBar from '../../../../components/shared/ApplicationsFilterBar';
+import ApplicationsFilterBar from '@/components/shared/ApplicationsFilterBar';
 import CustomButton from '@/components/shared/CustomButton';
 
 function ScadDashboardView() {
   const currentUser = useSelector((state) => state.auth.currentUser);
   const router = useRouter();
+
+  // Add state for search and industry/size filter
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedIndustry, setSelectedIndustry] = useState('all');
+  const [selectedSize, setSelectedSize] = useState('all');
+
+  // Get unique industries and sizes from MOCK_COMPANIES
+  const uniqueIndustries = [
+    ...new Set(MOCK_COMPANIES.map(company => company.industry))
+  ].filter(Boolean).map(ind => ({ id: ind, title: ind }));
+  const uniqueSizes = [
+    ...new Set(MOCK_COMPANIES.map(company => company.size))
+  ].filter(Boolean).map(size => ({ id: size, title: size }));
+
+  // Filter companies based on search, industry, and size
+  const filteredCompanies = MOCK_COMPANIES.filter(company => {
+    const matchesSearch =
+      company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      company.industry.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesIndustry = selectedIndustry === 'all' || company.industry === selectedIndustry;
+    const matchesSize = selectedSize === 'all' || company.size === selectedSize;
+    return matchesSearch && matchesIndustry && matchesSize;
+  });
 
   useEffect(() => {
     const userSessionData = sessionStorage.getItem('userSession') || localStorage.getItem('userSession');
@@ -105,12 +128,35 @@ function ScadDashboardView() {
     </div>
   );
 
+  // Custom filter sections for ApplicationsFilterBar
+  const customFilterSections = [
+    {
+      title: 'Industry',
+      options: [{ label: 'All Industries', value: 'all' }, ...uniqueIndustries.map(i => ({ label: i.title, value: i.id }))],
+      isSelected: (option) => selectedIndustry === option.value,
+      onSelect: (option) => setSelectedIndustry(option.value)
+    },
+    {
+      title: 'Size',
+      options: [{ label: 'All Sizes', value: 'all' }, ...uniqueSizes.map(s => ({ label: s.title, value: s.id }))],
+      isSelected: (option) => selectedSize === option.value,
+      onSelect: (option) => setSelectedSize(option.value)
+    }
+  ];
+
   return (
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <CompanyPartnershipReviewPortalInfoCard />
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search companies by name or industry ..."
+          onClearFilters={() => { setSearchTerm(''); setSelectedIndustry('all'); setSelectedSize('all'); }}
+          customFilterSections={customFilterSections}
+        />
       </div>
-      <CompanyTable companies={MOCK_COMPANIES} />
+      <CompanyTable companies={filteredCompanies} />
     </div>
   );
 }

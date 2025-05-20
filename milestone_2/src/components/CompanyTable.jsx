@@ -67,12 +67,11 @@ export default function CompanyTable({ companies }) {
         {/* Table Section */}
         <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} text-sm transition-all duration-600`}>
           {/* Filter Controls Container */}
-          <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} flex flex-col md:flex-row justify-between gap-4 bg-metallica-blue-100/50 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm mb-6 transition-all duration-600`}>
+          {/* <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} flex flex-col md:flex-row justify-between gap-4 bg-metallica-blue-100/50 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm mb-6 transition-all duration-600`}>
             <div className="w-full md:w-1/3">
               <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </div>
 
-            {/* Industry Filter Dropdown */}
             <div className="w-full md:w-1/3">
               <IndustryFilter
                 selectedIndustry={selectedIndustry}
@@ -80,7 +79,7 @@ export default function CompanyTable({ companies }) {
                 industries={INDUSTRIES}
               />
             </div>
-          </div>
+          </div> */}
           {/* Column Headers */}
           <div className="grid grid-cols-12 gap-2 mb-3 px-4 text-xs font-medium text-gray-500 tracking-wide">
             <div className="col-span-5">COMPANY</div>
