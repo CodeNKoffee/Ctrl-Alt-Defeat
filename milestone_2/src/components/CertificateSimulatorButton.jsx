@@ -35,8 +35,16 @@ export default function CertificateSimulatorButton({ isOpen, onClose }) {
           </p>
         </div>
         <button
-          // No actual download functionality needed as per requirements
-          onClick={() => handleDownloadCertificate()}
+          onClick={() => {
+            // Create a link element
+            const link = document.createElement('a');
+            link.href = '/docs/CS50 Cybersecurity Certificate.pdf';
+            link.download = 'CS50 Cybersecurity Certificate.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            handleDownloadCertificate();
+          }}
           className="w-full bg-metallica-blue-600 hover:bg-metallica-blue-700 text-white font-semibold py-3 px-6 rounded-full shadow-md hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2 transition-all duration-150 ease-in-out"
         >
           Download Certificate

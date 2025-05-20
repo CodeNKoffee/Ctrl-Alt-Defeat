@@ -770,11 +770,11 @@ export const MOCK_EVALUATIONS = [
     status: "submitted"
   },
   {
-    studentName: "Hatem Soliman",
+    studentName: "Mezo Maestro",
     major: "Media Engineering & Technology",
-    companyName: "Vodafone Egypt",
-    supervisorName: "Ms. Laila Hassan",
-    supervisorEmail: "laila.hassan@vodafone.com.eg",
+    companyName: "Orange Egypt",
+    supervisorName: "Ms. Rania Hassan",
+    supervisorEmail: "ra.hassan@orange.com.eg",
     tasks: "Designed UI/UX for mobile app and participated in frontend sprints.",
     environment: "Fast-paced, innovative, and fun.",
     rating: 4,
