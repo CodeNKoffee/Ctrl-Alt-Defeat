@@ -2,13 +2,25 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function ContinueOption({ name, imageUrl, className, width, height, onClick, layoutId }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
+  const handleClick = () => {
+    setIsHovered(false); // Reset hover state on click
+    onClick();
+  };
+
   return (
     <motion.div
       id={className}
-      className="option_container"
-      onClick={onClick}
+      className={`option_container ${isHovered ? 'hovered' : ''}`}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="circle_1">
         <div className="circle_2"></div>
