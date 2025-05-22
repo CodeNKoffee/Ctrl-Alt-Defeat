@@ -12,7 +12,7 @@ import Copyright from "@/components/Copyright";
 import LoginForm from "@/components/LoginForm";
 import BackButton from "@/components/shared/BackButton";
 import { ToastContainer, toast } from 'react-toastify';
-
+import { motion } from 'framer-motion';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -191,6 +191,9 @@ export default function LoginPage() {
    * AMR's NOTIFICATIONS ends here
    */
 
+  // Adjust the transition duration for the icon animation
+  const iconTransition = { duration: 1.5, ease: "easeInOut" }; // Set a fixed duration for consistency
+
   return (
     <div className="min-h-screen flex flex-col kontainer">
       <BackButton />
@@ -199,7 +202,12 @@ export default function LoginPage() {
         <main className="w-full flex flex-col-reverse xl:flex-row items-center justify-center gap-4 xl:gap-16 px-4">
           <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
             <div className="w-full max-w-[430px] px-4 xl:block hidden">
-              <Blobs imageUrl={userDetails.imageUrl} bgColor={userDetails.bgColor} />
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: iconTransition }}
+              >
+                <Blobs imageUrl={userDetails.imageUrl} bgColor={userDetails.bgColor} />
+              </motion.div>
             </div>
             <div className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8">
               {userType === 'company' && (

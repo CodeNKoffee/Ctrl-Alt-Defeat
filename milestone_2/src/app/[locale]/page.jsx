@@ -180,6 +180,9 @@ export default function Home() {
     }),
   };
 
+  // Adjust the transition duration for the icon animation
+  const iconTransition = { duration: 1.5, ease: "easeInOut" }; // Set a fixed duration for consistency
+
   return (
     <div className="min-h-screen flex flex-col kontainer relative overflow-hidden">
       <ToastContainer />
@@ -309,7 +312,7 @@ export default function Home() {
                         exit={{
                           opacity: clickedOptionId === option.value ? 1 : 0,
                           scale: clickedOptionId === option.value ? 1 : 0.8,
-                          transition: { duration: 0.4 }
+                          transition: iconTransition // Use the consistent transition
                         }}
                       >
                         <ContinueOption
@@ -352,9 +355,9 @@ export default function Home() {
               <main className="w-full flex flex-col-reverse xl:flex-row items-center justify-center gap-4 xl:gap-16 px-4">
                 <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
                   <motion.div
-                    className="w-full max-w-[430px] px-4"
+                    className="w-full max-w-[430px] px-4 z-[1000]"
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, transition: { delay: isIconAnimating ? 0.2 : 0.1, duration: 0.5 } }}
+                    animate={{ opacity: 1, transition: { ...iconTransition, delay: isIconAnimating ? 0.2 : 0.4 } }}
                   >
                     <Blobs
                       imageUrl={selectedUserOption.imageUrl}
