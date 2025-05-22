@@ -9,8 +9,9 @@ export default function ContinueOption({ name, imageUrl, className, width, heigh
 
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
-  const handleClick = () => {
-    setIsHovered(false); // Reset hover state on click
+  const handleClick = (event) => {
+    event.preventDefault(); // Prevent default action to ensure immediate effect
+    setIsHovered(false); // Reset hover state immediately
     onClick();
   };
 
