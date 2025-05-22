@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import ReportStatistics from '@/components/ReportStatistics';
