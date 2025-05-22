@@ -1,13 +1,18 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 
-export default function ContinueOption({ name, imageUrl, className, width, height, onClick }) {
+export default function ContinueOption({ name, imageUrl, className, width, height, onClick, layoutId }) {
   return (
-    <div id={className} className="option_container" onClick={onClick}>
+    <motion.div
+      id={className}
+      className="option_container"
+      onClick={onClick}
+    >
       <div className="circle_1">
         <div className="circle_2"></div>
-        <div className="image-container">
+        <motion.div className="image-container" layoutId={layoutId}>
           <Image
             className="logos"
             src={imageUrl}
@@ -15,11 +20,11 @@ export default function ContinueOption({ name, imageUrl, className, width, heigh
             height={height}
             alt={name}
           />
-        </div>
+        </motion.div>
       </div>
       <div className="info">
         <div className="option_name font-ibm-plex-sans">{name}</div>
       </div>
-    </div>
+    </motion.div>
   );
 }

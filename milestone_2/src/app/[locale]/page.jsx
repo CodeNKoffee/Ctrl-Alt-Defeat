@@ -2,16 +2,26 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import ContinueOption from "@/components/ContinueOption";
+import { useDispatch } from 'react-redux';
+import { MOCK_USERS } from "../../../constants/mockData";
 import { usersOptions } from "../../../constants/index";
 import Header from "@/components/Header";
 import Copyright from "@/components/Copyright";
+import Blobs from "@/components/Blobs";
+import LoginForm from "@/components/LoginForm";
+import BackButton from "@/components/shared/BackButton";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ContinueOption from "@/components/ContinueOption";
 import { useRouter } from "next/navigation";
 import { createTypingAnimation } from "../../../utils";
 
 export default function Home() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const [showWelcome, setShowWelcome] = useState(() => {
     if (typeof window !== 'undefined') {
       return !sessionStorage.getItem('welcomeShown');
@@ -19,6 +29,10 @@ export default function Home() {
     return true;
   });
   const [animationState, setAnimationState] = useState(0);
+  const [view, setView] = useState(showWelcome ? 'welcome' : 'options');
+  const [selectedUserOption, setSelectedUserOption] = useState(null);
+  const [isIconAnimating, setIsIconAnimating] = useState(false);
+  const [clickedOptionId, setClickedOptionId] = useState(null);
 
   const textContent = [
     { title: "", subtitle: "" },                             // Initial state
@@ -29,35 +43,103 @@ export default function Home() {
 
   // Create typing animation variants
   const typingVariants = createTypingAnimation(textContent[1].title, {
-    delay: 100,  // Reduced from 150ms to 100ms
-    duration: 1  // Reduced from 2s to 1s
+    delay: 100,
+    duration: 1
   });
 
   // Handle animation timing with explicit states for delay
   useEffect(() => {
-    if (!showWelcome) return; // Skip animation if welcome is not shown
+    if (view !== 'welcome' || !showWelcome) return; // Only run for welcome animation
 
     if (animationState < textContent.length - 1) {
       const timer = setTimeout(() => {
         if (animationState === 2) {
-          setTimeout(() => setAnimationState(3), 1000); // Reduced from 2000ms to 1000ms
+          setTimeout(() => setAnimationState(3), 1000);
         } else {
           setAnimationState(prevState => prevState + 1);
         }
-      }, animationState === 1 ? 2000 : 500); // Reduced from 3000ms/1000ms to 2000ms/500ms
+      }, animationState === 1 ? 2000 : 500);
       return () => clearTimeout(timer);
     } else {
-      // After welcome animation completes, wait 1 second then show continue options
       const timer = setTimeout(() => {
         setShowWelcome(false);
         sessionStorage.setItem('welcomeShown', 'true');
-      }, 1000); // Reduced from 2000ms to 1000ms
+        setView('options'); // Transition to options view
+      }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [animationState, showWelcome]);
+  }, [animationState, view, showWelcome]);
 
   const handleOptionClick = (userType) => {
-    router.push(`/en/auth/login?userType=${userType}`);
+    const userDetails = usersOptions.find(option => option.value === userType);
+    if (userDetails) {
+      setSelectedUserOption(userDetails);
+      setClickedOptionId(userDetails.value);
+      setIsIconAnimating(true);
+      setTimeout(() => {
+        setView('login');
+      }, 150);
+    }
+  };
+
+  const handleBackToOptions = () => {
+    setSelectedUserOption(null);
+    setClickedOptionId(null);
+    setIsIconAnimating(false);
+    setView('options');
+  };
+
+  const handleLogin = async (values) => {
+    if (!selectedUserOption) return;
+
+    let mockUser = null;
+    const userType = selectedUserOption.value;
+
+    if (userType === 'student') {
+      mockUser = MOCK_USERS.students.find(
+        student => student.email === values.email && student.password === values.password
+      );
+    } else {
+      mockUser = MOCK_USERS[userType];
+      if (mockUser && (values.email !== mockUser.email || values.password !== mockUser.password)) {
+        mockUser = null;
+      }
+    }
+
+    if (!mockUser) {
+      toast.error('Invalid email or password', {
+        position: 'top-right',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light',
+      });
+      return;
+    }
+
+    const userSession = {
+      ...mockUser,
+      userType: userType, // Ensure userType is part of the session
+      timestamp: new Date().toISOString()
+    };
+
+    if (values.remember) {
+      localStorage.setItem('userSession', JSON.stringify(userSession));
+    }
+    sessionStorage.setItem('userSession', JSON.stringify(userSession));
+
+    dispatch({
+      type: 'LOGIN_SUCCESS',
+      payload: userSession
+    });
+
+    router.push(`/en/dashboard/${userType}`);
+  };
+
+  const handleIconAnimationComplete = () => {
+    setIsIconAnimating(false);
   };
 
   // Variants for GIF and blobs
@@ -100,30 +182,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col kontainer relative overflow-hidden">
-      {/* Animated Background Blobs - Only show during welcome screen */}
-      {/* {showWelcome && (
-        <>
-          <motion.div
-            className="absolute -top-4 -left-4 -z-10"
-            variants={blobVariants}
-            initial="initial"
-            animate="animate"
-          >
-            <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-500)] -translate-x-1/3 -translate-y-1/3" />
-          </motion.div>
-          <motion.div
-            className="absolute -bottom-4 -right-4 -z-10"
-            variants={blobVariants}
-            initial="initial"
-            animate="animate"
-          >
-            <div className="w-64 h-64 rounded-full bg-[var(--metallica-blue-200)] translate-x-1/3 translate-y-1/3" />
-          </motion.div>
-        </>
-      )} */}
-
-      <AnimatePresence mode="wait">
-        {showWelcome ? (
+      <ToastContainer />
+      <AnimatePresence mode="popLayout">
+        {view === 'welcome' && showWelcome && (
           <motion.div
             key="welcome"
             initial={{ opacity: 0 }}
@@ -215,47 +276,129 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
-        ) : (
+        )}
+
+        {view === 'options' && !showWelcome && (
           <motion.div
-            key="continue"
-            initial={{ opacity: 0 }}
+            key="options"
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
+            exit={{}}
             className="flex-grow"
           >
             <div className="row h-full">
               <div className="main">
                 <div className="flex flex-col items-center justify-center flex-grow">
                   {/* Header */}
-                  <div className="w-full flex justify-center mb-8">
+                  <motion.div
+                    exit={{ opacity: selectedUserOption ? 0 : 1, transition: { duration: 0.4 } }}
+                  >
                     <Header
                       text="Continue As"
                       className="continue-text"
                       isFullWidth={true}
                       size="1xl"
                     />
-                  </div>
+                  </motion.div>
 
                   {/* Continue Options */}
                   <div className="continue_options">
                     {usersOptions.map((option) => (
-                      <ContinueOption
+                      <motion.div
                         key={option.value}
-                        name={option.name}
-                        imageUrl={option.imageUrl}
-                        className={option.class}
-                        width={option.dimension}
-                        height={option.dimension}
-                        onClick={() => handleOptionClick(option.value)}
-                      />
+                        exit={{
+                          opacity: clickedOptionId === option.value ? 1 : 0,
+                          scale: clickedOptionId === option.value ? 1 : 0.8,
+                          transition: { duration: 0.4 }
+                        }}
+                      >
+                        <ContinueOption
+                          name={option.name}
+                          imageUrl={option.imageUrl}
+                          className={option.class}
+                          width={option.dimension}
+                          height={option.dimension}
+                          onClick={() => handleOptionClick(option.value)}
+                          layoutId={`user-icon-${option.value}`}
+                        />
+                      </motion.div>
                     ))}
                   </div>
 
                   {/* Motivational Text */}
-                  <div className="motivational-text font-ibm-plex-sans">
-                    Tailored experience for every role.
-                  </div>
+                  <motion.div
+                    exit={{ opacity: selectedUserOption ? 0 : 1, transition: { duration: 0.4 } }}
+                  >
+                    <div className="motivational-text font-ibm-plex-sans">
+                      Tailored experience for every role.
+                    </div>
+                  </motion.div>
                 </div>
               </div>
+            </div>
+          </motion.div>
+        )}
+
+        {view === 'login' && selectedUserOption && (
+          <motion.div
+            key="login"
+            exit={{ opacity: 0 }}
+            className="flex-grow flex flex-col pt-12 md:pt-0"
+          >
+            <div className="absolute top-5 left-5 z-50">
+              <BackButton onClick={handleBackToOptions} />
+            </div>
+            <div className="flex-grow flex items-center justify-center py-8">
+              <main className="w-full flex flex-col-reverse xl:flex-row items-center justify-center gap-4 xl:gap-16 px-4">
+                <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
+                  <motion.div
+                    className="w-full max-w-[430px] px-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: { delay: isIconAnimating ? 0.2 : 0.1, duration: 0.5 } }}
+                  >
+                    <Blobs
+                      imageUrl={selectedUserOption.imageUrl}
+                      bgColor={selectedUserOption.bgColor}
+                      iconLayoutId={`user-icon-${selectedUserOption.value}`}
+                      animateKute={!isIconAnimating && view === 'login'}
+                      onIconAnimationComplete={handleIconAnimationComplete}
+                    />
+                  </motion.div>
+                  <motion.div
+                    className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0, transition: { delay: isIconAnimating ? 0.7 : 0.3, duration: 0.5 } }}
+                  >
+                    {selectedUserOption.value === 'company' && (
+                      <span className="text-black font-medium font-ibm-plex-sans">
+                        Not registered yet?{' '}
+                        <Link href={`/en/auth/signup?userType=${selectedUserOption.value}`} className="text-metallica-blue-off-charts underline">
+                          Sign up
+                        </Link>
+                      </span>
+                    )}
+                  </motion.div>
+                </div>
+
+                <motion.div
+                  className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0, transition: { delay: isIconAnimating ? 0.6 : 0.2, duration: 0.5 } }}
+                >
+                  <div className="w-full max-w-md">
+                    <Header
+                      text="Login"
+                      className="mb-8"
+                      size="text-6xl"
+                    />
+                    <LoginForm
+                      userType={selectedUserOption.value}
+                      onSubmit={handleLogin}
+                      key={selectedUserOption.value}
+                    />
+                  </div>
+                </motion.div>
+              </main>
             </div>
           </motion.div>
         )}
