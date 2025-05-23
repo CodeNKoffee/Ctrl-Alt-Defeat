@@ -526,7 +526,7 @@ function ApplicationsView() {
 
   // Show notification toast when component mounts
   useEffect(() => {
-    toast.info('Receive a notification via email and on the system when somebody applies to an internship', {
+    toast.info('A new applicant has applied to one of your internship listings', {
       position: 'bottom-right',
       autoClose: 6000,
       hideProgressBar: false,
