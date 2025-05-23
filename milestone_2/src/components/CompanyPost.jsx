@@ -76,7 +76,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
     : "bg-white rounded-lg shadow-md p-6 border mb-4";
 
   const titleClasses = compact
-    ? "text-lg font-bold text-[var(--metallica-blue-800)] line-clamp-1"
+    ? "text-lg font-bold text-[var(--metallica-blue-800)] line-clamp-1 w-3/4"
     : "text-xl font-bold text-[var(--metallica-blue-800)]";
 
   const descriptionClasses = compact && !expanded

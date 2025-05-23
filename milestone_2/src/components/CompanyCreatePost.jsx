@@ -20,17 +20,48 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
   const [paidValidation, setPaid] = useState(true);
   const [skillInput, setSkillInput] = useState('');
 
-  // Initialize form with post data if editing - with proper dependency tracking
+  // Initialize form with post data if editing or reset if creating
   useEffect(() => {
-    if (initialPost) {
-      setForm(initialPost);
-
-      // Also update the preview immediately when initialPost changes
+    if (isEditing && initialPost) {
+      // If editing, populate form with initialPost data
+      const validInitialPost = { // Ensure all fields are present
+        title: initialPost.title || '',
+        description: initialPost.description || '',
+        startDate: initialPost.startDate || '',
+        duration: initialPost.duration || '',
+        jobType: initialPost.jobType || 'Full-time',
+        jobSetting: initialPost.jobSetting || 'On-site',
+        paid: initialPost.paid || 'Paid',
+        salary: initialPost.salary || '',
+        requirements: initialPost.requirements || '',
+        skills: initialPost.skills || [],
+      };
+      setForm(validInitialPost);
       if (onFormChange) {
-        onFormChange(initialPost);
+        onFormChange(validInitialPost); // Update preview
+      }
+    } else if (!isEditing) {
+      // If creating a new post (or initialPost is not available), reset to default
+      const defaultFormState = {
+        title: '',
+        description: '',
+        startDate: '',
+        duration: '',
+        jobType: 'Full-time',
+        jobSetting: 'On-site',
+        paid: 'Paid',
+        salary: '',
+        requirements: '',
+        skills: [],
+      };
+      setForm(defaultFormState);
+      if (onFormChange) {
+        onFormChange(defaultFormState); // Reset preview
       }
     }
-  }, [initialPost, onFormChange]);
+    // This effect should run when isEditing status changes or a new initialPost is provided for editing.
+    // Crucially, onFormChange is not in dependencies to prevent loops if it's not memoized by parent.
+  }, [isEditing, initialPost]); // Removed onFormChange from dependencies
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -124,10 +155,17 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
 
   // Send initial form state on component mount for preview
   useEffect(() => {
-    if (onFormChange) {
-      onFormChange(form);
+    // This effect is intended to run once on mount to set the initial preview
+    // if not already handled by the isEditing/initialPost effect.
+    // However, the above effect now handles initial setup for both create and edit.
+    // If there's no initialPost and it's not editing, it sets a default preview.
+    // Consider if this is still needed or if the logic above is sufficient.
+    // For safety, let's ensure it doesn't overwrite an existing preview set by `initialPost`.
+    if (!isEditing && !initialPost && onFormChange) {
+      onFormChange(form); // form here would be the initial empty state
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Keep this to run only on mount if necessary for initial preview setup
 
   // Function to disable past dates
   const disablePastDates = (date) => {

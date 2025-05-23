@@ -61,45 +61,43 @@ export default function PostTiles({ searchOverride, filterOverride }) {
     }
   };
 
-  const handleAddPost = (newPost) => {
-    if (editingPost !== null) {
-      // We're updating an existing post
+  const handleAddPost = (newPostData) => {
+    if (editingPost) {
       setPosts((prevPosts) =>
-        prevPosts.map((post, index) =>
-          index === editingPost ? newPost : post
+        prevPosts.map((post) =>
+          (post.title === editingPost.title && post.description === editingPost.description)
+            ? { ...post, ...newPostData }
+            : post
         )
       );
       setEditingPost(null);
     } else {
-      // We're creating a new post
-      setPosts((prevPosts) => [newPost, ...prevPosts]);
+      setPosts((prevPosts) => [newPostData, ...prevPosts]);
     }
     setShowForm(false);
+    setPostPreview({
+      title: '',
+      description: '',
+      startDate: '',
+      duration: '',
+      jobType: 'Full-time',
+      jobSetting: 'On-site',
+      paid: 'Paid',
+      salary: '',
+      requirements: '',
+      skills: [],
+    });
   };
 
   const handleFormChange = (updatedForm) => {
     setPostPreview(updatedForm);
   };
 
-  const handleUpdateClick = (post) => {
-    const postIndex = posts.findIndex(p =>
-      p.title === post.title &&
-      p.description === post.description
-    );
-
-    if (postIndex !== -1) {
-      // Create a deep copy of the post to ensure we're passing a complete object
-      const postToEdit = JSON.parse(JSON.stringify(posts[postIndex]));
-
-      // First set the preview to match the post we're editing
-      setPostPreview(postToEdit);
-
-      // Then mark this post as the one being edited
-      setEditingPost(postIndex);
-
-      // Finally show the form
-      setShowForm(true);
-    }
+  const handleUpdateClick = (postToEdit) => {
+    const postCopy = JSON.parse(JSON.stringify(postToEdit));
+    setEditingPost(postCopy);
+    setPostPreview(postCopy);
+    setShowForm(true);
   };
 
   const handleDeleteClick = (post) => {
@@ -126,7 +124,6 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
   const toggleCreatePost = () => {
     if (showForm) {
-      // If we're closing the form, clear the editing state
       setEditingPost(null);
       setPostPreview({
         title: '',
@@ -149,10 +146,8 @@ export default function PostTiles({ searchOverride, filterOverride }) {
       const updatedFilters = { ...prevFilters };
 
       if (updatedFilters[category].includes(value)) {
-        // Remove the value if it's already selected
         updatedFilters[category] = updatedFilters[category].filter(item => item !== value);
       } else {
-        // Add the value if it's not selected
         updatedFilters[category] = [...updatedFilters[category], value];
       }
 
@@ -201,7 +196,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
               {/* Header bar */}
               <div className="bg-[var(--metallica-blue-50)] text-[var(--metallica-blue-700)] py-3 px-6 flex justify-between items-center">
                 <h2 className="text-xl font-semibold">
-                  {editingPost !== null ? 'Update Post' : 'Create New Post'}
+                  {editingPost ? 'Update Post' : 'Create New Post'}
                 </h2>
                 <button
                   onClick={toggleCreatePost}
@@ -222,8 +217,8 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                     <CompanyCreatePost
                       onAddPost={handleAddPost}
                       onFormChange={handleFormChange}
-                      initialPost={editingPost !== null ? posts[editingPost] : null}
-                      isEditing={editingPost !== null}
+                      initialPost={editingPost}
+                      isEditing={!!editingPost}
                     />
                   </div>
                 </div>
