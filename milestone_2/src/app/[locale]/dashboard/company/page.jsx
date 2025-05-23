@@ -77,24 +77,14 @@ const CompanyPostsInfoCard = () => (
 
 function CompanyPostsView() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [isCombinedFilterPopoverOpen, setIsCombinedFilterPopoverOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState({
     jobType: [],
     jobSetting: [],
     paymentStatus: []
   });
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.target.closest('.combined-filter-popover') && !event.target.closest('.combined-filter-button')) {
-        setIsCombinedFilterPopoverOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-  const handleFilterClick = (category, value) => {
+
+  // Handler for ApplicationsFilterBar
+  const handleFilterChange = (category, value) => {
     setActiveFilters(prev => {
       const newFilters = { ...prev };
       if (value === 'all') {
@@ -113,8 +103,7 @@ function CompanyPostsView() {
     setActiveFilters({ jobType: [], jobSetting: [], paymentStatus: [] });
     setSearchTerm('');
   };
-  const isFilterActive = (category, value) => activeFilters[category].includes(value);
-  const hasActiveFilters = () => Object.values(activeFilters).some(arr => arr.length > 0) || searchTerm;
+
   return (
     <div className="container mx-auto p-10">
       <div className="w-full max-w-6xl mx-auto">
@@ -125,154 +114,50 @@ function CompanyPostsView() {
 
         <CompanyPostsInfoCard />
 
-        {/* Modern search and filter bar */}
-        <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
-          <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
-            {/* Search box */}
-            <div className="flex-1 w-full md:w-auto md:max-w-md">
-              <div className="relative w-full flex justify-center items-center">
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search by title, description, or skills..."
-                  className="w-full py-3 pl-10 pr-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
-                />
-                <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-                  <FontAwesomeIcon icon={faSearch} className="h-4 w-4 text-[#5DB2C7]" />
-                </div>
-                {searchTerm && (
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-3.5 flex items-center p-1 rounded-full hover:bg-[#B8E1E9]/50 transition-colors duration-200"
-                    onClick={() => setSearchTerm('')}
-                  >
-                    <FontAwesomeIcon icon={faXmark} className="w-4 h-4 text-[#5DB2C7] hover:text-[#2a5f74]" />
-                  </button>
-                )}
-              </div>
-            </div>
-            {/* Combined Filter Button and Popover */}
-            <div className="relative w-full md:w-auto">
-              <button
-                onClick={() => setIsCombinedFilterPopoverOpen(!isCombinedFilterPopoverOpen)}
-                className={`appearance-none w-full md:w-auto backdrop-blur-sm border-2 text-sm py-3 px-4 rounded-full shadow-md transition-all duration-300 flex items-center justify-center gap-2 combined-filter-button min-w-[150px]
-                  ${hasActiveFilters()
-                    ? "bg-[#5DB2C7] text-white border-[#5DB2C7] hover:bg-[#4AA0B5]"
-                    : "bg-white/90 text-[#1a3f54] border-[#B8E1E9] hover:border-[#5DB2C7]"
-                  }`}
-              >
-                <FontAwesomeIcon icon={faFilter} className={`h-4 w-4 ${hasActiveFilters() ? "text-white" : "text-[#5DB2C7]"}`} />
-                <span>Filters</span>
-                {hasActiveFilters() && (
-                  <span className="bg-white text-[#5DB2C7] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
-                    {activeFilters.jobType.length + activeFilters.jobSetting.length + activeFilters.paymentStatus.length + (searchTerm ? 1 : 0)}
-                  </span>
-                )}
-                <FontAwesomeIcon
-                  icon={faChevronDown}
-                  className={`h-4 w-4 ${hasActiveFilters() ? "text-white" : "text-[#5DB2C7]"}} transition-transform duration-300 ${isCombinedFilterPopoverOpen ? 'rotate-180' : ''}`}
-                />
-              </button>
-              {isCombinedFilterPopoverOpen && (
-                <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-30 combined-filter-popover animate-dropdown focus:outline-none p-4 space-y-4">
-                  {/* Job Type Filter Section */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Job Type</h4>
-                    <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${activeFilters.jobType.length === 0 ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'all')}
-                      >
-                        All Types
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobType', 'Full-time') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'Full-time')}
-                      >
-                        Full-time
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobType', 'Part-time') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'Part-time')}
-                      >
-                        Part-time
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobType', 'Internship') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'Internship')}
-                      >
-                        Internship
-                      </div>
-                    </div>
-                  </div>
-                  {/* Job Setting Filter Section */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Job Setting</h4>
-                    <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${activeFilters.jobSetting.length === 0 ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'all')}
-                      >
-                        All Settings
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobSetting', 'Remote') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'Remote')}
-                      >
-                        Remote
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobSetting', 'On-site') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'On-site')}
-                      >
-                        On-site
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobSetting', 'Hybrid') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'Hybrid')}
-                      >
-                        Hybrid
-                      </div>
-                    </div>
-                  </div>
-                  {/* Payment Status Filter Section */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Payment Status</h4>
-                    <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${activeFilters.paymentStatus.length === 0 ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('paymentStatus', 'all')}
-                      >
-                        All Status
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('paymentStatus', 'Paid') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('paymentStatus', 'Paid')}
-                      >
-                        Paid
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('paymentStatus', 'Unpaid') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('paymentStatus', 'Unpaid')}
-                      >
-                        Unpaid
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    className="w-full mt-4 py-2 rounded-full bg-[#5DB2C7] text-white font-semibold hover:bg-[#3298BA] transition-colors duration-200"
-                    onClick={clearAllFilters}
-                  >
-                    Clear All Filters
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        {/* ApplicationsFilterBar replaces custom filter/search bar */}
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search internships by job title, description, skills..."
+          primaryFilterName="Filter"
+          selectedPrimaryFilter={activeFilters.jobType[0] || 'all'}
+          onPrimaryFilterChange={value => handleFilterChange('jobType', value)}
+          primaryFilterOptions={[
+            { id: 'Full-time', title: 'Full-time' },
+            { id: 'Part-time', title: 'Part-time' },
+            { id: 'Internship', title: 'Internship' },
+          ]}
+          statusConfig={{}}
+          selectedStatus={'all'}
+          onStatusChange={() => { }}
+          showDatePicker={false}
+          onClearFilters={clearAllFilters}
+          // Add more filter sections as needed
+          customFilterSections={[
+            {
+              title: 'Job Setting',
+              options: [
+                { label: 'Remote', value: 'Remote' },
+                { label: 'On-site', value: 'On-site' },
+                { label: 'Hybrid', value: 'Hybrid' },
+              ],
+              isSelected: (option) => activeFilters.jobSetting.includes(option.value),
+              onSelect: (option) => handleFilterChange('jobSetting', option.value),
+            },
+            {
+              title: 'Payment Status',
+              options: [
+                { label: 'Paid', value: 'Paid' },
+                { label: 'Unpaid', value: 'Unpaid' },
+              ],
+              isSelected: (option) => activeFilters.paymentStatus.includes(option.value),
+              onSelect: (option) => handleFilterChange('paymentStatus', option.value),
+            },
+          ]}
+        />
+
         {/* Post Tiles */}
-        <PostTiles searchTerm={searchTerm} activeFilters={activeFilters} />
+        <PostTiles searchOverride={searchTerm} filterOverride={activeFilters} />
       </div>
     </div>
   );

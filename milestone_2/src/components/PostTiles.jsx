@@ -174,11 +174,15 @@ export default function PostTiles({ searchOverride, filterOverride }) {
     });
   };
 
-  // Filter posts based on search query (only title) and filters
+  // Filter posts based on search query (title, description, skills) and filters
   const filteredPosts = posts.filter(post => {
-    // Filter by title search
-    const titleMatches = post.title?.toLowerCase().includes(searchQuery.toLowerCase());
-    if (!titleMatches) return false;
+    // Search: match on title, description, or skills (case-insensitive, partial match)
+    const search = searchQuery.trim().toLowerCase();
+    const titleMatches = post.title?.toLowerCase().includes(search);
+    const descriptionMatches = post.description?.toLowerCase().includes(search);
+    const skillsMatches = Array.isArray(post.skills) && post.skills.some(skill => skill.toLowerCase().includes(search));
+    const searchMatches = !search || titleMatches || descriptionMatches || skillsMatches;
+    if (!searchMatches) return false;
 
     // Filter by job type
     if (filters.jobType.length > 0 && !filters.jobType.includes(post.jobType)) {
