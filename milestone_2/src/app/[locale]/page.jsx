@@ -90,19 +90,32 @@ export default function Home() {
   };
 
   const handleLogin = async (values) => {
-    if (!selectedUserOption) return;
+    if (!selectedUserOption) {
+      // Should not happen if login form is visible, but good guard
+      toast.error('User type not selected.', {
+        position: 'top-right',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light',
+      });
+      return;
+    }
 
     let mockUser = null;
-    const userType = selectedUserOption.value;
+    const userType = selectedUserOption.value; // e.g., 'student', 'company'
 
     if (userType === 'student') {
       mockUser = MOCK_USERS.students.find(
         student => student.email === values.email && student.password === values.password
       );
     } else {
-      mockUser = MOCK_USERS[userType];
-      if (mockUser && (values.email !== mockUser.email || values.password !== mockUser.password)) {
-        mockUser = null;
+      // For other user types like 'company', 'faculty', 'scad'
+      const potentialUser = MOCK_USERS[userType];
+      if (potentialUser && potentialUser.email === values.email && potentialUser.password === values.password) {
+        mockUser = potentialUser;
       }
     }
 
@@ -120,8 +133,8 @@ export default function Home() {
     }
 
     const userSession = {
-      ...mockUser,
-      userType: userType, // Ensure userType is part of the session
+      ...mockUser, // Contains all user details from MOCK_USERS, including 'role'
+      userType: userType, // Explicitly add/ensure userType for clarity in the session
       timestamp: new Date().toISOString()
     };
 
