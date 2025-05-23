@@ -1,4 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import CompanyPost from './CompanyPost';
 import CompanyCreatePost from './CompanyCreatePost';
 import DeleteTileConfirmation from './DeleteTileConfirmation';
@@ -9,6 +12,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
   const [editingPost, setEditingPost] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [deletingPostIndex, setDeletingPostIndex] = useState(null);
+  const [feedbackModal, setFeedbackModal] = useState(null);
   const [filters, setFilters] = useState({
     jobType: [],
     jobSetting: [],
@@ -62,7 +66,8 @@ export default function PostTiles({ searchOverride, filterOverride }) {
   };
 
   const handleAddPost = (newPostData) => {
-    if (editingPost) {
+    const isUpdating = !!editingPost;
+    if (isUpdating) {
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
           (post.title === editingPost.title && post.description === editingPost.description)
@@ -71,10 +76,11 @@ export default function PostTiles({ searchOverride, filterOverride }) {
         )
       );
       setEditingPost(null);
+      setFeedbackModal({ show: true, type: 'update', message: 'Post Updated Successfully!' });
     } else {
       setPosts((prevPosts) => [newPostData, ...prevPosts]);
+      setFeedbackModal({ show: true, type: 'create', message: 'Post Created Successfully!' });
     }
-    setShowForm(false);
     setPostPreview({
       title: '',
       description: '',
@@ -87,6 +93,11 @@ export default function PostTiles({ searchOverride, filterOverride }) {
       requirements: '',
       skills: [],
     });
+
+    setTimeout(() => {
+      setFeedbackModal(null);
+      setShowForm(false);
+    }, 2500);
   };
 
   const handleFormChange = (updatedForm) => {
@@ -189,6 +200,76 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
   return (
     <div className="container mx-auto pt-0 pb-8">
+      {/* Success Feedback Modal */}
+      <AnimatePresence>
+        {feedbackModal && feedbackModal.show && (
+          <motion.div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000, // Ensure it's above other content
+              background: 'rgba(42, 95, 116, 0.18)' // Semi-transparent background
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setFeedbackModal(null)} // Optional: close on click outside
+          >
+            <motion.div
+              style={{
+                background: 'white',
+                padding: '30px 35px',
+                borderRadius: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05)',
+                minWidth: '320px',
+                textAlign: 'center'
+              }}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal content
+            >
+              <motion.div
+                style={{
+                  marginBottom: '20px',
+                  width: 70,
+                  height: 70,
+                  borderRadius: '50%',
+                  background: feedbackModal.type === 'create' ? '#34D399' : '#60A5FA', // Green for create, Blue for update
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15, delay: 0.1 }}
+              >
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  style={{ fontSize: 36, color: 'white' }}
+                />
+              </motion.div>
+              <div style={{ fontSize: '22px', fontWeight: '600', color: '#2A5F74', marginBottom: '8px' }}>
+                {feedbackModal.type === 'create' ? 'Success!' : 'Updated!'}
+              </div>
+              <div style={{ fontSize: '16px', color: '#4B5563' }}>
+                {feedbackModal.message}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center backdrop-blur-sm overflow-auto py-8">
           <div className="bg-white rounded-lg shadow-xl w-[90%] max-w-6xl max-h-[90vh] overflow-hidden">
