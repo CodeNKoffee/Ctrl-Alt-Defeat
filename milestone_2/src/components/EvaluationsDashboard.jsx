@@ -149,8 +149,6 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
         ? { ...ev, ...updatedFields }
         : ev
     ));
-    setShowEditModal(false);
-    setEvaluationToEdit(null);
   };
 
   // First let's create a method to get the appropriate empty state message
