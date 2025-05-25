@@ -496,6 +496,7 @@ function ApplicationsView() {
               searchTerm={searchTerm}
               selectedStatus={selectedStatus}
               selectedInternship={selectedInternship}
+              statuses={['pending', 'accepted', 'finalized', 'rejected', 'current', 'completed']}
             />
           </div>
         </div>

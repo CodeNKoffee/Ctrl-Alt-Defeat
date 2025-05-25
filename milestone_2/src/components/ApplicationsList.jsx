@@ -162,6 +162,17 @@ export default function ApplicationsList({
 }) {
   const [applications, setApplications] = useState(MOCK_APPLICATIONS);
   const [selectedApplication, setSelectedApplication] = useState(null);
+  const [selectedStatusLocal, setSelectedStatusLocal] = useState(selectedStatus);
+
+  // Update local state if prop changes
+  useEffect(() => {
+    setSelectedStatusLocal(selectedStatus);
+  }, [selectedStatus]);
+
+  // Statuses to display (all 6 for ApplicationsList)
+  const displayStatuses = [
+    'pending', 'accepted', 'finalized', 'rejected', 'current', 'completed'
+  ];
 
   // Filter applications based on search term, status, and internship
   const filteredApplications = applications.filter(app => {
@@ -170,7 +181,7 @@ export default function ApplicationsList({
       app.studentEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
       app.internshipTitle.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesStatus = selectedStatus === 'all' || app.status === selectedStatus;
+    const matchesStatus = selectedStatusLocal === 'all' || app.status === selectedStatusLocal;
     const matchesInternship = selectedInternship === 'all' || app.internshipId === parseInt(selectedInternship);
 
     return matchesSearch && matchesStatus && matchesInternship;
@@ -201,6 +212,37 @@ export default function ApplicationsList({
 
   return (
     <div className="space-y-4">
+      {/* Status Filter Pills */}
+      <div className="w-full max-w-6xl mx-auto mb-6">
+        <div className="flex flex-wrap gap-2 items-center">
+          <button
+            onClick={() => setSelectedStatusLocal('all')}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${selectedStatusLocal === 'all'
+              ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+              : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
+              }`}
+          >
+            ALL
+          </button>
+          {displayStatuses.map((status) => (
+            <button
+              key={status}
+              onClick={() => setSelectedStatusLocal(status)}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${selectedStatusLocal === status
+                ? STATUS_CONFIG[status].color.replace('border ', 'border-2 ') // ensure border thickness matches
+                : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
+                }`}
+            >
+              <div className="flex items-center">
+                {selectedStatusLocal === status && (
+                  <span className={`inline-block w-2 h-2 rounded-full ${STATUS_CONFIG[status].badgeColor} mr-1.5`}></span>
+                )}
+                {STATUS_CONFIG[status].label}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
       {filteredApplications.length === 0 ? (
         <div className="bg-white p-8 rounded-lg shadow text-center">
           <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
