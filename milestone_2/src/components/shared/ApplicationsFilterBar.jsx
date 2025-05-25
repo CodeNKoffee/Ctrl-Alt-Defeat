@@ -59,11 +59,15 @@ export default function ApplicationsFilterBar({
     };
   }, []);
 
-  // Check if any filters are applied
+  const hasActiveCustomFilters = customFilterSections.some(section =>
+    section.options.some(option => section.isSelected(option))
+  );
+
   const hasFilters = searchTerm ||
     selectedStatus !== 'all' ||
     selectedPrimaryFilter !== 'all' ||
-    selectedDate;
+    selectedDate ||
+    hasActiveCustomFilters;
 
   return (
     <div className={`w-full ${bgColor} backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl relative z-20 isolation-auto`}>
@@ -262,6 +266,32 @@ export default function ApplicationsFilterBar({
                 </button>
               </div>
             )}
+
+            {/* Custom Active Filters */}
+            {customFilterSections.map(section => {
+              const selectedOption = section.options.find(opt => section.isSelected(opt));
+              if (selectedOption) {
+                return (
+                  <div
+                    key={section.title}
+                    className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group"
+                  >
+                    <span className="mr-1.5">{section.title}:</span>
+                    <span className="font-semibold mr-1.5">
+                      {selectedOption.label || selectedOption.value}
+                    </span>
+                    <button
+                      className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
+                      onClick={() => section.onSelect(selectedOption)}
+                      aria-label={`Remove ${section.title} filter`}
+                    >
+                      <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
+                    </button>
+                  </div>
+                );
+              }
+              return null;
+            })}
 
             <button
               className="ml-auto bg-[#2a5f74] hover:bg-[#1a3f54] text-white px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm hover:shadow-md transition-all duration-300 flex items-center"

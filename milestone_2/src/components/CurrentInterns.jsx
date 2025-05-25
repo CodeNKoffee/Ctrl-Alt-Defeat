@@ -96,7 +96,7 @@ export default function CurrentInterns() {
     setSelectedIntern(intern);
     setEvaluationModalOpen(true);
   };
-  
+
   const handleSubmitEvaluation = (data) => {
     console.log("Evaluation submitted:", data);
     // Here you would typically send this to your backend
@@ -112,15 +112,15 @@ export default function CurrentInterns() {
 
   // Filter logic
   const filteredInterns = interns.filter(intern => {
-    const matchesSearch = 
+    const matchesSearch =
       intern.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       intern.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
       intern.company.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesStatus = 
+
+    const matchesStatus =
       activeTab === 'all' ||
       intern.status === activeTab;
-    
+
     return matchesSearch && matchesStatus;
   });
 
@@ -155,17 +155,17 @@ export default function CurrentInterns() {
         />
         <div className="flex flex-wrap gap-2 w-full">
           {['all', 'current', 'completed', 'evaluated'].map((tab) => (
-<button
-  key={tab}
-  onClick={() => setActiveTab(tab)}
-  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
     ${activeTab === tab
-      ? activeTabStyles[tab] // Apply active tab styles
-      : `${statusColors[tab]} ${hoverStatusColors[tab]}`} // Default styles and hover effects
+                  ? activeTabStyles[tab] // Apply active tab styles
+                  : `${statusColors[tab]} ${hoverStatusColors[tab]}`} // Default styles and hover effects
   `}
->
-  {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
-</button>
+            >
+              {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
           ))}
         </div>
       </div>
