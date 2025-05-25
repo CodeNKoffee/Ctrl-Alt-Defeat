@@ -129,7 +129,7 @@ export default function ApplicationsFilterBar({
           </button>
 
           {isCombinedFilterPopoverOpen && (
-            <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-[1000] combined-filter-popover animate-dropdown focus:outline-none p-4 space-y-4">
+            <div className="absolute right-0 mt-2 w-72 bg-white backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-[1000] combined-filter-popover animate-dropdown focus:outline-none p-4 space-y-4">
               {filterSections.map((section, idx) => (
                 <div key={section.name || idx}>
                   <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">{section.name}</h4>

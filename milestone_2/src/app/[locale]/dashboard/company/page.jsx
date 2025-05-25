@@ -508,13 +508,13 @@ function ApplicationsView() {
               ]}
               onClearFilters={clearFilters}
             />
-            <div className="w-full max-w-6xl mx-auto mt-4 mb-6">
+            {/* <div className="w-full max-w-6xl mx-auto mt-4 mb-6">
               <StatusPills
                 statuses={statusPills}
                 selected={selectedStatus}
                 onChange={setSelectedStatus}
               />
-            </div>
+            </div> */}
           </div>
           <div className="application-list-item">
             <ApplicationsList
@@ -541,9 +541,9 @@ function CurrentInternsView() {
 
   // Evaluation status filter options for the filter bar
   const evaluationStatusOptions = [
-    { id: 'current', title: 'Current Interns' },
-    { id: 'completed', title: 'Completed (Needs Evaluation)' },
-    { id: 'evaluated', title: 'Evaluated' },
+    { id: 'current', title: 'CURRENT' },
+    { id: 'completed', title: 'COMPLETED' },
+    { id: 'evaluated', title: 'EVALUATED' },
   ];
 
   // Info card for Intern Management Dashboard
