@@ -620,12 +620,11 @@ function CurrentInternsView() {
         onSearchChange={setSearchTerm}
         searchPlaceholder="Search interns by name, department, position..."
 
-        primaryFilterName="Evaluation Status"
+        primaryFilterName="Filter"
         selectedPrimaryFilter={activeFilters.evaluationStatus}
         onPrimaryFilterChange={(value) => handleFilterChange('evaluationStatus', value)}
         primaryFilterOptions={[
           // These should be derived from your actual evaluation statuses
-          { id: 'all', title: 'All Statuses' },
           { id: 'current', title: 'Current Interns' },
           { id: 'completed', title: 'Completed (Needs Evaluation)' },
           { id: 'evaluated', title: 'Evaluated' },
