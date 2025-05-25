@@ -17,6 +17,7 @@ import { getRegularInternships, getRecommendedInternships, getRecommendedInterns
 import InternshipList from '../../../../components/shared/InternshipList';
 import ApplicationInfoCard from '@/components/ApplicationInfoCard';
 import { toast } from 'react-toastify';
+import StatusPills from '../../../../components/shared/StatusPills';
 
 // CompanyPostsInfoCard component
 const CompanyPostsInfoCard = () => (
@@ -404,7 +405,6 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 }
 
 function ApplicationsView() {
-  // ...copy logic from applications/page.jsx...
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [selectedInternship, setSelectedInternship] = useState('all');
@@ -460,6 +460,14 @@ function ApplicationsView() {
     { id: 4, title: "Data Analyst Intern" },
     { id: 5, title: "Marketing Intern" }
   ];
+  const statusPills = [
+    { value: 'pending', label: 'PENDING', color: 'bg-yellow-100 text-yellow-800 border-2 border-yellow-400', badgeColor: 'bg-yellow-600' },
+    { value: 'accepted', label: 'ACCEPTED', color: 'bg-green-100 text-green-800 border-2 border-green-400', badgeColor: 'bg-green-600' },
+    { value: 'finalized', label: 'FINALIZED', color: 'bg-purple-100 text-purple-800 border-2 border-purple-400', badgeColor: 'bg-purple-600' },
+    { value: 'rejected', label: 'REJECTED', color: 'bg-red-100 text-red-800 border-2 border-red-400', badgeColor: 'bg-red-600' },
+    { value: 'current', label: 'CURRENT INTERN', color: 'bg-blue-100 text-blue-800 border-2 border-blue-400', badgeColor: 'bg-blue-600' },
+    { value: 'completed', label: 'COMPLETED', color: 'bg-green-100 text-green-800 border-2 border-green-400', badgeColor: 'bg-green-600' },
+  ];
   const clearFilters = () => {
     setSearchTerm('');
     setSelectedStatus('all');
@@ -490,6 +498,13 @@ function ApplicationsView() {
               primaryFilterOptions={MOCK_INTERNSHIPS}
               onClearFilters={clearFilters}
             />
+            <div className="w-full max-w-6xl mx-auto mt-4 mb-6">
+              <StatusPills
+                statuses={statusPills}
+                selected={selectedStatus}
+                onChange={setSelectedStatus}
+              />
+            </div>
           </div>
           <div className="application-list-item">
             <ApplicationsList
@@ -639,7 +654,11 @@ function CurrentInternsView() {
 
         marginBottom="mb-0"
       />
-      <CurrentInterns searchTerm={searchTerm} activeFilters={activeFilters} />
+      <CurrentInterns
+        searchTerm={searchTerm}
+        activeFilters={activeFilters}
+        onEvaluationStatusChange={(value) => handleFilterChange('evaluationStatus', value)}
+      />
     </div>
   );
 }

@@ -213,7 +213,7 @@ export default function ApplicationsList({
   return (
     <div className="space-y-4">
       {/* Status Filter Pills */}
-      <div className="w-full max-w-6xl mx-auto mb-6">
+      {/* <div className="w-full max-w-6xl mx-auto mb-6">
         <div className="flex flex-wrap gap-2 items-center">
           <button
             onClick={() => setSelectedStatusLocal('all')}
@@ -242,7 +242,7 @@ export default function ApplicationsList({
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
       {filteredApplications.length === 0 ? (
         <div className="bg-white p-8 rounded-lg shadow text-center">
           <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
