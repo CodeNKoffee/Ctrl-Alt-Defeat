@@ -164,12 +164,12 @@ function CompanyPostsView() {
   );
 }
 
-// Using the actual page components for each view
 function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds }) {
   const [filters, setFilters] = useState({
-    industry: '',
-    duration: '',
-    isPaid: null
+    position: '',
+    jobType: '',
+    jobSetting: '',
+    company: '',
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -186,8 +186,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const userMajor = currentUser?.major || 'Computer Science';
 
   const internshipDataForFilters = getRegularInternships();
-  const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))];
-  const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))];
+  const uniquePositions = [...new Set(internshipDataForFilters.map(internship => internship.title))];
+  const uniqueJobTypes = [...new Set(internshipDataForFilters.map(internship => internship.type))];
+  const uniqueJobSettings = [...new Set(internshipDataForFilters.map(internship => internship.jobSetting))];
+  const uniqueCompanies = [...new Set(internshipDataForFilters.map(internship => internship.company))];
 
   // Get internships based on active tab
   const baseInternships = activeTab === 'all'
@@ -221,13 +223,13 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 
   // Update filteredInternships when baseInternships changes (without depending on hasActiveFilters)
   useEffect(() => {
-    const hasFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
+    const hasFilters = filters.position || filters.jobType || filters.jobSetting || filters.company || searchTerm;
     if (!hasFilters) {
       setFilteredInternships(baseInternships);
     }
   }, [baseInternships, filters, searchTerm]);
 
-  // Apply additional filters (industry, duration, paid/unpaid, search)
+  // Apply additional filters (position, jobType, jobSetting, company, search)
   useEffect(() => {
     let result = [...baseInternships];
 
@@ -243,80 +245,69 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       );
     }
 
-    // Filter by industry
-    if (filters.industry) {
-      result = result.filter(internship =>
-        internship.industry === filters.industry
-      );
+    // Filter by position
+    if (filters.position) {
+      result = result.filter(internship => internship.title === filters.position);
     }
-
-    // Filter by duration
-    if (filters.duration) {
-      result = result.filter(internship => {
-        // Parse the duration value from the filter (e.g., "3 months" -> 3)
-        const filterDurationMatch = filters.duration.match(/(\d+)/);
-        const filterDurationMonths = filterDurationMatch ? parseInt(filterDurationMatch[1]) : 0;
-
-        // Parse the internship duration (e.g., "3 months", "6-8 months", etc.)
-        const internshipDurationMatch = internship.duration.match(/(\d+)/);
-        const internshipDurationMonths = internshipDurationMatch ? parseInt(internshipDurationMatch[1]) : 0;
-
-        // If we have valid numbers for both, compare them
-        if (filterDurationMonths > 0 && internshipDurationMonths > 0) {
-          return internshipDurationMonths === filterDurationMonths;
-        }
-
-        return true;
-      });
+    // Filter by job type
+    if (filters.jobType) {
+      result = result.filter(internship => internship.type === filters.jobType);
     }
-
-    // Filter by paid status
-    if (filters.isPaid !== null) {
-      result = result.filter(internship =>
-        internship.paid === filters.isPaid
-      );
+    // Filter by job setting
+    if (filters.jobSetting) {
+      result = result.filter(internship => internship.jobSetting === filters.jobSetting);
+    }
+    // Filter by company
+    if (filters.company) {
+      result = result.filter(internship => internship.company === filters.company);
     }
 
     setFilteredInternships(result);
   }, [baseInternships, filters, searchTerm]);
 
   // Check if any filters are active
-  const hasActiveFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
+  const hasActiveFilters = filters.position || filters.jobType || filters.jobSetting || filters.company || searchTerm;
 
   const clearAllFilters = () => {
     setFilters({
-      industry: '',
-      duration: '',
-      isPaid: null
+      position: '',
+      jobType: '',
+      jobSetting: '',
+      company: '',
     });
     setSearchTerm('');
   };
 
-  const customFilterSections = [
+  // Build filter sections for the new filter bar API
+  const filterSections = [
     {
-      title: "Industry",
-      options: uniqueIndustries.map(ind => ({ label: ind, value: ind })),
-      isSelected: (option) => filters.industry === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, industry: prev.industry === option.value ? '' : option.value }));
-      }
+      name: 'Position',
+      options: uniquePositions.map(pos => ({ id: pos, title: pos })),
+      selected: filters.position || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, position: value === 'all' ? '' : value })),
+      resetLabel: 'All Positions',
     },
     {
-      title: "Duration",
-      options: uniqueDurations.map(dur => ({ label: dur, value: dur })),
-      isSelected: (option) => filters.duration === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, duration: prev.duration === option.value ? '' : option.value }));
-      }
+      name: 'Job Type',
+      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      selected: filters.jobType || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Types',
     },
     {
-      title: "Payment",
-      options: [{ label: "Paid", value: true }, { label: "Unpaid", value: false }],
-      isSelected: (option) => filters.isPaid === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, isPaid: prev.isPaid === option.value ? null : option.value }));
-      }
-    }
+      name: 'Job Setting',
+      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      selected: filters.jobSetting || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Settings',
+    },
+    {
+      name: 'Company',
+      options: uniqueCompanies.map(company => ({ id: company, title: company })),
+      selected: filters.company || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, company: value === 'all' ? '' : value })),
+      resetLabel: 'All Companies',
+    },
   ];
 
   // Define the info card JSX/Component here for clarity
@@ -377,8 +368,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           onSearchChange={(value) => setSearchTerm(value)}
           searchPlaceholder="Search internships by job title or company name ..."
           onClearFilters={clearAllFilters}
-          customFilterSections={customFilterSections}
-          primaryFilterName="Filters"
+          filterSections={filterSections}
         />
       </div>
       <InternshipList
