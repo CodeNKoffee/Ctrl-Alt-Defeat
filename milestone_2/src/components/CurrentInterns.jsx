@@ -122,6 +122,12 @@ export default function CurrentInterns({ searchTerm, activeFilters }) {
     return matchesSearch && matchesEvaluationStatus && matchesDepartment && matchesPosition && matchesTimePeriod;
   });
 
+  const statusButtonValues = [
+    { label: "Current", value: "current" },
+    { label: "Completed", value: "completed" },
+    { label: "Evaluated", value: "evaluated" },
+  ];
+
   return (
     <div className="mx-auto py-4 mb-4 flex flex-col items-start">
       {/* Evaluation Modal */}
@@ -133,9 +139,26 @@ export default function CurrentInterns({ searchTerm, activeFilters }) {
           evaluationToEdit={null}
         />
       )}
-      <div className="flex flex-col gap-0 mb-6 w-full">
-        {/* Removed the local ApplicationsFilterBar instance */}
-        {/* Removed the local status tab buttons */}
+      <div className="flex flex-col gap-0 mb-6 w-full items-center">
+        {/* Restored Pill Buttons */}
+        <div className="flex space-x-2 mb-6 bg-gray-100 p-1 rounded-full self-center">
+          {statusButtonValues.map((button) => (
+            <button
+              key={button.value}
+              // onClick={() => { /* TODO: Implement if interactivity is needed via parent callback */ }}
+              disabled // For now, purely visual indicator, not clickable to change state
+              className={`px-5 py-2 rounded-full font-semibold text-sm transition-all duration-200 ease-in-out focus:outline-none
+                ${activeFilters.evaluationStatus === button.value
+                  ? 'bg-metallica-blue-600 text-white shadow-md ring-2 ring-offset-1 ring-metallica-blue-500'
+                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-800'
+                }
+                ${activeFilters.evaluationStatus !== button.value ? 'cursor-not-allowed opacity-70' : 'cursor-default'}
+              `}
+            >
+              {button.label}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="w-full space-y-4">
         {filteredInterns.map((intern) => (
