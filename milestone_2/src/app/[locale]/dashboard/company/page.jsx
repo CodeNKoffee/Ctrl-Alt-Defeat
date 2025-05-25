@@ -522,42 +522,19 @@ function ApplicationsView() {
 
 function CurrentInternsView() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeFilters, setActiveFilters] = useState({
-    department: [], // Example filter category
-    position: [],   // Example filter category
-    timePeriod: [], // Example filter category
-    evaluationStatus: 'all', // Using 'all' as default for a primary-like filter
-  });
+  const [selectedStatus, setSelectedStatus] = useState('all');
+  const statusPills = [
+    { value: 'current', label: 'CURRENT', color: 'bg-blue-100 text-blue-800 border-2 border-blue-400', badgeColor: 'bg-blue-600' },
+    { value: 'completed', label: 'COMPLETED', color: 'bg-green-100 text-green-800 border-2 border-green-400', badgeColor: 'bg-green-600' },
+    { value: 'evaluated', label: 'EVALUATED', color: 'bg-purple-100 text-purple-800 border-2 border-purple-400', badgeColor: 'bg-purple-600' },
+  ];
 
-  const handleFilterChange = (category, value) => {
-    setActiveFilters(prev => {
-      const newFilters = { ...prev };
-      // For multi-select custom filters (like department, position)
-      if (Array.isArray(newFilters[category])) {
-        if (value === 'all') {
-          newFilters[category] = [];
-        } else if (newFilters[category].includes(value)) {
-          newFilters[category] = newFilters[category].filter(item => item !== value);
-        } else {
-          newFilters[category] = [...newFilters[category], value];
-        }
-      } else {
-        // For single-select primary-like filters (like evaluationStatus)
-        newFilters[category] = value;
-      }
-      return newFilters;
-    });
-  };
-
-  const clearAllFilters = () => {
-    setSearchTerm('');
-    setActiveFilters({
-      department: [],
-      position: [],
-      timePeriod: [],
-      evaluationStatus: 'all',
-    });
-  };
+  // Evaluation status filter options for the filter bar
+  const evaluationStatusOptions = [
+    { id: 'current', title: 'Current Interns' },
+    { id: 'completed', title: 'Completed (Needs Evaluation)' },
+    { id: 'evaluated', title: 'Evaluated' },
+  ];
 
   // Info card for Intern Management Dashboard
   const InternsInfoCard = () => (
@@ -631,33 +608,32 @@ function CurrentInternsView() {
   return (
     <div className="w-full max-w-6xl mx-auto p-10">
       <InternsInfoCard />
-      <ApplicationsFilterBar
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        searchPlaceholder="Search interns by name, department, position..."
-
-        primaryFilterName="Filter"
-        selectedPrimaryFilter={activeFilters.evaluationStatus}
-        onPrimaryFilterChange={(value) => handleFilterChange('evaluationStatus', value)}
-        primaryFilterOptions={[
-          // These should be derived from your actual evaluation statuses
-          { id: 'current', title: 'Current Interns' },
-          { id: 'completed', title: 'Completed (Needs Evaluation)' },
-          { id: 'evaluated', title: 'Evaluated' },
-        ]}
-
-        statusConfig={{}} // Not used if primary filter handles status
-        selectedStatus={'all'}
-        onStatusChange={() => { }}
-        showDatePicker={false} // Assuming no date picker needed for this view
-        onClearFilters={clearAllFilters}
-
-        marginBottom="mb-0"
-      />
+      <div className="dropdown-overlay">
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search interns by name, department, position..."
+          primaryFilterName="Filters"
+          selectedPrimaryFilter={selectedStatus}
+          onPrimaryFilterChange={setSelectedStatus}
+          primaryFilterOptions={evaluationStatusOptions}
+          onClearFilters={() => {
+            setSearchTerm('');
+            setSelectedStatus('all');
+          }}
+        />
+        <div className="w-full max-w-6xl mx-auto my-4">
+          <StatusPills
+            statuses={statusPills}
+            selected={selectedStatus}
+            onChange={setSelectedStatus}
+          />
+        </div>
+      </div>
       <CurrentInterns
         searchTerm={searchTerm}
-        activeFilters={activeFilters}
-        onEvaluationStatusChange={(value) => handleFilterChange('evaluationStatus', value)}
+        selectedStatus={selectedStatus}
+        onStatusChange={setSelectedStatus}
       />
     </div>
   );

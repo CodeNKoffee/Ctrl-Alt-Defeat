@@ -60,7 +60,7 @@ const transformStudentsToInterns = (students) => {
     });
 };
 
-export default function CurrentInterns({ searchTerm, activeFilters, onEvaluationStatusChange }) {
+export default function CurrentInterns({ searchTerm, selectedStatus = 'all', onStatusChange }) {
   const [interns, setInterns] = useState([]);
   const [evaluationModalOpen, setEvaluationModalOpen] = useState(false);
   const [selectedIntern, setSelectedIntern] = useState(null);
@@ -105,29 +105,15 @@ export default function CurrentInterns({ searchTerm, activeFilters, onEvaluation
   const filteredInterns = interns.filter(intern => {
     const search = searchTerm?.toLowerCase() || '';
     const matchesSearch =
-      !search || // if no search term, all match
+      !search ||
       intern.name.toLowerCase().includes(search) ||
       intern.jobTitle.toLowerCase().includes(search) ||
       intern.company.toLowerCase().includes(search) ||
-      (intern.department && intern.department.toLowerCase().includes(search)); // Added department to search
+      (intern.department && intern.department.toLowerCase().includes(search));
 
-    const matchesEvaluationStatus =
-      activeFilters.evaluationStatus === 'all' ||
-      intern.status === activeFilters.evaluationStatus;
+    const matchesStatus = selectedStatus === 'all' || intern.status === selectedStatus;
 
-    const matchesDepartment =
-      activeFilters.department.length === 0 ||
-      activeFilters.department.includes(intern.department);
-
-    const matchesPosition = // Assuming intern.jobTitle is the position
-      activeFilters.position.length === 0 ||
-      activeFilters.position.includes(intern.jobTitle);
-
-    const matchesTimePeriod = // Assuming intern.timePeriod is the internship period string
-      activeFilters.timePeriod.length === 0 ||
-      activeFilters.timePeriod.includes(intern.timePeriod);
-
-    return matchesSearch && matchesEvaluationStatus && matchesDepartment && matchesPosition && matchesTimePeriod;
+    return matchesSearch && matchesStatus;
   });
 
   return (
@@ -141,16 +127,6 @@ export default function CurrentInterns({ searchTerm, activeFilters, onEvaluation
           evaluationToEdit={null}
         />
       )}
-      <div className="flex flex-col gap-0 mb-6 w-full items-start">
-        {/* Unified Status Filter Pills */}
-        <div className="w-full max-w-6xl mx-auto mt-4 mb-1">
-          <StatusPills
-            statuses={displayStatuses}
-            selected={activeFilters.evaluationStatus}
-            onChange={onEvaluationStatusChange}
-          />
-        </div>
-      </div>
       <div className="w-full space-y-4">
         {filteredInterns.map((intern) => (
           <InternRow
