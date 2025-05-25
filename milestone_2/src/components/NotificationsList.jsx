@@ -507,12 +507,14 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
             >
               All
             </button>
+            {userData?.role === 'student' && (
             <button
               className={`flex-1 py-3 px-4 text-sm font-medium transition-all duration-200 ${activeTab === 'profile' ? 'text-[#3298BA] border-b-2 border-[#3298BA]' : 'text-gray-500 hover:text-[#5DB2C7]'}`}
               onClick={() => setActiveTab('profile')}
             >
               Profile Views
             </button>
+            )}
           </div>
 
           {/* Content area */}
