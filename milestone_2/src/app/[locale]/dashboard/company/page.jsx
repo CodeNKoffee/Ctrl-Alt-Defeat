@@ -473,6 +473,17 @@ function ApplicationsView() {
     setSelectedStatus('all');
     setSelectedInternship('all');
   };
+
+  // Build filter sections for the new filter bar API
+  const positionOptions = [
+    { id: 'all', title: 'All Positions' },
+    ...MOCK_INTERNSHIPS.map(pos => ({ id: pos.id.toString(), title: pos.title }))
+  ];
+  const statusOptions = [
+    { id: 'all', title: 'All Status' },
+    ...Object.entries(STATUS_CONFIG).map(([key, val]) => ({ id: key, title: val.label }))
+  ];
+
   return (
     <div className="min-h-screen p-4 isolate">
       <div className="container mx-auto px-6 py-6">
@@ -489,13 +500,22 @@ function ApplicationsView() {
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
               searchPlaceholder="Search by name, email, or position..."
-              selectedStatus={selectedStatus}
-              onStatusChange={setSelectedStatus}
-              statusConfig={STATUS_CONFIG}
-              primaryFilterName="Filter"
-              selectedPrimaryFilter={selectedInternship}
-              onPrimaryFilterChange={setSelectedInternship}
-              primaryFilterOptions={MOCK_INTERNSHIPS}
+              filterSections={[
+                {
+                  name: 'Position',
+                  options: positionOptions.slice(1),
+                  selected: selectedInternship,
+                  onChange: setSelectedInternship,
+                  resetLabel: 'All Positions'
+                },
+                {
+                  name: 'Status',
+                  options: statusOptions.slice(1),
+                  selected: selectedStatus,
+                  onChange: setSelectedStatus,
+                  resetLabel: 'All Status'
+                }
+              ]}
               onClearFilters={clearFilters}
             />
             <div className="w-full max-w-6xl mx-auto mt-4 mb-6">
@@ -613,10 +633,15 @@ function CurrentInternsView() {
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search interns by name, department, position..."
-          primaryFilterName="Filters"
-          selectedPrimaryFilter={selectedStatus}
-          onPrimaryFilterChange={setSelectedStatus}
-          primaryFilterOptions={evaluationStatusOptions}
+          filterSections={[
+            {
+              name: 'Status',
+              options: evaluationStatusOptions,
+              selected: selectedStatus,
+              onChange: setSelectedStatus,
+              resetLabel: 'All Status'
+            }
+          ]}
           onClearFilters={() => {
             setSearchTerm('');
             setSelectedStatus('all');

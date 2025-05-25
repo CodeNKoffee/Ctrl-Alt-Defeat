@@ -43,7 +43,10 @@ export default function ApplicationsFilterBar({
   // UI customization
   bgColor = "bg-[#D9F0F4]/60",
   filterButtonColor = "bg-white/90",
-  marginBottom = "mb-8"
+  marginBottom = "mb-8",
+  primaryFilterResetLabel,
+
+  filterSections = [], // [{ name, options, selected, onChange, resetLabel }]
 }) {
   const [isCombinedFilterPopoverOpen, setIsCombinedFilterPopoverOpen] = useState(false);
 
@@ -118,73 +121,29 @@ export default function ApplicationsFilterBar({
             className={`appearance-none w-full md:w-auto ${filterButtonColor} backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-3 px-4 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 flex items-center justify-center gap-2 combined-filter-button min-w-[150px]`}
           >
             <FontAwesomeIcon icon={faFilter} className="h-4 w-4 text-[#5DB2C7]" />
-            <span>{primaryFilterName}</span>
+            <span>Filters</span>
             <FontAwesomeIcon icon={faChevronDown} className={`h-4 w-4 text-[#5DB2C7] transition-transform duration-300 ${isCombinedFilterPopoverOpen ? 'rotate-180' : ''}`} />
           </button>
 
           {isCombinedFilterPopoverOpen && (
             <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-[1000] combined-filter-popover animate-dropdown focus:outline-none p-4 space-y-4">
-              {/* Primary Filter Section (like Internship types) */}
-              {primaryFilterOptions.length > 0 && (
-                <div>
-                  <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">{primaryFilterName}</h4>
+              {filterSections.map((section, idx) => (
+                <div key={section.name || idx}>
+                  <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">{section.name}</h4>
                   <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
                     <div
-                      className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${selectedPrimaryFilter === 'all' ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
-                      onClick={() => onPrimaryFilterChange('all')}
+                      className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${section.selected === 'all' ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
+                      onClick={() => section.onChange('all')}
                     >
-                      All {primaryFilterName}s
+                      {section.resetLabel || `All ${section.name}`}
                     </div>
-                    {primaryFilterOptions.map(option => (
+                    {section.options.map(option => (
                       <div
                         key={option.id}
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${selectedPrimaryFilter === option.id.toString() ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
-                        onClick={() => onPrimaryFilterChange(option.id.toString())}
+                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${section.selected === option.id.toString() ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
+                        onClick={() => section.onChange(option.id.toString())}
                       >
                         {option.title || option.label || option.name}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Status Filter Section */}
-              {Object.keys(statusConfig).length > 0 && (
-                <div>
-                  <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Status</h4>
-                  <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                    <div
-                      className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${selectedStatus === 'all' ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
-                      onClick={() => onStatusChange('all')}
-                    >
-                      All Status
-                    </div>
-                    {Object.entries(statusConfig).map(([status, config]) => (
-                      <div
-                        key={status}
-                        className={`px-3 py-2 text-sm flex items-center gap-2 text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${selectedStatus === status ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
-                        onClick={() => onStatusChange(status)}
-                      >
-                        <span className={`h-2.5 w-2.5 rounded-full ${config.badgeColor} border border-black/20`}></span>
-                        {config.label}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Custom Filter Sections */}
-              {customFilterSections.map((section, index) => (
-                <div key={index}>
-                  <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">{section.title}</h4>
-                  <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                    {section.options.map((option, optionIndex) => (
-                      <div
-                        key={optionIndex}
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${section.isSelected(option) ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
-                        onClick={() => section.onSelect(option)}
-                      >
-                        {option.label || option}
                       </div>
                     ))}
                   </div>
