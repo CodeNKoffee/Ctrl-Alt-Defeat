@@ -3,6 +3,49 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faXmark, faChevronDown, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from '@/components/DatePicker';
 
+// Add a color map for status values
+const STATUS_COLOR_MAP = {
+  pending: 'bg-yellow-600',
+  accepted: 'bg-green-600',
+  finalized: 'bg-purple-600',
+  rejected: 'bg-red-600',
+  current: 'bg-blue-600',
+  completed: 'bg-green-600',
+  evaluated: 'bg-purple-600',
+};
+
+// Add a color map for status values (for pills)
+const STATUS_PILL_STYLE_MAP = {
+  pending: {
+    color: 'bg-yellow-100 text-yellow-800 border-2 border-yellow-400',
+    badgeColor: 'bg-yellow-600',
+  },
+  accepted: {
+    color: 'bg-green-100 text-green-800 border-2 border-green-400',
+    badgeColor: 'bg-green-600',
+  },
+  finalized: {
+    color: 'bg-purple-100 text-purple-800 border-2 border-purple-400',
+    badgeColor: 'bg-purple-600',
+  },
+  rejected: {
+    color: 'bg-red-100 text-red-800 border-2 border-red-400',
+    badgeColor: 'bg-red-600',
+  },
+  current: {
+    color: 'bg-blue-100 text-blue-800 border-2 border-blue-400',
+    badgeColor: 'bg-blue-600',
+  },
+  completed: {
+    color: 'bg-green-100 text-green-800 border-2 border-green-400',
+    badgeColor: 'bg-green-600',
+  },
+  evaluated: {
+    color: 'bg-purple-100 text-purple-800 border-2 border-purple-400',
+    badgeColor: 'bg-purple-600',
+  },
+};
+
 export default function ApplicationsFilterBar({
   // Search functionality
   searchTerm = '',
@@ -143,9 +186,13 @@ export default function ApplicationsFilterBar({
                     {section.options.map(option => (
                       <div
                         key={option.id}
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${section.selected === option.id.toString() ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
+                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 flex items-center ${section.selected === option.id.toString() ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
                         onClick={() => section.onChange(option.id.toString())}
                       >
+                        {/* Add color dot for status sections only */}
+                        {section.name.toLowerCase() === 'status' && STATUS_COLOR_MAP[option.id] && (
+                          <span className={`inline-block w-2 h-2 rounded-full mr-2 ${STATUS_COLOR_MAP[option.id]}`}></span>
+                        )}
                         {option.title || option.label || option.name}
                       </div>
                     ))}
@@ -164,19 +211,41 @@ export default function ApplicationsFilterBar({
             <span className="text-sm text-[#2a5f74] font-medium">Active Filters:</span>
             {filterSections.map(section => (
               section.selected && section.selected !== 'all' ? (
-                <div key={section.name} className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group">
-                  <span className="mr-1.5">{section.name}:</span>
-                  <span className="font-semibold mr-1.5">
-                    {section.options.find(opt => opt.id.toString() === section.selected)?.title || section.selected}
-                  </span>
-                  <button
-                    className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
-                    onClick={() => section.onChange('all')}
-                    aria-label={`Remove ${section.name} filter`}
+                section.name.toLowerCase() === 'status' && STATUS_PILL_STYLE_MAP[section.selected] ? (
+                  <div
+                    key={section.name}
+                    className={`flex items-center px-3 py-1.5 rounded-full text-xs font-medium h-[38px] transition-all mr-2 ${STATUS_PILL_STYLE_MAP[section.selected].color}`}
+                    style={{ borderWidth: 2 }}
                   >
-                    <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
-                  </button>
-                </div>
+                    <span className="mr-1.5">Status:</span>
+                    <span className={`inline-block w-2 h-2 rounded-full mr-1.5 ${STATUS_PILL_STYLE_MAP[section.selected].badgeColor}`}></span>
+                    <span className="font-semibold mr-1.5">
+                      {section.options.find(opt => opt.id.toString() === section.selected)?.title || section.selected}
+                    </span>
+                    <button
+                      className={`ml-2 px-0.5 rounded-full`}
+                      style={{ color: STATUS_PILL_STYLE_MAP[section.selected].color.split(' ')[2]?.replace('border-', '').replace('-400', '') ? STATUS_PILL_STYLE_MAP[section.selected].color.split(' ')[2].replace('border-', '').replace('-400', '') : '#5DB2C7' }}
+                      onClick={() => section.onChange('all')}
+                      aria-label={`Remove ${section.name} filter`}
+                    >
+                      <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
+                    </button>
+                  </div>
+                ) : (
+                  <div key={section.name} className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group">
+                    <span className="mr-1.5">{section.name}:</span>
+                    <span className="font-semibold mr-1.5">
+                      {section.options.find(opt => opt.id.toString() === section.selected)?.title || section.selected}
+                    </span>
+                    <button
+                      className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
+                      onClick={() => section.onChange('all')}
+                      aria-label={`Remove ${section.name} filter`}
+                    >
+                      <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
+                    </button>
+                  </div>
+                )
               ) : null
             ))}
           </div>
