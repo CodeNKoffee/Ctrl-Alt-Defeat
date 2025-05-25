@@ -637,39 +637,6 @@ function CurrentInternsView() {
         showDatePicker={false} // Assuming no date picker needed for this view
         onClearFilters={clearAllFilters}
 
-        customFilterSections={[
-          {
-            title: 'Department',
-            options: [
-              // These should be dynamically populated from your data
-              { label: 'Design', value: 'Design' },
-              { label: 'Engineering', value: 'Engineering' },
-              { label: 'Marketing', value: 'Marketing' },
-            ],
-            isSelected: (option) => activeFilters.department.includes(option.value),
-            onSelect: (option) => handleFilterChange('department', option.value),
-          },
-          {
-            title: 'Position',
-            options: [
-              // Dynamically populate from data
-              { label: 'Frontend Developer', value: 'Frontend Developer' },
-              { label: 'UX Designer', value: 'UX Designer' },
-            ],
-            isSelected: (option) => activeFilters.position.includes(option.value),
-            onSelect: (option) => handleFilterChange('position', option.value),
-          },
-          {
-            title: 'Time Period',
-            options: [
-              // Dynamically populate (e.g., "Fall 2023", "Spring 2024")
-              { label: 'Fall 2023', value: 'Fall 2023' },
-              { label: 'Spring 2024', value: 'Spring 2024' },
-            ],
-            isSelected: (option) => activeFilters.timePeriod.includes(option.value),
-            onSelect: (option) => handleFilterChange('timePeriod', option.value),
-          },
-        ]}
         marginBottom="mb-0"
       />
       <CurrentInterns searchTerm={searchTerm} activeFilters={activeFilters} />
