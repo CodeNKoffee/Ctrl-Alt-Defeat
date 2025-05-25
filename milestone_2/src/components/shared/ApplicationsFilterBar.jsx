@@ -73,6 +73,9 @@ export default function ApplicationsFilterBar({
     selectedDate ||
     hasActiveCustomFilters;
 
+  // Determine if any filters are active in filterSections
+  const hasActiveFilters = filterSections.some(section => section.selected && section.selected !== 'all');
+
   return (
     <div className={`w-full ${bgColor} backdrop-blur-md p-6 rounded-xl shadow-lg ${marginBottom} border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl relative z-20 isolation-auto`}>
 
@@ -156,109 +159,26 @@ export default function ApplicationsFilterBar({
 
       {/* No filters text or active filters display */}
       <div className="w-full mt-4 pt-4 border-t border-[#B8E1E9]/50">
-        {hasFilters ? (
+        {hasActiveFilters ? (
           <div className="flex flex-wrap gap-3 items-center">
             <span className="text-sm text-[#2a5f74] font-medium">Active Filters:</span>
-
-            {/* Search term filter */}
-            {searchTerm && (
-              <div className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group">
-                <span className="mr-1.5">Search:</span>
-                <span className="font-semibold italic mr-1.5">"{searchTerm}"</span>
-                <button
-                  className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
-                  onClick={() => onSearchChange('')}
-                  aria-label="Remove search term"
-                >
-                  <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-
-            {/* Status filter */}
-            {selectedStatus !== 'all' && statusConfig[selectedStatus] && (
-              <div className={`flex items-center px-3 py-1.5 rounded-full text-xs font-medium ${statusConfig[selectedStatus].color} shadow-sm hover:shadow-md transition-all duration-300 group`}>
-                <span className="mr-1.5">Status:</span>
-                <span className="font-semibold mr-1.5">{statusConfig[selectedStatus].label}</span>
-                <button
-                  className="ml-1 p-0.5 rounded-full opacity-70 hover:opacity-100 transition-opacity duration-200 hover:bg-black/10"
-                  onClick={() => onStatusChange('all')}
-                  aria-label={`Remove status filter ${statusConfig[selectedStatus].label}`}
-                >
-                  <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-
-            {/* Primary filter */}
-            {selectedPrimaryFilter !== 'all' && (
-              <div className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group">
-                <span className="mr-1.5">{primaryFilterName}:</span>
-                <span className="font-semibold mr-1.5">
-                  {primaryFilterOptions.find(i => i.id === parseInt(selectedPrimaryFilter) || i.id === selectedPrimaryFilter)?.title ||
-                    primaryFilterOptions.find(i => i.id === parseInt(selectedPrimaryFilter) || i.id === selectedPrimaryFilter)?.label ||
-                    primaryFilterOptions.find(i => i.id === parseInt(selectedPrimaryFilter) || i.id === selectedPrimaryFilter)?.name ||
-                    selectedPrimaryFilter}
-                </span>
-                <button
-                  className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
-                  onClick={() => onPrimaryFilterChange('all')}
-                  aria-label="Remove position filter"
-                >
-                  <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-
-            {/* Date filter */}
-            {selectedDate && (
-              <div className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group">
-                <span className="mr-1.5">Date:</span>
-                <span className="font-semibold mr-1.5">
-                  {selectedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-                </span>
-                <button
-                  className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
-                  onClick={() => onDateChange(null)}
-                  aria-label="Remove date filter"
-                >
-                  <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-
-            {/* Custom Active Filters */}
-            {customFilterSections.map(section => {
-              const selectedOption = section.options.find(opt => section.isSelected(opt));
-              if (selectedOption) {
-                return (
-                  <div
-                    key={section.title}
-                    className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group"
+            {filterSections.map(section => (
+              section.selected && section.selected !== 'all' ? (
+                <div key={section.name} className="flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 text-[#2a5f74] border-2 border-[#B8E1E9] shadow-sm hover:shadow-md transition-all duration-300 group">
+                  <span className="mr-1.5">{section.name}:</span>
+                  <span className="font-semibold mr-1.5">
+                    {section.options.find(opt => opt.id.toString() === section.selected)?.title || section.selected}
+                  </span>
+                  <button
+                    className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
+                    onClick={() => section.onChange('all')}
+                    aria-label={`Remove ${section.name} filter`}
                   >
-                    <span className="mr-1.5">{section.title}:</span>
-                    <span className="font-semibold mr-1.5">
-                      {selectedOption.label || selectedOption.value}
-                    </span>
-                    <button
-                      className="ml-1 p-0.5 rounded-full text-[#5DB2C7] hover:bg-[#B8E1E9]/60 hover:text-[#1a3f54] transition-colors duration-200"
-                      onClick={() => section.onSelect(selectedOption)}
-                      aria-label={`Remove ${section.title} filter`}
-                    >
-                      <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
-                    </button>
-                  </div>
-                );
-              }
-              return null;
-            })}
-
-            <button
-              className="ml-auto bg-[#2a5f74] hover:bg-[#1a3f54] text-white px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm hover:shadow-md transition-all duration-300 flex items-center"
-              onClick={onClearFilters}
-            >
-              <FontAwesomeIcon icon={faXmark} className="w-3 h-3 mr-1.5" /> Clear All
-            </button>
+                    <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
+                  </button>
+                </div>
+              ) : null
+            ))}
           </div>
         ) : (
           <p className="text-sm text-gray-500 italic">No filters currently applied.</p>
