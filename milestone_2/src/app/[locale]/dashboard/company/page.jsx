@@ -505,6 +505,44 @@ function ApplicationsView() {
 }
 
 function CurrentInternsView() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeFilters, setActiveFilters] = useState({
+    department: [], // Example filter category
+    position: [],   // Example filter category
+    timePeriod: [], // Example filter category
+    evaluationStatus: 'all', // Using 'all' as default for a primary-like filter
+  });
+
+  const handleFilterChange = (category, value) => {
+    setActiveFilters(prev => {
+      const newFilters = { ...prev };
+      // For multi-select custom filters (like department, position)
+      if (Array.isArray(newFilters[category])) {
+        if (value === 'all') {
+          newFilters[category] = [];
+        } else if (newFilters[category].includes(value)) {
+          newFilters[category] = newFilters[category].filter(item => item !== value);
+        } else {
+          newFilters[category] = [...newFilters[category], value];
+        }
+      } else {
+        // For single-select primary-like filters (like evaluationStatus)
+        newFilters[category] = value;
+      }
+      return newFilters;
+    });
+  };
+
+  const clearAllFilters = () => {
+    setSearchTerm('');
+    setActiveFilters({
+      department: [],
+      position: [],
+      timePeriod: [],
+      evaluationStatus: 'all',
+    });
+  };
+
   // Info card for Intern Management Dashboard
   const InternsInfoCard = () => (
     <div className="w-full max-w-6xl mx-auto">
@@ -577,7 +615,64 @@ function CurrentInternsView() {
   return (
     <div className="w-full max-w-6xl mx-auto p-10">
       <InternsInfoCard />
-      <CurrentInterns />
+      <ApplicationsFilterBar
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        searchPlaceholder="Search interns by name, department, position..."
+
+        primaryFilterName="Evaluation Status"
+        selectedPrimaryFilter={activeFilters.evaluationStatus}
+        onPrimaryFilterChange={(value) => handleFilterChange('evaluationStatus', value)}
+        primaryFilterOptions={[
+          // These should be derived from your actual evaluation statuses
+          { id: 'all', title: 'All Statuses' },
+          { id: 'current', title: 'Current Interns' },
+          { id: 'completed', title: 'Completed (Needs Evaluation)' },
+          { id: 'evaluated', title: 'Evaluated' },
+        ]}
+
+        statusConfig={{}} // Not used if primary filter handles status
+        selectedStatus={'all'}
+        onStatusChange={() => { }}
+        showDatePicker={false} // Assuming no date picker needed for this view
+        onClearFilters={clearAllFilters}
+
+        customFilterSections={[
+          {
+            title: 'Department',
+            options: [
+              // These should be dynamically populated from your data
+              { label: 'Design', value: 'Design' },
+              { label: 'Engineering', value: 'Engineering' },
+              { label: 'Marketing', value: 'Marketing' },
+            ],
+            isSelected: (option) => activeFilters.department.includes(option.value),
+            onSelect: (option) => handleFilterChange('department', option.value),
+          },
+          {
+            title: 'Position',
+            options: [
+              // Dynamically populate from data
+              { label: 'Frontend Developer', value: 'Frontend Developer' },
+              { label: 'UX Designer', value: 'UX Designer' },
+            ],
+            isSelected: (option) => activeFilters.position.includes(option.value),
+            onSelect: (option) => handleFilterChange('position', option.value),
+          },
+          {
+            title: 'Time Period',
+            options: [
+              // Dynamically populate (e.g., "Fall 2023", "Spring 2024")
+              { label: 'Fall 2023', value: 'Fall 2023' },
+              { label: 'Spring 2024', value: 'Spring 2024' },
+            ],
+            isSelected: (option) => activeFilters.timePeriod.includes(option.value),
+            onSelect: (option) => handleFilterChange('timePeriod', option.value),
+          },
+        ]}
+        marginBottom="mb-0"
+      />
+      <CurrentInterns searchTerm={searchTerm} activeFilters={activeFilters} />
     </div>
   );
 }

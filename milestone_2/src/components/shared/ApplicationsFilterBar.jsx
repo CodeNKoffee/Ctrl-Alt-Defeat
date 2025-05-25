@@ -42,7 +42,8 @@ export default function ApplicationsFilterBar({
 
   // UI customization
   bgColor = "bg-[#D9F0F4]/60",
-  filterButtonColor = "bg-white/90"
+  filterButtonColor = "bg-white/90",
+  marginBottom = "mb-8"
 }) {
   const [isCombinedFilterPopoverOpen, setIsCombinedFilterPopoverOpen] = useState(false);
 
@@ -70,7 +71,7 @@ export default function ApplicationsFilterBar({
     hasActiveCustomFilters;
 
   return (
-    <div className={`w-full ${bgColor} backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl relative z-20 isolation-auto`}>
+    <div className={`w-full ${bgColor} backdrop-blur-md p-6 rounded-xl shadow-lg ${marginBottom} border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl relative z-20 isolation-auto`}>
 
       {/* Main filter section with search and industry filter */}
       <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
