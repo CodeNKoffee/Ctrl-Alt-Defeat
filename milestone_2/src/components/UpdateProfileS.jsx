@@ -240,8 +240,9 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                     {/* Color Theme Picker */}
                     <div className="form-row color-picker-container">
                       <label htmlFor="cardColor" className="color-picker-label">
-                        <FontAwesomeIcon icon={faPalette} /> Profile Color Theme
+                        <FontAwesomeIcon icon={faPalette} className="mr-2" /> Personalize Your Profile Card Theme
                       </label>
+                      <p className="text-sm text-gray-600 mb-2">Choose a color to automatically generate a matching theme for your profile card</p>
                       <div className="color-picker-wrapper">
                         <div className="color-picker-clickable">
                           <input
@@ -269,7 +270,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                               background: generateGradient(values.cardColor)
                             }}
                           >
-                            <span className='preview'>Card Preview</span>
+                            <span className='preview'>Card Color Preview</span>
                           </div>
                           <div className="theme-color-squares">
                             <div className="theme-color-row">

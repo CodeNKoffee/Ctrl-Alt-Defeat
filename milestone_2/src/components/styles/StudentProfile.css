@@ -1221,16 +1221,44 @@
 
 .color-picker-clickable {
   position: relative;
-  height: 40px;
+  height: 45px;
   width: 100%;
   max-width: 300px;
   overflow: hidden;
   border-radius: 20px;
   cursor: pointer;
-  border: 2px dashed #aaa;
+  border: 2px solid var(--metallica-blue-300);
+  background-image: linear-gradient(to right, #ff0000, #ff9900, #ffff00, #33cc33, #3399ff, #9933ff);
+  background-size: 100% 5px;
+  background-position: bottom;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.color-picker-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(49, 143, 168, 0.4);
+  border-color: var(--metallica-blue-500);
+  background-image: linear-gradient(to right, #ff0000, #ff9900, #ffff00, #33cc33, #3399ff, #9933ff);
+  background-size: 100% 100%;
+  background-position: center;
+  transition: all 0.3s ease;
+}
+
+.color-picker-clickable:hover .click-indicator {
+  background-color: rgba(255, 255, 255, 0.85);
+  transform: scale(0.95);
+  border: 2px dashed var(--metallica-blue-400);
+  margin: 5px;
+  font-weight: 700;
+}
+
+.color-picker-clickable:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(49, 143, 168, 0.2);
 }
 
 .color-picker-input {
@@ -1250,21 +1278,35 @@
   justify-content: center;
   height: 100%;
   width: 100%;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #666;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--metallica-blue-600);
+  background-color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 0 white;
+  transition: all 0.3s ease;
+  position: relative;
   animation: pulse 2s infinite;
+  border-radius: 16px;
+}
+
+.click-indicator::before {
+  content: "🎨";
+  margin-right: 8px;
+  font-size: 16px;
 }
 
 @keyframes pulse {
   0% {
-    opacity: 0.6;
+    opacity: 0.9;
+    transform: scale(1);
   }
   50% {
     opacity: 1;
+    transform: scale(1.02);
   }
   100% {
-    opacity: 0.6;
+    opacity: 0.9;
+    transform: scale(1);
   }
 }
 
@@ -1277,17 +1319,34 @@
 
 .color-preview {
   flex: 1;
-  height: 40px;
-  border-radius: 8px;
+  height: 70px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--user-text);
   font-size: 0.9rem;
   font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3), 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
+  position: relative;
+  border: 2px solid var(--user-primary);
+  overflow: hidden;
+  background: var(--user-background);
+}
+
+/* Add the same gradient overlay as the student card */
+.color-preview::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom right, white, var(--user-accent-transparent, rgba(65, 185, 217, 0.4)));
+  pointer-events: none;
+  z-index: 1;
 }
 
 .theme-color-squares {
@@ -1320,10 +1379,16 @@
 }
 
 .preview {
-  font-size: 12px;
-  padding: 2px 6px;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  font-size: 14px;
+  padding: 5px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  color: var(--user-primary);
+  font-weight: 700;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); 
+  border: 1px solid var(--user-primary);
+  position: relative;
+  z-index: 5;
 }
 
 /* Error message styling */
