@@ -10,6 +10,7 @@ import { mockCompanyReviews } from '../../../constants/mockData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
+import CustomButton from "../shared/CustomButton";
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";
@@ -288,18 +289,30 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             {/* Only show Create Report for completed status in 'my' internships */}
             {type === 'my' && internship.status === 'completed' && (
               <div className="flex gap-2">
-                <button
+                {/* <button
                   onClick={() => onTriggerReportCreate(internship)}
-                  className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#E2F4F7] text-[#4d98ab] border border-[#4d98ab] hover:bg-[#aedae5] transition duration-200"
+                  className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#E2F4F7] text-[#4d98ab] border border-[#4d98ab] hover:bg-[#aedae5] transition duration-200 hover:-translate-y-0.5"
                 >
                   Create Report
-                </button>
-                <button
+                </button> */}
+                <CustomButton
+                          onClick={() => setTestStarted(true)}
+                          variant="secondary"
+                          text="Create Report"
+                          width="w-90"
+                        />
+                {/* <button
                   onClick={() => setShowEvaluation(true)}
-                  className="px-3 py-1 text-sm rounded-full font-medium bg-green-100 text-green-800 border-green-400 border hover:bg-green-200"
+                  className="px-3 py-1 text-md rounded-full font-bold bg-green-100 text-green-800 border-green-400 border hover:bg-green-200 hover:-translate-y-0.5"
                 >
                   Evaluate Company
-                </button>
+                </button> */}
+                 <CustomButton
+                          onClick={() => setTestStarted(true)}
+                          variant="green"
+                          text="Evaluate Company"
+                          width="w-90"
+                        />
               </div>
             )}
 

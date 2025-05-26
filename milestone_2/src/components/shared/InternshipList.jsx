@@ -95,7 +95,7 @@ export default function InternshipList({
     },
     // For my internships
     current: {
-      label: "CURRENT INTERN",
+      label: "CURRENT",
       color: "bg-blue-100 text-blue-800 border-2 border-blue-400",
       badgeColor: "bg-blue-600",
     },

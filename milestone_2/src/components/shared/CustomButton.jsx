@@ -21,6 +21,7 @@ export default function CustomButton({
     primary: "bg-[#318FA8] text-white hover:bg-[#2a5c67] border-[#5DB2C7]",
     secondary: "bg-[#daedf0] text-[#318FA8] hover:bg-[#D9F0F4] border-[#5DB2C7]",
     danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
+    green:"px-3 py-1 rounded-full bg-green-100 text-green-800 border-green-400 border hover:bg-green-200 hover:-translate-y-0.5"
   };
 
   return (
