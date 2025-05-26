@@ -24,7 +24,7 @@ export default function Student() {
     },
     personalityTraits: [
       { trait: "Openness", rating: 4 },
-      { trait: "Conscientiousness", rating: 5 },
+      { trait: "Creativity", rating: 5 },
       { trait: "Extraversion", rating: 4 },
       { trait: "Agreeableness", rating: 3 },
     ],

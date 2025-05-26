@@ -40,6 +40,7 @@ export default function StudentCard({ isOpen, toggleDetails, onEditProfile, stud
     "--user-primary": theme.primary,
     "--user-secondary": theme.secondary,
     "--user-accent": theme.accent,
+    "--user-accent-transparent": theme.accent + '66', // 66 in hex is approx 0.4 opacity
     "--user-text": theme.text,
     "--user-background": theme.background,
     "height": "673px" // Fixed height to match StudentDetails
@@ -70,7 +71,6 @@ export default function StudentCard({ isOpen, toggleDetails, onEditProfile, stud
 
       <div
         className="card-top"
-        style={{ background: "#FFFFFF" }}
       >
         <div className="profile-image-container">
           <img
