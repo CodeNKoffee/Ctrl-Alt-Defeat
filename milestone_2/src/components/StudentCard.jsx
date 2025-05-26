@@ -90,9 +90,9 @@ export default function StudentCard({ isOpen, toggleDetails, onEditProfile, stud
         </p>
         <div className="student-info-section">
           <h3 className="section-title" style={sectionTitleStyle}>MAJOR</h3>
-          <p className="section-value" style={sectionValueStyle}>{studentData.major || "N/A"}</p>
+          <p className="section-value" style={sectionValueStyle}>{studentData.major || "Compute Science and Engineering"}</p>
           <h3 className="section-title" style={sectionTitleStyle}>GRADUATING CLASS</h3>
-          <p className="section-value" style={sectionValueStyle}>{studentData.year || "N/A"}</p>
+          <p className="section-value" style={sectionValueStyle}>{studentData.year || "2027"}</p>
         </div>
         <div className="social-links">
           <a href={studentData.socialLinks?.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={socialIconStyle}>

@@ -147,7 +147,6 @@
 }
 
 .student-info-section {
-  margin-bottom: 0.8rem;
   margin-top: 1rem;
   position: relative;
   width: 100%;
@@ -169,8 +168,13 @@
   font-size: 0.9rem;
   color: var(--user-secondary);
   margin-bottom: 0.2rem;
+  /* margin-top:2px; */
   text-transform: uppercase;
   letter-spacing: 0.1em;
+}
+
+.student-info-section .section-title:first-child {
+  margin-top: 0.9rem;
 }
 
 .student-info-section .section-value {

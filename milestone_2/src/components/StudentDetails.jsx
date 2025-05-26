@@ -90,7 +90,7 @@ export default function StudentDetails({ isOpen, studentData }) {
             <div className="details-section education-section">
               <h3 style={sectionTitleStyle}>Education</h3>
               <div className="education-content">
-                {studentData.education && studentData.education[0] && (
+               {studentData.education && studentData.education[0] && (
                   <div className="education-item">
                     <h4 style={headingStyle}>{studentData.education[0].degree}</h4>
                     <p style={textStyle}>{studentData.education[0].institution}</p>

@@ -288,41 +288,39 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
 
             {/* Only show Create Report for completed status in 'my' internships */}
             {type === 'my' && internship.status === 'completed' && (
-              <div className="flex gap-2">
-                {/* <button
-                  onClick={() => onTriggerReportCreate(internship)}
-                  className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#E2F4F7] text-[#4d98ab] border border-[#4d98ab] hover:bg-[#aedae5] transition duration-200 hover:-translate-y-0.5"
-                >
-                  Create Report
-                </button> */}
-                <CustomButton
-                          onClick={() => setTestStarted(true)}
-                          variant="secondary"
-                          text="Create Report"
-                          width="w-90"
-                        />
-                {/* <button
-                  onClick={() => setShowEvaluation(true)}
-                  className="px-3 py-1 text-md rounded-full font-bold bg-green-100 text-green-800 border-green-400 border hover:bg-green-200 hover:-translate-y-0.5"
-                >
-                  Evaluate Company
-                </button> */}
-                 <CustomButton
-                          onClick={() => setTestStarted(true)}
-                          variant="green"
-                          text="Evaluate Company"
-                          width="w-90"
-                        />
-              </div>
+         <div className="flex flex-col sm:flex-row gap-2 mt-4">
+          <button
+            onClick={() => onTriggerReportCreate(internship)}
+            className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+            flex items-center justify-center focus:outline-none focus:ring-2
+             bg-[#318FA8] text-white hover:bg-[#2a5c67] border-[#5DB2C7]
+            transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
+          >
+            Create Report
+          </button>
+
+          <button
+            onClick={() => setShowEvaluation(true)}
+            className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+            flex items-center justify-center focus:outline-none focus:ring-2
+            bg-green-100 text-green-800 border-green-400 hover:bg-[#aeeac5]
+            transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
+          >
+            Evaluate Company
+          </button>
+        </div>
+
             )}
 
             {/* Apply button for recommended or browsing internships */}
             {(type === 'recommended' || type === 'browsing') && type !== 'company-view' && (
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
-                className={`px-4 py-2 text-white rounded-full transition sm:w-auto text-sm hover:-translate-y-0.5 ${isApplied ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#5DB2C7] hover:bg-[#4796a8]'
-                  }`}
-                disabled={isApplied}
+                className="p font-bold py-2 px-3 rounded-full transition-all duration-200 
+        flex items-center justify-center focus:outline-none focus:ring-2
+       bg-[#318FA8] text-white hover:bg-[#2a5c67] border-[#5DB2C7]
+        w-24 hover:-translate-y-0.5 shadow-md hover:shadow-lg  border letter-spacing-1"
+          disabled={isApplied}
               >
                 {isApplied ? 'Applied' : 'Apply'}
               </button>
