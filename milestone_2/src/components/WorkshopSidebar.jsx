@@ -47,7 +47,7 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
       case 'live':
         return 'bg-red-500 hover:bg-red-600';
       case 'prerecorded':
-        return 'bg-yellow-500 hover:bg-yellow-600 text-gray-900';
+        return 'bg-amber-100 hover:bg-amber-200 text-amber-800';
       default:
         return 'bg-[#3298BA] hover:bg-[#267a8c]';
     }
@@ -125,8 +125,8 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
                   />
                   {workshop.type && (
                     <span className={`absolute top-2 left-2 px-3 py-1 rounded-md text-xs font-bold ${workshop.type === 'live' ? 'bg-red-500 text-white' :
-                      workshop.type === 'prerecorded' ? 'bg-yellow-500 text-gray-900' :
-                        'bg-green-600 text-white'
+                      workshop.type === 'prerecorded' ? 'bg-amber-200 text-amber-800 ' :
+                        'bg-green-600  text-white'
                       }`}>
                       {workshop.type === 'live' ? 'LIVE' :
                         workshop.type === 'prerecorded' ? 'PRERECORDED' :
@@ -197,6 +197,7 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
               <CustomButton
                 onClick={handleAction}
                 text={getButtonText()}
+                variant={workshop.type === 'live' ? 'danger' : workshop.type === 'prerecorded' ? 'pre' : 'upcoming'}
                 width="w-full"
                 disabled={registrationFeedback === 'success' && workshop.type !== 'live' && workshop.type !== 'prerecorded'}
               >

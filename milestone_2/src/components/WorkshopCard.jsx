@@ -27,8 +27,8 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
       case "prerecorded":
         return {
           text: "Prerecorded",
-          bgColor: "bg-yellow-500",
-          textColor: "text-gray-900"
+          bgColor: " bg-amber-200 ",
+          textColor: "text-amber-900"
         };
       default: // regular/upcoming
         return {
@@ -78,7 +78,8 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
           alt={workshop.title}
           className="w-full h-full object-cover"
         />
-        <span className={`absolute top-0 left-0 ${typeLabel.bgColor} ${typeLabel.textColor} text-xs font-medium px-3 py-1 rounded-br-md`}>
+        <span className={`absolute top-0 left-0 ${typeLabel.bgColor} ${typeLabel.textColor} text-xs font-medium px-3 py-1 rounded-br-md flex items-center gap-2`}>
+          <span className={`h-2 w-2 rounded-full ${workshop.type === "live" ? "bg-red-300" : workshop.type === "prerecorded" ? "bg-amber-500" : "bg-green-300"}`}></span>
           {typeLabel.text}
         </span>
       </div>

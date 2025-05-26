@@ -1449,7 +1449,7 @@ export const mockStudents = [
     },
     personalityTraits: [
       { trait: "Openness", rating: 3 },
-      { trait: "Conscientiousness", rating: 4 },
+      { trait: "Creativity", rating: 4 },
       { trait: "Extraversion", rating: 2 },
       { trait: "Agreeableness", rating: 4 }
     ],
@@ -1505,7 +1505,7 @@ export const mockStudents = [
     },
     personalityTraits: [
       { trait: "Openness", rating: 5 },
-      { trait: "Conscientiousness", rating: 4 },
+      { trait: "Creativity", rating: 4 },
       { trait: "Extraversion", rating: 3 },
       { trait: "Agreeableness", rating: 5 }
     ],
@@ -1562,7 +1562,7 @@ export const mockStudents = [
     },
     personalityTraits: [
       { trait: "Openness", rating: 4 },
-      { trait: "Conscientiousness", rating: 5 },
+      { trait: "Creativity", rating: 5 },
       { trait: "Extraversion", rating: 4 },
       { trait: "Agreeableness", rating: 3 }
     ],
@@ -1656,7 +1656,7 @@ export const mockStudents = [
     },
     personalityTraits: [
       { trait: "Openness", rating: 4 },
-      { trait: "Conscientiousness", rating: 2 },
+      { trait: "Creativity", rating: 2 },
       { trait: "Extraversion", rating: 5 },
       { trait: "Agreeableness", rating: 3 }
     ],
@@ -1716,7 +1716,7 @@ export const mockStudents = [
     },
     personalityTraits: [
       { trait: "Openness", rating: 5 },
-      { trait: "Conscientiousness", rating: 3 },
+      { trait: "Creativity", rating: 3 },
       { trait: "Extraversion", rating: 4 },
       { trait: "Agreeableness", rating: 4 }
     ],
@@ -1775,7 +1775,7 @@ export const mockStudents = [
     },
     personalityTraits: [
       { trait: "Openness", rating: 3 },
-      { trait: "Conscientiousness", rating: 4 },
+      { trait: "Creativity", rating: 4 },
       { trait: "Extraversion", rating: 2 },
       { trait: "Agreeableness", rating: 3 }
     ],
@@ -1813,7 +1813,7 @@ export const mockStudents = [
     },
     personalityTraits: [
       { trait: "Openness", rating: 4 },
-      { trait: "Conscientiousness", rating: 5 },
+      { trait: "Creativity", rating: 5 },
       { trait: "Extraversion", rating: 2 },
       { trait: "Agreeableness", rating: 4 }
     ],
@@ -1873,7 +1873,7 @@ export const mockStudents = [
     },
     personalityTraits: [
       { trait: "Openness", rating: 3 },
-      { trait: "Conscientiousness", rating: 4 },
+      { trait: "Creativity", rating: 4 },
       { trait: "Extraversion", rating: 3 },
       { trait: "Agreeableness", rating: 5 }
     ],

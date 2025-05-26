@@ -8,7 +8,29 @@
 }
 
 /* Profile Container */
-.profile-container {
+.profile-container {.details-content {
+  padding: 0 1.5rem;
+  width: 100%;
+  overflow-y: auto;
+  max-height: 667px;
+  background: transparent; /* Make the container background transparent */
+}
+
+/* You might also want to update the student-details-container to be transparent */
+.student-details-container {
+  flex: 1;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  height: 673px;
+  max-height: 673px;
+  transition: all 0.4s ease;
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); */
+  /* border: 3px solid var(--user-primary); */
+  background: transparent; /* Make this container transparent as well */
+  overflow-y: hidden;
+}
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,13 +67,27 @@
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  background: #FFFFFF;
+  background: var(--user-background);
   border: 3px solid var(--user-primary);
   position: relative;
   z-index: 10;
   transition: all 0.4s ease;
   transform: translateZ(0);
   margin: 0;
+}
+
+/* Add overlay gradient that covers the entire card */
+.student-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Set gradient with hex color and 0.4 opacity */
+  background: linear-gradient(to bottom right, white, var(--user-accent-transparent, rgba(65, 185, 217, 0.4)));
+  z-index: -1;
+  pointer-events: none;
 }
 
 .student-card.active {
@@ -91,7 +127,7 @@
   justify-content: flex-start;
   padding: 1rem;
   padding-top: 2.5rem;
-  background: #FFFFFF;
+  background: transparent; /* Make it transparent so the parent gradient shows through */
   min-height: 200px;
   position: relative;
 }
@@ -147,7 +183,6 @@
 }
 
 .student-info-section {
-  margin-bottom: 0.8rem;
   margin-top: 1rem;
   position: relative;
   width: 100%;
@@ -161,7 +196,7 @@
   transform: translateX(-50%);
   width: 80%;
   height: 1px;
-  background: var(--user-primary);
+  background: rgba(49, 143, 168, 0.5); /* Semi-transparent primary color */
   border-radius: 1px;
 }
 
@@ -169,8 +204,13 @@
   font-size: 0.9rem;
   color: var(--user-secondary);
   margin-bottom: 0.2rem;
+  /* margin-top:2px; */
   text-transform: uppercase;
   letter-spacing: 0.1em;
+}
+
+.student-info-section .section-title:first-child {
+  margin-top: 0.9rem;
 }
 
 .student-info-section .section-value {
@@ -196,7 +236,7 @@
   transform: translateX(-50%);
   width: 80%;
   height: 1px;
-  background: var(--user-primary);
+  background: rgba(49, 143, 168, 0.5); /* Semi-transparent primary color */
   border-radius: 1px;
 }
 
@@ -218,62 +258,131 @@
   max-width: 0;
   opacity: 0;
   overflow: hidden;
-  border-radius: 20px;
   height: 673px;
   max-height: 673px;
   transition: all 0.4s ease;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 3px solid var(--user-primary);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .student-profile-wrapper.expanded .student-details-container {
   max-width: 800px;
   opacity: 1;
-  overflow: visible;
+  overflow: hidden;
   margin-left: 0;
+  /* padding-top: 1.2rem; */
+  padding-bottom: 1.2rem;
 }
 
 .details-content {
-  padding: 1.5rem;
+  padding: 0;
+  padding-left: 0.5rem;
   width: 100%;
-  overflow-y: auto;
-  max-height: 667px;
+  overflow-y: auto; /* Changed from hidden to auto to enable scrolling */
+  max-height: 650px;
+  background: transparent; /* Transparent background */
+  scrollbar-width: thin;
+  scrollbar-color: var(--user-primary) transparent;
+  position: relative; /* Needed for fade gradient positioning */
+}
+
+/* Add fade gradient at the bottom */
+.details-content.with-fade::after {
+  content: "";
+  position: sticky; /* Use sticky to keep it at bottom of scrollable area */
+  display: block;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-top: -40px; /* Pull it up into the content */
+  height: 40px;
+  pointer-events: none; /* Let mouse events pass through */
+  background: linear-gradient(to bottom, rgba(232, 244, 248, 0), var(--user-background));
+  z-index: 2;
+}
+
+.details-content.no-fade::after {
+  display: none; /* Hide the fade effect when scrolled to bottom */
+  background: linear-gradient(to bottom, rgba(232, 244, 248, 0), var(--user-background));
+  z-index: 2;
+}
+
+.details-content.no-fade::after {
+  display: none; /* Hide the fade effect when scrolled to bottom */
+
+  width: inherit; /* Takes width from parent */
+}
+
+.details-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.details-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.details-content::-webkit-scrollbar-thumb {
+  background-color: var(--user-primary);
+  border-radius: 10px;
 }
 
 .details-section {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  padding: 1.6rem;
+  background: linear-gradient(to bottom right, white, var(--user-background)); /* Using theme variable */
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-right: 0.5rem;
+}
+
+.details-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .details-section h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--user-text);
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--user-primary), var(--user-accent));
+  color: white;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.details-section h4 {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--user-text);
-  margin-bottom: 1rem;
-  position: relative;
-  padding-bottom: 0.5rem;
-}
-
-.details-section h3::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 40px;
-  height: 3px;
-  background: var(--user-primary);
-  border-radius: 3px;
-}
-
-.details-section h4 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--user-text);
   margin-bottom: 0.5rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.3rem;
 }
+
 
 /* Edit profile button */
 .edit-profile-button {
@@ -330,6 +439,14 @@
     width: 100%;
     height: 673px;
     max-height: 673px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    padding-left: 0;
+  }
+  
+  .details-content {
+    padding-left: 0;
   }
   
   .student-profile-wrapper.expanded .student-details-container {
@@ -341,7 +458,8 @@
 /* Personality Traits section */
 .personality-traits-section {
   background: linear-gradient(to bottom right, white, var(--user-background));
-  border-left: 4px solid var(--user-accent);
+  border: 3px solid var(--user-primary);
+  /* Removed left border for cleaner look */
 }
 
 .personality-traits {
@@ -488,6 +606,11 @@
   gap: 12px;
 }
 
+.internship-item:hover .internship-icon {
+  transform: scale(1.1);
+  color: var(--user-accent);
+}
+
 .internship-header h4 {
   margin: 0;
   color: var(--user-text);
@@ -501,10 +624,9 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background-color: white;
-  border-radius: 50%;
-  font-size: 1rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: var(--user-primary);
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
 }
 
 .internship-content {
@@ -1099,16 +1221,44 @@
 
 .color-picker-clickable {
   position: relative;
-  height: 40px;
+  height: 45px;
   width: 100%;
   max-width: 300px;
   overflow: hidden;
   border-radius: 20px;
   cursor: pointer;
-  border: 2px dashed #aaa;
+  border: 2px solid var(--metallica-blue-300);
+  background-image: linear-gradient(to right, #ff0000, #ff9900, #ffff00, #33cc33, #3399ff, #9933ff);
+  background-size: 100% 5px;
+  background-position: bottom;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.color-picker-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(49, 143, 168, 0.4);
+  border-color: var(--metallica-blue-500);
+  background-image: linear-gradient(to right, #ff0000, #ff9900, #ffff00, #33cc33, #3399ff, #9933ff);
+  background-size: 100% 100%;
+  background-position: center;
+  transition: all 0.3s ease;
+}
+
+.color-picker-clickable:hover .click-indicator {
+  background-color: rgba(255, 255, 255, 0.85);
+  transform: scale(0.95);
+  border: 2px dashed var(--metallica-blue-400);
+  margin: 5px;
+  font-weight: 700;
+}
+
+.color-picker-clickable:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(49, 143, 168, 0.2);
 }
 
 .color-picker-input {
@@ -1128,21 +1278,35 @@
   justify-content: center;
   height: 100%;
   width: 100%;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #666;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--metallica-blue-600);
+  background-color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 0 white;
+  transition: all 0.3s ease;
+  position: relative;
   animation: pulse 2s infinite;
+  border-radius: 16px;
+}
+
+.click-indicator::before {
+  content: "🎨";
+  margin-right: 8px;
+  font-size: 16px;
 }
 
 @keyframes pulse {
   0% {
-    opacity: 0.6;
+    opacity: 0.9;
+    transform: scale(1);
   }
   50% {
     opacity: 1;
+    transform: scale(1.02);
   }
   100% {
-    opacity: 0.6;
+    opacity: 0.9;
+    transform: scale(1);
   }
 }
 
@@ -1155,17 +1319,34 @@
 
 .color-preview {
   flex: 1;
-  height: 40px;
-  border-radius: 8px;
+  height: 70px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--user-text);
   font-size: 0.9rem;
   font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3), 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
+  position: relative;
+  border: 2px solid var(--user-primary);
+  overflow: hidden;
+  background: var(--user-background);
+}
+
+/* Add the same gradient overlay as the student card */
+.color-preview::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom right, white, var(--user-accent-transparent, rgba(65, 185, 217, 0.4)));
+  pointer-events: none;
+  z-index: 1;
 }
 
 .theme-color-squares {
@@ -1198,10 +1379,16 @@
 }
 
 .preview {
-  font-size: 12px;
-  padding: 2px 6px;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  font-size: 14px;
+  padding: 5px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  color: var(--user-primary);
+  font-weight: 700;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); 
+  border: 1px solid var(--user-primary);
+  position: relative;
+  z-index: 5;
 }
 
 /* Error message styling */
@@ -1230,6 +1417,7 @@
 @media (max-width: 768px) {
   .grid-layout {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
   .student-details {

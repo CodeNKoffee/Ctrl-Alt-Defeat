@@ -56,14 +56,14 @@ const sidebarConfig = {
   student: [
     { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/student', isPage: false },
     { id: 'browse', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/student/browse-internships', isPage: false },
-    { id: 'applied', iconId: 'applied', label: 'Applied Internships', path: '/dashboard/student/applied-internships', isPage: false },
+    { id: 'applied', iconId: 'applied', label: 'My Applications', path: '/dashboard/student/applied-internships', isPage: false },
     { id: 'my-internships', iconId: 'my-internships', label: 'My Internships', path: '/dashboard/student/my-internships', isPage: false },
     { id: 'my-reports', iconId: 'my-reports', label: 'My Reports', path: '/dashboard/student/my-reports', isPage: false },
     { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/student/my-evaluations', isPage: false },
     { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/student/workshops', isPage: false, requiresPro: true },
     { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/student/notifications', isPage: false },
     { id: 'online-assessments', iconId: 'online-assessments', label: 'Online Assessments', path: '/dashboard/student/online-assessments', isPage: false, requiresPro: true },
-    { id: 'profile', iconId: 'profile', label: 'Profile', path: '/dashboard/student/profile', isPage: false },
+    { id: 'profile', iconId: 'profile', label: 'My Profile', path: '/dashboard/student/profile', isPage: false },
   ],
   faculty: [
     { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },

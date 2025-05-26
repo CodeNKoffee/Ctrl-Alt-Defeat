@@ -1,0 +1,121 @@
+/* Enhanced section styles to make sections more prominent */
+
+/* Job interests section styling */
+.job-interests-section {
+  background: linear-gradient(to bottom right, white, var(--user-background));
+     border: 3px solid var(--user-primary);
+}
+
+.job-interest-item {
+  padding: 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.job-interest-item:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.job-interest-item h4 {
+  font-size: 1.05rem;
+  color: var(--user-text);
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.job-interest-separator {
+  height: 3px;
+  background: linear-gradient(to right, var(--user-accent), var(--user-primary));
+  margin: 5px 0 12px 0;
+  width: 60px;
+  border-radius: 2px;
+  transition: width 0.4s ease, background 0.3s ease;
+}
+
+.job-interest-item:hover .job-interest-separator {
+  width: 100%;
+}
+
+/* Experience section styling */
+.experience-section {
+  background: linear-gradient(to bottom right, white, var(--user-background));
+  /* All borders removed for cleaner look */
+     border: 3px solid var(--user-primary);
+}
+
+.experience-item {
+  padding: 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.experience-item:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.experience-item:last-child {
+  border-bottom: none;
+}
+
+/* Education section styling */
+.education-section {
+  background: linear-gradient(to bottom right, white, var(--user-background));
+  /* Border removed for consistent design */
+  border: 3px solid var(--user-primary);
+}
+
+.education-item {
+  padding: 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.education-item:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Skills section styling */
+.skills-section {
+  background: linear-gradient(to bottom right, white, var(--user-background));
+  border: 3px solid var(--user-primary);
+  /* Border removed for consistent design */
+}
+
+.skill-tag {
+  background-color: var(--user-primary);
+  color: var(--user-background);
+  padding: 8px 15px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  margin: 5px;
+  display: inline-block;
+  border: 1px solid transparent;
+}
+
+.skill-tag:hover {
+  background-color: var(--user-accent);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  border-color: var(--user-primary);
+}
+
+/* Internships section styling */
+.internships-section {
+  background: linear-gradient(to bottom right, white, var(--user-background));
+  /* Border removed for consistent design */
+    border: 3px solid var(--user-primary);
+}
