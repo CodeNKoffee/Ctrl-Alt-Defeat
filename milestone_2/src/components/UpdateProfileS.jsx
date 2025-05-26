@@ -344,13 +344,14 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                               )}
                             </div>
                           ))}
-                          <CustomButton
-                            type="button"
-                            variant="secondary"
-                            onClick={() => push({ trait: "", rating: 3 })}
-                            text="Add Trait"
-                            icon={faPlus}
-                          />
+                              <button
+                          type="button"
+                          className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                          flex items-center justify-center focus:outline-none focus:ring-2
+                          bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
+                          transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
+                               onClick={() => push({ trait: "", rating: 3 })}
+                       >   <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Trait </button>
                         </>
                       )}
                     </FieldArray>
@@ -416,13 +417,14 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                               </div>
                             ))}
                           </div>
-                          <CustomButton
-                            type="button"
-                            variant="secondary"
-                            onClick={() => push("")}
-                            text="Add Skill"
-                            icon={faPlus}
-                          />
+                            <button
+                          type="button"
+                          className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                          flex items-center justify-center focus:outline-none focus:ring-2
+                          bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
+                          transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border w-fit"
+                             onClick={() => push("")}
+                       >   <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Skill </button>
                         </div>
                       )}
                     </FieldArray>
@@ -455,25 +457,25 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                   rows="3"
                                 />
                               </div>
-                              <CustomButton
+                               <button
                                 type="button"
-                                variant="danger"
+                                className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                                flex items-center justify-center focus:outline-none focus:ring-2
+                                bg-red-600 text-white hover:bg-red-700 focus:ring-red-500
+                                transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                 onClick={() => remove(index)}
-                                text="Remove Job Interest"
-                                icon={faTrash}
-                                width="w-full md:w-auto"
-                              />
+                                ><FontAwesomeIcon icon={faTrash} className="mr-2"/> Remove Job Interest</button>
                               <hr className="section-divider" />
                             </div>
                           ))}
-                          <CustomButton
-                            type="button"
-                            variant="secondary"
+                         <button
+                          type="button"
+                          className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                          flex items-center justify-center focus:outline-none focus:ring-2
+                          bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
+                          transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                             onClick={() => push({ title: "", description: "" })}
-                            text="Add Job Interest"
-                            icon={faPlus}
-                            width="w-full md:w-auto"
-                          />
+                       >   <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Job Interest </button>
                         </>
                       )}
                     </FieldArray>
@@ -532,26 +534,26 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                           </button>
                                         </div>
                                       ))}
-                                      <CustomButton
+                                      <button
                                         type="button"
-                                        variant="secondary"
+                                        className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                                flex items-center justify-center focus:outline-none focus:ring-2
+                               bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
+                                transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                         onClick={() => pushResp("")}
-                                        text="Add Responsibility"
-                                        icon={faPlus}
-                                        width="w-auto"
-                                      />
+                                       >   <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Responsibilty </button>
                                     </>
                                   )}
                                 </FieldArray>
                               </div>
-                              <CustomButton
+                               <button
                                 type="button"
-                                variant="danger"
+                                className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                                flex items-center justify-center focus:outline-none focus:ring-2
+                                bg-red-600 text-white hover:bg-red-700 focus:ring-red-500
+                                transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                 onClick={() => remove(index)}
-                                text="Remove Experience"
-                                icon={faTrash}
-                                width="w-full md:w-auto"
-                              />
+                                ><FontAwesomeIcon icon={faTrash} className="mr-2"/> Remove Experience</button>
                               <hr className="section-divider" />
                             </div>
                           ))}
@@ -609,25 +611,27 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                   rows="3"
                                 />
                               </div>
-                              <CustomButton
+                              <button
                                 type="button"
-                                variant="danger"
+                                className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                                flex items-center justify-center focus:outline-none focus:ring-2
+                                bg-red-600 text-white hover:bg-red-700 focus:ring-red-500
+                                transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                 onClick={() => remove(index)}
-                                text="Remove Internship"
-                                icon={faTrash}
-                                width="w-full md:w-auto"
-                              />
+                                ><FontAwesomeIcon icon={faTrash} className="mr-2"/> Remove Internship</button>
                               <hr className="section-divider" />
                             </div>
                           ))}
-                          <CustomButton
+                          <button
                             type="button"
-                            variant="secondary"
+                            className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                                flex items-center justify-center focus:outline-none focus:ring-2
+                               bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
+                                transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                             onClick={() => push({ title: "", company: "", period: "", description: "" })}
-                            text="Add Internship"
-                            icon={faPlus}
-                            width="w-full md:w-auto"
-                          />
+        
+                        
+                          >   <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Internship</button>
                         </>
                       )}
                     </FieldArray>
