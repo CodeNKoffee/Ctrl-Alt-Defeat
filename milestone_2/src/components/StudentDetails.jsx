@@ -1,9 +1,39 @@
+import React, { useState, useEffect, useRef } from 'react';
 import './styles/StudentProfile.css';
 import './styles/SectionStyles.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faGraduationCap, faCode, faBriefcase, faBuilding, faClipboard } from "@fortawesome/free-solid-svg-icons";
 
 export default function StudentDetails({ isOpen, studentData }) {
+  // Ref for the details-content div to manage scroll effects
+  const detailsContentRef = useRef(null);
+  const [showFade, setShowFade] = useState(true);
+  
+  // Add scroll event listener to check if at bottom
+  useEffect(() => {
+    const handleScroll = () => {
+      const detailsContent = detailsContentRef.current;
+      if (detailsContent) {
+        // Check if user has scrolled to the bottom (with a small buffer)
+        const isAtBottom = detailsContent.scrollHeight - detailsContent.scrollTop - detailsContent.clientHeight < 10;
+        setShowFade(!isAtBottom); // Hide fade when at bottom
+      }
+    };
+
+    const detailsContent = detailsContentRef.current;
+    if (detailsContent) {
+      detailsContent.addEventListener('scroll', handleScroll);
+      // Initial check
+      handleScroll();
+    }
+
+    return () => {
+      if (detailsContent) {
+        detailsContent.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [isOpen]); // Re-initialize when the panel opens/closes
+  
   // Function to render stars for personality traits
   const renderStars = (rating) => {
     const stars = [];
@@ -72,7 +102,10 @@ export default function StudentDetails({ isOpen, studentData }) {
       className={`student-details-container overflow-hidden`}
       style={themeStyle}
     >
-      <div className="details-content w-full">
+      <div 
+        ref={detailsContentRef}
+        className={`details-content w-full ${showFade ? 'with-fade' : 'no-fade'}`}
+      >
         <div className="grid-layout grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="grid-column">
             <div className="details-section personality-traits-section">
