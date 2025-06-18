@@ -443,6 +443,45 @@ function ApplicationsView() {
       badgeColor: "bg-green-600",
     }
   };
+  const STATUS_CONFIG_HOVER = {
+    // For applied internships
+    pending: {
+      label: "PENDING",
+      color:"bg-white text-gray-600 border border-gray-300 hover:bg-yellow-100 hover:text-yellow-800 hover:border-yellow-400",
+      badgeColor: "bg-yellow-600",
+    },
+    accepted: {
+      label: "ACCEPTED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    rejected: {
+      label: "REJECTED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-red-100 hover:text-red-800 hover:border-red-400",
+      badgeColor: "bg-red-600",
+    },
+    finalized: {
+      label: "FINALIZED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400",
+      badgeColor: "bg-purple-600",
+    },
+    // For my internships
+    current: {
+      label: "CURRENT",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-blue-200 hover:text-blue-900 hover:border-blue-500",
+      badgeColor: "bg-blue-600",
+    },
+    completed: {
+      label: "COMPLETED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    evaluated: {
+      label: "EVALUATED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400",
+      badgeColor: "bg-purple-600",
+    }
+  };
   const MOCK_INTERNSHIPS = [
     { id: 1, title: "Frontend Developer Intern" },
     { id: 2, title: "UI/UX Design Intern" },
@@ -638,11 +677,43 @@ function CurrentInternsView() {
           }}
         />
         <div className="w-full max-w-6xl mx-auto my-4">
-          <StatusPills
-            statuses={statusPills}
-            selected={selectedStatus}
-            onChange={setSelectedStatus}
-          />
+          <div className="flex flex-wrap gap-2 items-center">
+            <button
+              onClick={() => setSelectedStatus('all')}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${
+                selectedStatus === 'all'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
+              }`}
+            >
+              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${
+                selectedStatus === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
+              }`}></span>
+              ALL
+            </button>
+            {statusPills.map((status) => (
+              <button
+                key={status.value}
+                onClick={() => setSelectedStatus(status.value)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${
+                  selectedStatus === status.value
+                  ? status.color
+                  : status.value === 'current' 
+                    ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
+                    : status.value === 'completed'
+                      ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-green-50 hover:border-green-300 hover:text-green-700'
+                      : status.value === 'evaluated'
+                        ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-purple-50 hover:border-purple-300 hover:text-purple-700'
+                        : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                }`}
+              >
+                <span className={`inline-block w-3 h-3 rounded-full mr-2 ${
+                  selectedStatus === status.value ? status.badgeColor : 'bg-gray-300'
+                }`}></span>
+                {status.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       <CurrentInterns

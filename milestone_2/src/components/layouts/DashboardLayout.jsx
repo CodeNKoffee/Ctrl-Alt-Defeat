@@ -257,7 +257,7 @@ export default function DashboardLayout({
                           </div>
                           <button
                             type="submit"
-                            className="mt-2 bg-[#5DB2C7] hover:bg-[#3298BA] text-white rounded-full px-4 py-2 font-semibold shadow-md transition-all duration-200"
+                            className="mt-2 bg-[#5DB2C7] hover:bg-[#3298BA] text-white rounded-full px-4 py-2 font-semibold shadow-md transition-all duration-200 hover:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={!!error || !cycleType || !startDate || !endDate}
                           >
                             Save

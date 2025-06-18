@@ -80,12 +80,12 @@ export default function InternshipList({
     },
     accepted: {
       label: "ACCEPTED",
-      color: "bg-green-100 text-green-800 border-2 border-green-400",
+      color: "bg-green-100 text-green-800 border-2 border-green-400 ",
       badgeColor: "bg-green-600",
     },
     rejected: {
       label: "REJECTED",
-      color: "bg-red-100 text-red-800 border-2 border-red-400",
+      color: "bg-red-100 text-red-800 border-2 border-red-400 ",
       badgeColor: "bg-red-600",
     },
     finalized: {
@@ -107,6 +107,45 @@ export default function InternshipList({
     evaluated: {
       label: "EVALUATED",
       color: "bg-purple-100 text-purple-800 border-2 border-purple-400",
+      badgeColor: "bg-purple-600",
+    }
+  };
+  const STATUS_CONFIG_HOVER = {
+    // For applied internships
+    pending: {
+      label: "PENDING",
+      color:"bg-white text-gray-600 border border-gray-300 hover:bg-yellow-100 hover:text-yellow-800 hover:border-yellow-400",
+      badgeColor: "bg-yellow-600",
+    },
+    accepted: {
+      label: "ACCEPTED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    rejected: {
+      label: "REJECTED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-red-100 hover:text-red-800 hover:border-red-400",
+      badgeColor: "bg-red-600",
+    },
+    finalized: {
+      label: "FINALIZED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400",
+      badgeColor: "bg-purple-600",
+    },
+    // For my internships
+    current: {
+      label: "CURRENT",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-blue-200 hover:text-blue-900 hover:border-blue-500",
+      badgeColor: "bg-blue-600",
+    },
+    completed: {
+      label: "COMPLETED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    evaluated: {
+      label: "EVALUATED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400",
       badgeColor: "bg-purple-600",
     }
   };
@@ -318,43 +357,20 @@ export default function InternshipList({
               </div>
             )}
 
-            {/* Tab buttons section - Only show in browse view, not in home/recommended */}
-            {/* {shouldShowTabs && !customFilterPanel && (
-              // <div className="w-full max-w-6xl mx-auto mb-6">
-              //   <div className="flex items-center space-x-2">
-              //     <button
-              //       onClick={() => setActiveTab('all')}
-              //       className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
-              //         ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-              //         : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-              //         }`}
-              //     >
-              //       ALL
-              //     </button>
-              //     <button
-              //       onClick={() => setActiveTab('recent')}
-              //       className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recent'
-              //         ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-              //         : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-              //         }`}
-              //     >
-              //       RECOMMENDED
-              //     </button>
-              //   </div>
-              // </div>
-            )} */}
-
             {/* Status Filter Pills - Only for applied and my internships */}
             {shouldShowStatusFilters && (
               <div className="w-full max-w-6xl mx-auto mb-6">
                 <div className="flex flex-wrap gap-2 items-center">
                   <button
                     onClick={() => setSelectedStatus('all')}
-                    className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${selectedStatus === 'all'
+                    className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${selectedStatus === 'all'
                       ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                      : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
+                      : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
                       }`}
                   >
+                    <span className={`inline-block w-3 h-3 rounded-full mr-2 ${
+                      selectedStatus === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
+                    }`}></span>
                     ALL
                   </button>
 
@@ -363,17 +379,15 @@ export default function InternshipList({
                     <button
                       key={status}
                       onClick={() => setSelectedStatus(status)}
-                      className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all ${selectedStatus === status
+                      className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${selectedStatus === status
                         ? STATUS_CONFIG[status].color
-                        : 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-gray-50'
+                        :  STATUS_CONFIG_HOVER[status].color
                         }`}
                     >
-                      <div className="flex items-center">
-                        {selectedStatus === status && (
-                          <span className={`inline-block w-2 h-2 rounded-full ${STATUS_CONFIG[status].badgeColor} mr-1.5`}></span>
-                        )}
-                        {STATUS_CONFIG[status].label}
-                      </div>
+                      <span className={`inline-block w-3 h-3 rounded-full mr-2 ${
+                        selectedStatus === status ? STATUS_CONFIG[status].badgeColor : 'bg-gray-300'
+                      }`}></span>
+                      {STATUS_CONFIG[status].label}
                     </button>
                   ))}
                 </div>
