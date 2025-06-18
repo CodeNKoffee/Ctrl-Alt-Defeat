@@ -8,11 +8,13 @@ import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
 const statusColors = {
   current: 'bg-blue-100 text-blue-800 border-2 border-blue-400',
   completed: 'bg-green-100 text-green-800 border-2 border-green-400',
+  evaluated: 'bg-purple-100 text-purple-800 border-2 border-purple-400',
 };
 
 const hoverStatusColors = {
   current: 'hover:bg-blue-100 hover:text-blue-800 hover:border-blue-400',
   completed: 'hover:bg-green-100 hover:text-green-800 hover:border-green-400',
+  evaluated: 'hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400',
   all: 'hover:bg-gray-100 hover:text-gray-800 hover:border-gray-400'
 };
 
@@ -31,7 +33,8 @@ export default function StudentList({ students, sidebarExpanded = true }) {
   const tabs = [
     { id: 'all', label: 'ALL' },
     { id: 'current', label: 'CURRENT' },
-    { id: 'completed', label: 'COMPLETED' }
+    { id: 'completed', label: 'COMPLETED' },
+    { id: 'evaluated', label: 'EVALUATED' }
   ];
 
   const filterStudents = (students) => {
@@ -64,7 +67,7 @@ export default function StudentList({ students, sidebarExpanded = true }) {
 
   const getTabStatusColor = (tabId) => {
     if (tabId === 'all') {
-      return 'bg-white text-gray-600 border-2 border-gray-300';
+      return 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]';
     }
     return statusColors[tabId] || 'bg-white text-gray-600 border-2 border-gray-300';
   };
@@ -141,11 +144,19 @@ export default function StudentList({ students, sidebarExpanded = true }) {
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 flex items-center
                 ${activeTab === id
                   ? `${getTabStatusColor(id)} text-[#2a5f74]`
                   : `bg-white text-gray-600 border border-gray-300 ${hoverStatusColors[id] || 'hover:bg-gray-50'}`}`}
             >
+              <span className={`w-3 h-3 rounded-full mr-2 ${
+                activeTab === id ? (
+                  id === 'all' ? 'bg-[#5DB2C7]' :
+                  id === 'current' ? 'bg-blue-600' : 
+                  id === 'completed' ? 'bg-green-600' :
+                  id === 'evaluated' ? 'bg-purple-600' : 'bg-gray-400'
+                ) : 'bg-gray-300'
+              }`}></span>
               {label}
             </button>
           ))}

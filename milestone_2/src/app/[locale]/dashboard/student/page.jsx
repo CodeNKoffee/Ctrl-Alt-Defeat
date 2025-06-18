@@ -379,20 +379,26 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'all'
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center ${activeTab === 'all'
                 ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50 hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
                 }`}
             >
+              <span className={`w-3 h-3 rounded-full mr-2 ${
+                activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
+              }`}></span>
               ALL
             </button>
             <button
               onClick={() => setActiveTab('recommended')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'recommended'
-                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50 hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center ${activeTab === 'recommended'
+                ? 'bg-pink-100 text-pink-800 border-pink-800 border-2'
+                : 'bg-white text-gray-600 border border-gray-300 hover:text-pink-800 hover:border-[1px] hover:border-pink-800 hover:bg-pink-100'
                 }`}
             >
+              <span className={`w-3 h-3 rounded-full mr-2 ${
+                activeTab === 'recommended' ? 'bg-pink-800' : 'bg-gray-300'
+              }`}></span>
               RECOMMENDED
             </button>
           </div>

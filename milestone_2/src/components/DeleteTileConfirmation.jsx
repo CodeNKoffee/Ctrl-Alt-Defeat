@@ -2,17 +2,28 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import CustomButton from "./shared/CustomButton";
-
+ 
 export default function DeleteTileConfirmation({ type, onConfirm, onCancel }) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <motion.div 
-          className="bg-white p-6 rounded-2xl shadow-lg text-center w-full max-w-sm"
+          className="bg-white p-6 rounded-2xl shadow-lg text-center w-full max-w-sm relative"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         >
+          {/* Close button */}
+          <button
+            className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
+            onClick={onCancel}
+            aria-label="Close modal"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="12" fill="#E8F7FB" />
+              <path d="M15.3 8.7L12 12M12 12L8.7 15.3M12 12L15.3 15.3M12 12L8.7 8.7" stroke="#2A5F74" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
           <motion.div
             className="mx-auto mb-5 w-[70px] h-[70px] rounded-full flex items-center justify-center"
             style={{
