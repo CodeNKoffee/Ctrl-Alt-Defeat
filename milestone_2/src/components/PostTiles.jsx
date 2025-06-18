@@ -1,4 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import CompanyPost from './CompanyPost';
 import CompanyCreatePost from './CompanyCreatePost';
 import DeleteTileConfirmation from './DeleteTileConfirmation';
@@ -9,6 +12,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
   const [editingPost, setEditingPost] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [deletingPostIndex, setDeletingPostIndex] = useState(null);
+  const [feedbackModal, setFeedbackModal] = useState(null);
   const [filters, setFilters] = useState({
     jobType: [],
     jobSetting: [],
@@ -61,45 +65,50 @@ export default function PostTiles({ searchOverride, filterOverride }) {
     }
   };
 
-  const handleAddPost = (newPost) => {
-    if (editingPost !== null) {
-      // We're updating an existing post
+  const handleAddPost = (newPostData) => {
+    const isUpdating = !!editingPost;
+    if (isUpdating) {
       setPosts((prevPosts) =>
-        prevPosts.map((post, index) =>
-          index === editingPost ? newPost : post
+        prevPosts.map((post) =>
+          (post.title === editingPost.title && post.description === editingPost.description)
+            ? { ...post, ...newPostData }
+            : post
         )
       );
       setEditingPost(null);
+      setFeedbackModal({ show: true, type: 'update', message: 'Post Updated Successfully!' });
     } else {
-      // We're creating a new post
-      setPosts((prevPosts) => [newPost, ...prevPosts]);
+      setPosts((prevPosts) => [newPostData, ...prevPosts]);
+      setFeedbackModal({ show: true, type: 'create', message: 'Post Created Successfully!' });
     }
-    setShowForm(false);
+    setPostPreview({
+      title: '',
+      description: '',
+      startDate: '',
+      duration: '',
+      jobType: 'Full-time',
+      jobSetting: 'On-site',
+      paid: 'Paid',
+      salary: '',
+      requirements: '',
+      skills: [],
+    });
+
+    setTimeout(() => {
+      setFeedbackModal(null);
+      setShowForm(false);
+    }, 2500);
   };
 
   const handleFormChange = (updatedForm) => {
     setPostPreview(updatedForm);
   };
 
-  const handleUpdateClick = (post) => {
-    const postIndex = posts.findIndex(p =>
-      p.title === post.title &&
-      p.description === post.description
-    );
-
-    if (postIndex !== -1) {
-      // Create a deep copy of the post to ensure we're passing a complete object
-      const postToEdit = JSON.parse(JSON.stringify(posts[postIndex]));
-
-      // First set the preview to match the post we're editing
-      setPostPreview(postToEdit);
-
-      // Then mark this post as the one being edited
-      setEditingPost(postIndex);
-
-      // Finally show the form
-      setShowForm(true);
-    }
+  const handleUpdateClick = (postToEdit) => {
+    const postCopy = JSON.parse(JSON.stringify(postToEdit));
+    setEditingPost(postCopy);
+    setPostPreview(postCopy);
+    setShowForm(true);
   };
 
   const handleDeleteClick = (post) => {
@@ -126,7 +135,6 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
   const toggleCreatePost = () => {
     if (showForm) {
-      // If we're closing the form, clear the editing state
       setEditingPost(null);
       setPostPreview({
         title: '',
@@ -149,10 +157,8 @@ export default function PostTiles({ searchOverride, filterOverride }) {
       const updatedFilters = { ...prevFilters };
 
       if (updatedFilters[category].includes(value)) {
-        // Remove the value if it's already selected
         updatedFilters[category] = updatedFilters[category].filter(item => item !== value);
       } else {
-        // Add the value if it's not selected
         updatedFilters[category] = [...updatedFilters[category], value];
       }
 
@@ -168,11 +174,15 @@ export default function PostTiles({ searchOverride, filterOverride }) {
     });
   };
 
-  // Filter posts based on search query (only title) and filters
+  // Filter posts based on search query (title, description, skills) and filters
   const filteredPosts = posts.filter(post => {
-    // Filter by title search
-    const titleMatches = post.title?.toLowerCase().includes(searchQuery.toLowerCase());
-    if (!titleMatches) return false;
+    // Search: match on title, description, or skills (case-insensitive, partial match)
+    const search = searchQuery.trim().toLowerCase();
+    const titleMatches = post.title?.toLowerCase().includes(search);
+    const descriptionMatches = post.description?.toLowerCase().includes(search);
+    const skillsMatches = Array.isArray(post.skills) && post.skills.some(skill => skill.toLowerCase().includes(search));
+    const searchMatches = !search || titleMatches || descriptionMatches || skillsMatches;
+    if (!searchMatches) return false;
 
     // Filter by job type
     if (filters.jobType.length > 0 && !filters.jobType.includes(post.jobType)) {
@@ -194,14 +204,87 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
   return (
     <div className="container mx-auto pt-0 pb-8">
+      {/* Success Feedback Modal */}
+      <AnimatePresence>
+        {feedbackModal && feedbackModal.show && (
+          <motion.div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000, // Ensure it's above other content
+              background: 'rgba(42, 95, 116, 0.18)' // Semi-transparent background
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setFeedbackModal(null)} // Optional: close on click outside
+          >
+            <motion.div
+              style={{
+                background: 'white',
+                padding: '30px 35px',
+                borderRadius: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05)',
+                minWidth: '320px',
+                textAlign: 'center'
+              }}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal content
+            >
+              <motion.div
+                style={{
+                  marginBottom: '20px',
+                  width: 70,
+                  height: 70,
+                  borderRadius: '50%',
+                  background: feedbackModal.type === 'create' ? '#34D399' : '#60A5FA', // Green for create, Blue for update
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15, delay: 0.1 }}
+              >
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  style={{ fontSize: 36, color: 'white' }}
+                />
+              </motion.div>
+              <div style={{ fontSize: '22px', fontWeight: '600', color: '#2A5F74', marginBottom: '8px' }}>
+                {feedbackModal.type === 'create' ? 'Success!' : 'Updated!'}
+              </div>
+              <div style={{ fontSize: '16px', color: '#4B5563' }}>
+                {feedbackModal.message}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center backdrop-blur-sm overflow-auto py-8">
           <div className="bg-white rounded-lg shadow-xl w-[90%] max-w-6xl max-h-[90vh] overflow-hidden">
             <div className="relative">
               {/* Header bar */}
-              <div className="bg-[var(--metallica-blue-50)] text-[var(--metallica-blue-700)] py-3 px-6 flex justify-between items-center">
-                <h2 className="text-xl font-semibold">
-                  {editingPost !== null ? 'Update Post' : 'Create New Post'}
+              <div className="bg-[var(--metallica-blue-50)] text-[var(--metallica-blue-700)] p-6 flex justify-between items-center">
+                <h2 className="text-xl font-bold flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
+                  {editingPost ? 'Update Post' : 'Create New Post'}
                 </h2>
                 <button
                   onClick={toggleCreatePost}
@@ -222,15 +305,21 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                     <CompanyCreatePost
                       onAddPost={handleAddPost}
                       onFormChange={handleFormChange}
-                      initialPost={editingPost !== null ? posts[editingPost] : null}
-                      isEditing={editingPost !== null}
+                      initialPost={editingPost}
+                      isEditing={!!editingPost}
                     />
                   </div>
                 </div>
 
                 {/* Right side - Live Preview - This div will NOT scroll with the form */}
                 <div className="lg:w-1/2 p-6 overflow-y-auto bg-white min-h-full h-full flex flex-col">
-                  <h2 className="text-xl font-semibold mb-4 text-[var(--metallica-blue-700)] bg-white">Post Preview</h2>
+         
+                  <h2 className="text-xl font-bold mb-4 text-[var(--metallica-blue-700)] bg-white  flex items-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+              </svg>
+                    Post Preview</h2>
                   <div className="bg-white rounded-lg shadow-md p-6 border border-[var(--metallica-blue-100)] flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-4">
                       <div>
@@ -347,6 +436,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
                   {/* Text part that expands on hover - now with bold text and slower transition */}
                   <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
+           
                     <span className="font-semibold">Create Post</span>
                   </span>
                 </button>
@@ -380,6 +470,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                     </span>
 
                     {/* Text part that expands on hover - now with bold text and slower transition */}
+                    
                     <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
                       <span className="font-semibold">Create Post</span>
                     </span>

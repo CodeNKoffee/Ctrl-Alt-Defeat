@@ -1,33 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { mockStudents } from '../../constants/mockData';
 import InternRow from './InternRow';
 import CompanyEvaluationModal from './CompanyEvaluationModal';
-import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
-
-// Basic styling for tabs (default state)
-const statusColors = {
-  all: 'bg-white text-gray-600 border-2 border-gray-300', // Basic styling for "All" tab
-  current: 'bg-white text-gray-600 border-2 border-gray-300',
-  completed: 'bg-white text-gray-600 border-2 border-gray-300',
-  evaluated: 'bg-white text-gray-600 border-2 border-gray-300',
-};
-
-// Hover effect for tabs
-const hoverStatusColors = {
-  current: 'hover:bg-blue-100 hover:text-blue-800 hover:border-blue-400',
-  completed: 'hover:bg-green-100 hover:text-green-800 hover:border-green-400',
-  evaluated: 'hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400',
-  all: 'hover:bg-gray-100 hover:text-gray-700 hover:border-gray-400', // Hover effect for "All" tab
-};
-
-// Active tab styling
-const activeTabStyles = {
-  current: 'bg-blue-100 text-blue-800 border-2 border-blue-400',
-  completed: 'bg-green-100 text-green-800 border-2 border-green-400',
-  evaluated: 'bg-purple-100 text-purple-800 border-2 border-purple-400',
-  all: 'bg-white text-gray-600 border-2 border-gray-300', // Active "All" tab styling
-};
+import StatusPills from './shared/StatusPills';
 
 // Helper to infer internship status from period
 const inferStatus = (period) => {
@@ -62,6 +38,9 @@ const transformStudentsToInterns = (students) => {
     .map(student => {
       const internship = student.internships[0]; // Use first internship
       const status = inferStatus(internship.period);
+      const department = student.department || 'N/A'; // Assuming student object might have department
+      const timePeriod = internship.period || 'N/A'; // Or derive more specifically if needed
+
       return {
         id: student.id,
         name: student.name,
@@ -71,21 +50,33 @@ const transformStudentsToInterns = (students) => {
         profilePic: student.photo,
         skills: student.skills,
         degree: student.education[0]?.degree,
-        period: student.education[0]?.period,
         jobInterests: student.jobInterests,
         startDate: internship.period,
         endDate: (status === 'completed' || status === 'evaluated') ? calculateEndDate(internship.period) : null,
         description: internship.description,
+        department: department,
+        timePeriod: timePeriod,
       };
     });
 };
 
-export default function CurrentInterns() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeTab, setActiveTab] = useState("all");
-  const [interns, setInterns] = useState(mockStudents ? transformStudentsToInterns(mockStudents) : []);
+export default function CurrentInterns({ searchTerm, selectedStatus = 'all', onStatusChange }) {
+  const [interns, setInterns] = useState([]);
   const [evaluationModalOpen, setEvaluationModalOpen] = useState(false);
   const [selectedIntern, setSelectedIntern] = useState(null);
+
+  // Statuses to display
+  const displayStatuses = [
+    { value: 'current', label: 'CURRENT', color: 'bg-blue-100 text-blue-800 border-2 border-blue-400', badgeColor: 'bg-blue-600' },
+    { value: 'completed', label: 'COMPLETED', color: 'bg-green-100 text-green-800 border-2 border-green-400', badgeColor: 'bg-green-600' },
+    { value: 'evaluated', label: 'EVALUATED', color: 'bg-purple-100 text-purple-800 border-2 border-purple-400', badgeColor: 'bg-purple-600' },
+  ];
+
+  useEffect(() => {
+    // Initialize interns from mockData or a fetch call
+    const initialInterns = mockStudents ? transformStudentsToInterns(mockStudents) : [];
+    setInterns(initialInterns);
+  }, []); // Runs once on mount
 
   const handleSelectIntern = (id) => {
     console.log(`Selected intern with id: ${id}`);
@@ -96,7 +87,7 @@ export default function CurrentInterns() {
     setSelectedIntern(intern);
     setEvaluationModalOpen(true);
   };
-  
+
   const handleSubmitEvaluation = (data) => {
     console.log("Evaluation submitted:", data);
     // Here you would typically send this to your backend
@@ -110,17 +101,18 @@ export default function CurrentInterns() {
     setInterns(updatedInterns);
   };
 
-  // Filter logic
+  // Filter logic using props
   const filteredInterns = interns.filter(intern => {
-    const matchesSearch = 
-      intern.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      intern.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      intern.company.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesStatus = 
-      activeTab === 'all' ||
-      intern.status === activeTab;
-    
+    const search = searchTerm?.toLowerCase() || '';
+    const matchesSearch =
+      !search ||
+      intern.name.toLowerCase().includes(search) ||
+      intern.jobTitle.toLowerCase().includes(search) ||
+      intern.company.toLowerCase().includes(search) ||
+      (intern.department && intern.department.toLowerCase().includes(search));
+
+    const matchesStatus = selectedStatus === 'all' || intern.status === selectedStatus;
+
     return matchesSearch && matchesStatus;
   });
 
@@ -135,40 +127,6 @@ export default function CurrentInterns() {
           evaluationToEdit={null}
         />
       )}
-      <div className="flex flex-col gap-0 mb-6 w-full">
-        {/* <div className="w-full">
-          <input
-            type="text"
-            placeholder="Search interns by name or job title..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-2 pl-4 pr-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-transparent text-sm"
-          />
-      </div> */}
-        <ApplicationsFilterBar
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          searchPlaceholder="Search by student, company or supervisor..."
-          selectedStatus={activeTab}
-          onStatusChange={setActiveTab}
-          primaryFilterName="Filters"
-        />
-        <div className="flex flex-wrap gap-2 w-full">
-          {['all', 'current', 'completed', 'evaluated'].map((tab) => (
-<button
-  key={tab}
-  onClick={() => setActiveTab(tab)}
-  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
-    ${activeTab === tab
-      ? activeTabStyles[tab] // Apply active tab styles
-      : `${statusColors[tab]} ${hoverStatusColors[tab]}`} // Default styles and hover effects
-  `}
->
-  {tab === 'all' ? 'All' : tab.charAt(0).toUpperCase() + tab.slice(1)}
-</button>
-          ))}
-        </div>
-      </div>
       <div className="w-full space-y-4">
         {filteredInterns.map((intern) => (
           <InternRow

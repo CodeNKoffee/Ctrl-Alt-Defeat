@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Filter from './Filter';
 import StatusBadge from './shared/StatusBadge';
 import { facultyScadReports } from '../../constants/mockData';
+import CustomButton from './shared/CustomButton';
 
 export default function InternshipReport() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -122,12 +123,16 @@ export default function InternshipReport() {
               {selectedReport.comments}
             </div>
             <div className="modal-actions">
-              <button 
-                onClick={() => setShowCommentsModal(false)}
-                className="button-secondary"
-              >
-                Close
-              </button>
+              <CustomButton
+              text={"Close"}
+              onClick={() => setShowCommentsModal(false)}
+              />
+              {/* // <button 
+              //   onClick={() => setShowCommentsModal(false)}
+              //   className="button-secondary"
+              // >
+              //   Close
+              // </button> */}
             </div>
           </div>
         </div>

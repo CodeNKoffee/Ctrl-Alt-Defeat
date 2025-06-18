@@ -6,6 +6,7 @@ import ReportViewer from '@/components/ReportViewer';
 import Header from "@/components/Header";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { facultyScadReports } from '../../../../../../constants/mockData';
+import CustomButton from "../../../../../components/shared/CustomButton";
 
 export default function ReportsPage() {
   const [reports, setReports] = useState([]);
@@ -115,13 +116,18 @@ export default function ReportsPage() {
                 </div>
                 <div className="mt-4 pt-4 border-t border-gray-200">
                   <div className="flex justify-end gap-3">
-                    <button
+                    <CustomButton 
+                      text="Close"
+                      onClick={handleCloseModal}
+                      className="bg-metallica-blue-500 text-metallica-blue-100 hover:bg-metallica-blue-700"
+                      />
+                    {/* <button
                       onClick={handleCloseModal}
 
                       className="inline-flex items-center justify-center w-32 min-w-[8rem] px-0 py-2 rounded-full font-medium shadow-sm bg-metallica-blue-500 text-metallica-blue-100 border border-metallica-blue-200 hover:bg-metallica-blue-900 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
                     >
                       Close
-                    </button>
+                    </button> */}
                   </div>
                   {reviewSubmitted && (
                     <div className="mt-4 text-green-700 font-semibold text-center">

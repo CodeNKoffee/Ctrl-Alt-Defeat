@@ -8,6 +8,7 @@ import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomButton from "./shared/CustomButton";
 import { Tooltip } from 'react-tooltip';
+import DeleteTileConfirmation from "./DeleteTileConfirmation";
 
 export default function StudentReportCards() {
   const reportStatusTooltipMessages = {
@@ -403,35 +404,11 @@ export default function StudentReportCards() {
 
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500/75 backdrop-blur-sm">
-          <div className="relative w-full max-w-md bg-white rounded-2xl overflow-hidden shadow-2xl transform text-left p-6">
-            {/* Close button - styled like CallModal */}
-            <button
-              className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
-              onClick={() => setShowDeleteConfirm(false)}
-              aria-label="Close modal"
-            >
-              <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
-            </button>
-            <div className="mb-4">
-              <h3 className="text-xl font-semibold text-gray-800">Confirm Delete</h3>
-            </div>
-            <p className="text-sm text-gray-600 mb-6">Are you sure you want to delete this report draft? This action cannot be undone.</p>
-            <div className="flex justify-end gap-3">
-              <CustomButton
-                variant="primary"
-                text="Cancel"
-                onClick={() => setShowDeleteConfirm(false)}
-              />
-              <CustomButton
-                variant="danger"
-                text="Delete"
-                onClick={handleDeleteReport}
-                icon={faTrash}
-              />
-            </div>
-          </div>
-        </div>
+        <DeleteTileConfirmation
+          type="report"
+          onConfirm={handleDeleteReport}
+          onCancel={() => setShowDeleteConfirm(false)}
+        />
       )}
     </div>
   );

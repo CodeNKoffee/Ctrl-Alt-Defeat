@@ -10,6 +10,7 @@ import TopInternshipCompaniesChart from './charts/TopInternshipCompaniesChart';
 import ReportsPieChart from './charts/ReportsPieChart';
 import StatCard from './charts/StatCard';
 import WeeklyActivityLineChart from './charts/WeeklyActivityLineChart';
+import CustomButton from './shared/CustomButton';
 
 export default function Stats() {
   const [dateRange, setDateRange] = useState({
@@ -85,10 +86,10 @@ topCourses: [
       <PDFDownloadLink
         document={<ReportPDF data={dashboardData} dateRange={dateRange} />}
         fileName={`stats_report_${dateRange.start.toDateString()}_to_${dateRange.end.toDateString()}.pdf`}
-        className="text-white bg-[#2A5F74] px-4 py-3 rounded-full flex items-center gap-2 hover:cursor-pointer transition-colors text-sm font-bold"
+        className="text-white bg-[#2A5F74] px-4 py-3 rounded-full flex items-center gap-2 hover:cursor-pointer transition-all text-sm font-bold hover:translate-y-0.5 shadow-md hover:shadow-lg"
       >
-        <FiDownload size={16} className="font-bold" />
-        Generate Report
+        <FiDownload size={16}/>
+            Generate Report
       </PDFDownloadLink>
       </div>
 

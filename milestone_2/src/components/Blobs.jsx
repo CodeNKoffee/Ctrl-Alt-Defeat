@@ -3,28 +3,25 @@
 import { useEffect } from "react";
 import KUTE from "kute.js";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
-export default function Blobs({ imageUrl, bgColor, decreaseBorderThickness = false }) {
+export default function Blobs({ imageUrl, bgColor, decreaseBorderThickness = false, iconLayoutId, onIconAnimationComplete }) {
   useEffect(() => {
-    // Dark blob animation
+    // Always run the animation
     const darkBlobTween = KUTE.fromTo(
       '#blob1',
       { path: '#blob1' },
       { path: '#blob1-morph' },
       { repeat: Infinity, duration: 2000, yoyo: true, easing: 'easingCubicInOut' }
     );
-
-    // Light blob animation
     const lightBlobTween = KUTE.fromTo(
       '#blob2',
       { path: '#blob2' },
       { path: '#blob2-morph' },
       { repeat: Infinity, duration: 2000, yoyo: true, offset: 1000, easing: 'easingCubicInOut' }
     );
-
     darkBlobTween.start();
     lightBlobTween.start();
-
     return () => {
       darkBlobTween.stop();
       lightBlobTween.stop();
@@ -51,17 +48,20 @@ export default function Blobs({ imageUrl, bgColor, decreaseBorderThickness = fal
       <div className="absolute left-[12%] top-[12%] w-[70%] h-[70%] z-20">
         <div
           className={`bg-[#eaf3f6] w-full h-full rounded-full border-white flex items-center justify-center transition-all duration-300`}
-          
         >
           {imageUrl && (
-            <div className="w-[70%] h-[70%] relative">
+            <motion.div
+              className="w-[70%] h-[70%] relative"
+              layoutId={iconLayoutId}
+              onAnimationComplete={onIconAnimationComplete}
+            >
               <Image
                 src={imageUrl}
                 alt="User Type Icon"
-                layout="fill"
-                objectFit="contain"
+                fill
+                style={{ objectFit: "contain" }}
               />
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

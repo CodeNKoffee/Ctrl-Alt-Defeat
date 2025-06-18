@@ -514,13 +514,14 @@ function ReportsView() {
                     </span>
                   </div>
                   <div className="flex flex-col">
-                    <button
-                      onClick={handleExportPDF}
-                      className="border-2 border-metallica-blue-700 text-metallica-blue-700 rounded-full px-4 py-2"
-                    >
-                      <FontAwesomeIcon icon={faFilePdf} className="pdf-icon" />
-                      Export
-                    </button>
+                     <CustomButton
+                        variant="primary"
+                        text={`Export as PDF`}
+                        icon={faFilePdf}
+                        //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
+                        onClick={handleExportPDF}
+                        width="w-60"
+                      />            
                   </div>
                 </div>
               </div>

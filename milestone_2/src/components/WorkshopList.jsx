@@ -207,38 +207,42 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
       <div className="flex flex-wrap items-center gap-2 mb-8 pl-2">
         <button
           onClick={() => setActiveFilter('all')}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'all'
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeFilter === 'all'
             ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
             : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
             }`}
         >
+          <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'}`}></span>
           ALL
         </button>
         <button
           onClick={() => setActiveFilter('upcoming')}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'upcoming'
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeFilter === 'upcoming'
             ? 'bg-green-100 text-green-800 border-2 border-green-600'
             : 'bg-white text-gray-600 border border-gray-300 hover:bg-green-50 hover:text-green-800 hover:border-green-600'
             }`}
         >
+          <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'upcoming' ? 'bg-green-600' : 'bg-gray-300'}`}></span>
           UPCOMING
         </button>
         <button
           onClick={() => setActiveFilter('live')}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'live'
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeFilter === 'live'
             ? 'bg-red-100 text-red-800 border-2 border-red-500'
             : 'bg-white text-gray-600 border border-gray-300 hover:bg-red-50 hover:text-red-800 hover:border-red-500'
             }`}
         >
+          <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'live' ? 'bg-red-600' : 'bg-gray-300'}`}></span>
           LIVE
         </button>
         <button
           onClick={() => setActiveFilter('prerecorded')}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeFilter === 'prerecorded'
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeFilter === 'prerecorded'
             ? 'bg-yellow-100 text-yellow-800 border-2 border-yellow-500'
             : 'bg-white text-gray-600 border border-gray-300 hover:bg-yellow-50 hover:text-yellow-800 hover:border-yellow-500'
             }`}
         >
+          <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'prerecorded' ? 'bg-yellow-600' : 'bg-gray-300'}`}></span>
           PRERECORDED
         </button>
       </div>

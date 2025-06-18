@@ -7,6 +7,7 @@ import { faFilter, faTimesCircle, faCalendar, faEdit, faTrash } from '@fortaweso
 import CompanyEvaluationModal from "./CompanyEvaluationModal";
 import CustomButton from './shared/CustomButton';
 import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
+import DeleteTileConfirmation from "./DeleteTileConfirmation";
 
 export default function EvaluationsDashboard({ evaluations: initialEvaluations, stakeholder = "other" }) {
   const [expandedIndex, setExpandedIndex] = useState(null);
@@ -149,8 +150,6 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
         ? { ...ev, ...updatedFields }
         : ev
     ));
-    setShowEditModal(false);
-    setEvaluationToEdit(null);
   };
 
   // First let's create a method to get the appropriate empty state message
@@ -560,36 +559,11 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
 
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500/75 backdrop-blur-sm">
-          <div className="relative w-full max-w-md bg-white rounded-2xl overflow-hidden shadow-2xl transform text-left p-6">
-            {/* Close button */}
-            <button
-              className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
-              onClick={() => setShowDeleteConfirm(false)}
-              aria-label="Close modal"
-            >
-              <FontAwesomeIcon icon={faTimesCircle} className="text-xl text-gray-500 font-normal" />
-            </button>
-
-            <div className="mb-4">
-              <h3 className="text-xl font-semibold text-gray-800">Confirm Delete</h3>
-            </div>
-            <p className="text-sm text-gray-600 mb-6">Are you sure you want to delete this evaluation draft? This action cannot be undone.</p>
-            <div className="flex justify-end gap-3">
-              <CustomButton
-                variant="primary"
-                text="Cancel"
-                onClick={() => setShowDeleteConfirm(false)}
-              />
-              <CustomButton
-                variant="danger"
-                text="Delete"
-                onClick={() => handleDeleteEvaluation(evaluationToDelete)}
-                icon={faTrash}
-              />
-            </div>
-          </div>
-        </div>
+        <DeleteTileConfirmation
+          type="evaluation"
+          onConfirm={() => handleDeleteEvaluation(evaluationToDelete)}
+          onCancel={() => setShowDeleteConfirm(false)}
+        />
       )}
     </>
   );

@@ -6,6 +6,7 @@ import WorkshopList from './WorkshopList';
 import WorkshopForm from './WorkshopForm';
 import DeleteWorkshopModal from './DeleteWorkshopModal';
 import { sampleWorkshops } from '../../constants/mockData';
+import CustomButton from './shared/CustomButton';
 
 export default function WorkshopManager() {
   const [workshops, setWorkshops] = useState(sampleWorkshops);
@@ -70,13 +71,13 @@ export default function WorkshopManager() {
       <div className="w-full max-w-7xl mx-auto">
         {/* Title and Add Workshop Button */}
         <div className="flex flex-wrap justify-between items-center mb-8">
-          <button
+          <CustomButton
             onClick={handleCreateWorkshop}
-            className="mt-4 sm:mt-0 bg-[#2a5f74] hover:bg-[#1a3f54] text-white px-4 py-2 rounded-lg shadow-md flex items-center transition-colors duration-300"
-          >
-            <FontAwesomeIcon icon={faPlus} className="mr-2" />
-            Add New Workshop
-          </button>
+            variant="primary"
+            text=" Add New Workshop"
+            icon={faPlus}
+            className="text-lg font-semibold"
+         />
         </div>
 
         {/* Search Bar */}

@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import CustomButton from './shared/CustomButton';
 
 const statusColors = {
   current: 'bg-blue-100 text-blue-800 border-blue-400',
@@ -13,8 +14,8 @@ export default function Student({ student, onViewProfile }) {
 
   return (
     <div className="bg-[#F0F9FB] rounded-lg p-6 shadow-sm border-2 border-[#5DB2C7]
-      transform transition-all duration-300 ease-in-out cursor-pointer
-      hover:scale-110 hover:shadow-2xl hover:border-[#3298BA]">
+      transform transition-all duration-150 ease-in-out cursor-pointer
+      hover:scale-105 hover:shadow-2xl hover:border-[#3298BA]">
 
       <div className="flex flex-col items-center space-y-4">
         <span className={`absolute top-2 right-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border
@@ -51,14 +52,16 @@ export default function Student({ student, onViewProfile }) {
         </div>
 
         {/* View Profile Button */}
-        <button
-          onClick={onViewProfile}
-          className="px-6 py-2 bg-white text-sm font-medium text-[#2a5f74] border-2 border-[#3298BA] rounded-full
-            hover:bg-[#D9F0F4] transition-colors"
-        >
-          View Profile
-        </button>
-      </div>
+         <CustomButton
+        
+            variant="primary"
+            text={"View Profile"}
+            // icon={nextStatus === 'rejected' ? faTimesCircle :
+            //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
+            onClick={onViewProfile}
+            width="w-40"
+          />
     </div>
+  </div>
   );
 }

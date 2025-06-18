@@ -1,6 +1,39 @@
+import React, { useState, useEffect, useRef } from 'react';
 import './styles/StudentProfile.css';
+import './styles/SectionStyles.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faGraduationCap, faCode, faBriefcase, faBuilding, faClipboard } from "@fortawesome/free-solid-svg-icons";
 
 export default function StudentDetails({ isOpen, studentData }) {
+  // Ref for the details-content div to manage scroll effects
+  const detailsContentRef = useRef(null);
+  const [showFade, setShowFade] = useState(true);
+  
+  // Add scroll event listener to check if at bottom
+  useEffect(() => {
+    const handleScroll = () => {
+      const detailsContent = detailsContentRef.current;
+      if (detailsContent) {
+        // Check if user has scrolled to the bottom (with a small buffer)
+        const isAtBottom = detailsContent.scrollHeight - detailsContent.scrollTop - detailsContent.clientHeight < 10;
+        setShowFade(!isAtBottom); // Hide fade when at bottom
+      }
+    };
+
+    const detailsContent = detailsContentRef.current;
+    if (detailsContent) {
+      detailsContent.addEventListener('scroll', handleScroll);
+      // Initial check
+      handleScroll();
+    }
+
+    return () => {
+      if (detailsContent) {
+        detailsContent.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [isOpen]); // Re-initialize when the panel opens/closes
+  
   // Function to render stars for personality traits
   const renderStars = (rating) => {
     const stars = [];
@@ -38,6 +71,7 @@ export default function StudentDetails({ isOpen, studentData }) {
     "--user-primary": theme.primary,
     "--user-secondary": theme.secondary,
     "--user-accent": theme.accent,
+    "--user-accent-transparent": theme.accent + '66', // 66 in hex is approx 0.4 opacity
     "--user-text": theme.text,
     "--user-background": theme.background,
   };
@@ -61,20 +95,26 @@ export default function StudentDetails({ isOpen, studentData }) {
   };
 
   const skillTagStyle = {
-    backgroundColor: theme.background,
-    color: theme.text
-  };
-
-  return (
+    backgroundColor: theme.primary,
+    color: theme.background
+  };  return (
     <div
-      className={`student-details-container bg-white rounded-xl shadow-lg overflow-hidden border-2 border-[#318FA8]`}
+      className={`student-details-container overflow-hidden`}
       style={themeStyle}
     >
-      <div className="details-content w-full">
-        <div className="grid-layout grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div 
+        ref={detailsContentRef}
+        className={`details-content w-full ${showFade ? 'with-fade' : 'no-fade'}`}
+      >
+        <div className="grid-layout grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="grid-column">
             <div className="details-section personality-traits-section">
-              <h3 style={sectionTitleStyle}>Personality Traits</h3>
+              <h3 style={sectionTitleStyle}>
+                <span className="section-badge">
+                  <FontAwesomeIcon icon={faUser} />
+                </span>
+                Personality Traits
+              </h3>
               <div className="personality-traits">
                 {studentData.personalityTraits && studentData.personalityTraits.map((trait, index) => (
                   <div key={index} className="trait-item">
@@ -88,9 +128,14 @@ export default function StudentDetails({ isOpen, studentData }) {
             </div>
 
             <div className="details-section education-section">
-              <h3 style={sectionTitleStyle}>Education</h3>
+              <h3 style={sectionTitleStyle}>
+                <span className="section-badge">
+                  <FontAwesomeIcon icon={faGraduationCap} />
+                </span>
+                Education
+              </h3>
               <div className="education-content">
-                {studentData.education && studentData.education[0] && (
+               {studentData.education && studentData.education[0] && (
                   <div className="education-item">
                     <h4 style={headingStyle}>{studentData.education[0].degree}</h4>
                     <p style={textStyle}>{studentData.education[0].institution}</p>
@@ -108,7 +153,12 @@ export default function StudentDetails({ isOpen, studentData }) {
             </div>
 
             <div className="details-section skills-section">
-              <h3 style={sectionTitleStyle}>Skills</h3>
+              <h3 style={sectionTitleStyle}>
+                <span className="section-badge">
+                  <FontAwesomeIcon icon={faCode} />
+                </span>
+                Skills
+              </h3>
               <div className="skills-container">
                 {studentData.skills && studentData.skills.map((skill, index) => (
                   <span key={index} className="skill-tag" style={skillTagStyle}>{skill}</span>
@@ -117,7 +167,12 @@ export default function StudentDetails({ isOpen, studentData }) {
             </div>
 
             <div className="details-section job-interests-section">
-              <h3 style={sectionTitleStyle}>Job Interests</h3>
+              <h3 style={sectionTitleStyle}>
+                <span className="section-badge">
+                  <FontAwesomeIcon icon={faBriefcase} />
+                </span>
+                Job Interests
+              </h3>
               <div className="job-interests-container">
                 {studentData.jobInterests && studentData.jobInterests.map((interest, index) => (
                   <div key={index} className="job-interest-item">
@@ -134,7 +189,12 @@ export default function StudentDetails({ isOpen, studentData }) {
 
           <div className="grid-column">
             <div className="details-section experience-section">
-              <h3 style={sectionTitleStyle}>Experience</h3>
+              <h3 style={sectionTitleStyle}>
+                <span className="section-badge">
+                  <FontAwesomeIcon icon={faBuilding} />
+                </span>
+                Experience
+              </h3>
               <div className="experience-content">
                 {studentData.experience && studentData.experience.map((exp, index) => (
                   <div key={index} className="experience-item">
@@ -153,12 +213,19 @@ export default function StudentDetails({ isOpen, studentData }) {
             </div>
 
             <div className="details-section internships-section">
-              <h3 style={sectionTitleStyle}>Internships</h3>
+              <h3 style={sectionTitleStyle}>
+                <span className="section-badge">
+                  <FontAwesomeIcon icon={faClipboard} />
+                </span>
+                Internships
+              </h3>
               <div className="internships-container">
                 {studentData.internships && studentData.internships.map((internship, index) => (
                   <div key={index} className="internship-item">
                     <div className="internship-header">
-                      <div className="internship-icon">📋</div>
+                      <div className="internship-icon">
+                        <FontAwesomeIcon icon={faClipboard} />
+                      </div>
                       <h4 style={headingStyle}>{internship.title}</h4>
                     </div>
                     <div className="internship-content">

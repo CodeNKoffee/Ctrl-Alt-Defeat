@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CustomButton from "./shared/CustomButton";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const skillAttributes = [
@@ -46,7 +46,8 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
   const [draftStatus, setDraftStatus] = useState("");
   const [activeTab, setActiveTab] = useState('skills');
   const isEditMode = !!evaluationToEdit;
-  const [feedback, setFeedback] = useState(null);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [feedbackType, setFeedbackType] = useState('');
 
   useEffect(() => {
     if (evaluationToEdit) {
@@ -93,93 +94,76 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     const submitData = isEditMode ? { ...form, id: evaluationToEdit.id } : form;
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
     onSubmit(submitData, isEditMode);
-    setFeedback('submit');
+
+    setFeedbackType('submit');
+    setShowFeedbackModal(true);
+    setSubmitting(false);
+
     setTimeout(() => {
-      setSubmitting(false);
-      setFeedback(null);
+      setShowFeedbackModal(false);
       onClose();
-    }, 1200);
+    }, 1800);
+  };
+
+  const handleSaveDraft = async () => {
+    setDraftStatus("saving");
+    const draftData = isEditMode ? { ...form, id: evaluationToEdit.id } : form;
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log("Draft saved:", draftData);
+
+    setFeedbackType('saveDraft');
+    setShowFeedbackModal(true);
+    setDraftStatus("saved");
+
+    setTimeout(() => {
+      setShowFeedbackModal(false);
+    }, 1800);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(44,63,80,0.60)]">
       {/* Feedback success modal */}
       <AnimatePresence>
-        {feedback && (
+        {showFeedbackModal && (
           <motion.div
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10000,
-              background: 'rgba(42, 95, 116, 0.18)'
-            }}
+            className="fixed inset-0 z-[10001] flex items-center justify-center bg-[rgba(42,95,116,0.18)] backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              style={{
-                background: 'white',
-                padding: '25px',
-                borderRadius: '15px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
-                maxWidth: '400px'
-              }}
+              className="bg-white p-6 rounded-xl shadow-2xl flex flex-col items-center max-w-sm w-full mx-4"
               initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.7, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
             >
               <motion.div
-                style={{
-                  marginBottom: '15px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
+                className="mb-4"
                 initial={{ scale: 0.5 }}
                 animate={{ scale: 1 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15, delay: 0.1 }}
               >
-                <div
-                  style={{
-                    width: 60,
-                    height: 60,
-                    borderRadius: '50%',
-                    background: '#318FA8',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    style={{ fontSize: 32, color: 'white' }}
-                  />
+                <div className="w-16 h-16 rounded-full bg-[#318FA8] flex items-center justify-center">
+                  <FontAwesomeIcon icon={faCheck} className="text-3xl text-white" />
                 </div>
               </motion.div>
-              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
+              <h3 className="text-2xl font-bold text-[#2A5F74] mb-2">
                 Success!
-              </div>
-              <div style={{ color: '#333', textAlign: 'center' }}>
-                {feedback === 'submit'
+              </h3>
+              <p className="text-gray-700 text-center text-sm">
+                {feedbackType === 'submit'
                   ? 'Your evaluation has been successfully submitted.'
-                  : 'Your evaluation has been successfully saved as a draft.'}
-              </div>
+                  : 'Your changes have been successfully saved.'}
+              </p>
             </motion.div>
           </motion.div>
         )}
@@ -302,30 +286,27 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
               </>
             )}
           </div>
-          <div className="flex gap-2 mt-2 w-full">
+          <div className="flex gap-3 mt-4 w-full">
             <CustomButton
               variant="primary"
               type="submit"
               text="Submit Evaluation"
-              isLoading={draftStatus === 'saving'}
-              loadingText="Saving..."
-              disabled={submitting}
-              onClick={onClose}
+              isLoading={submitting}
+              loadingText="Submitting..."
+              disabled={submitting || draftStatus === 'saving'}
+              onClick={handleSubmit}
               width="w-full"
             />
-            {(
-              <CustomButton
-                variant="secondary"
-                type="button"
-                text={isEditMode ? "Save Changes" : "Save as Draft"}
-                isLoading={draftStatus === 'saving'}
-                loadingText="Saving..."
-                disabled={submitting}
-                onClick={onClose}
-                width="w-full"
-              />
-
-            )}
+            <CustomButton
+              variant="secondary"
+              type="button"
+              text={isEditMode ? "Save Changes" : "Save as Draft"}
+              isLoading={draftStatus === 'saving'}
+              loadingText="Saving..."
+              disabled={submitting || draftStatus === 'saving'}
+              onClick={handleSaveDraft}
+              width="w-full"
+            />
           </div>
         </form>
       </div>

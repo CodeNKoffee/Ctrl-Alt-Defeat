@@ -75,6 +75,68 @@ body {
   box-sizing: border-box;
 }
 
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--metallica-blue-50);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--metallica-blue-300);
+  border-radius: 8px;
+  border: 2px solid var(--metallica-blue-800);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--metallica-blue-400);
+}
+
+/* Firefox scrollbar support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--metallica-blue-300) var(--metallica-blue-50);
+}
+
+/* Custom Select/Dropdown Styling */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232a5f74' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--metallica-blue-500);
+  box-shadow: 0 0 0 2px rgba(49, 143, 168, 0.1);
+}
+
+select option {
+  background-color: white;
+  color: var(--metallica-blue-800);
+  padding: 0.5rem;
+}
+
+select option:hover,
+select option:focus,
+select option:active,
+select option:checked {
+  background-color: var(--metallica-blue-100);
+  color: var(--metallica-blue-800);
+}
+
+/* Remove dropdown arrow in IE/Edge */
+select::-ms-expand {
+  display: none;
+}
+
 nav {
   width: 100%;
 }

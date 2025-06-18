@@ -15,12 +15,15 @@ export default function CustomButton({
   iconPosition = "left",
   type = "button",
   showIconOnLoading = false,
+  extraClasses = "",
 }) {
   // Classes based on variant
   const variantStyles = {
     primary: "bg-[#318FA8] text-white hover:bg-[#2a5c67] border-[#5DB2C7]",
-    secondary: "bg-[#daedf0] text-[#318FA8] hover:bg-[#D9F0F4] border-[#5DB2C7]",
+    secondary: "bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]",
     danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
+    pre:"bg-amber-200 text-amber-800 hover:bg-amber-300 focus:ring-amber-500",
+    upcoming:"bg-green-600 text-white hover:bg-green-700 focus:ring-green-500",
   };
 
   return (
@@ -29,6 +32,7 @@ export default function CustomButton({
       onClick={!disabled && !isLoading ? onClick : undefined}
       disabled={disabled || isLoading}
       className={`
+        ${extraClasses}
         font-bold py-3 px-4 rounded-full transition-all duration-200 
         flex items-center justify-center focus:outline-none focus:ring-2
         ${variantStyles[variant] || variantStyles.primary}

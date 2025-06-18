@@ -17,6 +17,7 @@ import { getRegularInternships, getRecommendedInternships, getRecommendedInterns
 import InternshipList from '../../../../components/shared/InternshipList';
 import ApplicationInfoCard from '@/components/ApplicationInfoCard';
 import { toast } from 'react-toastify';
+import StatusPills from '../../../../components/shared/StatusPills';
 
 // CompanyPostsInfoCard component
 const CompanyPostsInfoCard = () => (
@@ -77,24 +78,14 @@ const CompanyPostsInfoCard = () => (
 
 function CompanyPostsView() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [isCombinedFilterPopoverOpen, setIsCombinedFilterPopoverOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState({
     jobType: [],
     jobSetting: [],
     paymentStatus: []
   });
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.target.closest('.combined-filter-popover') && !event.target.closest('.combined-filter-button')) {
-        setIsCombinedFilterPopoverOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-  const handleFilterClick = (category, value) => {
+
+  // Handler for ApplicationsFilterBar
+  const handleFilterChange = (category, value) => {
     setActiveFilters(prev => {
       const newFilters = { ...prev };
       if (value === 'all') {
@@ -113,8 +104,7 @@ function CompanyPostsView() {
     setActiveFilters({ jobType: [], jobSetting: [], paymentStatus: [] });
     setSearchTerm('');
   };
-  const isFilterActive = (category, value) => activeFilters[category].includes(value);
-  const hasActiveFilters = () => Object.values(activeFilters).some(arr => arr.length > 0) || searchTerm;
+
   return (
     <div className="container mx-auto p-10">
       <div className="w-full max-w-6xl mx-auto">
@@ -125,165 +115,61 @@ function CompanyPostsView() {
 
         <CompanyPostsInfoCard />
 
-        {/* Modern search and filter bar */}
-        <div className="w-full bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl">
-          <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
-            {/* Search box */}
-            <div className="flex-1 w-full md:w-auto md:max-w-md">
-              <div className="relative w-full flex justify-center items-center">
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search by title, description, or skills..."
-                  className="w-full py-3 pl-10 pr-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
-                />
-                <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-                  <FontAwesomeIcon icon={faSearch} className="h-4 w-4 text-[#5DB2C7]" />
-                </div>
-                {searchTerm && (
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-3.5 flex items-center p-1 rounded-full hover:bg-[#B8E1E9]/50 transition-colors duration-200"
-                    onClick={() => setSearchTerm('')}
-                  >
-                    <FontAwesomeIcon icon={faXmark} className="w-4 h-4 text-[#5DB2C7] hover:text-[#2a5f74]" />
-                  </button>
-                )}
-              </div>
-            </div>
-            {/* Combined Filter Button and Popover */}
-            <div className="relative w-full md:w-auto">
-              <button
-                onClick={() => setIsCombinedFilterPopoverOpen(!isCombinedFilterPopoverOpen)}
-                className={`appearance-none w-full md:w-auto backdrop-blur-sm border-2 text-sm py-3 px-4 rounded-full shadow-md transition-all duration-300 flex items-center justify-center gap-2 combined-filter-button min-w-[150px]
-                  ${hasActiveFilters()
-                    ? "bg-[#5DB2C7] text-white border-[#5DB2C7] hover:bg-[#4AA0B5]"
-                    : "bg-white/90 text-[#1a3f54] border-[#B8E1E9] hover:border-[#5DB2C7]"
-                  }`}
-              >
-                <FontAwesomeIcon icon={faFilter} className={`h-4 w-4 ${hasActiveFilters() ? "text-white" : "text-[#5DB2C7]"}`} />
-                <span>Filters</span>
-                {hasActiveFilters() && (
-                  <span className="bg-white text-[#5DB2C7] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
-                    {activeFilters.jobType.length + activeFilters.jobSetting.length + activeFilters.paymentStatus.length + (searchTerm ? 1 : 0)}
-                  </span>
-                )}
-                <FontAwesomeIcon
-                  icon={faChevronDown}
-                  className={`h-4 w-4 ${hasActiveFilters() ? "text-white" : "text-[#5DB2C7]"}} transition-transform duration-300 ${isCombinedFilterPopoverOpen ? 'rotate-180' : ''}`}
-                />
-              </button>
-              {isCombinedFilterPopoverOpen && (
-                <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-30 combined-filter-popover animate-dropdown focus:outline-none p-4 space-y-4">
-                  {/* Job Type Filter Section */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Job Type</h4>
-                    <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${activeFilters.jobType.length === 0 ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'all')}
-                      >
-                        All Types
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobType', 'Full-time') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'Full-time')}
-                      >
-                        Full-time
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobType', 'Part-time') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'Part-time')}
-                      >
-                        Part-time
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobType', 'Internship') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobType', 'Internship')}
-                      >
-                        Internship
-                      </div>
-                    </div>
-                  </div>
-                  {/* Job Setting Filter Section */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Job Setting</h4>
-                    <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${activeFilters.jobSetting.length === 0 ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'all')}
-                      >
-                        All Settings
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobSetting', 'Remote') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'Remote')}
-                      >
-                        Remote
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobSetting', 'On-site') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'On-site')}
-                      >
-                        On-site
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('jobSetting', 'Hybrid') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('jobSetting', 'Hybrid')}
-                      >
-                        Hybrid
-                      </div>
-                    </div>
-                  </div>
-                  {/* Payment Status Filter Section */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">Payment Status</h4>
-                    <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${activeFilters.paymentStatus.length === 0 ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('paymentStatus', 'all')}
-                      >
-                        All Status
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('paymentStatus', 'Paid') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('paymentStatus', 'Paid')}
-                      >
-                        Paid
-                      </div>
-                      <div
-                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${isFilterActive('paymentStatus', 'Unpaid') ? 'bg-[#D9F0F4] font-semibold' : ''}`}
-                        onClick={() => handleFilterClick('paymentStatus', 'Unpaid')}
-                      >
-                        Unpaid
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    className="w-full mt-4 py-2 rounded-full bg-[#5DB2C7] text-white font-semibold hover:bg-[#3298BA] transition-colors duration-200"
-                    onClick={clearAllFilters}
-                  >
-                    Clear All Filters
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        {/* ApplicationsFilterBar replaces custom filter/search bar */}
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search internships by job title, description, skills..."
+          primaryFilterName="Filter"
+          selectedPrimaryFilter={activeFilters.jobType[0] || 'all'}
+          onPrimaryFilterChange={value => handleFilterChange('jobType', value)}
+          primaryFilterOptions={[
+            { id: 'Full-time', title: 'Full-time' },
+            { id: 'Part-time', title: 'Part-time' },
+            { id: 'Internship', title: 'Internship' },
+          ]}
+          statusConfig={{}}
+          selectedStatus={'all'}
+          onStatusChange={() => { }}
+          showDatePicker={false}
+          onClearFilters={clearAllFilters}
+          // Add more filter sections as needed
+          customFilterSections={[
+            {
+              title: 'Job Setting',
+              options: [
+                { label: 'Remote', value: 'Remote' },
+                { label: 'On-site', value: 'On-site' },
+                { label: 'Hybrid', value: 'Hybrid' },
+              ],
+              isSelected: (option) => activeFilters.jobSetting.includes(option.value),
+              onSelect: (option) => handleFilterChange('jobSetting', option.value),
+            },
+            {
+              title: 'Payment Status',
+              options: [
+                { label: 'Paid', value: 'Paid' },
+                { label: 'Unpaid', value: 'Unpaid' },
+              ],
+              isSelected: (option) => activeFilters.paymentStatus.includes(option.value),
+              onSelect: (option) => handleFilterChange('paymentStatus', option.value),
+            },
+          ]}
+        />
+
         {/* Post Tiles */}
-        <PostTiles searchTerm={searchTerm} activeFilters={activeFilters} />
+        <PostTiles searchOverride={searchTerm} filterOverride={activeFilters} />
       </div>
     </div>
   );
 }
 
-// Using the actual page components for each view
 function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds }) {
   const [filters, setFilters] = useState({
-    industry: '',
-    duration: '',
-    isPaid: null
+    position: '',
+    jobType: '',
+    jobSetting: '',
+    company: '',
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -300,8 +186,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const userMajor = currentUser?.major || 'Computer Science';
 
   const internshipDataForFilters = getRegularInternships();
-  const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))];
-  const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))];
+  const uniquePositions = [...new Set(internshipDataForFilters.map(internship => internship.title))];
+  const uniqueJobTypes = [...new Set(internshipDataForFilters.map(internship => internship.type))];
+  const uniqueJobSettings = [...new Set(internshipDataForFilters.map(internship => internship.jobSetting))];
+  const uniqueCompanies = [...new Set(internshipDataForFilters.map(internship => internship.company))];
 
   // Get internships based on active tab
   const baseInternships = activeTab === 'all'
@@ -335,13 +223,13 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 
   // Update filteredInternships when baseInternships changes (without depending on hasActiveFilters)
   useEffect(() => {
-    const hasFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
+    const hasFilters = filters.position || filters.jobType || filters.jobSetting || filters.company || searchTerm;
     if (!hasFilters) {
       setFilteredInternships(baseInternships);
     }
   }, [baseInternships, filters, searchTerm]);
 
-  // Apply additional filters (industry, duration, paid/unpaid, search)
+  // Apply additional filters (position, jobType, jobSetting, company, search)
   useEffect(() => {
     let result = [...baseInternships];
 
@@ -357,80 +245,69 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       );
     }
 
-    // Filter by industry
-    if (filters.industry) {
-      result = result.filter(internship =>
-        internship.industry === filters.industry
-      );
+    // Filter by position
+    if (filters.position) {
+      result = result.filter(internship => internship.title === filters.position);
     }
-
-    // Filter by duration
-    if (filters.duration) {
-      result = result.filter(internship => {
-        // Parse the duration value from the filter (e.g., "3 months" -> 3)
-        const filterDurationMatch = filters.duration.match(/(\d+)/);
-        const filterDurationMonths = filterDurationMatch ? parseInt(filterDurationMatch[1]) : 0;
-
-        // Parse the internship duration (e.g., "3 months", "6-8 months", etc.)
-        const internshipDurationMatch = internship.duration.match(/(\d+)/);
-        const internshipDurationMonths = internshipDurationMatch ? parseInt(internshipDurationMatch[1]) : 0;
-
-        // If we have valid numbers for both, compare them
-        if (filterDurationMonths > 0 && internshipDurationMonths > 0) {
-          return internshipDurationMonths === filterDurationMonths;
-        }
-
-        return true;
-      });
+    // Filter by job type
+    if (filters.jobType) {
+      result = result.filter(internship => internship.type === filters.jobType);
     }
-
-    // Filter by paid status
-    if (filters.isPaid !== null) {
-      result = result.filter(internship =>
-        internship.paid === filters.isPaid
-      );
+    // Filter by job setting
+    if (filters.jobSetting) {
+      result = result.filter(internship => internship.jobSetting === filters.jobSetting);
+    }
+    // Filter by company
+    if (filters.company) {
+      result = result.filter(internship => internship.company === filters.company);
     }
 
     setFilteredInternships(result);
   }, [baseInternships, filters, searchTerm]);
 
   // Check if any filters are active
-  const hasActiveFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
+  const hasActiveFilters = filters.position || filters.jobType || filters.jobSetting || filters.company || searchTerm;
 
   const clearAllFilters = () => {
     setFilters({
-      industry: '',
-      duration: '',
-      isPaid: null
+      position: '',
+      jobType: '',
+      jobSetting: '',
+      company: '',
     });
     setSearchTerm('');
   };
 
-  const customFilterSections = [
+  // Build filter sections for the new filter bar API
+  const filterSections = [
     {
-      title: "Industry",
-      options: uniqueIndustries.map(ind => ({ label: ind, value: ind })),
-      isSelected: (option) => filters.industry === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, industry: prev.industry === option.value ? '' : option.value }));
-      }
+      name: 'Position',
+      options: uniquePositions.map(pos => ({ id: pos, title: pos })),
+      selected: filters.position || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, position: value === 'all' ? '' : value })),
+      resetLabel: 'All Positions',
     },
     {
-      title: "Duration",
-      options: uniqueDurations.map(dur => ({ label: dur, value: dur })),
-      isSelected: (option) => filters.duration === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, duration: prev.duration === option.value ? '' : option.value }));
-      }
+      name: 'Job Type',
+      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      selected: filters.jobType || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Types',
     },
     {
-      title: "Payment",
-      options: [{ label: "Paid", value: true }, { label: "Unpaid", value: false }],
-      isSelected: (option) => filters.isPaid === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, isPaid: prev.isPaid === option.value ? null : option.value }));
-      }
-    }
+      name: 'Job Setting',
+      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      selected: filters.jobSetting || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Settings',
+    },
+    {
+      name: 'Company',
+      options: uniqueCompanies.map(company => ({ id: company, title: company })),
+      selected: filters.company || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, company: value === 'all' ? '' : value })),
+      resetLabel: 'All Companies',
+    },
   ];
 
   // Define the info card JSX/Component here for clarity
@@ -491,8 +368,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           onSearchChange={(value) => setSearchTerm(value)}
           searchPlaceholder="Search internships by job title or company name ..."
           onClearFilters={clearAllFilters}
-          customFilterSections={customFilterSections}
-          primaryFilterName="Filters"
+          filterSections={filterSections}
         />
       </div>
       <InternshipList
@@ -519,14 +395,13 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 }
 
 function ApplicationsView() {
-  // ...copy logic from applications/page.jsx...
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [selectedInternship, setSelectedInternship] = useState('all');
 
   // Show notification toast when component mounts
   useEffect(() => {
-    toast.info('Receive a notification via email and on the system when somebody applies to an internship', {
+    toast.info('A new applicant has applied to one of your internship listings', {
       position: 'bottom-right',
       autoClose: 6000,
       hideProgressBar: false,
@@ -568,6 +443,45 @@ function ApplicationsView() {
       badgeColor: "bg-green-600",
     }
   };
+  const STATUS_CONFIG_HOVER = {
+    // For applied internships
+    pending: {
+      label: "PENDING",
+      color:"bg-white text-gray-600 border border-gray-300 hover:bg-yellow-100 hover:text-yellow-800 hover:border-yellow-400",
+      badgeColor: "bg-yellow-600",
+    },
+    accepted: {
+      label: "ACCEPTED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    rejected: {
+      label: "REJECTED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-red-100 hover:text-red-800 hover:border-red-400",
+      badgeColor: "bg-red-600",
+    },
+    finalized: {
+      label: "FINALIZED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400",
+      badgeColor: "bg-purple-600",
+    },
+    // For my internships
+    current: {
+      label: "CURRENT",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-blue-200 hover:text-blue-900 hover:border-blue-500",
+      badgeColor: "bg-blue-600",
+    },
+    completed: {
+      label: "COMPLETED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400",
+      badgeColor: "bg-green-600",
+    },
+    evaluated: {
+      label: "EVALUATED",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400",
+      badgeColor: "bg-purple-600",
+    }
+  };
   const MOCK_INTERNSHIPS = [
     { id: 1, title: "Frontend Developer Intern" },
     { id: 2, title: "UI/UX Design Intern" },
@@ -575,11 +489,30 @@ function ApplicationsView() {
     { id: 4, title: "Data Analyst Intern" },
     { id: 5, title: "Marketing Intern" }
   ];
+  const statusPills = [
+    { value: 'pending', label: 'PENDING', color: 'bg-yellow-100 text-yellow-800 border-2 border-yellow-400', badgeColor: 'bg-yellow-600' },
+    { value: 'accepted', label: 'ACCEPTED', color: 'bg-green-100 text-green-800 border-2 border-green-400', badgeColor: 'bg-green-600' },
+    { value: 'finalized', label: 'FINALIZED', color: 'bg-purple-100 text-purple-800 border-2 border-purple-400', badgeColor: 'bg-purple-600' },
+    { value: 'rejected', label: 'REJECTED', color: 'bg-red-100 text-red-800 border-2 border-red-400', badgeColor: 'bg-red-600' },
+    { value: 'current', label: 'CURRENT INTERN', color: 'bg-blue-100 text-blue-800 border-2 border-blue-400', badgeColor: 'bg-blue-600' },
+    { value: 'completed', label: 'COMPLETED', color: 'bg-green-100 text-green-800 border-2 border-green-400', badgeColor: 'bg-green-600' },
+  ];
   const clearFilters = () => {
     setSearchTerm('');
     setSelectedStatus('all');
     setSelectedInternship('all');
   };
+
+  // Build filter sections for the new filter bar API
+  const positionOptions = [
+    { id: 'all', title: 'All Positions' },
+    ...MOCK_INTERNSHIPS.map(pos => ({ id: pos.id.toString(), title: pos.title }))
+  ];
+  const statusOptions = [
+    { id: 'all', title: 'All Status' },
+    ...Object.entries(STATUS_CONFIG).map(([key, val]) => ({ id: key, title: val.label }))
+  ];
+
   return (
     <div className="min-h-screen p-4 isolate">
       <div className="container mx-auto px-6 py-6">
@@ -596,21 +529,38 @@ function ApplicationsView() {
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
               searchPlaceholder="Search by name, email, or position..."
-              selectedStatus={selectedStatus}
-              onStatusChange={setSelectedStatus}
-              statusConfig={STATUS_CONFIG}
-              primaryFilterName="Filter"
-              selectedPrimaryFilter={selectedInternship}
-              onPrimaryFilterChange={setSelectedInternship}
-              primaryFilterOptions={MOCK_INTERNSHIPS}
+              filterSections={[
+                {
+                  name: 'Position',
+                  options: positionOptions.slice(1),
+                  selected: selectedInternship,
+                  onChange: setSelectedInternship,
+                  resetLabel: 'All Positions'
+                },
+                {
+                  name: 'Status',
+                  options: statusOptions.slice(1),
+                  selected: selectedStatus,
+                  onChange: setSelectedStatus,
+                  resetLabel: 'All Status'
+                }
+              ]}
               onClearFilters={clearFilters}
             />
+            {/* <div className="w-full max-w-6xl mx-auto mt-4 mb-6">
+              <StatusPills
+                statuses={statusPills}
+                selected={selectedStatus}
+                onChange={setSelectedStatus}
+              />
+            </div> */}
           </div>
           <div className="application-list-item">
             <ApplicationsList
               searchTerm={searchTerm}
               selectedStatus={selectedStatus}
               selectedInternship={selectedInternship}
+              statuses={['pending', 'accepted', 'finalized', 'rejected', 'current', 'completed']}
             />
           </div>
         </div>
@@ -620,6 +570,21 @@ function ApplicationsView() {
 }
 
 function CurrentInternsView() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('all');
+  const statusPills = [
+    { value: 'current', label: 'CURRENT', color: 'bg-blue-100 text-blue-800 border-2 border-blue-400', badgeColor: 'bg-blue-600' },
+    { value: 'completed', label: 'COMPLETED', color: 'bg-green-100 text-green-800 border-2 border-green-400', badgeColor: 'bg-green-600' },
+    { value: 'evaluated', label: 'EVALUATED', color: 'bg-purple-100 text-purple-800 border-2 border-purple-400', badgeColor: 'bg-purple-600' },
+  ];
+
+  // Evaluation status filter options for the filter bar
+  const evaluationStatusOptions = [
+    { id: 'current', title: 'CURRENT' },
+    { id: 'completed', title: 'COMPLETED' },
+    { id: 'evaluated', title: 'EVALUATED' },
+  ];
+
   // Info card for Intern Management Dashboard
   const InternsInfoCard = () => (
     <div className="w-full max-w-6xl mx-auto">
@@ -692,7 +657,70 @@ function CurrentInternsView() {
   return (
     <div className="w-full max-w-6xl mx-auto p-10">
       <InternsInfoCard />
-      <CurrentInterns />
+      <div className="dropdown-overlay">
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search interns by name, department, position..."
+          filterSections={[
+            {
+              name: 'Status',
+              options: evaluationStatusOptions,
+              selected: selectedStatus,
+              onChange: setSelectedStatus,
+              resetLabel: 'All Status'
+            }
+          ]}
+          onClearFilters={() => {
+            setSearchTerm('');
+            setSelectedStatus('all');
+          }}
+        />
+        <div className="w-full max-w-6xl mx-auto my-4">
+          <div className="flex flex-wrap gap-2 items-center">
+            <button
+              onClick={() => setSelectedStatus('all')}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${
+                selectedStatus === 'all'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
+              }`}
+            >
+              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${
+                selectedStatus === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
+              }`}></span>
+              ALL
+            </button>
+            {statusPills.map((status) => (
+              <button
+                key={status.value}
+                onClick={() => setSelectedStatus(status.value)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${
+                  selectedStatus === status.value
+                  ? status.color
+                  : status.value === 'current' 
+                    ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
+                    : status.value === 'completed'
+                      ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-green-50 hover:border-green-300 hover:text-green-700'
+                      : status.value === 'evaluated'
+                        ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-purple-50 hover:border-purple-300 hover:text-purple-700'
+                        : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                }`}
+              >
+                <span className={`inline-block w-3 h-3 rounded-full mr-2 ${
+                  selectedStatus === status.value ? status.badgeColor : 'bg-gray-300'
+                }`}></span>
+                {status.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <CurrentInterns
+        searchTerm={searchTerm}
+        selectedStatus={selectedStatus}
+        onStatusChange={setSelectedStatus}
+      />
     </div>
   );
 }
