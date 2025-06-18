@@ -198,7 +198,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                   value={filledReport.internshipTitle}
                   onChange={handleFormChange}
                   placeholder="Enter a descriptive title for your report"
-                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 transition-all duration-300 hover:shadow-md"
+                  className="w-full border-2 border-[var(--metallica-blue-200)] p-2 rounded-md bg-white focus:border-[var(--metallica-blue-500)] focus:outline-none transition-colors"
                 />
               </div>
               <div>
@@ -208,7 +208,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                   value={filledReport.company}
                   onChange={handleFormChange}
                   placeholder="Where did you complete your internship?"
-                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 transition-all duration-300 hover:shadow-md"
+                  className="w-full border-2 border-[var(--metallica-blue-200)] p-2 rounded-md bg-white focus:border-[var(--metallica-blue-500)] focus:outline-none transition-colors"
                 />
               </div>
               <div>
@@ -217,7 +217,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                   required
                   value={filledReport.major}
                   onChange={handleMajorChange}
-                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 transition-all duration-300 hover:shadow-md"
+                  className="w-full border-2 border-[var(--metallica-blue-200)] p-2 rounded-md bg-white focus:border-[var(--metallica-blue-500)] focus:outline-none transition-colors"
                 >
                   <option value="" disabled>Select your major</option>
                   <option value="CSEN">CSEN</option>
@@ -230,7 +230,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                 <label className="block text-sm font-medium text-[#2A5F74] mb-1">Add courses that helped you during your internship</label>
                 <select
                   onChange={handleCourseSelect}
-                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 transition-all duration-300 hover:shadow-md"
+                  className="w-full border-2 border-[var(--metallica-blue-200)] p-2 rounded-md bg-white focus:border-[var(--metallica-blue-500)] focus:outline-none transition-colors"
                 >
                   <option value="" disabled>Select a course</option>
                   {courses.map((course, index) => (
@@ -268,7 +268,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                   value={filledReport.introduction}
                   onChange={handleFormChange}
                   placeholder="Introduce the company and your role..."
-                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 resize-y transition-all duration-300 hover:shadow-md"
+                  className="w-full border-2 border-[var(--metallica-blue-200)] p-2 rounded-md bg-white focus:border-[var(--metallica-blue-500)] focus:outline-none transition-colors resize-vertical min-h-[100px]"
                   rows="3"
                 />
               </div>
@@ -280,7 +280,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                   value={filledReport.body}
                   onChange={handleFormChange}
                   placeholder="Detail your responsibilities and experiences..."
-                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 resize-y transition-all duration-300 hover:shadow-md"
+                  className="w-full border-2 border-[var(--metallica-blue-200)] p-2 rounded-md bg-white focus:border-[var(--metallica-blue-500)] focus:outline-none transition-colors resize-vertical min-h-[100px]"
                   rows="3"
                 />
               </div>
@@ -292,7 +292,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                   value={filledReport.conclusion}
                   onChange={handleFormChange}
                   placeholder="Summarize what you learned and gained..."
-                  className="mt-1 block w-full rounded-lg border-2 border-[#B8E1E9] shadow-sm focus:border-[#3298BA] focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74] sm:text-sm px-4 py-2 resize-y transition-all duration-300 hover:shadow-md"
+                  className="w-full border-2 border-[var(--metallica-blue-200)] p-2 rounded-md bg-white focus:border-[var(--metallica-blue-500)] focus:outline-none transition-colors resize-vertical min-h-[100px]"
                   rows="3"
                 />
               </div>
