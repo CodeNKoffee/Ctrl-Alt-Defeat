@@ -208,7 +208,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
   return (
     <div
-      className={`bg-[#E2F4F7] h-screen flex flex-col border-r border-[#5DB2C7] sticky top-0 transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-20'}`}
+      className={`z-30 bg-[#E2F4F7] h-screen flex flex-col border-r border-[#5DB2C7] sticky top-0 transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-20'}`}
       style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}
     >
       {/* Sidebar Header */}
@@ -242,7 +242,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
       </div>
 
       {/* Sidebar Content (Navigation Items) */}
-      <div className="flex-1 overflow-y-auto pt-4 overflow-x-hidden mt-2 relative sidebar-content">
+      <div className="flex-1 overflow-y-auto pt-4 overflow-x-hidden mt-2 relative sidebar-content z-20">
         <ul className="space-y-1 relative z-10">
           {localizedItems.map(item => {
             const isActive = getIsActive(item);

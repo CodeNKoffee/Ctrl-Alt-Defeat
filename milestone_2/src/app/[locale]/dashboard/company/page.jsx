@@ -447,7 +447,7 @@ function ApplicationsView() {
     // For applied internships
     pending: {
       label: "PENDING",
-      color:"bg-white text-gray-600 border border-gray-300 hover:bg-yellow-100 hover:text-yellow-800 hover:border-yellow-400",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-yellow-100 hover:text-yellow-800 hover:border-yellow-400",
       badgeColor: "bg-yellow-600",
     },
     accepted: {
@@ -680,36 +680,32 @@ function CurrentInternsView() {
           <div className="flex flex-wrap gap-2 items-center">
             <button
               onClick={() => setSelectedStatus('all')}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${
-                selectedStatus === 'all'
-                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
-              }`}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${selectedStatus === 'all'
+                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
+                }`}
             >
-              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${
-                selectedStatus === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
-              }`}></span>
+              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${selectedStatus === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
+                }`}></span>
               ALL
             </button>
             {statusPills.map((status) => (
               <button
                 key={status.value}
                 onClick={() => setSelectedStatus(status.value)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${
-                  selectedStatus === status.value
-                  ? status.color
-                  : status.value === 'current' 
-                    ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
-                    : status.value === 'completed'
-                      ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-green-50 hover:border-green-300 hover:text-green-700'
-                      : status.value === 'evaluated'
-                        ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-purple-50 hover:border-purple-300 hover:text-purple-700'
-                        : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-                }`}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${selectedStatus === status.value
+                    ? status.color
+                    : status.value === 'current'
+                      ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
+                      : status.value === 'completed'
+                        ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-green-50 hover:border-green-300 hover:text-green-700'
+                        : status.value === 'evaluated'
+                          ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-purple-50 hover:border-purple-300 hover:text-purple-700'
+                          : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                  }`}
               >
-                <span className={`inline-block w-3 h-3 rounded-full mr-2 ${
-                  selectedStatus === status.value ? status.badgeColor : 'bg-gray-300'
-                }`}></span>
+                <span className={`inline-block w-3 h-3 rounded-full mr-2 ${selectedStatus === status.value ? status.badgeColor : 'bg-gray-300'
+                  }`}></span>
                 {status.label}
               </button>
             ))}
