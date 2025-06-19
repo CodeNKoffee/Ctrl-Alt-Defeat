@@ -128,20 +128,22 @@ function ScadDashboardView() {
     </div>
   );
 
-  // Custom filter sections for ApplicationsFilterBar
-  const customFilterSections = [
+  // Filter sections config for ApplicationsFilterBar (Industry & Size)
+  const companyFilterSections = [
     {
-      title: 'Industry',
-      options: [{ label: 'All Industries', value: 'all' }, ...uniqueIndustries.map(i => ({ label: i.title, value: i.id }))],
-      isSelected: (option) => selectedIndustry === option.value,
-      onSelect: (option) => setSelectedIndustry(option.value)
+      name: 'Industry',
+      options: [...uniqueIndustries],
+      selected: selectedIndustry,
+      onChange: (value) => setSelectedIndustry(value),
+      resetLabel: 'All Industries',
     },
     {
-      title: 'Size',
-      options: [{ label: 'All Sizes', value: 'all' }, ...uniqueSizes.map(s => ({ label: s.title, value: s.id }))],
-      isSelected: (option) => selectedSize === option.value,
-      onSelect: (option) => setSelectedSize(option.value)
-    }
+      name: 'Size',
+      options: [...uniqueSizes],
+      selected: selectedSize,
+      onChange: (value) => setSelectedSize(value),
+      resetLabel: 'All Sizes',
+    },
   ];
 
   return (
@@ -153,7 +155,7 @@ function ScadDashboardView() {
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search companies by name or industry ..."
           onClearFilters={() => { setSearchTerm(''); setSelectedIndustry('all'); setSelectedSize('all'); }}
-          customFilterSections={customFilterSections}
+          filterSections={companyFilterSections}
         />
       </div>
       <CompanyTable companies={filteredCompanies} />
@@ -514,14 +516,14 @@ function ReportsView() {
                     </span>
                   </div>
                   <div className="flex flex-col">
-                     <CustomButton
-                        variant="primary"
-                        text={`Export as PDF`}
-                        icon={faFilePdf}
-                        //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
-                        onClick={handleExportPDF}
-                        width="w-60"
-                      />            
+                    <CustomButton
+                      variant="primary"
+                      text={`Export as PDF`}
+                      icon={faFilePdf}
+                      //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
+                      onClick={handleExportPDF}
+                      width="w-60"
+                    />
                   </div>
                 </div>
               </div>
@@ -663,7 +665,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const customFilterSections = [
     {
       title: "Industry",
-      options: uniqueIndustries.map(ind => ({ label: ind, value: ind })),
+      options: [...uniqueIndustries],
       isSelected: (option) => filters.industry === option.value,
       onSelect: (option) => {
         setFilters(prev => ({ ...prev, industry: prev.industry === option.value ? '' : option.value }));
@@ -671,7 +673,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     },
     {
       title: "Duration",
-      options: uniqueDurations.map(dur => ({ label: dur, value: dur })),
+      options: [...uniqueDurations],
       isSelected: (option) => filters.duration === option.value,
       onSelect: (option) => {
         setFilters(prev => ({ ...prev, duration: prev.duration === option.value ? '' : option.value }));
