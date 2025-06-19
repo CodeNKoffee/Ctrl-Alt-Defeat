@@ -179,34 +179,40 @@ export default function ApplicationsFilterBar({
           className="absolute left-0 right-0 mt-2 bg-white backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-[1000] combined-filter-popover animate-dropdown focus:outline-none p-4"
           style={{ top: filterRowRef.current ? `${filterRowRef.current.offsetTop + filterRowRef.current.offsetHeight}px` : '100px' }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {filterSections.map((section, idx) => (
-              <div key={section.name || idx}>
-                <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">{section.name}</h4>
-                <div className="space-y-1">
-                  <div
-                    className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${section.selected === 'all' ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
-                    onClick={() => section.onChange('all')}
-                  >
-                    {section.resetLabel || `All ${section.name}`}
-                  </div>
-                  {section.options.map(option => (
+          {filterSections && filterSections.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {filterSections.map((section, idx) => (
+                <div key={section.name || idx}>
+                  <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">{section.name}</h4>
+                  <div className="space-y-1">
                     <div
-                      key={option.id}
-                      className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 flex items-center ${section.selected === option.id.toString() ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
-                      onClick={() => section.onChange(option.id.toString())}
+                      className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${section.selected === 'all' ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
+                      onClick={() => section.onChange('all')}
                     >
-                      {/* Add color dot for status sections only */}
-                      {section.name.toLowerCase() === 'status' && STATUS_COLOR_MAP[option.id] && (
-                        <span className={`inline-block w-2 h-2 rounded-full mr-2 ${STATUS_COLOR_MAP[option.id]}`}></span>
-                      )}
-                      {option.title || option.label || option.name}
+                      {section.resetLabel || `All ${section.name}`}
                     </div>
-                  ))}
+                    {section.options.map(option => (
+                      <div
+                        key={option.id}
+                        className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 flex items-center ${section.selected === option.id.toString() ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
+                        onClick={() => section.onChange(option.id.toString())}
+                      >
+                        {/* Add color dot for status sections only */}
+                        {section.name.toLowerCase() === 'status' && STATUS_COLOR_MAP[option.id] && (
+                          <span className={`inline-block w-2 h-2 rounded-full mr-2 ${STATUS_COLOR_MAP[option.id]}`}></span>
+                        )}
+                        {option.title || option.label || option.name}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center text-gray-500 py-4">
+              No filters available at the moment.
+            </div>
+          )}
         </div>
       )}
 
