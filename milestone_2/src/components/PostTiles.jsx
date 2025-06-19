@@ -281,9 +281,9 @@ export default function PostTiles({ searchOverride, filterOverride }) {
               {/* Header bar */}
               <div className="bg-[var(--metallica-blue-50)] text-[var(--metallica-blue-700)] p-6 flex justify-between items-center">
                 <h2 className="text-xl font-bold flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-              </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                  </svg>
                   {editingPost ? 'Update Post' : 'Create New Post'}
                 </h2>
                 <button
@@ -313,12 +313,12 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
                 {/* Right side - Live Preview - This div will NOT scroll with the form */}
                 <div className="lg:w-1/2 p-6 overflow-y-auto bg-white min-h-full h-full flex flex-col">
-         
+
                   <h2 className="text-xl font-bold mb-4 text-[var(--metallica-blue-700)] bg-white  flex items-center">
-                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-              </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                      <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                    </svg>
                     Post Preview</h2>
                   <div className="bg-white rounded-lg shadow-md p-6 border border-[var(--metallica-blue-100)] flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-4">
@@ -359,7 +359,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
                     <div className="border-t border-gray-200 pt-4 mb-4">
                       <h4 className="font-medium mb-2 text-[var(--metallica-blue-700)]">Description</h4>
-                      <p className="text-gray-700 mb-4 text-sm">
+                      <p className="text-gray-700 mb-4 text-sm break-words">
                         {postPreview.description || "Job description will appear here..."}
                       </p>
 
@@ -436,7 +436,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
                   {/* Text part that expands on hover - now with bold text and slower transition */}
                   <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
-           
+
                     <span className="font-semibold">Create Post</span>
                   </span>
                 </button>
@@ -470,7 +470,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                     </span>
 
                     {/* Text part that expands on hover - now with bold text and slower transition */}
-                    
+
                     <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
                       <span className="font-semibold">Create Post</span>
                     </span>
