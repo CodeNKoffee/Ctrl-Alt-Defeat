@@ -22,6 +22,7 @@ import { getRegularInternships, getRecommendedInternshipsForStudent, getRecommen
 import InternshipList from '../../../../components/shared/InternshipList';
 import ApplicationsFilterBar from '@/components/shared/ApplicationsFilterBar';
 import CustomButton from '@/components/shared/CustomButton';
+import { sampleWorkshops } from '../../../../../constants/mockData';
 
 function ScadDashboardView() {
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -831,6 +832,23 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 }
 
 function WorkshopsView() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedInstructor, setSelectedInstructor] = useState('all');
+
+  const uniqueInstructors = [
+    ...new Set(sampleWorkshops.map(ws => ws.instructor))
+  ].filter(Boolean).map(inst => ({ id: inst, title: inst }));
+
+  const workshopFilterSections = [
+    {
+      name: 'Instructor',
+      options: [...uniqueInstructors],
+      selected: selectedInstructor,
+      onChange: (value) => setSelectedInstructor(value),
+      resetLabel: 'All Instructors',
+    },
+  ];
+
   const WorkshopManagementPortalInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
@@ -928,8 +946,15 @@ function WorkshopsView() {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <WorkshopManagementPortalInfoCard />
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search workshops..."
+          onClearFilters={() => { setSearchTerm(''); setSelectedInstructor('all'); }}
+          filterSections={workshopFilterSections}
+        />
       </div>
-      <WorkshopManager />
+      <WorkshopManager instructorFilter={selectedInstructor} />
     </div>
   );
 }

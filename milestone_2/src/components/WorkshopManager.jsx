@@ -8,7 +8,7 @@ import DeleteWorkshopModal from './DeleteWorkshopModal';
 import { sampleWorkshops } from '../../constants/mockData';
 import CustomButton from './shared/CustomButton';
 
-export default function WorkshopManager() {
+export default function WorkshopManager({ instructorFilter = 'all' }) {
   const [workshops, setWorkshops] = useState(sampleWorkshops);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentWorkshop, setCurrentWorkshop] = useState(null);
@@ -17,11 +17,14 @@ export default function WorkshopManager() {
   const [successNotification, setSuccessNotification] = useState({ show: false, message: '' });
 
   // Filter workshops based on search term
-  const filteredWorkshops = workshops.filter(workshop =>
-    workshop.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    workshop.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    workshop.instructor.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredWorkshops = workshops.filter(workshop => {
+    const matchesSearch =
+      workshop.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      workshop.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      workshop.instructor.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesInstructor = instructorFilter === 'all' || workshop.instructor === instructorFilter;
+    return matchesSearch && matchesInstructor;
+  });
 
   // Handle create new workshop
   const handleCreateWorkshop = () => {
@@ -77,7 +80,7 @@ export default function WorkshopManager() {
             text=" Add New Workshop"
             icon={faPlus}
             className="text-lg font-semibold"
-         />
+          />
         </div>
 
         {/* Search Bar */}
