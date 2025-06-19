@@ -166,29 +166,58 @@ function ScadDashboardView() {
 function StudentListView({ sidebarExpanded }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMajor, setSelectedMajor] = useState('all');
+  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [selectedSemester, setSelectedSemester] = useState('all');
 
   // Get unique majors from mockStudents
   const uniqueMajors = [
     ...new Set(mockStudents.map(student => student.major))
   ].filter(Boolean).map(major => ({ id: major, title: major }));
 
+  const uniqueStatuses = [
+    ...new Set(mockStudents.map(student => student.status))
+  ].filter(Boolean).map(status => ({ id: status, title: status }));
+
+  const uniqueSemesters = [
+    ...new Set(mockStudents.map(student => student.semester))
+  ].filter(Boolean).map(sem => ({ id: sem, title: `Semester ${sem}` }));
+
   // Filter students by search and major
   const filteredStudents = mockStudents.filter(student => {
     const matchesSearch =
       student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      student.major?.toLowerCase().includes(searchTerm.toLowerCase());
+      student.major?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.semester?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesMajor = selectedMajor === 'all' || student.major === selectedMajor;
-    return matchesSearch && matchesMajor;
+    const matchesStatus = selectedStatus === 'all' || student.status === selectedStatus;
+    const matchesSemester = selectedSemester === 'all' || student.semester === selectedSemester;
+    return matchesSearch && matchesMajor && matchesStatus && matchesSemester;
   });
 
-  const customFilterSections = [
+  const studentFilterSections = [
     {
-      title: 'Major',
-      options: [{ label: 'All Majors', value: 'all' }, ...uniqueMajors.map(m => ({ label: m.title, value: m.id }))],
-      isSelected: (option) => selectedMajor === option.value,
-      onSelect: (option) => setSelectedMajor(option.value)
-    }
+      name: 'Major',
+      options: [...uniqueMajors],
+      selected: selectedMajor,
+      onChange: (value) => setSelectedMajor(value),
+      resetLabel: 'All Majors',
+    },
+    {
+      name: 'Status',
+      options: [...uniqueStatuses],
+      selected: selectedStatus,
+      onChange: (value) => setSelectedStatus(value),
+      resetLabel: 'All Statuses',
+    },
+    {
+      name: 'Semester',
+      options: [...uniqueSemesters],
+      selected: selectedSemester,
+      onChange: (value) => setSelectedSemester(value),
+      resetLabel: 'All Semesters',
+    },
   ];
 
   const StudentDirectoryManagementInfoCard = () => (
@@ -272,8 +301,8 @@ function StudentListView({ sidebarExpanded }) {
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search students by name, email, or major ..."
-          onClearFilters={() => { setSearchTerm(''); setSelectedMajor('all'); }}
-          customFilterSections={customFilterSections}
+          onClearFilters={() => { setSearchTerm(''); setSelectedMajor('all'); setSelectedStatus('all'); setSelectedSemester('all'); }}
+          filterSections={studentFilterSections}
         />
       </div>
       <StudentList students={filteredStudents} sidebarExpanded={sidebarExpanded} />
