@@ -400,16 +400,16 @@ function ApplicationsView() {
   const [selectedInternship, setSelectedInternship] = useState('all');
 
   // Show notification toast when component mounts
-  useEffect(() => {
-    toast.info('A new applicant has applied to one of your internship listings', {
-      position: 'bottom-right',
-      autoClose: 6000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true
-    });
-  }, []);
+  // useEffect(() => {
+  //   toast.info('A new applicant has applied to one of your internship listings', {
+  //     position: 'bottom-right',
+  //     autoClose: 6000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true
+  //   });
+  // }, []);
 
   const STATUS_CONFIG = {
     pending: {
