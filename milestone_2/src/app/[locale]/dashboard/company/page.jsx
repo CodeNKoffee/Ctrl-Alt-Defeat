@@ -105,6 +105,41 @@ function CompanyPostsView() {
     setSearchTerm('');
   };
 
+  const filterSectionsConfig = [
+    {
+      name: 'Job Type',
+      options: [
+        { id: 'Full-time', title: 'Full-time' },
+        { id: 'Part-time', title: 'Part-time' },
+        { id: 'Internship', title: 'Internship' },
+      ],
+      selected: activeFilters.jobType[0] || 'all',
+      onChange: (value) => handleFilterChange('jobType', value),
+      resetLabel: 'All Job Types',
+    },
+    {
+      name: 'Job Setting',
+      options: [
+        { id: 'Remote', title: 'Remote' },
+        { id: 'On-site', title: 'On-site' },
+        { id: 'Hybrid', title: 'Hybrid' },
+      ],
+      selected: activeFilters.jobSetting[0] || 'all',
+      onChange: (value) => handleFilterChange('jobSetting', value),
+      resetLabel: 'All Settings',
+    },
+    {
+      name: 'Payment Status',
+      options: [
+        { id: 'Paid', title: 'Paid' },
+        { id: 'Unpaid', title: 'Unpaid' },
+      ],
+      selected: activeFilters.paymentStatus[0] || 'all',
+      onChange: (value) => handleFilterChange('paymentStatus', value),
+      resetLabel: 'All Payment Statuses',
+    },
+  ];
+
   return (
     <div className="container mx-auto p-10">
       <div className="w-full max-w-6xl mx-auto">
@@ -133,28 +168,7 @@ function CompanyPostsView() {
           onStatusChange={() => { }}
           showDatePicker={false}
           onClearFilters={clearAllFilters}
-          // Add more filter sections as needed
-          customFilterSections={[
-            {
-              title: 'Job Setting',
-              options: [
-                { label: 'Remote', value: 'Remote' },
-                { label: 'On-site', value: 'On-site' },
-                { label: 'Hybrid', value: 'Hybrid' },
-              ],
-              isSelected: (option) => activeFilters.jobSetting.includes(option.value),
-              onSelect: (option) => handleFilterChange('jobSetting', option.value),
-            },
-            {
-              title: 'Payment Status',
-              options: [
-                { label: 'Paid', value: 'Paid' },
-                { label: 'Unpaid', value: 'Unpaid' },
-              ],
-              isSelected: (option) => activeFilters.paymentStatus.includes(option.value),
-              onSelect: (option) => handleFilterChange('paymentStatus', option.value),
-            },
-          ]}
+          filterSections={filterSectionsConfig}
         />
 
         {/* Post Tiles */}
@@ -681,8 +695,8 @@ function CurrentInternsView() {
             <button
               onClick={() => setSelectedStatus('all')}
               className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${selectedStatus === 'all'
-                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
                 }`}
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${selectedStatus === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
@@ -694,14 +708,14 @@ function CurrentInternsView() {
                 key={status.value}
                 onClick={() => setSelectedStatus(status.value)}
                 className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${selectedStatus === status.value
-                    ? status.color
-                    : status.value === 'current'
-                      ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
-                      : status.value === 'completed'
-                        ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-green-50 hover:border-green-300 hover:text-green-700'
-                        : status.value === 'evaluated'
-                          ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-purple-50 hover:border-purple-300 hover:text-purple-700'
-                          : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+                  ? status.color
+                  : status.value === 'current'
+                    ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
+                    : status.value === 'completed'
+                      ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-green-50 hover:border-green-300 hover:text-green-700'
+                      : status.value === 'evaluated'
+                        ? 'bg-white text-gray-600 border-2 border-gray-300 hover:bg-purple-50 hover:border-purple-300 hover:text-purple-700'
+                        : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
                   }`}
               >
                 <span className={`inline-block w-3 h-3 rounded-full mr-2 ${selectedStatus === status.value ? status.badgeColor : 'bg-gray-300'
