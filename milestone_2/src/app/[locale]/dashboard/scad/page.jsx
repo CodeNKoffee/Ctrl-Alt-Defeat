@@ -936,12 +936,13 @@ function WorkshopsView() {
 
 function StudentEvalsView() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [selectedMajor, setSelectedMajor] = useState('all');
+  const [selectedRecommended, setSelectedRecommended] = useState('all');
 
-  // Get unique statuses from MOCK_EVALUATIONS
-  const uniqueStatuses = [
-    ...new Set(MOCK_EVALUATIONS.map(evalObj => evalObj.status))
-  ].filter(Boolean).map(status => ({ id: status, title: status }));
+  // Get unique majors from MOCK_EVALUATIONS
+  const uniqueMajorsEval = [
+    ...new Set(MOCK_EVALUATIONS.map(evalObj => evalObj.major))
+  ].filter(Boolean).map(m => ({ id: m, title: m }));
 
   // Filter evaluations by search and status
   const filteredEvals = MOCK_EVALUATIONS.filter(evalObj => {
@@ -949,17 +950,30 @@ function StudentEvalsView() {
       evalObj.studentName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       evalObj.companyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       evalObj.title?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = selectedStatus === 'all' || evalObj.status === selectedStatus;
-    return matchesSearch && matchesStatus;
+    const matchesMajor = selectedMajor === 'all' || evalObj.major === selectedMajor;
+    const isRecommended = evalObj.rating >= 4; // 4 or 5 stars considered recommended
+    const matchesRecommended = selectedRecommended === 'all' || (selectedRecommended === 'yes' ? isRecommended : !isRecommended);
+    return matchesSearch && matchesMajor && matchesRecommended;
   });
 
-  const customFilterSections = [
+  const evalFilterSections = [
     {
-      title: 'Status',
-      options: [{ label: 'All Statuses', value: 'all' }, ...uniqueStatuses.map(s => ({ label: s.title, value: s.id }))],
-      isSelected: (option) => selectedStatus === option.value,
-      onSelect: (option) => setSelectedStatus(option.value)
-    }
+      name: 'Major',
+      options: [...uniqueMajorsEval],
+      selected: selectedMajor,
+      onChange: (value) => setSelectedMajor(value),
+      resetLabel: 'All Majors',
+    },
+    {
+      name: 'Recommended',
+      options: [
+        { id: 'yes', title: 'Yes' },
+        { id: 'no', title: 'No' },
+      ],
+      selected: selectedRecommended,
+      onChange: (value) => setSelectedRecommended(value),
+      resetLabel: 'All',
+    },
   ];
 
   const InternshipsEvaluationAnalyticsInfoCard = () => (
@@ -1040,8 +1054,8 @@ function StudentEvalsView() {
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search evaluations by student, company, or title ..."
-          onClearFilters={() => { setSearchTerm(''); setSelectedStatus('all'); }}
-          customFilterSections={customFilterSections}
+          onClearFilters={() => { setSearchTerm(''); setSelectedMajor('all'); setSelectedRecommended('all'); }}
+          filterSections={evalFilterSections}
         />
       </div>
       <EvaluationsDashboard evaluations={filteredEvals} stakeholder={"other"} />
