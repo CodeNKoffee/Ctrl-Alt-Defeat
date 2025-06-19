@@ -596,8 +596,13 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const userMajor = currentUser?.major || 'Computer Science';
 
   const internshipDataForFilters = getRegularInternships();
-  const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))];
-  const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))];
+  const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))]
+    .filter(Boolean)
+    .map(ind => ({ id: ind, title: ind }));
+
+  const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))]
+    .filter(Boolean)
+    .map(dur => ({ id: dur, title: dur }));
 
   // Get internships based on active tab
   const baseInternships = activeTab === 'all'
@@ -691,31 +696,37 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     setSearchTerm('');
   };
 
-  const customFilterSections = [
+  const filterSectionsConfig = [
     {
-      title: "Industry",
+      name: 'Industry',
       options: [...uniqueIndustries],
-      isSelected: (option) => filters.industry === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, industry: prev.industry === option.value ? '' : option.value }));
-      }
+      selected: filters.industry || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, industry: value === 'all' ? '' : value })),
+      resetLabel: 'All Industries',
     },
     {
-      title: "Duration",
+      name: 'Duration',
       options: [...uniqueDurations],
-      isSelected: (option) => filters.duration === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, duration: prev.duration === option.value ? '' : option.value }));
-      }
+      selected: filters.duration || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, duration: value === 'all' ? '' : value })),
+      resetLabel: 'All Durations',
     },
     {
-      title: "Payment",
-      options: [{ label: "Paid", value: true }, { label: "Unpaid", value: false }],
-      isSelected: (option) => filters.isPaid === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, isPaid: prev.isPaid === option.value ? null : option.value }));
-      }
-    }
+      name: 'Payment',
+      options: [
+        { id: 'true', title: 'Paid' },
+        { id: 'false', title: 'Unpaid' },
+      ],
+      selected: filters.isPaid === null ? 'all' : filters.isPaid.toString(),
+      onChange: (value) => {
+        if (value === 'all') {
+          setFilters(prev => ({ ...prev, isPaid: null }));
+        } else {
+          setFilters(prev => ({ ...prev, isPaid: value === 'true' }));
+        }
+      },
+      resetLabel: 'All Payment',
+    },
   ];
 
   // Define the info card JSX/Component here for clarity
@@ -794,10 +805,9 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search internships by job title or company name ..."
+          searchPlaceholder="Search internships by job title, company, or skills..."
           onClearFilters={clearAllFilters}
-          customFilterSections={customFilterSections}
-          primaryFilterName="Filters"
+          filterSections={filterSectionsConfig}
         />
         {/* ALL / RECOMMENDED Tabs */}
       </div>
