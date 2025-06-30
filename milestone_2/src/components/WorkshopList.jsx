@@ -331,8 +331,14 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
 
           {/* Show "No workshops found" when filtered list is empty */}
           {!filteredWorkshops.upcoming.length && !filteredWorkshops.live.length && !filteredWorkshops.prerecorded.length && (
-            <div className="flex justify-center items-center py-16 bg-gray-50 rounded-lg">
-              <p className="text-gray-500 text-lg">No workshops found for this filter</p>
+            <div className="p-16 text-center">
+              <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <p className="text-gray-500 font-medium">No workshops found matching your criteria</p>
+              <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
             </div>
           )}
         </div>

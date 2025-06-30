@@ -455,10 +455,22 @@ export default function PostTiles({ searchOverride, filterOverride }) {
               ))}
             </>
           ) : (
-            <div className="col-span-full text-center py-12 bg-white rounded-lg shadow-sm p-8 border border-[var(--metallica-blue-100)]">
+            <div className="col-span-full p-16 text-center">
+              <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <p className="text-gray-500 font-medium">
+                {posts.length > 0 ? 'No posts found matching your criteria' : 'No internship posts found'}
+              </p>
+              <p className="text-gray-400 text-sm mt-1">
+                {posts.length > 0 ? 'Try adjusting your search or filter' : 'Create your first post to get started'}
+              </p>
+
               {/* Only show the "+ Post" button when we have posts but filtering returns none */}
               {posts.length > 0 && (
-                <div className="flex justify-end mb-4">
+                <div className="flex justify-center mt-4">
                   <button
                     onClick={toggleCreatePost}
                     className="relative z-10 bg-[#5DB2C7] hover:bg-[#4AA0B5] text-white rounded-full shadow-md transition-all duration-500 flex items-center overflow-hidden group h-10"
@@ -470,7 +482,6 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                     </span>
 
                     {/* Text part that expands on hover - now with bold text and slower transition */}
-
                     <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
                       <span className="font-semibold">Create Post</span>
                     </span>
@@ -478,15 +489,11 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                 </div>
               )}
 
-              <p className="text-[var(--metallica-blue-600)] text-lg mb-4">
-                {posts.length > 0 ? 'No posts match your search' : 'No internship posts yet.'}
-              </p>
-
               {/* Only show "Create Your First Post" button when there are no posts at all */}
               {!showForm && posts.length === 0 && (
                 <button
                   onClick={toggleCreatePost}
-                  className="bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md shadow-sm transition-colors font-medium"
+                  className="mt-4 bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md shadow-sm transition-colors font-medium"
                 >
                   Create Your First Post
                 </button>
