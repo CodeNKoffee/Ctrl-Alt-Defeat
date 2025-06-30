@@ -331,11 +331,11 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     if (filters.duration) {
       result = result.filter(internship => {
         // Parse the duration value from the filter (e.g., "3 months" -> 3)
-        const filterDurationMatch = filters.duration.match(/(\d+)/);
+        const filterDurationMatch = filters.duration.match(/(\\d+)/);
         const filterDurationMonths = filterDurationMatch ? parseInt(filterDurationMatch[1]) : 0;
 
         // Parse the internship duration (e.g., "3 months", "6-8 months", etc.)
-        const internshipDurationMatch = internship.duration.match(/(\d+)/);
+        const internshipDurationMatch = internship.duration.match(/(\\d+)/);
         const internshipDurationMonths = internshipDurationMatch ? parseInt(internshipDurationMatch[1]) : 0;
 
         // If we have valid numbers for both, compare them
@@ -354,11 +354,60 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       );
     }
 
+    // Filter by start date
+    if (selectedDate) {
+      console.log('Selected date for filtering:', selectedDate);
+
+      let filterDateString;
+
+      // Handle different possible date formats from DatePicker
+      if (selectedDate instanceof Date) {
+        // If it's a Date object
+        filterDateString = selectedDate.toISOString().split('T')[0]; // "YYYY-MM-DD"
+      } else if (typeof selectedDate === 'string') {
+        // If it's already a string, try to parse and format it
+        const dateObj = new Date(selectedDate);
+        if (!isNaN(dateObj.getTime())) {
+          filterDateString = dateObj.toISOString().split('T')[0];
+        } else {
+          filterDateString = selectedDate; // Use as-is if it can't be parsed
+        }
+      } else {
+        console.warn('Unexpected date format:', selectedDate);
+        return true; // Skip filtering if format is unknown
+      }
+
+      console.log('Formatted filter date string:', filterDateString);
+
+      result = result.filter(internship => {
+        console.log(`Checking internship "${internship.title}" with startDate: "${internship.startDate}"`);
+        if (!internship.startDate) {
+          console.log(`No startDate for internship: ${internship.title}`);
+          return false;
+        }
+
+        // Normalize internship start date to YYYY-MM-DD format
+        let internshipDateString;
+        if (internship.startDate instanceof Date) {
+          internshipDateString = internship.startDate.toISOString().split('T')[0];
+        } else {
+          internshipDateString = internship.startDate.split('T')[0]; // Remove time part if present
+        }
+
+        console.log(`Comparing: filter="${filterDateString}" vs internship="${internshipDateString}"`);
+        const matches = internshipDateString === filterDateString;
+        console.log(`Match result: ${matches}`);
+        return matches;
+      });
+
+      console.log('Filtered internships by date:', result.length);
+    }
+
     setFilteredInternships(result);
-  }, [baseInternships, filters]);
+  }, [baseInternships, filters, selectedDate]);
 
   // Check if any filters are active
-  const hasActiveFilters = filters.position || filters.jobType || filters.jobSetting || filters.company || filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
+  const hasActiveFilters = filters.position || filters.jobType || filters.jobSetting || filters.company || filters.industry || filters.duration || filters.isPaid !== null || searchTerm || selectedDate;
 
   const clearAllFilters = () => {
     setFilters({
@@ -371,6 +420,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       isPaid: null
     });
     setSearchTerm('');
+    setSelectedDate(null);
   };
 
   const filterSections = [
@@ -1067,10 +1117,10 @@ function NotificationsView() {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <NotificationsInfoCard />
-        <ApplicationsFilterBar
+        {/* <ApplicationsFilterBar
           filterSections={filterSections}
           onClearFilters={() => setFilters({ category: 'all', read: 'all' })}
-        />
+        /> */}
       </div>
       <NotificationsList filters={filters} hideFilters={true} />
     </div>
