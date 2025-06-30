@@ -268,6 +268,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
               icon={faCheck}
               text="Accept"
               className="flex-1 w-full"
+              width="w-full"
               showIconOnLoading={false}
             />
             <CustomButton
@@ -276,6 +277,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
               icon={faTimes}
               text="Reject"
               className="flex-1 w-full"
+              width="w-full"
               showIconOnLoading={false}
             />
           </div>

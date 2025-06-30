@@ -139,14 +139,14 @@ export default function CompanyDetails({
               onClick={handleAccept}
               icon={faCheck}
               text="Accept"
-              className="w-full"
+              width="w-1/2"
             />
             <CustomButton
               variant="danger"
               onClick={handleReject}
               icon={faTimes}
               text="Reject"
-              className="w-full"
+              width="w-1/2"
             />
           </div>
         </>
