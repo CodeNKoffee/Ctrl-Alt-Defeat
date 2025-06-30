@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from './shared/SearchBar';
 import IndustryFilter from './IndustryFilter';
 import CompanyDetails from './CompanyDetails';
@@ -9,13 +9,18 @@ import CompanyRow from './CompanyRow';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand } from "@fortawesome/free-solid-svg-icons";
 
-export default function CompanyTable({ companies }) {
+export default function CompanyTable({ companies, onSidebarToggle = () => { } }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIndustry, setSelectedIndustry] = useState('');
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalCompany, setModalCompany] = useState(null);
+
+  // Notify parent when sidebar visibility changes
+  useEffect(() => {
+    onSidebarToggle(Boolean(selectedCompany));
+  }, [selectedCompany, onSidebarToggle]);
 
   // Updated filtering logic
   const filteredCompanies = companies.filter(company => {
@@ -61,7 +66,7 @@ export default function CompanyTable({ companies }) {
   return (
     <div className="flex flex-col items-center w-full min-h-screen py-4">
       {/* Header Section */}
-     
+
 
       <div className={`relative flex w-full justify-center transition-all duration-600 ${selectedCompany ? 'pr-[420px]' : ''}`}>
         {/* Table Section */}

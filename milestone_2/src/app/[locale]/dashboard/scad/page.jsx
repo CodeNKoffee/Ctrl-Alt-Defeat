@@ -33,6 +33,9 @@ function ScadDashboardView() {
   const [selectedIndustry, setSelectedIndustry] = useState('all');
   const [selectedSize, setSelectedSize] = useState('all');
 
+  // State to track if the sidebar (CompanyDetails) is open in CompanyTable
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   // Get unique industries and sizes from MOCK_COMPANIES
   const uniqueIndustries = [
     ...new Set(MOCK_COMPANIES.map(company => company.industry))
@@ -149,7 +152,7 @@ function ScadDashboardView() {
 
   return (
     <div className="w-full px-6 py-4">
-      <div className="px-4 pt-6">
+      <div className={`px-4 pt-6 transition-all duration-600 ${sidebarOpen ? 'pr-[420px]' : ''}`}>
         <CompanyPartnershipReviewPortalInfoCard />
         <ApplicationsFilterBar
           searchTerm={searchTerm}
@@ -159,7 +162,7 @@ function ScadDashboardView() {
           filterSections={companyFilterSections}
         />
       </div>
-      <CompanyTable companies={filteredCompanies} />
+      <CompanyTable companies={filteredCompanies} onSidebarToggle={setSidebarOpen} />
     </div>
   );
 }
