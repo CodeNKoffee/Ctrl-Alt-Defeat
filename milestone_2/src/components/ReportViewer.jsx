@@ -253,17 +253,41 @@ export default function ReportViewer({ report, userType = "faculty" }) {
   // Helper: Render text with highlights and comments using start/end indices
   function renderTextWithHighlights(text, sectionKey = 'body') {
     if (!text) return null;
-    // Get highlights/comments for this section
-    const highlights = (report?.highlights || []).filter(h => (h.section || 'body') === sectionKey);
-    const comments = (report?.comments || []).filter(c => (c.section || 'body') === sectionKey);
-    // Build a list of all annotation ranges
+
+    const sectionAnnotations = annotations.filter(a => (a.section || 'body') === sectionKey);
+
     let ranges = [];
-    highlights.forEach((h, i) => {
-      ranges.push({ type: 'highlight', start: h.start, end: h.end, color: h.color, id: `highlight-${i}` });
+    sectionAnnotations.forEach((annotation) => {
+      let start, end;
+      if (annotation.range && typeof annotation.range.start === 'number') {
+        start = annotation.range.start;
+        end = annotation.range.end;
+      } else if (annotation.text) {
+        // Fallback for newly created annotations that don't have start/end offsets.
+        // This is not robust and may fail if the same text is repeated.
+        const FuzzFactor = 20; // For comments, the text is a snippet
+        const annText = annotation.type === 'comment' ? annotation.text.slice(0, FuzzFactor) : annotation.text;
+        const index = text.indexOf(annText);
+        if (index !== -1) {
+          start = index;
+          end = index + annotation.text.length;
+        }
+      }
+
+      if (typeof start === 'number') {
+        const rangeData = {
+          start,
+          end,
+          id: annotation.id
+        };
+        if (annotation.type === 'highlight') {
+          ranges.push({ ...rangeData, type: 'highlight', color: annotation.color });
+        } else if (annotation.type === 'comment') {
+          ranges.push({ ...rangeData, type: 'comment', comment: annotation.comment });
+        }
+      }
     });
-    comments.forEach((c, i) => {
-      ranges.push({ type: 'comment', start: c.position, end: c.position + 20, comment: c.text, id: `comment-${i}` });
-    });
+
     // Sort by start index
     ranges.sort((a, b) => a.start - b.start);
     // Render text with highlights/comments
@@ -369,9 +393,9 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           <div className="report-section">
             <h2 className="report-section-title">Report Body</h2>
             <div className="report-text">
-              {(reportData.body || reportData.text || "").split('\n\n').map((paragraph, idx) => (
-                <p key={idx} className="report-paragraph">{renderTextWithHighlights(paragraph, 'body')}</p>
-              ))}
+              <p className="report-paragraph" style={{ whiteSpace: 'pre-wrap' }}>
+                {renderTextWithHighlights(reportData.body || reportData.text || "", 'body')}
+              </p>
             </div>
           </div>
         </div>
