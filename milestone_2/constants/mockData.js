@@ -445,7 +445,7 @@ export const facultyScadReports = {
     body: 'During my internship at Web Solutions Ltd., I worked with the frontend development team on various client projects. The company specializes in creating custom web applications for businesses across different industries.\n\nMy main responsibilities included implementing UI components according to design specifications, fixing cross-browser compatibility issues, and optimizing application performance. I collaborated closely with designers and backend developers to ensure seamless integration of all system components.\n\nA significant project I contributed to was the redesign of a healthcare provider\'s patient portal. I implemented responsive components that improved accessibility and user experience, particularly for users with disabilities. This project taught me the importance of inclusive design and adherence to WCAG guidelines.\n\nThroughout the internship, I gained proficiency in:\n- React.js and state management with Redux\n- Styled Components and CSS-in-JS approaches\n- Frontend testing with Jest and React Testing Library\n- Webpack configuration and optimization\n- Client-side performance optimization techniques\n\nThe internship also helped me develop soft skills such as client communication, requirement analysis, and presenting technical concepts to non-technical stakeholders. I learned to balance aesthetic design with technical constraints, which is crucial for successful frontend development.\n\nThe knowledge from my Human-Computer Interaction and Web Development courses proved invaluable during this experience. Understanding usability principles and web standards helped me contribute meaningful improvements to projects right from the start of my internship.',
     highlights: [
       { start: 52, end: 148, color: '#D4F1F9' }, // "user interface design and implementation using modern web technologies like React and TailwindCSS"
-      { start: 412, end: 483, color: '#FFDBF2' }, // "optimizing application performance. I collaborated closely with designers"
+      { start: 412, end: 483, color: '#FFDBF2' }, // "optimizing application performance. I collaborated with designers"
       { start: 557, end: 642, color: '#FFFBC9' }  // "responsive components that improved accessibility and user experience, particularly"
     ],
     comments: [
@@ -743,7 +743,7 @@ export const mockCompanyReviews = [
 export const MOCK_EVALUATIONS = [
   {
     studentName: "Layla Khaled",
-    major: "Computer Science",
+    major: "Management",
     companyName: "Juhayna Food Industries",
     supervisorName: "Dr. Indra",
     supervisorEmail: "indra@juhayna.com",
@@ -784,8 +784,8 @@ export const MOCK_EVALUATIONS = [
     status: "submitted"
   },
   {
-    studentName: "Salma Tarek",
-    major: "Computer Science",
+    studentName: "John Magdy",
+    major: "Management",
     companyName: "Nestlé Egypt",
     supervisorName: "Mr. Ahmed Said",
     supervisorEmail: "ahmed.said@eg.nestle.com",
@@ -794,12 +794,12 @@ export const MOCK_EVALUATIONS = [
     rating: 5,
     startDate: "2024-06-15",
     endDate: "2024-09-01",
-    avatar: "/images/girl1.png",
+    avatar: "/images/boy2.png",
     status: "saved"
   },
   {
-    studentName: "Salma Tarek",
-    major: "Computer Science",
+    studentName: "Rana Tarek",
+    major: "Management",
     companyName: "Nestlé Egypt",
     supervisorName: "Mr. Ahmed Said",
     supervisorEmail: "ahmed.said@eg.nestle.com",
@@ -812,8 +812,8 @@ export const MOCK_EVALUATIONS = [
     status: "saved"
   },
   {
-    studentName: "Salma Tarek",
-    major: "Computer Science",
+    studentName: "Selim Hatem",
+    major: "Management",
     companyName: "Nestlé Egypt",
     supervisorName: "Mr. Ahmed Said",
     supervisorEmail: "ahmed.said@eg.nestle.com",
@@ -822,7 +822,7 @@ export const MOCK_EVALUATIONS = [
     rating: 2,
     startDate: "2024-06-15",
     endDate: "2024-09-01",
-    avatar: "/images/girl1.png",
+    avatar: "/images/boy1.png",
     status: "saved"
   }
 ];
@@ -1915,7 +1915,6 @@ export const mockStudents = [
       }
     ]
   }
-
 ];
 
 export const MOCK_COMPANY_EVALUATIONS = [
