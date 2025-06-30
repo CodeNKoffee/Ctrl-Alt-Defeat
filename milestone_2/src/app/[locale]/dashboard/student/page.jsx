@@ -1585,7 +1585,7 @@ function MyEvaluationsView() {
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search evaluations by student or company name..."
-          
+
           filterSections={filterSections}
         />
       </div>
