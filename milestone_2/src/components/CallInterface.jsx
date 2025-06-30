@@ -484,6 +484,22 @@ const CallInterface = () => {
               Connected with {otherPartyName} (camera off)
             </>
           )}
+          <div className="flex items-center gap-2 ml-4 pl-4 border-l border-white/10">
+            <button
+              onClick={triggerLeaveToast}
+              className="text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 px-2 py-1 rounded-full border border-red-500/30 transition-colors"
+              title="Simulate other party leaving"
+            >
+              Sim Leave
+            </button>
+            <button
+              onClick={() => setOtherPartyCameraOn(prev => !prev)}
+              className="text-xs bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 px-2 py-1 rounded-full border border-blue-500/30 transition-colors"
+              title="Toggle camera state"
+            >
+              Toggle Cam
+            </button>
+          </div>
         </div>
 
         {/* Camera off placeholder */}
@@ -494,6 +510,23 @@ const CallInterface = () => {
             </div>
             <h2 className="text-xl font-semibold text-blue-100">{otherPartyName}</h2>
             <p className="text-sm text-blue-200/60 mt-2">Camera is turned off</p>
+          </div>
+        )}
+
+        {/* Camera on placeholder with image */}
+        {otherPartyCameraOn && !showConnectingOverlay && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0a1118] text-white">
+            <img
+              src="https://printler.com/media/photo/176171-1.jpg"
+              alt="Call placeholder"
+              className="w-full h-full object-cover"
+              style={{ objectPosition: 'center top' }}
+            />
+            <div className="absolute bottom-8 left-0 right-0 text-center">
+              <p className="text-lg sm:text-xl text-white bg-[#1E3A5F]/80 backdrop-blur-sm py-2 px-4 mx-auto inline-block rounded-full border border-white/10">
+                {otherPartyName}'s camera is on
+              </p>
+            </div>
           </div>
         )}
 
