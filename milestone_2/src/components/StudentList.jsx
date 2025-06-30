@@ -149,14 +149,13 @@ export default function StudentList({ students, sidebarExpanded = true }) {
                   ? `${getTabStatusColor(id)} text-[#2a5f74]`
                   : `bg-white text-gray-600 border border-gray-300 ${hoverStatusColors[id] || 'hover:bg-gray-50'}`}`}
             >
-              <span className={`w-3 h-3 rounded-full mr-2 ${
-                activeTab === id ? (
+              <span className={`w-3 h-3 rounded-full mr-2 ${activeTab === id ? (
                   id === 'all' ? 'bg-[#5DB2C7]' :
-                  id === 'current' ? 'bg-blue-600' : 
-                  id === 'completed' ? 'bg-green-600' :
-                  id === 'evaluated' ? 'bg-purple-600' : 'bg-gray-400'
+                    id === 'current' ? 'bg-blue-600' :
+                      id === 'completed' ? 'bg-green-600' :
+                        id === 'evaluated' ? 'bg-purple-600' : 'bg-gray-400'
                 ) : 'bg-gray-300'
-              }`}></span>
+                }`}></span>
               {label}
             </button>
           ))}
@@ -188,8 +187,14 @@ export default function StudentList({ students, sidebarExpanded = true }) {
 
       {/* Empty State */}
       {(!filteredStudents || filteredStudents.length === 0) && (
-        <div className="text-center py-10 text-gray-500">
-          No students found
+        <div className="p-16 text-center">
+          <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+            <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <p className="text-gray-500 font-medium">No students found matching your criteria</p>
+          <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
         </div>
       )}
 
