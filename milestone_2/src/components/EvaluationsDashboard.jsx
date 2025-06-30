@@ -200,7 +200,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
               </div>
             </div>
           </div> */}
-        {(stakeholder === "student" || stakeholder == "faculty") &&
+        {(stakeholder == "faculty") &&
           <ApplicationsFilterBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}

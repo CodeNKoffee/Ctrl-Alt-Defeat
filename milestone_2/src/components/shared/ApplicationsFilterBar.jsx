@@ -87,6 +87,7 @@ export default function ApplicationsFilterBar({
   bgColor = "bg-[#D9F0F4]/60",
   filterButtonColor = "bg-white/90",
   marginBottom = "mb-8",
+  marginTop,
   primaryFilterResetLabel,
 
   filterSections = [], // [{ name, options, selected, onChange, resetLabel }]
@@ -121,7 +122,7 @@ export default function ApplicationsFilterBar({
   const hasActiveFilters = filterSections.some(section => section.selected && section.selected !== 'all');
 
   return (
-    <div className={`w-full ${bgColor} backdrop-blur-md p-6 rounded-xl shadow-lg ${marginBottom} border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl relative z-20 isolation-auto`}>
+    <div className={`w-full ${bgColor} backdrop-blur-md p-6 rounded-xl shadow-lg ${marginBottom} ${marginTop} border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl relative z-20 isolation-auto`}>
 
       {/* Main filter section with search and industry filter */}
       <div ref={filterRowRef} className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">

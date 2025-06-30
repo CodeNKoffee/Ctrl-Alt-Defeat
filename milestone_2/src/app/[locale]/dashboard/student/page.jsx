@@ -214,6 +214,8 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search recommended internships..."
           filterSections={filterSections}
+          marginTop={"mt-6"}
+          marginBottom="mb-0"
           onClearFilters={() => {
             setSearchTerm('');
             setFilters({ jobType: '', jobSetting: '', isPaid: null });
@@ -728,6 +730,7 @@ function AppliedInternshipsView() {
           showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
+          marginBottom='mt-4'
           onClearFilters={() => setFilters({ status: 'all', company: 'all', position: 'all', jobType: 'all' })}
         />
       </div>
@@ -903,6 +906,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
           showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
+          marginBottom='mb-2'
           onClearFilters={() => setFilters({ status: 'all', company: 'all', position: 'all' })}
         />
       </div>
@@ -1068,7 +1072,7 @@ function NotificationsView() {
           onClearFilters={() => setFilters({ category: 'all', read: 'all' })}
         />
       </div>
-      <NotificationsList filters={filters} />
+      <NotificationsList filters={filters} hideFilters={true} />
     </div>
   );
 }
@@ -1581,6 +1585,7 @@ function MyEvaluationsView() {
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search evaluations by student or company name..."
+          
           filterSections={filterSections}
         />
       </div>
