@@ -34,6 +34,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   // Filter workshops by instructor name (search) and instructor filter
   const filteredWorkshopsList = workshops.filter(ws => {
     const matchesSearch =
+      ws.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       ws.instructor?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesInstructor = selectedInstructor === 'all' || ws.instructor === selectedInstructor;
     return matchesSearch && matchesInstructor;

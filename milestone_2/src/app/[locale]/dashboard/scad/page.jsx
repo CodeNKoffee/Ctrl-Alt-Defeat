@@ -954,7 +954,7 @@ function WorkshopsView() {
           filterSections={workshopFilterSections}
         />
       </div>
-      <WorkshopManager instructorFilter={selectedInstructor} />
+      <WorkshopManager instructorFilter={selectedInstructor} searchTerm={searchTerm} />
     </div>
   );
 }

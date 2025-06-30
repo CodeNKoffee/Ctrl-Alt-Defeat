@@ -8,11 +8,10 @@ import DeleteWorkshopModal from './DeleteWorkshopModal';
 import { sampleWorkshops } from '../../constants/mockData';
 import CustomButton from './shared/CustomButton';
 
-export default function WorkshopManager({ instructorFilter = 'all' }) {
+export default function WorkshopManager({ instructorFilter = 'all', searchTerm = '' }) {
   const [workshops, setWorkshops] = useState(sampleWorkshops);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentWorkshop, setCurrentWorkshop] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
   const [confirmDelete, setConfirmDelete] = useState(null);
   const [successNotification, setSuccessNotification] = useState({ show: false, message: '' });
 
