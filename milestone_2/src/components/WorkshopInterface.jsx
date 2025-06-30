@@ -304,7 +304,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
   if (!isClient) return null;
 
   return (
-    <div className="fixed inset-0 flex flex-col bg-gray-900 text-white z-50">
+    <div className="fixed inset-0 flex flex-col bg-gray-900 text-white z-50 overflow-hidden">
       {/* Header with workshop title */}
       <div className="bg-[#2A5F74] py-3 px-6 shadow-md">
         <div>
@@ -419,7 +419,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
       </div>
 
       {/* Control bar */}
-      <div className="h-20 bg-gray-800 flex items-center justify-center px-4 shadow-lg">
+      <div className="h-28 bg-gray-800 flex items-center justify-center px-4 shadow-lg">
         <div className="bg-gray-700 p-3 rounded-full flex items-center justify-center gap-4">
           <button
             onClick={toggleMicrophone}

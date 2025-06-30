@@ -553,7 +553,7 @@ const CallInterface = () => {
         </div>
       </div>
 
-      <div className="h-24 flex items-center justify-center px-4 bg-gray-50">
+      <div className="h-32 flex items-center justify-center px-4 bg-gray-50">
         <div className="bg-gray-100 p-3 rounded-full flex items-center justify-center gap-3 sm:gap-4">
           <button
             onClick={() => dispatch(toggleMute())}
