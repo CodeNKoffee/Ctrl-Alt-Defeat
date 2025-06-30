@@ -1,5 +1,8 @@
 "use client"
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import StudentCard from "./StudentCard";
 import StudentDetails from "./StudentDetails";
 import UpdateProfileS from "./UpdateProfileS";
@@ -8,6 +11,9 @@ import './styles/StudentProfile.css'; // Importing CSS for styling
 export default function Student() {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  // Feedback state for successful profile update - copied from UploadDocuments.jsx
+  const [feedback, setFeedback] = useState(null);
 
   // Default student data
   const defaultStudentData = {
@@ -152,6 +158,18 @@ export default function Student() {
     console.log("Updated profile data:", updatedData);
   };
 
+  const handleEditModalClose = (success = false) => {
+    closeEditModal();
+
+    // If the update was successful, show feedback
+    if (success) {
+      setFeedback('success');
+      setTimeout(() => {
+        setFeedback(null);
+      }, 1400);
+    }
+  };
+
   return (
     <div className="w-full h-full relative profile-container">
       <div className={`student-profile-wrapper ${isDetailsOpen ? 'expanded' : ''}`}>
@@ -168,10 +186,85 @@ export default function Student() {
       </div>
       <UpdateProfileS
         isOpen={isEditModalOpen}
-        onClose={closeEditModal}
+        onClose={handleEditModalClose}
         studentData={studentData}
         onProfileUpdate={handleProfileUpdate}
       />
+
+      {/* Feedback overlay - copied exactly from UploadDocuments.jsx */}
+      <AnimatePresence>
+        {feedback && (
+          <motion.div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000,
+              background: 'rgba(42, 95, 116, 0.18)'
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              style={{
+                background: 'white',
+                padding: '25px',
+                borderRadius: '15px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+                maxWidth: '400px'
+              }}
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            >
+              <motion.div
+                style={{
+                  marginBottom: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+              >
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    background: '#318FA8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    style={{ fontSize: 32, color: 'white' }}
+                  />
+                </div>
+              </motion.div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
+                Success!
+              </div>
+              <div style={{ color: '#333', textAlign: 'center' }}>
+                Your profile has been successfully updated.
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
