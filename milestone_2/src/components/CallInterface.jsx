@@ -38,30 +38,34 @@ const ChatPanelContent = memo(({
   handleToggleChat,
   chatScrollRef
 }) => (
-  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg rounded-3xl overflow-hidden">
-    <div className="flex justify-between items-center p-3 border-b bg-gray-100">
-      <h3 className="text-lg font-semibold text-gray-700">Chat</h3>
+  <div className="h-full flex flex-col">
+    <div className="flex justify-between items-center p-4 border-b border-white/10">
+      <h3 className="text-lg font-semibold text-blue-100">Chat</h3>
       <button
         onClick={handleToggleChat}
-        className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+        className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
         title="Close Chat Panel"
       >
         <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
       </button>
     </div>
     <div className="flex flex-col flex-grow overflow-hidden">
-      <div ref={chatScrollRef} className="flex-grow p-4 space-y-3 overflow-y-auto bg-white">
+      <div ref={chatScrollRef} className="flex-grow p-4 space-y-4 overflow-y-auto">
         {chatMessages.length === 0 ? (
-          <p className="text-center text-sm text-gray-500 py-4">No messages yet.</p>
+          <div className="flex flex-col items-center justify-center h-full text-center text-sm text-blue-200/60">
+            <FontAwesomeIcon icon={faComments} className="h-8 w-8 mb-3 opacity-50" />
+            <p>No messages yet</p>
+            <p className="text-xs mt-1">Start the conversation!</p>
+          </div>
         ) : (
           chatMessages.map(message => (
             <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] rounded-lg px-3 py-2 shadow-sm ${message.isSelf
-                ? 'bg-metallica-blue-700 text-white rounded-br-none'
-                : 'bg-gray-100 text-gray-800 border border-gray-200 rounded-bl-none'
+              <div className={`max-w-[80%] rounded-xl px-4 py-2 shadow-lg ${message.isSelf
+                ? 'bg-[#318FA8] text-white rounded-br-none'
+                : 'bg-white/5 text-blue-100 border border-white/10 rounded-bl-none'
                 }`}>
                 <p className="text-sm">{message.content}</p>
-                <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100' : 'text-gray-400'} ${message.isSelf ? 'text-right' : 'text-left'}`}>
+                <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100/70' : 'text-blue-200/60'}`}>
                   {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
               </div>
@@ -69,22 +73,22 @@ const ChatPanelContent = memo(({
           ))
         )}
       </div>
-      <div className="p-3 border-t bg-white">
+      <div className="p-4 border-t border-white/10">
         <form onSubmit={handleSendMessage} className="flex items-center gap-2">
           <input
             type="text"
             value={currentMessage}
             onChange={(e) => setCurrentMessage(e.target.value)}
-            className="flex-grow border text-black border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 text-sm"
+            className="flex-grow bg-white/5 border border-white/10 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 text-sm text-blue-100 placeholder-blue-200/40"
             placeholder="Type your message..."
           />
           <button
             type="submit"
-            className={`w-10 h-10 rounded-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''}`}
+            className={`w-10 h-10 rounded-full bg-[#318FA8] hover:bg-[#2A5F74] text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''} shadow-lg hover:shadow-xl`}
             disabled={!currentMessage.trim()}
             title="Send Message"
           >
-            <FontAwesomeIcon icon={faPaperPlane} />
+            <FontAwesomeIcon icon={faPaperPlane} className="h-4 w-4" />
           </button>
         </form>
       </div>
@@ -99,30 +103,30 @@ const NotesPanelContent = memo(({
   handleSaveNotes,
   handleToggleNotes
 }) => (
-  <div className="h-full flex flex-col bg-white border-gray-300 shadow-lg rounded-xl overflow-hidden">
-    <div className="flex justify-between items-center p-3 border-b bg-gray-100">
-      <h3 className="text-lg font-semibold text-gray-700">Private Notes</h3>
+  <div className="h-full flex flex-col">
+    <div className="flex justify-between items-center p-4 border-b border-white/10">
+      <h3 className="text-lg font-semibold text-blue-100">Notes</h3>
       <button
         onClick={handleToggleNotes}
-        className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-200"
+        className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
         title="Close Notes Panel"
       >
         <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
       </button>
     </div>
-    <div className="flex flex-col flex-grow overflow-hidden p-4 bg-white">
+    <div className="flex flex-col flex-grow p-4">
       <textarea
         value={noteContent}
         onChange={(e) => setNoteContent(e.target.value)}
-        className="flex-grow w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-metallica-blue-700 focus:border-metallica-blue-700 resize-none text-sm mb-4"
-        placeholder="Write your private notes here..."
+        className="flex-grow w-full p-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 resize-none text-sm text-blue-100 placeholder-blue-200/40 mb-4"
+        placeholder="Take notes here..."
       />
       <button
         onClick={handleSaveNotes}
-        className="w-full bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-2 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors"
-        title="Save Notes (logs to console)"
+        className="w-full bg-[#318FA8] hover:bg-[#2A5F74] text-white py-3 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors shadow-lg hover:shadow-xl border border-[#41B9D9]/30"
+        title="Save Notes"
       >
-        <FontAwesomeIcon icon={faSave} />
+        <FontAwesomeIcon icon={faSave} className="h-4 w-4" />
         Save Notes
       </button>
     </div>
@@ -443,17 +447,16 @@ const CallInterface = () => {
 
   console.log(`[CallInterface ${instanceId}] Rendering UI.`); // Log UI render
 
-  const baseButtonClass = "flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-colors transition-shadow transition-transform duration-150 focus:outline-none shadow-[0_2px_8px_rgba(49,143,168,0.06)] hover:translate-y-[-2px] hover:scale-107 focus:ring-2 focus:ring-[#318FA8] focus:ring-offset-2 focus:ring-offset-metallica-blue-400";
-  const defaultButtonClass = "bg-gray-200 hover:bg-gray-300 text-[#2A5F74]";
-  const activeButtonClass = "bg-[#318FA8] hover:bg-[#2A5F74] text-white";
-  const activeNotesButtonClass = "bg-metallica-blue-100 hover:bg-metallica-blue-200 text-metallica-blue-700";
-  const redButtonClass = "bg-red-600 hover:bg-red-700 text-white";
-  const greenButtonClass = "bg-green-600 hover:bg-green-700 text-white";
+  const baseButtonClass = "flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full transition-all duration-200 focus:outline-none shadow-lg hover:shadow-xl focus:ring-2 focus:ring-[#318FA8] focus:ring-offset-2 focus:ring-offset-[#0a1118]";
+  const defaultButtonClass = "bg-white/5 hover:bg-white/10 text-blue-100 border border-white/10";
+  const activeButtonClass = "bg-[#318FA8] hover:bg-[#2A5F74] text-white border border-[#41B9D9]/30";
+  const redButtonClass = "bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30";
+  const greenButtonClass = "bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30";
 
   const renderCallContent = () => (
     <>
-      <div className="flex-1 flex relative bg-apple-gray-900">
-        {/* Main video area - only show when camera is on */}
+      <div className="flex-1 flex relative bg-[#0a1118]">
+        {/* Remote video */}
         {otherPartyCameraOn && (
           <video
             ref={remoteVideoRef}
@@ -463,44 +466,56 @@ const CallInterface = () => {
           />
         )}
 
-        {/* Display a different status message based on the current state */}
-        <div className="absolute top-4 left-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-lg flex items-center text-xs sm:text-sm shadow">
+        {/* Status messages */}
+        <div className="absolute top-4 left-4 bg-[#1E3A5F]/40 backdrop-blur-sm text-blue-100 px-4 py-2 rounded-full flex items-center text-sm shadow-lg border border-white/10">
           {showConnectingOverlay ? (
-            <>Connecting to {otherPartyName}...</>
+            <>
+              <div className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse mr-2"></div>
+              Connecting to {otherPartyName}...
+            </>
           ) : otherPartyCameraOn ? (
-            <>Call in progress with {otherPartyName}</>
+            <>
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div>
+              Call in progress with {otherPartyName}
+            </>
           ) : (
-            <>Connected with {otherPartyName} (camera off)</>
+            <>
+              <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse mr-2"></div>
+              Connected with {otherPartyName} (camera off)
+            </>
           )}
-          <button
-            onClick={triggerLeaveToast}
-            className="ml-2 text-xs bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
-            title="Simulate other party leaving"
-          >
-            Sim Leave
-          </button>
-          {/* Debug button to toggle camera */}
-          <button
-            onClick={() => setOtherPartyCameraOn(prev => !prev)}
-            className="ml-2 text-xs bg-blue-500 hover:bg-blue-600 text-white font-bold py-0.5 px-1.5 rounded opacity-75 hover:opacity-100 transition-opacity"
-            title="Toggle camera state"
-          >
-            Toggle Cam
-          </button>
+          <div className="flex items-center gap-2 ml-4 pl-4 border-l border-white/10">
+            <button
+              onClick={triggerLeaveToast}
+              className="text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 px-2 py-1 rounded-full border border-red-500/30 transition-colors"
+              title="Simulate other party leaving"
+            >
+              Sim Leave
+            </button>
+            <button
+              onClick={() => setOtherPartyCameraOn(prev => !prev)}
+              className="text-xs bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 px-2 py-1 rounded-full border border-blue-500/30 transition-colors"
+              title="Toggle camera state"
+            >
+              Toggle Cam
+            </button>
+          </div>
         </div>
 
-        {/* Camera ON notification */}
-        {otherPartyCameraOn && !showConnectingOverlay && (
-          <div className="absolute bottom-8 left-0 right-0 text-center">
-            <p className="text-lg sm:text-xl text-white bg-black bg-opacity-50 py-2 px-4 inline-block rounded-lg">
-              {otherPartyName}'s camera is off
-            </p>
+        {/* Camera off placeholder */}
+        {!otherPartyCameraOn && !showConnectingOverlay && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0a1118] text-white">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#318FA8] to-[#41B9D9] flex items-center justify-center text-4xl font-bold mb-4 shadow-lg">
+              {otherPartyName?.charAt(0).toUpperCase() || 'U'}
+            </div>
+            <h2 className="text-xl font-semibold text-blue-100">{otherPartyName}</h2>
+            <p className="text-sm text-blue-200/60 mt-2">Camera is turned off</p>
           </div>
         )}
 
-        {/* Camera off placeholder with image - show when camera is off and we're connected */}
-        {!otherPartyCameraOn && !showConnectingOverlay && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-apple-gray-800 text-white p-4">
+        {/* Camera on placeholder with image */}
+        {otherPartyCameraOn && !showConnectingOverlay && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0a1118] text-white">
             <img
               src="https://printler.com/media/photo/176171-1.jpg"
               alt="Call placeholder"
@@ -508,26 +523,32 @@ const CallInterface = () => {
               style={{ objectPosition: 'center top' }}
             />
             <div className="absolute bottom-8 left-0 right-0 text-center">
-              <p className="text-lg sm:text-xl text-white bg-black bg-opacity-50 py-2 px-4 inline-block rounded-lg">
+              <p className="text-lg sm:text-xl text-white bg-[#1E3A5F]/80 backdrop-blur-sm py-2 px-4 mx-auto inline-block rounded-full border border-white/10">
                 {otherPartyName}'s camera is on
               </p>
             </div>
           </div>
         )}
 
+        {/* Connecting overlay */}
         {showConnectingOverlay && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
-            <div className="text-white text-lg sm:text-xl">Connecting...</div>
+          <div className="absolute inset-0 flex items-center justify-center bg-[#0a1118]/90 backdrop-blur-sm">
+            <div className="text-blue-100 text-xl flex flex-col items-center">
+              <div className="w-16 h-16 rounded-full border-4 border-[#318FA8] border-t-transparent animate-spin mb-4"></div>
+              Connecting...
+            </div>
           </div>
         )}
 
+        {/* Party left notification */}
         {hasOtherPartyLeft && (
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-3 py-1 rounded shadow-md text-sm">
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-500/20 backdrop-blur-sm text-red-400 px-4 py-2 rounded-full shadow-lg border border-red-500/30">
             {otherPartyName} has left the call
           </div>
         )}
 
-        <div className="absolute right-4 bottom-24 w-1/4 sm:w-1/5 max-w-[150px] sm:max-w-xs aspect-video bg-apple-gray-700 border border-apple-gray-500 overflow-hidden rounded-md sm:rounded-lg shadow-lg flex items-center justify-center">
+        {/* Local video preview */}
+        <div className="absolute right-6 bottom-32 w-1/4 sm:w-1/5 max-w-[200px] aspect-video bg-[#1E3A5F]/40 backdrop-blur-sm border border-white/20 overflow-hidden rounded-xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-200">
           {isVideoEnabled ? (
             <video
               ref={localVideoRef}
@@ -537,14 +558,14 @@ const CallInterface = () => {
               muted
             />
           ) : (
-            <div className="flex flex-col items-center justify-center text-white h-full w-full p-1 sm:p-2 bg-apple-gray-700">
-              <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-metallica-blue-600 flex items-center justify-center text-sm sm:text-xl font-bold mb-1 p-1 shrink-0">
+            <div className="flex flex-col items-center justify-center text-white h-full w-full p-2">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#318FA8] to-[#41B9D9] flex items-center justify-center text-xl font-bold mb-2 shadow-lg">
                 {currentUser?.name?.charAt(0).toUpperCase() || 'U'}
               </div>
-              <span className="text-xs font-semibold max-w-full truncate mt-0.5" title={currentUser?.name || 'User'}>{currentUser?.name || 'User'}</span>
+              <span className="text-sm font-medium text-blue-100">You</span>
               {isMuted && (
-                <div className="mt-0.5 flex items-center text-red-400 text-xs scale-90">
-                  <FontAwesomeIcon icon={faMicrophoneSlash} className="h-2.5 w-2.5 mr-1" />
+                <div className="mt-2 flex items-center text-red-400 text-xs bg-red-500/20 px-2 py-1 rounded-full">
+                  <FontAwesomeIcon icon={faMicrophoneSlash} className="h-3 w-3 mr-1" />
                   Muted
                 </div>
               )}
@@ -553,54 +574,59 @@ const CallInterface = () => {
         </div>
       </div>
 
-      <div className="h-24 flex items-center justify-center px-4 bg-gray-50">
-        <div className="bg-gray-100 p-3 rounded-full flex items-center justify-center gap-3 sm:gap-4">
+      {/* Control bar */}
+      <div className="h-24 bg-[#1E3A5F]/40 backdrop-blur-md flex items-center justify-center px-4 shadow-lg border-t border-white/10">
+        <div className="bg-[#0a1118]/40 px-4 py-3 rounded-full flex items-center justify-center gap-6 backdrop-blur-sm border border-white/10 shadow-xl">
           <button
             onClick={() => dispatch(toggleMute())}
-            className={`${baseButtonClass} ${isMuted ? redButtonClass : defaultButtonClass}`}
+            className={`${baseButtonClass} ${isMuted ? redButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
             title={isMuted ? 'Unmute' : 'Mute'}
           >
-            <FontAwesomeIcon icon={isMuted ? faMicrophoneSlash : faMicrophone} className="h-4 w-4 sm:h-5 sm:w-5" />
+            <FontAwesomeIcon icon={isMuted ? faMicrophoneSlash : faMicrophone} className="h-5 w-5" />
           </button>
 
           <button
             onClick={() => dispatch(toggleVideo())}
-            className={`${baseButtonClass} ${!isVideoEnabled ? redButtonClass : defaultButtonClass}`}
+            className={`${baseButtonClass} ${!isVideoEnabled ? redButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
             title={isVideoEnabled ? 'Stop Video' : 'Start Video'}
           >
-            <FontAwesomeIcon icon={isVideoEnabled ? faVideo : faVideoSlash} className="h-4 w-4 sm:h-5 sm:w-5" />
-          </button>
-
-          <button
-            onClick={handleToggleChat}
-            className={`${baseButtonClass} ${showChat ? activeButtonClass : defaultButtonClass}`}
-            title="Chat"
-          >
-            <FontAwesomeIcon icon={faComments} className="h-4 w-4 sm:h-5 sm:w-5" />
-          </button>
-
-          <button
-            onClick={handleToggleNotes}
-            className={`${baseButtonClass} ${showNotes ? activeNotesButtonClass : defaultButtonClass}`}
-            title="Notes"
-          >
-            <FontAwesomeIcon icon={faNoteSticky} className="h-4 w-4 sm:h-5 sm:w-5" />
+            <FontAwesomeIcon icon={isVideoEnabled ? faVideo : faVideoSlash} className="h-5 w-5" />
           </button>
 
           <button
             onClick={() => dispatch(toggleScreenShare())}
-            className={`${baseButtonClass} ${isScreenSharing ? greenButtonClass : defaultButtonClass}`}
+            className={`${baseButtonClass} ${isScreenSharing ? greenButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
             title={isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
           >
-            <FontAwesomeIcon icon={faDesktop} className="h-4 w-4 sm:h-5 sm:w-5" />
+            <FontAwesomeIcon icon={faDesktop} className="h-5 w-5" />
+          </button>
+
+          <div className="h-8 w-px bg-white/10"></div>
+
+          <button
+            onClick={handleToggleChat}
+            className={`${baseButtonClass} ${showChat ? activeButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
+            title="Chat"
+          >
+            <FontAwesomeIcon icon={faComments} className="h-5 w-5" />
           </button>
 
           <button
+            onClick={handleToggleNotes}
+            className={`${baseButtonClass} ${showNotes ? activeButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
+            title="Notes"
+          >
+            <FontAwesomeIcon icon={faNoteSticky} className="h-5 w-5" />
+          </button>
+
+          <div className="h-8 w-px bg-white/10"></div>
+
+          <button
             onClick={handleEndCall}
-            className={`${baseButtonClass} ${redButtonClass}`}
+            className={`${baseButtonClass} ${redButtonClass} transform hover:scale-110 transition-all duration-200`}
             title="End Call"
           >
-            <FontAwesomeIcon icon={faPhone} className="h-4 w-4 sm:h-5 sm:w-5" />
+            <FontAwesomeIcon icon={faPhone} className="h-5 w-5 transform rotate-135" />
           </button>
         </div>
       </div>
@@ -608,7 +634,7 @@ const CallInterface = () => {
   );
 
   return (
-    <div className="fixed inset-0 bg-black flex flex-row z-40">
+    <div className="fixed inset-0 bg-gradient-to-br from-[#1a2942] to-[#17202f] flex flex-row z-40">
       <audio
         ref={answerAudioRef}
         src="/sounds/Facetime_Ring_and_Answer_Sound.mp3"
@@ -620,8 +646,8 @@ const CallInterface = () => {
         layout
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className={`flex flex-col h-screen ${showChat || showNotes
-          ? 'w-3/4' // Main content takes 3/4 if any sidebar is open
-          : 'w-full' // Main content takes full width if no sidebars
+          ? 'w-3/4'
+          : 'w-full'
           }`
         }
       >
@@ -633,16 +659,40 @@ const CallInterface = () => {
         {(showChat || showNotes) && (
           <motion.div
             key="right-sidebar"
-            initial={{ x: '100%' }}
-            animate={{ x: '0%' }}
-            exit={{ x: '100%' }}
+            initial={{ x: '100%', opacity: 0 }}
+            animate={{ x: '0%', opacity: 1 }}
+            exit={{ x: '100%', opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-1/4 h-screen flex flex-col bg-white border-l border-gray-300 shadow-lg p-1"
+            className="w-1/4 min-w-[300px] h-full flex flex-col bg-[#1E3A5F]/40 backdrop-blur-md border-l border-white/10 shadow-2xl"
           >
             {showNotes && showChat ? (
-              // Both Notes and Chat are open: Notes (1/2 height), Chat (1/2 height)
               <>
-                <div className="h-1/2 pb-1">
+                <div className="h-1/2 flex-grow overflow-hidden pb-2 p-4">
+                  <div className="h-full rounded-3xl bg-[#0a1118]/40 backdrop-blur-sm border border-white/10 shadow-xl overflow-hidden">
+                    <NotesPanelContent
+                      noteContent={noteContent}
+                      setNoteContent={setNoteContent}
+                      handleSaveNotes={handleSaveNotes}
+                      handleToggleNotes={handleToggleNotes}
+                    />
+                  </div>
+                </div>
+                <div className="h-1/2 flex-grow overflow-hidden pt-2 p-4">
+                  <div className="h-full rounded-3xl bg-[#0a1118]/40 backdrop-blur-sm border border-white/10 shadow-xl overflow-hidden">
+                    <ChatPanelContent
+                      chatMessages={chatMessages}
+                      currentMessage={currentMessage}
+                      setCurrentMessage={setCurrentMessage}
+                      handleSendMessage={handleSendMessage}
+                      handleToggleChat={handleToggleChat}
+                      chatScrollRef={chatScrollRef}
+                    />
+                  </div>
+                </div>
+              </>
+            ) : showNotes ? (
+              <div className="h-full p-4">
+                <div className="h-full rounded-3xl bg-[#0a1118]/40 backdrop-blur-sm border border-white/10 shadow-xl overflow-hidden">
                   <NotesPanelContent
                     noteContent={noteContent}
                     setNoteContent={setNoteContent}
@@ -650,7 +700,10 @@ const CallInterface = () => {
                     handleToggleNotes={handleToggleNotes}
                   />
                 </div>
-                <div className="h-1/2 pt-1">
+              </div>
+            ) : showChat ? (
+              <div className="h-full p-4">
+                <div className="h-full rounded-3xl bg-[#0a1118]/40 backdrop-blur-sm border border-white/10 shadow-xl overflow-hidden">
                   <ChatPanelContent
                     chatMessages={chatMessages}
                     currentMessage={currentMessage}
@@ -660,32 +713,14 @@ const CallInterface = () => {
                     chatScrollRef={chatScrollRef}
                   />
                 </div>
-              </>
-            ) : showNotes ? (
-              // Only Notes is open
-              <NotesPanelContent
-                noteContent={noteContent}
-                setNoteContent={setNoteContent}
-                handleSaveNotes={handleSaveNotes}
-                handleToggleNotes={handleToggleNotes}
-              />
-            ) : showChat ? (
-              // Only Chat is open
-              <ChatPanelContent
-                chatMessages={chatMessages}
-                currentMessage={currentMessage}
-                setCurrentMessage={setCurrentMessage}
-                handleSendMessage={handleSendMessage}
-                handleToggleChat={handleToggleChat}
-                chatScrollRef={chatScrollRef}
-              />
+              </div>
             ) : null}
           </motion.div>
         )}
       </AnimatePresence>
 
       {showManualLeaveToast && (
-        <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-pulse z-60">
+        <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 bg-red-500/20 backdrop-blur-sm text-red-400 px-4 py-2 rounded-full shadow-lg border border-red-500/30 animate-pulse">
           {otherPartyName || 'Other party'} has left the call (Simulated)
         </div>
       )}
