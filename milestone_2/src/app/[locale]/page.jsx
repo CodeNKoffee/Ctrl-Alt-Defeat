@@ -90,19 +90,19 @@ export default function Home() {
   };
 
   const handleLogin = async (values) => {
-    if (!selectedUserOption) {
-      // Should not happen if login form is visible, but good guard
-      toast.error('User type not selected.', {
-        position: 'top-right',
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'light',
-      });
-      return;
-    }
+    // if (!selectedUserOption) {
+    //   // Should not happen if login form is visible, but good guard
+    //   toast.error('User type not selected.', {
+    //     position: 'top-right',
+    //     autoClose: 4000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     theme: 'light',
+    //   });
+    //   return;
+    // }
 
     let mockUser = null;
     const userType = selectedUserOption.value; // e.g., 'student', 'company'
@@ -120,16 +120,7 @@ export default function Home() {
     }
 
     if (!mockUser) {
-      toast.error('Invalid email or password', {
-        position: 'top-right',
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'light',
-      });
-      return;
+      throw new Error('Invalid email or password');
     }
 
     const userSession = {

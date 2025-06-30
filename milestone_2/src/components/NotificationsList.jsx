@@ -508,12 +508,12 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
               All
             </button>
             {userData?.role === 'student' && (
-            <button
-              className={`flex-1 py-3 px-4 text-sm font-medium transition-all duration-200 ${activeTab === 'profile' ? 'text-[#3298BA] border-b-2 border-[#3298BA]' : 'text-gray-500 hover:text-[#5DB2C7]'}`}
-              onClick={() => setActiveTab('profile')}
-            >
-              Profile Views
-            </button>
+              <button
+                className={`flex-1 py-3 px-4 text-sm font-medium transition-all duration-200 ${activeTab === 'profile' ? 'text-[#3298BA] border-b-2 border-[#3298BA]' : 'text-gray-500 hover:text-[#5DB2C7]'}`}
+                onClick={() => setActiveTab('profile')}
+              >
+                Profile Views
+              </button>
             )}
           </div>
 
@@ -522,9 +522,14 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
             {activeTab === 'all' && (
               <>
                 {searchTerm && filteredNotifications.length === 0 ? (
-                  <div className="p-8 text-center">
-                    <p className="text-gray-500 font-medium">No notifications found</p>
-                    <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filters</p>
+                  <div className="p-16 text-center">
+                    <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                      <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-500 font-medium">No notifications found matching your criteria</p>
+                    <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
                   </div>
                 ) : (
                   filteredNotifications.map(notification => (
@@ -559,8 +564,13 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
                 {isPro ? (
                   <>
                     {filteredCompanyViews.length === 0 ? (
-                      <div className="p-8 text-center">
-                        <p className="text-gray-500 font-medium">No profile views found</p>
+                      <div className="p-16 text-center">
+                        <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                          <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </div>
+                        <p className="text-gray-500 font-medium">No profile views found matching your criteria</p>
                         <p className="text-gray-400 text-sm mt-1">Try adjusting your filters</p>
                       </div>
                     ) : (

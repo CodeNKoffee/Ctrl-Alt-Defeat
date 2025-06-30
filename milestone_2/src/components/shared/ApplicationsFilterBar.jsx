@@ -87,11 +87,13 @@ export default function ApplicationsFilterBar({
   bgColor = "bg-[#D9F0F4]/60",
   filterButtonColor = "bg-white/90",
   marginBottom = "mb-8",
+  marginTop,
   primaryFilterResetLabel,
 
   filterSections = [], // [{ name, options, selected, onChange, resetLabel }]
 }) {
   const [isCombinedFilterPopoverOpen, setIsCombinedFilterPopoverOpen] = useState(false);
+  const filterRowRef = React.useRef(null);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -120,10 +122,10 @@ export default function ApplicationsFilterBar({
   const hasActiveFilters = filterSections.some(section => section.selected && section.selected !== 'all');
 
   return (
-    <div className={`w-full ${bgColor} backdrop-blur-md p-6 rounded-xl shadow-lg ${marginBottom} border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl relative z-20 isolation-auto`}>
+    <div className={`w-full ${bgColor} backdrop-blur-md p-6 rounded-xl shadow-lg ${marginBottom} ${marginTop} border border-[#B8E1E9]/50 transition-all duration-300 hover:shadow-xl relative z-20 isolation-auto`}>
 
       {/* Main filter section with search and industry filter */}
-      <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div ref={filterRowRef} className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
         {/* Search box */}
         <div className="flex-1 w-full md:w-auto md:max-w-[620px] flex items-center">
           <div className="relative w-full flex justify-center items-center">
@@ -170,13 +172,20 @@ export default function ApplicationsFilterBar({
             <span>Filters</span>
             <FontAwesomeIcon icon={faChevronDown} className={`h-4 w-4 text-[#5DB2C7] transition-transform duration-300 ${isCombinedFilterPopoverOpen ? 'rotate-180' : ''}`} />
           </button>
+        </div>
+      </div>
 
-          {isCombinedFilterPopoverOpen && (
-            <div className="absolute right-0 mt-2 w-72 bg-white backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-[1000] combined-filter-popover animate-dropdown focus:outline-none p-4 space-y-4">
+      {isCombinedFilterPopoverOpen && (
+        <div
+          className="absolute left-0 right-0 mt-2 bg-white backdrop-blur-md border-2 border-[#B8E1E9] rounded-xl shadow-xl z-[1000] combined-filter-popover animate-dropdown focus:outline-none p-4"
+          style={{ top: filterRowRef.current ? `${filterRowRef.current.offsetTop + filterRowRef.current.offsetHeight}px` : '100px' }}
+        >
+          {filterSections && filterSections.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {filterSections.map((section, idx) => (
                 <div key={section.name || idx}>
                   <h4 className="text-sm font-semibold text-[#2a5f74] mb-2">{section.name}</h4>
-                  <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
+                  <div className="space-y-1">
                     <div
                       className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${section.selected === 'all' ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
                       onClick={() => section.onChange('all')}
@@ -200,9 +209,13 @@ export default function ApplicationsFilterBar({
                 </div>
               ))}
             </div>
+          ) : (
+            <div className="text-center text-gray-500 py-4">
+              No filters available at the moment.
+            </div>
           )}
         </div>
-      </div>
+      )}
 
       {/* No filters text or active filters display */}
       <div className="w-full mt-4 pt-4 border-t border-[#B8E1E9]/50">

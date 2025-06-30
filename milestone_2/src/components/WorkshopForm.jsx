@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faUsers, faMapMarkerAlt, faClock, faUserTie, faListUl, faTimes, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faUsers, faMapMarkerAlt, faClock, faUserTie, faListUl, faTimes, faPlus, faTrash, faCheck } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from './DatePicker';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'create' }) {
   // Default empty workshop if none provided
@@ -40,6 +41,9 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
   const [agendaItem, setAgendaItem] = useState('');
   const [previewVisible, setPreviewVisible] = useState(true);
   const [errors, setErrors] = useState({});
+
+  // Feedback state for successful creation/update
+  const [feedback, setFeedback] = useState(null);
 
   // Reset form when workshop changes (for edit mode)
   useEffect(() => {
@@ -145,12 +149,93 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
     e.preventDefault();
 
     if (validateForm()) {
-      onSave(formData);
+      // Show success feedback
+      setFeedback('success');
+
+      setTimeout(() => {
+        setFeedback(null);
+        onSave(formData);
+      }, 1400);
     }
   };
 
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-75 overflow-y-auto h-full w-full z-50 flex justify-center">
+      {/* Feedback overlay - copied exactly from UploadDocuments.jsx */}
+      <AnimatePresence>
+        {feedback && (
+          <motion.div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000,
+              background: 'rgba(42, 95, 116, 0.18)'
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              style={{
+                background: 'white',
+                padding: '25px',
+                borderRadius: '15px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+                maxWidth: '400px'
+              }}
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            >
+              <motion.div
+                style={{
+                  marginBottom: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+              >
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    background: '#318FA8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    style={{ fontSize: 32, color: 'white' }}
+                  />
+                </div>
+              </motion.div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
+                Success!
+              </div>
+              <div style={{ color: '#333', textAlign: 'center' }}>
+                {mode === 'create' ? 'Workshop has been successfully created.' : 'Workshop has been successfully updated.'}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row my-6 h-[calc(100vh-3rem)]">
         {/* Close button */}
         <button

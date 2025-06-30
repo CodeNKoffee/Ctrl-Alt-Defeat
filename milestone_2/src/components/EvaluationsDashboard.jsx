@@ -200,7 +200,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
               </div>
             </div>
           </div> */}
-        {(stakeholder === "student" || stakeholder == "faculty") &&
+        {(stakeholder == "faculty") &&
           <ApplicationsFilterBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
@@ -516,25 +516,24 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
               </div>
             ))
           ) : (
-            <div className="w-full text-center py-10">
-              <div className="flex flex-col items-center justify-center">
-                <div className="bg-[#eaf3f7] rounded-full p-4 mb-3">
-                  <svg className="w-10 h-10 text-[#5DB2C7]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                </div>
-                <p className="text-[#2A5F74] font-semibold text-lg">{getEmptyStateMessage()}</p>
-
-                {searchTerm && (
-                  <button
-                    onClick={() => setSearchTerm('')}
-                    className="mt-4 px-4 py-2 bg-[#D9F0F4] text-[#2A5F74] rounded-full text-sm font-medium hover:bg-[#B8E1E9] transition-colors duration-200 flex items-center"
-                  >
-                    <span>Clear search filter</span>
-                    <FontAwesomeIcon icon={faTimesCircle} className="ml-2 h-3 w-3" />
-                  </button>
-                )}
+            <div className="w-full p-16 text-center">
+              <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
               </div>
+              <p className="text-gray-500 font-medium">{getEmptyStateMessage()}</p>
+              <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
+
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="mt-4 px-4 py-2 bg-[#D9F0F4] text-[#2A5F74] rounded-full text-sm font-medium hover:bg-[#B8E1E9] transition-colors duration-200 flex items-center mx-auto"
+                >
+                  <span>Clear search filter</span>
+                  <FontAwesomeIcon icon={faTimesCircle} className="ml-2 h-3 w-3" />
+                </button>
+              )}
             </div>
           )}
         </div>

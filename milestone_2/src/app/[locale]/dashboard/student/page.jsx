@@ -75,6 +75,11 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const userMajor = currentUser?.major || 'Computer Science';
+  const [filters, setFilters] = useState({
+    jobType: '',
+    jobSetting: '',
+    isPaid: null,
+  });
 
   useEffect(() => {
     const userData = currentUser || JSON.parse(sessionStorage.getItem('userSession') || localStorage.getItem('userSession') || '{}');
@@ -97,6 +102,52 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
       setPersonalizedInternships(recommendationsWithRatings);
     }
   }, [currentUser]);
+
+  const internshipDataForFilters = personalizedInternships;
+  const uniqueJobTypes = [...new Set(internshipDataForFilters.map(i => i.type))].filter(Boolean);
+  const uniqueJobSettings = [...new Set(internshipDataForFilters.map(i => i.jobSetting))].filter(Boolean);
+
+  const filterSections = [
+    {
+      name: 'Job Type',
+      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      selected: filters.jobType || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Types',
+    },
+    {
+      name: 'Job Setting',
+      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      selected: filters.jobSetting || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Settings',
+    },
+    {
+      name: 'Payment Status',
+      options: [
+        { id: 'paid', title: 'Paid' },
+        { id: 'unpaid', title: 'Unpaid' }
+      ],
+      selected: filters.isPaid === true ? 'paid' : filters.isPaid === false ? 'unpaid' : 'all',
+      onChange: (value) => setFilters(prev => ({
+        ...prev,
+        isPaid: value === 'paid' ? true : value === 'unpaid' ? false : null
+      })),
+      resetLabel: 'All Payment Types',
+    }
+  ];
+
+  const filteredPersonalizedInternships = personalizedInternships.filter(internship => {
+    const term = searchTerm.toLowerCase();
+    return (
+      (searchTerm === '' ||
+        internship.title.toLowerCase().includes(term) ||
+        internship.company.toLowerCase().includes(term)) &&
+      (filters.jobType === '' || internship.type === filters.jobType) &&
+      (filters.jobSetting === '' || internship.jobSetting === filters.jobSetting) &&
+      (filters.isPaid === null || internship.paid === filters.isPaid)
+    );
+  });
 
   const RecommendedOpportunitiesInfoCard = () => (
     <div className="w-full mx-auto">
@@ -158,16 +209,29 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <RecommendedOpportunitiesInfoCard />
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search recommended internships..."
+          filterSections={filterSections}
+          marginTop={"mt-6"}
+          marginBottom="mb-0"
+          onClearFilters={() => {
+            setSearchTerm('');
+            setFilters({ jobType: '', jobSetting: '', isPaid: null });
+          }}
+        />
       </div>
       <InternshipList
         title=""
-        internships={personalizedInternships}
+        internships={filteredPersonalizedInternships}
         type={"recommended"}
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
         userMajor={userMajor}
         isRecommended={true}
+        customFilterPanel={<></>}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         activeTab={activeTab}
@@ -184,7 +248,11 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const [filters, setFilters] = useState({
     industry: '',
     duration: '',
-    isPaid: null
+    isPaid: null,
+    position: '',
+    jobType: '',
+    jobSetting: '',
+    company: '',
   });
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -196,6 +264,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const internshipDataForFilters = getRegularInternships();
   const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))];
   const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))];
+  const uniquePositions = [...new Set(internshipDataForFilters.map(internship => internship.title))];
+  const uniqueJobTypes = [...new Set(internshipDataForFilters.map(internship => internship.type))];
+  const uniqueJobSettings = [...new Set(internshipDataForFilters.map(internship => internship.jobSetting))];
+  const uniqueCompanies = [...new Set(internshipDataForFilters.map(internship => internship.company))];
 
   // Get internships based on active tab
   const baseInternships = activeTab === 'all'
@@ -224,9 +296,29 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       }));
     })();
 
-  // Apply additional filters (industry, duration, paid/unpaid)
+  // Apply additional filters (position, jobType, jobSetting, company, industry, duration, paid/unpaid)
   useEffect(() => {
     let result = [...baseInternships];
+
+    // Filter by position
+    if (filters.position) {
+      result = result.filter(internship => internship.title === filters.position);
+    }
+
+    // Filter by job type
+    if (filters.jobType) {
+      result = result.filter(internship => internship.type === filters.jobType);
+    }
+
+    // Filter by job setting
+    if (filters.jobSetting) {
+      result = result.filter(internship => internship.jobSetting === filters.jobSetting);
+    }
+
+    // Filter by company
+    if (filters.company) {
+      result = result.filter(internship => internship.company === filters.company);
+    }
 
     // Filter by industry
     if (filters.industry) {
@@ -239,11 +331,11 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     if (filters.duration) {
       result = result.filter(internship => {
         // Parse the duration value from the filter (e.g., "3 months" -> 3)
-        const filterDurationMatch = filters.duration.match(/(\d+)/);
+        const filterDurationMatch = filters.duration.match(/(\\d+)/);
         const filterDurationMonths = filterDurationMatch ? parseInt(filterDurationMatch[1]) : 0;
 
         // Parse the internship duration (e.g., "3 months", "6-8 months", etc.)
-        const internshipDurationMatch = internship.duration.match(/(\d+)/);
+        const internshipDurationMatch = internship.duration.match(/(\\d+)/);
         const internshipDurationMonths = internshipDurationMatch ? parseInt(internshipDurationMatch[1]) : 0;
 
         // If we have valid numbers for both, compare them
@@ -262,45 +354,130 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       );
     }
 
+    // Filter by start date
+    if (selectedDate) {
+      console.log('Selected date for filtering:', selectedDate);
+
+      let filterDateString;
+
+      // Handle different possible date formats from DatePicker
+      if (selectedDate instanceof Date) {
+        // If it's a Date object
+        filterDateString = selectedDate.toISOString().split('T')[0]; // "YYYY-MM-DD"
+      } else if (typeof selectedDate === 'string') {
+        // If it's already a string, try to parse and format it
+        const dateObj = new Date(selectedDate);
+        if (!isNaN(dateObj.getTime())) {
+          filterDateString = dateObj.toISOString().split('T')[0];
+        } else {
+          filterDateString = selectedDate; // Use as-is if it can't be parsed
+        }
+      } else {
+        console.warn('Unexpected date format:', selectedDate);
+        return true; // Skip filtering if format is unknown
+      }
+
+      console.log('Formatted filter date string:', filterDateString);
+
+      result = result.filter(internship => {
+        console.log(`Checking internship "${internship.title}" with startDate: "${internship.startDate}"`);
+        if (!internship.startDate) {
+          console.log(`No startDate for internship: ${internship.title}`);
+          return false;
+        }
+
+        // Normalize internship start date to YYYY-MM-DD format
+        let internshipDateString;
+        if (internship.startDate instanceof Date) {
+          internshipDateString = internship.startDate.toISOString().split('T')[0];
+        } else {
+          internshipDateString = internship.startDate.split('T')[0]; // Remove time part if present
+        }
+
+        console.log(`Comparing: filter="${filterDateString}" vs internship="${internshipDateString}"`);
+        const matches = internshipDateString === filterDateString;
+        console.log(`Match result: ${matches}`);
+        return matches;
+      });
+
+      console.log('Filtered internships by date:', result.length);
+    }
+
     setFilteredInternships(result);
-  }, [baseInternships, filters]);
+  }, [baseInternships, filters, selectedDate]);
 
   // Check if any filters are active
-  const hasActiveFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
+  const hasActiveFilters = filters.position || filters.jobType || filters.jobSetting || filters.company || filters.industry || filters.duration || filters.isPaid !== null || searchTerm || selectedDate;
 
   const clearAllFilters = () => {
     setFilters({
+      position: '',
+      jobType: '',
+      jobSetting: '',
+      company: '',
       industry: '',
       duration: '',
       isPaid: null
     });
     setSearchTerm('');
+    setSelectedDate(null);
   };
 
-  const customFilterSections = [
+  const filterSections = [
     {
-      title: "Industry",
-      options: uniqueIndustries.map(ind => ({ label: ind, value: ind })),
-      isSelected: (option) => filters.industry === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, industry: prev.industry === option.value ? '' : option.value }));
-      }
+      name: 'Position',
+      options: uniquePositions.map(pos => ({ id: pos, title: pos })),
+      selected: filters.position || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, position: value === 'all' ? '' : value })),
+      resetLabel: 'All Positions',
     },
     {
-      title: "Duration",
-      options: uniqueDurations.map(dur => ({ label: dur, value: dur })),
-      isSelected: (option) => filters.duration === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, duration: prev.duration === option.value ? '' : option.value }));
-      }
+      name: 'Job Type',
+      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      selected: filters.jobType || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Types',
     },
     {
-      title: "Payment",
-      options: [{ label: "Paid", value: true }, { label: "Unpaid", value: false }],
-      isSelected: (option) => filters.isPaid === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, isPaid: prev.isPaid === option.value ? null : option.value }));
-      }
+      name: 'Job Setting',
+      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      selected: filters.jobSetting || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Settings',
+    },
+    {
+      name: 'Company',
+      options: uniqueCompanies.map(company => ({ id: company, title: company })),
+      selected: filters.company || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, company: value === 'all' ? '' : value })),
+      resetLabel: 'All Companies',
+    },
+    {
+      name: 'Industry',
+      options: uniqueIndustries.map(ind => ({ id: ind, title: ind })),
+      selected: filters.industry || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, industry: value === 'all' ? '' : value })),
+      resetLabel: 'All Industries',
+    },
+    {
+      name: 'Duration',
+      options: uniqueDurations.map(dur => ({ id: dur, title: dur })),
+      selected: filters.duration || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, duration: value === 'all' ? '' : value })),
+      resetLabel: 'All Durations',
+    },
+    {
+      name: 'Payment Status',
+      options: [
+        { id: 'paid', title: 'Paid' },
+        { id: 'unpaid', title: 'Unpaid' }
+      ],
+      selected: filters.isPaid === true ? 'paid' : filters.isPaid === false ? 'unpaid' : 'all',
+      onChange: (value) => setFilters(prev => ({
+        ...prev,
+        isPaid: value === 'paid' ? true : value === 'unpaid' ? false : null
+      })),
+      resetLabel: 'All Payment Types',
     }
   ];
 
@@ -367,8 +544,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search internships by job title or company name ..."
           onClearFilters={clearAllFilters}
-          customFilterSections={customFilterSections}
-          primaryFilterName="Filters"
+          filterSections={filterSections}
           showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
@@ -384,9 +560,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
                 : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
                 }`}
             >
-              <span className={`w-3 h-3 rounded-full mr-2 ${
-                activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
-              }`}></span>
+              <span className={`w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
+                }`}></span>
               ALL
             </button>
             <button
@@ -396,9 +571,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
                 : 'bg-white text-gray-600 border border-gray-300 hover:text-pink-800 hover:border-[1px] hover:border-pink-800 hover:bg-pink-100'
                 }`}
             >
-              <span className={`w-3 h-3 rounded-full mr-2 ${
-                activeTab === 'recommended' ? 'bg-pink-800' : 'bg-gray-300'
-              }`}></span>
+              <span className={`w-3 h-3 rounded-full mr-2 ${activeTab === 'recommended' ? 'bg-pink-800' : 'bg-gray-300'
+                }`}></span>
               RECOMMENDED
             </button>
           </div>
@@ -432,7 +606,69 @@ function AppliedInternshipsView() {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedDate, setSelectedDate] = useState(null);
+  const [filters, setFilters] = useState({
+    status: 'all',
+    company: 'all',
+    position: 'all',
+    jobType: 'all',
+  });
   const userMajor = currentUser?.major || 'Computer Science';
+
+  const appliedInternships = getAppliedInternships();
+  const uniqueCompanies = [...new Set(appliedInternships.map(internship => internship.company))];
+  const uniquePositions = [...new Set(appliedInternships.map(internship => internship.title))];
+  const uniqueJobTypes = [...new Set(appliedInternships.map(internship => internship.type))];
+
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prev => ({ ...prev, [filterName]: value }));
+  };
+
+  const filterSections = [
+    {
+      name: 'Status',
+      options: [
+        { id: 'pending', title: 'Pending' },
+        { id: 'accepted', title: 'Accepted' },
+        { id: 'finalized', title: 'Finalized' },
+        { id: 'rejected', title: 'Rejected' }
+      ],
+      selected: filters.status,
+      onChange: (value) => handleFilterChange('status', value),
+      resetLabel: 'All Statuses',
+    },
+    {
+      name: 'Company',
+      options: uniqueCompanies.map(company => ({ id: company, title: company })),
+      selected: filters.company,
+      onChange: (value) => handleFilterChange('company', value),
+      resetLabel: 'All Companies',
+    },
+    {
+      name: 'Position',
+      options: uniquePositions.map(pos => ({ id: pos, title: pos })),
+      selected: filters.position,
+      onChange: (value) => handleFilterChange('position', value),
+      resetLabel: 'All Positions',
+    },
+    {
+      name: 'Job Type',
+      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      selected: filters.jobType,
+      onChange: (value) => handleFilterChange('jobType', value),
+      resetLabel: 'All Job Types',
+    }
+  ];
+
+  const filteredAppliedInternships = appliedInternships.filter(internship => {
+    const term = searchTerm.toLowerCase();
+    return (
+      (searchTerm === '' || internship.title.toLowerCase().includes(term) || internship.company.toLowerCase().includes(term)) &&
+      (filters.status === 'all' || internship.status === filters.status) &&
+      (filters.company === 'all' || internship.company === filters.company) &&
+      (filters.position === 'all' || internship.title === filters.position) &&
+      (filters.jobType === 'all' || internship.type === filters.jobType)
+    );
+  });
 
   // Mock statuses for AppliedInternshipsView
   const APPLIED_INTERNSHIP_STATUSES = {
@@ -535,14 +771,27 @@ function AppliedInternshipsView() {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <AppliedInternshipsInfoCard />
+
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search applications by company or position..."
+          filterSections={filterSections}
+          showDatePicker={true}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+          marginBottom='mt-4'
+          onClearFilters={() => setFilters({ status: 'all', company: 'all', position: 'all', jobType: 'all' })}
+        />
       </div>
       <InternshipList
         title=""
-        internships={getAppliedInternships()}
+        internships={filteredAppliedInternships}
         type="applied"
         statuses={['pending', 'accepted', 'finalized', 'rejected']}
         showSidebar={true}
         userMajor={userMajor}
+        customFilterPanel={<></>}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         activeTab={activeTab}
@@ -559,7 +808,57 @@ function MyInternshipsView({ onTriggerReportCreate }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedDate, setSelectedDate] = useState(null);
+  const [filters, setFilters] = useState({
+    status: 'all',
+    company: 'all',
+    position: 'all'
+  });
   const userMajor = currentUser?.major || 'Computer Science';
+
+  const myInternships = getMyInternships();
+  const uniqueCompanies = [...new Set(myInternships.map(internship => internship.company))];
+  const uniquePositions = [...new Set(myInternships.map(internship => internship.title))];
+
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prev => ({ ...prev, [filterName]: value }));
+  };
+
+  const filterSections = [
+    {
+      name: 'Status',
+      options: [
+        { id: 'current', title: 'Current' },
+        { id: 'completed', title: 'Completed' }
+      ],
+      selected: filters.status,
+      onChange: (value) => handleFilterChange('status', value),
+      resetLabel: 'All Statuses',
+    },
+    {
+      name: 'Company',
+      options: uniqueCompanies.map(company => ({ id: company, title: company })),
+      selected: filters.company,
+      onChange: (value) => handleFilterChange('company', value),
+      resetLabel: 'All Companies',
+    },
+    {
+      name: 'Position',
+      options: uniquePositions.map(pos => ({ id: pos, title: pos })),
+      selected: filters.position,
+      onChange: (value) => handleFilterChange('position', value),
+      resetLabel: 'All Positions',
+    },
+  ];
+
+  const filteredMyInternships = myInternships.filter(internship => {
+    const term = searchTerm.toLowerCase();
+    return (
+      (searchTerm === '' || internship.title.toLowerCase().includes(term) || internship.company.toLowerCase().includes(term)) &&
+      (filters.status === 'all' || internship.status === filters.status) &&
+      (filters.company === 'all' || internship.company === filters.company) &&
+      (filters.position === 'all' || internship.title === filters.position)
+    );
+  });
 
   // Mock statuses for MyInternshipsView
   const MY_INTERNSHIP_STATUSES = {
@@ -648,16 +947,28 @@ function MyInternshipsView({ onTriggerReportCreate }) {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <MyInternshipsInfoCard />
+
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search internships by company or position..."
+          filterSections={filterSections}
+          showDatePicker={true}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+          marginBottom='mb-2'
+          onClearFilters={() => setFilters({ status: 'all', company: 'all', position: 'all' })}
+        />
       </div>
       <InternshipList
         title=""
-        internships={getMyInternships()}
-        type="my"
-        statuses={['current', 'completed', 'evaluated']}
+        internships={filteredMyInternships}
+        type="mine"
         onTriggerReportCreate={onTriggerReportCreate}
         showSidebar={true}
-        showDatePicker={true}
         userMajor={userMajor}
+        statuses={['current', 'completed', 'evaluated']}
+        customFilterPanel={<></>}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         activeTab={activeTab}
@@ -670,6 +981,38 @@ function MyInternshipsView({ onTriggerReportCreate }) {
 }
 
 function NotificationsView() {
+  const [filters, setFilters] = useState({ category: 'all', read: 'all' });
+
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prev => ({ ...prev, [filterName]: value }));
+  };
+
+  const filterSections = [
+    {
+      name: 'Category',
+      options: [
+        { id: 'Application', title: 'Application' },
+        { id: 'Report', title: 'Report' },
+        { id: 'Workshop', title: 'Workshop' },
+        { id: 'Deadline', title: 'Deadline' },
+        { id: 'Opportunity', title: 'Opportunity' }
+      ],
+      selected: filters.category,
+      onChange: (value) => handleFilterChange('category', value),
+      resetLabel: 'All Categories'
+    },
+    {
+      name: 'Status',
+      options: [
+        { id: 'read', title: 'Read' },
+        { id: 'unread', title: 'Unread' }
+      ],
+      selected: filters.read,
+      onChange: (value) => handleFilterChange('read', value),
+      resetLabel: 'All'
+    }
+  ];
+
   // Define the Notifications Info Card similar to other pages
   const NotificationsInfoCard = () => (
     <div className="w-full mx-auto">
@@ -774,8 +1117,12 @@ function NotificationsView() {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <NotificationsInfoCard />
+        {/* <ApplicationsFilterBar
+          filterSections={filterSections}
+          onClearFilters={() => setFilters({ category: 'all', read: 'all' })}
+        /> */}
       </div>
-      <NotificationsList />
+      <NotificationsList filters={filters} hideFilters={true} />
     </div>
   );
 }
@@ -1206,6 +1553,25 @@ function MyReportsView() {
 }
 
 function MyEvaluationsView() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedRating, setSelectedRating] = useState('all');
+
+  const filterSections = [
+    {
+      name: 'Rating',
+      options: [
+        { id: '5', title: '5 Stars' },
+        { id: '4', title: '4 Stars' },
+        { id: '3', title: '3 Stars' },
+        { id: '2', title: '2 Stars' },
+        { id: '1', title: '1 Star' }
+      ],
+      selected: selectedRating,
+      onChange: setSelectedRating,
+      resetLabel: 'All Ratings',
+    }
+  ];
+
   // Define the Evaluations Info Card in the same way as other pages
   const EvaluationsInfoCard = () => (
     <div className="w-full mx-auto">
@@ -1264,8 +1630,21 @@ function MyEvaluationsView() {
     <div className="min-h-screen bg-[#f4fafd] py-10 px-4">
       <div className="px-4 pt-6">
         <EvaluationsInfoCard />
+
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search evaluations by student or company name..."
+
+          filterSections={filterSections}
+        />
       </div>
-      <EvaluationsDashboard evaluations={MOCK_EVALUATIONS} stakeholder={"student"} />
+      <EvaluationsDashboard
+        evaluations={MOCK_EVALUATIONS}
+        stakeholder={"student"}
+        searchTerm={searchTerm}
+        selectedRating={selectedRating}
+      />
     </div>
   );
 }

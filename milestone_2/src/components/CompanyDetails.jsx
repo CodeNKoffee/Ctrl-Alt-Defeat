@@ -52,45 +52,73 @@ export default function CompanyDetails({
       <AnimatePresence mode="wait">
         {feedback && (
           <motion.div
-            className="companydetails-feedback-overlay"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000,
+              background: 'rgba(42, 95, 116, 0.18)'
+            }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            style={{ background: 'rgba(42, 95, 116, 0.18)' }}
           >
             <motion.div
+              style={{
+                background: 'white',
+                padding: '25px',
+                borderRadius: '15px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+                maxWidth: '400px'
+              }}
               initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.7, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              className="companydetails-feedback-content"
-              style={{ minWidth: 0 }}
             >
               <motion.div
+                style={{
+                  marginBottom: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
                 initial={{ scale: 0.5 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-                className="mb-3"
               >
                 <div
-                  className={`flex items-center justify-center rounded-full mx-auto mb-1 shadow-lg ${feedback === 'accepted' ? 'bg-green-500' : 'bg-red-500'}`}
-                  style={{ width: 60, height: 60 }}
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    background: feedback === 'accepted' ? '#318FA8' : '#D32F2F',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
                 >
                   <FontAwesomeIcon
                     icon={feedback === 'accepted' ? faCheck : faTimes}
-                    className="companydetails-feedback-icon"
-                    style={{ fontSize: 32 }}
+                    style={{ fontSize: 32, color: 'white' }}
                   />
                 </div>
               </motion.div>
-              <div className="companydetails-feedback-title">
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
                 {feedback === 'accepted' ? 'Accepted!' : 'Rejected!'}
               </div>
-              <div className="companydetails-feedback-message">
+              <div style={{ color: '#333', textAlign: 'center' }}>
                 {feedback === 'accepted'
-                  ? (<span>This company has been <span className="companydetails-feedback-approved">approved</span> and added to your list.</span>)
-                  : (<span>This company has been <span className="companydetails-feedback-rejected">rejected</span> and removed from your list.</span>)}
+                  ? 'This company has been approved and added to your list.'
+                  : 'This company has been rejected and removed from your list.'}
               </div>
             </motion.div>
           </motion.div>

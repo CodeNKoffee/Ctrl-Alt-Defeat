@@ -114,7 +114,7 @@ export default function InternshipList({
     // For applied internships
     pending: {
       label: "PENDING",
-      color:"bg-white text-gray-600 border border-gray-300 hover:bg-yellow-100 hover:text-yellow-800 hover:border-yellow-400",
+      color: "bg-white text-gray-600 border border-gray-300 hover:bg-yellow-100 hover:text-yellow-800 hover:border-yellow-400",
       badgeColor: "bg-yellow-600",
     },
     accepted: {
@@ -368,9 +368,8 @@ export default function InternshipList({
                       : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
                       }`}
                   >
-                    <span className={`inline-block w-3 h-3 rounded-full mr-2 ${
-                      selectedStatus === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
-                    }`}></span>
+                    <span className={`inline-block w-3 h-3 rounded-full mr-2 ${selectedStatus === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
+                      }`}></span>
                     ALL
                   </button>
 
@@ -381,12 +380,11 @@ export default function InternshipList({
                       onClick={() => setSelectedStatus(status)}
                       className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${selectedStatus === status
                         ? STATUS_CONFIG[status].color
-                        :  STATUS_CONFIG_HOVER[status].color
+                        : STATUS_CONFIG_HOVER[status].color
                         }`}
                     >
-                      <span className={`inline-block w-3 h-3 rounded-full mr-2 ${
-                        selectedStatus === status ? STATUS_CONFIG[status].badgeColor : 'bg-gray-300'
-                      }`}></span>
+                      <span className={`inline-block w-3 h-3 rounded-full mr-2 ${selectedStatus === status ? STATUS_CONFIG[status].badgeColor : 'bg-gray-300'
+                        }`}></span>
                       {STATUS_CONFIG[status].label}
                     </button>
                   ))}
@@ -404,12 +402,14 @@ export default function InternshipList({
                 {/* Internship List */}
                 <div className="space-y-3 relative">
                   {filteredInternships.length === 0 ? (
-                    <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-                      <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                        <FontAwesomeIcon icon={faTimes} className="text-gray-400 text-xl" />
+                    <div className="p-16 text-center">
+                      <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                        <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
                       </div>
-                      <h3 className="text-lg font-medium text-gray-700 mb-1">No internships found</h3>
-                      <p className="text-gray-500 text-sm">Try adjusting your filters or search terms</p>
+                      <p className="text-gray-500 font-medium">No internships found matching your criteria</p>
+                      <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
                     </div>
                   ) : (
                     filteredInternships.map(internship => (

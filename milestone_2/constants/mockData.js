@@ -445,7 +445,7 @@ export const facultyScadReports = {
     body: 'During my internship at Web Solutions Ltd., I worked with the frontend development team on various client projects. The company specializes in creating custom web applications for businesses across different industries.\n\nMy main responsibilities included implementing UI components according to design specifications, fixing cross-browser compatibility issues, and optimizing application performance. I collaborated closely with designers and backend developers to ensure seamless integration of all system components.\n\nA significant project I contributed to was the redesign of a healthcare provider\'s patient portal. I implemented responsive components that improved accessibility and user experience, particularly for users with disabilities. This project taught me the importance of inclusive design and adherence to WCAG guidelines.\n\nThroughout the internship, I gained proficiency in:\n- React.js and state management with Redux\n- Styled Components and CSS-in-JS approaches\n- Frontend testing with Jest and React Testing Library\n- Webpack configuration and optimization\n- Client-side performance optimization techniques\n\nThe internship also helped me develop soft skills such as client communication, requirement analysis, and presenting technical concepts to non-technical stakeholders. I learned to balance aesthetic design with technical constraints, which is crucial for successful frontend development.\n\nThe knowledge from my Human-Computer Interaction and Web Development courses proved invaluable during this experience. Understanding usability principles and web standards helped me contribute meaningful improvements to projects right from the start of my internship.',
     highlights: [
       { start: 52, end: 148, color: '#D4F1F9' }, // "user interface design and implementation using modern web technologies like React and TailwindCSS"
-      { start: 412, end: 483, color: '#FFDBF2' }, // "optimizing application performance. I collaborated closely with designers"
+      { start: 412, end: 483, color: '#FFDBF2' }, // "optimizing application performance. I collaborated with designers"
       { start: 557, end: 642, color: '#FFFBC9' }  // "responsive components that improved accessibility and user experience, particularly"
     ],
     comments: [
@@ -743,7 +743,7 @@ export const mockCompanyReviews = [
 export const MOCK_EVALUATIONS = [
   {
     studentName: "Layla Khaled",
-    major: "Computer Science",
+    major: "Management",
     companyName: "Juhayna Food Industries",
     supervisorName: "Dr. Indra",
     supervisorEmail: "indra@juhayna.com",
@@ -784,8 +784,8 @@ export const MOCK_EVALUATIONS = [
     status: "submitted"
   },
   {
-    studentName: "Salma Tarek",
-    major: "Computer Science",
+    studentName: "John Magdy",
+    major: "Management",
     companyName: "Nestlé Egypt",
     supervisorName: "Mr. Ahmed Said",
     supervisorEmail: "ahmed.said@eg.nestle.com",
@@ -794,12 +794,12 @@ export const MOCK_EVALUATIONS = [
     rating: 5,
     startDate: "2024-06-15",
     endDate: "2024-09-01",
-    avatar: "/images/girl1.png",
+    avatar: "/images/boy2.png",
     status: "saved"
   },
   {
-    studentName: "Salma Tarek",
-    major: "Computer Science",
+    studentName: "Rana Tarek",
+    major: "Management",
     companyName: "Nestlé Egypt",
     supervisorName: "Mr. Ahmed Said",
     supervisorEmail: "ahmed.said@eg.nestle.com",
@@ -812,8 +812,8 @@ export const MOCK_EVALUATIONS = [
     status: "saved"
   },
   {
-    studentName: "Salma Tarek",
-    major: "Computer Science",
+    studentName: "Selim Hatem",
+    major: "Management",
     companyName: "Nestlé Egypt",
     supervisorName: "Mr. Ahmed Said",
     supervisorEmail: "ahmed.said@eg.nestle.com",
@@ -822,7 +822,7 @@ export const MOCK_EVALUATIONS = [
     rating: 2,
     startDate: "2024-06-15",
     endDate: "2024-09-01",
-    avatar: "/images/girl1.png",
+    avatar: "/images/boy1.png",
     status: "saved"
   }
 ];
@@ -863,6 +863,8 @@ export const sampleWorkshops = [
     id: 1,
     title: "Introduction to Machine Learning",
     date: "2023-10-15",
+    startDate: "2023-10-15T10:00:00",
+    endDate: "2023-10-15T12:00:00",
     time: "10:00 AM - 12:00 PM",
     location: "Tech Building, Room 101",
     description: "Kickstart your journey into machine learning! In this beginner-friendly session, you'll explore key ML concepts, algorithms like decision trees and k-nearest neighbors, and see live demos of real-world applications in healthcare, finance, and marketing.",
@@ -878,6 +880,8 @@ export const sampleWorkshops = [
     id: 2,
     title: "Web Development Bootcamp",
     date: "2023-10-20",
+    startDate: "2023-10-20T13:00:00",
+    endDate: "2023-10-20T16:00:00",
     time: "1:00 PM - 4:00 PM",
     location: "Innovation Hub, Room 202",
     description: "Join us for a hands-on workshop where you'll build a modern web app from scratch using HTML, CSS, JavaScript, and React. You'll also get introduced to backend concepts with Node.js.",
@@ -893,6 +897,8 @@ export const sampleWorkshops = [
     id: 3,
     title: "Data Science with Python",
     date: "2023-10-25",
+    startDate: "2023-10-25T09:00:00",
+    endDate: "2023-10-25T11:00:00",
     time: "9:00 AM - 11:00 AM",
     location: "Analytics Lab, Room 303",
     description: "Dive into data science using Python! Learn about data manipulation with pandas, data visualization with matplotlib, and machine learning with scikit-learn through practical exercises.",
@@ -908,6 +914,8 @@ export const sampleWorkshops = [
     id: 4,
     title: "UI/UX Design Principles",
     date: "2023-10-30",
+    startDate: "2023-10-30T14:00:00",
+    endDate: "2023-10-30T17:00:00",
     time: "2:00 PM - 5:00 PM",
     location: "Design Studio, Room 404",
     description: "Master the principles of great design! This session covers user research, wireframing, prototyping, and usability testing with tools like Figma and Adobe XD.",
@@ -923,6 +931,8 @@ export const sampleWorkshops = [
     id: 5,
     title: "Digital Marketing Strategies",
     date: "2023-11-05",
+    startDate: "2023-11-05T10:00:00",
+    endDate: "2023-11-05T12:00:00",
     time: "10:00 AM - 12:00 PM",
     location: "Business Center, Room 505",
     description: "Explore the latest trends and tools in digital marketing, including SEO, content marketing, paid ads, and analytics. You'll leave with actionable strategies to boost your brand.",
@@ -938,6 +948,8 @@ export const sampleWorkshops = [
     id: 6,
     title: "Cybersecurity Essentials",
     date: "2023-11-10",
+    startDate: "2023-11-10T13:00:00",
+    endDate: "2023-11-10T15:00:00",
     time: "1:00 PM - 3:00 PM",
     location: "IT Security Lab, Room 606",
     description: "Learn how to secure your digital assets! This workshop covers password management, phishing detection, encryption basics, and security best practices.",
@@ -953,6 +965,8 @@ export const sampleWorkshops = [
     id: 7,
     title: "Introduction to Web Design",
     date: "2023-11-15",
+    startDate: "2023-11-15T10:00:00",
+    endDate: "2023-11-15T12:00:00",
     time: "10:00 AM - 12:00 PM",
     location: "Online",
     description: "Learn the basics of web design and user experience.",
@@ -968,6 +982,8 @@ export const sampleWorkshops = [
     id: 8,
     title: "Advanced React Techniques",
     date: "2023-11-16",
+    startDate: "2023-11-16T14:00:00",
+    endDate: "2023-11-16T16:00:00",
     time: "2:00 PM - 4:00 PM",
     location: "Online",
     description: "Deep dive into React hooks and performance optimization.",
@@ -983,6 +999,8 @@ export const sampleWorkshops = [
     id: 9,
     title: "Introduction to Web Fundamentals",
     date: "2023-11-10",
+    startDate: "2023-11-10T13:00:00",
+    endDate: "2023-11-10T15:00:00",
     time: "1:00 PM - 3:00 PM",
     location: "Online",
     description: "Learn the basics of web design and user experience.",
@@ -998,6 +1016,8 @@ export const sampleWorkshops = [
     id: 10,
     title: "Advanced Next.js Techniques",
     date: "2023-11-10",
+    startDate: "2023-11-10T13:00:00",
+    endDate: "2023-11-10T15:00:00",
     time: "1:00 PM - 3:00 PM",
     location: "Prerecorded",
     description: "Learn the basics of Next.js and user experience.",
@@ -1013,6 +1033,8 @@ export const sampleWorkshops = [
     id: 11,
     title: "Introduction to Web Fundamentals",
     date: "2023-11-10",
+    startDate: "2023-11-10T17:00:00",
+    endDate: "2023-11-10T18:00:00",
     time: "5:00 PM - 6:00 PM",
     location: "Prerecorded",
     description: "Learn the basics of web design and user experience.",
@@ -1028,6 +1050,8 @@ export const sampleWorkshops = [
     id: 12,
     title: "Advanced React Hooks",
     date: "2023-11-10",
+    startDate: "2023-11-10T16:00:00",
+    endDate: "2023-11-10T18:00:00",
     time: "4:00 PM - 6:00 PM",
     location: "Prerecorded",
     description: "Master React Hooks and build efficient, powerful components.",
@@ -1915,7 +1939,6 @@ export const mockStudents = [
       }
     ]
   }
-
 ];
 
 export const MOCK_COMPANY_EVALUATIONS = [

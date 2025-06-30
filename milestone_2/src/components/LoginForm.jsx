@@ -8,7 +8,6 @@ import FloatingLabelInput from "@/components/FloatingLabelInput";
 import { loginValidationSchema } from "../../utils/validationSchemas";
 
 export default function LoginForm({ userType, onSubmit }) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [initialValues, setInitialValues] = useState({
     email: '',
@@ -34,14 +33,26 @@ export default function LoginForm({ userType, onSubmit }) {
 
   const formikRef = React.useRef(null);
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      setIsSubmitting(true);
       await onSubmit(values);
     } catch (error) {
-      console.error('Login error:', error);
+      if (error.message === 'Invalid email or password') {
+        // Set error message for both fields to ensure red underline.
+        setErrors({
+          email: 'Invalid email or password',
+          password: 'Invalid email or password'
+        });
+
+        // Mark both fields as touched so the red style is applied.
+        if (formikRef.current) {
+          formikRef.current.setFieldTouched('email', true, false);
+          formikRef.current.setFieldTouched('password', true, false);
+        }
+      } else {
+        console.error('Login error:', error);
+      }
     } finally {
-      setIsSubmitting(false);
       setSubmitting(false);
     }
   };
@@ -68,6 +79,7 @@ export default function LoginForm({ userType, onSubmit }) {
               label="Email *"
               errors={errors}
               touched={touched}
+              hideErrorMessage={true}
             />
           </div>
 

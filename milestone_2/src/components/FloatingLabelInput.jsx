@@ -5,7 +5,7 @@ import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-export default function FloatingLabelInput({ name, type, label, errors, touched, tooltip }) {
+export default function FloatingLabelInput({ name, type, label, errors, touched, tooltip, hideErrorMessage = false }) {
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
 
@@ -58,7 +58,7 @@ export default function FloatingLabelInput({ name, type, label, errors, touched,
           </>
         )}
       </Field>
-      {errors[name] && touched[name] && (
+      {errors[name] && touched[name] && !hideErrorMessage && (
         <div className="text-red-500 text-sm mt-1">{errors[name]}</div>
       )}
     </div>

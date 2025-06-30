@@ -46,19 +46,31 @@ export default function AssessmentList() {
       <div className="relative">
         {/* Assessment grid - adjusted spacing when sidebar is open */}
         <div className={`transition-all duration-300 ease-in-out ${selectedAssessment ? "md:pr-[calc(33%+24px)] lg:pr-[calc(33%+32px)]" : "pr-0"}`}>
-          <div className={`grid ${getGridColumns()} gap-6`}>
-            {mockAssessments.map((assessment) => (
-              <div key={assessment.id} className="flex justify-center">
-                <div className={`${getCardContainerClass()}`}>
-                  <AssessmentCard
-                    assessment={assessment}
-                    onClick={setSelectedAssessment}
-                    className="w-full"
-                  />
-                </div>
+          {mockAssessments.length === 0 ? (
+            <div className="p-16 text-center">
+              <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
               </div>
-            ))}
-          </div>
+              <p className="text-gray-500 font-medium">No assessments found matching your criteria</p>
+              <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
+            </div>
+          ) : (
+            <div className={`grid ${getGridColumns()} gap-6`}>
+              {mockAssessments.map((assessment) => (
+                <div key={assessment.id} className="flex justify-center">
+                  <div className={`${getCardContainerClass()}`}>
+                    <AssessmentCard
+                      assessment={assessment}
+                      onClick={setSelectedAssessment}
+                      className="w-full"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Fixed sidebar - ensure it doesn't overlap with content */}

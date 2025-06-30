@@ -38,7 +38,9 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
       background: "#E8F4F8"
     }
   });
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // Feedback state for successful upload - copied from UploadDocuments.jsx
+  const [feedback, setFeedback] = useState(null);
 
   // Update initial values when student data changes
   useEffect(() => {
@@ -132,11 +134,15 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
     }
 
     onProfileUpdate(updatedProfileData);
-    setShowSuccessModal(true);
+
+    // Show success feedback - copied from UploadDocuments.jsx
+    setFeedback('success');
+
     setTimeout(() => {
-      setShowSuccessModal(false);
-      onClose();
-    }, 1500);
+      setFeedback(null);
+      console.log('Profile successfully updated (simulated).');
+      if (onClose) onClose(true); // Indicate success
+    }, 400); // Reduced from 1400ms to 800ms for faster response
   };
 
   // Function to render star rating input
@@ -345,14 +351,14 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                               )}
                             </div>
                           ))}
-                              <button
-                          type="button"
-                          className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                          <button
+                            type="button"
+                            className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
                           flex items-center justify-center focus:outline-none focus:ring-2
                           bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
                           transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
-                               onClick={() => push({ trait: "", rating: 3 })}
-                       >   <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Trait </button>
+                            onClick={() => push({ trait: "", rating: 3 })}
+                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Trait </button>
                         </>
                       )}
                     </FieldArray>
@@ -418,14 +424,14 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                               </div>
                             ))}
                           </div>
-                            <button
-                          type="button"
-                          className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                          <button
+                            type="button"
+                            className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
                           flex items-center justify-center focus:outline-none focus:ring-2
                           bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
                           transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border w-fit"
-                             onClick={() => push("")}
-                       >   <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Skill </button>
+                            onClick={() => push("")}
+                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Skill </button>
                         </div>
                       )}
                     </FieldArray>
@@ -458,25 +464,25 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                   rows="3"
                                 />
                               </div>
-                               <button
+                              <button
                                 type="button"
                                 className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
                                 flex items-center justify-center focus:outline-none focus:ring-2
                                 bg-red-600 text-white hover:bg-red-700 focus:ring-red-500
                                 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                 onClick={() => remove(index)}
-                                ><FontAwesomeIcon icon={faTrash} className="mr-2"/> Remove Job Interest</button>
+                              ><FontAwesomeIcon icon={faTrash} className="mr-2" /> Remove Job Interest</button>
                               <hr className="section-divider" />
                             </div>
                           ))}
-                         <button
-                          type="button"
-                          className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
+                          <button
+                            type="button"
+                            className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
                           flex items-center justify-center focus:outline-none focus:ring-2
                           bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
                           transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                             onClick={() => push({ title: "", description: "" })}
-                       >   <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Job Interest </button>
+                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Job Interest </button>
                         </>
                       )}
                     </FieldArray>
@@ -542,19 +548,19 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
                                 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                         onClick={() => pushResp("")}
-                                       >   <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Responsibilty </button>
+                                      >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Responsibilty </button>
                                     </>
                                   )}
                                 </FieldArray>
                               </div>
-                               <button
+                              <button
                                 type="button"
                                 className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
                                 flex items-center justify-center focus:outline-none focus:ring-2
                                 bg-red-600 text-white hover:bg-red-700 focus:ring-red-500
                                 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                 onClick={() => remove(index)}
-                                ><FontAwesomeIcon icon={faTrash} className="mr-2"/> Remove Experience</button>
+                              ><FontAwesomeIcon icon={faTrash} className="mr-2" /> Remove Experience</button>
                               <hr className="section-divider" />
                             </div>
                           ))}
@@ -619,7 +625,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 bg-red-600 text-white hover:bg-red-700 focus:ring-red-500
                                 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                 onClick={() => remove(index)}
-                                ><FontAwesomeIcon icon={faTrash} className="mr-2"/> Remove Internship</button>
+                              ><FontAwesomeIcon icon={faTrash} className="mr-2" /> Remove Internship</button>
                               <hr className="section-divider" />
                             </div>
                           ))}
@@ -630,9 +636,9 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
                                 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                             onClick={() => push({ title: "", company: "", period: "", description: "" })}
-        
-                        
-                          >   <FontAwesomeIcon icon={faPlus} className="mr-2"/> Add Internship</button>
+
+
+                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Internship</button>
                         </>
                       )}
                     </FieldArray>
@@ -652,8 +658,10 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
           )}
         </Formik>
       </div>
+
+      {/* Feedback overlay - copied exactly from UploadDocuments.jsx */}
       <AnimatePresence>
-        {showSuccessModal && (
+        {feedback && (
           <motion.div
             style={{
               position: 'fixed',
@@ -665,8 +673,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
               alignItems: 'center',
               justifyContent: 'center',
               zIndex: 10000,
-              background: 'rgba(42, 95, 116, 0.18)',
-              backdropFilter: 'blur(2px)'
+              background: 'rgba(42, 95, 116, 0.18)'
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -720,7 +727,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                 Success!
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
-                Your changes have been saved successfully.
+                Your profile has been successfully updated.
               </div>
             </motion.div>
           </motion.div>

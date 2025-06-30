@@ -22,6 +22,7 @@ import { getRegularInternships, getRecommendedInternshipsForStudent, getRecommen
 import InternshipList from '../../../../components/shared/InternshipList';
 import ApplicationsFilterBar from '@/components/shared/ApplicationsFilterBar';
 import CustomButton from '@/components/shared/CustomButton';
+import { sampleWorkshops } from '../../../../../constants/mockData';
 
 function ScadDashboardView() {
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -128,20 +129,22 @@ function ScadDashboardView() {
     </div>
   );
 
-  // Custom filter sections for ApplicationsFilterBar
-  const customFilterSections = [
+  // Filter sections config for ApplicationsFilterBar (Industry & Size)
+  const companyFilterSections = [
     {
-      title: 'Industry',
-      options: [{ label: 'All Industries', value: 'all' }, ...uniqueIndustries.map(i => ({ label: i.title, value: i.id }))],
-      isSelected: (option) => selectedIndustry === option.value,
-      onSelect: (option) => setSelectedIndustry(option.value)
+      name: 'Industry',
+      options: [...uniqueIndustries],
+      selected: selectedIndustry,
+      onChange: (value) => setSelectedIndustry(value),
+      resetLabel: 'All Industries',
     },
     {
-      title: 'Size',
-      options: [{ label: 'All Sizes', value: 'all' }, ...uniqueSizes.map(s => ({ label: s.title, value: s.id }))],
-      isSelected: (option) => selectedSize === option.value,
-      onSelect: (option) => setSelectedSize(option.value)
-    }
+      name: 'Size',
+      options: [...uniqueSizes],
+      selected: selectedSize,
+      onChange: (value) => setSelectedSize(value),
+      resetLabel: 'All Sizes',
+    },
   ];
 
   return (
@@ -153,7 +156,7 @@ function ScadDashboardView() {
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search companies by name or industry ..."
           onClearFilters={() => { setSearchTerm(''); setSelectedIndustry('all'); setSelectedSize('all'); }}
-          customFilterSections={customFilterSections}
+          filterSections={companyFilterSections}
         />
       </div>
       <CompanyTable companies={filteredCompanies} />
@@ -164,29 +167,58 @@ function ScadDashboardView() {
 function StudentListView({ sidebarExpanded }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMajor, setSelectedMajor] = useState('all');
+  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [selectedSemester, setSelectedSemester] = useState('all');
 
   // Get unique majors from mockStudents
   const uniqueMajors = [
     ...new Set(mockStudents.map(student => student.major))
   ].filter(Boolean).map(major => ({ id: major, title: major }));
 
+  const uniqueStatuses = [
+    ...new Set(mockStudents.map(student => student.status))
+  ].filter(Boolean).map(status => ({ id: status, title: status }));
+
+  const uniqueSemesters = [
+    ...new Set(mockStudents.map(student => student.semester))
+  ].filter(Boolean).map(sem => ({ id: sem, title: `Semester ${sem}` }));
+
   // Filter students by search and major
   const filteredStudents = mockStudents.filter(student => {
     const matchesSearch =
       student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      student.major?.toLowerCase().includes(searchTerm.toLowerCase());
+      student.major?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.semester?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesMajor = selectedMajor === 'all' || student.major === selectedMajor;
-    return matchesSearch && matchesMajor;
+    const matchesStatus = selectedStatus === 'all' || student.status === selectedStatus;
+    const matchesSemester = selectedSemester === 'all' || student.semester === selectedSemester;
+    return matchesSearch && matchesMajor && matchesStatus && matchesSemester;
   });
 
-  const customFilterSections = [
+  const studentFilterSections = [
     {
-      title: 'Major',
-      options: [{ label: 'All Majors', value: 'all' }, ...uniqueMajors.map(m => ({ label: m.title, value: m.id }))],
-      isSelected: (option) => selectedMajor === option.value,
-      onSelect: (option) => setSelectedMajor(option.value)
-    }
+      name: 'Major',
+      options: [...uniqueMajors],
+      selected: selectedMajor,
+      onChange: (value) => setSelectedMajor(value),
+      resetLabel: 'All Majors',
+    },
+    {
+      name: 'Status',
+      options: [...uniqueStatuses],
+      selected: selectedStatus,
+      onChange: (value) => setSelectedStatus(value),
+      resetLabel: 'All Statuses',
+    },
+    {
+      name: 'Semester',
+      options: [...uniqueSemesters],
+      selected: selectedSemester,
+      onChange: (value) => setSelectedSemester(value),
+      resetLabel: 'All Semesters',
+    },
   ];
 
   const StudentDirectoryManagementInfoCard = () => (
@@ -270,8 +302,8 @@ function StudentListView({ sidebarExpanded }) {
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search students by name, email, or major ..."
-          onClearFilters={() => { setSearchTerm(''); setSelectedMajor('all'); }}
-          customFilterSections={customFilterSections}
+          onClearFilters={() => { setSearchTerm(''); setSelectedMajor('all'); setSelectedStatus('all'); setSelectedSemester('all'); }}
+          filterSections={studentFilterSections}
         />
       </div>
       <StudentList students={filteredStudents} sidebarExpanded={sidebarExpanded} />
@@ -514,14 +546,14 @@ function ReportsView() {
                     </span>
                   </div>
                   <div className="flex flex-col">
-                     <CustomButton
-                        variant="primary"
-                        text={`Export as PDF`}
-                        icon={faFilePdf}
-                        //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
-                        onClick={handleExportPDF}
-                        width="w-60"
-                      />            
+                    <CustomButton
+                      variant="primary"
+                      text={`Export as PDF`}
+                      icon={faFilePdf}
+                      //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
+                      onClick={handleExportPDF}
+                      width="w-60"
+                    />
                   </div>
                 </div>
               </div>
@@ -565,8 +597,13 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const userMajor = currentUser?.major || 'Computer Science';
 
   const internshipDataForFilters = getRegularInternships();
-  const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))];
-  const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))];
+  const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))]
+    .filter(Boolean)
+    .map(ind => ({ id: ind, title: ind }));
+
+  const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))]
+    .filter(Boolean)
+    .map(dur => ({ id: dur, title: dur }));
 
   // Get internships based on active tab
   const baseInternships = activeTab === 'all'
@@ -660,31 +697,37 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     setSearchTerm('');
   };
 
-  const customFilterSections = [
+  const filterSectionsConfig = [
     {
-      title: "Industry",
-      options: uniqueIndustries.map(ind => ({ label: ind, value: ind })),
-      isSelected: (option) => filters.industry === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, industry: prev.industry === option.value ? '' : option.value }));
-      }
+      name: 'Industry',
+      options: [...uniqueIndustries],
+      selected: filters.industry || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, industry: value === 'all' ? '' : value })),
+      resetLabel: 'All Industries',
     },
     {
-      title: "Duration",
-      options: uniqueDurations.map(dur => ({ label: dur, value: dur })),
-      isSelected: (option) => filters.duration === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, duration: prev.duration === option.value ? '' : option.value }));
-      }
+      name: 'Duration',
+      options: [...uniqueDurations],
+      selected: filters.duration || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, duration: value === 'all' ? '' : value })),
+      resetLabel: 'All Durations',
     },
     {
-      title: "Payment",
-      options: [{ label: "Paid", value: true }, { label: "Unpaid", value: false }],
-      isSelected: (option) => filters.isPaid === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, isPaid: prev.isPaid === option.value ? null : option.value }));
-      }
-    }
+      name: 'Payment',
+      options: [
+        { id: 'true', title: 'Paid' },
+        { id: 'false', title: 'Unpaid' },
+      ],
+      selected: filters.isPaid === null ? 'all' : filters.isPaid.toString(),
+      onChange: (value) => {
+        if (value === 'all') {
+          setFilters(prev => ({ ...prev, isPaid: null }));
+        } else {
+          setFilters(prev => ({ ...prev, isPaid: value === 'true' }));
+        }
+      },
+      resetLabel: 'All Payment',
+    },
   ];
 
   // Define the info card JSX/Component here for clarity
@@ -763,10 +806,9 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search internships by job title or company name ..."
+          searchPlaceholder="Search internships by job title, company, or skills..."
           onClearFilters={clearAllFilters}
-          customFilterSections={customFilterSections}
-          primaryFilterName="Filters"
+          filterSections={filterSectionsConfig}
         />
         {/* ALL / RECOMMENDED Tabs */}
       </div>
@@ -790,6 +832,23 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 }
 
 function WorkshopsView() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedInstructor, setSelectedInstructor] = useState('all');
+
+  const uniqueInstructors = [
+    ...new Set(sampleWorkshops.map(ws => ws.instructor))
+  ].filter(Boolean).map(inst => ({ id: inst, title: inst }));
+
+  const workshopFilterSections = [
+    {
+      name: 'Instructor',
+      options: [...uniqueInstructors],
+      selected: selectedInstructor,
+      onChange: (value) => setSelectedInstructor(value),
+      resetLabel: 'All Instructors',
+    },
+  ];
+
   const WorkshopManagementPortalInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
@@ -887,20 +946,22 @@ function WorkshopsView() {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <WorkshopManagementPortalInfoCard />
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search by title or instructor..."
+          onClearFilters={() => { setSearchTerm(''); setSelectedInstructor('all'); }}
+          filterSections={workshopFilterSections}
+        />
       </div>
-      <WorkshopManager />
+      <WorkshopManager instructorFilter={selectedInstructor} searchTerm={searchTerm} />
     </div>
   );
 }
 
 function StudentEvalsView() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('all');
-
-  // Get unique statuses from MOCK_EVALUATIONS
-  const uniqueStatuses = [
-    ...new Set(MOCK_EVALUATIONS.map(evalObj => evalObj.status))
-  ].filter(Boolean).map(status => ({ id: status, title: status }));
+  const [selectedRating, setSelectedRating] = useState('all');
 
   // Filter evaluations by search and status
   const filteredEvals = MOCK_EVALUATIONS.filter(evalObj => {
@@ -908,17 +969,24 @@ function StudentEvalsView() {
       evalObj.studentName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       evalObj.companyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       evalObj.title?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = selectedStatus === 'all' || evalObj.status === selectedStatus;
-    return matchesSearch && matchesStatus;
+    const matchesRating = selectedRating === 'all' || evalObj.rating.toString() === selectedRating;
+    return matchesSearch && matchesRating;
   });
 
-  const customFilterSections = [
+  const evalFilterSections = [
     {
-      title: 'Status',
-      options: [{ label: 'All Statuses', value: 'all' }, ...uniqueStatuses.map(s => ({ label: s.title, value: s.id }))],
-      isSelected: (option) => selectedStatus === option.value,
-      onSelect: (option) => setSelectedStatus(option.value)
-    }
+      name: 'Rating',
+      options: [
+        { id: '5', title: '5 Stars' },
+        { id: '4', title: '4 Stars' },
+        { id: '3', title: '3 Stars' },
+        { id: '2', title: '2 Stars' },
+        { id: '1', title: '1 Star' },
+      ],
+      selected: selectedRating,
+      onChange: setSelectedRating,
+      resetLabel: 'All Ratings',
+    },
   ];
 
   const InternshipsEvaluationAnalyticsInfoCard = () => (
@@ -999,8 +1067,11 @@ function StudentEvalsView() {
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search evaluations by student, company, or title ..."
-          onClearFilters={() => { setSearchTerm(''); setSelectedStatus('all'); }}
-          customFilterSections={customFilterSections}
+          onClearFilters={() => {
+            setSearchTerm('');
+            setSelectedRating('all');
+          }}
+          filterSections={evalFilterSections}
         />
       </div>
       <EvaluationsDashboard evaluations={filteredEvals} stakeholder={"other"} />
