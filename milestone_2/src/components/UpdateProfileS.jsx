@@ -142,7 +142,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
       setFeedback(null);
       console.log('Profile successfully updated (simulated).');
       if (onClose) onClose(true); // Indicate success
-    }, 800); // Reduced from 1400ms to 800ms for faster response
+    }, 400); // Reduced from 1400ms to 800ms for faster response
   };
 
   // Function to render star rating input
