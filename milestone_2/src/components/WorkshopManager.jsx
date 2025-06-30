@@ -139,7 +139,7 @@ export default function WorkshopManager({ instructorFilter = 'all', searchTerm =
                           {workshop.title}
                         </h3>
                         <p className="text-sm text-gray-500 mb-2">
-                          By {workshop.instructor} • {new Date(workshop.startDate).toLocaleDateString()}
+                          By {workshop.instructor} • {workshop.startDate ? new Date(workshop.startDate).toLocaleDateString() : workshop.date ? new Date(workshop.date).toLocaleDateString() : 'Date TBD'}
                         </p>
                       </div>
 
@@ -164,12 +164,18 @@ export default function WorkshopManager({ instructorFilter = 'all', searchTerm =
 
                     {/* Workshop Time */}
                     <p className="text-sm text-gray-700 mt-1">
-                      {new Date(workshop.startDate).toLocaleString(undefined, {
-                        dateStyle: 'medium',
-                        timeStyle: 'short'
-                      })} - {new Date(workshop.endDate).toLocaleString(undefined, {
-                        timeStyle: 'short'
-                      })}
+                      {workshop.startDate && workshop.endDate ? (
+                        `${new Date(workshop.startDate).toLocaleString(undefined, {
+                          dateStyle: 'medium',
+                          timeStyle: 'short'
+                        })} - ${new Date(workshop.endDate).toLocaleString(undefined, {
+                          timeStyle: 'short'
+                        })}`
+                      ) : workshop.date && workshop.time ? (
+                        `${new Date(workshop.date).toLocaleDateString()} • ${workshop.time}`
+                      ) : (
+                        'Schedule TBD'
+                      )}
                     </p>
                   </div>
                 </div>
