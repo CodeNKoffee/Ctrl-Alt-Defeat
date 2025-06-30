@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faEdit, faTrash, faSearch, faFilter, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { motion, AnimatePresence } from 'framer-motion';
+import { faPlus, faEdit, faTrash, faSearch, faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
 import WorkshopList from './WorkshopList';
 import WorkshopForm from './WorkshopForm';
 import DeleteWorkshopModal from './DeleteWorkshopModal';
@@ -13,7 +12,6 @@ export default function WorkshopManager({ instructorFilter = 'all', searchTerm =
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentWorkshop, setCurrentWorkshop] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
-  const [successNotification, setSuccessNotification] = useState({ show: false, message: '' });
 
   // Filter workshops based on search term
   const filteredWorkshops = workshops.filter(workshop => {
@@ -45,7 +43,6 @@ export default function WorkshopManager({ instructorFilter = 'all', searchTerm =
 
   // Save workshop (create or update)
   const handleSaveWorkshop = (workshopData) => {
-    const isUpdating = !!currentWorkshop;
     if (currentWorkshop) {
       // Update existing workshop
       setWorkshops(workshops.map(w =>
@@ -56,13 +53,6 @@ export default function WorkshopManager({ instructorFilter = 'all', searchTerm =
       setWorkshops([...workshops, { ...workshopData, id: Date.now().toString() }]);
     }
     setIsFormOpen(false);
-    setSuccessNotification({
-      show: true,
-      message: isUpdating ? 'Workshop updated successfully!' : 'Workshop created successfully!'
-    });
-    setTimeout(() => {
-      setSuccessNotification({ show: false, message: '' });
-    }, 3000); // Hide after 3 seconds
   };
 
   // Find the workshop title for the delete modal
@@ -81,37 +71,6 @@ export default function WorkshopManager({ instructorFilter = 'all', searchTerm =
             className="text-lg font-semibold"
           />
         </div>
-
-        {/* Search Bar */}
-        {/* <div className="bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50">
-          <div className="relative w-full max-w-md flex items-center">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search by title, description, or instructor..."
-              className="w-full py-3 pl-10 pr-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
-            />
-            <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-              <FontAwesomeIcon
-                icon={faSearch}
-                className="h-4 w-4 text-[#5DB2C7]"
-              />
-            </div>
-            {searchTerm && (
-              <button
-                type="button"
-                className="absolute inset-y-0 right-3.5 flex items-center p-1 rounded-full hover:bg-[#B8E1E9]/50 transition-colors duration-200"
-                onClick={() => setSearchTerm('')}
-              >
-                <FontAwesomeIcon
-                  icon={faXmark}
-                  className="w-4 h-4 text-[#5DB2C7] hover:text-[#2a5f74]"
-                />
-              </button>
-            )}
-          </div>
-        </div> */}
 
         {/* Workshop List with Management Functions */}
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
@@ -213,44 +172,6 @@ export default function WorkshopManager({ instructorFilter = 'all', searchTerm =
         workshopTitle={workshopToDelete?.title}
         slideDirection="left"
       />
-
-      {/* Success Notification Overlay */}
-      <AnimatePresence>
-        {successNotification.show && (
-          <motion.div
-            className="fixed inset-0 bg-[rgba(42,95,116,0.18)] z-[100] flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="bg-white p-6 md:p-8 rounded-xl shadow-2xl text-center max-w-md w-full mx-auto"
-              initial={{ scale: 0.7, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.7, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            >
-              <motion.div
-                className="w-12 h-12 md:w-16 md:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6"
-                initial={{ scale: 0.5 }}
-                animate={{ scale: 1 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 15, delay: 0.1 }}
-              >
-                <FontAwesomeIcon
-                  icon={faCheck}
-                  className="text-green-600 text-xl md:text-2xl"
-                />
-              </motion.div>
-              <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
-                Success!
-              </h3>
-              <p className="text-gray-600 text-sm md:text-base">
-                {successNotification.message}
-              </p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 } 
