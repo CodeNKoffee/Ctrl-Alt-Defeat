@@ -184,7 +184,11 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const [filters, setFilters] = useState({
     industry: '',
     duration: '',
-    isPaid: null
+    isPaid: null,
+    position: '',
+    jobType: '',
+    jobSetting: '',
+    company: '',
   });
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -196,6 +200,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const internshipDataForFilters = getRegularInternships();
   const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))];
   const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))];
+  const uniquePositions = [...new Set(internshipDataForFilters.map(internship => internship.title))];
+  const uniqueJobTypes = [...new Set(internshipDataForFilters.map(internship => internship.type))];
+  const uniqueJobSettings = [...new Set(internshipDataForFilters.map(internship => internship.jobSetting))];
+  const uniqueCompanies = [...new Set(internshipDataForFilters.map(internship => internship.company))];
 
   // Get internships based on active tab
   const baseInternships = activeTab === 'all'
@@ -224,9 +232,29 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       }));
     })();
 
-  // Apply additional filters (industry, duration, paid/unpaid)
+  // Apply additional filters (position, jobType, jobSetting, company, industry, duration, paid/unpaid)
   useEffect(() => {
     let result = [...baseInternships];
+
+    // Filter by position
+    if (filters.position) {
+      result = result.filter(internship => internship.title === filters.position);
+    }
+
+    // Filter by job type
+    if (filters.jobType) {
+      result = result.filter(internship => internship.type === filters.jobType);
+    }
+
+    // Filter by job setting
+    if (filters.jobSetting) {
+      result = result.filter(internship => internship.jobSetting === filters.jobSetting);
+    }
+
+    // Filter by company
+    if (filters.company) {
+      result = result.filter(internship => internship.company === filters.company);
+    }
 
     // Filter by industry
     if (filters.industry) {
@@ -266,10 +294,14 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   }, [baseInternships, filters]);
 
   // Check if any filters are active
-  const hasActiveFilters = filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
+  const hasActiveFilters = filters.position || filters.jobType || filters.jobSetting || filters.company || filters.industry || filters.duration || filters.isPaid !== null || searchTerm;
 
   const clearAllFilters = () => {
     setFilters({
+      position: '',
+      jobType: '',
+      jobSetting: '',
+      company: '',
       industry: '',
       duration: '',
       isPaid: null
@@ -277,30 +309,61 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     setSearchTerm('');
   };
 
-  const customFilterSections = [
+  const filterSections = [
     {
-      title: "Industry",
-      options: uniqueIndustries.map(ind => ({ label: ind, value: ind })),
-      isSelected: (option) => filters.industry === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, industry: prev.industry === option.value ? '' : option.value }));
-      }
+      name: 'Position',
+      options: uniquePositions.map(pos => ({ id: pos, title: pos })),
+      selected: filters.position || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, position: value === 'all' ? '' : value })),
+      resetLabel: 'All Positions',
     },
     {
-      title: "Duration",
-      options: uniqueDurations.map(dur => ({ label: dur, value: dur })),
-      isSelected: (option) => filters.duration === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, duration: prev.duration === option.value ? '' : option.value }));
-      }
+      name: 'Job Type',
+      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      selected: filters.jobType || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Types',
     },
     {
-      title: "Payment",
-      options: [{ label: "Paid", value: true }, { label: "Unpaid", value: false }],
-      isSelected: (option) => filters.isPaid === option.value,
-      onSelect: (option) => {
-        setFilters(prev => ({ ...prev, isPaid: prev.isPaid === option.value ? null : option.value }));
-      }
+      name: 'Job Setting',
+      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      selected: filters.jobSetting || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Settings',
+    },
+    {
+      name: 'Company',
+      options: uniqueCompanies.map(company => ({ id: company, title: company })),
+      selected: filters.company || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, company: value === 'all' ? '' : value })),
+      resetLabel: 'All Companies',
+    },
+    {
+      name: 'Industry',
+      options: uniqueIndustries.map(ind => ({ id: ind, title: ind })),
+      selected: filters.industry || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, industry: value === 'all' ? '' : value })),
+      resetLabel: 'All Industries',
+    },
+    {
+      name: 'Duration',
+      options: uniqueDurations.map(dur => ({ id: dur, title: dur })),
+      selected: filters.duration || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, duration: value === 'all' ? '' : value })),
+      resetLabel: 'All Durations',
+    },
+    {
+      name: 'Payment Status',
+      options: [
+        { id: 'paid', title: 'Paid' },
+        { id: 'unpaid', title: 'Unpaid' }
+      ],
+      selected: filters.isPaid === true ? 'paid' : filters.isPaid === false ? 'unpaid' : 'all',
+      onChange: (value) => setFilters(prev => ({
+        ...prev,
+        isPaid: value === 'paid' ? true : value === 'unpaid' ? false : null
+      })),
+      resetLabel: 'All Payment Types',
     }
   ];
 
@@ -367,8 +430,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search internships by job title or company name ..."
           onClearFilters={clearAllFilters}
-          customFilterSections={customFilterSections}
-          primaryFilterName="Filters"
+          filterSections={filterSections}
           showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
@@ -384,9 +446,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
                 : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
                 }`}
             >
-              <span className={`w-3 h-3 rounded-full mr-2 ${
-                activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
-              }`}></span>
+              <span className={`w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
+                }`}></span>
               ALL
             </button>
             <button
@@ -396,9 +457,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
                 : 'bg-white text-gray-600 border border-gray-300 hover:text-pink-800 hover:border-[1px] hover:border-pink-800 hover:bg-pink-100'
                 }`}
             >
-              <span className={`w-3 h-3 rounded-full mr-2 ${
-                activeTab === 'recommended' ? 'bg-pink-800' : 'bg-gray-300'
-              }`}></span>
+              <span className={`w-3 h-3 rounded-full mr-2 ${activeTab === 'recommended' ? 'bg-pink-800' : 'bg-gray-300'
+                }`}></span>
               RECOMMENDED
             </button>
           </div>
@@ -432,7 +492,49 @@ function AppliedInternshipsView() {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState('all');
   const userMajor = currentUser?.major || 'Computer Science';
+
+  const appliedInternships = getAppliedInternships();
+  const uniqueCompanies = [...new Set(appliedInternships.map(internship => internship.company))];
+  const uniquePositions = [...new Set(appliedInternships.map(internship => internship.title))];
+  const uniqueJobTypes = [...new Set(appliedInternships.map(internship => internship.type))];
+
+  const filterSections = [
+    {
+      name: 'Status',
+      options: [
+        { id: 'pending', title: 'Pending' },
+        { id: 'accepted', title: 'Accepted' },
+        { id: 'finalized', title: 'Finalized' },
+        { id: 'rejected', title: 'Rejected' }
+      ],
+      selected: selectedStatus,
+      onChange: setSelectedStatus,
+      resetLabel: 'All Statuses',
+    },
+    {
+      name: 'Company',
+      options: uniqueCompanies.map(company => ({ id: company, title: company })),
+      selected: 'all',
+      onChange: () => { },
+      resetLabel: 'All Companies',
+    },
+    {
+      name: 'Position',
+      options: uniquePositions.map(pos => ({ id: pos, title: pos })),
+      selected: 'all',
+      onChange: () => { },
+      resetLabel: 'All Positions',
+    },
+    {
+      name: 'Job Type',
+      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      selected: 'all',
+      onChange: () => { },
+      resetLabel: 'All Job Types',
+    }
+  ];
 
   // Mock statuses for AppliedInternshipsView
   const APPLIED_INTERNSHIP_STATUSES = {
@@ -535,10 +637,20 @@ function AppliedInternshipsView() {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <AppliedInternshipsInfoCard />
+
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search applications by company or position..."
+          filterSections={filterSections}
+          showDatePicker={true}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+        />
       </div>
       <InternshipList
         title=""
-        internships={getAppliedInternships()}
+        internships={appliedInternships.filter(internship => selectedStatus === 'all' || internship.status === selectedStatus)}
         type="applied"
         statuses={['pending', 'accepted', 'finalized', 'rejected']}
         showSidebar={true}
@@ -1206,6 +1318,25 @@ function MyReportsView() {
 }
 
 function MyEvaluationsView() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedRating, setSelectedRating] = useState('all');
+
+  const filterSections = [
+    {
+      name: 'Rating',
+      options: [
+        { id: '5', title: '5 Stars' },
+        { id: '4', title: '4 Stars' },
+        { id: '3', title: '3 Stars' },
+        { id: '2', title: '2 Stars' },
+        { id: '1', title: '1 Star' }
+      ],
+      selected: selectedRating,
+      onChange: setSelectedRating,
+      resetLabel: 'All Ratings',
+    }
+  ];
+
   // Define the Evaluations Info Card in the same way as other pages
   const EvaluationsInfoCard = () => (
     <div className="w-full mx-auto">
@@ -1264,8 +1395,20 @@ function MyEvaluationsView() {
     <div className="min-h-screen bg-[#f4fafd] py-10 px-4">
       <div className="px-4 pt-6">
         <EvaluationsInfoCard />
+
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search evaluations by student or company name..."
+          filterSections={filterSections}
+        />
       </div>
-      <EvaluationsDashboard evaluations={MOCK_EVALUATIONS} stakeholder={"student"} />
+      <EvaluationsDashboard
+        evaluations={MOCK_EVALUATIONS}
+        stakeholder={"student"}
+        searchTerm={searchTerm}
+        selectedRating={selectedRating}
+      />
     </div>
   );
 }
