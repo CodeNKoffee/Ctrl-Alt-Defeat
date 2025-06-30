@@ -83,14 +83,14 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   >
                     <motion.div
-                      className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                      className="w-12 h-12 bg-[#318FA8] rounded-full flex items-center justify-center mx-auto mb-4"
                       initial={{ scale: 0.5 }}
                       animate={{ scale: 1 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 15 }}
                     >
                       <FontAwesomeIcon
                         icon={faCheck}
-                        className="text-green-600 text-xl"
+                        className="text-white text-xl"
                       />
                     </motion.div>
                     <h3 className="text-lg font-semibold text-gray-800 mb-1">
