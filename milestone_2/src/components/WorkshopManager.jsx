@@ -84,7 +84,7 @@ export default function WorkshopManager({ instructorFilter = 'all' }) {
         </div>
 
         {/* Search Bar */}
-        <div className="bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50">
+        {/* <div className="bg-[#D9F0F4]/60 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 border border-[#B8E1E9]/50">
           <div className="relative w-full max-w-md flex items-center">
             <input
               type="text"
@@ -112,7 +112,7 @@ export default function WorkshopManager({ instructorFilter = 'all' }) {
               </button>
             )}
           </div>
-        </div>
+        </div> */}
 
         {/* Workshop List with Management Functions */}
         <div className="bg-white rounded-xl shadow-md overflow-hidden">

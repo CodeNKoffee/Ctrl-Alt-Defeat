@@ -11,6 +11,7 @@ import { faPlus, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import NotificationButton from "./NotificationButton";
 import WorkshopFeedback from "./WorkshopFeedback";
 import CertificateSimulatorButton from "./CertificateSimulatorButton";
+import ApplicationsFilterBar from './shared/ApplicationsFilterBar';
 
 export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSelectLive, sidebarExpanded }) {
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
@@ -21,7 +22,27 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const [showFeedback, setShowFeedback] = useState(false);
   const [showCertificateModal, setShowCertificateModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedInstructor, setSelectedInstructor] = useState('all');
   const router = useRouter();
+
+  // Unique instructors for filter
+  const uniqueInstructors = [
+    ...new Set(workshops.map(ws => ws.instructor))
+  ].filter(Boolean).map(inst => ({ id: inst, title: inst }));
+
+  // Filter workshops by instructor name (search) and instructor filter
+  const filteredWorkshopsList = workshops.filter(ws => {
+    const matchesSearch =
+      ws.instructor?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesInstructor = selectedInstructor === 'all' || ws.instructor === selectedInstructor;
+    return matchesSearch && matchesInstructor;
+  });
+
+  // Group workshops by type for better organization
+  const upcomingWorkshops = filteredWorkshopsList.filter(ws => ws.type === 'regular' || !ws.type);
+  const liveWorkshops = filteredWorkshopsList.filter(ws => ws.type === 'live');
+  const prerecordedWorkshops = filteredWorkshopsList.filter(ws => ws.type === 'prerecorded');
 
   // Listen to window resize to adjust layout
   useEffect(() => {
@@ -60,11 +81,6 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   const handleBackFromPrerecorded = () => {
     setShowPrerecordedInterface(false);
   };
-
-  // Group workshops by type for better organization
-  const upcomingWorkshops = workshops.filter(ws => ws.type === 'regular' || !ws.type);
-  const liveWorkshops = workshops.filter(ws => ws.type === 'live');
-  const prerecordedWorkshops = workshops.filter(ws => ws.type === 'prerecorded');
 
   // Filter workshops based on activeFilter
   const displayWorkshops = () => {

@@ -949,7 +949,7 @@ function WorkshopsView() {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search workshops..."
+          searchPlaceholder="Search by title or instructor..."
           onClearFilters={() => { setSearchTerm(''); setSelectedInstructor('all'); }}
           filterSections={workshopFilterSections}
         />
