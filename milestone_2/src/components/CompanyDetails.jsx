@@ -48,7 +48,7 @@ export default function CompanyDetails({
   };
 
   return (
-    <div className="companydetails-root companydetails-big relative">
+    <div className="companydetails-root companydetails-big relative ml-4!">
       <AnimatePresence mode="wait">
         {feedback && (
           <motion.div
