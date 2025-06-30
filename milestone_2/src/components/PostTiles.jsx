@@ -249,7 +249,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                   width: 70,
                   height: 70,
                   borderRadius: '50%',
-                  background: feedbackModal.type === 'create' ? '#34D399' : '#60A5FA', // Green for create, Blue for update
+                  background: '#318FA8',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
