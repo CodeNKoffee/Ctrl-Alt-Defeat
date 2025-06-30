@@ -75,6 +75,11 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const userMajor = currentUser?.major || 'Computer Science';
+  const [filters, setFilters] = useState({
+    jobType: '',
+    jobSetting: '',
+    isPaid: null,
+  });
 
   useEffect(() => {
     const userData = currentUser || JSON.parse(sessionStorage.getItem('userSession') || localStorage.getItem('userSession') || '{}');
@@ -97,6 +102,52 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
       setPersonalizedInternships(recommendationsWithRatings);
     }
   }, [currentUser]);
+
+  const internshipDataForFilters = personalizedInternships;
+  const uniqueJobTypes = [...new Set(internshipDataForFilters.map(i => i.type))].filter(Boolean);
+  const uniqueJobSettings = [...new Set(internshipDataForFilters.map(i => i.jobSetting))].filter(Boolean);
+
+  const filterSections = [
+    {
+      name: 'Job Type',
+      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      selected: filters.jobType || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Types',
+    },
+    {
+      name: 'Job Setting',
+      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      selected: filters.jobSetting || 'all',
+      onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
+      resetLabel: 'All Job Settings',
+    },
+    {
+      name: 'Payment Status',
+      options: [
+        { id: 'paid', title: 'Paid' },
+        { id: 'unpaid', title: 'Unpaid' }
+      ],
+      selected: filters.isPaid === true ? 'paid' : filters.isPaid === false ? 'unpaid' : 'all',
+      onChange: (value) => setFilters(prev => ({
+        ...prev,
+        isPaid: value === 'paid' ? true : value === 'unpaid' ? false : null
+      })),
+      resetLabel: 'All Payment Types',
+    }
+  ];
+
+  const filteredPersonalizedInternships = personalizedInternships.filter(internship => {
+    const term = searchTerm.toLowerCase();
+    return (
+      (searchTerm === '' ||
+        internship.title.toLowerCase().includes(term) ||
+        internship.company.toLowerCase().includes(term)) &&
+      (filters.jobType === '' || internship.type === filters.jobType) &&
+      (filters.jobSetting === '' || internship.jobSetting === filters.jobSetting) &&
+      (filters.isPaid === null || internship.paid === filters.isPaid)
+    );
+  });
 
   const RecommendedOpportunitiesInfoCard = () => (
     <div className="w-full mx-auto">
@@ -158,16 +209,27 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <RecommendedOpportunitiesInfoCard />
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search recommended internships..."
+          filterSections={filterSections}
+          onClearFilters={() => {
+            setSearchTerm('');
+            setFilters({ jobType: '', jobSetting: '', isPaid: null });
+          }}
+        />
       </div>
       <InternshipList
         title=""
-        internships={personalizedInternships}
+        internships={filteredPersonalizedInternships}
         type={"recommended"}
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
         userMajor={userMajor}
         isRecommended={true}
+        customFilterPanel={<></>}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         activeTab={activeTab}
@@ -492,13 +554,22 @@ function AppliedInternshipsView() {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [filters, setFilters] = useState({
+    status: 'all',
+    company: 'all',
+    position: 'all',
+    jobType: 'all',
+  });
   const userMajor = currentUser?.major || 'Computer Science';
 
   const appliedInternships = getAppliedInternships();
   const uniqueCompanies = [...new Set(appliedInternships.map(internship => internship.company))];
   const uniquePositions = [...new Set(appliedInternships.map(internship => internship.title))];
   const uniqueJobTypes = [...new Set(appliedInternships.map(internship => internship.type))];
+
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prev => ({ ...prev, [filterName]: value }));
+  };
 
   const filterSections = [
     {
@@ -509,32 +580,43 @@ function AppliedInternshipsView() {
         { id: 'finalized', title: 'Finalized' },
         { id: 'rejected', title: 'Rejected' }
       ],
-      selected: selectedStatus,
-      onChange: setSelectedStatus,
+      selected: filters.status,
+      onChange: (value) => handleFilterChange('status', value),
       resetLabel: 'All Statuses',
     },
     {
       name: 'Company',
       options: uniqueCompanies.map(company => ({ id: company, title: company })),
-      selected: 'all',
-      onChange: () => { },
+      selected: filters.company,
+      onChange: (value) => handleFilterChange('company', value),
       resetLabel: 'All Companies',
     },
     {
       name: 'Position',
       options: uniquePositions.map(pos => ({ id: pos, title: pos })),
-      selected: 'all',
-      onChange: () => { },
+      selected: filters.position,
+      onChange: (value) => handleFilterChange('position', value),
       resetLabel: 'All Positions',
     },
     {
       name: 'Job Type',
       options: uniqueJobTypes.map(type => ({ id: type, title: type })),
-      selected: 'all',
-      onChange: () => { },
+      selected: filters.jobType,
+      onChange: (value) => handleFilterChange('jobType', value),
       resetLabel: 'All Job Types',
     }
   ];
+
+  const filteredAppliedInternships = appliedInternships.filter(internship => {
+    const term = searchTerm.toLowerCase();
+    return (
+      (searchTerm === '' || internship.title.toLowerCase().includes(term) || internship.company.toLowerCase().includes(term)) &&
+      (filters.status === 'all' || internship.status === filters.status) &&
+      (filters.company === 'all' || internship.company === filters.company) &&
+      (filters.position === 'all' || internship.title === filters.position) &&
+      (filters.jobType === 'all' || internship.type === filters.jobType)
+    );
+  });
 
   // Mock statuses for AppliedInternshipsView
   const APPLIED_INTERNSHIP_STATUSES = {
@@ -646,15 +728,17 @@ function AppliedInternshipsView() {
           showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
+          onClearFilters={() => setFilters({ status: 'all', company: 'all', position: 'all', jobType: 'all' })}
         />
       </div>
       <InternshipList
         title=""
-        internships={appliedInternships.filter(internship => selectedStatus === 'all' || internship.status === selectedStatus)}
+        internships={filteredAppliedInternships}
         type="applied"
         statuses={['pending', 'accepted', 'finalized', 'rejected']}
         showSidebar={true}
         userMajor={userMajor}
+        customFilterPanel={<></>}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         activeTab={activeTab}
@@ -671,7 +755,57 @@ function MyInternshipsView({ onTriggerReportCreate }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedDate, setSelectedDate] = useState(null);
+  const [filters, setFilters] = useState({
+    status: 'all',
+    company: 'all',
+    position: 'all'
+  });
   const userMajor = currentUser?.major || 'Computer Science';
+
+  const myInternships = getMyInternships();
+  const uniqueCompanies = [...new Set(myInternships.map(internship => internship.company))];
+  const uniquePositions = [...new Set(myInternships.map(internship => internship.title))];
+
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prev => ({ ...prev, [filterName]: value }));
+  };
+
+  const filterSections = [
+    {
+      name: 'Status',
+      options: [
+        { id: 'current', title: 'Current' },
+        { id: 'completed', title: 'Completed' }
+      ],
+      selected: filters.status,
+      onChange: (value) => handleFilterChange('status', value),
+      resetLabel: 'All Statuses',
+    },
+    {
+      name: 'Company',
+      options: uniqueCompanies.map(company => ({ id: company, title: company })),
+      selected: filters.company,
+      onChange: (value) => handleFilterChange('company', value),
+      resetLabel: 'All Companies',
+    },
+    {
+      name: 'Position',
+      options: uniquePositions.map(pos => ({ id: pos, title: pos })),
+      selected: filters.position,
+      onChange: (value) => handleFilterChange('position', value),
+      resetLabel: 'All Positions',
+    },
+  ];
+
+  const filteredMyInternships = myInternships.filter(internship => {
+    const term = searchTerm.toLowerCase();
+    return (
+      (searchTerm === '' || internship.title.toLowerCase().includes(term) || internship.company.toLowerCase().includes(term)) &&
+      (filters.status === 'all' || internship.status === filters.status) &&
+      (filters.company === 'all' || internship.company === filters.company) &&
+      (filters.position === 'all' || internship.title === filters.position)
+    );
+  });
 
   // Mock statuses for MyInternshipsView
   const MY_INTERNSHIP_STATUSES = {
@@ -760,16 +894,27 @@ function MyInternshipsView({ onTriggerReportCreate }) {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <MyInternshipsInfoCard />
+
+        <ApplicationsFilterBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="Search internships by company or position..."
+          filterSections={filterSections}
+          showDatePicker={true}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+          onClearFilters={() => setFilters({ status: 'all', company: 'all', position: 'all' })}
+        />
       </div>
       <InternshipList
         title=""
-        internships={getMyInternships()}
-        type="my"
-        statuses={['current', 'completed', 'evaluated']}
+        internships={filteredMyInternships}
+        type="mine"
         onTriggerReportCreate={onTriggerReportCreate}
         showSidebar={true}
-        showDatePicker={true}
         userMajor={userMajor}
+        statuses={['current', 'completed', 'evaluated']}
+        customFilterPanel={<></>}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         activeTab={activeTab}
@@ -782,6 +927,38 @@ function MyInternshipsView({ onTriggerReportCreate }) {
 }
 
 function NotificationsView() {
+  const [filters, setFilters] = useState({ category: 'all', read: 'all' });
+
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prev => ({ ...prev, [filterName]: value }));
+  };
+
+  const filterSections = [
+    {
+      name: 'Category',
+      options: [
+        { id: 'Application', title: 'Application' },
+        { id: 'Report', title: 'Report' },
+        { id: 'Workshop', title: 'Workshop' },
+        { id: 'Deadline', title: 'Deadline' },
+        { id: 'Opportunity', title: 'Opportunity' }
+      ],
+      selected: filters.category,
+      onChange: (value) => handleFilterChange('category', value),
+      resetLabel: 'All Categories'
+    },
+    {
+      name: 'Status',
+      options: [
+        { id: 'read', title: 'Read' },
+        { id: 'unread', title: 'Unread' }
+      ],
+      selected: filters.read,
+      onChange: (value) => handleFilterChange('read', value),
+      resetLabel: 'All'
+    }
+  ];
+
   // Define the Notifications Info Card similar to other pages
   const NotificationsInfoCard = () => (
     <div className="w-full mx-auto">
@@ -886,8 +1063,12 @@ function NotificationsView() {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <NotificationsInfoCard />
+        <ApplicationsFilterBar
+          filterSections={filterSections}
+          onClearFilters={() => setFilters({ category: 'all', read: 'all' })}
+        />
       </div>
-      <NotificationsList />
+      <NotificationsList filters={filters} />
     </div>
   );
 }
