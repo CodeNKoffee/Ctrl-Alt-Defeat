@@ -152,7 +152,7 @@ export default function EvaluationModal({
 
     // Show success feedback
     setFeedback('success');
-    setFeedbackType('submit');
+    setFeedbackType(isEditMode ? 'update' : 'submit');
 
     setTimeout(() => {
       onSubmit(submitData, isEditMode);
@@ -168,45 +168,20 @@ export default function EvaluationModal({
       <AnimatePresence>
         {feedback && (
           <motion.div
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10000,
-              background: 'rgba(42, 95, 116, 0.18)'
-            }}
+            className="fixed inset-0 z-[10001] flex items-center justify-center bg-[rgba(42,95,116,0.18)] backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              style={{
-                background: 'white',
-                padding: '25px',
-                borderRadius: '15px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
-                maxWidth: '400px'
-              }}
+              className="bg-white p-6 rounded-xl shadow-2xl flex flex-col items-center max-w-sm w-full mx-4"
               initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.7, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
             >
               <motion.div
-                style={{
-                  marginBottom: '15px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
+                style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 initial={{ scale: 0.5 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 15 }}
@@ -216,7 +191,7 @@ export default function EvaluationModal({
                     width: 60,
                     height: 60,
                     borderRadius: '50%',
-                    background: '#318FA8',
+                    background: feedbackType === 'submit' ? '#22C55E' : '#318FA8',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
@@ -229,12 +204,14 @@ export default function EvaluationModal({
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                Success!
+                {feedbackType === 'submit' ? 'Success!' : 'Updated!'}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
                 {feedbackType === 'submit'
-                  ? `Your evaluation has been successfully ${isEditMode ? 'updated' : 'submitted'}.`
-                  : `Your evaluation has been successfully saved as a draft.`
+                  ? `Your evaluation has been successfully submitted.`
+                  : feedbackType === 'update'
+                    ? `Your evaluation has been successfully updated.`
+                    : `Your evaluation has been successfully saved as a draft.`
                 }
               </div>
             </motion.div>
@@ -507,7 +484,7 @@ export default function EvaluationModal({
                   if (isFormDirty()) {
                     // Show feedback for saving changes
                     setFeedback('success');
-                    setFeedbackType('submit');
+                    setFeedbackType('update');
 
                     setTimeout(() => {
                       onSubmit({ ...form, id: evaluationToEdit.id }, true);

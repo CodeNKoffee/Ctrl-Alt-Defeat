@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Evaluation from "./Evaluation";
 import SearchBar from "./shared/SearchBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faTimesCircle, faCalendar, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faTimesCircle, faCalendar, faEdit, faTrash, faCheck } from '@fortawesome/free-solid-svg-icons';
 import CompanyEvaluationModal from "./CompanyEvaluationModal";
 import CustomButton from './shared/CustomButton';
 import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
@@ -23,6 +23,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
   const [evaluationToEdit, setEvaluationToEdit] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [evaluationToDelete, setEvaluationToDelete] = useState(null);
+  const [feedbackType, setFeedbackType] = useState(null);
 
   useEffect(() => {
     setEvaluations(initialEvaluations || []);
@@ -442,12 +443,18 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                             <FontAwesomeIcon icon={faTimesCircle} />
                           </button>
                           <div className="flex flex-col items-center mb-4">
-                            <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#f4fafd] to-[#eaf3f7] shadow flex items-center justify-center mb-2 border-4 border-[#F8E7BE]">
-                              <img
-                                src={evaluation.companyLogo || '/images/company-icon.png'}
-                                alt={evaluation.company || 'Company Logo'}
-                                className="w-12 h-12 object-contain rounded-full"
-                              />
+                            <div
+                              style={{
+                                width: 60,
+                                height: 60,
+                                borderRadius: '50%',
+                                background: feedbackType === 'submit' ? '#22C55E' : '#318FA8',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}
+                            >
+                              <FontAwesomeIcon icon={faCheck} style={{ fontSize: 32, color: 'white' }} />
                             </div>
                             <div className="font-bold text-[#2A5F74] text-lg mb-1 text-center tracking-wide drop-shadow">{evaluation.company}</div>
                             <div className="text-xs text-[#4C798B] mb-1 text-center">{evaluation.supervisor}</div>
@@ -553,6 +560,8 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
           onClose={() => { setShowEditModal(false); setEvaluationToEdit(null); }}
           onSubmit={handleModalSubmit}
           evaluationToEdit={evaluationToEdit}
+          feedbackType={feedbackType}
+          setFeedbackType={setFeedbackType}
         />
       )}
 

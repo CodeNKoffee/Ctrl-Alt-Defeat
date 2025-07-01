@@ -150,7 +150,11 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
 
     if (validateForm()) {
       // Show success feedback
-      setFeedback('success');
+      if (mode === 'create') {
+        setFeedback('success');
+      } else {
+        setFeedback('update');
+      }
 
       setTimeout(() => {
         setFeedback(null);
@@ -213,7 +217,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                     width: 60,
                     height: 60,
                     borderRadius: '50%',
-                    background: '#318FA8',
+                    background: feedback === 'success' ? '#22C55E' : '#318FA8',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
@@ -226,10 +230,12 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                Success!
+                {feedback === 'success' ? 'Success!' : 'Updated!'}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
-                {mode === 'create' ? 'Workshop has been successfully created.' : 'Workshop has been successfully updated.'}
+                {feedback === 'success'
+                  ? 'Workshop has been successfully created.'
+                  : 'Workshop has been successfully updated.'}
               </div>
             </motion.div>
           </motion.div>
@@ -488,14 +494,22 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
         </div>
 
         {/* Preview Section */}
-        <div className="bg-[#D9F0F4]/60 backdrop-blur-md rounded-tr-xl rounded-br-xl p-8 w-full md:w-1/2 overflow-y-auto">
-          <div className="sticky top-0 bg-[#D9F0F4]/80 backdrop-blur-md p-4 rounded-lg mb-6 z-10">
-            <h2 className="text-2xl font-bold text-[#2a5f74]">Workshop Preview</h2>
+        <div className="bg-[#F7FBFD] rounded-tr-xl rounded-br-xl p-8 w-full md:w-1/2 overflow-y-auto">
+          {/* Unified Preview Header (not sticky, styled like Post Preview) */}
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-[var(--metallica-blue-700)] flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+              </svg>
+              Workshop Preview
+            </h2>
           </div>
 
-          <div className="bg-white rounded-xl overflow-hidden shadow-lg mb-6">
+          {/* Preview Card - match Post Preview style */}
+          <div className="bg-white rounded-lg shadow-md p-6 border border-[var(--metallica-blue-100)] flex-1 flex flex-col">
             {/* Workshop Image */}
-            <div className="relative w-full h-48">
+            <div className="relative w-full h-40 mb-4 rounded-md overflow-hidden">
               <img
                 src={formData.imageUrl || '/images/default-workshop.jpg'}
                 alt={formData.title}
@@ -504,62 +518,53 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
             </div>
 
             {/* Workshop Content */}
-            <div className="p-6 space-y-6">
+            <div className="flex flex-col gap-6">
               {/* Category and Title */}
               <div>
-                <span className="text-xs text-blue-600 font-medium block mb-2">
+                <span className="text-xs text-blue-600 font-medium mb-2 inline-block">
                   {formData.category || "WORKSHOP"}
                 </span>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                <h3 className="text-xl font-bold text-[var(--metallica-blue-800)] mb-2">
                   {formData.title || "Workshop Title"}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-700 text-sm">
                   {formData.description || "Workshop description will appear here"}
                 </p>
               </div>
 
               {/* Workshop Details */}
-              <div className="space-y-3 border-t border-b border-gray-100 py-4">
-                <div className="flex items-center">
-                  <FontAwesomeIcon icon={faCalendarAlt} className="h-5 w-5 text-[#5DB2C7] mr-3" />
-                  <div>
-                    <p className="text-sm text-gray-600 font-medium">Date & Time</p>
-                    <p className="text-sm text-gray-800">
-                      {formData.startDate.toLocaleString(undefined, {
-                        dateStyle: 'medium',
-                        timeStyle: 'short'
-                      })} - {formData.endDate.toLocaleString(undefined, {
-                        timeStyle: 'short'
-                      })}
-                    </p>
-                  </div>
+              <div className="grid grid-cols-2 gap-4 border-t border-b border-gray-100 py-4">
+                <div>
+                  <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-xs uppercase tracking-wide">Date & Time</h4>
+                  <p className="text-gray-700 text-sm">
+                    {formData.startDate.toLocaleString(undefined, {
+                      dateStyle: 'medium',
+                      timeStyle: 'short'
+                    })} - {formData.endDate.toLocaleString(undefined, {
+                      timeStyle: 'short'
+                    })}
+                  </p>
                 </div>
-
-                <div className="flex items-center">
-                  <FontAwesomeIcon icon={faMapMarkerAlt} className="h-5 w-5 text-[#5DB2C7] mr-3" />
-                  <div>
-                    <p className="text-sm text-gray-600 font-medium">Location</p>
-                    <p className="text-sm text-gray-800">{formData.location || "Online"}</p>
-                  </div>
+                <div>
+                  <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-xs uppercase tracking-wide">Location</h4>
+                  <p className="text-gray-700 text-sm">{formData.location || "Online"}</p>
                 </div>
-
-                <div className="flex items-center">
-                  <FontAwesomeIcon icon={faUsers} className="h-5 w-5 text-[#5DB2C7] mr-3" />
-                  <div>
-                    <p className="text-sm text-gray-600 font-medium">Maximum Attendees</p>
-                    <p className="text-sm text-gray-800">{formData.maxAttendees || 25}</p>
-                  </div>
+                <div>
+                  <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-xs uppercase tracking-wide">Maximum Attendees</h4>
+                  <p className="text-gray-700 text-sm">{formData.maxAttendees || 25}</p>
                 </div>
               </div>
 
               {/* Instructor */}
-              <div className="space-y-3">
-                <h4 className="text-lg font-medium text-[#2a5f74] flex items-center">
-                  <FontAwesomeIcon icon={faUserTie} className="h-5 w-5 text-[#5DB2C7] mr-2" />
+              <div>
+                <h4 className="text-base font-medium text-[var(--metallica-blue-700)] flex items-center mb-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#5DB2C7] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
                   Instructor
                 </h4>
-                <div className="flex items-center">
-                  <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full overflow-hidden">
                     <img
                       src={formData.instructorImage || "/images/default-avatar.png"}
                       alt={formData.instructor}
@@ -574,9 +579,11 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
               </div>
 
               {/* Agenda */}
-              <div className="space-y-3">
-                <h4 className="text-lg font-medium text-[#2a5f74] flex items-center">
-                  <FontAwesomeIcon icon={faListUl} className="h-5 w-5 text-[#5DB2C7] mr-2" />
+              <div>
+                <h4 className="text-base font-medium text-[var(--metallica-blue-700)] flex items-center mb-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#5DB2C7] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                  </svg>
                   Workshop Agenda
                 </h4>
                 {formData.agenda && formData.agenda.length > 0 ? (
@@ -586,7 +593,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                         <span className="inline-flex items-center justify-center bg-[#5DB2C7] text-white rounded h-5 w-5 text-xs mr-3 mt-0.5">
                           {index + 1}
                         </span>
-                        <span className="text-gray-700">{item}</span>
+                        <span className="text-gray-700 text-sm">{item}</span>
                       </li>
                     ))}
                   </ul>

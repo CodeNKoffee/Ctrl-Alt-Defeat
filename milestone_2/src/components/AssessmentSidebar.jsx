@@ -55,7 +55,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
 
       // Show success toast notification with score
       toast.info(`Your test score is ${calculatedScore}%. Please check your email for detailed results.`, {
-        position: 'bottom-right',
+        position: 'top-right',
         autoClose: 7000, // Increased duration for better readability
         hideProgressBar: false,
         closeOnClick: true,
@@ -65,7 +65,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
     } catch (error) {
       console.error('Error submitting test:', error);
       toast.error('Error submitting test', {
-        position: 'bottom-right',
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,

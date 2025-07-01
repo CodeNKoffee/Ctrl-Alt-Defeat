@@ -143,7 +143,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                     width: 60,
                     height: 60,
                     borderRadius: '50%',
-                    background: '#318FA8',
+                    background: feedbackType === 'submit' ? '#22C55E' : '#318FA8',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'

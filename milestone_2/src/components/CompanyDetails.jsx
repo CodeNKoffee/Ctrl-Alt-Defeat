@@ -18,6 +18,7 @@ export default function CompanyDetails({
   size,
   documentation = [],
   onCollapse,
+  onCompanyRemoval = () => { },
 }) {
   const [feedback, setFeedback] = useState(null); // 'accepted' | 'rejected' | null
 
@@ -37,12 +38,14 @@ export default function CompanyDetails({
   const handleAccept = () => {
     setFeedback('accepted');
     setTimeout(() => {
+      onCompanyRemoval(companyName);
       onCollapse && onCollapse();
     }, 1400);
   };
   const handleReject = () => {
     setFeedback('rejected');
     setTimeout(() => {
+      onCompanyRemoval(companyName);
       onCollapse && onCollapse();
     }, 1400);
   };
@@ -100,7 +103,7 @@ export default function CompanyDetails({
                     width: 60,
                     height: 60,
                     borderRadius: '50%',
-                    background: feedback === 'accepted' ? '#318FA8' : '#D32F2F',
+                    background: feedback === 'accepted' ? '#22C55E' : '#D32F2F',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'

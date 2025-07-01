@@ -16,7 +16,7 @@ const BG = "bg-[#eaf3f6]";
 // But since this is a single file, add below the imports:
 // (Assume INDUSTRY_ICONS is imported correctly)
 
-export default function CompanyDetailsModal({ open, onClose, companyName, companyEmail, companyLogo, industry, size, documentation = [], registrationDate }) {
+export default function CompanyDetailsModal({ open, onClose, companyName, companyEmail, companyLogo, industry, size, documentation = [], registrationDate, onCompanyRemoval = () => { } }) {
   if (!open) return null;
 
   // Notepad state (6 notes for Figma style)
@@ -34,6 +34,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
     setFeedback('accepted');
     setTimeout(() => {
       setFeedback(null);
+      onCompanyRemoval(companyName);
       onClose && onClose(true);
     }, 1400);
   };
@@ -41,6 +42,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
     setFeedback('rejected');
     setTimeout(() => {
       setFeedback(null);
+      onCompanyRemoval(companyName);
       onClose && onClose(true);
     }, 1400);
   };
@@ -114,7 +116,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
                     width: 60,
                     height: 60,
                     borderRadius: '50%',
-                    background: feedback === 'accepted' ? '#318FA8' : '#D32F2F',
+                    background: feedback === 'accepted' ? '#22C55E' : '#D32F2F',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'

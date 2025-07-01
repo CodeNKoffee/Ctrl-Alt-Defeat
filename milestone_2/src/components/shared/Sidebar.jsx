@@ -10,6 +10,8 @@ import {
   faChevronRight,
   faHome,
   faSearch,
+  faBrain,
+  faChartLine,
   faClipboardList,
   faBriefcase,
   faUser,
@@ -21,7 +23,8 @@ import {
   faRightFromBracket,
   faBell,
   faVideo,
-  faLock
+  faLock,
+  faListAlt
 } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
@@ -33,7 +36,7 @@ import ProBadge from './ProBadge';
 const iconMap = {
   home: faHome,
   browse: faSearch,
-  applied: faClipboardList,
+  applied: faFolder,
   'my-internships': faBriefcase,
   'my-reports': faChartBar,
   'my-evaluations': faClipboardList,
@@ -41,14 +44,15 @@ const iconMap = {
   'live-workshops': faVideo,
   profile: faUser,
   students: faGraduationCap,
+  'student-list': faListAlt,
   reports: faChartBar,
   companies: faBuilding,
   listings: faList,
   applications: faFolder,
   logout: faRightFromBracket,
   notifications: faBell,
-  'online-assessments': faChartBar,
-  statistics: faChartBar
+  'online-assessments': faBrain,
+  statistics: faChartLine
 };
 
 // Map of sidebar items for different user types
@@ -68,7 +72,7 @@ const sidebarConfig = {
   faculty: [
     { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },
     { id: 'student-evals', iconId: 'my-evaluations', label: 'Evaluations', path: '/dashboard/faculty/student-evals', isPage: false },
-    { id: 'statistics', iconId: 'reports', label: 'Statistics', path: '/dashboard/faculty/statistics', isPage: false },
+    { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/faculty/statistics', isPage: false },
   ],
   company: [
     { id: 'companyposts', iconId: 'listings', label: 'My Posts', path: '/dashboard/company/companyposts', isPage: false },
@@ -79,7 +83,7 @@ const sidebarConfig = {
   ],
   scad: [
     { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/scad', isPage: false },
-    { id: 'student-list', iconId: 'students', label: 'Student List', path: '/dashboard/scad/student-list', isPage: false },
+    { id: 'student-list', iconId: 'student-list', label: 'Student List', path: '/dashboard/scad/student-list', isPage: false },
     { id: 'browse-internships', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/scad/browse-internships', isPage: false },
     { id: 'student-evals', iconId: 'my-evaluations', label: 'Student Evaluations', path: '/dashboard/scad/student-evals', isPage: false },
     { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/scad/statistics', isPage: false },
