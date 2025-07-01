@@ -70,7 +70,7 @@ const sidebarConfig = {
   faculty: [
     { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },
     { id: 'student-evals', iconId: 'my-evaluations', label: 'Evaluations', path: '/dashboard/faculty/student-evals', isPage: false },
-    { id: 'statistics', iconId: 'faChartLine', label: 'Statistics', path: '/dashboard/faculty/statistics', isPage: false },
+    { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/faculty/statistics', isPage: false },
   ],
   company: [
     { id: 'companyposts', iconId: 'listings', label: 'My Posts', path: '/dashboard/company/companyposts', isPage: false },
