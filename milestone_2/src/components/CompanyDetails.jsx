@@ -18,6 +18,7 @@ export default function CompanyDetails({
   size,
   documentation = [],
   onCollapse,
+  onCompanyRemoval = () => { },
 }) {
   const [feedback, setFeedback] = useState(null); // 'accepted' | 'rejected' | null
 
@@ -37,12 +38,14 @@ export default function CompanyDetails({
   const handleAccept = () => {
     setFeedback('accepted');
     setTimeout(() => {
+      onCompanyRemoval(companyName);
       onCollapse && onCollapse();
     }, 1400);
   };
   const handleReject = () => {
     setFeedback('rejected');
     setTimeout(() => {
+      onCompanyRemoval(companyName);
       onCollapse && onCollapse();
     }, 1400);
   };

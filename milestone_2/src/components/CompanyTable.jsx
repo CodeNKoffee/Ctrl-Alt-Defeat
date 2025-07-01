@@ -9,7 +9,7 @@ import CompanyRow from './CompanyRow';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand } from "@fortawesome/free-solid-svg-icons";
 
-export default function CompanyTable({ companies, onSidebarToggle = () => { } }) {
+export default function CompanyTable({ companies, onSidebarToggle = () => { }, onCompanyRemoval = () => { } }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIndustry, setSelectedIndustry] = useState('');
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -159,6 +159,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { } })
                 onExpand={() => { }}
                 onCollapse={handleCloseSidebar}
                 onExpandModal={() => handleExpandModal(selectedCompany)}
+                onCompanyRemoval={onCompanyRemoval}
               />
             </div>
           </div>
@@ -174,6 +175,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { } })
         industry={modalCompany?.industry}
         size={modalCompany?.size}
         documentation={modalCompany?.documentation}
+        onCompanyRemoval={onCompanyRemoval}
       />
       <style jsx global>{`
         @keyframes slide-in {

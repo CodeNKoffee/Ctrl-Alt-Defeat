@@ -36,16 +36,19 @@ function ScadDashboardView() {
   // State to track if the sidebar (CompanyDetails) is open in CompanyTable
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Get unique industries and sizes from MOCK_COMPANIES
+  // State to manage companies - start with MOCK_COMPANIES
+  const [companies, setCompanies] = useState(MOCK_COMPANIES);
+
+  // Get unique industries and sizes from companies
   const uniqueIndustries = [
-    ...new Set(MOCK_COMPANIES.map(company => company.industry))
+    ...new Set(companies.map(company => company.industry))
   ].filter(Boolean).map(ind => ({ id: ind, title: ind }));
   const uniqueSizes = [
-    ...new Set(MOCK_COMPANIES.map(company => company.size))
+    ...new Set(companies.map(company => company.size))
   ].filter(Boolean).map(size => ({ id: size, title: size }));
 
   // Filter companies based on search, industry, and size
-  const filteredCompanies = MOCK_COMPANIES.filter(company => {
+  const filteredCompanies = companies.filter(company => {
     const matchesSearch =
       company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       company.industry.toLowerCase().includes(searchTerm.toLowerCase());
@@ -53,6 +56,11 @@ function ScadDashboardView() {
     const matchesSize = selectedSize === 'all' || company.size === selectedSize;
     return matchesSearch && matchesIndustry && matchesSize;
   });
+
+  // Handle company removal when accepted or rejected
+  const handleCompanyRemoval = (companyName) => {
+    setCompanies(prevCompanies => prevCompanies.filter(company => company.name !== companyName));
+  };
 
   useEffect(() => {
     const userSessionData = sessionStorage.getItem('userSession') || localStorage.getItem('userSession');
@@ -162,7 +170,7 @@ function ScadDashboardView() {
           filterSections={companyFilterSections}
         />
       </div>
-      <CompanyTable companies={filteredCompanies} onSidebarToggle={setSidebarOpen} />
+      <CompanyTable companies={filteredCompanies} onSidebarToggle={setSidebarOpen} onCompanyRemoval={handleCompanyRemoval} />
     </div>
   );
 }
