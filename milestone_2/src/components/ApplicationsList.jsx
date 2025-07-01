@@ -324,19 +324,17 @@ export default function ApplicationsList({
             {/* Expanded application details - NEW outer wrapper for accordion animation */}
             <div
               className={`
-                overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                overflow-hidden transition-all duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)]
                 transform-gpu
                 ${selectedApplication?.id === application.id ? 'max-h-[1000px]' : 'max-h-0'}
               `}
             >
-              {/* This div is the one that was previously conditionally rendered (selectedApplication?.id === application.id) */}
-              {/* It now handles its own opacity and contains the original structure, and is always rendered if the parent is, but opacity controls visibility */}
               <div
                 className={`
                   px-4 pt-4 pb-6 
                   bg-gray-50 border-t border-gray-200 
                   flex flex-col md:flex-row 
-                  transition-opacity duration-500 ease-in-out
+                  transition-opacity duration-[1200ms] ease-[cubic-bezier(0.4,0,0.2,1)]
                   ${selectedApplication?.id === application.id ? 'opacity-100 delay-300' : 'opacity-0'}
                 `}
               >
