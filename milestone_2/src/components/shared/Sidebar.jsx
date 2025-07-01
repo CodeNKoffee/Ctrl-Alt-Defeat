@@ -23,7 +23,8 @@ import {
   faRightFromBracket,
   faBell,
   faVideo,
-  faLock
+  faLock,
+  faListAlt
 } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
@@ -43,6 +44,7 @@ const iconMap = {
   'live-workshops': faVideo,
   profile: faUser,
   students: faGraduationCap,
+  'student-list': faListAlt,
   reports: faChartBar,
   companies: faBuilding,
   listings: faList,
@@ -81,7 +83,7 @@ const sidebarConfig = {
   ],
   scad: [
     { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/scad', isPage: false },
-    { id: 'student-list', iconId: 'students', label: 'Student List', path: '/dashboard/scad/student-list', isPage: false },
+    { id: 'student-list', iconId: 'student-list', label: 'Student List', path: '/dashboard/scad/student-list', isPage: false },
     { id: 'browse-internships', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/scad/browse-internships', isPage: false },
     { id: 'student-evals', iconId: 'my-evaluations', label: 'Student Evaluations', path: '/dashboard/scad/student-evals', isPage: false },
     { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/scad/statistics', isPage: false },
