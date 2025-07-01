@@ -1631,13 +1631,13 @@ function MyEvaluationsView() {
       <div className="px-4 pt-6">
         <EvaluationsInfoCard />
 
-        <ApplicationsFilterBar
+        {/* <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search evaluations by student or company name..."
 
           filterSections={filterSections}
-        />
+        /> */}
       </div>
       <EvaluationsDashboard
         evaluations={MOCK_EVALUATIONS}

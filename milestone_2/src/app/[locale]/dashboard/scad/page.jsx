@@ -1066,7 +1066,7 @@ function StudentEvalsView() {
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
         <InternshipsEvaluationAnalyticsInfoCard />
-        <ApplicationsFilterBar
+        {/* <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search evaluations by student, company, or title ..."
@@ -1075,7 +1075,7 @@ function StudentEvalsView() {
             setSelectedRating('all');
           }}
           filterSections={evalFilterSections}
-        />
+        /> */}
       </div>
       <EvaluationsDashboard evaluations={filteredEvals} stakeholder={"other"} />
     </div>
