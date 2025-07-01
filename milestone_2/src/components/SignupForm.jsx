@@ -16,7 +16,7 @@ export default function SignupForm() {
 
       // Show success toast notification
       toast.success('Application has been accepted! Please check your email.', {
-        position: 'bottom-right',
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -26,7 +26,7 @@ export default function SignupForm() {
 
       // For demo purposes, you can uncomment this to show an error toast
       // toast.error('Application has been rejected. Please check your email.', {
-      //   position: 'bottom-right',
+      //   position: 'top-right',
       //   autoClose: 5000,
       //   hideProgressBar: false,
       //   closeOnClick: true,
@@ -38,7 +38,7 @@ export default function SignupForm() {
 
       // Show error toast notification
       toast.error('Application has been rejected. Please check your email.', {
-        position: 'bottom-right',
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,

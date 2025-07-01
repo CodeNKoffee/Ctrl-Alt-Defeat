@@ -409,7 +409,7 @@ function ReportsView() {
 
   const handleExportPDF = () => {
     toast.info('PDF export started. Your document will be downloaded shortly.', {
-      position: "bottom-right",
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,

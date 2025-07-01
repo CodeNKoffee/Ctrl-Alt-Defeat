@@ -321,7 +321,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
   // Handle PDF export (just shows toast for now)
   const handleExportPDF = () => {
     toast.info('PDF export started. Your document will be downloaded shortly.', {
-      position: "bottom-right",
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,

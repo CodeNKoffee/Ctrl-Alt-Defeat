@@ -381,7 +381,7 @@ export default function ApplicationsList({
                       onClick={e => {
                         e.preventDefault();
                         toast.success('PDF download has started for the resume of the applicant', {
-                          position: 'bottom-right',
+                          position: 'top-right',
                           autoClose: 3000,
                           hideProgressBar: false,
                           closeOnClick: true,
@@ -406,7 +406,7 @@ export default function ApplicationsList({
                       onClick={e => {
                         e.preventDefault();
                         toast.success('PDF download has started for the cover letter of the applicant', {
-                          position: 'bottom-right',
+                          position: 'top-right',
                           autoClose: 3000,
                           hideProgressBar: false,
                           closeOnClick: true,
