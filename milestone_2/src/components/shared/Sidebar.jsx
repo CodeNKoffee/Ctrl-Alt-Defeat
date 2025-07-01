@@ -10,6 +10,8 @@ import {
   faChevronRight,
   faHome,
   faSearch,
+  faBrain,
+  faChartLine,
   faClipboardList,
   faBriefcase,
   faUser,
@@ -33,7 +35,7 @@ import ProBadge from './ProBadge';
 const iconMap = {
   home: faHome,
   browse: faSearch,
-  applied: faClipboardList,
+  applied: faFolder,
   'my-internships': faBriefcase,
   'my-reports': faChartBar,
   'my-evaluations': faClipboardList,
@@ -47,8 +49,8 @@ const iconMap = {
   applications: faFolder,
   logout: faRightFromBracket,
   notifications: faBell,
-  'online-assessments': faChartBar,
-  statistics: faChartBar
+  'online-assessments': faBrain,
+  statistics: faChartLine
 };
 
 // Map of sidebar items for different user types
@@ -68,7 +70,7 @@ const sidebarConfig = {
   faculty: [
     { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },
     { id: 'student-evals', iconId: 'my-evaluations', label: 'Evaluations', path: '/dashboard/faculty/student-evals', isPage: false },
-    { id: 'statistics', iconId: 'reports', label: 'Statistics', path: '/dashboard/faculty/statistics', isPage: false },
+    { id: 'statistics', iconId: 'faChartLine', label: 'Statistics', path: '/dashboard/faculty/statistics', isPage: false },
   ],
   company: [
     { id: 'companyposts', iconId: 'listings', label: 'My Posts', path: '/dashboard/company/companyposts', isPage: false },
