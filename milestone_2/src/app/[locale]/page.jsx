@@ -33,6 +33,7 @@ export default function Home() {
   const [selectedUserOption, setSelectedUserOption] = useState(null);
   const [isIconAnimating, setIsIconAnimating] = useState(false);
   const [clickedOptionId, setClickedOptionId] = useState(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const textContent = [
     { title: "", subtitle: "" },                             // Initial state
@@ -76,17 +77,27 @@ export default function Home() {
       setSelectedUserOption(userDetails);
       setClickedOptionId(userDetails.value);
       setIsIconAnimating(true);
+      setIsTransitioning(true);
+
+      // Start the 3D flip transition
       setTimeout(() => {
         setView('login');
-      }, 150);
+        setIsTransitioning(false);
+      }, 800); // Half of the total transition time
     }
   };
 
   const handleBackToOptions = () => {
-    setSelectedUserOption(null);
-    setClickedOptionId(null);
-    setIsIconAnimating(false);
-    setView('options');
+    setIsTransitioning(true);
+
+    // Start the reverse flip animation
+    setTimeout(() => {
+      setSelectedUserOption(null);
+      setClickedOptionId(null);
+      setIsIconAnimating(false);
+      setView('options');
+      setIsTransitioning(false);
+    }, 800);
   };
 
   const handleLogin = async (values) => {
@@ -184,8 +195,77 @@ export default function Home() {
     }),
   };
 
-  // Adjust the transition duration for the icon animation
-  const iconTransition = { duration: 1.5, ease: "easeInOut" }; // Set a fixed duration for consistency
+  // New 3D flip transition variants
+  const flipTransitionVariants = {
+    initial: {
+      rotateY: 0,
+      scale: 1,
+      opacity: 1
+    },
+    flip: {
+      rotateY: 90,
+      scale: 0.8,
+      opacity: 0.3,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    },
+    final: {
+      rotateY: 180,
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    },
+    exit: {
+      rotateY: 270,
+      scale: 0.8,
+      opacity: 0.3,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  // Reverse flip for going back (counter-clockwise rotation)
+  const reverseFlipVariants = {
+    initial: {
+      rotateY: 180,
+      scale: 1,
+      opacity: 1
+    },
+    flip: {
+      rotateY: 270, // Rotate counter-clockwise to 270° (opposite direction)
+      scale: 0.8,
+      opacity: 0.3,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    },
+    final: {
+      rotateY: 360, // Complete counter-clockwise rotation to 360° (same as 0°)
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    },
+    exit: {
+      rotateY: 450, // Continue counter-clockwise for exit
+      scale: 0.8,
+      opacity: 0.3,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col kontainer relative overflow-hidden">
@@ -290,10 +370,23 @@ export default function Home() {
             key="options"
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
-            exit={{}}
+            exit={{ opacity: 0 }}
             className="flex-grow"
+            style={{
+              perspective: "1000px",
+              transformStyle: "preserve-3d"
+            }}
           >
-            <div className="row h-full">
+            <motion.div
+              className="row h-full"
+              variants={isTransitioning ? flipTransitionVariants : {}}
+              initial="initial"
+              animate={isTransitioning ? "flip" : "initial"}
+              style={{
+                transformStyle: "preserve-3d",
+                backfaceVisibility: "hidden"
+              }}
+            >
               <div className="main">
                 <div className="flex flex-col items-center justify-center flex-grow">
                   {/* Header */}
@@ -313,10 +406,14 @@ export default function Home() {
                     {usersOptions.map((option) => (
                       <motion.div
                         key={option.value}
-                        exit={{
-                          opacity: clickedOptionId === option.value ? 1 : 0,
-                          scale: clickedOptionId === option.value ? 1 : 0.8,
-                          transition: iconTransition // Use the consistent transition
+                        whileHover={{
+                          scale: 1.05,
+                          rotateY: 5,
+                          transition: { duration: 0.2 }
+                        }}
+                        style={{
+                          transformStyle: "preserve-3d",
+                          perspective: "1000px"
                         }}
                       >
                         <ContinueOption
@@ -342,71 +439,118 @@ export default function Home() {
                   </motion.div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
 
         {view === 'login' && selectedUserOption && (
           <motion.div
             key="login"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="flex-grow flex flex-col pt-12 md:pt-0"
+            style={{
+              perspective: "1000px",
+              transformStyle: "preserve-3d"
+            }}
           >
-            <div className="absolute top-5 left-5 z-50">
-              <BackButton onClick={handleBackToOptions} />
-            </div>
-            <div className="flex-grow flex items-center justify-center py-8">
-              <main className="w-full flex flex-col-reverse xl:flex-row items-center justify-center gap-4 xl:gap-16 px-4">
-                <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
-                  <motion.div
-                    className="w-full max-w-[430px] px-4 z-[1000]"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, transition: { ...iconTransition, delay: isIconAnimating ? 0.2 : 0.4 } }}
-                  >
-                    <Blobs
-                      imageUrl={selectedUserOption.imageUrl}
-                      bgColor={selectedUserOption.bgColor}
-                      iconLayoutId={`user-icon-${selectedUserOption.value}`}
-                      animateKute={!isIconAnimating && view === 'login'}
-                      onIconAnimationComplete={handleIconAnimationComplete}
-                    />
-                  </motion.div>
-                  <motion.div
-                    className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0, transition: { delay: isIconAnimating ? 0.7 : 0.3, duration: 0.5 } }}
-                  >
-                    {selectedUserOption.value === 'company' && (
-                      <span className="text-black font-medium font-ibm-plex-sans">
-                        Not registered yet?{' '}
-                        <Link href={`/en/auth/signup?userType=${selectedUserOption.value}`} className="text-metallica-blue-off-charts underline">
-                          Sign up
-                        </Link>
-                      </span>
-                    )}
-                  </motion.div>
-                </div>
-
-                <motion.div
-                  className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0, transition: { delay: isIconAnimating ? 0.6 : 0.2, duration: 0.5 } }}
-                >
-                  <div className="w-full max-w-md">
-                    <Header
-                      text="Login"
-                      className="mb-8"
-                      size="text-6xl"
-                    />
-                    <LoginForm
-                      userType={selectedUserOption.value}
-                      onSubmit={handleLogin}
-                      key={selectedUserOption.value}
-                    />
+            <motion.div
+              className="flex-grow flex flex-col pt-12 md:pt-0"
+              variants={reverseFlipVariants}
+              initial="initial"
+              animate={isTransitioning ? "flip" : "final"}
+              exit="exit"
+              style={{
+                transformStyle: "preserve-3d",
+                backfaceVisibility: "hidden"
+              }}
+            >
+              <div className="absolute top-5 left-5 z-50">
+                <BackButton onClick={handleBackToOptions} />
+              </div>
+              <div className="flex-grow flex items-center justify-center py-8">
+                <main className="w-full flex flex-col-reverse xl:flex-row items-center justify-center gap-4 xl:gap-16 px-4">
+                  <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
+                    <motion.div
+                      className="w-full max-w-[430px] px-4 z-[1000]"
+                      initial={{ opacity: 0, rotateY: -90 }}
+                      animate={{
+                        opacity: 1,
+                        rotateY: 0,
+                        transition: {
+                          delay: isTransitioning ? 0.4 : 0.2,
+                          duration: 0.6,
+                          ease: "easeOut"
+                        }
+                      }}
+                      style={{ transformStyle: "preserve-3d" }}
+                    >
+                      <Blobs
+                        imageUrl={selectedUserOption.imageUrl}
+                        bgColor={selectedUserOption.bgColor}
+                        iconLayoutId={`user-icon-${selectedUserOption.value}`}
+                        animateKute={!isIconAnimating && view === 'login'}
+                        onIconAnimationComplete={handleIconAnimationComplete}
+                      />
+                    </motion.div>
+                    <motion.div
+                      className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8"
+                      initial={{ opacity: 0, y: 20, rotateY: -90 }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        rotateY: 0,
+                        transition: {
+                          delay: isTransitioning ? 0.6 : 0.4,
+                          duration: 0.5,
+                          ease: "easeOut"
+                        }
+                      }}
+                      style={{ transformStyle: "preserve-3d" }}
+                    >
+                      {selectedUserOption.value === 'company' && (
+                        <span className="text-black font-medium font-ibm-plex-sans">
+                          Not registered yet?{' '}
+                          <Link href={`/en/auth/signup?userType=${selectedUserOption.value}`} className="text-metallica-blue-off-charts underline">
+                            Sign up
+                          </Link>
+                        </span>
+                      )}
+                    </motion.div>
                   </div>
-                </motion.div>
-              </main>
-            </div>
+
+                  <motion.div
+                    className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0"
+                    initial={{ opacity: 0, x: 50, rotateY: 90 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      rotateY: 0,
+                      transition: {
+                        delay: isTransitioning ? 0.5 : 0.3,
+                        duration: 0.5,
+                        ease: "easeOut"
+                      }
+                    }}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    <div className="w-full max-w-md">
+                      <Header
+                        text="Login"
+                        className="mb-8"
+                        size="text-6xl"
+                      />
+                      <LoginForm
+                        userType={selectedUserOption.value}
+                        onSubmit={handleLogin}
+                        key={selectedUserOption.value}
+                      />
+                    </div>
+                  </motion.div>
+                </main>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
