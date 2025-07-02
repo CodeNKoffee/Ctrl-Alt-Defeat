@@ -195,58 +195,70 @@ export default function Home() {
     }),
   };
 
-  // Particle explosion transition variants
-  const explosionTransitionVariants = {
+  // Cinematic camera transition variants
+  const cinematicTransitionVariants = {
     initial: {
       scale: 1,
       opacity: 1,
-      filter: "blur(0px)"
+      y: 0,
+      filter: "blur(0px) brightness(1)",
+      transform: "perspective(1000px) rotateX(0deg)"
     },
-    explode: {
-      scale: [1, 1.5, 0.1],
-      opacity: [1, 0.8, 0],
-      filter: ["blur(0px)", "blur(10px)", "blur(20px)"],
+    cameraMove: {
+      scale: [1, 1.1, 0.8],
+      opacity: [1, 0.9, 0.3],
+      y: [0, -20, -60],
+      filter: ["blur(0px) brightness(1)", "blur(2px) brightness(0.8)", "blur(8px) brightness(0.4)"],
+      transform: ["perspective(1000px) rotateX(0deg)", "perspective(1000px) rotateX(5deg)", "perspective(1000px) rotateX(15deg)"],
       transition: {
-        duration: 0.6,
-        ease: "easeInOut",
-        times: [0, 0.3, 1]
+        duration: 1.2,
+        ease: [0.25, 0.46, 0.45, 0.94], // Custom cubic-bezier for cinematic feel
+        times: [0, 0.4, 1]
       }
     },
     final: {
       scale: 1,
       opacity: 1,
-      filter: "blur(0px)",
+      y: 0,
+      filter: "blur(0px) brightness(1)",
+      transform: "perspective(1000px) rotateX(0deg)",
       transition: {
-        duration: 0.4,
-        ease: "easeOut"
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
-  // Reverse explosion for going back
-  const reverseExplosionVariants = {
+  // Reverse cinematic transition
+  const reverseCinematicVariants = {
     initial: {
       scale: 1,
       opacity: 1,
-      filter: "blur(0px)"
+      y: 0,
+      filter: "blur(0px) brightness(1)",
+      transform: "perspective(1000px) rotateX(0deg)"
     },
-    implode: {
-      scale: [1, 0.1, 1.5],
-      opacity: [1, 0, 0.8],
-      filter: ["blur(0px)", "blur(20px)", "blur(10px)"],
+    cameraReturn: {
+      scale: [1, 0.9, 1.1],
+      opacity: [1, 0.7, 0.9],
+      y: [0, 30, -10],
+      filter: ["blur(0px) brightness(1)", "blur(3px) brightness(0.7)", "blur(1px) brightness(0.9)"],
+      transform: ["perspective(1000px) rotateX(0deg)", "perspective(1000px) rotateX(-8deg)", "perspective(1000px) rotateX(-2deg)"],
       transition: {
-        duration: 0.6,
-        ease: "easeInOut",
-        times: [0, 0.7, 1]
+        duration: 1.2,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        times: [0, 0.6, 1]
       }
     },
     final: {
       scale: 1,
       opacity: 1,
-      filter: "blur(0px)",
+      y: 0,
+      filter: "blur(0px) brightness(1)",
+      transform: "perspective(1000px) rotateX(0deg)",
       transition: {
-        duration: 0.4,
-        ease: "easeOut"
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
@@ -359,11 +371,12 @@ export default function Home() {
           >
             <motion.div
               className="row h-full"
-              variants={isTransitioning ? explosionTransitionVariants : {}}
+              variants={isTransitioning ? cinematicTransitionVariants : {}}
               initial="initial"
-              animate={isTransitioning ? "explode" : "initial"}
+              animate={isTransitioning ? "cameraMove" : "initial"}
               style={{
-                overflow: "hidden"
+                overflow: "hidden",
+                transformStyle: "preserve-3d"
               }}
             >
               <div className="main">
@@ -386,33 +399,37 @@ export default function Home() {
                       <motion.div
                         key={option.value}
                         whileHover={{
-                          scale: 1.1,
-                          y: -5,
-                          transition: { duration: 0.3, ease: "easeOut" }
+                          scale: 1.05,
+                          y: -3,
+                          filter: "brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.2))",
+                          transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
                         }}
                         animate={isTransitioning && clickedOptionId === option.value ? {
-                          scale: [1, 1.3, 0.1],
-                          rotate: [0, 180, 360],
-                          opacity: [1, 0.6, 0],
-                          y: [0, -30, -60],
-                          x: [0, Math.random() * 100 - 50, Math.random() * 200 - 100],
+                          scale: [1, 1.2, 1.4],
+                          y: [0, -15, -40],
+                          opacity: [1, 0.9, 0.7],
+                          filter: ["brightness(1)", "brightness(1.3)", "brightness(0.5) blur(2px)"],
+                          z: [0, 100, 200],
                           transition: {
-                            duration: 0.8,
-                            ease: "easeInOut",
-                            times: [0, 0.4, 1]
+                            duration: 1.2,
+                            ease: [0.25, 0.46, 0.45, 0.94],
+                            times: [0, 0.5, 1]
                           }
                         } : isTransitioning && clickedOptionId !== option.value ? {
-                          scale: [1, 0.8, 0.3],
-                          opacity: [1, 0.4, 0],
-                          y: [0, 20, 40],
+                          scale: [1, 0.95, 0.8],
+                          opacity: [1, 0.6, 0.3],
+                          y: [0, 10, 25],
+                          filter: ["brightness(1)", "brightness(0.7)", "brightness(0.3) blur(1px)"],
+                          z: [0, -50, -100],
                           transition: {
-                            duration: 0.6,
-                            ease: "easeInOut",
-                            times: [0, 0.3, 1]
+                            duration: 1.0,
+                            ease: [0.25, 0.46, 0.45, 0.94],
+                            times: [0, 0.4, 1]
                           }
                         } : {}}
                         style={{
-                          transformOrigin: "center center"
+                          transformOrigin: "center center",
+                          transformStyle: "preserve-3d"
                         }}
                       >
                         <ContinueOption
@@ -452,11 +469,12 @@ export default function Home() {
           >
             <motion.div
               className="flex-grow flex flex-col pt-12 md:pt-0"
-              variants={reverseExplosionVariants}
+              variants={reverseCinematicVariants}
               initial="initial"
-              animate={isTransitioning ? "implode" : "final"}
+              animate={isTransitioning ? "cameraReturn" : "final"}
               style={{
-                overflow: "hidden"
+                overflow: "hidden",
+                transformStyle: "preserve-3d"
               }}
             >
               <div className="absolute top-5 left-5 z-50">
@@ -467,16 +485,16 @@ export default function Home() {
                   <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
                     <motion.div
                       className="w-full max-w-[430px] px-4 z-[1000]"
-                      initial={{ opacity: 0, scale: 0.1, rotate: 180, y: -100 }}
+                      initial={{ opacity: 0, scale: 0.8, y: 50, filter: "blur(4px) brightness(0.7)" }}
                       animate={{
                         opacity: 1,
                         scale: 1,
-                        rotate: 0,
                         y: 0,
+                        filter: "blur(0px) brightness(1)",
                         transition: {
-                          delay: isTransitioning ? 0.8 : 0.4,
-                          duration: 1,
-                          ease: "easeOut"
+                          delay: isTransitioning ? 1.0 : 0.5,
+                          duration: 1.2,
+                          ease: [0.25, 0.46, 0.45, 0.94]
                         }
                       }}
                       style={{ transformOrigin: "center center" }}
@@ -491,16 +509,15 @@ export default function Home() {
                     </motion.div>
                     <motion.div
                       className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8"
-                      initial={{ opacity: 0, scale: 0.1, x: -50, rotate: -90 }}
+                      initial={{ opacity: 0, y: 30, filter: "blur(2px) brightness(0.8)" }}
                       animate={{
                         opacity: 1,
-                        scale: 1,
-                        x: 0,
-                        rotate: 0,
+                        y: 0,
+                        filter: "blur(0px) brightness(1)",
                         transition: {
-                          delay: isTransitioning ? 1.0 : 0.6,
-                          duration: 0.8,
-                          ease: "easeOut"
+                          delay: isTransitioning ? 1.2 : 0.7,
+                          duration: 1.0,
+                          ease: [0.25, 0.46, 0.45, 0.94]
                         }
                       }}
                       style={{ transformOrigin: "center center" }}
@@ -518,16 +535,15 @@ export default function Home() {
 
                   <motion.div
                     className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0"
-                    initial={{ opacity: 0, scale: 0.1, x: 100, rotate: 90 }}
+                    initial={{ opacity: 0, x: 80, filter: "blur(3px) brightness(0.6)" }}
                     animate={{
                       opacity: 1,
-                      scale: 1,
                       x: 0,
-                      rotate: 0,
+                      filter: "blur(0px) brightness(1)",
                       transition: {
-                        delay: isTransitioning ? 0.9 : 0.5,
-                        duration: 0.9,
-                        ease: "easeOut"
+                        delay: isTransitioning ? 1.1 : 0.6,
+                        duration: 1.1,
+                        ease: [0.25, 0.46, 0.45, 0.94]
                       }
                     }}
                     style={{ transformOrigin: "center center" }}
