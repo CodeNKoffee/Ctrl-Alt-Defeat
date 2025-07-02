@@ -195,74 +195,64 @@ export default function Home() {
     }),
   };
 
-  // New 3D flip transition variants
-  const flipTransitionVariants = {
+  // Morphing transition variants - icons transform into login form
+  const morphTransitionVariants = {
     initial: {
-      rotateY: 0,
       scale: 1,
-      opacity: 1
+      borderRadius: "50%",
+      width: "auto",
+      height: "auto"
     },
-    flip: {
-      rotateY: 90,
-      scale: 0.8,
-      opacity: 0.3,
+    morph: {
+      scale: [1, 1.2, 0.8],
+      borderRadius: ["50%", "25%", "12px"],
+      width: "100%",
+      height: "100vh",
       transition: {
-        duration: 0.4,
-        ease: "easeInOut"
+        duration: 0.8,
+        ease: "easeInOut",
+        times: [0, 0.5, 1]
       }
     },
     final: {
-      rotateY: 180,
       scale: 1,
-      opacity: 1,
+      borderRadius: "12px",
+      width: "100%",
+      height: "auto",
       transition: {
         duration: 0.4,
-        ease: "easeInOut"
-      }
-    },
-    exit: {
-      rotateY: 270,
-      scale: 0.8,
-      opacity: 0.3,
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut"
+        ease: "easeOut"
       }
     }
   };
 
-  // Reverse flip for going back (counter-clockwise rotation)
-  const reverseFlipVariants = {
+  // Reverse morph for going back
+  const reverseMorphVariants = {
     initial: {
-      rotateY: 180,
       scale: 1,
-      opacity: 1
+      borderRadius: "12px",
+      width: "100%",
+      height: "auto"
     },
-    flip: {
-      rotateY: 270, // Rotate counter-clockwise to 270° (opposite direction)
-      scale: 0.8,
-      opacity: 0.3,
+    morph: {
+      scale: [1, 0.8, 1.2],
+      borderRadius: ["12px", "25%", "50%"],
+      width: "auto",
+      height: "auto",
       transition: {
-        duration: 0.4,
-        ease: "easeInOut"
+        duration: 0.8,
+        ease: "easeInOut",
+        times: [0, 0.5, 1]
       }
     },
     final: {
-      rotateY: 360, // Complete counter-clockwise rotation to 360° (same as 0°)
       scale: 1,
-      opacity: 1,
+      borderRadius: "50%",
+      width: "auto",
+      height: "auto",
       transition: {
         duration: 0.4,
-        ease: "easeInOut"
-      }
-    },
-    exit: {
-      rotateY: 450, // Continue counter-clockwise for exit
-      scale: 0.8,
-      opacity: 0.3,
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut"
+        ease: "easeOut"
       }
     }
   };
@@ -372,19 +362,14 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="flex-grow"
-            style={{
-              perspective: "1000px",
-              transformStyle: "preserve-3d"
-            }}
           >
             <motion.div
               className="row h-full"
-              variants={isTransitioning ? flipTransitionVariants : {}}
+              variants={isTransitioning ? morphTransitionVariants : {}}
               initial="initial"
-              animate={isTransitioning ? "flip" : "initial"}
+              animate={isTransitioning ? "morph" : "initial"}
               style={{
-                transformStyle: "preserve-3d",
-                backfaceVisibility: "hidden"
+                overflow: "hidden"
               }}
             >
               <div className="main">
@@ -407,13 +392,22 @@ export default function Home() {
                       <motion.div
                         key={option.value}
                         whileHover={{
-                          scale: 1.05,
-                          rotateY: 5,
-                          transition: { duration: 0.2 }
+                          scale: 1.1,
+                          y: -5,
+                          transition: { duration: 0.3, ease: "easeOut" }
                         }}
+                        animate={isTransitioning && clickedOptionId === option.value ? {
+                          scale: [1, 1.5, 2],
+                          y: [0, -20, -40],
+                          opacity: [1, 0.8, 0],
+                          transition: {
+                            duration: 0.8,
+                            ease: "easeInOut",
+                            times: [0, 0.5, 1]
+                          }
+                        } : {}}
                         style={{
-                          transformStyle: "preserve-3d",
-                          perspective: "1000px"
+                          transformOrigin: "center center"
                         }}
                       >
                         <ContinueOption
@@ -450,20 +444,14 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="flex-grow flex flex-col pt-12 md:pt-0"
-            style={{
-              perspective: "1000px",
-              transformStyle: "preserve-3d"
-            }}
           >
             <motion.div
               className="flex-grow flex flex-col pt-12 md:pt-0"
-              variants={reverseFlipVariants}
+              variants={reverseMorphVariants}
               initial="initial"
-              animate={isTransitioning ? "flip" : "final"}
-              exit="exit"
+              animate={isTransitioning ? "morph" : "final"}
               style={{
-                transformStyle: "preserve-3d",
-                backfaceVisibility: "hidden"
+                overflow: "hidden"
               }}
             >
               <div className="absolute top-5 left-5 z-50">
@@ -474,17 +462,18 @@ export default function Home() {
                   <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
                     <motion.div
                       className="w-full max-w-[430px] px-4 z-[1000]"
-                      initial={{ opacity: 0, rotateY: -90 }}
+                      initial={{ opacity: 0, scale: 0.5, y: 50 }}
                       animate={{
                         opacity: 1,
-                        rotateY: 0,
+                        scale: 1,
+                        y: 0,
                         transition: {
-                          delay: isTransitioning ? 0.4 : 0.2,
-                          duration: 0.6,
+                          delay: isTransitioning ? 0.6 : 0.3,
+                          duration: 0.8,
                           ease: "easeOut"
                         }
                       }}
-                      style={{ transformStyle: "preserve-3d" }}
+                      style={{ transformOrigin: "center center" }}
                     >
                       <Blobs
                         imageUrl={selectedUserOption.imageUrl}
@@ -496,18 +485,18 @@ export default function Home() {
                     </motion.div>
                     <motion.div
                       className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8"
-                      initial={{ opacity: 0, y: 20, rotateY: -90 }}
+                      initial={{ opacity: 0, scale: 0.8, y: 30 }}
                       animate={{
                         opacity: 1,
+                        scale: 1,
                         y: 0,
-                        rotateY: 0,
                         transition: {
-                          delay: isTransitioning ? 0.6 : 0.4,
-                          duration: 0.5,
+                          delay: isTransitioning ? 0.8 : 0.5,
+                          duration: 0.6,
                           ease: "easeOut"
                         }
                       }}
-                      style={{ transformStyle: "preserve-3d" }}
+                      style={{ transformOrigin: "center center" }}
                     >
                       {selectedUserOption.value === 'company' && (
                         <span className="text-black font-medium font-ibm-plex-sans">
@@ -522,18 +511,18 @@ export default function Home() {
 
                   <motion.div
                     className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0"
-                    initial={{ opacity: 0, x: 50, rotateY: 90 }}
+                    initial={{ opacity: 0, scale: 0.7, x: 100 }}
                     animate={{
                       opacity: 1,
+                      scale: 1,
                       x: 0,
-                      rotateY: 0,
                       transition: {
-                        delay: isTransitioning ? 0.5 : 0.3,
-                        duration: 0.5,
+                        delay: isTransitioning ? 0.7 : 0.4,
+                        duration: 0.7,
                         ease: "easeOut"
                       }
                     }}
-                    style={{ transformStyle: "preserve-3d" }}
+                    style={{ transformOrigin: "center center" }}
                   >
                     <div className="w-full max-w-md">
                       <Header
