@@ -195,30 +195,27 @@ export default function Home() {
     }),
   };
 
-  // Morphing transition variants - icons transform into login form
-  const morphTransitionVariants = {
+  // Particle explosion transition variants
+  const explosionTransitionVariants = {
     initial: {
       scale: 1,
-      borderRadius: "50%",
-      width: "auto",
-      height: "auto"
+      opacity: 1,
+      filter: "blur(0px)"
     },
-    morph: {
-      scale: [1, 1.2, 0.8],
-      borderRadius: ["50%", "25%", "12px"],
-      width: "100%",
-      height: "100vh",
+    explode: {
+      scale: [1, 1.5, 0.1],
+      opacity: [1, 0.8, 0],
+      filter: ["blur(0px)", "blur(10px)", "blur(20px)"],
       transition: {
-        duration: 0.8,
+        duration: 0.6,
         ease: "easeInOut",
-        times: [0, 0.5, 1]
+        times: [0, 0.3, 1]
       }
     },
     final: {
       scale: 1,
-      borderRadius: "12px",
-      width: "100%",
-      height: "auto",
+      opacity: 1,
+      filter: "blur(0px)",
       transition: {
         duration: 0.4,
         ease: "easeOut"
@@ -226,30 +223,27 @@ export default function Home() {
     }
   };
 
-  // Reverse morph for going back
-  const reverseMorphVariants = {
+  // Reverse explosion for going back
+  const reverseExplosionVariants = {
     initial: {
       scale: 1,
-      borderRadius: "12px",
-      width: "100%",
-      height: "auto"
+      opacity: 1,
+      filter: "blur(0px)"
     },
-    morph: {
-      scale: [1, 0.8, 1.2],
-      borderRadius: ["12px", "25%", "50%"],
-      width: "auto",
-      height: "auto",
+    implode: {
+      scale: [1, 0.1, 1.5],
+      opacity: [1, 0, 0.8],
+      filter: ["blur(0px)", "blur(20px)", "blur(10px)"],
       transition: {
-        duration: 0.8,
+        duration: 0.6,
         ease: "easeInOut",
-        times: [0, 0.5, 1]
+        times: [0, 0.7, 1]
       }
     },
     final: {
       scale: 1,
-      borderRadius: "50%",
-      width: "auto",
-      height: "auto",
+      opacity: 1,
+      filter: "blur(0px)",
       transition: {
         duration: 0.4,
         ease: "easeOut"
@@ -365,9 +359,9 @@ export default function Home() {
           >
             <motion.div
               className="row h-full"
-              variants={isTransitioning ? morphTransitionVariants : {}}
+              variants={isTransitioning ? explosionTransitionVariants : {}}
               initial="initial"
-              animate={isTransitioning ? "morph" : "initial"}
+              animate={isTransitioning ? "explode" : "initial"}
               style={{
                 overflow: "hidden"
               }}
@@ -397,13 +391,24 @@ export default function Home() {
                           transition: { duration: 0.3, ease: "easeOut" }
                         }}
                         animate={isTransitioning && clickedOptionId === option.value ? {
-                          scale: [1, 1.5, 2],
-                          y: [0, -20, -40],
-                          opacity: [1, 0.8, 0],
+                          scale: [1, 1.3, 0.1],
+                          rotate: [0, 180, 360],
+                          opacity: [1, 0.6, 0],
+                          y: [0, -30, -60],
+                          x: [0, Math.random() * 100 - 50, Math.random() * 200 - 100],
                           transition: {
                             duration: 0.8,
                             ease: "easeInOut",
-                            times: [0, 0.5, 1]
+                            times: [0, 0.4, 1]
+                          }
+                        } : isTransitioning && clickedOptionId !== option.value ? {
+                          scale: [1, 0.8, 0.3],
+                          opacity: [1, 0.4, 0],
+                          y: [0, 20, 40],
+                          transition: {
+                            duration: 0.6,
+                            ease: "easeInOut",
+                            times: [0, 0.3, 1]
                           }
                         } : {}}
                         style={{
@@ -447,9 +452,9 @@ export default function Home() {
           >
             <motion.div
               className="flex-grow flex flex-col pt-12 md:pt-0"
-              variants={reverseMorphVariants}
+              variants={reverseExplosionVariants}
               initial="initial"
-              animate={isTransitioning ? "morph" : "final"}
+              animate={isTransitioning ? "implode" : "final"}
               style={{
                 overflow: "hidden"
               }}
@@ -462,14 +467,15 @@ export default function Home() {
                   <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
                     <motion.div
                       className="w-full max-w-[430px] px-4 z-[1000]"
-                      initial={{ opacity: 0, scale: 0.5, y: 50 }}
+                      initial={{ opacity: 0, scale: 0.1, rotate: 180, y: -100 }}
                       animate={{
                         opacity: 1,
                         scale: 1,
+                        rotate: 0,
                         y: 0,
                         transition: {
-                          delay: isTransitioning ? 0.6 : 0.3,
-                          duration: 0.8,
+                          delay: isTransitioning ? 0.8 : 0.4,
+                          duration: 1,
                           ease: "easeOut"
                         }
                       }}
@@ -485,14 +491,15 @@ export default function Home() {
                     </motion.div>
                     <motion.div
                       className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8"
-                      initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                      initial={{ opacity: 0, scale: 0.1, x: -50, rotate: -90 }}
                       animate={{
                         opacity: 1,
                         scale: 1,
-                        y: 0,
+                        x: 0,
+                        rotate: 0,
                         transition: {
-                          delay: isTransitioning ? 0.8 : 0.5,
-                          duration: 0.6,
+                          delay: isTransitioning ? 1.0 : 0.6,
+                          duration: 0.8,
                           ease: "easeOut"
                         }
                       }}
@@ -511,14 +518,15 @@ export default function Home() {
 
                   <motion.div
                     className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0"
-                    initial={{ opacity: 0, scale: 0.7, x: 100 }}
+                    initial={{ opacity: 0, scale: 0.1, x: 100, rotate: 90 }}
                     animate={{
                       opacity: 1,
                       scale: 1,
                       x: 0,
+                      rotate: 0,
                       transition: {
-                        delay: isTransitioning ? 0.7 : 0.4,
-                        duration: 0.7,
+                        delay: isTransitioning ? 0.9 : 0.5,
+                        duration: 0.9,
                         ease: "easeOut"
                       }
                     }}
