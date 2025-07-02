@@ -195,70 +195,50 @@ export default function Home() {
     }),
   };
 
-  // Cinematic camera transition variants
-  const cinematicTransitionVariants = {
+  // Simple fade and slide transition variants
+  const simpleTransitionVariants = {
     initial: {
-      scale: 1,
       opacity: 1,
-      y: 0,
-      filter: "blur(0px) brightness(1)",
-      transform: "perspective(1000px) rotateX(0deg)"
+      y: 0
     },
-    cameraMove: {
-      scale: [1, 1.1, 0.8],
-      opacity: [1, 0.9, 0.3],
-      y: [0, -20, -60],
-      filter: ["blur(0px) brightness(1)", "blur(2px) brightness(0.8)", "blur(8px) brightness(0.4)"],
-      transform: ["perspective(1000px) rotateX(0deg)", "perspective(1000px) rotateX(5deg)", "perspective(1000px) rotateX(15deg)"],
+    fadeOut: {
+      opacity: 0,
+      y: -20,
       transition: {
-        duration: 1.2,
-        ease: [0.25, 0.46, 0.45, 0.94], // Custom cubic-bezier for cinematic feel
-        times: [0, 0.4, 1]
+        duration: 0.4,
+        ease: "easeOut"
       }
     },
     final: {
-      scale: 1,
       opacity: 1,
       y: 0,
-      filter: "blur(0px) brightness(1)",
-      transform: "perspective(1000px) rotateX(0deg)",
       transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
+        duration: 0.4,
+        ease: "easeOut"
       }
     }
   };
 
-  // Reverse cinematic transition
-  const reverseCinematicVariants = {
+  // Reverse simple transition
+  const reverseSimpleVariants = {
     initial: {
-      scale: 1,
       opacity: 1,
-      y: 0,
-      filter: "blur(0px) brightness(1)",
-      transform: "perspective(1000px) rotateX(0deg)"
+      y: 0
     },
-    cameraReturn: {
-      scale: [1, 0.9, 1.1],
-      opacity: [1, 0.7, 0.9],
-      y: [0, 30, -10],
-      filter: ["blur(0px) brightness(1)", "blur(3px) brightness(0.7)", "blur(1px) brightness(0.9)"],
-      transform: ["perspective(1000px) rotateX(0deg)", "perspective(1000px) rotateX(-8deg)", "perspective(1000px) rotateX(-2deg)"],
+    fadeIn: {
+      opacity: 0,
+      y: 20,
       transition: {
-        duration: 1.2,
-        ease: [0.25, 0.46, 0.45, 0.94],
-        times: [0, 0.6, 1]
+        duration: 0.4,
+        ease: "easeOut"
       }
     },
     final: {
-      scale: 1,
       opacity: 1,
       y: 0,
-      filter: "blur(0px) brightness(1)",
-      transform: "perspective(1000px) rotateX(0deg)",
       transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
+        duration: 0.4,
+        ease: "easeOut"
       }
     }
   };
@@ -371,12 +351,11 @@ export default function Home() {
           >
             <motion.div
               className="row h-full"
-              variants={isTransitioning ? cinematicTransitionVariants : {}}
+              variants={isTransitioning ? simpleTransitionVariants : {}}
               initial="initial"
-              animate={isTransitioning ? "cameraMove" : "initial"}
+              animate={isTransitioning ? "fadeOut" : "initial"}
               style={{
-                overflow: "hidden",
-                transformStyle: "preserve-3d"
+                overflow: "hidden"
               }}
             >
               <div className="main">
@@ -400,36 +379,25 @@ export default function Home() {
                         key={option.value}
                         whileHover={{
                           scale: 1.05,
-                          y: -3,
-                          filter: "brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.2))",
-                          transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
+                          y: -2,
+                          transition: { duration: 0.2, ease: "easeOut" }
                         }}
                         animate={isTransitioning && clickedOptionId === option.value ? {
-                          scale: [1, 1.2, 1.4],
-                          y: [0, -15, -40],
-                          opacity: [1, 0.9, 0.7],
-                          filter: ["brightness(1)", "brightness(1.3)", "brightness(0.5) blur(2px)"],
-                          z: [0, 100, 200],
+                          scale: 1.1,
+                          opacity: 0.8,
                           transition: {
-                            duration: 1.2,
-                            ease: [0.25, 0.46, 0.45, 0.94],
-                            times: [0, 0.5, 1]
+                            duration: 0.4,
+                            ease: "easeOut"
                           }
                         } : isTransitioning && clickedOptionId !== option.value ? {
-                          scale: [1, 0.95, 0.8],
-                          opacity: [1, 0.6, 0.3],
-                          y: [0, 10, 25],
-                          filter: ["brightness(1)", "brightness(0.7)", "brightness(0.3) blur(1px)"],
-                          z: [0, -50, -100],
+                          opacity: 0.4,
                           transition: {
-                            duration: 1.0,
-                            ease: [0.25, 0.46, 0.45, 0.94],
-                            times: [0, 0.4, 1]
+                            duration: 0.4,
+                            ease: "easeOut"
                           }
                         } : {}}
                         style={{
-                          transformOrigin: "center center",
-                          transformStyle: "preserve-3d"
+                          transformOrigin: "center center"
                         }}
                       >
                         <ContinueOption
@@ -469,12 +437,11 @@ export default function Home() {
           >
             <motion.div
               className="flex-grow flex flex-col pt-12 md:pt-0"
-              variants={reverseCinematicVariants}
+              variants={reverseSimpleVariants}
               initial="initial"
-              animate={isTransitioning ? "cameraReturn" : "final"}
+              animate={isTransitioning ? "fadeIn" : "final"}
               style={{
-                overflow: "hidden",
-                transformStyle: "preserve-3d"
+                overflow: "hidden"
               }}
             >
               <div className="absolute top-5 left-5 z-50">
@@ -485,16 +452,14 @@ export default function Home() {
                   <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
                     <motion.div
                       className="w-full max-w-[430px] px-4 z-[1000]"
-                      initial={{ opacity: 0, scale: 0.8, y: 50, filter: "blur(4px) brightness(0.7)" }}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{
                         opacity: 1,
-                        scale: 1,
                         y: 0,
-                        filter: "blur(0px) brightness(1)",
                         transition: {
-                          delay: isTransitioning ? 1.0 : 0.5,
-                          duration: 1.2,
-                          ease: [0.25, 0.46, 0.45, 0.94]
+                          delay: isTransitioning ? 0.3 : 0.2,
+                          duration: 0.3,
+                          ease: "easeOut"
                         }
                       }}
                       style={{ transformOrigin: "center center" }}
@@ -509,15 +474,14 @@ export default function Home() {
                     </motion.div>
                     <motion.div
                       className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8"
-                      initial={{ opacity: 0, y: 30, filter: "blur(2px) brightness(0.8)" }}
+                      initial={{ opacity: 0, y: 15 }}
                       animate={{
                         opacity: 1,
                         y: 0,
-                        filter: "blur(0px) brightness(1)",
                         transition: {
-                          delay: isTransitioning ? 1.2 : 0.7,
-                          duration: 1.0,
-                          ease: [0.25, 0.46, 0.45, 0.94]
+                          delay: isTransitioning ? 0.4 : 0.3,
+                          duration: 0.3,
+                          ease: "easeOut"
                         }
                       }}
                       style={{ transformOrigin: "center center" }}
@@ -535,15 +499,14 @@ export default function Home() {
 
                   <motion.div
                     className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0"
-                    initial={{ opacity: 0, x: 80, filter: "blur(3px) brightness(0.6)" }}
+                    initial={{ opacity: 0, x: 30 }}
                     animate={{
                       opacity: 1,
                       x: 0,
-                      filter: "blur(0px) brightness(1)",
                       transition: {
-                        delay: isTransitioning ? 1.1 : 0.6,
-                        duration: 1.1,
-                        ease: [0.25, 0.46, 0.45, 0.94]
+                        delay: isTransitioning ? 0.5 : 0.4,
+                        duration: 0.3,
+                        ease: "easeOut"
                       }
                     }}
                     style={{ transformOrigin: "center center" }}
