@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ContinueOption from "@/components/ContinueOption";
 import { useRouter } from "next/navigation";
 import { createTypingAnimation } from "../../../utils";
+import { MutatingDots } from 'react-loader-spinner';
 
 export default function Home() {
   const router = useRouter();
@@ -34,6 +35,7 @@ export default function Home() {
   const [isIconAnimating, setIsIconAnimating] = useState(false);
   const [clickedOptionId, setClickedOptionId] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const textContent = [
     { title: "", subtitle: "" },                             // Initial state
@@ -79,10 +81,16 @@ export default function Home() {
       setIsIconAnimating(true);
       setIsTransitioning(true);
 
-      // Immediate transition
+      // Show loader after fade out
       setTimeout(() => {
+        setShowLoader(true);
         setView('login');
-        setIsTransitioning(false);
+
+        // Hide loader and complete transition
+        setTimeout(() => {
+          setShowLoader(false);
+          setIsTransitioning(false);
+        }, 1600);
       }, 150);
     }
   };
@@ -90,7 +98,7 @@ export default function Home() {
   const handleBackToOptions = () => {
     setIsTransitioning(true);
 
-    // Immediate transition back
+    // Simple fade transition back (no loader)
     setTimeout(() => {
       setSelectedUserOption(null);
       setClickedOptionId(null);
@@ -445,7 +453,33 @@ export default function Home() {
           </motion.div>
         )}
 
-        {view === 'login' && selectedUserOption && (
+        {showLoader && (
+          <motion.div
+            key="loader"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex-grow flex items-center justify-center"
+          >
+            <div className="flex flex-col items-center space-y-4">
+              <MutatingDots
+                height={120}
+                width={120}
+                color="#2A5F74"
+                secondaryColor="#5DB2C7"
+                radius={12}
+                ariaLabel="mutating-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
+              <p className="text-metallica-blue-950 font-semibold text-xl mt-4">Loading...</p>
+            </div>
+          </motion.div>
+        )}
+
+        {view === 'login' && selectedUserOption && !showLoader && (
           <motion.div
             key="login"
             {...fadeTransition}
