@@ -152,12 +152,12 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 15, delay: 0.1 }}
               >
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center ${isEditMode ? 'bg-[#318FA8]' : 'bg-[#22C55E]'}`}>
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center ${feedbackType === 'saveDraft' ? 'bg-[#318FA8]' : 'bg-[#22C55E]'}`}>
                   <FontAwesomeIcon icon={faCheck} className="text-3xl text-white" />
                 </div>
               </motion.div>
               <h3 className="text-2xl font-bold text-[#2A5F74] mb-2">
-                {isEditMode ? 'Updated!' : 'Success!'}
+                {feedbackType === 'saveDraft' ? 'Updated!' : 'Success!'}
               </h3>
               <p className="text-gray-700 text-center text-sm">
                 {feedbackType === 'submit'
