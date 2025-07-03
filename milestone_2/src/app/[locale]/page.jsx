@@ -90,8 +90,8 @@ export default function Home() {
         setTimeout(() => {
           setShowLoader(false);
           setIsTransitioning(false);
-        }, 1600);
-      }, 150);
+        }, 2000); // Increased from 1600ms to 2000ms for slower transition
+      }, 300); // Increased from 150ms to 300ms for smoother fade out
     }
   };
 
@@ -105,7 +105,7 @@ export default function Home() {
       setIsIconAnimating(false);
       setView('options');
       setIsTransitioning(false);
-    }, 150);
+    }, 250); // Increased from 150ms to 250ms for smoother back transition
   };
 
   const handleLogin = async (values) => {
@@ -289,7 +289,7 @@ export default function Home() {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
     exit: { opacity: 0 },
-    transition: { duration: 0.15 }
+    transition: { duration: 0.4, ease: [0.23, 1, 0.32, 1] } // Increased duration and smooth easing
   };
 
   return (
@@ -402,7 +402,7 @@ export default function Home() {
                   {/* Header */}
                   <motion.div
                     animate={{ opacity: isTransitioning ? 0 : 1 }}
-                    transition={{ duration: 0.15 }}
+                    transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   >
                     <Header
                       text="Continue As"
@@ -420,8 +420,8 @@ export default function Home() {
                         whileHover={{ scale: 1.02 }}
                         animate={isTransitioning ? {
                           opacity: 0,
-                          scale: 0.98,
-                          transition: { duration: 0.15 }
+                          scale: 0.95,
+                          transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] }
                         } : {}}
                         style={{ transformOrigin: "center center" }}
                       >
@@ -441,7 +441,7 @@ export default function Home() {
                   {/* Motivational Text */}
                   <motion.div
                     animate={{ opacity: isTransitioning ? 0 : 1 }}
-                    transition={{ duration: 0.15 }}
+                    transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   >
                     <div className="motivational-text font-ibm-plex-sans">
                       Tailored experience for every role.
@@ -494,9 +494,9 @@ export default function Home() {
                   <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
                     <motion.div
                       className="w-full max-w-[430px] px-4 z-[1000]"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.15 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
                     >
                       <Blobs
                         imageUrl={selectedUserOption.imageUrl}
@@ -508,9 +508,9 @@ export default function Home() {
                     </motion.div>
                     <motion.div
                       className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.15 }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
                     >
                       {selectedUserOption.value === 'company' && (
                         <span className="text-black font-medium font-ibm-plex-sans">
@@ -525,9 +525,9 @@ export default function Home() {
 
                   <motion.div
                     className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.15 }}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.7, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
                   >
                     <div className="w-full max-w-md">
                       <Header
