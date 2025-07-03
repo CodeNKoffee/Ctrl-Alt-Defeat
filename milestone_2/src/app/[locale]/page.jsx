@@ -458,8 +458,8 @@ export default function Home() {
             key="loader"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, transition: { duration: 0.5 } }} // Ultra-fast exit
+            transition={{ duration: 0.35 }}
             className="flex-grow flex items-center justify-center"
           >
             <div className="flex flex-col items-center space-y-4">
