@@ -316,7 +316,7 @@ export default function ApplicationsList({
               {/* Expand/Collapse icon */}
               <FontAwesomeIcon
                 icon={faChevronDown}
-                className={`text-gray-400 ml-2 flex-shrink-0 transition-transform duration-300 ease-in-out 
+                className={`text-gray-400 ml-2 flex-shrink-0 transition-transform duration-500 ease-in-out 
                   ${selectedApplication?.id === application.id ? 'rotate-180' : 'rotate-0'}`}
               />
             </div>
@@ -324,7 +324,7 @@ export default function ApplicationsList({
             {/* Expanded application details - NEW outer wrapper for accordion animation */}
             <div
               className={`
-                overflow-hidden transition-all duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)]
+                overflow-hidden transition-all duration-[1100ms] ease-[cubic-bezier(0.4,0,0.2,1)]
                 transform-gpu
                 ${selectedApplication?.id === application.id ? 'max-h-[1000px]' : 'max-h-0'}
               `}
@@ -335,7 +335,7 @@ export default function ApplicationsList({
                   bg-gray-50 border-t border-gray-200 
                   flex flex-col md:flex-row 
                   transition-opacity duration-[1200ms] ease-[cubic-bezier(0.4,0,0.2,1)]
-                  ${selectedApplication?.id === application.id ? 'opacity-100 delay-300' : 'opacity-0'}
+                  ${selectedApplication?.id === application.id ? 'opacity-100 delay-500' : 'opacity-0'}
                 `}
               >
                 {/* Left column - Student details (removed animate-slideInFromLeft and py-4) */}
