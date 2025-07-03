@@ -90,7 +90,7 @@ export default function Home() {
         setTimeout(() => {
           setShowLoader(false);
           setIsTransitioning(false);
-        }, 2000); // Increased from 1600ms to 2000ms for slower transition
+        }, 1600); // Reduced from 2000ms to 1400ms to decrease gap before login animations
       }, 300); // Increased from 150ms to 300ms for smoother fade out
     }
   };
@@ -496,7 +496,7 @@ export default function Home() {
                       className="w-full max-w-[430px] px-4 z-[1000]"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                      transition={{ duration: 2, ease: [0.23, 1, 0.32, 1] }}
                     >
                       <Blobs
                         imageUrl={selectedUserOption.imageUrl}
@@ -510,7 +510,7 @@ export default function Home() {
                       className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                      transition={{ duration: 2, ease: [0.23, 1, 0.32, 1] }}
                     >
                       {selectedUserOption.value === 'company' && (
                         <span className="text-black font-medium font-ibm-plex-sans">
@@ -527,7 +527,7 @@ export default function Home() {
                     className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0"
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.7, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+                    transition={{ duration: 2, ease: [0.23, 1, 0.32, 1] }}
                   >
                     <div className="w-full max-w-md">
                       <Header
