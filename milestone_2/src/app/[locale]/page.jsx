@@ -79,25 +79,25 @@ export default function Home() {
       setIsIconAnimating(true);
       setIsTransitioning(true);
 
-      // Start the 3D flip transition
+      // Immediate transition
       setTimeout(() => {
         setView('login');
         setIsTransitioning(false);
-      }, 800); // Half of the total transition time
+      }, 150);
     }
   };
 
   const handleBackToOptions = () => {
     setIsTransitioning(true);
 
-    // Start the reverse flip animation
+    // Immediate transition back
     setTimeout(() => {
       setSelectedUserOption(null);
       setClickedOptionId(null);
       setIsIconAnimating(false);
       setView('options');
       setIsTransitioning(false);
-    }, 800);
+    }, 150);
   };
 
   const handleLogin = async (values) => {
@@ -243,10 +243,51 @@ export default function Home() {
     }
   };
 
+  // Clean Apple-style transition
+  const appleTransitionVariants = {
+    initial: {
+      opacity: 1,
+      scale: 1
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.97,
+      transition: {
+        duration: 0.2,
+        ease: [0.32, 0.72, 0, 1]
+      }
+    },
+    enter: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.2,
+        ease: [0.32, 0.72, 0, 1]
+      }
+    }
+  };
+
+  // Subtle hover effect
+  const appleHoverAnimation = {
+    scale: 1.02,
+    transition: {
+      duration: 0.2,
+      ease: [0.32, 0.72, 0, 1]
+    }
+  };
+
+  // Simple fade transition
+  const fadeTransition = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+    transition: { duration: 0.15 }
+  };
+
   return (
     <div className="min-h-screen flex flex-col kontainer relative overflow-hidden">
       <ToastContainer />
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="wait">
         {view === 'welcome' && showWelcome && (
           <motion.div
             key="welcome"
@@ -344,25 +385,16 @@ export default function Home() {
         {view === 'options' && !showWelcome && (
           <motion.div
             key="options"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            {...fadeTransition}
             className="flex-grow"
           >
-            <motion.div
-              className="row h-full"
-              variants={isTransitioning ? simpleTransitionVariants : {}}
-              initial="initial"
-              animate={isTransitioning ? "fadeOut" : "initial"}
-              style={{
-                overflow: "hidden"
-              }}
-            >
+            <div className="row h-full">
               <div className="main">
                 <div className="flex flex-col items-center justify-center flex-grow">
                   {/* Header */}
                   <motion.div
-                    exit={{ opacity: selectedUserOption ? 0 : 1, transition: { duration: 0.4 } }}
+                    animate={{ opacity: isTransitioning ? 0 : 1 }}
+                    transition={{ duration: 0.15 }}
                   >
                     <Header
                       text="Continue As"
@@ -377,28 +409,13 @@ export default function Home() {
                     {usersOptions.map((option) => (
                       <motion.div
                         key={option.value}
-                        whileHover={{
-                          scale: 1.05,
-                          y: -2,
-                          transition: { duration: 0.2, ease: "easeOut" }
-                        }}
-                        animate={isTransitioning && clickedOptionId === option.value ? {
-                          scale: 1.1,
-                          opacity: 0.8,
-                          transition: {
-                            duration: 0.4,
-                            ease: "easeOut"
-                          }
-                        } : isTransitioning && clickedOptionId !== option.value ? {
-                          opacity: 0.4,
-                          transition: {
-                            duration: 0.4,
-                            ease: "easeOut"
-                          }
+                        whileHover={{ scale: 1.02 }}
+                        animate={isTransitioning ? {
+                          opacity: 0,
+                          scale: 0.98,
+                          transition: { duration: 0.15 }
                         } : {}}
-                        style={{
-                          transformOrigin: "center center"
-                        }}
+                        style={{ transformOrigin: "center center" }}
                       >
                         <ContinueOption
                           name={option.name}
@@ -415,7 +432,8 @@ export default function Home() {
 
                   {/* Motivational Text */}
                   <motion.div
-                    exit={{ opacity: selectedUserOption ? 0 : 1, transition: { duration: 0.4 } }}
+                    animate={{ opacity: isTransitioning ? 0 : 1 }}
+                    transition={{ duration: 0.15 }}
                   >
                     <div className="motivational-text font-ibm-plex-sans">
                       Tailored experience for every role.
@@ -423,27 +441,17 @@ export default function Home() {
                   </motion.div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
 
         {view === 'login' && selectedUserOption && (
           <motion.div
             key="login"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            {...fadeTransition}
             className="flex-grow flex flex-col pt-12 md:pt-0"
           >
-            <motion.div
-              className="flex-grow flex flex-col pt-12 md:pt-0"
-              variants={reverseSimpleVariants}
-              initial="initial"
-              animate={isTransitioning ? "fadeIn" : "final"}
-              style={{
-                overflow: "hidden"
-              }}
-            >
+            <div className="flex-grow flex flex-col pt-12 md:pt-0">
               <div className="absolute top-5 left-5 z-50">
                 <BackButton onClick={handleBackToOptions} />
               </div>
@@ -452,39 +460,23 @@ export default function Home() {
                   <div className="w-full xl:w-2/5 flex flex-col-reverse xl:flex-col items-center">
                     <motion.div
                       className="w-full max-w-[430px] px-4 z-[1000]"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                          delay: isTransitioning ? 0.3 : 0.2,
-                          duration: 0.3,
-                          ease: "easeOut"
-                        }
-                      }}
-                      style={{ transformOrigin: "center center" }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.15 }}
                     >
                       <Blobs
                         imageUrl={selectedUserOption.imageUrl}
                         bgColor={selectedUserOption.bgColor}
                         iconLayoutId={`user-icon-${selectedUserOption.value}`}
-                        animateKute={!isIconAnimating && view === 'login'}
+                        animateKute={false}
                         onIconAnimationComplete={handleIconAnimationComplete}
                       />
                     </motion.div>
                     <motion.div
                       className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8"
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                          delay: isTransitioning ? 0.4 : 0.3,
-                          duration: 0.3,
-                          ease: "easeOut"
-                        }
-                      }}
-                      style={{ transformOrigin: "center center" }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.15 }}
                     >
                       {selectedUserOption.value === 'company' && (
                         <span className="text-black font-medium font-ibm-plex-sans">
@@ -499,17 +491,9 @@ export default function Home() {
 
                   <motion.div
                     className="w-full xl:w-2/5 flex flex-col items-center mb-4 xl:mb-0"
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      transition: {
-                        delay: isTransitioning ? 0.5 : 0.4,
-                        duration: 0.3,
-                        ease: "easeOut"
-                      }
-                    }}
-                    style={{ transformOrigin: "center center" }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.15 }}
                   >
                     <div className="w-full max-w-md">
                       <Header
@@ -526,7 +510,7 @@ export default function Home() {
                   </motion.div>
                 </main>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
