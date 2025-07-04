@@ -742,6 +742,7 @@ export const mockCompanyReviews = [
 // Mock evaluations for students
 export const MOCK_EVALUATIONS = [
   {
+    id: 1,
     studentName: "Layla Khaled",
     major: "Management",
     companyName: "Juhayna Food Industries",
@@ -756,6 +757,7 @@ export const MOCK_EVALUATIONS = [
     status: "submitted"
   },
   {
+    id: 2,
     studentName: "Hatem Soliman",
     major: "Media Engineering & Technology",
     companyName: "Vodafone Egypt",
@@ -770,6 +772,7 @@ export const MOCK_EVALUATIONS = [
     status: "submitted"
   },
   {
+    id: 3,
     studentName: "Mezo Maestro",
     major: "Media Engineering & Technology",
     companyName: "Orange Egypt",
@@ -784,6 +787,7 @@ export const MOCK_EVALUATIONS = [
     status: "submitted"
   },
   {
+    id: 4,
     studentName: "John Magdy",
     major: "Management",
     companyName: "Nestlé Egypt",
@@ -798,6 +802,7 @@ export const MOCK_EVALUATIONS = [
     status: "saved"
   },
   {
+    id: 5,
     studentName: "Rana Tarek",
     major: "Management",
     companyName: "Nestlé Egypt",
@@ -812,6 +817,7 @@ export const MOCK_EVALUATIONS = [
     status: "saved"
   },
   {
+    id: 6,
     studentName: "Selim Hatem",
     major: "Management",
     companyName: "Nestlé Egypt",

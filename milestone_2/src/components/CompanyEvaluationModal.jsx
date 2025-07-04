@@ -50,20 +50,28 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
   const [feedbackType, setFeedbackType] = useState('');
 
   useEffect(() => {
-    if (evaluationToEdit) {
-      setForm({
-        skillRatings: evaluationToEdit.skillRatings || Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
-        skillOther: evaluationToEdit.skillOther || "",
-        technical: evaluationToEdit.technical || Object.fromEntries(technicalAttributes.map(attr => [attr, ""])),
-        technicalOther: evaluationToEdit.technicalOther || ""
-      });
-    } else {
-      setForm({
-        skillRatings: Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
-        skillOther: "",
-        technical: Object.fromEntries(technicalAttributes.map(attr => [attr, ""])),
-        technicalOther: ""
-      });
+    if (isOpen) {
+      // Reset states when modal opens
+      setFeedbackType('');
+      setShowFeedbackModal(false);
+      setSubmitting(false);
+      setDraftStatus('');
+
+      if (evaluationToEdit) {
+        setForm({
+          skillRatings: evaluationToEdit.skillRatings || Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
+          skillOther: evaluationToEdit.skillOther || "",
+          technical: evaluationToEdit.technical || Object.fromEntries(technicalAttributes.map(attr => [attr, ""])),
+          technicalOther: evaluationToEdit.technicalOther || ""
+        });
+      } else {
+        setForm({
+          skillRatings: Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
+          skillOther: "",
+          technical: Object.fromEntries(technicalAttributes.map(attr => [attr, ""])),
+          technicalOther: ""
+        });
+      }
     }
   }, [evaluationToEdit, isOpen]);
 
@@ -96,12 +104,14 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('handleSubmit called - setting feedbackType to submit');
     setSubmitting(true);
-    const submitData = isEditMode ? { ...form, id: evaluationToEdit.id } : form;
+    const submitData = isEditMode ? { ...form, id: evaluationToEdit.id, status: 'submitted' } : { ...form, status: 'submitted' };
 
     await new Promise(resolve => setTimeout(resolve, 1000));
     onSubmit(submitData, isEditMode);
 
+    console.log('Setting feedbackType to submit');
     setFeedbackType('submit');
     setShowFeedbackModal(true);
     setSubmitting(false);
@@ -113,18 +123,23 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
   };
 
   const handleSaveDraft = async () => {
+    console.log('handleSaveDraft called - setting feedbackType to saveDraft');
     setDraftStatus("saving");
-    const draftData = isEditMode ? { ...form, id: evaluationToEdit.id } : form;
+    const draftData = isEditMode ? { ...form, id: evaluationToEdit.id, status: 'saved' } : { ...form, status: 'saved' };
 
     await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log("Draft saved:", draftData);
 
+    // Actually call onSubmit to update the parent component's state
+    onSubmit(draftData, isEditMode);
+
+    console.log('Setting feedbackType to saveDraft');
     setFeedbackType('saveDraft');
     setShowFeedbackModal(true);
     setDraftStatus("saved");
 
     setTimeout(() => {
       setShowFeedbackModal(false);
+      onClose();
     }, 1800);
   };
 
@@ -157,6 +172,7 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
                 </div>
               </motion.div>
               <h3 className="text-2xl font-bold text-[#2A5F74] mb-2">
+                {console.log('Feedback modal rendering with feedbackType:', feedbackType)}
                 {feedbackType === 'saveDraft' ? 'Updated!' : 'Success!'}
               </h3>
               <p className="text-gray-700 text-center text-sm">
@@ -294,7 +310,6 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
               isLoading={submitting}
               loadingText="Submitting..."
               disabled={submitting || draftStatus === 'saving'}
-              onClick={handleSubmit}
               width="w-full"
             />
             <CustomButton
