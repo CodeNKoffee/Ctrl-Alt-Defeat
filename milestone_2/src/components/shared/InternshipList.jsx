@@ -32,6 +32,7 @@ export default function InternshipList({
   statuses = [],
   customFilterPanel,
   onApplicationCompleted,
+  onTriggerReportCreate,
   appliedInternshipIds = new Set(),
   showDatePicker = false,
   showSidebar = false,
@@ -261,7 +262,12 @@ export default function InternshipList({
   };
 
   const handleTriggerReportCreate = (internship) => {
-    setReportingInternship(internship);
+    // If parent provided onTriggerReportCreate, call that instead
+    if (onTriggerReportCreate) {
+      onTriggerReportCreate(internship);
+    } else {
+      setReportingInternship(internship);
+    }
   };
 
   const handleReportClose = () => {
@@ -304,7 +310,8 @@ export default function InternshipList({
 
   return (
     <>
-      {reportingInternship ? (
+      {/* Only show internal report creation if parent didn't provide onTriggerReportCreate */}
+      {reportingInternship && !onTriggerReportCreate ? (
         <ReportCreationDashboard
           onAddTile={handleReportAddTile}
           onCancel={handleReportClose}

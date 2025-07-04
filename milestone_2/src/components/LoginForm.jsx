@@ -109,7 +109,8 @@ export default function LoginForm({ userType, onSubmit }) {
           <button
             type="submit"
             disabled={isSubmitting || !isValid || !dirty}
-            className="font-bold w-full py-3 px-4 bg-metallica-blue-off-charts text-white rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed enabled:hover:bg-metallica-blue-950"
+            className="font-bold w-full py-3 px-4 bg-metallica-blue-off-charts text-white rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed 
+            enabled:hover:bg-metallica-blue-950"
           >
             {isSubmitting ? 'Logging in...' : 'Log in'}
           </button>

@@ -164,7 +164,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                 </StatusBadge>
               )}
 
-              {type === 'my' && (
+              {(type === 'my' || type === 'mine') && (
                 <StatusBadge
                   color={
                     internship.status === 'current' ? 'bg-blue-100 text-blue-800 border-blue-400' :
