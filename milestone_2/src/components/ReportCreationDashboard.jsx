@@ -156,7 +156,7 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                Success!
+                {feedbackType === 'draft' ? 'Updated!' : 'Success!'}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
                 {feedbackType === 'submit'
@@ -322,19 +322,19 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
                       setDraftStatus('saving');
                       await new Promise(res => setTimeout(res, 800));
                       setReport({ ...filledReport, courses: selectedCourses });
-                      onAddTile({
-                        ...filledReport,
-                        courses: selectedCourses,
-                        status: isEditMode ? 'updated_draft' : 'draft'
-                      });
 
-                      // Show success feedback instead of just saved status
+                      // Show success feedback first
                       setDraftStatus("");
-                      setFeedback('success');
                       setFeedbackType('draft');
+                      setFeedback('success');
 
                       // Wait for animation and then close
                       setTimeout(() => {
+                        onAddTile({
+                          ...filledReport,
+                          courses: selectedCourses,
+                          status: isEditMode ? 'updated_draft' : 'draft'
+                        });
                         setFeedback(null);
                         if (onCancel) onCancel();
                       }, 1500);

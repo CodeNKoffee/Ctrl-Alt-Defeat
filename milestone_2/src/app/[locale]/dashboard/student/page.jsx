@@ -545,7 +545,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           searchPlaceholder="Search internships by job title or company name ..."
           onClearFilters={clearAllFilters}
           filterSections={filterSections}
-          showDatePicker={true}
+          // showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
         />
@@ -777,7 +777,7 @@ function AppliedInternshipsView() {
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search applications by company or position..."
           filterSections={filterSections}
-          showDatePicker={true}
+          // showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
           marginBottom='mt-4'
@@ -953,7 +953,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search internships by company or position..."
           filterSections={filterSections}
-          showDatePicker={true}
+          // showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
           marginBottom='mb-2'
