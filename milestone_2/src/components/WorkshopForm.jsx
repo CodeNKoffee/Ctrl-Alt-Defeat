@@ -478,13 +478,13 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                 <button
                   type="button"
                   onClick={onCancel}
-                  className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="px-6 py-4 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 transition-colors shadow-sm font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-[#2a5f74] text-white rounded-lg hover:bg-[#1a3f54] transition-colors shadow-md"
+                  className="px-6 py-4 bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white rounded-full hover:bg-[#1a3f54] transition-colors shadow-sm font-medium"
                 >
                   {mode === 'create' ? 'Create Workshop' : 'Update Workshop'}
                 </button>
