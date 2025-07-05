@@ -111,37 +111,39 @@ export default function ReportViewer({ report, userType = "faculty" }) {
       if (textRef.current.contains(startNode) && textRef.current.contains(endNode)) {
         // Determine which section the selection is from
         let section = 'body'; // default
-        let sectionElement = null;
+        let textContainer = null;
         let currentNode = startNode;
         while (currentNode && currentNode !== textRef.current) {
           if (currentNode.parentNode) {
             const parentClasses = currentNode.parentNode.className;
             if (typeof parentClasses === 'string' && parentClasses.includes('introduction-section')) {
               section = 'introduction';
-              sectionElement = currentNode.parentNode;
+              // Find the actual text container within the section
+              const textElement = currentNode.parentNode.querySelector('.report-text');
+              textContainer = textElement || currentNode.parentNode;
               break;
             }
             if (typeof parentClasses === 'string' && parentClasses.includes('body-section')) {
               section = 'body';
-              sectionElement = currentNode.parentNode;
+              // Find the actual text container within the section
+              const textElement = currentNode.parentNode.querySelector('.report-text');
+              textContainer = textElement || currentNode.parentNode;
               break;
             }
           }
           currentNode = currentNode.parentNode;
         }
 
-        // Calculate the text offset within the section
+        // Calculate the text offset within the actual text content
         let sectionStartOffset = 0;
         let sectionEndOffset = 0;
 
-        if (sectionElement) {
-          const sectionText = sectionElement.textContent || '';
-          const selectedText = selection.toString();
+        if (textContainer) {
           const beforeSelection = range.cloneRange();
-          beforeSelection.selectNodeContents(sectionElement);
+          beforeSelection.selectNodeContents(textContainer);
           beforeSelection.setEnd(range.startContainer, range.startOffset);
           sectionStartOffset = beforeSelection.toString().length;
-          sectionEndOffset = sectionStartOffset + selectedText.length;
+          sectionEndOffset = sectionStartOffset + selection.toString().length;
         }
 
         setSelectedText(selection.toString());
