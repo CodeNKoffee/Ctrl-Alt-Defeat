@@ -39,7 +39,7 @@ export default function CustomButton({
         flex items-center justify-center focus:outline-none focus:ring-2
         ${variantStyles[variant] || variantStyles.primary}
         ${width}
-        ${(disabled || isLoading) ? "opacity-60 cursor-not-allowed" : "transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"}
+        ${(disabled || isLoading) ? "opacity-60 cursor-not-allowed" : "cursor-pointer transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"}
         border
       `}
     >

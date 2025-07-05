@@ -111,7 +111,7 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
             type="submit"
             disabled={isSubmitting || !isValid || !dirty || isLoggingIn}
             className="font-bold w-full py-3 px-4 bg-metallica-blue-off-charts text-white rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed 
-            enabled:hover:bg-metallica-blue-950 flex items-center justify-center"
+            enabled:hover:bg-metallica-blue-950 flex items-center justify-center cursor-pointer"
           >
             {isLoggingIn ? (
               <div className="flex items-center space-x-2">
