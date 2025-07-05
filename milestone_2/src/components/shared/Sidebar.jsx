@@ -24,7 +24,8 @@ import {
   faBell,
   faVideo,
   faLock,
-  faListAlt
+  faListAlt,
+  faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
@@ -97,6 +98,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
   const [isMobile, setIsMobile] = useState(false);
   const [prevView, setPrevView] = useState(currentView);
   const [activeItemPosition, setActiveItemPosition] = useState(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const itemRefs = useRef({});
 
   const pathname = usePathname();
@@ -196,18 +198,28 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
   };
 
   // Handle logout
-  const handleLogout = () => {
-    dispatch({ type: LOGOUT_USER });
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
 
-    // Clear session and local storage for user data only
-    // Keep welcomeShown flags to prevent welcome animation on logout
-    if (typeof window !== 'undefined') {
-      sessionStorage.removeItem('userSession');
-      localStorage.removeItem('userSession');
-      // Don't remove welcomeShown flags to avoid showing animation again after logout
+    try {
+      // Add a brief delay to show loading state
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      dispatch({ type: LOGOUT_USER });
+
+      // Clear session and local storage for user data only
+      // Keep welcomeShown flags to prevent welcome animation on logout
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem('userSession');
+        localStorage.removeItem('userSession');
+        // Don't remove welcomeShown flags to avoid showing animation again after logout
+      }
+
+      router.push(`/${locale}/`);
+    } catch (error) {
+      console.error('Logout error:', error);
+      setIsLoggingOut(false);
     }
-
-    router.push(`/${locale}/`);
   };
 
   return (
@@ -381,14 +393,23 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             text="Logout"
             width="w-full"
             className="rounded-lg"
+            isLoading={isLoggingOut}
+            loadingText="Logging out..."
+            useAnimatedDots={true}
+            disabled={isLoggingOut}
           />
         ) : (
           <button
             onClick={handleLogout}
-            className="p-2.5 w-10 h-10 rounded-full flex items-center justify-center bg-[#E2F4F7] text-red-600 hover:bg-red-100 transition-all duration-200 border border-[#E0ECF2] focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2"
+            disabled={isLoggingOut}
+            className={`p-2.5 w-10 h-10 rounded-full flex items-center justify-center bg-[#E2F4F7] text-red-600 hover:bg-red-100 transition-all duration-200 border border-[#E0ECF2] focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 ${isLoggingOut ? 'opacity-50 cursor-not-allowed' : ''}`}
             aria-label="Logout"
           >
-            <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
+            {isLoggingOut ? (
+              <FontAwesomeIcon icon={faSpinner} className="animate-spin" size="lg" />
+            ) : (
+              <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
+            )}
           </button>
         )}
       </div>
