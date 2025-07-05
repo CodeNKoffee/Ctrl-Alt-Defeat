@@ -6,8 +6,9 @@ import { Formik, Form, Field } from "formik";
 import PasswordInputField from "@/components/PasswordInputField";
 import FloatingLabelInput from "@/components/FloatingLabelInput";
 import { loginValidationSchema } from "../../utils/validationSchemas";
+import { MutatingDots } from 'react-loader-spinner';
 
-export default function LoginForm({ userType, onSubmit }) {
+export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
   const [rememberMe, setRememberMe] = useState(false);
   const [initialValues, setInitialValues] = useState({
     email: '',
@@ -108,11 +109,28 @@ export default function LoginForm({ userType, onSubmit }) {
 
           <button
             type="submit"
-            disabled={isSubmitting || !isValid || !dirty}
+            disabled={isSubmitting || !isValid || !dirty || isLoggingIn}
             className="font-bold w-full py-3 px-4 bg-metallica-blue-off-charts text-white rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed 
-            enabled:hover:bg-metallica-blue-950"
+            enabled:hover:bg-metallica-blue-950 flex items-center justify-center"
           >
-            {isSubmitting ? 'Logging in...' : 'Log in'}
+            {isLoggingIn ? (
+              <div className="flex items-center space-x-2">
+                <MutatingDots
+                  height={20}
+                  width={20}
+                  color="#ffffff"
+                  secondaryColor="#ffffff"
+                  radius={2}
+                  ariaLabel="mutating-dots-loading"
+                  visible={true}
+                />
+                <span>Logging in...</span>
+              </div>
+            ) : isSubmitting ? (
+              'Logging in...'
+            ) : (
+              'Log in'
+            )}
           </button>
 
           {/* <div className="text-center text-sm text-gray-600">
