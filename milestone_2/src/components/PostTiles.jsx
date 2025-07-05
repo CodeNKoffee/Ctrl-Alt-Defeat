@@ -322,8 +322,8 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                     Post Preview</h2>
                   <div className="bg-white rounded-lg shadow-md p-6 border border-[var(--metallica-blue-100)] flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <h3 className="text-xl font-bold text-[var(--metallica-blue-800)]">
+                      <div className="flex-1 min-w-0 mr-4">
+                        <h3 className="text-xl font-bold text-[var(--metallica-blue-800)] break-words overflow-wrap-anywhere">
                           {postPreview.title || "Job Title"}
                         </h3>
                         <div className="flex flex-wrap items-center gap-2 mt-1">
