@@ -160,7 +160,7 @@ function ScadDashboardView() {
 
   return (
     <div className="w-full px-6 py-4">
-      <div className={`px-4 pt-6 transition-all duration-600 ${sidebarOpen ? 'pr-[420px]' : ''}`}>
+      <div className="px-4 pt-6 transition-all duration-600">
         <CompanyPartnershipReviewPortalInfoCard />
         <ApplicationsFilterBar
           searchTerm={searchTerm}

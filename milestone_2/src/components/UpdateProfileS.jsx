@@ -724,7 +724,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                Success!
+                Updated!
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
                 Your profile has been successfully updated.

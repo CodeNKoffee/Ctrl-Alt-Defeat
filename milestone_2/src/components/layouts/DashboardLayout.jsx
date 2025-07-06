@@ -18,6 +18,7 @@ export default function DashboardLayout({
   showSidebar = true,
   currentViewId,
   onViewChange,
+  sidebarOpen = false,
 }) {
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const router = useRouter();
@@ -300,7 +301,7 @@ export default function DashboardLayout({
             </div>
           </div>
 
-          <div className="bg-metallica-blue-50 rounded-xl shadow-sm border border-gray-200">
+          <div className={`bg-metallica-blue-50 rounded-xl shadow-sm border border-gray-200 transition-all duration-500 ${sidebarOpen ? 'mr-[420px]' : ''}`}>
             {title && (
               <div className="w-full pl-10 pt-6 pb-2">
                 <h2 className="text-3xl font-bold text-left text-[#2a5f74] relative">
