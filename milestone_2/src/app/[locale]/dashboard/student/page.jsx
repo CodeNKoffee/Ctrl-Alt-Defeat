@@ -962,7 +962,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         />
 
         {/* Status Tabs with Colored Dots */}
-        <div className="w-full max-w-6xl mx-auto my-4">
+        <div className="w-full max-w-6xl mx-auto !mt-10 !mb-0">
           <div className="flex flex-wrap gap-2 items-center">
             <button
               onClick={() => setActiveTab('all')}
@@ -1034,6 +1034,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         setActiveTab={setActiveTab}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
+        padding="pt-3"
       />
     </div>
   );
