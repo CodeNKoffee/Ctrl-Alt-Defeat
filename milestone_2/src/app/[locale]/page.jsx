@@ -170,6 +170,34 @@ export default function Home() {
     }
   };
 
+  // Add event listener for Enter key on login view
+  useEffect(() => {
+    const handleEnterKeyPress = (event) => {
+      // Check if we're on the login view and Enter key is pressed
+      if (view === 'login' && event.key === 'Enter' && !isLoggingIn && !showLoader) {
+        // Prevent default behavior to avoid conflicts
+        event.preventDefault();
+
+        // Find the login form and trigger its submission
+        const loginForm = document.querySelector('form');
+        if (loginForm) {
+          // Trigger form submission which will call handleLogin
+          loginForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        }
+      }
+    };
+
+    // Only add event listener when on login view
+    if (view === 'login' && selectedUserOption && !showLoader) {
+      document.addEventListener('keydown', handleEnterKeyPress);
+
+      // Cleanup function to remove event listener
+      return () => {
+        document.removeEventListener('keydown', handleEnterKeyPress);
+      };
+    }
+  }, [view, selectedUserOption, showLoader, isLoggingIn]); // Dependencies to re-run when these change
+
   const handleIconAnimationComplete = () => {
     setIsIconAnimating(false);
   };
