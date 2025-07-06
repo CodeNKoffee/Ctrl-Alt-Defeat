@@ -42,7 +42,7 @@ export default function InternshipVideoSidebar({ userMajor, videoUrl, videoTitle
               <span className="bg-[#D9F0F4]/50 p-1.5 rounded-full mr-2 flex-shrink-0 flex items-center justify-center">
                 <FontAwesomeIcon icon={faBook} className="text-[#3298BA] text-xs" />
               </span>
-              <a href="#" className="text-[#3298BA] hover:underline hover:text-[#2a5f74] transition-colors">Academic Requirements Guide</a>
+              <a href="" className="text-[#3298BA] hover:underline hover:text-[#2a5f74] transition-colors">Academic Requirements Guide</a>
             </li>
             <li className="flex items-start">
               <span className="bg-[#D9F0F4]/50 p-1.5 rounded-full mr-2 flex-shrink-0 flex items-center justify-center">

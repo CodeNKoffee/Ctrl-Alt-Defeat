@@ -821,6 +821,10 @@ function MyInternshipsView({ onTriggerReportCreate }) {
 
   const handleFilterChange = (filterName, value) => {
     setFilters(prev => ({ ...prev, [filterName]: value }));
+    // Sync with activeTab when status filter changes
+    if (filterName === 'status') {
+      setActiveTab(value);
+    }
   };
 
   const filterSections = [
@@ -828,7 +832,8 @@ function MyInternshipsView({ onTriggerReportCreate }) {
       name: 'Status',
       options: [
         { id: 'current', title: 'Current' },
-        { id: 'completed', title: 'Completed' }
+        { id: 'completed', title: 'Completed' },
+        { id: 'evaluated', title: 'Evaluated' }
       ],
       selected: filters.status,
       onChange: (value) => handleFilterChange('status', value),
@@ -958,17 +963,23 @@ function MyInternshipsView({ onTriggerReportCreate }) {
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
           marginBottom='mb-2'
-          onClearFilters={() => setFilters({ status: 'all', company: 'all', position: 'all' })}
+          onClearFilters={() => {
+            setFilters({ status: 'all', company: 'all', position: 'all' });
+            setActiveTab('all');
+          }}
         />
 
         {/* Status Tabs with Colored Dots */}
         <div className="w-full max-w-6xl mx-auto !mt-10 !mb-0">
           <div className="flex flex-wrap gap-2 items-center">
             <button
-              onClick={() => setActiveTab('all')}
+              onClick={() => {
+                setActiveTab('all');
+                setFilters(prev => ({ ...prev, status: 'all' }));
+              }}
               className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${activeTab === 'all'
-                  ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
-                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
                 }`}
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
@@ -976,10 +987,13 @@ function MyInternshipsView({ onTriggerReportCreate }) {
               ALL
             </button>
             <button
-              onClick={() => setActiveTab('current')}
+              onClick={() => {
+                setActiveTab('current');
+                setFilters(prev => ({ ...prev, status: 'current' }));
+              }}
               className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${activeTab === 'current'
-                  ? 'bg-blue-100 text-blue-800 border-2 border-blue-400'
-                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-800 hover:border-blue-400'
+                ? 'bg-blue-100 text-blue-800 border-2 border-blue-400'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-800 hover:border-blue-400'
                 }`}
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'current' ? 'bg-blue-600' : 'bg-gray-300'
@@ -987,10 +1001,13 @@ function MyInternshipsView({ onTriggerReportCreate }) {
               CURRENT
             </button>
             <button
-              onClick={() => setActiveTab('completed')}
+              onClick={() => {
+                setActiveTab('completed');
+                setFilters(prev => ({ ...prev, status: 'completed' }));
+              }}
               className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${activeTab === 'completed'
-                  ? 'bg-green-100 text-green-800 border-2 border-green-400'
-                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400'
+                ? 'bg-green-100 text-green-800 border-2 border-green-400'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400'
                 }`}
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'completed' ? 'bg-green-600' : 'bg-gray-300'
@@ -998,10 +1015,13 @@ function MyInternshipsView({ onTriggerReportCreate }) {
               COMPLETED
             </button>
             <button
-              onClick={() => setActiveTab('evaluated')}
+              onClick={() => {
+                setActiveTab('evaluated');
+                setFilters(prev => ({ ...prev, status: 'evaluated' }));
+              }}
               className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${activeTab === 'evaluated'
-                  ? 'bg-purple-100 text-purple-800 border-2 border-purple-400'
-                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400'
+                ? 'bg-purple-100 text-purple-800 border-2 border-purple-400'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400'
                 }`}
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'evaluated' ? 'bg-purple-600' : 'bg-gray-300'
