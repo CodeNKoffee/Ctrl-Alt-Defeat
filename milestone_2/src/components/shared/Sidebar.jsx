@@ -303,6 +303,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                       className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
                       onClick={() => !isExpanded && setIsExpanded(false)}
                       ref={el => itemRefs.current[item.id] = el}
+                      title={!isExpanded ? item.label : undefined}
                     >
                       {itemContent}
                     </Link>
@@ -310,7 +311,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     <div
                       className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
-                      title="PRO feature"
+                      title={!isExpanded ? "PRO feature - " + item.label : "PRO feature"}
                     >
                       {itemContent}
                     </div>
@@ -325,6 +326,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                       onClick={() => handleViewChange(item.id)}
                       className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
+                      title={!isExpanded ? item.label : undefined}
                     >
                       {itemContent}
                     </button>
@@ -332,7 +334,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     <div
                       className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
-                      title="PRO feature"
+                      title={!isExpanded ? "PRO feature - " + item.label : "PRO feature"}
                     >
                       {itemContent}
                     </div>
@@ -404,6 +406,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             disabled={isLoggingOut}
             className={`p-2.5 w-10 h-10 rounded-full flex items-center justify-center bg-[#E2F4F7] text-red-600 hover:bg-red-100 transition-all duration-200 border border-[#E0ECF2] focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 ${isLoggingOut ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             aria-label="Logout"
+            title={!isExpanded ? (isLoggingOut ? "Logging out..." : "Logout") : undefined}
           >
             {isLoggingOut ? (
               <FontAwesomeIcon icon={faSpinner} className="animate-spin" size="lg" />
