@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faXmark, faChevronDown, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from '@/components/DatePicker';
 
-// Add a color map for status values
+// Add a color map for status values and content types
 const STATUS_COLOR_MAP = {
   pending: 'bg-yellow-600',
   accepted: 'bg-green-600',
@@ -12,9 +12,12 @@ const STATUS_COLOR_MAP = {
   current: 'bg-blue-600',
   completed: 'bg-green-600',
   evaluated: 'bg-purple-600',
+  // Content Type colors
+  all: 'bg-[#5DB2C7]',
+  recommended: 'bg-pink-800',
 };
 
-// Add a color map for status values (for pills)
+// Add a color map for status values and content types (for pills)
 const STATUS_PILL_STYLE_MAP = {
   pending: {
     color: 'bg-yellow-100 text-yellow-800 border-2 border-yellow-400',
@@ -43,6 +46,15 @@ const STATUS_PILL_STYLE_MAP = {
   evaluated: {
     color: 'bg-purple-100 text-purple-800 border-2 border-purple-400',
     badgeColor: 'bg-purple-600',
+  },
+  // Content Type styles
+  all: {
+    color: 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]',
+    badgeColor: 'bg-[#5DB2C7]',
+  },
+  recommended: {
+    color: 'bg-pink-100 text-pink-800 border-2 border-pink-400',
+    badgeColor: 'bg-pink-800',
   },
 };
 
@@ -198,8 +210,8 @@ export default function ApplicationsFilterBar({
                         className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 flex items-center ${section.selected === option.id.toString() ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
                         onClick={() => section.onChange(option.id.toString())}
                       >
-                        {/* Add color dot for status sections only */}
-                        {section.name.toLowerCase() === 'status' && STATUS_COLOR_MAP[option.id] && (
+                        {/* Add color dot for status and content type sections */}
+                        {(section.name.toLowerCase() === 'status' || section.name.toLowerCase() === 'content type') && STATUS_COLOR_MAP[option.id] && (
                           <span className={`inline-block w-2 h-2 rounded-full mr-2 ${STATUS_COLOR_MAP[option.id]}`}></span>
                         )}
                         {option.title || option.label || option.name}
@@ -224,7 +236,7 @@ export default function ApplicationsFilterBar({
             <span className="text-sm text-[#2a5f74] font-medium">Active Filters:</span>
             {filterSections.map(section => (
               section.selected && section.selected !== 'all' ? (
-                section.name.toLowerCase() === 'status' && STATUS_PILL_STYLE_MAP[section.selected] ? (
+                (section.name.toLowerCase() === 'status' || section.name.toLowerCase() === 'content type') && STATUS_PILL_STYLE_MAP[section.selected] ? (
                   <div
                     key={section.name}
                     className={`flex items-center px-3 py-1.5 rounded-full text-xs font-medium h-[38px] transition-all mr-2 ${STATUS_PILL_STYLE_MAP[section.selected].color}`}

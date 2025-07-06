@@ -253,6 +253,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     jobType: '',
     jobSetting: '',
     company: '',
+    contentType: 'all',
   });
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -409,6 +410,14 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   // Check if any filters are active
   const hasActiveFilters = filters.position || filters.jobType || filters.jobSetting || filters.company || filters.industry || filters.duration || filters.isPaid !== null || searchTerm || selectedDate;
 
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prev => ({ ...prev, [filterName]: value }));
+    // Sync with activeTab when content type filter changes
+    if (filterName === 'contentType') {
+      setActiveTab(value);
+    }
+  };
+
   const clearAllFilters = () => {
     setFilters({
       position: '',
@@ -417,14 +426,26 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       company: '',
       industry: '',
       duration: '',
-      isPaid: null
+      isPaid: null,
+      contentType: 'all',
     });
     setSearchTerm('');
     setSelectedDate(null);
-    // Keep activeTab as is since it's for "ALL" vs "RECOMMENDED", not status
+    // Reset to "ALL" tab when clearing all filters for consistency
+    setActiveTab('all');
   };
 
   const filterSections = [
+    {
+      name: 'Content Type',
+      options: [
+        { id: 'all', title: 'All Internships' },
+        { id: 'recommended', title: 'Recommended' }
+      ],
+      selected: filters.contentType,
+      onChange: (value) => handleFilterChange('contentType', value),
+      resetLabel: 'All Content',
+    },
     {
       name: 'Position',
       options: uniquePositions.map(pos => ({ id: pos, title: pos })),
@@ -555,7 +576,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <div className="w-full mx-auto">
           <div className="flex items-center space-x-2">
             <button
-              onClick={() => setActiveTab('all')}
+              onClick={() => {
+                setActiveTab('all');
+                setFilters(prev => ({ ...prev, contentType: 'all' }));
+              }}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center ${activeTab === 'all'
                 ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
                 : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
@@ -566,7 +590,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
               ALL
             </button>
             <button
-              onClick={() => setActiveTab('recommended')}
+              onClick={() => {
+                setActiveTab('recommended');
+                setFilters(prev => ({ ...prev, contentType: 'recommended' }));
+              }}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center ${activeTab === 'recommended'
                 ? 'bg-pink-100 text-pink-800 border-pink-800 border-2'
                 : 'bg-white text-gray-600 border border-gray-300 hover:text-pink-800 hover:border-[1px] hover:border-pink-800 hover:bg-pink-100'
