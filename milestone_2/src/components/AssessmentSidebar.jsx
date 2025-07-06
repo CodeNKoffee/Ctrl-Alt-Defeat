@@ -210,7 +210,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
         )}
 
         {testCompleted && (
-          <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
+          <div className="bg-white border-l-4 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
             <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
               <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
             </div>

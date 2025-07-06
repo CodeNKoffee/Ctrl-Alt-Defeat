@@ -133,7 +133,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
         {selectedCompany && (
           <div
             // bg-[#002a38]
-            className={`fixed top-0 right-0 h-screen w-1/3 bg-metallica-blue-100/70 backdrop-blur-md shadow-xl z-50 flex flex-col border-l border-metallica-blue-100 ${isExpanded ? 'animate-slide-out' : 'animate-slide-in'}`}
+            className={`fixed top-0 right-0 h-screen w-1/3 bg-metallica-blue-100/70 backdrop-blur-md shadow-xl z-50 flex flex-col border-l-4 border-[#5DB2C7] ${isExpanded ? 'animate-slide-out' : 'animate-slide-in'}`}
             style={{ minWidth: 420, maxWidth: 500 }}
           >
             <div className="flex justify-end p-4 gap-4">
