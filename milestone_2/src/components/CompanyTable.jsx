@@ -78,7 +78,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
 
       <div className={`relative flex w-full justify-center transition-all duration-600 ${selectedCompany ? 'pr-[420px]' : ''}`}>
         {/* Table Section */}
-        <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} text-sm transition-all duration-600`}>
+        <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl pr-6' : ''} text-sm transition-all duration-600`}>
           {/* Filter Controls Container */}
           {/* <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} flex flex-col md:flex-row justify-between gap-4 bg-metallica-blue-100/50 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm mb-6 transition-all duration-600`}>
             <div className="w-full md:w-1/3">
