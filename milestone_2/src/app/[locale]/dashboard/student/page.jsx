@@ -421,6 +421,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     });
     setSearchTerm('');
     setSelectedDate(null);
+    // Keep activeTab as is since it's for "ALL" vs "RECOMMENDED", not status
   };
 
   const filterSections = [
@@ -621,6 +622,10 @@ function AppliedInternshipsView() {
 
   const handleFilterChange = (filterName, value) => {
     setFilters(prev => ({ ...prev, [filterName]: value }));
+    // Sync with activeTab when status filter changes
+    if (filterName === 'status') {
+      setActiveTab(value);
+    }
   };
 
   const filterSections = [
@@ -781,7 +786,10 @@ function AppliedInternshipsView() {
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
           marginBottom='mt-4'
-          onClearFilters={() => setFilters({ status: 'all', company: 'all', position: 'all', jobType: 'all' })}
+          onClearFilters={() => {
+            setFilters({ status: 'all', company: 'all', position: 'all', jobType: 'all' });
+            setActiveTab('all');
+          }}
         />
       </div>
       <InternshipList
@@ -795,7 +803,10 @@ function AppliedInternshipsView() {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={(value) => {
+          setActiveTab(value);
+          setFilters(prev => ({ ...prev, status: value }));
+        }}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
@@ -859,7 +870,6 @@ function MyInternshipsView({ onTriggerReportCreate }) {
     const term = searchTerm.toLowerCase();
     return (
       (searchTerm === '' || internship.title.toLowerCase().includes(term) || internship.company.toLowerCase().includes(term)) &&
-      (activeTab === 'all' || internship.status === activeTab) &&
       (filters.status === 'all' || internship.status === filters.status) &&
       (filters.company === 'all' || internship.company === filters.company) &&
       (filters.position === 'all' || internship.title === filters.position)
@@ -1043,7 +1053,10 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={(value) => {
+          setActiveTab(value);
+          setFilters(prev => ({ ...prev, status: value }));
+        }}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
         padding="pt-3"

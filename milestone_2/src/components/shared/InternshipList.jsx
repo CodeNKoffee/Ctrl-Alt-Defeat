@@ -199,8 +199,8 @@ export default function InternshipList({
     }
 
     // Filter by status for applied/my internships
-    if (selectedStatus !== 'all' && (type === 'applied' || type === 'my')) {
-      results = results.filter(internship => internship.status === selectedStatus);
+    if (activeTab !== 'all' && (type === 'applied' || type === 'my')) {
+      results = results.filter(internship => internship.status === activeTab);
     }
 
     // Filter by industry
@@ -243,7 +243,7 @@ export default function InternshipList({
     }
 
     setFilteredInternships(results);
-  }, [internships, searchTerm, selectedStatus, selectedIndustry, selectedDate, activeTab, type]);
+  }, [internships, searchTerm, selectedIndustry, selectedDate, activeTab, type]);
 
   // Determine the appropriate date field label
   const getDateFieldLabel = () => {
@@ -255,7 +255,6 @@ export default function InternshipList({
   // Handle clearing all filters
   const clearFilters = () => {
     setSearchTerm('');
-    setSelectedStatus('all');
     setSelectedIndustry('all');
     setSelectedDate(null);
     setActiveTab('all');
@@ -343,8 +342,8 @@ export default function InternshipList({
                   primaryFilterOptions={industries}
 
                   // Status filtering (only for applied/my)
-                  selectedStatus={(type === 'applied' || type === 'my') ? selectedStatus : undefined}
-                  onStatusChange={(type === 'applied' || type === 'my') ? setSelectedStatus : undefined}
+                  selectedStatus={(type === 'applied' || type === 'my') ? activeTab : undefined}
+                  onStatusChange={(type === 'applied' || type === 'my') ? setActiveTab : undefined}
                   statusConfig={(type === 'applied' || type === 'my') ? activeStatusConfig : {}}
 
                   // Date filtering
@@ -369,13 +368,13 @@ export default function InternshipList({
               <div className="w-full max-w-6xl mx-auto mb-6">
                 <div className="flex flex-wrap gap-2 items-center">
                   <button
-                    onClick={() => setSelectedStatus('all')}
-                    className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${selectedStatus === 'all'
+                    onClick={() => setActiveTab('all')}
+                    className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${activeTab === 'all'
                       ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
                       : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
                       }`}
                   >
-                    <span className={`inline-block w-3 h-3 rounded-full mr-2 ${selectedStatus === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
+                    <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
                       }`}></span>
                     ALL
                   </button>
@@ -384,13 +383,13 @@ export default function InternshipList({
                   {displayStatuses.map((status) => (
                     <button
                       key={status}
-                      onClick={() => setSelectedStatus(status)}
-                      className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${selectedStatus === status
+                      onClick={() => setActiveTab(status)}
+                      className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${activeTab === status
                         ? STATUS_CONFIG[status].color
                         : STATUS_CONFIG_HOVER[status].color
                         }`}
                     >
-                      <span className={`inline-block w-3 h-3 rounded-full mr-2 ${selectedStatus === status ? STATUS_CONFIG[status].badgeColor : 'bg-gray-300'
+                      <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === status ? STATUS_CONFIG[status].badgeColor : 'bg-gray-300'
                         }`}></span>
                       {STATUS_CONFIG[status].label}
                     </button>
