@@ -65,6 +65,14 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
 
   return (
     <div className="flex flex-col items-center w-full min-h-screen py-4">
+      {/* Semi-transparent overlay behind sidebar */}
+      {selectedCompany && (
+        <div
+          className="fixed inset-0 bg-gray-900 bg-opacity-20 z-40 transition-opacity duration-300"
+          onClick={handleCloseSidebar}
+        />
+      )}
+
       {/* Header Section */}
 
 
