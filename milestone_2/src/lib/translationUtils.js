@@ -30,6 +30,10 @@ export const translateFilterValue = (safeT, value, type) => {
       'Remote': safeT('company.posts.filters.remote'),
       'On-site': safeT('company.posts.filters.onSite'),
       'Hybrid': safeT('company.posts.filters.hybrid'),
+    },
+    paymentStatus: {
+      'Paid': safeT('company.posts.filters.paid'),
+      'Unpaid': safeT('company.posts.filters.unpaid'),
     }
   };
 
