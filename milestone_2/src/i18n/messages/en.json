@@ -108,6 +108,25 @@
         "hybrid": "Hybrid",
         "paid": "Paid",
         "unpaid": "Unpaid"
+      },
+      "post": {
+        "jobTitle": "Job Title",
+        "description": "Description",
+        "noDescription": "No description provided",
+        "startDate": "Start Date",
+        "duration": "Duration",
+        "requirements": "Requirements",
+        "skills": "Skills",
+        "applicants": "Applicants",
+        "notSpecified": "Not specified",
+        "start": "Start:",
+        "editPost": "Edit post",
+        "deletePost": "Delete post",
+        "seeMore": "See more",
+        "seeLess": "See less",
+        "beFirstToApply": "Be the first to apply!",
+        "personHasApplied": "person has applied",
+        "peopleHaveApplied": "people have applied"
       }
     },
     "browse": {
@@ -223,6 +242,169 @@
       "noFiltersApplied": "No filters currently applied",
       "noFiltersAvailable": "No filters available at the moment",
       "status": "Status"
+    },
+    "applicationDetails": {
+      "appliedOn": "Applied on",
+      "applicantDetails": "Applicant Details",
+      "major": "Major:",
+      "semester": "Semester:",
+      "applicationDocuments": "Application Documents",
+      "resume": "Resume",
+      "coverLetter": "Cover Letter",
+      "portfolio": "Portfolio",
+      "currentApplicationStatus": "Current Application Status",
+      "markAs": "Mark as",
+      "noFurtherChanges": "No further status changes available"
+    },
+    "internDetails": {
+      "startDate": "Start Date:",
+      "skills": "Skills:",
+      "degree": "Degree",
+      "jobInterests": "Job Interests",
+      "endedOn": "Ended on",
+      "startedOn": "started on",
+      "evaluateIntern": "Evaluate Intern",
+      "noInternsFound": "No interns found matching your criteria",
+      "adjustSearchFilter": "Try adjusting your search or filter"
+    },
+    "months": {
+      "full": {
+        "january": "January",
+        "february": "February", 
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+      },
+      "short": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Apr",
+        "may": "May",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Aug",
+        "sep": "Sep",
+        "oct": "Oct",
+        "nov": "Nov",
+        "dec": "Dec"
+      }
+    },
+    "evaluation": {
+      "skillAttributes": {
+        "adaptToChange": "Ability to adapt to change",
+        "analyticalSkills": "Analytical skills",
+        "dataCollection": "Collecting data/ research data skills",
+        "creativity": "Creativity",
+        "followUp": "Follow up skills",
+        "interpersonal": "Interpersonal skills with peers, supervisors, and clients",
+        "problemSolving": "Problem solving",
+        "punctuality": "Punctuality",
+        "reporting": "Reporting skills",
+        "responsibility": "Responsibility and accountability",
+        "stressHandling": "Stress handling",
+        "takingInitiatives": "Taking initiatives",
+        "teamwork": "Teamwork",
+        "timeManagement": "Time management"
+      },
+      "technicalAttributes": {
+        "technicalBackground": "Technical Background",
+        "technicalKnowledge": "Technical Knowledge",
+        "compatibility": "Compatibility of technical skills with the job"
+      },
+      "ratingLabels": {
+        "unsatisfactory": "Unsatisfactory",
+        "belowAverage": "Below Average",
+        "satisfactory": "Satisfactory",
+        "aboveAverage": "Above Average",
+        "excellent": "Excellent"
+      },
+      "tabs": {
+        "skillsAndProfessional": "Skills & Professional Attributes",
+        "technical": "Technical"
+      },
+      "buttons": {
+        "submitEvaluation": "Submit Evaluation",
+        "saveChanges": "Save Changes",
+        "saveAsDraft": "Save as Draft",
+        "submitting": "Submitting...",
+        "saving": "Saving..."
+      },
+      "feedback": {
+        "updated": "Updated!",
+        "success": "Success!",
+        "submittedSuccess": "Your evaluation has been successfully submitted.",
+        "savedSuccess": "Your changes have been successfully saved.",
+        "updatedSuccess": "Your evaluation has been successfully updated.",
+        "draftSaved": "Your evaluation has been successfully saved as a draft."
+      },
+      "placeholders": {
+        "skillsOther": "Add any other feedback on skills...",
+        "technicalOther": "Add any other technical feedback...",
+        "technicalFeedback": "Add feedback on {attribute}...",
+        "otherComments": "Add any additional feedback about the intern's performance...",
+        "tasks": "Describe the tasks you performed during your internship...",
+        "environment": "Describe the work environment and company culture..."
+      },
+      "labels": {
+        "other": "Other:",
+        "yourRating": "Your rating",
+        "recommend": "Do you recommend this internship to other students?",
+        "yes": "Yes",
+        "no": "No",
+        "supervisorName": "Company Supervisor Name",
+        "supervisorEmail": "Company Supervisor Email",
+        "tasks": "What tasks have you done?",
+        "environment": "How was the work environment?",
+        "otherComments": "Other Comments",
+        "yourEvaluation": "Your Evaluation",
+        "editEvaluation": "Edit Your Evaluation",
+        "mostLikedComments": "Most liked comments",
+        "ratingScale": "Rating Scale",
+        "noReviews": "No reviews available",
+        "liked": "Liked"
+      },
+      "helpText": {
+        "otherCommentsHelp": "Please provide any additional comments about the intern's strengths, areas for improvement, or overall performance not covered in the skills assessment."
+      }
+    },
+    "evaluationsDashboard": {
+      "tabs": {
+        "submittedEvaluations": "Submitted Evaluations",
+        "savedAsDraft": "Saved as Draft"
+      },
+      "actions": {
+        "seeMore": "See more",
+        "editEvaluation": "Edit Evaluation",
+        "deleteEvaluation": "Delete Evaluation",
+        "clearSearchFilter": "Clear search filter",
+        "close": "Close"
+      },
+      "labels": {
+        "draft": "Draft",
+        "company": "Company:",
+        "date": "Date:",
+        "skillsAndProfessional": "Skills & Professional Attributes",
+        "technical": "Technical",
+        "skills": "skills",
+        "items": "items",
+        "other": "Other:",
+        "comments": "Comments"
+      },
+      "emptyStates": {
+        "noSubmittedEvaluations": "No submitted evaluations found.",
+        "noDraftEvaluations": "No draft evaluations found.",
+        "noEvaluations": "No evaluations found.",
+        "noSearchResults": "No {type} evaluations found matching \"{searchTerm}\".",
+        "adjustFilters": "Try adjusting your search or filter"
+      }
     }
   },
   "internship": {
@@ -288,6 +470,30 @@
       "tooltip": {
         "statusInfo": "Status Info"
       }
+    }
+  },
+  "modals": {
+    "deleteConfirmation": {
+      "title": "Confirm Delete",
+      "message": "Are you sure you want to delete this {type}?",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "closeModal": "Close modal"
+    }
+  },
+  "common": {
+    "noResults": {
+      "notFound": "No {type} found matching your criteria",
+      "tryAdjusting": "Try adjusting your search or filter",
+      "noResultsGeneric": "No results found matching your criteria",
+      "noInternships": "No internships found matching your criteria",
+      "noApplications": "No applications found matching your criteria",
+      "noCompanies": "No companies found matching your criteria",
+      "noReports": "No reports found matching your criteria",
+      "noNotifications": "No notifications found matching your criteria",
+      "noWorkshops": "No workshops found matching your criteria",
+      "noStudents": "No students found matching your criteria",
+      "noAssessments": "No assessments found matching your criteria"
     }
   }
 }

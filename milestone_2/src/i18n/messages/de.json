@@ -108,6 +108,25 @@
         "hybrid": "Hybrid",
         "paid": "Bezahlt",
         "unpaid": "Unbezahlt"
+      },
+      "post": {
+        "jobTitle": "Stellentitel",
+        "description": "Beschreibung",
+        "noDescription": "Keine Beschreibung vorhanden",
+        "startDate": "Startdatum",
+        "duration": "Dauer",
+        "requirements": "Anforderungen",
+        "skills": "Fähigkeiten",
+        "applicants": "Bewerber",
+        "notSpecified": "Nicht angegeben",
+        "start": "Start:",
+        "editPost": "Stelle bearbeiten",
+        "deletePost": "Stelle löschen",
+        "seeMore": "Mehr sehen",
+        "seeLess": "Weniger sehen",
+        "beFirstToApply": "Sei der Erste, der sich bewirbt!",
+        "personHasApplied": "Person hat sich beworben",
+        "peopleHaveApplied": "Personen haben sich beworben"
       }
     },
     "browse": {
@@ -223,6 +242,169 @@
       "noFiltersApplied": "Derzeit keine Filter angewendet",
       "noFiltersAvailable": "Momentan sind keine Filter verfügbar",
       "status": "Status"
+    },
+    "applicationDetails": {
+      "appliedOn": "Beworben am",
+      "applicantDetails": "Bewerberdetails",
+      "major": "Studiengang:",
+      "semester": "Semester:",
+      "applicationDocuments": "Bewerbungsunterlagen",
+      "resume": "Lebenslauf",
+      "coverLetter": "Anschreiben",
+      "portfolio": "Portfolio",
+      "currentApplicationStatus": "Aktueller Bewerbungsstatus",
+      "markAs": "Markieren als",
+      "noFurtherChanges": "Keine weiteren Statusänderungen verfügbar"
+    },
+    "internDetails": {
+      "startDate": "Startdatum:",
+      "skills": "Fähigkeiten:",
+      "degree": "Abschluss",
+      "jobInterests": "Arbeitsinteressen",
+      "endedOn": "Beendet am",
+      "startedOn": "begonnen am",
+      "evaluateIntern": "Praktikant bewerten",
+      "noInternsFound": "Keine Praktikanten gefunden, die Ihren Kriterien entsprechen",
+      "adjustSearchFilter": "Versuchen Sie, Ihre Suche oder Filter anzupassen"
+    },
+    "months": {
+      "full": {
+        "january": "Januar",
+        "february": "Februar",
+        "march": "März",
+        "april": "April",
+        "may": "Mai",
+        "june": "Juni",
+        "july": "Juli",
+        "august": "August",
+        "september": "September",
+        "october": "Oktober",
+        "november": "November",
+        "december": "Dezember"
+      },
+      "short": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mär",
+        "apr": "Apr",
+        "may": "Mai",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Aug",
+        "sep": "Sep",
+        "oct": "Okt",
+        "nov": "Nov",
+        "dec": "Dez"
+      }
+    },
+    "evaluation": {
+      "skillAttributes": {
+        "adaptToChange": "Anpassungsfähigkeit an Veränderungen",
+        "analyticalSkills": "Analytische Fähigkeiten",
+        "dataCollection": "Datensammlung/ Forschungsdaten-Fähigkeiten",
+        "creativity": "Kreativität",
+        "followUp": "Nachverfolgungsfähigkeiten",
+        "interpersonal": "Zwischenmenschliche Fähigkeiten mit Kollegen, Vorgesetzten und Kunden",
+        "problemSolving": "Problemlösung",
+        "punctuality": "Pünktlichkeit",
+        "reporting": "Berichterstattungsfähigkeiten",
+        "responsibility": "Verantwortung und Rechenschaftspflicht",
+        "stressHandling": "Stressbewältigung",
+        "takingInitiatives": "Initiative ergreifen",
+        "teamwork": "Teamarbeit",
+        "timeManagement": "Zeitmanagement"
+      },
+      "technicalAttributes": {
+        "technicalBackground": "Technischer Hintergrund",
+        "technicalKnowledge": "Technisches Wissen",
+        "compatibility": "Vereinbarkeit der technischen Fähigkeiten mit der Arbeit"
+      },
+      "ratingLabels": {
+        "unsatisfactory": "Ungenügend",
+        "belowAverage": "Unterdurchschnittlich",
+        "satisfactory": "Befriedigend",
+        "aboveAverage": "Überdurchschnittlich",
+        "excellent": "Ausgezeichnet"
+      },
+      "tabs": {
+        "skillsAndProfessional": "Fähigkeiten & Berufliche Eigenschaften",
+        "technical": "Technisch"
+      },
+      "buttons": {
+        "submitEvaluation": "Bewertung einreichen",
+        "saveChanges": "Änderungen speichern",
+        "saveAsDraft": "Als Entwurf speichern",
+        "submitting": "Wird eingereicht...",
+        "saving": "Wird gespeichert..."
+      },
+      "feedback": {
+        "updated": "Aktualisiert!",
+        "success": "Erfolgreich!",
+        "submittedSuccess": "Ihre Bewertung wurde erfolgreich eingereicht.",
+        "savedSuccess": "Ihre Änderungen wurden erfolgreich gespeichert.",
+        "updatedSuccess": "Ihre Bewertung wurde erfolgreich aktualisiert.",
+        "draftSaved": "Ihre Bewertung wurde erfolgreich als Entwurf gespeichert."
+      },
+      "placeholders": {
+        "skillsOther": "Weitere Rückmeldungen zu Fähigkeiten hinzufügen...",
+        "technicalOther": "Weitere technische Rückmeldungen hinzufügen...",
+        "technicalFeedback": "Rückmeldung zu {attribute} hinzufügen...",
+        "otherComments": "Weitere Rückmeldungen zur Leistung des Praktikanten hinzufügen...",
+        "tasks": "Beschreiben Sie die Aufgaben, die Sie während Ihres Praktikums ausgeführt haben...",
+        "environment": "Beschreiben Sie das Arbeitsumfeld und die Unternehmenskultur..."
+      },
+      "labels": {
+        "other": "Sonstiges:",
+        "yourRating": "Ihre Bewertung",
+        "recommend": "Würden Sie dieses Praktikum anderen Studenten empfehlen?",
+        "yes": "Ja",
+        "no": "Nein",
+        "supervisorName": "Name des Unternehmenssupervisors",
+        "supervisorEmail": "E-Mail des Unternehmenssupervisors",
+        "tasks": "Welche Aufgaben haben Sie erledigt?",
+        "environment": "Wie war das Arbeitsumfeld?",
+        "otherComments": "Weitere Kommentare",
+        "yourEvaluation": "Ihre Bewertung",
+        "editEvaluation": "Bewertung bearbeiten",
+        "mostLikedComments": "Beliebteste Kommentare",
+        "ratingScale": "Bewertungsskala",
+        "noReviews": "Keine Bewertungen verfügbar",
+        "liked": "Gefallen"
+      },
+      "helpText": {
+        "otherCommentsHelp": "Bitte geben Sie zusätzliche Kommentare zu den Stärken, Verbesserungsbereichen oder der Gesamtleistung des Praktikanten an, die nicht in der Fähigkeitsbewertung erfasst wurden."
+      }
+    },
+    "evaluationsDashboard": {
+      "tabs": {
+        "submittedEvaluations": "Eingereichte Bewertungen",
+        "savedAsDraft": "Als Entwurf gespeichert"
+      },
+      "actions": {
+        "seeMore": "Mehr sehen",
+        "editEvaluation": "Bewertung bearbeiten",
+        "deleteEvaluation": "Bewertung löschen",
+        "clearSearchFilter": "Suchfilter löschen",
+        "close": "Schließen"
+      },
+      "labels": {
+        "draft": "Entwurf",
+        "company": "Unternehmen:",
+        "date": "Datum:",
+        "skillsAndProfessional": "Fähigkeiten & Berufliche Eigenschaften",
+        "technical": "Technisch",
+        "skills": "Fähigkeiten",
+        "items": "Elemente",
+        "other": "Sonstiges:",
+        "comments": "Kommentare"
+      },
+      "emptyStates": {
+        "noSubmittedEvaluations": "Keine eingereichten Bewertungen gefunden.",
+        "noDraftEvaluations": "Keine Entwurfsbewertungen gefunden.",
+        "noEvaluations": "Keine Bewertungen gefunden.",
+        "noSearchResults": "Keine {type} Bewertungen gefunden für \"{searchTerm}\".",
+        "adjustFilters": "Versuchen Sie, Ihre Suche oder Filter anzupassen"
+      }
     }
   },
   "internship": {
@@ -288,6 +470,30 @@
       "tooltip": {
         "statusInfo": "Status-Info"
       }
+    }
+  },
+  "modals": {
+    "deleteConfirmation": {
+      "title": "Löschen bestätigen",
+      "message": "Sind Sie sicher, dass Sie dieses {type} löschen möchten?",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "closeModal": "Modal schließen"
+    }
+  },
+  "common": {
+    "noResults": {
+      "notFound": "Keine {type} gefunden, die Ihren Kriterien entsprechen",
+      "tryAdjusting": "Versuchen Sie, Ihre Suche oder Filter anzupassen",
+      "noResultsGeneric": "Keine Ergebnisse gefunden, die Ihren Kriterien entsprechen",
+      "noInternships": "Keine Praktika gefunden, die Ihren Kriterien entsprechen",
+      "noApplications": "Keine Bewerbungen gefunden, die Ihren Kriterien entsprechen",
+      "noCompanies": "Keine Unternehmen gefunden, die Ihren Kriterien entsprechen",
+      "noReports": "Keine Berichte gefunden, die Ihren Kriterien entsprechen",
+      "noNotifications": "Keine Benachrichtigungen gefunden, die Ihren Kriterien entsprechen",
+      "noWorkshops": "Keine Workshops gefunden, die Ihren Kriterien entsprechen",
+      "noStudents": "Keine Studenten gefunden, die Ihren Kriterien entsprechen",
+      "noAssessments": "Keine Bewertungen gefunden, die Ihren Kriterien entsprechen"
     }
   }
 }

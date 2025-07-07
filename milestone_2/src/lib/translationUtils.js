@@ -39,4 +39,40 @@ export const translateFilterValue = (safeT, value, type) => {
 
   // Return translated value or original if no translation found
   return translations[type]?.[value] || value;
+};
+
+// Helper function to translate month names
+export const translateMonth = (safeT, month, short = false) => {
+  const monthNames = {
+    'January': 'january', 'February': 'february', 'March': 'march', 'April': 'april',
+    'May': 'may', 'June': 'june', 'July': 'july', 'August': 'august',
+    'September': 'september', 'October': 'october', 'November': 'november', 'December': 'december',
+    'Jan': 'jan', 'Feb': 'feb', 'Mar': 'mar', 'Apr': 'apr',
+    'Jun': 'jun', 'Jul': 'jul', 'Aug': 'aug', 'Sep': 'sep',
+    'Oct': 'oct', 'Nov': 'nov', 'Dec': 'dec'
+  };
+
+  const monthKey = monthNames[month];
+  if (!monthKey) return month;
+
+  const prefix = short ? 'company.months.short.' : 'company.months.full.';
+  return safeT(prefix + monthKey);
+};
+
+// Helper function to format translated dates
+export const formatTranslatedDate = (safeT, dateString, options = {}) => {
+  if (!dateString) return '';
+
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const day = date.getDate();
+  const monthName = date.toLocaleDateString('en-US', { month: 'long' });
+
+  const translatedMonth = translateMonth(safeT, monthName, options.short);
+
+  if (options.short) {
+    return `${translatedMonth} ${day}, ${year}`;
+  }
+
+  return `${translatedMonth} ${day}, ${year}`;
 }; 

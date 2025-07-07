@@ -9,6 +9,8 @@ import ApplicationsFilterBar from './ApplicationsFilterBar';
 import StatusBadge from './StatusBadge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faFilter, faTimes, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '../../lib/translationUtils';
 import InternshipVideoSidebar from './InternshipVideoSidebar';
 import ReportCreationDashboard from '../ReportCreationDashboard';
 
@@ -48,6 +50,9 @@ export default function InternshipList({
   selectedDate: controlledSelectedDate,
   setSelectedDate: controlledSetSelectedDate,
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [selectedIndustry, setSelectedIndustry] = useState('all');
   const [selectedStatus, setSelectedStatus] = useState('all');
@@ -408,15 +413,10 @@ export default function InternshipList({
                 {/* Internship List */}
                 <div className="space-y-3 relative">
                   {filteredInternships.length === 0 ? (
-                    <div className="p-16 text-center">
-                      <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-                        <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                      </div>
-                      <p className="text-gray-500 font-medium">No internships found matching your criteria</p>
-                      <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
-                    </div>
+                    <NoResults
+                      mainMessage={safeT('common.noResults.noInternships')}
+                      subMessage={safeT('common.noResults.tryAdjusting')}
+                    />
                   ) : (
                     filteredInternships.map(internship => (
                       <InternshipRow

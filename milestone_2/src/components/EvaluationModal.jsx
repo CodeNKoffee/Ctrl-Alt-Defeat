@@ -4,30 +4,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import CustomButton from "./shared/CustomButton";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '../lib/translationUtils';
 
-const skillAttributes = [
-  "Ability to adapt to change",
-  "Analytical skills",
-  "Collecting data/ research data skills",
-  "Creativity",
-  "Follow up skills",
-  "Interpersonal skills with peers, supervisors, and clients",
-  "Problem solving",
-  "Punctuality",
-  "Reporting skills",
-  "Responsibility and accountability",
-  "Stress handling",
-  "Taking initiatives",
-  "Teamwork",
-  "Time management"
+// Skill attribute keys for mapping to translations
+const skillAttributeKeys = [
+  "adaptToChange",
+  "analyticalSkills",
+  "dataCollection",
+  "creativity",
+  "followUp",
+  "interpersonal",
+  "problemSolving",
+  "punctuality",
+  "reporting",
+  "responsibility",
+  "stressHandling",
+  "takingInitiatives",
+  "teamwork",
+  "timeManagement"
 ];
 
-const ratingLabels = {
-  1: "Unsatisfactory",
-  2: "Below Average",
-  3: "Satisfactory",
-  4: "Above Average",
-  5: "Excellent"
+// Rating value keys for mapping to translations
+const ratingLabelKeys = {
+  1: "unsatisfactory",
+  2: "belowAverage",
+  3: "satisfactory",
+  4: "aboveAverage",
+  5: "excellent"
 };
 
 export default function EvaluationModal({
@@ -38,6 +42,20 @@ export default function EvaluationModal({
   evaluationToEdit = null,
   evaluationType = "student" // "student" or "company"
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
+  // Get translated skill attributes
+  const getSkillAttributes = () => skillAttributeKeys.map(key => safeT(`company.evaluation.skillAttributes.${key}`));
+
+  // Get translated rating labels
+  const getRatingLabels = () => ({
+    1: safeT(`company.evaluation.ratingLabels.${ratingLabelKeys[1]}`),
+    2: safeT(`company.evaluation.ratingLabels.${ratingLabelKeys[2]}`),
+    3: safeT(`company.evaluation.ratingLabels.${ratingLabelKeys[3]}`),
+    4: safeT(`company.evaluation.ratingLabels.${ratingLabelKeys[4]}`),
+    5: safeT(`company.evaluation.ratingLabels.${ratingLabelKeys[5]}`)
+  });
   const [form, setForm] = useState({
     supervisorName: "",
     supervisorEmail: "",
@@ -46,7 +64,7 @@ export default function EvaluationModal({
     rating: 0,
     recommend: "yes",
     // Company evaluation attributes
-    skillRatings: Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
+    skillRatings: Object.fromEntries(getSkillAttributes().map(skill => [skill, 3])),
     otherComments: ""
   });
   const [submitting, setSubmitting] = useState(false);
@@ -65,7 +83,7 @@ export default function EvaluationModal({
       environment: evaluationToEdit?.environment || "",
       rating: evaluationToEdit?.rating || 0,
       recommend: evaluationToEdit?.recommend || "yes",
-      skillRatings: evaluationToEdit?.skillRatings || Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
+      skillRatings: evaluationToEdit?.skillRatings || Object.fromEntries(getSkillAttributes().map(skill => [skill, 3])),
       otherComments: evaluationToEdit?.otherComments || ""
     };
     if (evaluationToEdit) {
@@ -80,7 +98,7 @@ export default function EvaluationModal({
         environment: "",
         rating: 0,
         recommend: "yes",
-        skillRatings: Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
+        skillRatings: Object.fromEntries(getSkillAttributes().map(skill => [skill, 3])),
         otherComments: ""
       };
       setForm(defaultState);
@@ -204,14 +222,14 @@ export default function EvaluationModal({
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                {feedbackType === 'submit' ? 'Success!' : 'Updated!'}
+                {feedbackType === 'submit' ? safeT('company.evaluation.feedback.success') : safeT('company.evaluation.feedback.updated')}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
                 {feedbackType === 'submit'
-                  ? `Your evaluation has been successfully submitted.`
+                  ? safeT('company.evaluation.feedback.submittedSuccess')
                   : feedbackType === 'update'
-                    ? `Your evaluation has been successfully updated.`
-                    : `Your evaluation has been successfully saved as a draft.`
+                    ? safeT('company.evaluation.feedback.updatedSuccess')
+                    : safeT('company.evaluation.feedback.draftSaved')
                 }
               </div>
             </motion.div>
@@ -253,11 +271,11 @@ export default function EvaluationModal({
                       </button>
                     ))}
                   </div>
-                  <span className="text-[#4C798B] text-sm">Your rating</span>
+                  <span className="text-[#4C798B] text-sm">{safeT('company.evaluation.labels.yourRating')}</span>
                 </div>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-[#2A5F74] mb-2">
-                    Do you recommend this internship to other students?
+                    {safeT('company.evaluation.labels.recommend')}
                   </label>
                   <div className="flex gap-4">
                     <label className="inline-flex items-center">
@@ -270,7 +288,7 @@ export default function EvaluationModal({
                         className="h-4 w-4 accent-[#3298BA] border-[#3298BA] focus:ring-2 focus:ring-[#3298BA] focus:ring-opacity-25"
                         required
                       />
-                      <span className="ml-2 text-[#2A5F74]">Yes</span>
+                      <span className="ml-2 text-[#2A5F74]">{safeT('company.evaluation.labels.yes')}</span>
                     </label>
                     <label className="inline-flex items-center">
                       <input
@@ -282,7 +300,7 @@ export default function EvaluationModal({
                         className="h-4 w-4 accent-[#3298BA] border-[#3298BA] focus:ring-2 focus:ring-[#3298BA] focus:ring-opacity-25"
                         required
                       />
-                      <span className="ml-2 text-[#2A5F74]">No</span>
+                      <span className="ml-2 text-[#2A5F74]">{safeT('company.evaluation.labels.no')}</span>
                     </label>
                   </div>
                 </div>
@@ -290,27 +308,27 @@ export default function EvaluationModal({
             ) : (
               <>
                 <h2 className="text-xl font-bold text-[#2A5F74] mb-6 text-center">
-                  Skills & Professional Attributes
+                  {safeT('company.evaluation.tabs.skillsAndProfessional')}
                 </h2>
                 <div className="mt-6 p-4 bg-[#F8FAFB] rounded-lg border border-[#D9F0F4] text-xs text-center">
-                  <p className="text-[#2A5F74] font-medium mb-2">Rating Scale</p>
+                  <p className="text-[#2A5F74] font-medium mb-2">{safeT('company.evaluation.labels.ratingScale')}</p>
                   <div className="flex justify-between items-center">
-                    <span className="text-[#4C798B]">1: Unsatisfactory</span>
-                    <span className="text-[#4C798B]">2: Below Average</span>
-                    <span className="text-[#4C798B]">3: Satisfactory</span>
-                    <span className="text-[#4C798B]">4: Above Average</span>
-                    <span className="text-[#4C798B]">5: Excellent</span>
+                    <span className="text-[#4C798B]">1: {safeT('company.evaluation.ratingLabels.unsatisfactory')}</span>
+                    <span className="text-[#4C798B]">2: {safeT('company.evaluation.ratingLabels.belowAverage')}</span>
+                    <span className="text-[#4C798B]">3: {safeT('company.evaluation.ratingLabels.satisfactory')}</span>
+                    <span className="text-[#4C798B]">4: {safeT('company.evaluation.ratingLabels.aboveAverage')}</span>
+                    <span className="text-[#4C798B]">5: {safeT('company.evaluation.ratingLabels.excellent')}</span>
                   </div>
                 </div>
                 <div className="overflow-auto max-h-[500px] pr-2">
                   <div className="space-y-6">
-                    {skillAttributes.map((skill) => (
+                    {getSkillAttributes().map((skill) => (
                       <div key={skill} className="bg-white rounded-lg p-4 shadow-sm border border-[#E2F4F7]">
                         <div className="mb-3">
                           <h3 className="text-md font-semibold text-[#2A5F74]">{skill}</h3>
                         </div>
                         <div className="flex items-center">
-                          <span className="text-xs font-medium text-[#4C798B] w-28">Unsatisfactory</span>
+                          <span className="text-xs font-medium text-[#4C798B] w-28">{safeT('company.evaluation.ratingLabels.unsatisfactory')}</span>
                           <div className="flex-1 flex justify-between items-center mx-2">
                             {[1, 2, 3, 4, 5].map((rating) => (
                               <label key={rating} className="cursor-pointer">
@@ -331,7 +349,7 @@ export default function EvaluationModal({
                               </label>
                             ))}
                           </div>
-                          <span className="text-xs font-medium text-[#4C798B] w-28 text-right">Excellent</span>
+                          <span className="text-xs font-medium text-[#4C798B] w-28 text-right">{safeT('company.evaluation.ratingLabels.excellent')}</span>
                         </div>
                       </div>
                     ))}
@@ -342,7 +360,7 @@ export default function EvaluationModal({
 
             {evaluationType === "student" && (
               <div className="mb-6">
-                <h3 className="text-lg font-semibold mb-2 text-[#2A5F74]">Most liked comments</h3>
+                <h3 className="text-lg font-semibold mb-2 text-[#2A5F74]">{safeT('company.evaluation.labels.mostLikedComments')}</h3>
                 <div className="space-y-3">
                   {mockReviews.length > 0 && mockReviews.map((review, idx) => (
                     <div key={idx} className="bg-[#F8FAFB] rounded-lg p-3 border border-[#D9F0F4] flex flex-col">
@@ -352,12 +370,12 @@ export default function EvaluationModal({
                         <span className="text-xs text-[#4C798B] ml-2">{review.date}</span>
                       </div>
                       <div className="text-[#4C798B] text-sm mb-1">{review.comment}</div>
-                      <div className="text-xs text-[#3298BA] font-semibold">👍 {review.likes} Liked</div>
+                      <div className="text-xs text-[#3298BA] font-semibold">👍 {review.likes} {safeT('company.evaluation.labels.liked')}</div>
                     </div>
                   ))}
                   {mockReviews.length === 0 && (
                     <div className="text-center py-4 text-[#4C798B]">
-                      No reviews available
+                      {safeT('company.evaluation.labels.noReviews')}
                     </div>
                   )}
                 </div>
@@ -369,7 +387,7 @@ export default function EvaluationModal({
         {/* Right: Evaluation Form */}
         <form className="flex-1 min-w-[300px] z-50 flex flex-col" onSubmit={handleSubmit}>
           <h2 className="text-xl font-bold text-[#2A5F74] mb-4">
-            {isEditMode ? "Edit Your Evaluation" : "Your Evaluation"}
+            {isEditMode ? safeT('company.evaluation.labels.editEvaluation') : safeT('company.evaluation.labels.yourEvaluation')}
           </h2>
 
           {/* Wrapper for form fields to allow buttons to be pushed to the bottom */}
@@ -377,7 +395,7 @@ export default function EvaluationModal({
             {evaluationType === "student" ? (
               <>
                 <div className="mb-3">
-                  <label className="block text-sm font-medium text-[#2A5F74] mb-1">Company Supervisor Name</label>
+                  <label className="block text-sm font-medium text-[#2A5F74] mb-1">{safeT('company.evaluation.labels.supervisorName')}</label>
                   <input
                     type="text"
                     name="supervisorName"
@@ -388,7 +406,7 @@ export default function EvaluationModal({
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="block text-sm font-medium text-[#2A5F74] mb-1">Company Supervisor Email</label>
+                  <label className="block text-sm font-medium text-[#2A5F74] mb-1">{safeT('company.evaluation.labels.supervisorEmail')}</label>
                   <input
                     type="email"
                     name="supervisorEmail"
@@ -399,22 +417,24 @@ export default function EvaluationModal({
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="block text-sm font-medium text-[#2A5F74] mb-1">What tasks have you done?</label>
+                  <label className="block text-sm font-medium text-[#2A5F74] mb-1">{safeT('company.evaluation.labels.tasks')}</label>
                   <textarea
                     name="tasks"
                     value={form.tasks}
                     onChange={handleChange}
+                    placeholder={safeT('company.evaluation.placeholders.tasks')}
                     className="w-full border border-[#D9F0F4] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74]"
                     rows={2}
                     required
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="block text-sm font-medium text-[#2A5F74] mb-1">How was the work environment?</label>
+                  <label className="block text-sm font-medium text-[#2A5F74] mb-1">{safeT('company.evaluation.labels.environment')}</label>
                   <textarea
                     name="environment"
                     value={form.environment}
                     onChange={handleChange}
+                    placeholder={safeT('company.evaluation.placeholders.environment')}
                     className="w-full border border-[#D9F0F4] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74]"
                     rows={2}
                     required
@@ -424,18 +444,17 @@ export default function EvaluationModal({
             ) : (
               <>
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-[#2A5F74] mb-2">Other Comments</label>
+                  <label className="block text-sm font-medium text-[#2A5F74] mb-2">{safeT('company.evaluation.labels.otherComments')}</label>
                   <textarea
                     name="otherComments"
                     value={form.otherComments}
                     onChange={handleChange}
-                    placeholder="Add any additional feedback about the intern's performance..."
+                    placeholder={safeT('company.evaluation.placeholders.otherComments')}
                     className="w-full border border-[#D9F0F4] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3298BA] bg-[#F8FAFB] text-[#2A5F74]"
                     rows={6}
                   />
                   <p className="mt-2 text-xs text-[#4C798B]">
-                    Please provide any additional comments about the intern's strengths, areas for improvement,
-                    or overall performance not covered in the skills assessment.
+                    {safeT('company.evaluation.helpText.otherCommentsHelp')}
                   </p>
                 </div>
               </>
@@ -446,16 +465,16 @@ export default function EvaluationModal({
             <CustomButton
               type="submit"
               variant="primary"
-              text={"Submit Evaluation"}
+              text={safeT("company.evaluation.buttons.submitEvaluation")}
               isLoading={submitting}
-              loadingText="Submitting..."
+              loadingText={safeT("company.evaluation.buttons.submitting")}
               disabled={submitting || (isEditMode && !isFormDirty()) || !isFormValid()}
               fullWidth
             />
             {!isEditMode && (
               <CustomButton
                 variant="secondary"
-                text={draftStatus === 'saved' ? '✓ Saved!' : 'Save as Draft'}
+                text={draftStatus === 'saved' ? '✓ Saved!' : safeT('company.evaluation.buttons.saveAsDraft')}
                 onClick={async () => {
                   setDraftStatus('saving');
                   await new Promise(res => setTimeout(res, 800));
@@ -472,14 +491,14 @@ export default function EvaluationModal({
                   }, 1500);
                 }}
                 isLoading={draftStatus === 'saving'}
-                loadingText="Saving..."
+                loadingText={safeT("company.evaluation.buttons.saving")}
                 disabled={submitting}
               />
             )}
             {isEditMode && (
               <CustomButton
                 variant="secondary"
-                text="Save Changes"
+                text={safeT('company.evaluation.buttons.saveChanges')}
                 onClick={() => {
                   if (isFormDirty()) {
                     // Show feedback for saving changes

@@ -108,6 +108,25 @@
         "hybrid": "مختلط",
         "paid": "مدفوع",
         "unpaid": "غير مدفوع"
+      },
+      "post": {
+        "jobTitle": "المسمى الوظيفي",
+        "description": "الوصف",
+        "noDescription": "لم يتم توفير وصف",
+        "startDate": "تاريخ البداية",
+        "duration": "المدة",
+        "requirements": "المتطلبات",
+        "skills": "المهارات",
+        "applicants": "المتقدمين",
+        "notSpecified": "غير محدد",
+        "start": "البداية:",
+        "editPost": "تعديل المنشور",
+        "deletePost": "حذف المنشور",
+        "seeMore": "عرض المزيد",
+        "seeLess": "عرض أقل",
+        "beFirstToApply": "كن أول من يتقدم!",
+        "personHasApplied": "شخص واحد تقدم",
+        "peopleHaveApplied": "أشخاص تقدموا"
       }
     },
     "browse": {
@@ -223,6 +242,169 @@
       "noFiltersApplied": "لا توجد مرشحات مطبقة حالياً",
       "noFiltersAvailable": "لا توجد مرشحات متاحة في الوقت الحالي",
       "status": "الحالة"
+    },
+    "applicationDetails": {
+      "appliedOn": "تقدم في",
+      "applicantDetails": "تفاصيل المتقدم",
+      "major": "التخصص:",
+      "semester": "الفصل الدراسي:",
+      "applicationDocuments": "وثائق الطلب",
+      "resume": "السيرة الذاتية",
+      "coverLetter": "خطاب التقديم",
+      "portfolio": "الأعمال",
+      "currentApplicationStatus": "حالة الطلب الحالية",
+      "markAs": "تحديد كـ",
+      "noFurtherChanges": "لا توجد تغييرات أخرى متاحة للحالة"
+    },
+    "internDetails": {
+      "startDate": "تاريخ البداية:",
+      "skills": "المهارات:",
+      "degree": "الدرجة العلمية",
+      "jobInterests": "الاهتمامات المهنية",
+      "endedOn": "انتهى في",
+      "startedOn": "بدأ في",
+      "evaluateIntern": "تقييم المتدرب",
+      "noInternsFound": "لم يتم العثور على متدربين يطابقون معاييرك",
+      "adjustSearchFilter": "جرب تعديل البحث أو المرشحات"
+    },
+    "months": {
+      "full": {
+        "january": "يناير",
+        "february": "فبراير",
+        "march": "مارس",
+        "april": "أبريل",
+        "may": "مايو",
+        "june": "يونيو",
+        "july": "يوليو",
+        "august": "أغسطس",
+        "september": "سبتمبر",
+        "october": "أكتوبر",
+        "november": "نوفمبر",
+        "december": "ديسمبر"
+      },
+      "short": {
+        "jan": "ينا",
+        "feb": "فبر",
+        "mar": "مار",
+        "apr": "أبر",
+        "may": "ماي",
+        "jun": "يون",
+        "jul": "يول",
+        "aug": "أغس",
+        "sep": "سبت",
+        "oct": "أكت",
+        "nov": "نوف",
+        "dec": "ديس"
+      }
+    },
+    "evaluation": {
+      "skillAttributes": {
+        "adaptToChange": "القدرة على التكيف مع التغيير",
+        "analyticalSkills": "المهارات التحليلية",
+        "dataCollection": "مهارات جمع البيانات/بيانات البحث",
+        "creativity": "الإبداع",
+        "followUp": "مهارات المتابعة",
+        "interpersonal": "المهارات الشخصية مع الزملاء والمشرفين والعملاء",
+        "problemSolving": "حل المشكلات",
+        "punctuality": "الالتزام بالمواعيد",
+        "reporting": "مهارات إعداد التقارير",
+        "responsibility": "المسؤولية والمساءلة",
+        "stressHandling": "التعامل مع الضغط",
+        "takingInitiatives": "أخذ المبادرات",
+        "teamwork": "العمل الجماعي",
+        "timeManagement": "إدارة الوقت"
+      },
+      "technicalAttributes": {
+        "technicalBackground": "الخلفية التقنية",
+        "technicalKnowledge": "المعرفة التقنية",
+        "compatibility": "توافق المهارات التقنية مع الوظيفة"
+      },
+      "ratingLabels": {
+        "unsatisfactory": "غير مرضي",
+        "belowAverage": "دون المتوسط",
+        "satisfactory": "مرضي",
+        "aboveAverage": "فوق المتوسط",
+        "excellent": "ممتاز"
+      },
+      "tabs": {
+        "skillsAndProfessional": "المهارات والصفات المهنية",
+        "technical": "تقني"
+      },
+      "buttons": {
+        "submitEvaluation": "إرسال التقييم",
+        "saveChanges": "حفظ التغييرات",
+        "saveAsDraft": "حفظ كمسودة",
+        "submitting": "جارٍ الإرسال...",
+        "saving": "جارٍ الحفظ..."
+      },
+      "feedback": {
+        "updated": "تم التحديث!",
+        "success": "نجح!",
+        "submittedSuccess": "تم إرسال تقييمك بنجاح.",
+        "savedSuccess": "تم حفظ تغييراتك بنجاح.",
+        "updatedSuccess": "تم تحديث تقييمك بنجاح.",
+        "draftSaved": "تم حفظ تقييمك كمسودة بنجاح."
+      },
+      "placeholders": {
+        "skillsOther": "أضف أي ملاحظات أخرى حول المهارات...",
+        "technicalOther": "أضف أي ملاحظات تقنية أخرى...",
+        "technicalFeedback": "أضف ملاحظات حول {attribute}...",
+        "otherComments": "أضف أي ملاحظات إضافية حول أداء المتدرب...",
+        "tasks": "صف المهام التي قمت بها خلال فترة التدريب...",
+        "environment": "صف بيئة العمل وثقافة الشركة..."
+      },
+      "labels": {
+        "other": "أخرى:",
+        "yourRating": "تقييمك",
+        "recommend": "هل توصي بهذا التدريب للطلاب الآخرين؟",
+        "yes": "نعم",
+        "no": "لا",
+        "supervisorName": "اسم المشرف في الشركة",
+        "supervisorEmail": "بريد المشرف الإلكتروني",
+        "tasks": "ما هي المهام التي قمت بها؟",
+        "environment": "كيف كانت بيئة العمل؟",
+        "otherComments": "تعليقات أخرى",
+        "yourEvaluation": "تقييمك",
+        "editEvaluation": "تعديل التقييم",
+        "mostLikedComments": "التعليقات الأكثر إعجاباً",
+        "ratingScale": "مقياس التقييم",
+        "noReviews": "لا توجد مراجعات متاحة",
+        "liked": "أعجب"
+      },
+      "helpText": {
+        "otherCommentsHelp": "يرجى تقديم أي تعليقات إضافية حول نقاط القوة، مجالات التحسين، أو الأداء العام للمتدرب غير المغطاة في تقييم المهارات."
+      }
+    },
+    "evaluationsDashboard": {
+      "tabs": {
+        "submittedEvaluations": "التقييمات المرسلة",
+        "savedAsDraft": "محفوظ كمسودة"
+      },
+      "actions": {
+        "seeMore": "عرض المزيد",
+        "editEvaluation": "تعديل التقييم",
+        "deleteEvaluation": "حذف التقييم",
+        "clearSearchFilter": "مسح مرشح البحث",
+        "close": "إغلاق"
+      },
+      "labels": {
+        "draft": "مسودة",
+        "company": "الشركة:",
+        "date": "التاريخ:",
+        "skillsAndProfessional": "المهارات والصفات المهنية",
+        "technical": "تقني",
+        "skills": "مهارات",
+        "items": "عناصر",
+        "other": "أخرى:",
+        "comments": "تعليقات"
+      },
+      "emptyStates": {
+        "noSubmittedEvaluations": "لم يتم العثور على تقييمات مرسلة.",
+        "noDraftEvaluations": "لم يتم العثور على مسودات تقييمات.",
+        "noEvaluations": "لم يتم العثور على تقييمات.",
+        "noSearchResults": "لم يتم العثور على تقييمات {type} تطابق \"{searchTerm}\".",
+        "adjustFilters": "جرب تعديل البحث أو المرشحات"
+      }
     }
   },
   "internship": {
@@ -288,6 +470,30 @@
       "tooltip": {
         "statusInfo": "معلومات الحالة"
       }
+    }
+  },
+  "modals": {
+    "deleteConfirmation": {
+      "title": "تأكيد الحذف",
+      "message": "هل أنت متأكد أنك تريد حذف هذا {type}؟",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "closeModal": "إغلاق النافذة"
+    }
+  },
+  "common": {
+    "noResults": {
+      "notFound": "لم يتم العثور على {type} تطابق معاييرك",
+      "tryAdjusting": "جرب تعديل البحث أو المرشحات",
+      "noResultsGeneric": "لم يتم العثور على نتائج تطابق معاييرك",
+      "noInternships": "لم يتم العثور على تدريبات تطابق معاييرك",
+      "noApplications": "لم يتم العثور على طلبات تطابق معاييرك",
+      "noCompanies": "لم يتم العثور على شركات تطابق معاييرك",
+      "noReports": "لم يتم العثور على تقارير تطابق معاييرك",
+      "noNotifications": "لم يتم العثور على إشعارات تطابق معاييرك",
+      "noWorkshops": "لم يتم العثور على ورشات تطابق معاييرك",
+      "noStudents": "لم يتم العثور على طلاب يطابقون معاييرك",
+      "noAssessments": "لم يتم العثور على تقييمات تطابق معاييرك"
     }
   }
 }

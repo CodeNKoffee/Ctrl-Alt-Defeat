@@ -8,8 +8,12 @@ import CompanyEvaluationModal from "./CompanyEvaluationModal";
 import CustomButton from './shared/CustomButton';
 import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
 import DeleteTileConfirmation from "./DeleteTileConfirmation";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '../lib/translationUtils';
 
 export default function EvaluationsDashboard({ evaluations: initialEvaluations, stakeholder = "other" }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState(stakeholder === "company" ? "submitted" : "submitted");
@@ -164,20 +168,23 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
   const getEmptyStateMessage = () => {
     // If search term is active, show a more specific message about filtering
     if (searchTerm.trim() !== '') {
-      return `No ${activeTab === 'submitted' ? 'submitted' : 'draft'} evaluations found matching "${searchTerm}".`;
+      const type = activeTab === 'submitted' ? safeT('company.evaluationsDashboard.tabs.submittedEvaluations').toLowerCase() : safeT('company.evaluationsDashboard.tabs.savedAsDraft').toLowerCase();
+      return safeT('company.evaluationsDashboard.emptyStates.noSearchResults')
+        .replace('{type}', type)
+        .replace('{searchTerm}', searchTerm);
     }
 
     // Default messages based on tab and stakeholder
     if (stakeholder === "student") {
       return activeTab === "submitted"
-        ? "No submitted evaluations found."
-        : "No draft evaluations found.";
+        ? safeT('company.evaluationsDashboard.emptyStates.noSubmittedEvaluations')
+        : safeT('company.evaluationsDashboard.emptyStates.noDraftEvaluations');
     } else if (stakeholder === "company") {
       return activeTab === "submitted"
-        ? "No submitted evaluations found."
-        : "No draft evaluations found.";
+        ? safeT('company.evaluationsDashboard.emptyStates.noSubmittedEvaluations')
+        : safeT('company.evaluationsDashboard.emptyStates.noDraftEvaluations');
     } else {
-      return "No evaluations found.";
+      return safeT('company.evaluationsDashboard.emptyStates.noEvaluations');
     }
   };
 
@@ -230,7 +237,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                   : "px-6 py-2 rounded-full font-semibold transition-colors bg-[#eaf3f7] text-metallica-blue-700"
                   }`}
               >
-                Submitted Evaluations
+                {safeT('company.evaluationsDashboard.tabs.submittedEvaluations')}
               </button>
               <button
                 onClick={() => setActiveTab("saved")}
@@ -239,7 +246,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                   : "px-6 py-2 rounded-full font-semibold transition-colors bg-[#eaf3f7] text-metallica-blue-700"
                   }`}
               >
-                Saved as Draft
+                {safeT('company.evaluationsDashboard.tabs.savedAsDraft')}
               </button>
             </div>
           </div>
@@ -381,21 +388,21 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                   <div className="bg-white rounded-xl shadow p-5 border border-[#E2F4F7] flex flex-col gap-3 h-full relative">
                     {/* Draft badge for company drafts, styled as absolute top-left corner */}
                     {activeTab === "saved" && (
-                      <span className="absolute top-0 left-0 bg-amber-100 text-amber-800 px-2 py-1 text-xs font-medium z-40 rounded-tl-xl rounded-br-xl" style={{ boxShadow: '0 2px 6px 0 rgba(0,0,0,0.04)' }}>Draft</span>
+                      <span className="absolute top-0 left-0 bg-amber-100 text-amber-800 px-2 py-1 text-xs font-medium z-40 rounded-tl-xl rounded-br-xl" style={{ boxShadow: '0 2px 6px 0 rgba(0,0,0,0.04)' }}>{safeT('company.evaluationsDashboard.labels.draft')}</span>
                     )}
                     {/* Edit & Delete icons only for drafts */}
                     {activeTab === "saved" && (
                       <div className="absolute top-3 right-3 flex gap-2 z-10">
                         <button
                           className="text-metallica-blue-600 hover:text-metallica-blue-800 p-1"
-                          title="Edit Evaluation"
+                          title={safeT('company.evaluationsDashboard.actions.editEvaluation')}
                           onClick={() => handleEditEvaluation(evaluation)}
                         >
                           <FontAwesomeIcon icon={faEdit} />
                         </button>
                         <button
                           className="text-red-500 hover:text-red-700 p-1"
-                          title="Delete Evaluation"
+                          title={safeT('company.evaluationsDashboard.actions.deleteEvaluation')}
                           onClick={() => confirmDelete(evaluation.id)}
                         >
                           <FontAwesomeIcon icon={faTrash} />
@@ -413,8 +420,8 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                       </div>
                       <div className="font-bold text-[#2A5F74] text-lg mb-1 text-center tracking-wide drop-shadow">{evaluation.studentName || evaluation.company}</div>
                       <div className="text-sm text-[#4C798B] mb-1 text-center">{evaluation.internshipTitle || evaluation.supervisor}</div>
-                      <div className="text-xs text-gray-500 mb-1 text-center">Company: {evaluation.company}</div>
-                      <div className="text-xs text-gray-500 mb-1 text-center">Date: {evaluation.date}</div>
+                      <div className="text-xs text-gray-500 mb-1 text-center">{safeT('company.evaluationsDashboard.labels.company')} {evaluation.company}</div>
+                      <div className="text-xs text-gray-500 mb-1 text-center">{safeT('company.evaluationsDashboard.labels.date')} {evaluation.date}</div>
                     </div>
                     {/* Fun star rating if available */}
                     {typeof evaluation.overallRating === 'number' && (
@@ -436,7 +443,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                       className="mt-2 text-metallica-blue-700 hover:underline text-xs font-semibold self-end"
                       onClick={() => setExpandedIndex(idx)}
                     >
-                      See more
+                      {safeT('company.evaluationsDashboard.actions.seeMore')}
                     </button>
                     {/* Modal for expanded details */}
                     {expandedIndex === idx && (
@@ -445,7 +452,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                           <button
                             className="absolute top-4 right-4 text-gray-400 hover:text-metallica-blue-700 text-xl"
                             onClick={() => setExpandedIndex(null)}
-                            aria-label="Close"
+                            aria-label={safeT('company.evaluationsDashboard.actions.close')}
                           >
                             <FontAwesomeIcon icon={faTimesCircle} />
                           </button>
@@ -468,8 +475,8 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                           </div>
                           <div className="mb-4">
                             <div className="font-semibold text-[#2A5F74] mb-2 flex items-center gap-2">
-                              <span>Skills & Professional Attributes</span>
-                              <span className="text-xs bg-[#F8E7BE] text-[#B58525] rounded-full px-2 py-0.5 font-bold">{Object.keys(evaluation.skillRatings).length} skills</span>
+                              <span>{safeT('company.evaluationsDashboard.labels.skillsAndProfessional')}</span>
+                              <span className="text-xs bg-[#F8E7BE] text-[#B58525] rounded-full px-2 py-0.5 font-bold">{Object.keys(evaluation.skillRatings).length} {safeT('company.evaluationsDashboard.labels.skills')}</span>
                             </div>
                             <ul className="grid grid-cols-2 gap-2">
                               {Object.entries(evaluation.skillRatings).map(([skill, rating]) => (
@@ -482,13 +489,13 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                               ))}
                             </ul>
                             {evaluation.skillOther && (
-                              <div className="mt-2 text-xs text-gray-500 italic">Other: {evaluation.skillOther}</div>
+                              <div className="mt-2 text-xs text-gray-500 italic">{safeT('company.evaluationsDashboard.labels.other')} {evaluation.skillOther}</div>
                             )}
                           </div>
                           <div className="mb-4">
                             <div className="font-semibold text-[#2A5F74] mb-2 flex items-center gap-2">
-                              <span>Technical</span>
-                              <span className="text-xs bg-[#F8E7BE] text-[#B58525] rounded-full px-2 py-0.5 font-bold">{Object.keys(evaluation.technical).length} items</span>
+                              <span>{safeT('company.evaluationsDashboard.labels.technical')}</span>
+                              <span className="text-xs bg-[#F8E7BE] text-[#B58525] rounded-full px-2 py-0.5 font-bold">{Object.keys(evaluation.technical).length} {safeT('company.evaluationsDashboard.labels.items')}</span>
                             </div>
                             <ul className="space-y-2">
                               {Object.entries(evaluation.technical).map(([attr, val]) => (
@@ -499,13 +506,13 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                               ))}
                             </ul>
                             {evaluation.technicalOther && (
-                              <div className="mt-2 text-xs text-gray-500 italic">Other: {evaluation.technicalOther}</div>
+                              <div className="mt-2 text-xs text-gray-500 italic">{safeT('company.evaluationsDashboard.labels.other')} {evaluation.technicalOther}</div>
                             )}
                           </div>
                           {evaluation.comments && (
                             <div className="mb-2">
                               <div className="font-semibold text-[#2A5F74] mb-1 flex items-center gap-2">
-                                <span>Comments</span>
+                                <span>{safeT('company.evaluationsDashboard.labels.comments')}</span>
                                 <span className="text-xs bg-[#F8E7BE] text-[#B58525] rounded-full px-2 py-0.5 font-bold">💬</span>
                               </div>
                               <div className="text-xs text-gray-700 bg-[#f4fafd] rounded-lg px-2 py-1 shadow-sm">{evaluation.comments}</div>
@@ -537,14 +544,14 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
                 </svg>
               </div>
               <p className="text-gray-500 font-medium">{getEmptyStateMessage()}</p>
-              <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
+              <p className="text-gray-400 text-sm mt-1">{safeT('company.evaluationsDashboard.emptyStates.adjustFilters')}</p>
 
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
                   className="mt-4 px-4 py-2 bg-[#D9F0F4] text-[#2A5F74] rounded-full text-sm font-medium hover:bg-[#B8E1E9] transition-colors duration-200 flex items-center mx-auto"
                 >
-                  <span>Clear search filter</span>
+                  <span>{safeT('company.evaluationsDashboard.actions.clearSearchFilter')}</span>
                   <FontAwesomeIcon icon={faTimesCircle} className="ml-2 h-3 w-3" />
                 </button>
               )}
