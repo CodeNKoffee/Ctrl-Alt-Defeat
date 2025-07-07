@@ -742,6 +742,7 @@ export const mockCompanyReviews = [
 // Mock evaluations for students
 export const MOCK_EVALUATIONS = [
   {
+    id: 1,
     studentName: "Layla Khaled",
     major: "Management",
     companyName: "Juhayna Food Industries",
@@ -756,6 +757,7 @@ export const MOCK_EVALUATIONS = [
     status: "submitted"
   },
   {
+    id: 2,
     studentName: "Hatem Soliman",
     major: "Media Engineering & Technology",
     companyName: "Vodafone Egypt",
@@ -770,6 +772,7 @@ export const MOCK_EVALUATIONS = [
     status: "submitted"
   },
   {
+    id: 3,
     studentName: "Mezo Maestro",
     major: "Media Engineering & Technology",
     companyName: "Orange Egypt",
@@ -784,6 +787,7 @@ export const MOCK_EVALUATIONS = [
     status: "submitted"
   },
   {
+    id: 4,
     studentName: "John Magdy",
     major: "Management",
     companyName: "Nestlé Egypt",
@@ -798,6 +802,7 @@ export const MOCK_EVALUATIONS = [
     status: "saved"
   },
   {
+    id: 5,
     studentName: "Rana Tarek",
     major: "Management",
     companyName: "Nestlé Egypt",
@@ -812,6 +817,7 @@ export const MOCK_EVALUATIONS = [
     status: "saved"
   },
   {
+    id: 6,
     studentName: "Selim Hatem",
     major: "Management",
     companyName: "Nestlé Egypt",
@@ -1936,6 +1942,66 @@ export const mockStudents = [
         company: "Nestlé Egypt",
         period: "Summer 2023",
         description: "Provided support for internal systems and assisted with data integrity checks in ERP modules."
+      }
+    ]
+  },
+  {
+    id: "59-9876",
+    name: "Ahmed Youssef",
+    photo: "/images/boy4.png",
+    major: "Computer Science",
+    semester: "8",
+    status: "Regular",
+    internshipStatus: "Evaluated",
+    gpa: 2.8,
+    email: "AhmedYoussef@student.guc.edu.eg",
+    bio: "Computer Science student with completed internship experience and comprehensive evaluation.",
+    profileImage: "/images/boy4.png",
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/ahmedyoussef",
+      github: "https://github.com/ahmedyoussef"
+    },
+    personalityTraits: [
+      { trait: "Openness", rating: 4 },
+      { trait: "Creativity", rating: 4 },
+      { trait: "Extraversion", rating: 3 },
+      { trait: "Agreeableness", rating: 4 }
+    ],
+    education: [
+      {
+        degree: "B.Sc. in Computer Science",
+        institution: "German University in Cairo",
+        period: "2020 - Present"
+      }
+    ],
+    skills: ["Python", "Django", "JavaScript", "React", "PostgreSQL", "Git", "AWS"],
+    jobInterests: [
+      {
+        title: "Full Stack Developer",
+        description: "Interested in building complete web applications from backend to frontend."
+      },
+      {
+        title: "Software Engineer",
+        description: "Passionate about clean code and scalable software architecture."
+      }
+    ],
+    experience: [
+      {
+        title: "Teaching Assistant",
+        company: "GUC Computer Science Department",
+        duration: "2023-2024",
+        responsibilities: [
+          "Assisted students with programming assignments",
+          "Graded exams and provided feedback"
+        ]
+      }
+    ],
+    internships: [
+      {
+        title: "Software Development Intern",
+        company: "Microsoft Egypt",
+        period: "Summer 2023",
+        description: "Developed internal tools using React and .NET. Internship completed with full evaluation and positive feedback from supervisors."
       }
     ]
   }

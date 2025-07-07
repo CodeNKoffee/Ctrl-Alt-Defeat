@@ -24,7 +24,8 @@ import {
   faBell,
   faVideo,
   faLock,
-  faListAlt
+  faListAlt,
+  faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
@@ -97,6 +98,9 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
   const [isMobile, setIsMobile] = useState(false);
   const [prevView, setPrevView] = useState(currentView);
   const [activeItemPosition, setActiveItemPosition] = useState(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [hoveredTooltip, setHoveredTooltip] = useState(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const itemRefs = useRef({});
 
   const pathname = usePathname();
@@ -196,18 +200,44 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
   };
 
   // Handle logout
-  const handleLogout = () => {
-    dispatch({ type: LOGOUT_USER });
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
 
-    // Clear session and local storage for user data only
-    // Keep welcomeShown flags to prevent welcome animation on logout
-    if (typeof window !== 'undefined') {
-      sessionStorage.removeItem('userSession');
-      localStorage.removeItem('userSession');
-      // Don't remove welcomeShown flags to avoid showing animation again after logout
+    try {
+      // Add a brief delay to show loading state
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      dispatch({ type: LOGOUT_USER });
+
+      // Clear session and local storage for user data only
+      // Keep welcomeShown flags to prevent welcome animation on logout
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem('userSession');
+        localStorage.removeItem('userSession');
+        // Don't remove welcomeShown flags to avoid showing animation again after logout
+      }
+
+      router.push(`/${locale}/`);
+    } catch (error) {
+      console.error('Logout error:', error);
+      setIsLoggingOut(false);
     }
+  };
 
-    router.push(`/${locale}/`);
+  // Handle tooltip display
+  const handleTooltipShow = (itemId, label, event) => {
+    if (!isExpanded) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      setTooltipPosition({
+        top: rect.top + rect.height / 2 - 20, // Center vertically
+        left: rect.right + 12 // Position to the right with some spacing
+      });
+      setHoveredTooltip({ id: itemId, label });
+    }
+  };
+
+  const handleTooltipHide = () => {
+    setHoveredTooltip(null);
   };
 
   return (
@@ -291,6 +321,8 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                       className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
                       onClick={() => !isExpanded && setIsExpanded(false)}
                       ref={el => itemRefs.current[item.id] = el}
+                      onMouseEnter={(e) => handleTooltipShow(item.id, item.label, e)}
+                      onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
                     </Link>
@@ -298,7 +330,8 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     <div
                       className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
-                      title="PRO feature"
+                      onMouseEnter={(e) => handleTooltipShow(item.id, `PRO feature - ${item.label}`, e)}
+                      onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
                     </div>
@@ -313,6 +346,8 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                       onClick={() => handleViewChange(item.id)}
                       className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
+                      onMouseEnter={(e) => handleTooltipShow(item.id, item.label, e)}
+                      onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
                     </button>
@@ -320,7 +355,8 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     <div
                       className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
-                      title="PRO feature"
+                      onMouseEnter={(e) => handleTooltipShow(item.id, `PRO feature - ${item.label}`, e)}
+                      onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
                     </div>
@@ -381,17 +417,47 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             text="Logout"
             width="w-full"
             className="rounded-lg"
+            isLoading={isLoggingOut}
+            loadingText="Logging out..."
+            useAnimatedDots={true}
+            disabled={isLoggingOut}
           />
         ) : (
           <button
             onClick={handleLogout}
-            className="p-2.5 w-10 h-10 rounded-full flex items-center justify-center bg-[#E2F4F7] text-red-600 hover:bg-red-100 transition-all duration-200 border border-[#E0ECF2] focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2"
+            disabled={isLoggingOut}
+            className={`p-2.5 w-10 h-10 rounded-full flex items-center justify-center bg-[#E2F4F7] text-red-600 hover:bg-red-100 transition-all duration-200 border border-[#E0ECF2] focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 ${isLoggingOut ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             aria-label="Logout"
+            onMouseEnter={(e) => handleTooltipShow('logout', isLoggingOut ? "Logging out..." : "Logout", e)}
+            onMouseLeave={handleTooltipHide}
           >
-            <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
+            {isLoggingOut ? (
+              <FontAwesomeIcon icon={faSpinner} className="animate-spin" size="lg" />
+            ) : (
+              <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
+            )}
           </button>
         )}
       </div>
+
+      {/* Custom Instant Tooltip - Only shows when sidebar is collapsed */}
+      {hoveredTooltip && !isExpanded && (
+        <div
+          className="fixed z-50 pointer-events-none"
+          style={{
+            top: tooltipPosition.top,
+            left: tooltipPosition.left,
+          }}
+        >
+          <div className="bg-gray-900 text-white text-sm px-3 py-2 rounded-lg shadow-lg whitespace-nowrap">
+            {hoveredTooltip.label}
+            {/* Small arrow pointing left */}
+            <div className="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-1">
+              <div className="w-2 h-2 bg-gray-900 rotate-45"></div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

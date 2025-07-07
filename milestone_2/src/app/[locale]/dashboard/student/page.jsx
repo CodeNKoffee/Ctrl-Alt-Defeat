@@ -253,6 +253,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     jobType: '',
     jobSetting: '',
     company: '',
+    contentType: 'all',
   });
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -409,6 +410,14 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   // Check if any filters are active
   const hasActiveFilters = filters.position || filters.jobType || filters.jobSetting || filters.company || filters.industry || filters.duration || filters.isPaid !== null || searchTerm || selectedDate;
 
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prev => ({ ...prev, [filterName]: value }));
+    // Sync with activeTab when content type filter changes
+    if (filterName === 'contentType') {
+      setActiveTab(value);
+    }
+  };
+
   const clearAllFilters = () => {
     setFilters({
       position: '',
@@ -417,13 +426,26 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       company: '',
       industry: '',
       duration: '',
-      isPaid: null
+      isPaid: null,
+      contentType: 'all',
     });
     setSearchTerm('');
     setSelectedDate(null);
+    // Reset to "ALL" tab when clearing all filters for consistency
+    setActiveTab('all');
   };
 
   const filterSections = [
+    {
+      name: 'Content Type',
+      options: [
+        { id: 'all', title: 'All Internships' },
+        { id: 'recommended', title: 'Recommended' }
+      ],
+      selected: filters.contentType,
+      onChange: (value) => handleFilterChange('contentType', value),
+      resetLabel: 'All Content',
+    },
     {
       name: 'Position',
       options: uniquePositions.map(pos => ({ id: pos, title: pos })),
@@ -545,7 +567,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           searchPlaceholder="Search internships by job title or company name ..."
           onClearFilters={clearAllFilters}
           filterSections={filterSections}
-          showDatePicker={true}
+          // showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
         />
@@ -554,7 +576,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <div className="w-full mx-auto">
           <div className="flex items-center space-x-2">
             <button
-              onClick={() => setActiveTab('all')}
+              onClick={() => {
+                setActiveTab('all');
+                setFilters(prev => ({ ...prev, contentType: 'all' }));
+              }}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center ${activeTab === 'all'
                 ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
                 : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
@@ -565,7 +590,10 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
               ALL
             </button>
             <button
-              onClick={() => setActiveTab('recommended')}
+              onClick={() => {
+                setActiveTab('recommended');
+                setFilters(prev => ({ ...prev, contentType: 'recommended' }));
+              }}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center ${activeTab === 'recommended'
                 ? 'bg-pink-100 text-pink-800 border-pink-800 border-2'
                 : 'bg-white text-gray-600 border border-gray-300 hover:text-pink-800 hover:border-[1px] hover:border-pink-800 hover:bg-pink-100'
@@ -621,6 +649,10 @@ function AppliedInternshipsView() {
 
   const handleFilterChange = (filterName, value) => {
     setFilters(prev => ({ ...prev, [filterName]: value }));
+    // Sync with activeTab when status filter changes
+    if (filterName === 'status') {
+      setActiveTab(value);
+    }
   };
 
   const filterSections = [
@@ -777,11 +809,14 @@ function AppliedInternshipsView() {
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search applications by company or position..."
           filterSections={filterSections}
-          showDatePicker={true}
+          // showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
           marginBottom='mt-4'
-          onClearFilters={() => setFilters({ status: 'all', company: 'all', position: 'all', jobType: 'all' })}
+          onClearFilters={() => {
+            setFilters({ status: 'all', company: 'all', position: 'all', jobType: 'all' });
+            setActiveTab('all');
+          }}
         />
       </div>
       <InternshipList
@@ -795,7 +830,10 @@ function AppliedInternshipsView() {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={(value) => {
+          setActiveTab(value);
+          setFilters(prev => ({ ...prev, status: value }));
+        }}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
@@ -821,6 +859,10 @@ function MyInternshipsView({ onTriggerReportCreate }) {
 
   const handleFilterChange = (filterName, value) => {
     setFilters(prev => ({ ...prev, [filterName]: value }));
+    // Sync with activeTab when status filter changes
+    if (filterName === 'status') {
+      setActiveTab(value);
+    }
   };
 
   const filterSections = [
@@ -828,7 +870,8 @@ function MyInternshipsView({ onTriggerReportCreate }) {
       name: 'Status',
       options: [
         { id: 'current', title: 'Current' },
-        { id: 'completed', title: 'Completed' }
+        { id: 'completed', title: 'Completed' },
+        { id: 'evaluated', title: 'Evaluated' }
       ],
       selected: filters.status,
       onChange: (value) => handleFilterChange('status', value),
@@ -953,12 +996,77 @@ function MyInternshipsView({ onTriggerReportCreate }) {
           onSearchChange={setSearchTerm}
           searchPlaceholder="Search internships by company or position..."
           filterSections={filterSections}
-          showDatePicker={true}
+          // showDatePicker={true}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
           marginBottom='mb-2'
-          onClearFilters={() => setFilters({ status: 'all', company: 'all', position: 'all' })}
+          onClearFilters={() => {
+            setFilters({ status: 'all', company: 'all', position: 'all' });
+            setActiveTab('all');
+          }}
         />
+
+        {/* Status Tabs with Colored Dots */}
+        <div className="w-full max-w-6xl mx-auto !mt-10 !mb-0">
+          <div className="flex flex-wrap gap-2 items-center">
+            <button
+              onClick={() => {
+                setActiveTab('all');
+                setFilters(prev => ({ ...prev, status: 'all' }));
+              }}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${activeTab === 'all'
+                ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[#5DB2C7]'
+                }`}
+            >
+              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
+                }`}></span>
+              ALL
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('current');
+                setFilters(prev => ({ ...prev, status: 'current' }));
+              }}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${activeTab === 'current'
+                ? 'bg-blue-100 text-blue-800 border-2 border-blue-400'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-800 hover:border-blue-400'
+                }`}
+            >
+              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'current' ? 'bg-blue-600' : 'bg-gray-300'
+                }`}></span>
+              CURRENT
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('completed');
+                setFilters(prev => ({ ...prev, status: 'completed' }));
+              }}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${activeTab === 'completed'
+                ? 'bg-green-100 text-green-800 border-2 border-green-400'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400'
+                }`}
+            >
+              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'completed' ? 'bg-green-600' : 'bg-gray-300'
+                }`}></span>
+              COMPLETED
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('evaluated');
+                setFilters(prev => ({ ...prev, status: 'evaluated' }));
+              }}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium h-[38px] transition-all flex items-center ${activeTab === 'evaluated'
+                ? 'bg-purple-100 text-purple-800 border-2 border-purple-400'
+                : 'bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400'
+                }`}
+            >
+              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'evaluated' ? 'bg-purple-600' : 'bg-gray-300'
+                }`}></span>
+              EVALUATED
+            </button>
+          </div>
+        </div>
       </div>
       <InternshipList
         title=""
@@ -972,9 +1080,13 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={(value) => {
+          setActiveTab(value);
+          setFilters(prev => ({ ...prev, status: value }));
+        }}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
+        padding="pt-3"
       />
     </div>
   );
@@ -1883,7 +1995,7 @@ export default function StudentDashboardPage() {
   }, [currentView, isCreatingReport]);
 
   // Special case: If we're on the My Internships view and creating a report,
-  // render the Report component directly instead of the CurrentViewComponent
+  // render the ReportCreationDashboard component directly instead of the CurrentViewComponent
   if (currentView === 'my-internships' && isCreatingReport) {
     return (
       <DashboardLayout
@@ -1892,10 +2004,14 @@ export default function StudentDashboardPage() {
         currentViewId={currentView}
         onViewChange={handleViewChange}
       >
-        {/* <Report
+        <ReportCreationDashboard
           onAddTile={handleReportSubmit}
           onCancel={handleReportCancel}
-        /> */}
+          initialReport={selectedInternship}
+          hideTitle={false}
+          showSaveDraftButton={true}
+          isEditMode={false}
+        />
       </DashboardLayout>
     );
   }

@@ -38,7 +38,7 @@ const CompanyPostsInfoCard = () => (
           </div>
           <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Employer Internship Portal</div>
           <div className="text-gray-700 mb-3 relative">
-            <p className="mb-3">Welcome to the Employer Dashboard where you can create and manage internship opportunities for talented SCAD students.</p>
+            <p className="mb-3">Welcome to the Employer Dashboard where you can create and manage internship opportunities for talented GUC students.</p>
 
             {/* Card content with improved styling */}
             <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">

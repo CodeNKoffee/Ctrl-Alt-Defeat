@@ -160,7 +160,7 @@ function ScadDashboardView() {
 
   return (
     <div className="w-full px-6 py-4">
-      <div className={`px-4 pt-6 transition-all duration-600 ${sidebarOpen ? 'pr-[420px]' : ''}`}>
+      <div className="px-4 pt-6 transition-all duration-600">
         <CompanyPartnershipReviewPortalInfoCard />
         <ApplicationsFilterBar
           searchTerm={searchTerm}
@@ -187,8 +187,8 @@ function StudentListView({ sidebarExpanded }) {
   ].filter(Boolean).map(major => ({ id: major, title: major }));
 
   const uniqueStatuses = [
-    ...new Set(mockStudents.map(student => student.status))
-  ].filter(Boolean).map(status => ({ id: status, title: status }));
+    ...new Set(mockStudents.map(student => student.internshipStatus))
+  ].filter(Boolean).map(status => ({ id: status.toLowerCase(), title: status }));
 
   const uniqueSemesters = [
     ...new Set(mockStudents.map(student => student.semester))
@@ -203,7 +203,7 @@ function StudentListView({ sidebarExpanded }) {
       student.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.semester?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesMajor = selectedMajor === 'all' || student.major === selectedMajor;
-    const matchesStatus = selectedStatus === 'all' || student.status === selectedStatus;
+    const matchesStatus = selectedStatus === 'all' || student.internshipStatus.toLowerCase() === selectedStatus;
     const matchesSemester = selectedSemester === 'all' || student.semester === selectedSemester;
     return matchesSearch && matchesMajor && matchesStatus && matchesSemester;
   });
@@ -317,7 +317,12 @@ function StudentListView({ sidebarExpanded }) {
           filterSections={studentFilterSections}
         />
       </div>
-      <StudentList students={filteredStudents} sidebarExpanded={sidebarExpanded} />
+      <StudentList
+        students={filteredStudents}
+        sidebarExpanded={sidebarExpanded}
+        selectedStatus={selectedStatus}
+        onStatusChange={setSelectedStatus}
+      />
     </div>
   );
 }

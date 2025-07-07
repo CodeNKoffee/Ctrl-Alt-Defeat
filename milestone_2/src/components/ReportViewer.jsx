@@ -109,13 +109,53 @@ export default function ReportViewer({ report, userType = "faculty" }) {
 
       // Only allow selection within the report text elements
       if (textRef.current.contains(startNode) && textRef.current.contains(endNode)) {
+        // Determine which section the selection is from
+        let section = 'body'; // default
+        let textContainer = null;
+        let currentNode = startNode;
+        while (currentNode && currentNode !== textRef.current) {
+          if (currentNode.parentNode) {
+            const parentClasses = currentNode.parentNode.className;
+            if (typeof parentClasses === 'string' && parentClasses.includes('introduction-section')) {
+              section = 'introduction';
+              // Find the actual text container within the section
+              const textElement = currentNode.parentNode.querySelector('.report-text');
+              textContainer = textElement || currentNode.parentNode;
+              break;
+            }
+            if (typeof parentClasses === 'string' && parentClasses.includes('body-section')) {
+              section = 'body';
+              // Find the actual text container within the section
+              const textElement = currentNode.parentNode.querySelector('.report-text');
+              textContainer = textElement || currentNode.parentNode;
+              break;
+            }
+          }
+          currentNode = currentNode.parentNode;
+        }
+
+        // Calculate the text offset within the actual text content
+        let sectionStartOffset = 0;
+        let sectionEndOffset = 0;
+
+        if (textContainer) {
+          const beforeSelection = range.cloneRange();
+          beforeSelection.selectNodeContents(textContainer);
+          beforeSelection.setEnd(range.startContainer, range.startOffset);
+          sectionStartOffset = beforeSelection.toString().length;
+          sectionEndOffset = sectionStartOffset + selection.toString().length;
+        }
+
         setSelectedText(selection.toString());
         setSelectedRange({
           startOffset: range.startOffset,
           endOffset: range.endOffset,
+          start: sectionStartOffset,
+          end: sectionEndOffset,
           startContainerPath: getDOMPath(range.startContainer, textRef.current),
           endContainerPath: getDOMPath(range.endContainer, textRef.current),
-          text: selection.toString()
+          text: selection.toString(),
+          section: section
         });
       }
     }
@@ -152,6 +192,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
         text: selectedText,
         range: selectedRange,
         color: color || selectedColor,
+        section: selectedRange.section || 'body'
       };
       setAnnotations([...annotations, newAnnotation]);
       setSelectedText('');
@@ -178,7 +219,8 @@ export default function ReportViewer({ report, userType = "faculty" }) {
         type: 'comment',
         text: selectedText,
         range: selectedRange,
-        comment: commentText
+        comment: commentText,
+        section: selectedRange.section || 'body'
       };
       setAnnotations([...annotations, newAnnotation]);
       setCommentText('');
@@ -386,11 +428,11 @@ export default function ReportViewer({ report, userType = "faculty" }) {
               </button> */}
             </div>
           </div>
-          <div className="report-section">
+          <div className="report-section introduction-section">
             <h2 className="report-section-title">Introduction</h2>
             <p className="report-text">{renderTextWithHighlights(reportData.introduction, 'introduction')}</p>
           </div>
-          <div className="report-section">
+          <div className="report-section body-section">
             <h2 className="report-section-title">Report Body</h2>
             <div className="report-text">
               <p className="report-paragraph" style={{ whiteSpace: 'pre-wrap' }}>

@@ -69,11 +69,9 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
     }
 
     let tabEvaluations = [...evaluations];
-    console.log("Initial evaluations:", tabEvaluations);
 
     if (stakeholder === "student" || stakeholder === "company") {
       tabEvaluations = tabEvaluations.filter(ev => ev.status === activeTab);
-      console.log("After status filter:", tabEvaluations);
     }
 
     if (searchTerm.trim() !== '') {
@@ -128,7 +126,12 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
   };
 
   const handleDeleteEvaluation = (evaluationId) => {
-    const updatedEvaluations = evaluations.filter(item => item.id !== evaluationId);
+    // Ensure we're comparing the right types (convert both to numbers for safety)
+    const idToDelete = typeof evaluationId === 'string' ? parseInt(evaluationId) : evaluationId;
+    const updatedEvaluations = evaluations.filter(item => {
+      const itemId = typeof item.id === 'string' ? parseInt(item.id) : item.id;
+      return itemId !== idToDelete;
+    });
     setEvaluations(updatedEvaluations);
     setShowDeleteConfirm(false);
     setEvaluationToDelete(null);
@@ -145,12 +148,16 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
   };
 
   const handleModalSubmit = (updatedFields) => {
-    // Only update the editable fields, keep id, status, studentName, etc.
-    setEvaluations(evaluations.map(ev =>
-      ev.id === evaluationToEdit.id
-        ? { ...ev, ...updatedFields }
-        : ev
-    ));
+    // Handle ID type comparisons properly
+    const editId = typeof evaluationToEdit?.id === 'string' ? parseInt(evaluationToEdit.id) : evaluationToEdit?.id;
+
+    const updatedEvaluations = evaluations.map(ev => {
+      const evId = typeof ev.id === 'string' ? parseInt(ev.id) : ev.id;
+      return evId === editId ? { ...ev, ...updatedFields } : ev;
+    });
+    setEvaluations(updatedEvaluations);
+
+    // Modal will close itself after the feedback animation
   };
 
   // First let's create a method to get the appropriate empty state message
@@ -560,8 +567,6 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
           onClose={() => { setShowEditModal(false); setEvaluationToEdit(null); }}
           onSubmit={handleModalSubmit}
           evaluationToEdit={evaluationToEdit}
-          feedbackType={feedbackType}
-          setFeedbackType={setFeedbackType}
         />
       )}
 

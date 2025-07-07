@@ -586,8 +586,11 @@ button:hover {
   justify-content: center;
 }
 .companyprofilecard-logo {
+  background-color: white;
   border-radius: 50%;
-  object-fit: contain;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 .companyprofilecard-name {
   font-size: 1.25rem;

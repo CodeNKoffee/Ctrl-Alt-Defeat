@@ -36,6 +36,7 @@ export default function Home() {
   const [clickedOptionId, setClickedOptionId] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const textContent = [
     { title: "", subtitle: "" },                             // Initial state
@@ -97,6 +98,7 @@ export default function Home() {
 
   const handleBackToOptions = () => {
     setIsTransitioning(true);
+    setIsLoggingIn(false); // Reset login state
 
     // Simple fade transition back (no loader)
     setTimeout(() => {
@@ -109,57 +111,92 @@ export default function Home() {
   };
 
   const handleLogin = async (values) => {
-    // if (!selectedUserOption) {
-    //   // Should not happen if login form is visible, but good guard
-    //   toast.error('User type not selected.', {
-    //     position: 'top-right',
-    //     autoClose: 4000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     theme: 'light',
-    //   });
-    //   return;
-    // }
+    setIsLoggingIn(true);
 
-    let mockUser = null;
-    const userType = selectedUserOption.value; // e.g., 'student', 'company'
+    try {
+      // if (!selectedUserOption) {
+      //   // Should not happen if login form is visible, but good guard
+      //   toast.error('User type not selected.', {
+      //     position: 'top-right',
+      //     autoClose: 4000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     theme: 'light',
+      //   });
+      //   return;
+      // }
 
-    if (userType === 'student') {
-      mockUser = MOCK_USERS.students.find(
-        student => student.email === values.email && student.password === values.password
-      );
-    } else {
-      // For other user types like 'company', 'faculty', 'scad'
-      const potentialUser = MOCK_USERS[userType];
-      if (potentialUser && potentialUser.email === values.email && potentialUser.password === values.password) {
-        mockUser = potentialUser;
+      let mockUser = null;
+      const userType = selectedUserOption.value; // e.g., 'student', 'company'
+
+      if (userType === 'student') {
+        mockUser = MOCK_USERS.students.find(
+          student => student.email === values.email && student.password === values.password
+        );
+      } else {
+        // For other user types like 'company', 'faculty', 'scad'
+        const potentialUser = MOCK_USERS[userType];
+        if (potentialUser && potentialUser.email === values.email && potentialUser.password === values.password) {
+          mockUser = potentialUser;
+        }
       }
-    }
 
-    if (!mockUser) {
-      throw new Error('Invalid email or password');
-    }
+      if (!mockUser) {
+        throw new Error('Invalid email or password');
+      }
 
-    const userSession = {
-      ...mockUser, // Contains all user details from MOCK_USERS, including 'role'
-      userType: userType, // Explicitly add/ensure userType for clarity in the session
-      timestamp: new Date().toISOString()
+      const userSession = {
+        ...mockUser, // Contains all user details from MOCK_USERS, including 'role'
+        userType: userType, // Explicitly add/ensure userType for clarity in the session
+        timestamp: new Date().toISOString()
+      };
+
+      if (values.remember) {
+        localStorage.setItem('userSession', JSON.stringify(userSession));
+      }
+      sessionStorage.setItem('userSession', JSON.stringify(userSession));
+
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: userSession
+      });
+
+      router.push(`/en/dashboard/${userType}`);
+    } catch (error) {
+      setIsLoggingIn(false);
+      throw error; // Re-throw so LoginForm can handle it
+    }
+  };
+
+  // Add event listener for Enter key on login view
+  useEffect(() => {
+    const handleEnterKeyPress = (event) => {
+      // Check if we're on the login view and Enter key is pressed
+      if (view === 'login' && event.key === 'Enter' && !isLoggingIn && !showLoader) {
+        // Prevent default behavior to avoid conflicts
+        event.preventDefault();
+
+        // Find the login form and trigger its submission
+        const loginForm = document.querySelector('form');
+        if (loginForm) {
+          // Trigger form submission which will call handleLogin
+          loginForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        }
+      }
     };
 
-    if (values.remember) {
-      localStorage.setItem('userSession', JSON.stringify(userSession));
+    // Only add event listener when on login view
+    if (view === 'login' && selectedUserOption && !showLoader) {
+      document.addEventListener('keydown', handleEnterKeyPress);
+
+      // Cleanup function to remove event listener
+      return () => {
+        document.removeEventListener('keydown', handleEnterKeyPress);
+      };
     }
-    sessionStorage.setItem('userSession', JSON.stringify(userSession));
-
-    dispatch({
-      type: 'LOGIN_SUCCESS',
-      payload: userSession
-    });
-
-    router.push(`/en/dashboard/${userType}`);
-  };
+  }, [view, selectedUserOption, showLoader, isLoggingIn]); // Dependencies to re-run when these change
 
   const handleIconAnimationComplete = () => {
     setIsIconAnimating(false);
@@ -538,6 +575,7 @@ export default function Home() {
                       <LoginForm
                         userType={selectedUserOption.value}
                         onSubmit={handleLogin}
+                        isLoggingIn={isLoggingIn}
                         key={selectedUserOption.value}
                       />
                     </div>
