@@ -34,6 +34,7 @@ import { useDispatch } from 'react-redux';
 import { LOGOUT_USER } from '@/store/authReducer';
 import ProfileIcon from './ProfileIcon';
 import ProBadge from './ProBadge';
+import { useTranslation } from 'react-i18next';
 
 // Language configuration
 const languages = [
@@ -68,37 +69,37 @@ const iconMap = {
 // Map of sidebar items for different user types
 const sidebarConfig = {
   student: [
-    { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/student', isPage: false },
-    { id: 'browse', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/student/browse-internships', isPage: false },
-    { id: 'applied', iconId: 'applied', label: 'My Applications', path: '/dashboard/student/applied-internships', isPage: false },
-    { id: 'my-internships', iconId: 'my-internships', label: 'My Internships', path: '/dashboard/student/my-internships', isPage: false },
-    { id: 'my-reports', iconId: 'my-reports', label: 'My Reports', path: '/dashboard/student/my-reports', isPage: false },
-    { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/student/my-evaluations', isPage: false },
-    { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/student/workshops', isPage: false, requiresPro: true },
-    { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/student/notifications', isPage: false },
-    { id: 'online-assessments', iconId: 'online-assessments', label: 'Online Assessments', path: '/dashboard/student/online-assessments', isPage: false, requiresPro: true },
-    { id: 'profile', iconId: 'profile', label: 'My Profile', path: '/dashboard/student/profile', isPage: false },
+    { id: 'home', iconId: 'home', labelKey: 'sidebar.student.dashboard', path: '/dashboard/student', isPage: false },
+    { id: 'browse', iconId: 'browse', labelKey: 'sidebar.student.browseInternships', path: '/dashboard/student/browse-internships', isPage: false },
+    { id: 'applied', iconId: 'applied', labelKey: 'sidebar.student.myApplications', path: '/dashboard/student/applied-internships', isPage: false },
+    { id: 'my-internships', iconId: 'my-internships', labelKey: 'sidebar.student.myInternships', path: '/dashboard/student/my-internships', isPage: false },
+    { id: 'my-reports', iconId: 'my-reports', labelKey: 'sidebar.student.myReports', path: '/dashboard/student/my-reports', isPage: false },
+    { id: 'my-evaluations', iconId: 'my-evaluations', labelKey: 'sidebar.student.myEvaluations', path: '/dashboard/student/my-evaluations', isPage: false },
+    { id: 'workshops', iconId: 'workshops', labelKey: 'sidebar.student.workshops', path: '/dashboard/student/workshops', isPage: false, requiresPro: true },
+    { id: 'notifications', iconId: 'notifications', labelKey: 'sidebar.student.notifications', path: '/dashboard/student/notifications', isPage: false },
+    { id: 'online-assessments', iconId: 'online-assessments', labelKey: 'sidebar.student.onlineAssessments', path: '/dashboard/student/online-assessments', isPage: false, requiresPro: true },
+    { id: 'profile', iconId: 'profile', labelKey: 'sidebar.student.myProfile', path: '/dashboard/student/profile', isPage: false },
   ],
   faculty: [
-    { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },
-    { id: 'student-evals', iconId: 'my-evaluations', label: 'Evaluations', path: '/dashboard/faculty/student-evals', isPage: false },
-    { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/faculty/statistics', isPage: false },
+    { id: 'dashboard', iconId: 'home', labelKey: 'sidebar.faculty.dashboard', path: '/dashboard/faculty', isPage: false },
+    { id: 'student-evals', iconId: 'my-evaluations', labelKey: 'sidebar.faculty.evaluations', path: '/dashboard/faculty/student-evals', isPage: false },
+    { id: 'statistics', iconId: 'statistics', labelKey: 'sidebar.faculty.statistics', path: '/dashboard/faculty/statistics', isPage: false },
   ],
   company: [
-    { id: 'companyposts', iconId: 'listings', label: 'My Posts', path: '/dashboard/company/companyposts', isPage: false },
-    { id: 'browse-internships', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/company/browse-internships', isPage: false },
-    { id: 'applications', iconId: 'applications', label: 'My Applicants', path: '/dashboard/company/applications', isPage: false },
-    { id: 'current-interns', iconId: 'my-internships', label: 'My Interns', path: '/dashboard/company/current-interns', isPage: false },
-    { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/company/my-evaluations', isPage: false },
+    { id: 'companyposts', iconId: 'listings', labelKey: 'sidebar.company.myPosts', path: '/dashboard/company/companyposts', isPage: false },
+    { id: 'browse-internships', iconId: 'browse', labelKey: 'sidebar.company.browseInternships', path: '/dashboard/company/browse-internships', isPage: false },
+    { id: 'applications', iconId: 'applications', labelKey: 'sidebar.company.myApplicants', path: '/dashboard/company/applications', isPage: false },
+    { id: 'current-interns', iconId: 'my-internships', labelKey: 'sidebar.company.myInterns', path: '/dashboard/company/current-interns', isPage: false },
+    { id: 'my-evaluations', iconId: 'my-evaluations', labelKey: 'sidebar.company.myEvaluations', path: '/dashboard/company/my-evaluations', isPage: false },
   ],
   scad: [
-    { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/scad', isPage: false },
-    { id: 'student-list', iconId: 'student-list', label: 'Student List', path: '/dashboard/scad/student-list', isPage: false },
-    { id: 'browse-internships', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/scad/browse-internships', isPage: false },
-    { id: 'student-evals', iconId: 'my-evaluations', label: 'Student Evaluations', path: '/dashboard/scad/student-evals', isPage: false },
-    { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/scad/statistics', isPage: false },
-    { id: 'reports', iconId: 'reports', label: 'Reports', path: '/dashboard/scad/reports', isPage: false },
-    { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/scad/workshops', isPage: false },
+    { id: 'dashboard', iconId: 'home', labelKey: 'sidebar.scad.dashboard', path: '/dashboard/scad', isPage: false },
+    { id: 'student-list', iconId: 'student-list', labelKey: 'sidebar.scad.studentList', path: '/dashboard/scad/student-list', isPage: false },
+    { id: 'browse-internships', iconId: 'browse', labelKey: 'sidebar.scad.browseInternships', path: '/dashboard/scad/browse-internships', isPage: false },
+    { id: 'student-evals', iconId: 'my-evaluations', labelKey: 'sidebar.scad.studentEvaluations', path: '/dashboard/scad/student-evals', isPage: false },
+    { id: 'statistics', iconId: 'statistics', labelKey: 'sidebar.scad.statistics', path: '/dashboard/scad/statistics', isPage: false },
+    { id: 'reports', iconId: 'reports', labelKey: 'sidebar.scad.reports', path: '/dashboard/scad/reports', isPage: false },
+    { id: 'workshops', iconId: 'workshops', labelKey: 'sidebar.scad.workshops', path: '/dashboard/scad/workshops', isPage: false },
   ],
 };
 
@@ -114,10 +115,22 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
   const itemRefs = useRef({});
   const languageDropdownRef = useRef(null);
 
+  const { t, ready } = useTranslation();
+
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useDispatch();
   const sidebarItems = sidebarConfig[userType] || [];
+
+  // Safe translation function that provides fallback
+  const safeT = (key) => {
+    if (!ready || !t) {
+      // Fallback to key without prefix for display
+      const fallbackKey = key.split('.').pop();
+      return fallbackKey.charAt(0).toUpperCase() + fallbackKey.slice(1);
+    }
+    return t(key);
+  };
 
   // Extract locale from pathname
   const locale = pathname.split('/')[1] || 'en';
@@ -338,7 +351,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                   className={`whitespace-nowrap overflow-hidden transition-all duration-200 ${isExpanded ? 'ml-3 opacity-100 w-full' : 'ml-0 opacity-0 w-0'} font-medium text-left`}
                   style={isExpanded ? { maxWidth: '100%' } : {}}
                 >
-                  {item.label}
+                  {safeT(item.labelKey)}
                 </span>
                 {item.requiresPro && !isAccessible && isExpanded && (
                   <span className="ml-auto">
@@ -357,7 +370,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                       className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
                       onClick={() => !isExpanded && setIsExpanded(false)}
                       ref={el => itemRefs.current[item.id] = el}
-                      onMouseEnter={(e) => handleTooltipShow(item.id, item.label, e)}
+                      onMouseEnter={(e) => handleTooltipShow(item.id, safeT(item.labelKey), e)}
                       onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
@@ -366,7 +379,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     <div
                       className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
-                      onMouseEnter={(e) => handleTooltipShow(item.id, `PRO feature - ${item.label}`, e)}
+                      onMouseEnter={(e) => handleTooltipShow(item.id, `PRO feature - ${safeT(item.labelKey)}`, e)}
                       onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
@@ -382,7 +395,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                       onClick={() => handleViewChange(item.id)}
                       className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
-                      onMouseEnter={(e) => handleTooltipShow(item.id, item.label, e)}
+                      onMouseEnter={(e) => handleTooltipShow(item.id, safeT(item.labelKey), e)}
                       onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
@@ -391,7 +404,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     <div
                       className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
-                      onMouseEnter={(e) => handleTooltipShow(item.id, `PRO feature - ${item.label}`, e)}
+                      onMouseEnter={(e) => handleTooltipShow(item.id, `PRO feature - ${safeT(item.labelKey)}`, e)}
                       onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
@@ -483,7 +496,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                 {currentUser?.accountType === 'PRO' && <ProBadge size="sm" />}
               </div>
               <span className="text-gray-500 text-xs capitalize truncate">
-                {userType}
+                {safeT(`sidebar.${userType}User`)}
               </span>
             </div>
           </div>
@@ -506,7 +519,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             variant="danger"
             onClick={handleLogout}
             icon={faRightFromBracket}
-            text="Logout"
+            text={safeT('sidebar.logout')}
             width="w-full"
             className="rounded-lg"
             isLoading={isLoggingOut}

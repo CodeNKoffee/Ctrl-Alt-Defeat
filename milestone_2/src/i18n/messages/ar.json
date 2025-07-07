@@ -1,0 +1,42 @@
+{
+  "sidebar": {
+    "logout": "تسجيل الخروج",
+    "companyUser": "الشركة",
+    "scadUser": "SCAD",
+    "facultyUser": "الجامعة",
+    "studentUser": "الطالب",
+    "company": {
+      "myPosts": "منشوراتي",
+      "browseInternships": "تصفح التدريبات",
+      "myApplicants": "المتقدمين",
+      "myInterns": "المتدربين",
+      "myEvaluations": "تقييماتي"
+    },
+    "scad": {
+      "dashboard": "الرئيسية",
+      "studentList": "قائمة الطلاب",
+      "browseInternships": "تصفح التدريبات",
+      "studentEvaluations": "تقييمات الطلاب",
+      "statistics": "الإحصائيات",
+      "reports": "التقارير",
+      "workshops": "الورشات"
+    },
+    "faculty": {
+      "dashboard": "الرئيسية",
+      "evaluations": "تقييمات",
+      "statistics": "الإحصائيات"
+    },
+    "student": {
+      "dashboard": "الرئيسية",
+      "browseInternships": "تصفح التدريبات",
+      "myApplications": "تطبيقاتي",
+      "myInternships": "تدريباتي",
+      "myReports": "التقارير",
+      "myEvaluations": "تقييماتي",
+      "workshops": "الورشات",
+      "notifications": "الإشعارات",
+      "onlineAssessments": "اختبارات",
+      "myProfile": "الملف الشخصي"
+    }
+  }
+}

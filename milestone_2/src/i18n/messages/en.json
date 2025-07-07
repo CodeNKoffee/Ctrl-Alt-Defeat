@@ -1,0 +1,42 @@
+{
+  "sidebar": {
+    "logout": "Logout",
+    "companyUser": "Company",
+    "scadUser": "SCAD",
+    "facultyUser": "Faculty",
+    "studentUser": "Student",
+    "company": {
+      "myPosts": "My Posts",
+      "browseInternships": "Browse Internships",
+      "myApplicants": "My Applicants",
+      "myInterns": "My Interns",
+      "myEvaluations": "My Evaluations"
+    },
+    "scad": {
+      "dashboard": "Dashboard",
+      "studentList": "Student List",
+      "browseInternships": "Browse Internships",
+      "studentEvaluations": "Student Evaluations",
+      "statistics": "Statistics",
+      "reports": "Reports",
+      "workshops": "Workshops"
+    },
+    "faculty": {
+      "dashboard": "Dashboard",
+      "evaluations": "Evaluations",
+      "statistics": "Statistics"
+    },
+    "student": {
+      "dashboard": "Dashboard",
+      "browseInternships": "Browse Internships",
+      "myApplications": "My Applications",
+      "myInternships": "My Internships",
+      "myReports": "My Reports",
+      "myEvaluations": "My Evaluations",
+      "workshops": "Workshops",
+      "notifications": "Notifications",
+      "onlineAssessments": "Online Assessments",
+      "myProfile": "My Profile"
+    }
+  }
+}
