@@ -2,11 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import { getRegularInternships } from '../../../../../constants/internshipData'
 import InternshipList from '../../../../components/shared/InternshipList';
 import ApplicationsFilterBar from '../../../../components/shared/ApplicationsFilterBar';
 
 export default function CompanyBrowseInternshipsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [filters, setFilters] = useState({
     industry: '',
     duration: '',
@@ -86,7 +91,7 @@ export default function CompanyBrowseInternshipsView() {
 
   const customFilterSections = [
     {
-      title: "Industry",
+      title: safeT('company.browse.filters.industry'),
       options: uniqueIndustries.map(ind => ({ label: ind, value: ind })),
       isSelected: (option) => filters.industry === option.value,
       onSelect: (option) => {
@@ -94,7 +99,7 @@ export default function CompanyBrowseInternshipsView() {
       }
     },
     {
-      title: "Duration",
+      title: safeT('company.browse.filters.duration'),
       options: uniqueDurations.map(dur => ({ label: dur, value: dur })),
       isSelected: (option) => filters.duration === option.value,
       onSelect: (option) => {
@@ -102,8 +107,11 @@ export default function CompanyBrowseInternshipsView() {
       }
     },
     {
-      title: "Payment",
-      options: [{ label: "Paid", value: true }, { label: "Unpaid", value: false }],
+      title: safeT('company.browse.filters.payment'),
+      options: [
+        { label: safeT('company.browse.filters.paid'), value: true },
+        { label: safeT('company.browse.filters.unpaid'), value: false }
+      ],
       isSelected: (option) => filters.isPaid === option.value,
       onSelect: (option) => {
         setFilters(prev => ({ ...prev, isPaid: prev.isPaid === option.value ? null : option.value }));
@@ -126,36 +134,36 @@ export default function CompanyBrowseInternshipsView() {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              OPPORTUNITIES OVERVIEW
+              {safeT('company.browse.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Available Internship Positions</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">{safeT('company.browse.heading')}</div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Browse the current internship positions available to SCAD students. This view allows you to see what opportunities students can discover and apply to through the platform.</p>
+              <p className="mb-3">{safeT('company.browse.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Key Benefits for Partner Companies:
+                  {safeT('company.browse.keyBenefits')}:
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Access to talented students with specialized skills</span>
+                    <span>{safeT('company.browse.benefits.talentedStudents')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Fresh perspectives and innovative approaches</span>
+                    <span>{safeT('company.browse.benefits.freshPerspectives')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Potential to develop future full-time talent</span>
+                    <span>{safeT('company.browse.benefits.futureTalent')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                To add your own internship listing, use the "Post New Internship" option in your company dashboard.
+                {safeT('company.browse.addListingNote')}
               </p>
             </div>
           </div>
@@ -172,10 +180,10 @@ export default function CompanyBrowseInternshipsView() {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search internships by job title or skills..."
+          searchPlaceholder={safeT('company.browse.searchPlaceholder')}
           onClearFilters={clearAllFilters}
           customFilterSections={customFilterSections}
-          primaryFilterName="Filters"
+          primaryFilterName={safeT('company.common.filter')}
         />
       </div>
 

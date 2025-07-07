@@ -63,6 +63,7 @@
         "allPaymentStatuses": "جميع حالات الدفع",
         "fullTime": "دوام كامل",
         "partTime": "دوام جزئي",
+        "contract": "عقد",
         "internship": "تدريب",
         "remote": "عن بُعد",
         "onSite": "في الموقع",
@@ -83,10 +84,23 @@
       },
       "note": "ملاحظة: جميع الشركات المعروضة تم فحصها من قبل SCAD وتحتفظ بشراكات نشطة مع مؤسستنا.",
       "searchPlaceholder": "البحث في التدريبات حسب المسمى الوظيفي أو اسم الشركة...",
+      "keyBenefits": "الفوائد الرئيسية للشركات الشريكة",
+      "benefits": {
+        "talentedStudents": "الوصول إلى طلاب موهوبين ذوي مهارات متخصصة",
+        "freshPerspectives": "وجهات نظر جديدة ونهج مبتكرة",
+        "futureTalent": "إمكانية تطوير مواهب مستقبلية بدوام كامل"
+      },
+      "addListingNote": "لإضافة إعلان التدريب الخاص بكم، استخدموا خيار \"نشر تدريب جديد\" في لوحة تحكم الشركة.",
       "filters": {
         "position": "المنصب",
         "allPositions": "جميع المناصب",
-        "allCompanies": "جميع الشركات"
+        "allCompanies": "جميع الشركات",
+        "company": "الشركة",
+        "industry": "الصناعة",
+        "duration": "المدة",
+        "payment": "الدفع",
+        "paid": "مدفوع",
+        "unpaid": "غير مدفوع"
       }
     },
     "applications": {
@@ -163,9 +177,14 @@
     },
     "common": {
       "filter": "تصفية",
+      "hideFilters": "إخفاء المرشحات",
       "clearFilters": "مسح المرشحات",
       "search": "بحث",
-      "all": "الكل"
+      "all": "الكل",
+      "activeFilters": "المرشحات النشطة",
+      "noFiltersApplied": "لا توجد مرشحات مطبقة حالياً",
+      "noFiltersAvailable": "لا توجد مرشحات متاحة في الوقت الحالي",
+      "status": "الحالة"
     }
   }
 }

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { createSafeT } from '@/lib/translationUtils';
+import { createSafeT, translateFilterValue } from '@/lib/translationUtils';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 
 import PostTiles from '@/components/PostTiles';
@@ -310,28 +310,34 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const filterSections = [
     {
       name: safeT('company.browse.filters.position'),
-      options: uniquePositions.map(pos => ({ id: pos, title: pos })),
+      options: uniquePositions.map(pos => ({ id: pos, title: pos })), // Keep position titles as-is (job titles)
       selected: filters.position || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, position: value === 'all' ? '' : value })),
       resetLabel: safeT('company.browse.filters.allPositions'),
     },
     {
       name: safeT('company.posts.filters.jobType'),
-      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      options: uniqueJobTypes.map(type => ({
+        id: type,
+        title: translateFilterValue(safeT, type, 'jobType')
+      })),
       selected: filters.jobType || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
       resetLabel: safeT('company.posts.filters.allJobTypes'),
     },
     {
       name: safeT('company.posts.filters.jobSetting'),
-      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      options: uniqueJobSettings.map(setting => ({
+        id: setting,
+        title: translateFilterValue(safeT, setting, 'jobSetting')
+      })),
       selected: filters.jobSetting || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
       resetLabel: safeT('company.posts.filters.allSettings'),
     },
     {
-      name: 'Company',
-      options: uniqueCompanies.map(company => ({ id: company, title: company })),
+      name: safeT('company.browse.filters.company'),
+      options: uniqueCompanies.map(company => ({ id: company, title: company })), // Keep company names in English as requested
       selected: filters.company || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, company: value === 'all' ? '' : value })),
       resetLabel: safeT('company.browse.filters.allCompanies'),
@@ -698,11 +704,11 @@ function CurrentInternsView() {
           searchPlaceholder={safeT('company.interns.searchPlaceholder')}
           filterSections={[
             {
-              name: 'Status',
+              name: safeT('company.applications.filters.status'),
               options: evaluationStatusOptions,
               selected: selectedStatus,
               onChange: setSelectedStatus,
-              resetLabel: 'All Status'
+              resetLabel: safeT('company.applications.filters.allStatus')
             }
           ]}
           onClearFilters={() => {

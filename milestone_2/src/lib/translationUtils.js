@@ -1,25 +1,38 @@
 // Safe translation utility function
 export const createSafeT = (t, ready) => {
-  return (key) => {
-    if (!ready || !t) {
-      console.warn(`Translation not ready for key: ${key}`);
-      const fallbackKey = key.split('.').pop();
-      return fallbackKey.charAt(0).toUpperCase() + fallbackKey.slice(1);
+  return (key, fallback = key) => {
+    if (!ready || typeof t !== 'function') {
+      return fallback;
     }
-
     try {
-      const translation = t(key);
-      // Check if translation is just the key (meaning translation failed)
-      if (translation === key) {
-        console.warn(`Missing translation for key: ${key}`);
-        const fallbackKey = key.split('.').pop();
-        return fallbackKey.charAt(0).toUpperCase() + fallbackKey.slice(1);
-      }
-      return translation;
+      const result = t(key);
+      return result || fallback;
     } catch (error) {
-      console.error(`Translation error for key ${key}:`, error);
-      const fallbackKey = key.split('.').pop();
-      return fallbackKey.charAt(0).toUpperCase() + fallbackKey.slice(1);
+      console.warn(`Translation failed for key: ${key}`, error);
+      return fallback;
     }
   };
+};
+
+// Helper function to translate filter option values
+export const translateFilterValue = (safeT, value, type) => {
+  if (!value || value === 'all') return value;
+
+  // Translation mappings for different filter types
+  const translations = {
+    jobType: {
+      'Full-time': safeT('company.posts.filters.fullTime'),
+      'Part-time': safeT('company.posts.filters.partTime'),
+      'Contract': safeT('company.posts.filters.contract'),
+      'Internship': safeT('company.posts.filters.internship'),
+    },
+    jobSetting: {
+      'Remote': safeT('company.posts.filters.remote'),
+      'On-site': safeT('company.posts.filters.onSite'),
+      'Hybrid': safeT('company.posts.filters.hybrid'),
+    }
+  };
+
+  // Return translated value or original if no translation found
+  return translations[type]?.[value] || value;
 }; 

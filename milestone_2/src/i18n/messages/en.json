@@ -63,6 +63,7 @@
         "allPaymentStatuses": "All Payment Statuses",
         "fullTime": "Full-time",
         "partTime": "Part-time",
+        "contract": "Contract",
         "internship": "Internship",
         "remote": "Remote",
         "onSite": "On-site",
@@ -83,10 +84,23 @@
       },
       "note": "Note: All displayed companies have been vetted by SCAD and maintain active partnerships with our institution.",
       "searchPlaceholder": "Search internships by job title or company name ...",
+      "keyBenefits": "Key Benefits for Partner Companies",
+      "benefits": {
+        "talentedStudents": "Access to talented students with specialized skills",
+        "freshPerspectives": "Fresh perspectives and innovative approaches", 
+        "futureTalent": "Potential to develop future full-time talent"
+      },
+      "addListingNote": "To add your own internship listing, use the \"Post New Internship\" option in your company dashboard.",
       "filters": {
         "position": "Position",
-        "allPositions": "All Positions",
-        "allCompanies": "All Companies"
+        "allPositions": "All Positions", 
+        "allCompanies": "All Companies",
+        "company": "Company",
+        "industry": "Industry",
+        "duration": "Duration",
+        "payment": "Payment",
+        "paid": "Paid",
+        "unpaid": "Unpaid"
       }
     },
     "applications": {
@@ -162,10 +176,15 @@
       "confidentialityNote": "Evaluations remain confidential between your company and authorized faculty and SCAD members."
     },
     "common": {
-      "filter": "Filter",
-      "clearFilters": "Clear Filters",
+      "filter": "Filters",
+      "hideFilters": "Hide Filters",
+      "clearFilters": "Clear Filters", 
       "search": "Search",
-      "all": "All"
+      "all": "All",
+      "activeFilters": "Active Filters",
+      "noFiltersApplied": "No filters currently applied",
+      "noFiltersAvailable": "No filters available at the moment",
+      "status": "Status"
     }
   }
 }

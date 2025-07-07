@@ -63,6 +63,7 @@
         "allPaymentStatuses": "Alle Vergütungsstatus",
         "fullTime": "Vollzeit",
         "partTime": "Teilzeit",
+        "contract": "Vertrag",
         "internship": "Praktikum",
         "remote": "Remote",
         "onSite": "Vor Ort",
@@ -83,10 +84,23 @@
       },
       "note": "Hinweis: Alle angezeigten Unternehmen wurden von SCAD geprüft und unterhalten aktive Partnerschaften mit unserer Institution.",
       "searchPlaceholder": "Praktika nach Stellentitel oder Firmenname suchen...",
+      "keyBenefits": "Hauptvorteile für Partnerunternehmen",
+      "benefits": {
+        "talentedStudents": "Zugang zu talentierten Studenten mit spezialisierten Fähigkeiten",
+        "freshPerspectives": "Frische Perspektiven und innovative Ansätze",
+        "futureTalent": "Potenzial zur Entwicklung zukünftiger Vollzeit-Talente"
+      },
+      "addListingNote": "Um Ihre eigene Praktikumsausschreibung hinzuzufügen, verwenden Sie die Option \"Neues Praktikum veröffentlichen\" in Ihrem Unternehmen-Dashboard.",
       "filters": {
         "position": "Position",
         "allPositions": "Alle Positionen",
-        "allCompanies": "Alle Unternehmen"
+        "allCompanies": "Alle Unternehmen",
+        "company": "Unternehmen",
+        "industry": "Branche",
+        "duration": "Dauer",
+        "payment": "Vergütung",
+        "paid": "Bezahlt",
+        "unpaid": "Unbezahlt"
       }
     },
     "applications": {
@@ -162,10 +176,15 @@
       "confidentialityNote": "Bewertungen bleiben vertraulich zwischen Ihrem Unternehmen und autorisierten Fakultäts- und SCAD-Mitgliedern."
     },
     "common": {
-      "filter": "Filter",
+      "filter": "Filters",
+      "hideFilters": "Filter ausblenden",
       "clearFilters": "Filter löschen",
       "search": "Suchen",
-      "all": "Alle"
+      "all": "Alle",
+      "activeFilters": "Aktive Filter",
+      "noFiltersApplied": "Derzeit keine Filter angewendet",
+      "noFiltersAvailable": "Momentan sind keine Filter verfügbar",
+      "status": "Status"
     }
   }
 }

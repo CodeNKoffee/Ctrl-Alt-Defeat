@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faXmark, faChevronDown, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from '@/components/DatePicker';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 // Add a color map for status values and content types
 const STATUS_COLOR_MAP = {
@@ -104,6 +106,9 @@ export default function ApplicationsFilterBar({
 
   filterSections = [], // [{ name, options, selected, onChange, resetLabel }]
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [isCombinedFilterPopoverOpen, setIsCombinedFilterPopoverOpen] = useState(false);
   const filterRowRef = React.useRef(null);
 
@@ -181,7 +186,7 @@ export default function ApplicationsFilterBar({
             className={`appearance-none w-full md:w-auto ${filterButtonColor} backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-3 px-4 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 flex items-center justify-center gap-2 combined-filter-button min-w-[150px]`}
           >
             <FontAwesomeIcon icon={faFilter} className="h-4 w-4 text-[#5DB2C7]" />
-            <span>Filters</span>
+            <span>{safeT('company.common.filter')}</span>
             <FontAwesomeIcon icon={faChevronDown} className={`h-4 w-4 text-[#5DB2C7] transition-transform duration-300 ${isCombinedFilterPopoverOpen ? 'rotate-180' : ''}`} />
           </button>
         </div>
@@ -202,7 +207,7 @@ export default function ApplicationsFilterBar({
                       className={`px-3 py-2 text-sm text-[#2a5f74] hover:bg-[#D9F0F4] rounded-lg cursor-pointer transition-colors duration-200 ${section.selected === 'all' ? 'bg-[#D9F0F4] font-semibold' : 'font-normal'}`}
                       onClick={() => section.onChange('all')}
                     >
-                      {section.resetLabel || `All ${section.name}`}
+                      {section.resetLabel || `${safeT('company.common.all')} ${section.name}`}
                     </div>
                     {section.options.map(option => (
                       <div
@@ -223,7 +228,7 @@ export default function ApplicationsFilterBar({
             </div>
           ) : (
             <div className="text-center text-gray-500 py-4">
-              No filters available at the moment.
+              {safeT('company.common.noFiltersAvailable')}
             </div>
           )}
         </div>
@@ -233,7 +238,7 @@ export default function ApplicationsFilterBar({
       <div className="w-full mt-4 pt-4 border-t border-[#B8E1E9]/50">
         {hasActiveFilters ? (
           <div className="flex flex-wrap gap-3 items-center">
-            <span className="text-sm text-[#2a5f74] font-medium">Active Filters:</span>
+            <span className="text-sm text-[#2a5f74] font-medium">{safeT('company.common.activeFilters')}:</span>
             {filterSections.map(section => (
               section.selected && section.selected !== 'all' ? (
                 (section.name.toLowerCase() === 'status' || section.name.toLowerCase() === 'content type') && STATUS_PILL_STYLE_MAP[section.selected] ? (
@@ -242,7 +247,7 @@ export default function ApplicationsFilterBar({
                     className={`flex items-center px-3 py-1.5 rounded-full text-xs font-medium h-[38px] transition-all mr-2 ${STATUS_PILL_STYLE_MAP[section.selected].color}`}
                     style={{ borderWidth: 2 }}
                   >
-                    <span className="mr-1.5">Status:</span>
+                    <span className="mr-1.5">{safeT('company.common.status')}:</span>
                     <span className={`inline-block w-2 h-2 rounded-full mr-1.5 ${STATUS_PILL_STYLE_MAP[section.selected].badgeColor}`}></span>
                     <span className="font-semibold mr-1.5">
                       {section.options.find(opt => opt.id.toString() === section.selected)?.title || section.selected}
@@ -275,7 +280,7 @@ export default function ApplicationsFilterBar({
             ))}
           </div>
         ) : (
-          <p className="text-sm text-gray-500 italic">No filters currently applied.</p>
+          <p className="text-sm text-gray-500 italic">{safeT('company.common.noFiltersApplied')}</p>
         )}
       </div>
     </div>
