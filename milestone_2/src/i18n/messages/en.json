@@ -224,5 +224,70 @@
       "noFiltersAvailable": "No filters available at the moment",
       "status": "Status"
     }
+  },
+  "internship": {
+    "videoSidebar": {
+      "defaultTitle": "Internship Requirements",
+      "watchFor": "Watch: Internships for",
+      "genZFuture": "Gen-Z are shaping the future",
+      "requirementsText": "Learn which internships count toward your graduation requirements based on your major and academic plan.",
+      "quickResources": "Quick Resources",
+      "academicGuide": "Academic Requirements Guide",
+      "contactAdvisor": "Contact Academic Advisor",
+      "faqsInternships": "FAQs About Internships"
+    },
+    "row": {
+      "timeAgo": {
+        "posted": "posted",
+        "monthsAgo": "month",
+        "monthsAgoPlural": "months",
+        "weeksAgo": "week", 
+        "weeksAgoPlural": "weeks",
+        "daysAgo": "day",
+        "daysAgoPlural": "days",
+        "hoursAgo": "hour",
+        "hoursAgoPlural": "hours",
+        "minutesAgo": "minute",
+        "minutesAgoPlural": "minutes",
+        "justNow": "posted just now",
+        "ago": "ago"
+      },
+      "statusTooltips": {
+        "accepted": "Your application has been accepted by the company! Congratulations!",
+        "pending": "Your application has been submitted but not yet reviewed by the company.",
+        "finalized": "You are among the top applicants, and the company may proceed with an offer soon. Awaiting final confirmation.",
+        "rejected": "Unfortunately, your application was not selected for this position this time."
+      },
+      "labels": {
+        "startDate": "Start Date:",
+        "duration": "Duration:",
+        "skills": "Skills:",
+        "jobDescription": "Job Description",
+        "requirements": "Requirements",
+        "rateNotSpecified": "Rate not specified",
+        "startedOn": "started on",
+        "appliedOn": "applied on"
+      },
+      "buttons": {
+        "createReport": "Create Report",
+        "evaluateCompany": "Evaluate Company", 
+        "apply": "Apply",
+        "applied": "Applied"
+      },
+      "statuses": {
+        "paid": "Paid",
+        "unpaid": "Unpaid",
+        "current": "CURRENT",
+        "completed": "COMPLETED", 
+        "evaluated": "EVALUATED",
+        "pending": "PENDING",
+        "accepted": "ACCEPTED",
+        "rejected": "REJECTED",
+        "finalized": "FINALIZED"
+      },
+      "tooltip": {
+        "statusInfo": "Status Info"
+      }
+    }
   }
 }

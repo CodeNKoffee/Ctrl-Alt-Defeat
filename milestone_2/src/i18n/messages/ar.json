@@ -224,5 +224,70 @@
       "noFiltersAvailable": "لا توجد مرشحات متاحة في الوقت الحالي",
       "status": "الحالة"
     }
+  },
+  "internship": {
+    "videoSidebar": {
+      "defaultTitle": "متطلبات التدريب",
+      "watchFor": "شاهد: التدريبات لتخصص",
+      "genZFuture": "جيل Z يصوغ المستقبل",
+      "requirementsText": "تعرف على التدريبات التي تحتسب ضمن متطلبات التخرج بناءً على تخصصك وخطتك الأكاديمية.",
+      "quickResources": "موارد سريعة",
+      "academicGuide": "دليل المتطلبات الأكاديمية",
+      "contactAdvisor": "التواصل مع المرشد الأكاديمي",
+      "faqsInternships": "الأسئلة الشائعة حول التدريب"
+    },
+    "row": {
+      "timeAgo": {
+        "posted": "تم النشر",
+        "monthsAgo": "شهر",
+        "monthsAgoPlural": "أشهر",
+        "weeksAgo": "أسبوع",
+        "weeksAgoPlural": "أسابيع",
+        "daysAgo": "يوم", 
+        "daysAgoPlural": "أيام",
+        "hoursAgo": "ساعة",
+        "hoursAgoPlural": "ساعات",
+        "minutesAgo": "دقيقة",
+        "minutesAgoPlural": "دقائق",
+        "justNow": "تم النشر للتو",
+        "ago": "منذ"
+      },
+      "statusTooltips": {
+        "accepted": "تم قبول طلبك من قبل الشركة! مبروك!",
+        "pending": "تم تقديم طلبك ولكن لم تتم مراجعته من قبل الشركة بعد.",
+        "finalized": "أنت من بين أفضل المتقدمين، وقد تقوم الشركة بتقديم عرض قريباً. في انتظار التأكيد النهائي.",
+        "rejected": "للأسف، لم يتم اختيار طلبك لهذا المنصب هذه المرة."
+      },
+      "labels": {
+        "startDate": "تاريخ البداية:",
+        "duration": "المدة:",
+        "skills": "المهارات:",
+        "jobDescription": "وصف الوظيفة",
+        "requirements": "المتطلبات", 
+        "rateNotSpecified": "المعدل غير محدد",
+        "startedOn": "بدأ في",
+        "appliedOn": "تقدم في"
+      },
+      "buttons": {
+        "createReport": "إنشاء تقرير",
+        "evaluateCompany": "تقييم الشركة",
+        "apply": "تقدم",
+        "applied": "تم التقديم"
+      },
+      "statuses": {
+        "paid": "مدفوع",
+        "unpaid": "غير مدفوع",
+        "current": "حالي",
+        "completed": "مكتمل",
+        "evaluated": "مُقيم",
+        "pending": "قيد الانتظار", 
+        "accepted": "مقبول",
+        "rejected": "مرفوض",
+        "finalized": "منتهي"
+      },
+      "tooltip": {
+        "statusInfo": "معلومات الحالة"
+      }
+    }
   }
 }

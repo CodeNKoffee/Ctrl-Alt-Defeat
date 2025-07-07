@@ -103,8 +103,8 @@
         "partTime": "Teilzeit",
         "contract": "Vertrag",
         "internship": "Praktikum",
-        "remote": "Remote",
-        "onSite": "Vor Ort",
+        "remote": "Fernarbeit",
+        "onSite": "Vor Ort", 
         "hybrid": "Hybrid",
         "paid": "Bezahlt",
         "unpaid": "Unbezahlt"
@@ -223,6 +223,71 @@
       "noFiltersApplied": "Derzeit keine Filter angewendet",
       "noFiltersAvailable": "Momentan sind keine Filter verfügbar",
       "status": "Status"
+    }
+  },
+  "internship": {
+    "videoSidebar": {
+      "defaultTitle": "Praktikumsanforderungen",
+      "watchFor": "Ansehen: Praktika für",
+      "genZFuture": "Gen-Z gestaltet die Zukunft",
+      "requirementsText": "Erfahren Sie, welche Praktika für Ihre Abschlussanforderungen basierend auf Ihrem Studiengang und Studienplan angerechnet werden.",
+      "quickResources": "Schnelle Ressourcen",
+      "academicGuide": "Akademischer Anforderungsleitfaden",
+      "contactAdvisor": "Studienberater kontaktieren",
+      "faqsInternships": "FAQs zu Praktika"
+    },
+    "row": {
+      "timeAgo": {
+        "posted": "veröffentlicht",
+        "monthsAgo": "Monat",
+        "monthsAgoPlural": "Monate",
+        "weeksAgo": "Woche",
+        "weeksAgoPlural": "Wochen", 
+        "daysAgo": "Tag",
+        "daysAgoPlural": "Tage",
+        "hoursAgo": "Stunde",
+        "hoursAgoPlural": "Stunden",
+        "minutesAgo": "Minute",
+        "minutesAgoPlural": "Minuten",
+        "justNow": "gerade veröffentlicht",
+        "ago": "vor"
+      },
+      "statusTooltips": {
+        "accepted": "Ihre Bewerbung wurde vom Unternehmen angenommen! Herzlichen Glückwunsch!",
+        "pending": "Ihre Bewerbung wurde eingereicht, aber noch nicht vom Unternehmen überprüft.",
+        "finalized": "Sie gehören zu den besten Bewerbern und das Unternehmen könnte bald ein Angebot machen. Warten auf endgültige Bestätigung.",
+        "rejected": "Leider wurde Ihre Bewerbung diesmal nicht für diese Position ausgewählt."
+      },
+      "labels": {
+        "startDate": "Startdatum:",
+        "duration": "Dauer:",
+        "skills": "Fähigkeiten:",
+        "jobDescription": "Stellenbeschreibung",
+        "requirements": "Anforderungen",
+        "rateNotSpecified": "Vergütung nicht angegeben",
+        "startedOn": "begonnen am",
+        "appliedOn": "beworben am"
+      },
+      "buttons": {
+        "createReport": "Bericht erstellen",
+        "evaluateCompany": "Unternehmen bewerten",
+        "apply": "Bewerben",
+        "applied": "Beworben"
+      },
+      "statuses": {
+        "paid": "Bezahlt",
+        "unpaid": "Unbezahlt",
+        "current": "AKTUELL",
+        "completed": "ABGESCHLOSSEN",
+        "evaluated": "BEWERTET", 
+        "pending": "AUSSTEHEND",
+        "accepted": "ANGENOMMEN",
+        "rejected": "ABGELEHNT",
+        "finalized": "ABGESCHLOSSEN"
+      },
+      "tooltip": {
+        "statusInfo": "Status-Info"
+      }
     }
   }
 }
