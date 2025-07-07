@@ -25,13 +25,22 @@ import {
   faVideo,
   faLock,
   faListAlt,
-  faSpinner
+  faSpinner,
+  faGlobe,
+  faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
 import { LOGOUT_USER } from '@/store/authReducer';
 import ProfileIcon from './ProfileIcon';
 import ProBadge from './ProBadge';
+
+// Language configuration
+const languages = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' }
+];
 
 // Icon mapping for different menu items
 const iconMap = {
@@ -101,7 +110,9 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [hoveredTooltip, setHoveredTooltip] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const itemRefs = useRef({});
+  const languageDropdownRef = useRef(null);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -110,6 +121,9 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
   // Extract locale from pathname
   const locale = pathname.split('/')[1] || 'en';
+
+  // Get current language info
+  const currentLanguage = languages.find(lang => lang.code === locale) || languages[0];
 
   // Add locale to paths
   const localizedItems = sidebarItems.map(item => ({
@@ -135,6 +149,18 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
     // Cleanup
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Handle click outside language dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target)) {
+        setShowLanguageDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   // Update indicator position when active item changes
@@ -238,6 +264,16 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
   const handleTooltipHide = () => {
     setHoveredTooltip(null);
+  };
+
+  // Handle language change
+  const handleLanguageChange = (languageCode) => {
+    const pathSegments = pathname.split('/');
+    pathSegments[1] = languageCode; // Replace the locale segment
+    const newPath = pathSegments.join('/');
+
+    setShowLanguageDropdown(false);
+    router.push(newPath);
   };
 
   return (
@@ -371,6 +407,62 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
       {/* User Profile Section at bottom */}
       <div className="mt-auto px-4 py-4 mb-2">
+        {/* Language Selector */}
+        <div className="relative mb-3" ref={languageDropdownRef}>
+          {isExpanded ? (
+            <button
+              onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+              className="w-full flex items-center justify-between bg-[#5DB2C7]/20 rounded-xl p-3 transition-all duration-200 hover:bg-[#5DB2C7]/30 border border-[#E0ECF2] group"
+            >
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon
+                  icon={faGlobe}
+                  className="text-[#2a5f74] h-4 w-4"
+                />
+                <span className="text-[#2a5f74] font-medium text-sm">
+                  {currentLanguage.flag} {currentLanguage.name}
+                </span>
+              </div>
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={`text-[#2a5f74] h-3 w-3 transition-transform duration-200 ${showLanguageDropdown ? 'rotate-180' : ''}`}
+              />
+            </button>
+          ) : (
+            <button
+              onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+              className="w-full flex items-center justify-center bg-[#5DB2C7]/20 rounded-xl p-3 transition-all duration-200 hover:bg-[#5DB2C7]/30 border border-[#E0ECF2]"
+              onMouseEnter={(e) => handleTooltipShow('language', 'Language', e)}
+              onMouseLeave={handleTooltipHide}
+            >
+              <FontAwesomeIcon
+                icon={faGlobe}
+                className="text-[#2a5f74] h-4 w-4"
+              />
+            </button>
+          )}
+
+          {/* Language Dropdown */}
+          {showLanguageDropdown && (
+            <div className={`absolute bottom-full mb-2 ${isExpanded ? 'left-0 right-0' : 'left-1/2 -translate-x-1/2 w-48'} bg-white rounded-lg shadow-lg border border-[#E0ECF2] z-50 overflow-hidden`}>
+              {languages.map((language) => (
+                <button
+                  key={language.code}
+                  onClick={() => handleLanguageChange(language.code)}
+                  className={`w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-gray-50 transition-colors duration-150 ${currentLanguage.code === language.code ? 'bg-[#5DB2C7]/10 text-[#2a5f74] font-medium' : 'text-gray-700'
+                    }`}
+                >
+                  <span className="text-base">{language.flag}</span>
+                  <span className="text-sm">{language.name}</span>
+                  {currentLanguage.code === language.code && (
+                    <span className="ml-auto w-2 h-2 bg-[#5DB2C7] rounded-full"></span>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
         {isExpanded ? (
           <div className="flex items-center bg-[#5DB2C7]/20 rounded-xl p-3 transition-all duration-200 cursor-pointer gap-3 border border-[#E0ECF2]">
             <div className="flex-shrink-0 mr-2">
