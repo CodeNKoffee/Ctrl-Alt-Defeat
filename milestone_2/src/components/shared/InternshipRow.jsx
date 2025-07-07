@@ -287,28 +287,22 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             </div>
 
             {/* Only show Create Report for completed status in 'my' internships */}
-            {type === 'my' && internship.status === 'completed' && (
-         <div className="flex flex-col sm:flex-row gap-2 mt-4">
-          <button
-            onClick={() => onTriggerReportCreate(internship)}
-            className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
-            flex items-center justify-center focus:outline-none focus:ring-2
-             bg-[#318FA8] text-white hover:bg-[#2a5c67] border-[#5DB2C7]
-            transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
-          >
-            Create Report
-          </button>
+            {(type === 'my' || type === 'mine') && internship.status === 'completed' && (
+              <div className="flex flex-col sm:flex-row gap-2 mt-4">
+                <CustomButton
+                  variant="primary"
+                  onClick={() => onTriggerReportCreate(internship)}
+                  text="Create Report"
+                  className="text-sm py-2 px-4"
+                />
 
-          <button
-            onClick={() => setShowEvaluation(true)}
-            className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
-            flex items-center justify-center focus:outline-none focus:ring-2
-            bg-green-100 text-green-800 border-green-400 hover:bg-[#aeeac5]
-            transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
-          >
-            Evaluate Company
-          </button>
-        </div>
+                <CustomButton
+                  variant="secondary"
+                  onClick={() => setShowEvaluation(true)}
+                  text="Evaluate Company"
+                  className="text-sm py-2 px-4 bg-green-100 text-green-800 border-green-400 hover:bg-[#aeeac5]"
+                />
+              </div>
 
             )}
 
@@ -320,7 +314,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         flex items-center justify-center focus:outline-none focus:ring-2
        bg-[#318FA8] text-white hover:bg-[#2a5c67] border-[#5DB2C7]
         w-24 hover:-translate-y-0.5 shadow-md hover:shadow-lg  border letter-spacing-1"
-          disabled={isApplied}
+                disabled={isApplied}
               >
                 {isApplied ? 'Applied' : 'Apply'}
               </button>

@@ -1995,7 +1995,7 @@ export default function StudentDashboardPage() {
   }, [currentView, isCreatingReport]);
 
   // Special case: If we're on the My Internships view and creating a report,
-  // render the Report component directly instead of the CurrentViewComponent
+  // render the ReportCreationDashboard component directly instead of the CurrentViewComponent
   if (currentView === 'my-internships' && isCreatingReport) {
     return (
       <DashboardLayout
@@ -2004,10 +2004,14 @@ export default function StudentDashboardPage() {
         currentViewId={currentView}
         onViewChange={handleViewChange}
       >
-        {/* <Report
+        <ReportCreationDashboard
           onAddTile={handleReportSubmit}
           onCancel={handleReportCancel}
-        /> */}
+          initialReport={selectedInternship}
+          hideTitle={false}
+          showSaveDraftButton={true}
+          isEditMode={false}
+        />
       </DashboardLayout>
     );
   }
