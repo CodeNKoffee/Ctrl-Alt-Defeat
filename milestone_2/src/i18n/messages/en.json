@@ -38,5 +38,134 @@
       "onlineAssessments": "Online Assessments",
       "myProfile": "My Profile"
     }
+  },
+  "company": {
+    "posts": {
+      "title": "INTERNSHIP POSTS",
+      "badge": "EMPLOYER PORTAL",
+      "heading": "Employer Internship Portal",
+      "description": "Welcome to the Employer Dashboard where you can create and manage internship opportunities for talented GUC students.",
+      "postOpportunities": "Post New Opportunities:",
+      "features": {
+        "createListings": "Create detailed internship listings with custom titles and descriptions",
+        "specifySkills": "Specify required skills, qualifications, and preferred majors",
+        "setTimeframes": "Set clear timeframes, work settings (remote/hybrid/on-site), and compensation details",
+        "addCompanyInfo": "Add company information and supervisor contacts"
+      },
+      "connectionNote": "Our platform connects you directly with pre-screened, motivated students whose skills and interests align with your organization's needs.",
+      "searchPlaceholder": "Search internships by job title, description, skills...",
+      "filters": {
+        "jobType": "Job Type",
+        "jobSetting": "Job Setting",
+        "paymentStatus": "Payment Status",
+        "allJobTypes": "All Job Types",
+        "allSettings": "All Settings",
+        "allPaymentStatuses": "All Payment Statuses",
+        "fullTime": "Full-time",
+        "partTime": "Part-time",
+        "internship": "Internship",
+        "remote": "Remote",
+        "onSite": "On-site",
+        "hybrid": "Hybrid",
+        "paid": "Paid",
+        "unpaid": "Unpaid"
+      }
+    },
+    "browse": {
+      "title": "BROWSE INTERNSHIPS",
+      "badge": "INTERNSHIP EXPLORER",
+      "heading": "Company Internship Explorer",
+      "description": "Browse internship opportunities posted by partner organizations across industries and locations.",
+      "whyUse": "Why Use This Explorer:",
+      "benefits": {
+        "identifyPartners": "This explorer helps you identify potential internship partners and examine their past engagement with SCAD students.",
+        "discoverLeaders": "Discover industry leaders and hidden gems that align with your students' career interests."
+      },
+      "note": "Note: All displayed companies have been vetted by SCAD and maintain active partnerships with our institution.",
+      "searchPlaceholder": "Search internships by job title or company name ...",
+      "filters": {
+        "position": "Position",
+        "allPositions": "All Positions",
+        "allCompanies": "All Companies"
+      }
+    },
+    "applications": {
+      "title": "APPLICATIONS MANAGEMENT",
+      "badge": "APPLICANT PORTAL", 
+      "heading": "Applicant Management Portal",
+      "description": "Monitor and evaluate all student applications to your posted internship opportunities in one centralized location.",
+      "trackingFeatures": "Applicant Tracking Features:",
+      "features": {
+        "viewApplications": "View all applications organized by position and submission date",
+        "accessProfiles": "Access comprehensive candidate profiles and application materials", 
+        "reviewDocuments": "Review attached documents (resumes, portfolios, cover letters)",
+        "exploreLinks": "Explore professional social links and relevant student work",
+        "trackStatus": "Track application status (new, reviewed, interviewed, selected, declined)"
+      },
+      "standardizedNote": "All application materials are presented in a standardized format for efficient comparison while preserving each student's unique presentation style.",
+      "privacyNotice": "Privacy Notice: Student information is protected and should only be used for evaluation purposes related to your internship opportunities.",
+      "searchPlaceholder": "Search by name, email, or position...",
+      "filters": {
+        "position": "Position",
+        "status": "Status",
+        "allPositions": "All Positions",
+        "allStatus": "All Status"
+      },
+      "statuses": {
+        "pending": "PENDING",
+        "accepted": "ACCEPTED",
+        "rejected": "REJECTED",
+        "finalized": "FINALIZED",
+        "current": "CURRENT INTERN",
+        "completed": "COMPLETED",
+        "evaluated": "EVALUATED"
+      }
+    },
+    "interns": {
+      "title": "INTERN MANAGEMENT DASHBOARD",
+      "badge": "INTERN MANAGEMENT DASHBOARD",
+      "heading": "Intern Management Dashboard",
+      "description": "This comprehensive view displays all SCAD students who have interned with your organization across all programs and time periods.",
+      "viewByCategory": "View By Category:",
+      "categories": {
+        "current": "Current Interns: Students actively working in their positions",
+        "completed": "Completed Internships: Past interns awaiting evaluation",
+        "evaluated": "Evaluated Interns: Students with completed feedback assessments"
+      },
+      "managementFeatures": "Management Features:",
+      "features": {
+        "filter": "Filter students by department, position, time period, or evaluation status",
+        "identify": "Identify students with outstanding evaluations"
+      },
+      "note": "Note: Student information is protected and should be handled according to your confidentiality agreement with SCAD.",
+      "searchPlaceholder": "Search interns by name, department, position...",
+      "statuses": {
+        "current": "CURRENT",
+        "completed": "COMPLETED",
+        "evaluated": "EVALUATED",
+        "all": "ALL"
+      }
+    },
+    "evaluations": {
+      "title": "EVALUATION PORTAL",
+      "badge": "EVALUATION PORTAL",
+      "heading": "Your Student Evaluation Portal",
+      "description": "Provide valuable feedback on interns who have completed positions at your organization. Your assessments help shape students' professional development and inform future placements.",
+      "components": "Evaluation Components:",
+      "features": {
+        "rateProfessional": "Rate professional competencies (adaptability, communication, problem-solving)",
+        "assessTechnical": "Assess technical skills relevant to the position",
+        "provideExamples": "Provide specific examples of achievements and areas for growth",
+        "answerQuestions": "Answer structured questions about performance and potential",
+        "addComments": "Add private comments for school administrators (optional)"
+      },
+      "confidentialityNote": "Evaluations remain confidential between your company and authorized faculty and SCAD members."
+    },
+    "common": {
+      "filter": "Filter",
+      "clearFilters": "Clear Filters",
+      "search": "Search",
+      "all": "All"
+    }
   }
 }

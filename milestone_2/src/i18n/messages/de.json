@@ -38,5 +38,134 @@
       "onlineAssessments": "Online Bewertungen",
       "myProfile": "Mein Profil"
     }
+  },
+  "company": {
+    "posts": {
+      "title": "PRAKTIKUMSSTELLEN",
+      "badge": "ARBEITGEBER PORTAL",
+      "heading": "Arbeitgeber Praktikums Portal",
+      "description": "Willkommen im Arbeitgeber-Dashboard, wo Sie Praktikumsmöglichkeiten für talentierte GUC-Studenten erstellen und verwalten können.",
+      "postOpportunities": "Neue Möglichkeiten veröffentlichen:",
+      "features": {
+        "createListings": "Detaillierte Praktikumsausschreibungen mit benutzerdefinierten Titeln und Beschreibungen erstellen",
+        "specifySkills": "Erforderliche Fähigkeiten, Qualifikationen und bevorzugte Studiengänge angeben",
+        "setTimeframes": "Klare Zeitrahmen, Arbeitseinstellungen (remote/hybrid/vor Ort) und Vergütungsdetails festlegen",
+        "addCompanyInfo": "Unternehmensinformationen und Vorgesetzten-Kontakte hinzufügen"
+      },
+      "connectionNote": "Unsere Plattform verbindet Sie direkt mit vorgeprüften, motivierten Studenten, deren Fähigkeiten und Interessen mit den Bedürfnissen Ihres Unternehmens übereinstimmen.",
+      "searchPlaceholder": "Praktika nach Stellentitel, Beschreibung, Fähigkeiten suchen...",
+      "filters": {
+        "jobType": "Stellentyp",
+        "jobSetting": "Arbeitsplatz",
+        "paymentStatus": "Vergütungsstatus",
+        "allJobTypes": "Alle Stellentypen",
+        "allSettings": "Alle Einstellungen",
+        "allPaymentStatuses": "Alle Vergütungsstatus",
+        "fullTime": "Vollzeit",
+        "partTime": "Teilzeit",
+        "internship": "Praktikum",
+        "remote": "Remote",
+        "onSite": "Vor Ort",
+        "hybrid": "Hybrid",
+        "paid": "Bezahlt",
+        "unpaid": "Unbezahlt"
+      }
+    },
+    "browse": {
+      "title": "PRAKTIKA DURCHSUCHEN",
+      "badge": "PRAKTIKUMS EXPLORER",
+      "heading": "Unternehmens Praktikums Explorer",
+      "description": "Durchsuchen Sie Praktikumsmöglichkeiten von Partnerorganisationen in verschiedenen Branchen und Standorten.",
+      "whyUse": "Warum diesen Explorer verwenden:",
+      "benefits": {
+        "identifyPartners": "Dieser Explorer hilft Ihnen dabei, potenzielle Praktikumspartner zu identifizieren und deren bisherige Zusammenarbeit mit SCAD-Studenten zu untersuchen.",
+        "discoverLeaders": "Entdecken Sie Branchenführer und versteckte Perlen, die mit den Karriereinteressen Ihrer Studenten übereinstimmen."
+      },
+      "note": "Hinweis: Alle angezeigten Unternehmen wurden von SCAD geprüft und unterhalten aktive Partnerschaften mit unserer Institution.",
+      "searchPlaceholder": "Praktika nach Stellentitel oder Firmenname suchen...",
+      "filters": {
+        "position": "Position",
+        "allPositions": "Alle Positionen",
+        "allCompanies": "Alle Unternehmen"
+      }
+    },
+    "applications": {
+      "title": "BEWERBUNGSMANAGEMENT",
+      "badge": "BEWERBER PORTAL",
+      "heading": "Bewerber Management Portal", 
+      "description": "Überwachen und bewerten Sie alle Studentenbewerbungen für Ihre veröffentlichten Praktikumsmöglichkeiten an einem zentralen Ort.",
+      "trackingFeatures": "Bewerber-Tracking-Funktionen:",
+      "features": {
+        "viewApplications": "Alle Bewerbungen nach Position und Einreichungsdatum organisiert anzeigen",
+        "accessProfiles": "Zugriff auf umfassende Kandidatenprofile und Bewerbungsunterlagen",
+        "reviewDocuments": "Angehängte Dokumente überprüfen (Lebensläufe, Portfolios, Anschreiben)",
+        "exploreLinks": "Professionelle Social Links und relevante Studentenarbeiten erkunden", 
+        "trackStatus": "Bewerbungsstatus verfolgen (neu, überprüft, interviewt, ausgewählt, abgelehnt)"
+      },
+      "standardizedNote": "Alle Bewerbungsunterlagen werden in einem standardisierten Format für effizienten Vergleich präsentiert, während der einzigartige Präsentationsstil jedes Studenten erhalten bleibt.",
+      "privacyNotice": "Datenschutzhinweis: Studenteninformationen sind geschützt und sollten nur für Bewertungszwecke im Zusammenhang mit Ihren Praktikumsmöglichkeiten verwendet werden.",
+      "searchPlaceholder": "Nach Name, E-Mail oder Position suchen...",
+      "filters": {
+        "position": "Position",
+        "status": "Status",
+        "allPositions": "Alle Positionen",
+        "allStatus": "Alle Status"
+      },
+      "statuses": {
+        "pending": "AUSSTEHEND",
+        "accepted": "ANGENOMMEN",
+        "rejected": "ABGELEHNT",
+        "finalized": "ABGESCHLOSSEN",
+        "current": "AKTUELLER PRAKTIKANT",
+        "completed": "BEENDET",
+        "evaluated": "BEWERTET"
+      }
+    },
+    "interns": {
+      "title": "PRAKTIKANTEN MANAGEMENT DASHBOARD",
+      "badge": "PRAKTIKANTEN MANAGEMENT DASHBOARD",
+      "heading": "Praktikanten Management Dashboard",
+      "description": "Diese umfassende Ansicht zeigt alle SCAD-Studenten, die in Ihrem Unternehmen über alle Programme und Zeiträume hinweg ein Praktikum absolviert haben.",
+      "viewByCategory": "Nach Kategorie anzeigen:",
+      "categories": {
+        "current": "Aktuelle Praktikanten: Studenten, die aktiv in ihren Positionen arbeiten",
+        "completed": "Abgeschlossene Praktika: Ehemalige Praktikanten, die auf eine Bewertung warten",
+        "evaluated": "Bewertete Praktikanten: Studenten mit abgeschlossenen Feedback-Bewertungen"
+      },
+      "managementFeatures": "Management-Funktionen:",
+      "features": {
+        "filter": "Studenten nach Abteilung, Position, Zeitraum oder Bewertungsstatus filtern",
+        "identify": "Studenten mit ausstehenden Bewertungen identifizieren"
+      },
+      "note": "Hinweis: Studenteninformationen sind geschützt und sollten gemäß Ihrer Vertraulichkeitsvereinbarung mit SCAD behandelt werden.",
+      "searchPlaceholder": "Praktikanten nach Name, Abteilung, Position suchen...",
+      "statuses": {
+        "current": "AKTUELL",
+        "completed": "ABGESCHLOSSEN",
+        "evaluated": "BEWERTET",
+        "all": "ALLE"
+      }
+    },
+    "evaluations": {
+      "title": "BEWERTUNGSPORTAL",
+      "badge": "BEWERTUNGSPORTAL",
+      "heading": "Ihr Studenten Bewertungsportal",
+      "description": "Geben Sie wertvolles Feedback zu Praktikanten, die Positionen in Ihrem Unternehmen abgeschlossen haben. Ihre Bewertungen helfen bei der beruflichen Entwicklung der Studenten und informieren über zukünftige Platzierungen.",
+      "components": "Bewertungskomponenten:",
+      "features": {
+        "rateProfessional": "Bewerten Sie berufliche Kompetenzen (Anpassungsfähigkeit, Kommunikation, Problemlösung)",
+        "assessTechnical": "Bewerten Sie technische Fähigkeiten, die für die Position relevant sind",
+        "provideExamples": "Geben Sie spezifische Beispiele für Leistungen und Verbesserungsbereiche an",
+        "answerQuestions": "Beantworten Sie strukturierte Fragen zu Leistung und Potenzial",
+        "addComments": "Fügen Sie private Kommentare für Schuladministratoren hinzu (optional)"
+      },
+      "confidentialityNote": "Bewertungen bleiben vertraulich zwischen Ihrem Unternehmen und autorisierten Fakultäts- und SCAD-Mitgliedern."
+    },
+    "common": {
+      "filter": "Filter",
+      "clearFilters": "Filter löschen",
+      "search": "Suchen",
+      "all": "Alle"
+    }
   }
 }
