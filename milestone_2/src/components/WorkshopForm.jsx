@@ -4,8 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faUsers, faMapMarkerAlt, faClock, faUserTie, faListUl, faTimes, faPlus, faTrash, faCheck } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from './DatePicker';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'create' }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   // Default empty workshop if none provided
   const defaultWorkshop = {
     id: Date.now().toString(),
@@ -130,15 +135,15 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.title.trim()) newErrors.title = 'Workshop title is required';
-    if (!formData.description.trim()) newErrors.description = 'Description is required';
-    if (!formData.instructor.trim()) newErrors.instructor = 'Instructor name is required';
-    if (!formData.instructorBio.trim()) newErrors.instructorBio = 'Instructor bio is required';
-    if (!formData.agenda || formData.agenda.length === 0) newErrors.agenda = 'At least one agenda item is required';
+    if (!formData.title.trim()) newErrors.title = safeT('scad.workshops.form.validation.titleRequired');
+    if (!formData.description.trim()) newErrors.description = safeT('scad.workshops.form.validation.descriptionRequired');
+    if (!formData.instructor.trim()) newErrors.instructor = safeT('scad.workshops.form.validation.instructorRequired');
+    if (!formData.instructorBio.trim()) newErrors.instructorBio = safeT('scad.workshops.form.validation.instructorBioRequired');
+    if (!formData.agenda || formData.agenda.length === 0) newErrors.agenda = safeT('scad.workshops.form.validation.agendaRequired');
 
     // Ensure end date is after start date
     if (formData.endDate <= formData.startDate) {
-      newErrors.endDate = 'End time must be after start time';
+      newErrors.endDate = safeT('scad.workshops.form.validation.endDateAfterStart');
     }
 
     setErrors(newErrors);
@@ -234,8 +239,8 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
                 {feedback === 'success'
-                  ? 'Workshop has been successfully created.'
-                  : 'Workshop has been successfully updated.'}
+                  ? safeT('scad.workshops.form.success.created')
+                  : safeT('scad.workshops.form.success.updated')}
               </div>
             </motion.div>
           </motion.div>
@@ -254,14 +259,14 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
         {/* Form Section */}
         <div className="bg-white rounded-tl-xl rounded-bl-xl p-8 overflow-y-auto w-full md:w-1/2">
           <h2 className="text-2xl font-bold text-[#2a5f74] mb-6">
-            {mode === 'create' ? 'Create New Workshop' : 'Edit Workshop'}
+            {mode === 'create' ? safeT('scad.workshops.form.createNew') : safeT('scad.workshops.form.editWorkshop')}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Workshop Title */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Workshop Title*
+                {safeT('scad.workshops.form.title')}{safeT('scad.workshops.form.required')}
               </label>
               <input
                 type="text"
@@ -269,15 +274,15 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                 value={formData.title}
                 onChange={handleChange}
                 className={`w-full px-4 py-2 border ${errors.title ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-[#5DB2C7] focus:border-[#5DB2C7]`}
-                placeholder="Enter workshop title"
+                placeholder={safeT('scad.workshops.form.titlePlaceholder')}
               />
-              {errors.title && <p className="mt-1 text-sm text-red-500">{errors.title}</p>}
+              {errors.title && <p className="mt-1 text-sm text-red-500">{safeT('scad.workshops.form.validation.titleRequired')}</p>}
             </div>
 
             {/* Description */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Description*
+                {safeT('scad.workshops.form.description')}{safeT('scad.workshops.form.required')}
               </label>
               <textarea
                 name="description"
@@ -285,16 +290,16 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                 onChange={handleChange}
                 rows="3"
                 className={`w-full px-4 py-2 border ${errors.description ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-[#5DB2C7] focus:border-[#5DB2C7]`}
-                placeholder="Enter workshop description"
+                placeholder={safeT('scad.workshops.form.descriptionPlaceholder')}
               />
-              {errors.description && <p className="mt-1 text-sm text-red-500">{errors.description}</p>}
+              {errors.description && <p className="mt-1 text-sm text-red-500">{safeT('scad.workshops.form.validation.descriptionRequired')}</p>}
             </div>
 
             {/* Time Range */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Start Date & Time*
+                  {safeT('scad.workshops.form.startDate')}{safeT('scad.workshops.form.required')}
                 </label>
                 <DatePicker
                   selectedDate={formData.startDate}
@@ -306,14 +311,14 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  End Date & Time*
+                  {safeT('scad.workshops.form.endDate')}{safeT('scad.workshops.form.required')}
                 </label>
                 <DatePicker
                   selectedDate={formData.endDate}
                   onDateChange={(date) => handleDateChange('endDate', date)}
                   className={`w-full px-4 py-2 border ${errors.endDate ? 'border-red-500' : 'border-gray-300'} rounded-lg`}
                 />
-                {errors.endDate && <p className="mt-1 text-sm text-red-500">{errors.endDate}</p>}
+                {errors.endDate && <p className="mt-1 text-sm text-red-500">{safeT('scad.workshops.form.validation.endDateAfterStart')}</p>}
               </div>
             </div>
 
@@ -321,7 +326,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Location
+                  {safeT('scad.workshops.form.location')}
                 </label>
                 <input
                   type="text"
@@ -329,13 +334,13 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   value={formData.location}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#5DB2C7] focus:border-[#5DB2C7]"
-                  placeholder="Enter location (default: Online)"
+                  placeholder={safeT('scad.workshops.form.locationPlaceholder')}
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Maximum Attendees
+                  {safeT('scad.workshops.form.maxAttendees')}
                 </label>
                 <input
                   type="number"
@@ -344,7 +349,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   onChange={handleChange}
                   min="1"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#5DB2C7] focus:border-[#5DB2C7]"
-                  placeholder="Maximum number of attendees"
+                  placeholder={safeT('scad.workshops.form.maxAttendeesPlaceholder')}
                 />
               </div>
             </div>
@@ -352,7 +357,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
             {/* Category */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Category
+                {safeT('scad.workshops.form.category')}
               </label>
               <input
                 type="text"
@@ -360,14 +365,14 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                 value={formData.category}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#5DB2C7] focus:border-[#5DB2C7]"
-                placeholder="Enter workshop category"
+                placeholder={safeT('scad.workshops.form.categoryPlaceholder')}
               />
             </div>
 
             {/* Image URL */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Workshop Image URL
+                {safeT('scad.workshops.form.imageUrl')}
               </label>
               <input
                 type="text"
@@ -375,17 +380,17 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                 value={formData.imageUrl}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#5DB2C7] focus:border-[#5DB2C7]"
-                placeholder="Enter image URL"
+                placeholder={safeT('scad.workshops.form.imageUrlPlaceholder')}
               />
             </div>
 
             {/* Instructor Information */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-[#2a5f74]">Instructor Information</h3>
+              <h3 className="text-lg font-medium text-[#2a5f74]">{safeT('scad.workshops.form.instructorInfo')}</h3>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Instructor Name*
+                  {safeT('scad.workshops.form.instructorName')}{safeT('scad.workshops.form.required')}
                 </label>
                 <input
                   type="text"
@@ -393,14 +398,14 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   value={formData.instructor}
                   onChange={handleChange}
                   className={`w-full px-4 py-2 border ${errors.instructor ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-[#5DB2C7] focus:border-[#5DB2C7]`}
-                  placeholder="Enter instructor name"
+                  placeholder={safeT('scad.workshops.form.instructorNamePlaceholder')}
                 />
-                {errors.instructor && <p className="mt-1 text-sm text-red-500">{errors.instructor}</p>}
+                {errors.instructor && <p className="mt-1 text-sm text-red-500">{safeT('scad.workshops.form.validation.instructorRequired')}</p>}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Instructor Bio*
+                  {safeT('scad.workshops.form.instructorBio')}{safeT('scad.workshops.form.required')}
                 </label>
                 <textarea
                   name="instructorBio"
@@ -408,14 +413,14 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   onChange={handleChange}
                   rows="3"
                   className={`w-full px-4 py-2 border ${errors.instructorBio ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-[#5DB2C7] focus:border-[#5DB2C7]`}
-                  placeholder="Enter instructor biography"
+                  placeholder={safeT('scad.workshops.form.instructorBioPlaceholder')}
                 />
-                {errors.instructorBio && <p className="mt-1 text-sm text-red-500">{errors.instructorBio}</p>}
+                {errors.instructorBio && <p className="mt-1 text-sm text-red-500">{safeT('scad.workshops.form.validation.instructorBioRequired')}</p>}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Instructor Image URL
+                  {safeT('scad.workshops.form.instructorImage')}
                 </label>
                 <input
                   type="text"
@@ -423,14 +428,14 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   value={formData.instructorImage}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#5DB2C7] focus:border-[#5DB2C7]"
-                  placeholder="Enter instructor image URL"
+                  placeholder={safeT('scad.workshops.form.instructorImagePlaceholder')}
                 />
               </div>
             </div>
 
             {/* Workshop Agenda */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-[#2a5f74]">Workshop Agenda*</h3>
+              <h3 className="text-lg font-medium text-[#2a5f74]">{safeT('scad.workshops.form.agenda')}{safeT('scad.workshops.form.required')}</h3>
 
               <div className="flex space-x-2">
                 <input
@@ -438,7 +443,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   value={agendaItem}
                   onChange={(e) => setAgendaItem(e.target.value)}
                   className="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#5DB2C7] focus:border-[#5DB2C7]"
-                  placeholder="Add agenda item"
+                  placeholder={safeT('scad.workshops.form.agendaPlaceholder')}
                   onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addAgendaItem())}
                 />
                 <button
@@ -450,7 +455,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                 </button>
               </div>
 
-              {errors.agenda && <p className="mt-1 text-sm text-red-500">{errors.agenda}</p>}
+              {errors.agenda && <p className="mt-1 text-sm text-red-500">{safeT('scad.workshops.form.validation.agendaRequired')}</p>}
 
               {formData.agenda && formData.agenda.length > 0 ? (
                 <ul className="bg-gray-50 rounded-lg p-3 space-y-2">
@@ -468,7 +473,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500 text-sm italic">No agenda items added yet</p>
+                <p className="text-gray-500 text-sm italic">{safeT('scad.workshops.form.noAgendaItems')}</p>
               )}
             </div>
 
@@ -480,13 +485,13 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   onClick={onCancel}
                   className="px-6 py-4 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 transition-colors shadow-sm font-medium"
                 >
-                  Cancel
+                  {safeT('scad.workshops.form.cancel')}
                 </button>
                 <button
                   type="submit"
                   className="px-6 py-4 bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white rounded-full hover:bg-[#1a3f54] transition-colors shadow-sm font-medium"
                 >
-                  {mode === 'create' ? 'Create Workshop' : 'Update Workshop'}
+                  {mode === 'create' ? safeT('scad.workshops.form.create') : safeT('scad.workshops.form.update')}
                 </button>
               </div>
             </div>
@@ -495,18 +500,18 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
 
         {/* Preview Section */}
         <div className="bg-[#F7FBFD] rounded-tr-xl rounded-br-xl p-8 w-full md:w-1/2 overflow-y-auto">
-          {/* Unified Preview Header (not sticky, styled like Post Preview) */}
+          {/* Unified Preview Header */}
           <div className="mb-6">
             <h2 className="text-xl font-bold text-[var(--metallica-blue-700)] flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                 <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
               </svg>
-              Workshop Preview
+              {safeT('scad.workshops.form.preview')}
             </h2>
           </div>
 
-          {/* Preview Card - match Post Preview style */}
+          {/* Preview Card */}
           <div className="bg-white rounded-lg shadow-md p-6 border border-[var(--metallica-blue-100)] flex-1 flex flex-col">
             {/* Workshop Image */}
             <div className="relative w-full h-40 mb-4 rounded-md overflow-hidden">
@@ -525,17 +530,19 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   {formData.category || "WORKSHOP"}
                 </span>
                 <h3 className="text-xl font-bold text-[var(--metallica-blue-800)] mb-2">
-                  {formData.title || "Workshop Title"}
+                  {formData.title || safeT('scad.workshops.form.titlePlaceholder')}
                 </h3>
                 <p className="text-gray-700 text-sm">
-                  {formData.description || "Workshop description will appear here"}
+                  {formData.description || safeT('scad.workshops.form.descriptionPlaceholder')}
                 </p>
               </div>
 
               {/* Workshop Details */}
               <div className="grid grid-cols-2 gap-4 border-t border-b border-gray-100 py-4">
                 <div>
-                  <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-xs uppercase tracking-wide">Date & Time</h4>
+                  <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-xs uppercase tracking-wide">
+                    {safeT('scad.workshops.form.dateTime')}
+                  </h4>
                   <p className="text-gray-700 text-sm">
                     {formData.startDate.toLocaleString(undefined, {
                       dateStyle: 'medium',
@@ -546,11 +553,15 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-xs uppercase tracking-wide">Location</h4>
+                  <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-xs uppercase tracking-wide">
+                    {safeT('scad.workshops.form.location')}
+                  </h4>
                   <p className="text-gray-700 text-sm">{formData.location || "Online"}</p>
                 </div>
                 <div>
-                  <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-xs uppercase tracking-wide">Maximum Attendees</h4>
+                  <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-xs uppercase tracking-wide">
+                    {safeT('scad.workshops.form.maxAttendees')}
+                  </h4>
                   <p className="text-gray-700 text-sm">{formData.maxAttendees || 25}</p>
                 </div>
               </div>
@@ -561,7 +572,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#5DB2C7] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  Instructor
+                  {safeT('scad.workshops.instructor')}
                 </h4>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full overflow-hidden">
@@ -572,8 +583,12 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                     />
                   </div>
                   <div>
-                    <p className="text-base font-medium text-gray-900">{formData.instructor || "Instructor Name"}</p>
-                    <p className="text-sm text-gray-600">{formData.instructorBio || "Instructor biography will appear here"}</p>
+                    <p className="text-base font-medium text-gray-900">
+                      {formData.instructor || safeT('scad.workshops.form.instructorNamePlaceholder')}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {formData.instructorBio || safeT('scad.workshops.form.instructorBioPlaceholder')}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -584,7 +599,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#5DB2C7] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                   </svg>
-                  Workshop Agenda
+                  {safeT('scad.workshops.form.agenda')}
                 </h4>
                 {formData.agenda && formData.agenda.length > 0 ? (
                   <ul className="space-y-2">
@@ -598,7 +613,7 @@ export default function WorkshopForm({ workshop, onSave, onCancel, mode = 'creat
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-gray-500 italic text-sm">No agenda items added yet</p>
+                  <p className="text-gray-500 italic text-sm">{safeT('scad.workshops.form.noAgendaItems')}</p>
                 )}
               </div>
             </div>

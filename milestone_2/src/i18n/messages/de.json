@@ -935,7 +935,53 @@
         "title": "WORKSHOP-VERWALTUNG",
         "badge": "BERUFLICHE ENTWICKLUNG",
         "cardTitle": "Workshop-Verwaltungsportal",
-        "description": "Erstellen, planen und verwalten Sie Workshops zur beruflichen Entwicklung, die die Berufsvorbereitung und Branchenvorbereitung der Studenten verbessern."
+        "description": "Erstellen, planen und verwalten Sie Workshops zur beruflichen Entwicklung, die die Berufsvorbereitung und Branchenvorbereitung der Studierenden verbessern."
+      },
+      "form": {
+        "createNew": "Neuen Workshop erstellen",
+        "editWorkshop": "Workshop bearbeiten",
+        "title": "Workshop-Titel",
+        "titlePlaceholder": "Workshop-Titel eingeben",
+        "description": "Beschreibung",
+        "descriptionPlaceholder": "Workshop-Beschreibung eingeben",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "location": "Ort",
+        "locationPlaceholder": "Ort eingeben (Standard: Online)",
+        "maxAttendees": "Maximale Teilnehmerzahl",
+        "maxAttendeesPlaceholder": "Maximale Anzahl der Teilnehmer",
+        "category": "Kategorie",
+        "categoryPlaceholder": "Workshop-Kategorie eingeben",
+        "imageUrl": "Workshop-Bild URL",
+        "imageUrlPlaceholder": "Bild-URL eingeben",
+        "instructorInfo": "Dozenten-Informationen",
+        "instructorName": "Name des Dozenten",
+        "instructorNamePlaceholder": "Name des Dozenten eingeben",
+        "instructorBio": "Dozenten-Biografie",
+        "instructorBioPlaceholder": "Biografie des Dozenten eingeben",
+        "instructorImage": "Dozenten-Bild URL",
+        "instructorImagePlaceholder": "Dozenten-Bild-URL eingeben",
+        "agenda": "Workshop-Agenda",
+        "agendaPlaceholder": "Agendapunkt hinzufügen",
+        "noAgendaItems": "Noch keine Agendapunkte hinzugefügt",
+        "required": "*",
+        "preview": "Workshop-Vorschau",
+        "dateTime": "Datum & Uhrzeit",
+        "cancel": "Abbrechen",
+        "create": "Workshop erstellen",
+        "update": "Workshop aktualisieren",
+        "success": {
+          "created": "Workshop wurde erfolgreich erstellt.",
+          "updated": "Workshop wurde erfolgreich aktualisiert."
+        },
+        "validation": {
+          "titleRequired": "Workshop-Titel ist erforderlich",
+          "descriptionRequired": "Beschreibung ist erforderlich",
+          "instructorRequired": "Name des Dozenten ist erforderlich",
+          "instructorBioRequired": "Dozenten-Biografie ist erforderlich",
+          "agendaRequired": "Mindestens ein Agendapunkt ist erforderlich",
+          "endDateAfterStart": "Endzeit muss nach der Startzeit liegen"
+        }
       }
     }
   },

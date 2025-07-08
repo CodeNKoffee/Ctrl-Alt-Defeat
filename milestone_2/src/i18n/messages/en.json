@@ -934,6 +934,52 @@
         "badge": "PROFESSIONAL DEVELOPMENT",
         "cardTitle": "Workshop Management Portal",
         "description": "Create, schedule, and manage professional development workshops that enhance student career readiness and industry preparation."
+      },
+      "form": {
+        "createNew": "Create New Workshop",
+        "editWorkshop": "Edit Workshop",
+        "title": "Workshop Title",
+        "titlePlaceholder": "Enter workshop title",
+        "description": "Description",
+        "descriptionPlaceholder": "Enter workshop description",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "location": "Location",
+        "locationPlaceholder": "Enter location (default: Online)",
+        "maxAttendees": "Maximum Attendees",
+        "maxAttendeesPlaceholder": "Maximum number of attendees",
+        "category": "Category",
+        "categoryPlaceholder": "Enter workshop category",
+        "imageUrl": "Workshop Image URL",
+        "imageUrlPlaceholder": "Enter image URL",
+        "instructorInfo": "Instructor Information",
+        "instructorName": "Instructor Name",
+        "instructorNamePlaceholder": "Enter instructor name",
+        "instructorBio": "Instructor Bio",
+        "instructorBioPlaceholder": "Enter instructor biography",
+        "instructorImage": "Instructor Image URL",
+        "instructorImagePlaceholder": "Enter instructor image URL",
+        "agenda": "Workshop Agenda",
+        "agendaPlaceholder": "Add agenda item",
+        "noAgendaItems": "No agenda items added yet",
+        "required": "*",
+        "preview": "Workshop Preview",
+        "dateTime": "Date & Time",
+        "cancel": "Cancel",
+        "create": "Create Workshop",
+        "update": "Update Workshop",
+        "success": {
+          "created": "Workshop has been successfully created.",
+          "updated": "Workshop has been successfully updated."
+        },
+        "validation": {
+          "titleRequired": "Workshop title is required",
+          "descriptionRequired": "Description is required",
+          "instructorRequired": "Instructor name is required",
+          "instructorBioRequired": "Instructor bio is required",
+          "agendaRequired": "At least one agenda item is required",
+          "endDateAfterStart": "End time must be after start time"
+        }
       }
     }
   },
