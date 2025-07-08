@@ -1009,5 +1009,22 @@
       "success": "Erfolgreich!",
       "successMessage": "Ihre Dokumente wurden erfolgreich hochgeladen."
     }
+  },
+  "student": {
+    "dashboard": {
+      "personalizedCard": {
+        "badge": "PERSONALISIERT",
+        "title": "Ihre personalisierten Praktikumsvorschläge",
+        "description": "Diese Seite zeigt Praktikumsmöglichkeiten, die speziell auf der Grundlage Ihres einzigartigen Profils und Ihrer Präferenzen zusammengestellt wurden.",
+        "howItWorks": {
+          "title": "So funktionieren diese Empfehlungen:",
+          "jobInterests": "Abgestimmt auf Ihre angegebenen Jobinteressen und Karriereziele",
+          "industries": "Gefiltert nach Ihren bevorzugten Branchen und Arbeitsumgebungen",
+          "ratings": "Enthält Positionen, die von ehemaligen SCAD-Praktikanten hoch bewertet wurden",
+          "updates": "Wird regelmäßig aktualisiert, wenn neue Möglichkeiten verfügbar sind"
+        },
+        "footer": "Nehmen Sie sich Zeit, diese maßgeschneiderten Vorschläge zu erkunden – sie repräsentieren Möglichkeiten, bei denen Ihre spezifischen Talente und Interessen wirklich glänzen können."
+      }
+    }
   }
 }

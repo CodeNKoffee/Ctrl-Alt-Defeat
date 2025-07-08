@@ -32,6 +32,8 @@ import { MOCK_EVALUATIONS } from '../../../../../constants/mockData';
 import EvaluationsDashboard from '@/components/EvaluationsDashboard';
 import WorkshopInterface from '@/components/WorkshopInterface';
 import ApplicationsFilterBar from '@/components/shared/ApplicationsFilterBar';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 // Video Sidebar Component
 function InternshipVideoSidebar({ userMajor }) {
@@ -69,6 +71,8 @@ function InternshipVideoSidebar({ userMajor }) {
 
 // Dashboard Home View Component
 function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [personalizedInternships, setPersonalizedInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -163,40 +167,42 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              PERSONALIZED
+              {safeT('student.dashboard.personalizedCard.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Personalized Internship Matches</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.personalizedCard.title')}
+            </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">This page showcases internship opportunities specifically curated for you based on your unique profile and preferences.</p>
+              <p className="mb-3">{safeT('student.dashboard.personalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  How These Recommendations Work:
+                  {safeT('student.dashboard.personalizedCard.howItWorks.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Matched to your specified job interests and career goals</span>
+                    <span>{safeT('student.dashboard.personalizedCard.howItWorks.jobInterests')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Filtered by your preferred industries and work environments</span>
+                    <span>{safeT('student.dashboard.personalizedCard.howItWorks.industries')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Includes positions highly rated by previous SCAD interns</span>
+                    <span>{safeT('student.dashboard.personalizedCard.howItWorks.ratings')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Updated regularly as new opportunities become available</span>
+                    <span>{safeT('student.dashboard.personalizedCard.howItWorks.updates')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Take time to explore these tailored suggestions—they represent opportunities where your specific talents and interests could truly shine.
+                {safeT('student.dashboard.personalizedCard.footer')}
               </p>
             </div>
           </div>

@@ -27,7 +27,21 @@
       "statistics": "Statistics"
     },
     "student": {
-      "dashboard": "Dashboard",
+      "dashboard": {
+        "personalizedCard": {
+          "badge": "PERSONALIZED",
+          "title": "Your Personalized Internship Matches",
+          "description": "This page showcases internship opportunities specifically curated for you based on your unique profile and preferences.",
+          "howItWorks": {
+            "title": "How These Recommendations Work:",
+            "jobInterests": "Matched to your specified job interests and career goals",
+            "industries": "Filtered by your preferred industries and work environments",
+            "ratings": "Includes positions highly rated by previous SCAD interns",
+            "updates": "Updated regularly as new opportunities become available"
+          },
+          "footer": "Take time to explore these tailored suggestions—they represent opportunities where your specific talents and interests could truly shine."
+        }
+      },
       "browseInternships": "Browse Internships",
       "myApplications": "My Applications",
       "myInternships": "My Internships",
