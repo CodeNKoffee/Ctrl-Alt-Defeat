@@ -1024,6 +1024,11 @@
           "updates": "Wird regelmäßig aktualisiert, wenn neue Möglichkeiten verfügbar sind"
         },
         "footer": "Nehmen Sie sich Zeit, diese maßgeschneiderten Vorschläge zu erkunden – sie repräsentieren Möglichkeiten, bei denen Ihre spezifischen Talente und Interessen wirklich glänzen können."
+      },
+      "statusPills": {
+        "industryMatch": "BRANCHENÜBEREINSTIMMUNG",
+        "recommendedByPastInterns": "VON VORHERIGEN PRAKTIKANTEN EMPFOHLEN",
+        "jobInterestMatch": "BERUFSINTERESSENÜBEREINSTIMMUNG"
       }
     }
   }

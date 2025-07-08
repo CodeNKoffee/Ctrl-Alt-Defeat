@@ -211,6 +211,17 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
     </div>
   );
 
+  const getInitialTitle = (view) => {
+    const titleKey = view === 'recommended'
+      ? 'student.dashboard.titles.recommended'
+      : view === 'applied'
+        ? 'student.dashboard.titles.applied'
+        : 'student.dashboard.titles.current';
+    return safeT(titleKey);
+  };
+
+  const [currentTitle, setCurrentTitle] = useState(() => getInitialTitle('recommended'));
+
   return (
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
@@ -229,7 +240,7 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
         />
       </div>
       <InternshipList
-        title=""
+        title={currentTitle}
         internships={filteredPersonalizedInternships}
         type={"recommended"}
         onApplicationCompleted={onApplicationCompleted}
