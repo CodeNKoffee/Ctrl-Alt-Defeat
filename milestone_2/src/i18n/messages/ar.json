@@ -1031,6 +1031,8 @@
     "dashboard": {
       "searchPlaceholder": "ابحث عن فرص التدريب المرشح بها...",
       "browseInternshipsSearchPlaceholder": "ابحث عن فرص التدريب حسب المنصب أو الشركة ...",
+      "appliedInternshipsSearchPlaceholder": "ابحث عن فرص التدريب المتقدم حسب الشركة أو المنصب ...",
+      "myInternshipsSearchPlaceholder": "ابحث عن فرص التدريب حسب الشركة أو المنصب ...",
       "personalizedCard": {
         "badge": "مخصص",
         "title": "فرص التدريب المخصصة لك",
@@ -1056,12 +1058,50 @@
         },
         "footer": "تذكر أن تشاهد فيديونا المعلومية الخاصة بنا \"ما الذي يجعل تدريبك مهماً\" لتتعلم كيفية تحقيق أقصى استفادة من تجربة التدريب!"
       },
+      "appliedInternshipsPersonalizedCard": {
+        "title": "تتبع وإدارة كل تطبيقات التدريب الخاصة بك في لوحة تحكم مركزية.",
+        "description": "تتبع وإدارة كل تطبيقات التدريب الخاصة بك في لوحة تحكم مركزية.",
+        "badge": "تطبيقات",
+        "howItWorks": {
+          "pending": "Pending",
+          "accepted": "مقبول",
+          "rejected": "مرفوض",
+          "finalized": "مكتمل",
+          "pendingDescription": "تطبيقات الانتظار لا تزال تقيمها الشركات",
+          "acceptedDescription": "تطبيقات مقبولة تعني أنك حاصل على الخطوات التالية",
+          "rejectedDescription": "تطبيقات مرفوضة غير ناجحة هذه المرة",
+          "finalizedDescription": "تطبيقات مكتملة مؤكدة وجاهزة للبدء"
+        },
+        "footer": "استخدم المرشحات لتصفية التطبيقات حسب الشركة أو المنصب أو الحالة!"
+      },
+      "myInternshipsPersonalizedCard": {
+        "title": "لوحة تحكم التدريبات الخاصة بك",
+        "description": "إدارة كل تدريباتك في مكان واحد.",
+        "badge": "لوحة تحكم",
+        "howItWorks": {
+          "current": "حالي",
+          "completed": "مكتمل",
+          "evaluated": "مُقيم",
+          "currentDescription": "التدريبات الحالية تستمر",
+          "completedDescription": "التدريبات المكتملة تنتظر تقريرك وتقييمك",
+          "evaluatedDescription": "التدريبات المُقيمة قد تمت مراجعتها من قبل مديرك"
+        },
+        "footer": "استخدم المرشحات لتصفية التدريبات حسب الشركة أو المنصب أو الحالة!"
+      },
       "statusPills": {
         "industryMatch": "توافق المجال",
         "recommendedByPastInterns": "مرشح به من قبل المتدربين السابقين",
         "jobInterestMatch": "توافق الاهتمامات المهنية",
         "all": "جميع",
-        "recommended": "مرشح به"
+        "recommended": "مرشح به",
+        "applied": "متقدم",
+        "current": "حالي",
+        "completed": "مكتمل",
+        "evaluated": "مُقيم",
+        "pending": "قيد الانتظار",
+        "rejected": "مرفوض",
+        "accepted": "مقبول",
+        "finalized": "مكتمل"
       },
       "filterSections": {
         "fullTime": "وقت كامل",
@@ -1099,7 +1139,9 @@
         "duration": "المدة",
         "allInternships": "جميع التدريبات",
         "allPositions": "جميع المناصب",
-        "contentType": "نوع المحتوى"
+        "contentType": "نوع المحتوى",
+        "status": "الحالة",
+        "allStatuses": "جميع الحالات"
       }
     }
   }

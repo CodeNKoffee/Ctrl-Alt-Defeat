@@ -677,6 +677,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 }
 
 function AppliedInternshipsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const { currentUser } = useSelector(state => state.auth);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -704,37 +706,41 @@ function AppliedInternshipsView() {
 
   const filterSections = [
     {
-      name: 'Status',
+      name: safeT('student.dashboard.filterSections.status'),
       options: [
-        { id: 'pending', title: 'Pending' },
-        { id: 'accepted', title: 'Accepted' },
-        { id: 'finalized', title: 'Finalized' },
-        { id: 'rejected', title: 'Rejected' }
+        { id: 'pending', title: safeT('student.dashboard.statusPills.pending') },
+        { id: 'accepted', title: safeT('student.dashboard.statusPills.accepted') },
+        { id: 'finalized', title: safeT('student.dashboard.statusPills.finalized') },
+        { id: 'rejected', title: safeT('student.dashboard.statusPills.rejected') }
       ],
       selected: filters.status,
       onChange: (value) => handleFilterChange('status', value),
-      resetLabel: 'All Statuses',
+      resetLabel: safeT('student.dashboard.filterSections.allStatuses'),
     },
     {
-      name: 'Company',
+      name: safeT('student.dashboard.filterSections.company'),
       options: uniqueCompanies.map(company => ({ id: company, title: company })),
       selected: filters.company,
       onChange: (value) => handleFilterChange('company', value),
-      resetLabel: 'All Companies',
+      resetLabel: safeT('student.dashboard.filterSections.allCompanies'),
     },
     {
-      name: 'Position',
+      name: safeT('student.dashboard.filterSections.position'),
       options: uniquePositions.map(pos => ({ id: pos, title: pos })),
       selected: filters.position,
       onChange: (value) => handleFilterChange('position', value),
-      resetLabel: 'All Positions',
+      resetLabel: safeT('student.dashboard.filterSections.allPositions'),
     },
     {
-      name: 'Job Type',
-      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      name: safeT('student.dashboard.filterSections.jobType'),
+      options: [
+        { id: 'fullTime', title: safeT('student.dashboard.filterSections.fullTime') },
+        { id: 'partTime', title: safeT('student.dashboard.filterSections.partTime') },
+        { id: 'contract', title: safeT('student.dashboard.filterSections.contract') },
+      ],
       selected: filters.jobType,
       onChange: (value) => handleFilterChange('jobType', value),
-      resetLabel: 'All Job Types',
+      resetLabel: safeT('student.dashboard.filterSections.allJobTypes'),
     }
   ];
 
@@ -752,22 +758,22 @@ function AppliedInternshipsView() {
   // Mock statuses for AppliedInternshipsView
   const APPLIED_INTERNSHIP_STATUSES = {
     pending: {
-      label: "PENDING",
+      label: safeT('student.dashboard.statusPills.pending'),
       color: "bg-yellow-100 text-yellow-800 border border-yellow-400",
       badgeColor: "bg-yellow-600",
     },
     accepted: {
-      label: "ACCEPTED",
+      label: safeT('student.dashboard.statusPills.accepted'),
       color: "bg-green-100 text-green-800 border border-green-400",
       badgeColor: "bg-green-600",
     },
     rejected: {
-      label: "REJECTED",
+      label: safeT('student.dashboard.statusPills.rejected'),
       color: "bg-red-100 text-red-800 border border-red-400",
       badgeColor: "bg-red-600",
     },
     finalized: {
-      label: "FINALIZED",
+      label: safeT('student.dashboard.statusPills.finalized'),
       color: "bg-purple-100 text-purple-800 border border-purple-400",
       badgeColor: "bg-purple-600",
     }
@@ -790,54 +796,56 @@ function AppliedInternshipsView() {
           </div>
           <div className="text-left flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              APPLICATIONS
+              {safeT('student.dashboard.appliedInternshipsPersonalizedCard.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Internship Applications</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.appliedInternshipsPersonalizedCard.title')}
+            </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Track and manage all your internship applications in one centralized dashboard.</p>
+              <p className="mb-3">{safeT('student.dashboard.appliedInternshipsPersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="flex justify-center space-x-4 mb-2 mx-auto">
                   <div className="flex-1 p-2 bg-yellow-50 rounded-lg border border-yellow-100 text-center">
                     <div className="w-3 h-3 bg-yellow-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-yellow-800">Pending</p>
+                    <p className="text-xs font-medium text-yellow-800">{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.pending')}</p>
                   </div>
                   <div className="flex-1 p-2 bg-green-50 rounded-lg border border-green-100 text-center">
                     <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-green-800">Accepted</p>
+                    <p className="text-xs font-medium text-green-800">{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.accepted')}</p>
                   </div>
                   <div className="flex-1 p-2 bg-purple-50 rounded-lg border border-purple-100 text-center">
                     <div className="w-3 h-3 bg-purple-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-purple-800">Finalized</p>
+                    <p className="text-xs font-medium text-purple-800">{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.finalized')}</p>
                   </div>
                   <div className="flex-1 p-2 bg-red-50 rounded-lg border border-red-100 text-center">
                     <div className="w-3 h-3 bg-red-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-red-800">Rejected</p>
+                    <p className="text-xs font-medium text-red-800">{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.rejected')}</p>
                   </div>
                 </div>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-yellow-500 mr-2">•</span>
-                    <span>Pending applications are still being reviewed by companies</span>
+                    <span>{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.pendingDescription')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-green-500 mr-2">•</span>
-                    <span>Accepted applications mean you've qualified for the next steps</span>
+                    <span>{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.acceptedDescription')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-500 mr-2">•</span>
-                    <span>Finalized applications are confirmed and ready to start</span>
+                    <span>{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.finalizedDescription')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-red-500 mr-2">•</span>
-                    <span>Rejected applications weren't successful this time</span>
+                    <span>{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.rejectedDescription')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Use the filters to sort through your applications by company, position, or status!
+                {safeT('student.dashboard.appliedInternshipsPersonalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -854,7 +862,7 @@ function AppliedInternshipsView() {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search applications by company or position..."
+          searchPlaceholder={safeT('student.dashboard.appliedInternshipsSearchPlaceholder')}
           filterSections={filterSections}
           // showDatePicker={true}
           selectedDate={selectedDate}
@@ -889,6 +897,8 @@ function AppliedInternshipsView() {
 }
 
 function MyInternshipsView({ onTriggerReportCreate }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const { currentUser } = useSelector(state => state.auth);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -914,29 +924,29 @@ function MyInternshipsView({ onTriggerReportCreate }) {
 
   const filterSections = [
     {
-      name: 'Status',
+      name: safeT('student.dashboard.filterSections.status'),
       options: [
-        { id: 'current', title: 'Current' },
-        { id: 'completed', title: 'Completed' },
-        { id: 'evaluated', title: 'Evaluated' }
+        { id: 'current', title: safeT('student.dashboard.statusPills.current') },
+        { id: 'completed', title: safeT('student.dashboard.statusPills.completed') },
+        { id: 'evaluated', title: safeT('student.dashboard.statusPills.evaluated') }
       ],
       selected: filters.status,
       onChange: (value) => handleFilterChange('status', value),
-      resetLabel: 'All Statuses',
+      resetLabel: safeT('student.dashboard.filterSections.allStatuses'),
     },
     {
-      name: 'Company',
+      name: safeT('student.dashboard.filterSections.company'),
       options: uniqueCompanies.map(company => ({ id: company, title: company })),
       selected: filters.company,
       onChange: (value) => handleFilterChange('company', value),
-      resetLabel: 'All Companies',
+      resetLabel: safeT('student.dashboard.filterSections.allCompanies'),
     },
     {
-      name: 'Position',
+      name: safeT('student.dashboard.filterSections.position'),
       options: uniquePositions.map(pos => ({ id: pos, title: pos })),
       selected: filters.position,
       onChange: (value) => handleFilterChange('position', value),
-      resetLabel: 'All Positions',
+      resetLabel: safeT('student.dashboard.filterSections.allPositions'),
     },
   ];
 
@@ -953,17 +963,17 @@ function MyInternshipsView({ onTriggerReportCreate }) {
   // Mock statuses for MyInternshipsView
   const MY_INTERNSHIP_STATUSES = {
     current: {
-      label: "CURRENT",
+      label: safeT('student.dashboard.statusPills.current'),
       color: "bg-blue-100 text-blue-800 border border-blue-400",
       badgeColor: "bg-blue-600",
     },
     completed: {
-      label: "COMPLETED",
+      label: safeT('student.dashboard.statusPills.completed'),
       color: "bg-green-100 text-green-800 border border-green-400",
       badgeColor: "bg-green-600",
     },
     evaluated: {
-      label: "EVALUATED",
+      label: safeT('student.dashboard.statusPills.evaluated'),
       color: "bg-purple-100 text-purple-800 border border-purple-400",
       badgeColor: "bg-purple-600",
     }
@@ -985,46 +995,48 @@ function MyInternshipsView({ onTriggerReportCreate }) {
           </div>
           <div className="text-left flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              DASHBOARD
+              {safeT('student.dashboard.myInternshipsPersonalizedCard.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Internships Dashboard</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.myInternshipsPersonalizedCard.title')}
+            </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Manage all your internships in one place.</p>
+              <p className="mb-3">{safeT('student.dashboard.myInternshipsPersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="flex space-x-4 mb-2">
                   <div className="flex-1 p-2 bg-blue-50 rounded-lg border border-blue-100 text-center">
                     <div className="w-3 h-3 bg-blue-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-blue-800">Current</p>
+                    <p className="text-xs font-medium text-blue-800">{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.current')}</p>
                   </div>
                   <div className="flex-1 p-2 bg-green-50 rounded-lg border border-green-100 text-center">
                     <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-green-800">Completed</p>
+                    <p className="text-xs font-medium text-green-800">{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.completed')}</p>
                   </div>
                   <div className="flex-1 p-2 bg-purple-50 rounded-lg border border-purple-100 text-center">
                     <div className="w-3 h-3 bg-purple-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-purple-800">Evaluated</p>
+                    <p className="text-xs font-medium text-purple-800">{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.evaluated')}</p>
                   </div>
                 </div>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-blue-500 mr-2">•</span>
-                    <span>Current internships are ongoing</span>
+                    <span>{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.currentDescription')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-green-500 mr-2">•</span>
-                    <span>Completed internships are awaiting your report and evaluation submissions</span>
+                    <span>{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.completedDescription')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-500 mr-2">•</span>
-                    <span>Evaluated ones have been reviewed by your supervisor</span>
+                    <span>{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.evaluatedDescription')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Use the filters to sort through your internship history or search for specific opportunities.
+                {safeT('student.dashboard.myInternshipsPersonalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -1041,7 +1053,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search internships by company or position..."
+          searchPlaceholder={safeT('student.dashboard.myInternshipsSearchPlaceholder')}
           filterSections={filterSections}
           // showDatePicker={true}
           selectedDate={selectedDate}
@@ -1068,7 +1080,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
                 }`}></span>
-              ALL
+              {safeT('student.dashboard.statusPills.all')}
             </button>
             <button
               onClick={() => {
@@ -1082,7 +1094,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'current' ? 'bg-blue-600' : 'bg-gray-300'
                 }`}></span>
-              CURRENT
+              {safeT('student.dashboard.statusPills.current')}
             </button>
             <button
               onClick={() => {
@@ -1096,7 +1108,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'completed' ? 'bg-green-600' : 'bg-gray-300'
                 }`}></span>
-              COMPLETED
+              {safeT('student.dashboard.statusPills.completed')}
             </button>
             <button
               onClick={() => {
@@ -1110,7 +1122,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'evaluated' ? 'bg-purple-600' : 'bg-gray-300'
                 }`}></span>
-              EVALUATED
+              {safeT('student.dashboard.statusPills.evaluated')}
             </button>
           </div>
         </div>

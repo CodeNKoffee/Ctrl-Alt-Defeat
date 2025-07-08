@@ -1014,6 +1014,8 @@
     "dashboard": {
       "searchPlaceholder": "Suche nach empfohlenen Praktikumsmöglichkeiten...",
       "browseInternshipsSearchPlaceholder": "Suche nach Praktikumsmöglichkeiten nach Jobtitel oder Unternehmensname ...",
+      "appliedInternshipsSearchPlaceholder": "Suche nach angewendeten Praktikumsmöglichkeiten nach Unternehmensname oder Jobtitel ...",
+      "myInternshipsSearchPlaceholder": "Suche nach Praktikumsmöglichkeiten nach Unternehmensname oder Jobtitel ...",
       "personalizedCard": {
         "badge": "PERSONALISIERT",
         "title": "Ihre personalisierten Praktikumsvorschläge",
@@ -1039,12 +1041,50 @@
         },
         "footer": "Sehen Sie sich unser Informationsvideo \"Was macht Ihr Praktikum zählt\" an, um zu erfahren, wie Sie Ihre Praktikumserfahrung maximieren können!"
       },
+      "appliedInternshipsPersonalizedCard": {
+        "title": "Ihre Praktikumsanwendungen",
+        "description": "Verwalten und verfolgen Sie alle Ihre Praktikumsanwendungen in einem zentralen Dashboard.",
+        "badge": "ANWENDUNGEN",
+        "howItWorks": {
+          "pending": "Ausstehend",
+          "accepted": "Akzeptiert",
+          "rejected": "Abgelehnt",
+          "finalized": "Abgeschlossen",
+          "pendingDescription": "Ausstehende Anwendungen werden noch von Unternehmen überprüft",
+          "acceptedDescription": "Akzeptierte Anwendungen bedeuten, dass Sie für die nächsten Schritte qualifiziert sind",
+          "rejectedDescription": "Abgelehnte Anwendungen waren dieses Mal nicht erfolgreich",
+          "finalizedDescription": "Abgeschlossene Anwendungen sind bestätigt und bereit zum Start"
+        },
+        "footer": "Verwenden Sie die Filter, um Ihre Anwendungen nach Unternehmen, Position oder Status zu sortieren!"
+      },
+      "myInternshipsPersonalizedCard": {
+        "title": "Ihre Praktikumsübersicht",
+        "description": "Verwalten Sie alle Ihre Praktika an einem Ort.",
+        "badge": "ÜBERSICHT",
+        "howItWorks": {
+          "current": "Aktuell",
+          "completed": "Abgeschlossen",
+          "evaluated": "Bewertet",
+          "currentDescription": "Aktuelle Praktika laufen",
+          "completedDescription": "Abgeschlossene Praktika warten auf Ihre Bericht- und Bewertungseinreichungen",
+          "evaluatedDescription": "Bewertete Praktika wurden von Ihrem Betreuer überprüft"
+        },
+        "footer": "Verwenden Sie die Filter, um Ihre Praktikumsgeschichte oder spezifische Möglichkeiten zu durchsuchen."
+      },
       "statusPills": {
         "industryMatch": "BRANCHENÜBEREINSTIMMUNG",
         "recommendedByPastInterns": "VON VORHERIGEN PRAKTIKANTEN EMPFOHLEN",
         "jobInterestMatch": "BERUFSINTERESSENÜBEREINSTIMMUNG",
         "all": "ALLE",
-        "recommended": "EMPFOHLEN"
+        "recommended": "EMPFOHLEN",
+        "applied": "ANGEWENDET",
+        "current": "AKTUELL",
+        "completed": "ABGESCHLOSSEN",
+        "evaluated": "BEWERTET",
+        "pending": "AUSSTEHEND",
+        "rejected": "ABGELEHNT",
+        "accepted": "AKZEPTIERT",
+        "finalized": "ABGESCHLOSSEN"
       },
       "filterSections": {
         "fullTime": "Vollzeit",
@@ -1082,7 +1122,9 @@
         "duration": "Dauer",
         "allInternships": "Alle Praktika",
         "allPositions": "Alle Positionen",
-        "contentType": "Inhaltstyp"
+        "contentType": "Inhaltstyp",
+        "status": "Status",
+        "allStatuses": "Alle Status"
       }
     }
   }

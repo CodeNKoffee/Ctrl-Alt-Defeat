@@ -80,38 +80,38 @@ export default function InternshipList({
   const STATUS_CONFIG = {
     // For applied internships
     pending: {
-      label: "PENDING",
+      label: safeT('student.dashboard.statusPills.pending'),
       color: "bg-yellow-100 text-yellow-800 border-2 border-yellow-400",
       badgeColor: "bg-yellow-600",
     },
     accepted: {
-      label: "ACCEPTED",
+      label: safeT('student.dashboard.statusPills.accepted'),
       color: "bg-green-100 text-green-800 border-2 border-green-400 ",
       badgeColor: "bg-green-600",
     },
     rejected: {
-      label: "REJECTED",
+      label: safeT('student.dashboard.statusPills.rejected'),
       color: "bg-red-100 text-red-800 border-2 border-red-400 ",
       badgeColor: "bg-red-600",
     },
     finalized: {
-      label: "FINALIZED",
+      label: safeT('student.dashboard.statusPills.finalized'),
       color: "bg-purple-100 text-purple-800 border-2 border-purple-400",
       badgeColor: "bg-purple-600",
     },
     // For my internships
     current: {
-      label: "CURRENT",
+      label: safeT('student.dashboard.statusPills.current'),
       color: "bg-blue-100 text-blue-800 border-2 border-blue-400",
       badgeColor: "bg-blue-600",
     },
     completed: {
-      label: "COMPLETED",
+      label: safeT('student.dashboard.statusPills.completed'),
       color: "bg-green-100 text-green-800 border-2 border-green-400",
       badgeColor: "bg-green-600",
     },
     evaluated: {
-      label: "EVALUATED",
+      label: safeT('student.dashboard.statusPills.evaluated'),
       color: "bg-purple-100 text-purple-800 border-2 border-purple-400",
       badgeColor: "bg-purple-600",
     }
@@ -119,38 +119,38 @@ export default function InternshipList({
   const STATUS_CONFIG_HOVER = {
     // For applied internships
     pending: {
-      label: "PENDING",
+      label: safeT('student.dashboard.statusPills.pending'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-yellow-100 hover:text-yellow-800 hover:border-yellow-400",
       badgeColor: "bg-yellow-600",
     },
     accepted: {
-      label: "ACCEPTED",
+      label: safeT('student.dashboard.statusPills.accepted'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400",
       badgeColor: "bg-green-600",
     },
     rejected: {
-      label: "REJECTED",
+      label: safeT('student.dashboard.statusPills.rejected'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-red-100 hover:text-red-800 hover:border-red-400",
       badgeColor: "bg-red-600",
     },
     finalized: {
-      label: "FINALIZED",
+      label: safeT('student.dashboard.statusPills.finalized'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400",
       badgeColor: "bg-purple-600",
     },
     // For my internships
     current: {
-      label: "CURRENT",
+      label: safeT('student.dashboard.statusPills.current'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-blue-200 hover:text-blue-900 hover:border-blue-500",
       badgeColor: "bg-blue-600",
     },
     completed: {
-      label: "COMPLETED",
+      label: safeT('student.dashboard.statusPills.completed'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400",
       badgeColor: "bg-green-600",
     },
     evaluated: {
-      label: "EVALUATED",
+      label: safeT('student.dashboard.statusPills.evaluated'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400",
       badgeColor: "bg-purple-600",
     }

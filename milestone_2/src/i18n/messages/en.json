@@ -1012,6 +1012,8 @@
     "dashboard": {
       "searchPlaceholder": "Search recommended internships...",
       "browseInternshipsSearchPlaceholder": "Search internships by job title or company name ...",
+      "appliedInternshipsSearchPlaceholder": "Search applications by company or position...",
+      "myInternshipsSearchPlaceholder": "Search internships by company or position...",
       "personalizedCard": {
         "badge": "PERSONALIZED",
         "title": "Your Personalized Internship Matches",
@@ -1037,12 +1039,50 @@
         },
         "footer": "Remember to watch our informational video \"What Makes Your Internship Count\" to learn how to maximize your internship experience!"
       },
+      "appliedInternshipsPersonalizedCard": {
+        "title": "Your Internship Applications",
+        "description": "Track and manage all your internship applications in one centralized dashboard.",
+        "badge": "APPLICATIONS",
+        "howItWorks": {
+          "pending": "Pending",
+          "accepted": "Accepted",
+          "rejected": "Rejected",
+          "finalized": "Finalized",
+          "pendingDescription": "Pending applications are still being reviewed by companies",
+          "acceptedDescription": "Accepted applications mean you've qualified for the next steps",
+          "rejectedDescription": "Rejected applications weren't successful this time",
+          "finalizedDescription": "Finalized applications are confirmed and ready to start"
+        },
+        "footer": "Use the filters to sort through your applications by company, position, or status!"
+      },
+      "myInternshipsPersonalizedCard": {
+        "title": "Your Internships Dashboard",
+        "description": "Manage all your internships in one place.",
+        "badge": "DASHBOARD",
+        "howItWorks": {
+          "current": "Current",
+          "completed": "Completed",
+          "evaluated": "Evaluated",
+          "currentDescription": "Current internships are ongoing",
+          "completedDescription": "Completed internships are awaiting your report and evaluation submissions",
+          "evaluatedDescription": "Evaluated ones have been reviewed by your supervisor"
+        },
+        "footer": "Use the filters to sort through your internship history or search for specific opportunities."
+      },
       "statusPills": {
         "industryMatch": "INDUSTRY MATCH",
         "recommendedByPastInterns": "RECOMMENDED BY PAST INTERNS",
         "jobInterestMatch": "JOB INTEREST MATCH",
         "all": "ALL",
-        "recommended": "RECOMMENDED"
+        "recommended": "RECOMMENDED",
+        "applied": "APPLIED",
+        "current": "CURRENT",
+        "completed": "COMPLETED",
+        "evaluated": "EVALUATED",
+        "pending": "PENDING",
+        "rejected": "REJECTED",
+        "accepted": "ACCEPTED",
+        "finalized": "FINALIZED"
       },
       "filterSections": {
         "fullTime": "Full-time",
@@ -1079,7 +1119,9 @@
         "duration": "Duration",
         "allInternships": "All Internships",
         "allPositions": "All Positions",
-        "contentType": "Content Type"
+        "contentType": "Content Type",
+        "status": "Status",
+        "allStatuses": "All Status"
       }
     }
   }
