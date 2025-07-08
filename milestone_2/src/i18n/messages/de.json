@@ -447,7 +447,8 @@
           "discoverTopCompanies": "Entdecken Sie top-bewertete Unternehmen basierend auf Studentenbewertungen",
           "identifyParticipation": "Identifizieren Sie Unternehmen mit der höchsten Praktikumsteilnahme"
         },
-        "strategicNote": "Erstellen Sie umfassende Berichte basierend auf Echtzeit-Statistiken für strategische Entscheidungsfindung."
+        "strategicNote": "Erstellen Sie umfassende Berichte basierend auf Echtzeit-Statistiken für strategische Entscheidungsfindung.",
+        "generateReport": "Bericht Erstellen"
       }
     },
     "reports": {

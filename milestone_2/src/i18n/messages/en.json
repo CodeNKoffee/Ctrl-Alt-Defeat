@@ -447,7 +447,8 @@
           "discoverTopCompanies": "Discover top-rated companies based on student evaluations",
           "identifyParticipation": "Identify companies with highest internship participation"
         },
-        "strategicNote": "Generate comprehensive reports based on real-time statistics for strategic decision making."
+        "strategicNote": "Generate comprehensive reports based on real-time statistics for strategic decision making.",
+        "generateReport": "Generate Report"
       }
     },
     "reports": {
