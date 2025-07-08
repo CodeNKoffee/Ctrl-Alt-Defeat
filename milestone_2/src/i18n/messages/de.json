@@ -926,6 +926,17 @@
           "noComments": "Noch keine Anmerkungen. Wählen Sie Text aus, um Hervorhebungen oder Kommentare hinzuzufügen."
         }
       }
+    },
+    "workshops": {
+      "instructor": "Dozent",
+      "allInstructors": "Alle Dozenten",
+      "addNewWorkshop": "Neuen Workshop hinzufügen",
+      "management": {
+        "title": "WORKSHOP-VERWALTUNG",
+        "badge": "BERUFLICHE ENTWICKLUNG",
+        "cardTitle": "Workshop-Verwaltungsportal",
+        "description": "Erstellen, planen und verwalten Sie Workshops zur beruflichen Entwicklung, die die Berufsvorbereitung und Branchenvorbereitung der Studenten verbessern."
+      }
     }
   },
   "uploadDocuments": {

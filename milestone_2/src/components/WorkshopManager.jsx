@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit, faTrash, faSearch, faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import WorkshopList from './WorkshopList';
 import WorkshopForm from './WorkshopForm';
 import DeleteWorkshopModal from './DeleteWorkshopModal';
@@ -8,6 +10,8 @@ import { sampleWorkshops } from '../../constants/mockData';
 import CustomButton from './shared/CustomButton';
 
 export default function WorkshopManager({ instructorFilter = 'all', searchTerm = '' }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [workshops, setWorkshops] = useState(sampleWorkshops);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentWorkshop, setCurrentWorkshop] = useState(null);
@@ -66,7 +70,7 @@ export default function WorkshopManager({ instructorFilter = 'all', searchTerm =
           <CustomButton
             onClick={handleCreateWorkshop}
             variant="primary"
-            text=" Add New Workshop"
+            text={safeT('scad.workshops.addNewWorkshop')}
             icon={faPlus}
             className="text-lg font-semibold"
           />

@@ -913,6 +913,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 }
 
 function WorkshopsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedInstructor, setSelectedInstructor] = useState('all');
 
@@ -922,11 +924,11 @@ function WorkshopsView() {
 
   const workshopFilterSections = [
     {
-      name: 'Instructor',
+      name: safeT('scad.workshops.instructor'),
       options: [...uniqueInstructors],
       selected: selectedInstructor,
       onChange: (value) => setSelectedInstructor(value),
-      resetLabel: 'All Instructors',
+      resetLabel: safeT('scad.workshops.allInstructors'),
     },
   ];
 
@@ -934,7 +936,7 @@ function WorkshopsView() {
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
         <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          WORKSHOP MANAGEMENT
+          {safeT('scad.workshops.management.title')}
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
@@ -952,11 +954,13 @@ function WorkshopsView() {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              PROFESSIONAL DEVELOPMENT
+              {safeT('scad.workshops.management.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Workshop Management Portal</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('scad.workshops.management.cardTitle')}
+            </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Create, schedule, and manage professional development workshops that enhance student career readiness and industry preparation.</p>
+              <p className="mb-3">{safeT('scad.workshops.management.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">

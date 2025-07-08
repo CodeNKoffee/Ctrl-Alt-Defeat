@@ -924,6 +924,17 @@
         "exportPdf": "Export as PDF",
         "close": "Close"
       }
+    },
+    "workshops": {
+      "instructor": "Instructor",
+      "allInstructors": "All Instructors",
+      "addNewWorkshop": "Add New Workshop",
+      "management": {
+        "title": "WORKSHOP MANAGEMENT",
+        "badge": "PROFESSIONAL DEVELOPMENT",
+        "cardTitle": "Workshop Management Portal",
+        "description": "Create, schedule, and manage professional development workshops that enhance student career readiness and industry preparation."
+      }
     }
   },
   "uploadDocuments": {
