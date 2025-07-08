@@ -1012,6 +1012,9 @@
   },
   "student": {
     "dashboard": {
+      "workshops": {
+        "backToWorkshops": "Zurück zu Workshops"
+      },
       "searchPlaceholder": "Suche nach empfohlenen Praktikumsmöglichkeiten...",
       "browseInternshipsSearchPlaceholder": "Suche nach Praktikumsmöglichkeiten nach Jobtitel oder Unternehmensname ...",
       "appliedInternshipsSearchPlaceholder": "Suche nach angewendeten Praktikumsmöglichkeiten nach Unternehmensname oder Jobtitel ...",
@@ -1103,6 +1106,28 @@
         "footer1": "Berichte markiert und",
         "footer2": "abgelehnt benötigen Ihre Aufmerksamkeit"
       },
+      "workshopsInfoPersonalizedCard": {
+        "title": "Workshops & Berufliche Entwicklung",
+        "description": "Verbessern Sie Ihre Fähigkeiten und erweitern Sie Ihr berufliches Wissen durch unseren umfassenden Workshop-Zentrum.",
+        "badge": "BERUFLICHE ENTWICKLUNG",
+        "availableWorkshops": {
+          "title": "Verfügbare Workshop-Typen:",
+          "type1": "Bevorstehende Workshops",
+          "type1Description": "Durchsuchen und registrieren Sie für geplante zukünftige Sitzungen",
+          "type2": "Live Jetzt",
+          "type2Description": "Teilnehmen Sie aktiven Workshops, die in Echtzeit stattfinden",
+          "type3": "On-Demand-Bibliothek",
+          "type3Description": "Zugang zu voraufgezeichneten Sitzungen jederzeit"
+        },
+        "workshopBenefits": {
+          "title": "Workshop-Vorteile:",
+          "benefit1": "Branchenspezifische Fähigkeiten, die von Arbeitgebern geschätzt werden",
+          "benefit2": "Lernen Sie praktische Techniken von erfahrenen Fachleuten",
+          "benefit3": "Netzwerk mit Branchenvertretern und Kollegen",
+          "benefit4": "Erhalten Sie Zertifikate für Ihr Portfolio"
+        },
+        "footer": "Jeder Workshop ist sorgfältig entworfen, um kritische Fähigkeiten und Wissensbereiche zu adressieren, die Ihr akademisches Lernen ergänzen und Sie für berufliches Erfolg vorbereiten."
+      },
       "statusPills": {
         "industryMatch": "BRANCHENÜBEREINSTIMMUNG",
         "recommendedByPastInterns": "VON VORHERIGEN PRAKTIKANTEN EMPFOHLEN",
@@ -1116,7 +1141,10 @@
         "pending": "AUSSTEHEND",
         "rejected": "ABGELEHNT",
         "accepted": "AKZEPTIERT",
-        "finalized": "ABGESCHLOSSEN"
+        "finalized": "ABGESCHLOSSEN",
+        "upcoming": "BEVORSTEHEND",
+        "live": "LIVE",
+        "prerecorded": "VORAUFGEZEICHNET"
       },
       "filterSections": {
         "fullTime": "Vollzeit",
@@ -1253,7 +1281,71 @@
             "edit": "Ihr Bericht wurde erfolgreich als Entwurf aktualisiert."
           }
         }
+      },
+      "upcomingWorkshops": "Bevorstehende Workshops",
+      "liveWorkshops": "Live Workshops",
+      "prerecordedWorkshops": "Voraufgezeichnete Workshops",
+      "upcoming": "Bevorstehend",
+      "live": "Live",
+      "prerecorded": "Voraufgezeichnet",
+      "joinNow": "Jetzt teilnehmen",
+      "watchNow": "Jetzt ansehen",
+      "registerNow": "Jetzt registrieren",
+      "workshopFeedback": {
+        "title": "Workshop Feedback",
+        "subtitle": "Wie würden Sie diesen Workshop bewerten?",
+        "placeholder": "Teilen Sie Ihre Gedanken über den Workshop...",
+        "submitButton": "Feedback einreichen",
+        "submitting": "Einreichen...",
+        "success": "Erfolgreich!",
+        "updated": "Aktualisiert!",
+        "submitSuccess": {
+          "create": "Ihr Bericht wurde erfolgreich eingereicht.",
+          "edit": "Ihr Bericht wurde erfolgreich aktualisiert."
+        },
+        "draftSuccess": {
+          "create": "Ihr Bericht wurde erfolgreich als Entwurf gespeichert.",
+          "edit": "Ihr Bericht wurde erfolgreich als Entwurf aktualisiert."
+        },
+        "certificateSimulator": {
+          "title": "Glückwunsch!",
+          "message": "Sie haben den Workshop erfolgreich abgeschlossen!",
+          "download": "Zertifikat herunterladen"
+        },
+        "successMessage": "Sie haben sich erfolgreich für diesen Workshop registriert"
       }
     }
+  },
+  "callInterface": {
+    "chat": "Chat",
+    "notes": "Notizen",
+    "closeChatPanel": "Chat-Panel schließen",
+    "closeNotesPanel": "Notizen-Panel schließen",
+    "noMessagesYet": "Noch keine Nachrichten",
+    "startConversation": "Starte die Konversation!",
+    "typeMessage": "Nachricht eingeben...",
+    "sendMessage": "Nachricht senden",
+    "saveNotes": "Notizen speichern",
+    "takeNotes": "Notizen hier eingeben...",
+    "connectingTo": "Verbinde mit {otherPartyName}...",
+    "callInProgress": "Anruf mit {otherPartyName} läuft",
+    "connectedWith": "Verbunden mit {otherPartyName} (Kamera aus)",
+    "simulateOtherPartyLeaving": "Andere Teilnehmer verlassen simulieren",
+    "toggleCam": "Kamera umschalten",
+    "toggleCameraState": "Kamera-Status umschalten",
+    "cameraIsTurnedOff": "Kamera ist ausgeschaltet",
+    "cameraIsOn": "{otherPartyName}'s Kamera ist eingeschaltet",
+    "connecting": "Verbinde...",
+    "otherPartyLeft": "{otherPartyName} hat den Anruf verlassen",
+    "you": "Du",
+    "muted": "Stumm geschaltet",
+    "unmute": "Stummschaltung aufheben",
+    "mute": "Stummschaltung",
+    "stopVideo": "Video stoppen",
+    "startVideo": "Video starten",
+    "stopSharing": "Teilen beenden",
+    "shareScreen": "Bildschirm teilen",
+    "endCall": "Anruf beenden",
+    "simLeave": "Simulierter Verlassen"
   }
 }

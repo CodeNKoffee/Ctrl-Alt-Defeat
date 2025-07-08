@@ -1029,6 +1029,9 @@
   },
   "student": {
     "dashboard": {
+      "workshops": {
+        "backToWorkshops": "العودة إلى ورش العمل"
+      },
       "searchPlaceholder": "ابحث عن فرص التدريب المرشح بها...",
       "browseInternshipsSearchPlaceholder": "ابحث عن فرص التدريب حسب المنصب أو الشركة ...",
       "appliedInternshipsSearchPlaceholder": "ابحث عن فرص التدريب المتقدم حسب الشركة أو المنصب ...",
@@ -1120,6 +1123,28 @@
         "footer1": "تقارير مشار إليها و",
         "footer2": "مرفوضة تحتاج إلى انتباهك"
       },
+      "workshopsInfoPersonalizedCard": {
+        "title": "ورش العمل ومركز التطوير المهني",
+        "description": "تعزز مهاراتك وتوسع علمك المهني من خلال مركز ورش العمل الموسع.",
+        "badge": "تطوير مهني",
+        "availableWorkshops": {
+          "title": "أنواع ورش العمل المتاحة:",
+          "type1": "ورش العمل القادمة",
+          "type1Description": "تصفح وقم بالتسجيل للجلسات المجدولة في المستقبل",
+          "type2": "مباشر",
+          "type2Description": "انضم إلى ورش العمل النشطة التي تحدث في الوقت الفعلي",
+          "type3": "مكتبة الطلب",
+          "type3Description": "الوصول إلى الجلسات المسجلة المتاحة في أي وقت"
+        },
+        "workshopBenefits": {
+          "title": "فوائد ورش العمل:",
+          "benefit1": "تعزيز مهارات صناعية مقدرة على قبولها من قبل الشركات",
+          "benefit2": "تعلم التقنيات العملية من المهنيين العاملين",
+          "benefit3": "الاتصال بالممثلين الصناعيين والزملاء",
+          "benefit4": "استلام شهادات الانتهاء لمحفظتك"
+        },
+        "footer": "يتم تصميم كل ورشة العمل بعناية للتعامل مع المهارات والمجالات المهمة التي تدعم تعلمك الأكاديمي وتستعد للنجاح المهني."
+      },
       "statusPills": {
         "industryMatch": "توافق المجال",
         "recommendedByPastInterns": "مرشح به من قبل المتدربين السابقين",
@@ -1133,7 +1158,10 @@
         "pending": "قيد الانتظار",
         "rejected": "مرفوض",
         "accepted": "مقبول",
-        "finalized": "مكتمل"
+        "finalized": "مكتمل",
+        "upcoming": "قادم",
+        "live": "مباشر",
+        "prerecorded": "مسجل مسبقاً"
       },
       "filterSections": {
         "fullTime": "وقت كامل",
@@ -1270,7 +1298,71 @@
             "edit": "تم تحديث التقرير بنجاح كمسودة."
           }
         }
+      },
+      "upcomingWorkshops": "ورش العمل القادمة",
+      "liveWorkshops": "ورش العمل المباشرة",
+      "prerecordedWorkshops": "ورش العمل المسجلة مسبقاً",
+      "upcoming": "قادم",
+      "live": "مباشر",
+      "prerecorded": "مسجل مسبقاً",
+      "joinNow": "انضم الآن",
+      "watchNow": "شاهد الآن",
+      "registerNow": "تسجيل الآن",
+      "workshopFeedback": {
+        "title": "تقييم الورشة",
+        "subtitle": "كيف تقيم هذه الورشة؟",
+        "placeholder": "شارك أفكارك حول الورشة...",
+        "submitButton": "إرسال التقييم",
+        "submitting": "إرسال...",
+        "success": "تم بنجاح!",
+        "updated": "تم التحديث!",
+        "submitSuccess": {
+          "create": "تم إرسال التقرير بنجاح.",
+          "edit": "تم تحديث التقرير بنجاح."
+        },
+        "draftSuccess": {
+          "create": "تم حفظ التقرير بنجاح كمسودة.",
+          "edit": "تم تحديث التقرير بنجاح كمسودة."
+        },
+        "certificateSimulator": {
+          "title": "تهانينا!",
+          "message": "لقد إنهيت الورشة بنجاح!",
+          "download": "تحميل الشهادة"
+        },
+        "successMessage": "لقد سجلت بنجاح لهذه الورشة"
       }
     }
+  },
+  "callInterface": {
+    "chat": "الدردشة",
+    "notes": "الملاحظات",
+    "closeChatPanel": "إغلاق لوحة الدردشة",
+    "closeNotesPanel": "إغلاق لوحة الملاحظات",
+    "noMessagesYet": "لا يوجد رسائل بعد",
+    "startConversation": "ابدأ المحادثة!",
+    "typeMessage": "أدخل رسالتك...",
+    "sendMessage": "إرسال الرسالة",
+    "saveNotes": "حفظ الملاحظات",
+    "takeNotes": "أدخل الملاحظات هنا...",
+    "connectingTo": "جاري الاتصال بـ {otherPartyName}...",
+    "callInProgress": "المكالمة قيد التنفيذ مع {otherPartyName}",
+    "connectedWith": "متصل بـ {otherPartyName} (الكاميرا مغلقة)",
+    "simulateOtherPartyLeaving": "إصلاح المكالمة",
+    "toggleCam": "تبديل الكاميرا",
+    "toggleCameraState": "تبديل حالة الكاميرا",
+    "cameraIsTurnedOff": "الكاميرا مغلقة",
+    "cameraIsOn": "الكاميرا مفتوحة بواسطة {otherPartyName}",
+    "connecting": "جاري الاتصال...",
+    "otherPartyLeft": "{otherPartyName} قام بالتوقف",
+    "you": "أنت",
+    "muted": "مقفل",
+    "unmute": "فتح الصوت",
+    "mute": "إيقاف الصوت",
+    "stopVideo": "إيقاف الفيديو",
+    "startVideo": "بدء الفيديو",
+    "stopSharing": "إيقاف المشاركة",
+    "shareScreen": "مشاركة الشاشة",
+    "endCall": "إنهاء المكالمة",
+    "simLeave": "إصلاح المكالمة"
   }
 }

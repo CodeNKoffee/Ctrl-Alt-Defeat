@@ -12,8 +12,12 @@ import NotificationButton from "./NotificationButton";
 import WorkshopFeedback from "./WorkshopFeedback";
 import CertificateSimulatorButton from "./CertificateSimulatorButton";
 import ApplicationsFilterBar from './shared/ApplicationsFilterBar';
+import { useTranslation } from "react-i18next";
+import { createSafeT } from "@/lib/translationUtils";
 
 export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSelectLive, sidebarExpanded }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
   const [workshops, setWorkshops] = useState(sampleWorkshops);
   const [showLiveInterface, setShowLiveInterface] = useState(false);
@@ -230,7 +234,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
             }`}
         >
           <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'}`}></span>
-          ALL
+          {safeT('student.dashboard.statusPills.all')}
         </button>
         <button
           onClick={() => setActiveFilter('upcoming')}
@@ -240,7 +244,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
             }`}
         >
           <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'upcoming' ? 'bg-green-600' : 'bg-gray-300'}`}></span>
-          UPCOMING
+          {safeT('student.dashboard.statusPills.upcoming')}
         </button>
         <button
           onClick={() => setActiveFilter('live')}
@@ -250,7 +254,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
             }`}
         >
           <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'live' ? 'bg-red-600' : 'bg-gray-300'}`}></span>
-          LIVE
+          {safeT('student.dashboard.statusPills.live')}
         </button>
         <button
           onClick={() => setActiveFilter('prerecorded')}
@@ -260,7 +264,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
             }`}
         >
           <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'prerecorded' ? 'bg-yellow-600' : 'bg-gray-300'}`}></span>
-          PRERECORDED
+          {safeT('student.dashboard.statusPills.prerecorded')}
         </button>
       </div>
 

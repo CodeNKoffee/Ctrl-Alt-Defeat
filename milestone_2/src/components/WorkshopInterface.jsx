@@ -10,6 +10,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import WorkshopFeedback from './WorkshopFeedback';
+import { useTranslation } from "react-i18next";
+import { createSafeT } from "@/lib/translationUtils";
 
 // Extract ChatPanelContent to be outside of WorkshopInterface
 const ChatPanelContent = ({
@@ -116,6 +118,8 @@ const NotesPanelContent = ({
 );
 
 export default function WorkshopInterface({ workshop, onBack }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [notes, setNotes] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
@@ -331,7 +335,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-200 border border-white/10 text-sm font-medium"
           >
             <FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4" />
-            Back to Workshops
+            {safeT('student.dashboard.workshops.backToWorkshops')}
           </button>
         </div>
       </div>

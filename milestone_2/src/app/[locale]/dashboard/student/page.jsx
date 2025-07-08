@@ -1366,6 +1366,8 @@ function ProfileView() {
 }
 
 function WorkshopsView({ sidebarExpanded }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [selectedLiveWorkshop, setSelectedLiveWorkshop] = useState(null);
 
   const handleWorkshopSelection = (workshop) => {
@@ -1391,71 +1393,71 @@ function WorkshopsView({ sidebarExpanded }) {
           </div>
           <div className="text-left flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              PROFESSIONAL DEVELOPMENT
+              {safeT('student.dashboard.workshopsInfoPersonalizedCard.badge')}
             </div>
             <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
-              Workshops & Professional Development Hub
+              {safeT('student.dashboard.workshopsInfoPersonalizedCard.title')}
             </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Enhance your skills and expand your professional knowledge through our comprehensive workshop center.</p>
+              <p className="mb-3">{safeT('student.dashboard.workshopsInfoPersonalizedCard.description')}</p>
 
               {/* Workshop Types */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Available Workshop Types:
+                  {safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.title')}
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-2">
                   <div className="p-3 bg-blue-50 rounded-lg border border-blue-100">
                     <div className="font-medium text-blue-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                      Upcoming Workshops
+                      {safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type1')}
                     </div>
-                    <p className="text-sm text-gray-600">Browse and register for scheduled future sessions</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type1Description')}</p>
                   </div>
                   <div className="p-3 bg-green-50 rounded-lg border border-green-100">
                     <div className="font-medium text-green-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                      Live Now
+                      {safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type2')}
                     </div>
-                    <p className="text-sm text-gray-600">Join active workshops happening in real-time</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type2Description')}</p>
                   </div>
                   <div className="p-3 bg-purple-50 rounded-lg border border-purple-100">
                     <div className="font-medium text-purple-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                      On-Demand Library
+                      {safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type3')}
                     </div>
-                    <p className="text-sm text-gray-600">Access pre-recorded sessions available anytime</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type3Description')}</p>
                   </div>
                 </div>
 
                 {/* Workshop Benefits */}
                 <p className="text-metallica-blue-700 font-medium mt-4 mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Workshop Benefits:
+                  {safeT('student.dashboard.workshopsInfoPersonalizedCard.workshopBenefits.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Build industry-specific skills valued by employers</span>
+                    <span>{safeT('student.dashboard.workshopsInfoPersonalizedCard.workshopBenefits.benefit1')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Learn practical techniques from working professionals</span>
+                    <span>{safeT('student.dashboard.workshopsInfoPersonalizedCard.workshopBenefits.benefit2')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Network with industry representatives and peers</span>
+                    <span>{safeT('student.dashboard.workshopsInfoPersonalizedCard.workshopBenefits.benefit3')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Receive certificates of completion for your portfolio</span>
+                    <span>{safeT('student.dashboard.workshopsInfoPersonalizedCard.workshopBenefits.benefit4')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Each workshop is carefully designed to address critical skills and knowledge areas that complement your academic learning and prepare you for professional success.
+                {safeT('student.dashboard.workshopsInfoPersonalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -1476,7 +1478,7 @@ function WorkshopsView({ sidebarExpanded }) {
               <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              Back to Workshops
+              {safeT('student.dashboard.workshops.backToWorkshops')}
             </button>
           </div>
           <WorkshopInterface workshop={selectedLiveWorkshop} onBack={() => setSelectedLiveWorkshop(null)} />

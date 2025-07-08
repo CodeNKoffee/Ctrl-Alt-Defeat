@@ -4,8 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from 'framer-motion';
 import CustomButton from "../components/shared/CustomButton"
+import { useTranslation } from "react-i18next";
+import { createSafeT } from "@/lib/translationUtils";
 
 export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatchPrerecorded }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [registrationFeedback, setRegistrationFeedback] = useState(null);
 
   const handleAction = () => {
@@ -34,11 +38,11 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
 
     switch (workshop?.type) {
       case 'live':
-        return 'Join Now';
+        return safeT('student.dashboard.joinNow');
       case 'prerecorded':
-        return 'Watch Now';
+        return safeT('student.dashboard.watchNow');
       default:
-        return 'Register Now';
+        return safeT('student.dashboard.registerNow');
     }
   };
 
@@ -83,7 +87,7 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   >
                     <motion.div
-                      className="w-12 h-12 bg-[#318FA8] rounded-full flex items-center justify-center mx-auto mb-4"
+                      className="w-12 h-12 bg-[#22C55E] rounded-full flex items-center justify-center mx-auto mb-4"
                       initial={{ scale: 0.5 }}
                       animate={{ scale: 1 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 15 }}
@@ -94,10 +98,10 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
                       />
                     </motion.div>
                     <h3 className="text-lg font-semibold text-gray-800 mb-1">
-                      Success!
+                      {safeT('student.dashboard.workshopFeedback.success')}
                     </h3>
                     <p className="text-gray-600">
-                      You've registered to this workshop successfully
+                      {safeT('student.dashboard.workshopFeedback.successMessage')}
                     </p>
                   </motion.div>
                 </motion.div>

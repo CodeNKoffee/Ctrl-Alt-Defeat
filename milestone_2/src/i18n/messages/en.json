@@ -1010,6 +1010,9 @@
   },
   "student": {
     "dashboard": {
+      "workshops": {
+        "backToWorkshops": "Back to Workshops"
+      },
       "searchPlaceholder": "Search recommended internships...",
       "browseInternshipsSearchPlaceholder": "Search internships by job title or company name ...",
       "appliedInternshipsSearchPlaceholder": "Search applications by company or position...",
@@ -1101,6 +1104,28 @@
         "footer1": "reports flagged and",
         "footer2": "rejected require your attention"
       },
+      "workshopsInfoPersonalizedCard": {
+        "title": "Workshops & Professional Development Hub",
+        "description": "Enhance your skills and expand your professional knowledge through our comprehensive workshop center.",
+        "badge": "PROFESSIONAL DEVELOPMENT",
+        "availableWorkshops": {
+          "title": "Available Workshop Types:",
+          "type1": "Upcoming Workshops",
+          "type1Description": "Browse and register for scheduled future sessions",
+          "type2": "Live Now",
+          "type2Description": "Join active workshops happening in real-time",
+          "type3": "On-Demand Library",
+          "type3Description": "Access pre-recorded sessions available anytime"
+        },
+        "workshopBenefits": {
+          "title": "Workshop Benefits:",
+          "benefit1": "Build industry-specific skills valued by employers",
+          "benefit2": "Learn practical techniques from working professionals",
+          "benefit3": "Network with industry representatives and peers",
+          "benefit4": "Receive certificates of completion for your portfolio"
+        },
+        "footer": "Each workshop is carefully designed to address critical skills and knowledge areas that complement your academic learning and prepare you for professional success."
+      },
       "statusPills": {
         "industryMatch": "INDUSTRY MATCH",
         "recommendedByPastInterns": "RECOMMENDED BY PAST INTERNS",
@@ -1114,7 +1139,10 @@
         "pending": "PENDING",
         "rejected": "REJECTED",
         "accepted": "ACCEPTED",
-        "finalized": "FINALIZED"
+        "finalized": "FINALIZED",
+        "upcoming": "UPCOMING",
+        "live": "LIVE",
+        "prerecorded": "PRERECORDED"
       },
       "filterSections": {
         "fullTime": "Full-time",
@@ -1250,7 +1278,71 @@
             "edit": "Your report has been successfully saved as a draft update."
           }
         }
+      },
+      "upcomingWorkshops": "Upcoming Workshops",
+      "liveWorkshops": "Live Workshops",
+      "prerecordedWorkshops": "Prerecorded Workshops",
+      "upcoming": "Upcoming",
+      "live": "Live",
+      "prerecorded": "Prerecorded",
+      "joinNow": "Join Now",
+      "watchNow": "Watch Now",
+      "registerNow": "Register Now",
+      "workshopFeedback": {
+        "title": "Workshop Feedback",
+        "subtitle": "How would you rate this workshop?",
+        "placeholder": "Share your thoughts about the workshop...",
+        "submitButton": "Submit Feedback",
+        "submitting": "Submitting...",
+        "success": "Success!",
+        "updated": "Updated!",
+        "submitSuccess": {
+          "create": "Your report has been successfully submitted.",
+          "edit": "Your report has been successfully updated."
+        },
+        "draftSuccess": {
+          "create": "Your report has been successfully saved as a draft.",
+          "edit": "Your report has been successfully saved as a draft update."
+        },
+        "certificateSimulator": {
+          "title": "Congratulations!",
+          "message": "You've successfully completed the workshop!",
+          "download": "Download Certificate"
+        },
+        "successMessage": "You've registered to this workshop successfully"
       }
     }
+  },
+  "callInterface": {
+    "chat": "Chat",
+    "notes": "Notes",
+    "closeChatPanel": "Close Chat Panel",
+    "closeNotesPanel": "Close Notes Panel",
+    "noMessagesYet": "No messages yet",
+    "startConversation": "Start the conversation!",
+    "typeMessage": "Type your message...",
+    "sendMessage": "Send Message",
+    "saveNotes": "Save Notes",
+    "takeNotes": "Take notes here...",
+    "connectingTo": "Connecting to {otherPartyName}...",
+    "callInProgress": "Call in progress with {otherPartyName}",
+    "connectedWith": "Connected with {otherPartyName} (camera off)",
+    "simulateOtherPartyLeaving": "Simulate other party leaving",
+    "toggleCam": "Toggle Cam",
+    "toggleCameraState": "Toggle camera state",
+    "cameraIsTurnedOff": "Camera is turned off",
+    "cameraIsOn": "{otherPartyName}'s camera is on",
+    "connecting": "Connecting...",
+    "otherPartyLeft": "{otherPartyName} has left the call",
+    "you": "You",
+    "muted": "Muted",
+    "unmute": "Unmute",
+    "mute": "Mute",
+    "stopVideo": "Stop Video",
+    "startVideo": "Start Video",
+    "stopSharing": "Stop Sharing",
+    "shareScreen": "Share Screen",
+    "endCall": "End Call",
+    "simLeave": "Sim Leave"
   }
 }
