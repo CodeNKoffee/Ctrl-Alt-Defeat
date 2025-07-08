@@ -157,7 +157,18 @@
         "duration": "Dauer",
         "payment": "Vergütung",
         "paid": "Bezahlt",
-        "unpaid": "Unbezahlt"
+        "unpaid": "Unbezahlt",
+        "durationValue": "{duration} Monate",
+        "allDurations": "Alle Zeiträume",
+        "allIndustries": "Alle Branchen",
+        "allPaymentStatuses": "Alle Vergütungsarten",
+        "monthsLabel": "Monate",
+        "industries": {
+          "technology": "Technologie",
+          "marketing": "Marketing",
+          "design": "Design",
+          "healthcare": "Gesundheitswesen"
+        }
       }
     },
     "applications": {
@@ -827,6 +838,23 @@
     },
     "student": {
       "viewProfile": "Profil ansehen"
+    },
+    "internships": {
+      "title": "PRAKTIKUMSANGEBOTE",
+      "badge": "AUFSICHT",
+      "management": {
+        "title": "Verwaltung der Praktikumsangebote",
+        "description": "Überwachen und beaufsichtigen Sie alle aktiven Praktikumsmöglichkeiten, die von zugelassenen Partnerunternehmen auf der Plattform veröffentlicht wurden.",
+        "features": {
+          "title": "Aufsichtsfunktionen:",
+          "viewDetails": "Vollständige Details aller aktuellen Praktikumsangebote anzeigen",
+          "filterOpportunities": "Möglichkeiten nach Unternehmen, Branche, Standort oder Status filtern",
+          "verifyCompliance": "Überprüfung der Einhaltung von Veröffentlichungsrichtlinien und Anforderungen",
+          "reviewCompensation": "Überprüfung der Vergütungsdetails und Arbeitsbedingungen",
+          "ensureSkills": "Sicherstellen angemessener Qualifikationsanforderungen und Bildungsausrichtung"
+        },
+        "note": "Dieses Dashboard ermöglicht es SCAD-Administratoren, die Qualität und Integrität aller für Studenten verfügbaren Praktikumsmöglichkeiten zu gewährleisten und sicherzustellen, dass sie mit den Bildungszielen und professionellen Standards übereinstimmen."
+      }
     }
   }
 }

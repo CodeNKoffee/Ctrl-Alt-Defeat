@@ -615,6 +615,9 @@ function ReportsView() {
 
 // Using the actual page components for each view
 function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [filters, setFilters] = useState({
     industry: '',
     duration: '',
@@ -629,11 +632,21 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const internshipDataForFilters = getRegularInternships();
   const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))]
     .filter(Boolean)
-    .map(ind => ({ id: ind, title: ind }));
+    .map(ind => ({
+      id: ind,
+      title: safeT(`company.browse.filters.industries.${ind.toLowerCase()}`)
+    }));
 
   const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))]
     .filter(Boolean)
-    .map(dur => ({ id: dur, title: dur }));
+    .map(dur => {
+      const durationMatch = dur.match(/(\d+)/);
+      const durationNumber = durationMatch ? durationMatch[1] : '';
+      return {
+        id: dur,
+        title: `${durationNumber} ${safeT('company.browse.filters.monthsLabel')}`
+      };
+    });
 
   // Get internships based on active tab
   const baseInternships = activeTab === 'all'
@@ -729,24 +742,24 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 
   const filterSectionsConfig = [
     {
-      name: 'Industry',
+      name: safeT('company.browse.filters.industry'),
       options: [...uniqueIndustries],
       selected: filters.industry || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, industry: value === 'all' ? '' : value })),
-      resetLabel: 'All Industries',
+      resetLabel: safeT('company.browse.filters.allIndustries'),
     },
     {
-      name: 'Duration',
+      name: safeT('company.browse.filters.duration'),
       options: [...uniqueDurations],
       selected: filters.duration || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, duration: value === 'all' ? '' : value })),
-      resetLabel: 'All Durations',
+      resetLabel: safeT('company.browse.filters.allDurations'),
     },
     {
-      name: 'Payment',
+      name: safeT('company.browse.filters.payment'),
       options: [
-        { id: 'true', title: 'Paid' },
-        { id: 'false', title: 'Unpaid' },
+        { id: 'true', title: safeT('company.posts.filters.paid') },
+        { id: 'false', title: safeT('company.posts.filters.unpaid') },
       ],
       selected: filters.isPaid === null ? 'all' : filters.isPaid.toString(),
       onChange: (value) => {
@@ -756,7 +769,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           setFilters(prev => ({ ...prev, isPaid: value === 'true' }));
         }
       },
-      resetLabel: 'All Payment',
+      resetLabel: safeT('company.browse.filters.allPaymentStatuses'),
     },
   ];
 
@@ -765,7 +778,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
         <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          INTERNSHIP LISTINGS
+          {safeT('scad.internships.title')}
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
@@ -783,44 +796,44 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              OVERSIGHT
+              {safeT('scad.internships.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Internship Listings Management</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">{safeT('scad.internships.management.title')}</div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Monitor and oversee all active internship opportunities posted by approved partner companies across the platform.</p>
+              <p className="mb-3">{safeT('scad.internships.management.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Oversight Features:
+                  {safeT('scad.internships.management.features.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>View complete details of all current internship listings</span>
+                    <span>{safeT('scad.internships.management.features.viewDetails')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Filter opportunities by company, industry, location, or status</span>
+                    <span>{safeT('scad.internships.management.features.filterOpportunities')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Verify compliance with posting guidelines and requirements</span>
+                    <span>{safeT('scad.internships.management.features.verifyCompliance')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Review compensation details and working conditions</span>
+                    <span>{safeT('scad.internships.management.features.reviewCompensation')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Ensure appropriate skill level requirements and educational alignment</span>
+                    <span>{safeT('scad.internships.management.features.ensureSkills')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                This dashboard enables SCAD administrators to maintain the quality and integrity of all internship opportunities available to students, ensuring they align with educational objectives and professional standards.
+                {safeT('scad.internships.management.note')}
               </p>
             </div>
           </div>
@@ -836,7 +849,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search internships by job title, company, or skills..."
+          searchPlaceholder={safeT('company.browse.searchPlaceholder')}
           onClearFilters={clearAllFilters}
           filterSections={filterSectionsConfig}
         />

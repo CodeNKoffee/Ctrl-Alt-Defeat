@@ -157,7 +157,18 @@
         "duration": "Duration",
         "payment": "Payment",
         "paid": "Paid",
-        "unpaid": "Unpaid"
+        "unpaid": "Unpaid",
+        "durationValue": "{duration} months",
+        "allDurations": "All Durations",
+        "allIndustries": "All Industries",
+        "allPaymentStatuses": "All Payment Statuses",
+        "monthsLabel": "months",
+        "industries": {
+          "technology": "Technology",
+          "marketing": "Marketing",
+          "design": "Design",
+          "healthcare": "Healthcare"
+        }
       }
     },
     "applications": {
@@ -827,6 +838,23 @@
     },
     "student": {
       "viewProfile": "View Profile"
+    },
+    "internships": {
+      "title": "INTERNSHIP LISTINGS",
+      "badge": "OVERSIGHT",
+      "management": {
+        "title": "Internship Listings Management",
+        "description": "Monitor and oversee all active internship opportunities posted by approved partner companies across the platform.",
+        "features": {
+          "title": "Oversight Features:",
+          "viewDetails": "View complete details of all current internship listings",
+          "filterOpportunities": "Filter opportunities by company, industry, location, or status",
+          "verifyCompliance": "Verify compliance with posting guidelines and requirements",
+          "reviewCompensation": "Review compensation details and working conditions",
+          "ensureSkills": "Ensure appropriate skill level requirements and educational alignment"
+        },
+        "note": "This dashboard enables SCAD administrators to maintain the quality and integrity of all internship opportunities available to students, ensuring they align with educational objectives and professional standards."
+      }
     }
   }
 }
