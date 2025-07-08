@@ -469,6 +469,97 @@
       }
     }
   },
+  "facultyReportViewer": {
+    "navigation": {
+      "backToReports": "Back to Reports"
+    },
+    "header": {
+      "title": "Report Review & Annotation",
+      "student": "Student:",
+      "submitted": "Submitted:",
+      "loadingReport": "Loading report...",
+      "reportNotFound": "If this persists, the report may not exist"
+    },
+    "evaluationMode": {
+      "title": "Evaluation Mode",
+      "description": "You're evaluating this student's report. Select any text to highlight key sections or add comments. Your annotations help provide constructive feedback and assess the report quality.",
+      "instructions": "Select any text in the report below to highlight important sections or add comments. Your annotations will appear in the sidebar."
+    },
+    "feedback": {
+      "overallFeedback": "Overall Feedback",
+      "overallFeedbackPlaceholder": "Provide overall feedback on the student's report...",
+      "reportStatus": "Report Status",
+      "chooseStatus": "Choose the final status for this report after your review:",
+      "status": "Status",
+      "reasonFor": "Reason for {action}",
+      "reasonPlaceholder": "Please explain why this report is being {status}...",
+      "flaggingHelp": "Flagging a report indicates issues that need resolution before acceptance.",
+      "rejectionHelp": "Please provide specific reasons why this report does not meet requirements.",
+      "facultyFeedback": "Faculty Feedback",
+      "reason": "Reason"
+    },
+    "statuses": {
+      "pending": "PENDING",
+      "accepted": "ACCEPTED", 
+      "rejected": "REJECTED",
+      "flagged": "FLAGGED",
+      "reviewed": "REVIEWED"
+    },
+    "statusMessages": {
+      "pendingMessage": "Report will remain under review",
+      "acceptedMessage": "Report will be marked as accepted",
+      "rejectedMessage": "Report will be returned to student with feedback",
+      "flaggedMessage": "Report will be flagged for specific issues"
+    },
+    "actions": {
+      "saving": "Saving...",
+      "saved": "Saved!",
+      "saveReview": "Save Review",
+      "submitReview": "Submit Review",
+      "flagging": "Flagging",
+      "rejecting": "Rejecting"
+    },
+    "alerts": {
+      "reasonRequired": "Please provide a reason for flagging or rejecting the report."
+    }
+  },
+  "reportViewer": {
+    "annotations": {
+      "title": "Annotations",
+      "noAnnotations": "No annotations yet. Select text to add highlights or comments.",
+      "deleteTooltip": "Delete annotation"
+    },
+    "annotationTypes": {
+      "comment": "Comment",
+      "highlight": "Highlight"
+    },
+    "commentForm": {
+      "title": "Add Comment",
+      "placeholder": "Add your comment here...",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "highlightForm": {
+      "title": "Select Highlight Color",
+      "preview": "Preview:",
+      "cancel": "Cancel"
+    },
+    "colors": {
+      "yellow": "Yellow",
+      "green": "Green", 
+      "pink": "Pink",
+      "blue": "Blue"
+    },
+    "errors": {
+      "noTextFound": "No text found for this highlight"
+    },
+    "scadForm": {
+      "title": "State your reason for flagging/rejecting this report",
+      "placeholder": "Enter your reason here...",
+      "submitButton": "Submit Reason",
+      "successMessage": "Reason submitted!"
+    }
+  },
   "internship": {
     "videoSidebar": {
       "defaultTitle": "Internship Requirements",

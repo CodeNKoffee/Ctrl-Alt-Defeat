@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHighlighter, faSave, faTimes, faTrash, faPalette, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
@@ -18,6 +20,8 @@ import CustomButton from './shared/CustomButton';
  * - Saving annotations
  */
 export default function ReportViewer({ report, userType = "faculty" }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   // Sample report data if none provided
   const sampleReport = {
     title: 'Frontend Development Internship Report',
@@ -42,10 +46,10 @@ export default function ReportViewer({ report, userType = "faculty" }) {
 
   // Highlight color options
   const highlightColors = [
-    { name: 'Yellow', value: '#FFFBC9' }, // Pastel yellow
-    { name: 'Green', value: '#D1F5D3' },  // Pastel green
-    { name: 'Pink', value: '#FFDBF2' },   // Pastel pink
-    { name: 'Blue', value: '#D4F1F9' }    // Pastel blue
+    { name: safeT('reportViewer.colors.yellow'), value: '#FFFBC9' }, // Pastel yellow
+    { name: safeT('reportViewer.colors.green'), value: '#D1F5D3' },  // Pastel green
+    { name: safeT('reportViewer.colors.pink'), value: '#FFDBF2' },   // Pastel pink
+    { name: safeT('reportViewer.colors.blue'), value: '#D4F1F9' }    // Pastel blue
   ];
 
   // Current selected color
@@ -445,22 +449,22 @@ export default function ReportViewer({ report, userType = "faculty" }) {
         {/* Comment/Highlight forms (hide for read-only) */}
         {!isReadOnly && isCommenting && (
           <div className="comment-form">
-            <h3>Add Comment</h3>
+            <h3>{safeT('reportViewer.commentForm.title')}</h3>
             <p className="selected-text">"{selectedText}"</p>
             <textarea
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
-              placeholder="Add your comment here..."
+              placeholder={safeT('reportViewer.commentForm.placeholder')}
               className="comment-input"
             />
             <div className="comment-actions">
               <button onClick={handleSaveComment} className="save-button">
                 <FontAwesomeIcon icon={faSave} />
-                <span>Save</span>
+                <span>{safeT('reportViewer.commentForm.save')}</span>
               </button>
               <button onClick={handleCancelComment} className="cancel-button">
                 <FontAwesomeIcon icon={faTimes} />
-                <span>Cancel</span>
+                <span>{safeT('reportViewer.commentForm.cancel')}</span>
               </button>
             </div>
           </div>
@@ -468,7 +472,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
 
         {!isReadOnly && isSelectingHighlightColor && (
           <div className="highlight-color-form">
-            <h3>Select Highlight Color</h3>
+            <h3>{safeT('reportViewer.highlightForm.title')}</h3>
             <p className="selected-text">"{selectedText}"</p>
             <div className="color-options">
               {highlightColors.map((color, index) => (
@@ -485,7 +489,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
               ))}
             </div>
             <div className="preview-section">
-              <span>Preview: </span>
+              <span>{safeT('reportViewer.highlightForm.preview')} </span>
               <span className="highlight-preview" style={{ backgroundColor: selectedColor }}>
                 {selectedText.length > 30 ? selectedText.substring(0, 30) + '...' : selectedText}
               </span>
@@ -493,7 +497,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
             <div className="comment-actions">
               <button onClick={handleCancelHighlightColor} className="cancel-button">
                 <FontAwesomeIcon icon={faTimes} />
-                <span>Cancel</span>
+                <span>{safeT('reportViewer.highlightForm.cancel')}</span>
               </button>
             </div>
           </div>
@@ -502,10 +506,10 @@ export default function ReportViewer({ report, userType = "faculty" }) {
         {/* SCAD reason input for flagged/rejected */}
         {userType === "scad" && (reportData.status === 'flagged' || reportData.status === 'rejected') && (
           <div className="mt-8 p-4 bg-metallica-blue-50 rounded-lg border border-metallica-blue-200">
-            <h3 className="text-metallica-blue-800 font-semibold mb-2">State your reason for flagging/rejecting this report</h3>
+            <h3 className="text-metallica-blue-800 font-semibold mb-2">{safeT('reportViewer.scadForm.title')}</h3>
             <textarea
               className="w-full p-2 border border-metallica-blue-200 rounded mb-2"
-              placeholder="Enter your reason here..."
+              placeholder={safeT('reportViewer.scadForm.placeholder')}
               value={scadReason || ''}
               onChange={e => setScadReason(e.target.value)}
             />
@@ -517,11 +521,11 @@ export default function ReportViewer({ report, userType = "faculty" }) {
                 setTimeout(() => setScadReasonSubmitted(false), 2000);
               }}
             >
-              Submit Reason
+              {safeT('reportViewer.scadForm.submitButton')}
             </button>
             {scadReasonSubmitted && (
               <div className="mt-3 text-green-700 font-semibold text-center">
-                Reason submitted!
+                {safeT('reportViewer.scadForm.successMessage')}
               </div>
             )}
           </div>
@@ -531,7 +535,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
       {showAnnotations && !hideAnnotations && (
         <div className="annotations-sidebar">
           <div className="annotations-header">
-            <h3>Annotations</h3>
+            <h3>{safeT('reportViewer.annotations.title')}</h3>
             <span className="annotation-count">{annotations.length}</span>
           </div>
 
@@ -546,7 +550,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
                   <div className="annotation-header">
                     <span className="annotation-type">
                       <FontAwesomeIcon icon={annotation.type === 'comment' ? faComment : faHighlighter} />
-                      {annotation.type === 'comment' ? 'Comment' : 'Highlight'}
+                      {annotation.type === 'comment' ? safeT('reportViewer.annotationTypes.comment') : safeT('reportViewer.annotationTypes.highlight')}
                     </span>
                     {/* Hide delete button in read-only mode */}
                     {!isReadOnly && (
@@ -556,7 +560,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
                           handleDeleteAnnotation(annotation.id);
                         }}
                         className="delete-button"
-                        title="Delete annotation"
+                        title={safeT('reportViewer.annotations.deleteTooltip')}
                       >
                         <FontAwesomeIcon icon={faTrash} />
                       </button>
@@ -566,7 +570,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
                     className="annotation-text"
                     style={annotation.type === 'highlight' ? { backgroundColor: annotation.color } : {}}
                   >
-                    {annotation.text ? `"${annotation.text}"` : <em>No text found for this highlight</em>}
+                    {annotation.text ? `"${annotation.text}"` : <em>{safeT('reportViewer.errors.noTextFound')}</em>}
                   </div>
                   {annotation.type === 'comment' && (
                     <div className="annotation-comment">{annotation.comment}</div>
@@ -574,7 +578,7 @@ export default function ReportViewer({ report, userType = "faculty" }) {
                 </div>
               ))
             ) : (
-              <p className="no-annotations">No annotations yet. Select text to add highlights or comments.</p>
+              <p className="no-annotations">{safeT('reportViewer.annotations.noAnnotations')}</p>
             )}
           </div>
         </div>

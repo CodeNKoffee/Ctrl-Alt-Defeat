@@ -469,6 +469,97 @@
       }
     }
   },
+  "facultyReportViewer": {
+    "navigation": {
+      "backToReports": "العودة إلى التقارير"
+    },
+    "header": {
+      "title": "مراجعة التقرير والتعليق",
+      "student": "الطالب:",
+      "submitted": "تم التقديم:",
+      "loadingReport": "جارٍ تحميل التقرير...",
+      "reportNotFound": "إذا استمر هذا، قد لا يكون التقرير موجوداً"
+    },
+    "evaluationMode": {
+      "title": "وضع التقييم",
+      "description": "أنت تقيم تقرير هذا الطالب. حدد أي نص لتمييز الأقسام الهامة أو إضافة تعليقات. تساعد تعليقاتك في تقديم ملاحظات بناءة وتقييم جودة التقرير.",
+      "instructions": "حدد أي نص في التقرير أدناه لتمييز الأقسام المهمة أو إضافة تعليقات. ستظهر تعليقاتك في الشريط الجانبي."
+    },
+    "feedback": {
+      "overallFeedback": "التغذية الراجعة الإجمالية",
+      "overallFeedbackPlaceholder": "قدم تغذية راجعة شاملة حول تقرير الطالب...",
+      "reportStatus": "حالة التقرير",
+      "chooseStatus": "اختر الحالة النهائية لهذا التقرير بعد مراجعتك:",
+      "status": "الحالة",
+      "reasonFor": "سبب {action}",
+      "reasonPlaceholder": "يرجى توضيح سبب {status} هذا التقرير...",
+      "flaggingHelp": "وضع علامة على التقرير يشير إلى مشاكل تحتاج حل قبل القبول.",
+      "rejectionHelp": "يرجى تقديم أسباب محددة لعدم استيفاء هذا التقرير للمتطلبات.",
+      "facultyFeedback": "ملاحظات الكلية",
+      "reason": "السبب"
+    },
+    "statuses": {
+      "pending": "معلق",
+      "accepted": "مقبول",
+      "rejected": "مرفوض",
+      "flagged": "معلم",
+      "reviewed": "تمت المراجعة"
+    },
+    "statusMessages": {
+      "pendingMessage": "سيبقى التقرير قيد المراجعة",
+      "acceptedMessage": "سيتم وضع علامة على التقرير كمقبول",
+      "rejectedMessage": "سيتم إرجاع التقرير للطالب مع التغذية الراجعة",
+      "flaggedMessage": "سيتم وضع علامة على التقرير لمشاكل محددة"
+    },
+    "actions": {
+      "saving": "جارٍ الحفظ...",
+      "saved": "تم الحفظ!",
+      "saveReview": "حفظ المراجعة",
+      "submitReview": "إرسال المراجعة",
+      "flagging": "وضع علامة",
+      "rejecting": "الرفض"
+    },
+    "alerts": {
+      "reasonRequired": "يرجى تقديم سبب لوضع علامة على التقرير أو رفضه."
+    }
+  },
+  "reportViewer": {
+    "annotations": {
+      "title": "التعليقات التوضيحية",
+      "noAnnotations": "لا توجد تعليقات توضيحية بعد. حدد النص لإضافة تمييزات أو تعليقات.",
+      "deleteTooltip": "حذف التعليق التوضيحي"
+    },
+    "annotationTypes": {
+      "comment": "تعليق",
+      "highlight": "تمييز"
+    },
+    "commentForm": {
+      "title": "إضافة تعليق",
+      "placeholder": "أضف تعليقك هنا...",
+      "save": "حفظ",
+      "cancel": "إلغاء"
+    },
+    "highlightForm": {
+      "title": "اختيار لون التمييز",
+      "preview": "معاينة:",
+      "cancel": "إلغاء"
+    },
+    "colors": {
+      "yellow": "أصفر",
+      "green": "أخضر",
+      "pink": "وردي",
+      "blue": "أزرق"
+    },
+    "errors": {
+      "noTextFound": "لم يتم العثور على نص لهذا التمييز"
+    },
+    "scadForm": {
+      "title": "اذكر سبب وضع علامة/رفض هذا التقرير",
+      "placeholder": "أدخل سببك هنا...",
+      "submitButton": "إرسال السبب",
+      "successMessage": "تم إرسال السبب!"
+    }
+  },
   "internship": {
     "videoSidebar": {
       "defaultTitle": "متطلبات التدريب",

@@ -469,6 +469,97 @@
       }
     }
   },
+  "facultyReportViewer": {
+    "navigation": {
+      "backToReports": "Zurück zu Berichten"
+    },
+    "header": {
+      "title": "Bericht Review & Annotation",
+      "student": "Studentin:",
+      "submitted": "Eingereicht:",
+      "loadingReport": "Bericht wird geladen...",
+      "reportNotFound": "Falls dies anhält, existiert der Bericht möglicherweise nicht"
+    },
+    "evaluationMode": {
+      "title": "Bewertungsmodus",
+      "description": "Sie bewerten den Bericht dieses Studenten. Wählen Sie beliebigen Text aus, um wichtige Abschnitte zu markieren oder Kommentare hinzuzufügen. Ihre Anmerkungen helfen dabei, konstruktives Feedback zu geben und die Berichtsqualität zu bewerten.",
+      "instructions": "Wählen Sie beliebigen Text im folgenden Bericht aus, um wichtige Abschnitte zu markieren oder Kommentare hinzuzufügen. Ihre Anmerkungen erscheinen in der Seitenleiste."
+    },
+    "feedback": {
+      "overallFeedback": "Gesamtfeedback",
+      "overallFeedbackPlaceholder": "Geben Sie Gesamtfeedback zum Bericht des Studenten...",
+      "reportStatus": "Berichtstatus",
+      "chooseStatus": "Wählen Sie den endgültigen Status für diesen Bericht nach Ihrer Überprüfung:",
+      "status": "Status",
+      "reasonFor": "Grund für {action}",
+      "reasonPlaceholder": "Bitte erklären Sie, warum dieser Bericht {status} wird...",
+      "flaggingHelp": "Das Markieren eines Berichts zeigt Probleme an, die vor der Annahme gelöst werden müssen.",
+      "rejectionHelp": "Bitte geben Sie spezifische Gründe an, warum dieser Bericht die Anforderungen nicht erfüllt.",
+      "facultyFeedback": "Fakultätsfeedback",
+      "reason": "Grund"
+    },
+    "statuses": {
+      "pending": "AUSSTEHEND",
+      "accepted": "ANGENOMMEN",
+      "rejected": "ABGELEHNT",
+      "flagged": "MARKIERT",
+      "reviewed": "ÜBERPRÜFT"
+    },
+    "statusMessages": {
+      "pendingMessage": "Bericht bleibt unter Überprüfung",
+      "acceptedMessage": "Bericht wird als angenommen markiert",
+      "rejectedMessage": "Bericht wird mit Feedback an den Studenten zurückgegeben",
+      "flaggedMessage": "Bericht wird für spezifische Probleme markiert"
+    },
+    "actions": {
+      "saving": "Wird gespeichert...",
+      "saved": "Gespeichert!",
+      "saveReview": "Überprüfung Speichern",
+      "submitReview": "Überprüfung Einreichen",
+      "flagging": "Markierung",
+      "rejecting": "Ablehnung"
+    },
+    "alerts": {
+      "reasonRequired": "Bitte geben Sie einen Grund für die Markierung oder Ablehnung des Berichts an."
+    }
+  },
+  "reportViewer": {
+    "annotations": {
+      "title": "Anmerkungen",
+      "noAnnotations": "Noch keine Anmerkungen. Wählen Sie Text aus, um Hervorhebungen oder Kommentare hinzuzufügen.",
+      "deleteTooltip": "Anmerkung löschen"
+    },
+    "annotationTypes": {
+      "comment": "Kommentar",
+      "highlight": "Hervorhebung"
+    },
+    "commentForm": {
+      "title": "Kommentar hinzufügen",
+      "placeholder": "Fügen Sie hier Ihren Kommentar hinzu...",
+      "save": "Speichern",
+      "cancel": "Abbrechen"
+    },
+    "highlightForm": {
+      "title": "Hervorhebungsfarbe auswählen",
+      "preview": "Vorschau:",
+      "cancel": "Abbrechen"
+    },
+    "colors": {
+      "yellow": "Gelb",
+      "green": "Grün",
+      "pink": "Rosa",
+      "blue": "Blau"
+    },
+    "errors": {
+      "noTextFound": "Kein Text für diese Hervorhebung gefunden"
+    },
+    "scadForm": {
+      "title": "Geben Sie Ihren Grund für die Markierung/Ablehnung dieses Berichts an",
+      "placeholder": "Geben Sie hier Ihren Grund ein...",
+      "submitButton": "Grund übermitteln",
+      "successMessage": "Grund übermittelt!"
+    }
+  },
   "internship": {
     "videoSidebar": {
       "defaultTitle": "Praktikumsanforderungen",
