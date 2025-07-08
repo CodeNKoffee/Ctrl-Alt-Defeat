@@ -219,11 +219,14 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
           <ApplicationsFilterBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
-            searchPlaceholder={`Search ${activeTab === 'submitted' ? 'submitted' : 'draft'} evaluations by student, company or supervisor...`}
+            searchPlaceholder={activeTab === 'submitted'
+              ? safeT('faculty.evaluationsDashboard.searchPlaceholder.submitted')
+              : safeT('faculty.evaluationsDashboard.searchPlaceholder.draft')
+            }
             selectedStatus={activeTab}
             onStatusChange={setActiveTab}
             // customFilterSections={customFilterSections}
-            primaryFilterName="Filters"
+            primaryFilterName={safeT('faculty.evaluationsDashboard.filterLabel')}
           />
         }
 

@@ -126,6 +126,9 @@ function FacultyDashboardView() {
 }
 
 function StudentEvalsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   // Define the Evaluations Info Card
   const StudentEvaluationsInfoCard = () => (
     <div className="w-full">
@@ -144,40 +147,40 @@ function StudentEvalsView() {
 
           <div className="text-left w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              STUDENT EVALUATIONS
+              {safeT('faculty.dashboard.studentEvaluations.badge')}
             </div>
             <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
-              Review Internship Evaluation Reports
+              {safeT('faculty.dashboard.studentEvaluations.title')}
             </h2>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">
-                Browse and access evaluations submitted by students regarding their internship experiences. View ratings, company information, and detailed feedback per student.
+                {safeT('faculty.dashboard.studentEvaluations.description')}
               </p>
 
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-semibold">FILTER</span>
-                      <h3 className="font-medium text-blue-700">Search & Sort</h3>
+                      <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('faculty.dashboard.studentEvaluations.features.filterTitle')}</span>
+                      <h3 className="font-medium text-blue-700">{safeT('faculty.dashboard.studentEvaluations.features.searchSortTitle')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Easily search evaluations by student name, company, or supervisor to quickly access relevant reports.</p>
+                    <p className="text-sm text-gray-600">{safeT('faculty.dashboard.studentEvaluations.features.searchSortDescription')}</p>
                   </div>
 
                   <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-[#146C80] text-white px-3 py-0.5 rounded-full text-xs font-semibold shadow-sm">See more</span>
-                      <h3 className="font-medium text-[#146C80]">Full Evaluation Report</h3>
+                      <span className="bg-[#146C80] text-white px-3 py-0.5 rounded-full text-xs font-semibold shadow-sm">{safeT('faculty.dashboard.studentEvaluations.features.seeMoreButton')}</span>
+                      <h3 className="font-medium text-[#146C80]">{safeT('faculty.dashboard.studentEvaluations.features.fullReportTitle')}</h3>
                     </div>
                     <p className="text-sm text-gray-600">
-                      View the student's full evaluation including their feedback, company details, main supervisor, and internship duration.
+                      {safeT('faculty.dashboard.studentEvaluations.features.fullReportDescription')}
                     </p>
                   </div>
                 </div>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                These evaluations contribute to enhancing internship quality and guide future students in making informed choices.
+                {safeT('faculty.dashboard.studentEvaluations.qualityNote')}
               </p>
             </div>
           </div>
@@ -188,7 +191,7 @@ function StudentEvalsView() {
 
   return (
     <div className="min-h-screen bg-[#f4fafd] px-6 py-10">
-      <ViewSection title="STUDENT EVALUATIONS">
+      <ViewSection title={safeT('faculty.dashboard.studentEvaluations.badge')}>
         <StudentEvaluationsInfoCard />
       </ViewSection>
       <div>

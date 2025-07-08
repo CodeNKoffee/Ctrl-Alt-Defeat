@@ -421,6 +421,20 @@
           "flagReports": "Flag reports that require additional attention"
         },
         "pendingReports": "{count} reports are currently awaiting your review."
+      },
+      "studentEvaluations": {
+        "badge": "STUDENT EVALUATIONS",
+        "title": "Review Internship Evaluation Reports",
+        "description": "Browse and access evaluations submitted by students regarding their internship experiences. View ratings, company information, and detailed feedback per student.",
+        "features": {
+          "filterTitle": "FILTER",
+          "searchSortTitle": "Search & Sort",
+          "searchSortDescription": "Easily search evaluations by student name, company, or supervisor to quickly access relevant reports.",
+          "seeMoreButton": "See more",
+          "fullReportTitle": "Full Evaluation Report",
+          "fullReportDescription": "View the student's full evaluation including their feedback, company details, main supervisor, and internship duration."
+        },
+        "qualityNote": "These evaluations contribute to enhancing internship quality and guide future students in making informed choices."
       }
     },
     "reports": {
@@ -467,6 +481,13 @@
           "clearAllFilters": "Clear all filters"
         }
       }
+    },
+    "evaluationsDashboard": {
+      "searchPlaceholder": {
+        "submitted": "Search submitted evaluations by student, company or supervisor...",
+        "draft": "Search draft evaluations by student, company or supervisor..."
+      },
+      "filterLabel": "Filters"
     }
   },
   "facultyReportViewer": {
@@ -634,6 +655,12 @@
       "closeModal": "Close modal"
     }
   },
+  "deleteTypes": {
+    "evaluation": "evaluation",
+    "evaluationDraft": "evaluation draft",
+    "post": "post",
+    "workshop": "workshop"
+  },
   "common": {
     "noResults": {
       "notFound": "No {type} found matching your criteria",
@@ -647,6 +674,26 @@
       "noWorkshops": "No workshops found matching your criteria",
       "noStudents": "No students found matching your criteria",
       "noAssessments": "No assessments found matching your criteria"
+    }
+  },
+  "evaluation": {
+    "card": {
+      "seeMore": "See More",
+      "hide": "Hide",
+      "draft": "Draft",
+      "editTooltip": "Edit evaluation",
+      "deleteTooltip": "Delete evaluation"
+    },
+    "details": {
+      "supervisorName": "Supervisor Name:",
+      "supervisorEmail": "Supervisor Email:",
+      "tasks": "Tasks:",
+      "workEnvironment": "Work Environment:",
+      "recommendToOthers": "Recommend to Others:",
+      "internshipStart": "Internship Start:",
+      "internshipEnd": "Internship End:",
+      "yes": "Yes",
+      "no": "No"
     }
   }
 }

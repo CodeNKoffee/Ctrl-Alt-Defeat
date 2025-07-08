@@ -7,6 +7,8 @@ import EvaluationModal from "./EvaluationModal";
 import DeleteTileConfirmation from "./DeleteTileConfirmation";
 import { mockCompanyReviews } from "../../constants/mockData";
 import CustomButton from "./shared/CustomButton";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '../lib/translationUtils';
 
 export default function Evaluation({
   evaluation,
@@ -17,6 +19,9 @@ export default function Evaluation({
   onUpdate,
   onDelete
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [localEvaluation, setLocalEvaluation] = useState(evaluation);
@@ -61,14 +66,14 @@ export default function Evaluation({
           >
             <button
               onClick={handleEdit}
-              title="Edit evaluation"
+              title={safeT('evaluation.card.editTooltip')}
               className="text-[#3298BA] hover:text-[#65bedc] p-1"
             >
               <FontAwesomeIcon icon={faEdit} className="w-4 h-4" />
             </button>
             <button
               onClick={handleDelete}
-              title="Delete evaluation"
+              title={safeT('evaluation.card.deleteTooltip')}
               className="text-red-500 hover:text-red-700 p-1"
             >
               <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
@@ -78,7 +83,7 @@ export default function Evaluation({
 
         {isDraft && stakeholder === "student" && (
           <div className="absolute top-0 left-0 bg-amber-100 text-amber-800 px-2 py-1 text-xs font-medium z-40 rounded-tl-xl rounded-br-xl">
-            Draft
+            {safeT('evaluation.card.draft')}
           </div>
         )}
 
@@ -134,7 +139,7 @@ export default function Evaluation({
           aria-expanded={expanded}
           aria-controls={expanded ? 'evaluation-details' : undefined}
         >
-          {expanded ? "Hide" : "See More"}
+          {expanded ? safeT('evaluation.card.hide') : safeT('evaluation.card.seeMore')}
         </button>
         {expanded && (
           <div
@@ -144,13 +149,13 @@ export default function Evaluation({
             role="region"
             aria-label="Evaluation details"
           >
-            <div><span className="font-semibold">Supervisor Name:</span> {localEvaluation.supervisorName}</div>
-            <div><span className="font-semibold">Supervisor Email:</span> {localEvaluation.supervisorEmail}</div>
-            <div><span className="font-semibold">Tasks:</span> {localEvaluation.tasks}</div>
-            <div><span className="font-semibold">Work Environment:</span> {localEvaluation.environment}</div>
-            <div><span className="font-semibold">Recommend to Others:</span> <span className={localEvaluation.recommend === "yes" ? "text-green-600 font-medium" : "text-red-600 font-medium"}>{localEvaluation.recommend === "yes" ? "Yes" : "No"}</span></div>
-            <div><span className="font-semibold">Internship Start:</span> {localEvaluation.startDate}</div>
-            <div><span className="font-semibold">Internship End:</span> {localEvaluation.endDate}</div>
+            <div><span className="font-semibold">{safeT('evaluation.details.supervisorName')}</span> {localEvaluation.supervisorName}</div>
+            <div><span className="font-semibold">{safeT('evaluation.details.supervisorEmail')}</span> {localEvaluation.supervisorEmail}</div>
+            <div><span className="font-semibold">{safeT('evaluation.details.tasks')}</span> {localEvaluation.tasks}</div>
+            <div><span className="font-semibold">{safeT('evaluation.details.workEnvironment')}</span> {localEvaluation.environment}</div>
+            <div><span className="font-semibold">{safeT('evaluation.details.recommendToOthers')}</span> <span className={localEvaluation.recommend === "yes" ? "text-green-600 font-medium" : "text-red-600 font-medium"}>{localEvaluation.recommend === "yes" ? safeT('evaluation.details.yes') : safeT('evaluation.details.no')}</span></div>
+            <div><span className="font-semibold">{safeT('evaluation.details.internshipStart')}</span> {localEvaluation.startDate}</div>
+            <div><span className="font-semibold">{safeT('evaluation.details.internshipEnd')}</span> {localEvaluation.endDate}</div>
           </div>
         )}
       </div>
@@ -169,7 +174,7 @@ export default function Evaluation({
       {/* Delete Confirmation Modal using DeleteTileConfirmation */}
       {showDeleteConfirm && (
         <DeleteTileConfirmation
-          type="evaluation draft"
+          type={safeT('deleteTypes.evaluationDraft')}
           onConfirm={confirmDelete}
           onCancel={() => setShowDeleteConfirm(false)}
         />

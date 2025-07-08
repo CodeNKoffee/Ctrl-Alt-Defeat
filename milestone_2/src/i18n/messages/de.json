@@ -421,6 +421,20 @@
           "flagReports": "Berichte markieren, die zusätzliche Aufmerksamkeit erfordern"
         },
         "pendingReports": "{count} Berichte warten derzeit auf Ihre Überprüfung."
+      },
+      "studentEvaluations": {
+        "badge": "STUDENTEN BEWERTUNGEN",
+        "title": "Praktikums-Bewertungsberichte überprüfen",
+        "description": "Durchsuchen und greifen Sie auf Bewertungen zu, die von Studenten zu ihren Praktikumserfahrungen eingereicht wurden. Sehen Sie sich Bewertungen, Unternehmensinformationen und detailliertes Feedback pro Student an.",
+        "features": {
+          "filterTitle": "FILTER",
+          "searchSortTitle": "Suchen & Sortieren",
+          "searchSortDescription": "Durchsuchen Sie Bewertungen einfach nach Studentenname, Unternehmen oder Betreuer, um schnell auf relevante Berichte zuzugreifen.",
+          "seeMoreButton": "Mehr sehen",
+          "fullReportTitle": "Vollständiger Bewertungsbericht",
+          "fullReportDescription": "Sehen Sie sich die vollständige Bewertung des Studenten an, einschließlich seines Feedbacks, der Unternehmensdetails, des Hauptbetreuers und der Praktikumsdauer."
+        },
+        "qualityNote": "Diese Bewertungen tragen zur Verbesserung der Praktikumsqualität bei und helfen zukünftigen Studenten bei der Entscheidungsfindung."
       }
     },
     "reports": {
@@ -467,6 +481,13 @@
           "clearAllFilters": "Alle Filter löschen"
         }
       }
+    },
+    "evaluationsDashboard": {
+      "searchPlaceholder": {
+        "submitted": "Durchsuche eingereichte Bewertungen nach Student, Unternehmen oder Betreuer...",
+        "draft": "Durchsuche Entwurfs-Bewertungen nach Student, Unternehmen oder Betreuer..."
+      },
+      "filterLabel": "Filter"
     }
   },
   "facultyReportViewer": {
@@ -634,6 +655,12 @@
       "closeModal": "Modal schließen"
     }
   },
+  "deleteTypes": {
+    "evaluation": "Bewertung",
+    "evaluationDraft": "Bewertungsentwurf",
+    "post": "Beitrag",
+    "workshop": "Workshop"
+  },
   "common": {
     "noResults": {
       "notFound": "Keine {type} gefunden, die Ihren Kriterien entsprechen",
@@ -647,6 +674,26 @@
       "noWorkshops": "Keine Workshops gefunden, die Ihren Kriterien entsprechen",
       "noStudents": "Keine Studenten gefunden, die Ihren Kriterien entsprechen",
       "noAssessments": "Keine Bewertungen gefunden, die Ihren Kriterien entsprechen"
+    }
+  },
+  "evaluation": {
+    "card": {
+      "seeMore": "Mehr sehen",
+      "hide": "Ausblenden",
+      "draft": "Entwurf",
+      "editTooltip": "Bewertung bearbeiten",
+      "deleteTooltip": "Bewertung löschen"
+    },
+    "details": {
+      "supervisorName": "Name des Betreuers:",
+      "supervisorEmail": "E-Mail des Betreuers:",
+      "tasks": "Aufgaben:",
+      "workEnvironment": "Arbeitsumfeld:",
+      "recommendToOthers": "Anderen empfehlen:",
+      "internshipStart": "Praktikumsbeginn:",
+      "internshipEnd": "Praktikumsende:",
+      "yes": "Ja",
+      "no": "Nein"
     }
   }
 }
