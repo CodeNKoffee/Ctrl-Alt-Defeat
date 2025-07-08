@@ -1011,6 +1011,7 @@
   "student": {
     "dashboard": {
       "searchPlaceholder": "Search recommended internships...",
+      "browseInternshipsSearchPlaceholder": "Search internships by job title or company name ...",
       "personalizedCard": {
         "badge": "PERSONALIZED",
         "title": "Your Personalized Internship Matches",
@@ -1024,12 +1025,32 @@
         },
         "footer": "Take time to explore these tailored suggestions—they represent opportunities where your specific talents and interests could truly shine."
       },
+      "browseInternshipsPersonalizedCard": {
+        "title": "Browse Career-Building Internships",
+        "description": "Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.",
+        "badge": "OPPORTUNITIES",
+        "howItWorks": {
+          "title": "Why These Opportunities Matter:",
+          "potential": "Potential for academic credit and professional references",
+          "networking": "Networking connections that could lead to full-time employment",
+          "portfolio": "Portfolio-building projects to showcase your skills"
+        },
+        "footer": "Remember to watch our informational video \"What Makes Your Internship Count\" to learn how to maximize your internship experience!"
+      },
       "statusPills": {
         "industryMatch": "INDUSTRY MATCH",
         "recommendedByPastInterns": "RECOMMENDED BY PAST INTERNS",
-        "jobInterestMatch": "JOB INTEREST MATCH"
+        "jobInterestMatch": "JOB INTEREST MATCH",
+        "all": "ALL",
+        "recommended": "RECOMMENDED"
       },
       "filterSections": {
+        "fullTime": "Full-time",
+        "partTime": "Part-time",
+        "contract": "Contract",
+        "remote": "Remote",
+        "hybrid": "Hybrid",
+        "onSite": "On-site",
         "paid": "Paid",
         "unpaid": "Unpaid",
         "jobType": "Job Type",
@@ -1037,7 +1058,28 @@
         "paymentStatus": "Payment Status",
         "allJobTypes": "All Job Types",
         "allJobSettings": "All Job Settings",
-        "allPaymentTypes": "All Payment Types"
+        "allPaymentTypes": "All Payment Types",
+        "technology": "Technology",
+        "marketing": "Marketing",
+        "design": "Design",
+        "healthcare": "Healthcare",
+        "3 months": "3 months",
+        "6 months": "6 months",
+        "12 months": "12 months",
+        "allDurations": "All Durations",
+        "allIndustries": "All Industries",
+        "allCompanies": "All Companies",
+        "allContent": "All Content",
+        "recommended": "Recommended",
+        "applied": "Applied",
+        "current": "Current",
+        "company": "Company",
+        "industry": "Industry",
+        "position": "Position",
+        "duration": "Duration",
+        "allInternships": "All Internships",
+        "allPositions": "All Positions",
+        "contentType": "Content Type"
       }
     }
   }

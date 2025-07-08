@@ -114,14 +114,22 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
   const filterSections = [
     {
       name: safeT('student.dashboard.filterSections.jobType'),
-      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      options: [
+        { id: 'fullTime', title: safeT('student.dashboard.filterSections.fullTime') },
+        { id: 'partTime', title: safeT('student.dashboard.filterSections.partTime') },
+        { id: 'contract', title: safeT('student.dashboard.filterSections.contract') },
+      ],
       selected: filters.jobType || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
       resetLabel: safeT('student.dashboard.filterSections.allJobTypes'),
     },
     {
       name: safeT('student.dashboard.filterSections.jobSetting'),
-      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      options: [
+        { id: 'remote', title: safeT('student.dashboard.filterSections.remote') },
+        { id: 'hybrid', title: safeT('student.dashboard.filterSections.hybrid') },
+        { id: 'onSite', title: safeT('student.dashboard.filterSections.onSite') },
+      ],
       selected: filters.jobSetting || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
       resetLabel: safeT('student.dashboard.filterSections.allJobSettings'),
@@ -262,6 +270,8 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
 
 // Using the actual page components for each view
 function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [filters, setFilters] = useState({
     industry: '',
     duration: '',
@@ -454,69 +464,87 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 
   const filterSections = [
     {
-      name: 'Content Type',
+      name: safeT('student.dashboard.filterSections.contentType'),
       options: [
-        { id: 'all', title: 'All Internships' },
-        { id: 'recommended', title: 'Recommended' }
+        // { id: 'all', title: safeT('student.dashboard.filterSections.allInternships') },
+        { id: 'recommended', title: safeT('student.dashboard.filterSections.recommended') }
       ],
       selected: filters.contentType,
       onChange: (value) => handleFilterChange('contentType', value),
-      resetLabel: 'All Content',
+      resetLabel: safeT('student.dashboard.filterSections.allContent'),
     },
     {
-      name: 'Position',
+      name: safeT('student.dashboard.filterSections.position'),
       options: uniquePositions.map(pos => ({ id: pos, title: pos })),
       selected: filters.position || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, position: value === 'all' ? '' : value })),
-      resetLabel: 'All Positions',
+      resetLabel: safeT('student.dashboard.filterSections.allPositions'),
     },
     {
-      name: 'Job Type',
-      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      name: safeT('student.dashboard.filterSections.jobType'),
+      options: [
+        { id: 'fullTime', title: safeT('student.dashboard.filterSections.fullTime') },
+        { id: 'partTime', title: safeT('student.dashboard.filterSections.partTime') },
+        { id: 'contract', title: safeT('student.dashboard.filterSections.contract') },
+      ],
       selected: filters.jobType || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
-      resetLabel: 'All Job Types',
+      resetLabel: safeT('student.dashboard.filterSections.allJobTypes'),
     },
     {
-      name: 'Job Setting',
-      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      name: safeT('student.dashboard.filterSections.jobSetting'),
+      options: [
+        { id: 'remote', title: safeT('student.dashboard.filterSections.remote') },
+        { id: 'hybrid', title: safeT('student.dashboard.filterSections.hybrid') },
+        { id: 'onSite', title: safeT('student.dashboard.filterSections.onSite') },
+      ],
       selected: filters.jobSetting || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
-      resetLabel: 'All Job Settings',
+      resetLabel: safeT('student.dashboard.filterSections.allJobSettings'),
     },
     {
-      name: 'Company',
+      name: safeT('student.dashboard.filterSections.company'),
       options: uniqueCompanies.map(company => ({ id: company, title: company })),
       selected: filters.company || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, company: value === 'all' ? '' : value })),
-      resetLabel: 'All Companies',
+      resetLabel: safeT('student.dashboard.filterSections.allCompanies'),
     },
     {
-      name: 'Industry',
-      options: uniqueIndustries.map(ind => ({ id: ind, title: ind })),
+      name: safeT('student.dashboard.filterSections.industry'),
+      options: [
+        { id: 'technology', title: safeT('student.dashboard.filterSections.technology') },
+        { id: 'design', title: safeT('student.dashboard.filterSections.design') },
+        { id: 'marketing', title: safeT('student.dashboard.filterSections.marketing') },
+        { id: 'healthcare', title: safeT('student.dashboard.filterSections.healthcare') },
+      ],
       selected: filters.industry || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, industry: value === 'all' ? '' : value })),
       resetLabel: 'All Industries',
     },
     {
-      name: 'Duration',
-      options: uniqueDurations.map(dur => ({ id: dur, title: dur })),
+      name: safeT('student.dashboard.filterSections.duration'),
+      options: [
+        { id: '3 months', title: safeT('student.dashboard.filterSections.3 months') },
+        { id: '4 months', title: safeT('student.dashboard.filterSections.4 months') },
+        { id: '6 months', title: safeT('student.dashboard.filterSections.6 months') },
+        { id: '12 months', title: safeT('student.dashboard.filterSections.12 months') },
+      ],
       selected: filters.duration || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, duration: value === 'all' ? '' : value })),
-      resetLabel: 'All Durations',
+      resetLabel: safeT('student.dashboard.filterSections.allDurations'),
     },
     {
-      name: 'Payment Status',
+      name: safeT('student.dashboard.filterSections.paymentStatus'),
       options: [
-        { id: 'paid', title: 'Paid' },
-        { id: 'unpaid', title: 'Unpaid' }
+        { id: 'paid', title: safeT('student.dashboard.filterSections.paid') },
+        { id: 'unpaid', title: safeT('student.dashboard.filterSections.unpaid') }
       ],
       selected: filters.isPaid === true ? 'paid' : filters.isPaid === false ? 'unpaid' : 'all',
       onChange: (value) => setFilters(prev => ({
         ...prev,
         isPaid: value === 'paid' ? true : value === 'unpaid' ? false : null
       })),
-      resetLabel: 'All Payment Types',
+      resetLabel: safeT('student.dashboard.filterSections.allPaymentTypes'),
     }
   ];
 
@@ -535,36 +563,38 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              OPPORTUNITIES
+              {safeT('student.dashboard.browseInternshipsPersonalizedCard.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Browse Career-Building Internships</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.browseInternshipsPersonalizedCard.title')}
+            </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.</p>
+              <p className="mb-3">{safeT('student.dashboard.browseInternshipsPersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Why These Opportunities Matter:
+                  {safeT('student.dashboard.browseInternshipsPersonalizedCard.howItWorks.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Potential for academic credit and professional references</span>
+                    <span>{safeT('student.dashboard.browseInternshipsPersonalizedCard.howItWorks.potential')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Networking connections that could lead to full-time employment</span>
+                    <span>{safeT('student.dashboard.browseInternshipsPersonalizedCard.howItWorks.networking')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Portfolio-building projects to showcase your skills</span>
+                    <span>{safeT('student.dashboard.browseInternshipsPersonalizedCard.howItWorks.portfolio')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience!
+                {safeT('student.dashboard.browseInternshipsPersonalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -581,7 +611,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search internships by job title or company name ..."
+          searchPlaceholder={safeT('student.dashboard.browseInternshipsSearchPlaceholder')}
           onClearFilters={clearAllFilters}
           filterSections={filterSections}
           // showDatePicker={true}
@@ -604,7 +634,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
             >
               <span className={`w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
                 }`}></span>
-              ALL
+              {safeT('student.dashboard.statusPills.all')}
             </button>
             <button
               onClick={() => {
@@ -618,7 +648,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
             >
               <span className={`w-3 h-3 rounded-full mr-2 ${activeTab === 'recommended' ? 'bg-pink-800' : 'bg-gray-300'
                 }`}></span>
-              RECOMMENDED
+              {safeT('student.dashboard.statusPills.recommended')}
             </button>
           </div>
         </div>

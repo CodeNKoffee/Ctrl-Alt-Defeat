@@ -1013,6 +1013,7 @@
   "student": {
     "dashboard": {
       "searchPlaceholder": "Suche nach empfohlenen Praktikumsmöglichkeiten...",
+      "browseInternshipsSearchPlaceholder": "Suche nach Praktikumsmöglichkeiten nach Jobtitel oder Unternehmensname ...",
       "personalizedCard": {
         "badge": "PERSONALISIERT",
         "title": "Ihre personalisierten Praktikumsvorschläge",
@@ -1026,12 +1027,32 @@
         },
         "footer": "Nehmen Sie sich Zeit, diese maßgeschneiderten Vorschläge zu erkunden – sie repräsentieren Möglichkeiten, bei denen Ihre spezifischen Talente und Interessen wirklich glänzen können."
       },
+      "browseInternshipsPersonalizedCard": {
+        "title": "Praktikumsmöglichkeiten für Ihre Karriere",
+        "description": "Entdecken Sie praktikumsmöglichkeiten, die von SCAD und unseren Partnern angeboten werden. Diese Positionen sind so konzipiert, dass Sie praktische Erfahrungen sammeln und Ihr berufliches Portfolio aufbauen können.",
+        "badge": "MÖGLICHKEITEN",
+        "howItWorks": {
+          "title": "Warum diese Möglichkeiten wichtig sind:",
+          "potential": "Potenzial für akademische Ansprüche und berufliche Referenzen",
+          "networking": "Netzwerkverbindungen, die zu einer vollzeitigen Beschäftigung führen können",
+          "portfolio": "Portfolio-bildende Projekte, um Ihre Fähigkeiten zu zeigen"
+        },
+        "footer": "Sehen Sie sich unser Informationsvideo \"Was macht Ihr Praktikum zählt\" an, um zu erfahren, wie Sie Ihre Praktikumserfahrung maximieren können!"
+      },
       "statusPills": {
         "industryMatch": "BRANCHENÜBEREINSTIMMUNG",
         "recommendedByPastInterns": "VON VORHERIGEN PRAKTIKANTEN EMPFOHLEN",
-        "jobInterestMatch": "BERUFSINTERESSENÜBEREINSTIMMUNG"
+        "jobInterestMatch": "BERUFSINTERESSENÜBEREINSTIMMUNG",
+        "all": "ALLE",
+        "recommended": "EMPFOHLEN"
       },
       "filterSections": {
+        "fullTime": "Vollzeit",
+        "partTime": "Teilzeit",
+        "contract": "Vertrag",
+        "remote": "Fernarbeit",
+        "onSite": "Vor Ort", 
+        "hybrid": "Hybrid",
         "paid": "Bezahlt",
         "unpaid": "Unbezahlt",
         "jobType": "Arbeitsart",
@@ -1039,7 +1060,29 @@
         "paymentStatus": "Bezahlung",
         "allJobTypes": "Alle Jobtypen",
         "allJobSettings": "Alle Arbeitsumgebungen",
-        "allPaymentTypes": "Alle Bezahlungen"
+        "allPaymentTypes": "Alle Bezahlungen",
+        "technology": "Technologie",
+        "design": "Design",
+        "marketing": "Marketing",
+        "healthcare": "Gesundheit",
+        "3 months": "3 Monate",
+        "4 months": "4 Monate",
+        "6 months": "6 Monate",
+        "12 months": "12 Monate",
+        "allDurations": "Alle Dauern",
+        "allIndustries": "Alle Branchen",
+        "allCompanies": "Alle Unternehmen",
+        "allContent": "Alle Inhalte",
+        "recommended": "Empfohlen",
+        "applied": "Beworben",
+        "current": "Aktuell",
+        "company": "Unternehmen",
+        "industry": "Branche",
+        "position": "Position",
+        "duration": "Dauer",
+        "allInternships": "Alle Praktika",
+        "allPositions": "Alle Positionen",
+        "contentType": "Inhaltstyp"
       }
     }
   }

@@ -1029,7 +1029,8 @@
   },
   "student": {
     "dashboard": {
-      "searchPlaceholder": "ابحث عن فرص التدريب الموصى بها...",
+      "searchPlaceholder": "ابحث عن فرص التدريب المرشح بها...",
+      "browseInternshipsSearchPlaceholder": "ابحث عن فرص التدريب حسب المنصب أو الشركة ...",
       "personalizedCard": {
         "badge": "مخصص",
         "title": "فرص التدريب المخصصة لك",
@@ -1043,12 +1044,32 @@
         },
         "footer": "خذ وقتك لاستكشاف هذه الاقتراحات المخصصة - فهي تمثل الفرص التي يمكن أن تتألق فيها مواهبك واهتماماتك المحددة."
       },
+      "browseInternshipsPersonalizedCard": {
+        "title": "استكشف فرص التدريب المهنية",
+        "description": "استكشف فرص التدريب المختارة خصيصاً من قبل SCAD وشركائنا. تم تصميم هذه المناصب لتعطيك تجربة العالم الحقيقي أثناء بناء محفظتك المهنية.",
+        "badge": "فرص",
+        "howItWorks": {
+          "title": "لماذا تهم هذه الفرص:",
+          "potential": "المرجعية الأكاديمية والمرجعية المهنية",
+          "networking": "الإتصالات المهنية التي يمكن أن تؤدي إلى العمل الدوامي",
+          "portfolio": "المشاريع المهنية لبناء محفظتك"
+        },
+        "footer": "تذكر أن تشاهد فيديونا المعلومية الخاصة بنا \"ما الذي يجعل تدريبك مهماً\" لتتعلم كيفية تحقيق أقصى استفادة من تجربة التدريب!"
+      },
       "statusPills": {
         "industryMatch": "توافق المجال",
-        "recommendedByPastInterns": "موصى به من قبل المتدربين السابقين",
-        "jobInterestMatch": "توافق الاهتمامات المهنية"
+        "recommendedByPastInterns": "مرشح به من قبل المتدربين السابقين",
+        "jobInterestMatch": "توافق الاهتمامات المهنية",
+        "all": "جميع",
+        "recommended": "مرشح به"
       },
       "filterSections": {
+        "fullTime": "وقت كامل",
+        "partTime": "وقت جزئي",
+        "contract": "عقد",
+        "remote": "عن بعد",
+        "onSite": "في الموقع", 
+        "hybrid": "مختلط",
         "paid": "مدفوع",
         "unpaid": "غير مدفوع",
         "jobType": "نوع الوظيفة",
@@ -1056,7 +1077,29 @@
         "paymentStatus": "حالة الدفع",
         "allJobTypes": "جميع الأنواع",
         "allJobSettings": "جميع البيئات",
-        "allPaymentTypes": "جميع الحالات"
+        "allPaymentTypes": "جميع الحالات",
+        "technology": "تكنولوجيا",
+        "design": "تصميم",
+        "marketing": "تسويق",
+        "healthcare": "صحة",
+        "3 months": "3 أشهر",
+        "6 months": "6 أشهر",
+        "4 months": "4 أشهر",
+        "12 months": "12 أشهر",
+        "allDurations": "جميع المدد",
+        "allIndustries": "جميع الصناعات",
+        "allCompanies": "جميع الشركات",
+        "allContent": "جميع المحتويات",
+        "recommended": "مرشح به",
+        "applied": "متقدم",
+        "current": "حالي",
+        "company": "الشركة",
+        "industry": "الصناعة",
+        "position": "المنصب",
+        "duration": "المدة",
+        "allInternships": "جميع التدريبات",
+        "allPositions": "جميع المناصب",
+        "contentType": "نوع المحتوى"
       }
     }
   }
