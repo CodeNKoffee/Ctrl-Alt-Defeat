@@ -1030,6 +1030,16 @@
         "industryMatch": "BRANCHENÜBEREINSTIMMUNG",
         "recommendedByPastInterns": "VON VORHERIGEN PRAKTIKANTEN EMPFOHLEN",
         "jobInterestMatch": "BERUFSINTERESSENÜBEREINSTIMMUNG"
+      },
+      "filterSections": {
+        "paid": "Bezahlt",
+        "unpaid": "Unbezahlt",
+        "jobType": "Arbeitsart",
+        "jobSetting": "Arbeitsumgebung",
+        "paymentStatus": "Bezahlung",
+        "allJobTypes": "Alle Jobtypen",
+        "allJobSettings": "Alle Arbeitsumgebungen",
+        "allPaymentTypes": "Alle Bezahlungen"
       }
     }
   }

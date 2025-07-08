@@ -1028,6 +1028,16 @@
         "industryMatch": "INDUSTRY MATCH",
         "recommendedByPastInterns": "RECOMMENDED BY PAST INTERNS",
         "jobInterestMatch": "JOB INTEREST MATCH"
+      },
+      "filterSections": {
+        "paid": "Paid",
+        "unpaid": "Unpaid",
+        "jobType": "Job Type",
+        "jobSetting": "Job Setting",
+        "paymentStatus": "Payment Status",
+        "allJobTypes": "All Job Types",
+        "allJobSettings": "All Job Settings",
+        "allPaymentTypes": "All Payment Types"
       }
     }
   }

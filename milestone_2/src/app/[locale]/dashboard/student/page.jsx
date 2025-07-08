@@ -113,31 +113,31 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
 
   const filterSections = [
     {
-      name: 'Job Type',
+      name: safeT('student.dashboard.filterSections.jobType'),
       options: uniqueJobTypes.map(type => ({ id: type, title: type })),
       selected: filters.jobType || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
-      resetLabel: 'All Job Types',
+      resetLabel: safeT('student.dashboard.filterSections.allJobTypes'),
     },
     {
-      name: 'Job Setting',
+      name: safeT('student.dashboard.filterSections.jobSetting'),
       options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
       selected: filters.jobSetting || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
-      resetLabel: 'All Job Settings',
+      resetLabel: safeT('student.dashboard.filterSections.allJobSettings'),
     },
     {
-      name: 'Payment Status',
+      name: safeT('student.dashboard.filterSections.paymentStatus'),
       options: [
-        { id: 'paid', title: 'Paid' },
-        { id: 'unpaid', title: 'Unpaid' }
+        { id: 'paid', title: safeT('student.dashboard.filterSections.paid') },
+        { id: 'unpaid', title: safeT('student.dashboard.filterSections.unpaid') }
       ],
       selected: filters.isPaid === true ? 'paid' : filters.isPaid === false ? 'unpaid' : 'all',
       onChange: (value) => setFilters(prev => ({
         ...prev,
         isPaid: value === 'paid' ? true : value === 'unpaid' ? false : null
       })),
-      resetLabel: 'All Payment Types',
+      resetLabel: safeT('student.dashboard.filterSections.allPaymentTypes'),
     }
   ];
 
