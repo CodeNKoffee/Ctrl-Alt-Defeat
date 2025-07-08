@@ -39,7 +39,9 @@ const ChatPanelContent = memo(({
   setCurrentMessage,
   handleSendMessage,
   handleToggleChat,
-  chatScrollRef
+  chatScrollRef,
+  safeT,
+  ready
 }) => (
   <div className="h-full flex flex-col">
     <div className="flex justify-between items-center p-4 border-b border-white/10">

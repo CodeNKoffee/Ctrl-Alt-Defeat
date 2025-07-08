@@ -1346,6 +1346,26 @@
     "stopSharing": "Teilen beenden",
     "shareScreen": "Bildschirm teilen",
     "endCall": "Anruf beenden",
-    "simLeave": "Simulierter Verlassen"
+    "simLeave": "Simulierter Verlassen",
+    "presenter": "Präsentator",
+    "liveSession": "Live-Sitzung",
+    "subtitles": "Dies ist ein Beispiel für Untertitel, die hier während des Workshops erscheinen würden...",
+    "hideSubtitles": "Untertitel ausblenden",
+    "showSubtitles": "Untertitel anzeigen",
+    "leaveWorkshop": "Workshop verlassen",
+    "leaveWorkshopConfirmation": "Sind Sie sicher, dass Sie den Workshop verlassen möchten?",
+    "leaveWorkshopConfirmationMessage": "Sie werden zur Workshop-Liste weitergeleitet.",
+    "prerequisites": "Voraussetzungen",
+    "workshopTitle": "Workshop Titel",
+    "instructor": "Präsentator",
+    "instructorName": "Präsentator Name",
+    "like": "Gefällt mir",
+    "save": "Speichern",
+    "share": "Teilen",
+    "backToWorkshops": "Zurück zu Workshops",
+    "noDescriptionAvailable": "Keine Beschreibung verfügbar.",
+    "incomingVideoCall": "Eingehender Videoanruf",
+    "decline": "Ablehnen",
+    "accept": "Akzeptieren"
   }
 }

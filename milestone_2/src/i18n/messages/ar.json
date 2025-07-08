@@ -1363,6 +1363,26 @@
     "stopSharing": "إيقاف المشاركة",
     "shareScreen": "مشاركة الشاشة",
     "endCall": "إنهاء المكالمة",
-    "simLeave": "إصلاح المكالمة"
+    "simLeave": "إصلاح المكالمة",
+    "presenter": "المتحدث",
+    "liveSession": "جلسة مباشرة",
+    "subtitles": "هذا هو نص الترجمة المثالي الذي سيظهر هنا أثناء الورشة...",
+    "hideSubtitles": "إخفاء الترجمات",
+    "showSubtitles": "عرض الترجمات",
+    "leaveWorkshop": "إنهاء الورشة",
+    "leaveWorkshopConfirmation": "هل أنت متأكد من أنك تريد إنهاء الورشة؟",
+    "leaveWorkshopConfirmationMessage": "سيتم توجيهك إلى قائمة الورشات.",
+    "prerequisites": "المتطلبات الأساسية",
+    "workshopTitle": "عنوان الورشة",
+    "instructor": "المتحدث",
+    "instructorName": "اسم المتحدث",
+    "like": "معجب",
+    "save": "حفظ",
+    "share": "مشاركة",
+    "backToWorkshops": "العودة إلى الورشات",
+    "noDescriptionAvailable": "لا يوجد وصف متاح.",
+    "incomingVideoCall": "مكالمة فيديو مستقبلة",
+    "decline": "رفض",
+    "accept": "قبول"
   }
 }

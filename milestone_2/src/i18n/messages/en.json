@@ -1343,6 +1343,26 @@
     "stopSharing": "Stop Sharing",
     "shareScreen": "Share Screen",
     "endCall": "End Call",
-    "simLeave": "Sim Leave"
+    "simLeave": "Sim Leave",
+    "presenter": "Presenter",
+    "liveSession": "Live Session",
+    "subtitles": "This is sample subtitle text that would appear here during the workshop...",
+    "hideSubtitles": "Hide Subtitles",
+    "showSubtitles": "Show Subtitles",
+    "leaveWorkshop": "Leave Workshop",
+    "leaveWorkshopConfirmation": "Are you sure you want to leave the workshop?",
+    "leaveWorkshopConfirmationMessage": "You will be redirected to the workshop list.",
+    "prerequisites": "Prerequisites",
+    "workshopTitle": "Workshop Title",
+    "instructor": "Instructor",
+    "instructorName": "Instructor Name",
+    "like": "Like",
+    "save": "Save",
+    "share": "Share",
+    "backToWorkshops": "Back to Workshops",
+    "noDescriptionAvailable": "No description available.",
+    "incomingVideoCall": "Incoming Video Call",
+    "decline": "Decline",
+    "accept": "Accept"
   }
 }
