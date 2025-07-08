@@ -27,7 +27,7 @@ export default function CompanyDetails({
   const [feedback, setFeedback] = useState(null); // 'accepted' | 'rejected' | null
 
   // Compose registration message
-  const registrationMessage = `Registered on 03 May, 2025`;
+  const registrationMessage = `${safeT('scad.companyDetails.registeredOn')} 03 May, 2025`;
   // Compose docs array for card
   const docs = Array.isArray(documentation)
     ? documentation

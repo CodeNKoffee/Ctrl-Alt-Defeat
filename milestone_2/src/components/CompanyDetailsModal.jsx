@@ -31,7 +31,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
   };
 
   // Compose registration message
-  const registrationMessage = `Registered on 03 May, 2025`;
+  const registrationMessage = `${safeT('scad.companyDetails.registeredOn')} 03 May, 2025`;
 
   // Accept/Reject feedback state
   const [feedback, setFeedback] = useState(null); // 'accepted' | 'rejected' | null

@@ -1,3 +1,6 @@
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
+
 const sizeRanges = [
   { label: '<=50', key: 'small' },
   { label: '51-100', key: 'medium' },
@@ -15,10 +18,12 @@ function getRangeKey(size) {
 }
 
 export default function CompanySizeCard({ size }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const activeKey = getRangeKey(size);
   return (
     <div className="companysizecard-root">
-      <div className="companysizecard-title">Company Size</div>
+      <div className="companysizecard-title">{safeT('scad.companyDetails.companySize')}</div>
       <div className="companysizecard-bar-container">
         <div className="companysizecard-bar">
           {sizeRanges.map((range, idx) => (
