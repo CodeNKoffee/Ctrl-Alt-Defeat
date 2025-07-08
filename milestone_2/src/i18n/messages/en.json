@@ -1069,6 +1069,38 @@
         },
         "footer": "Use the filters to sort through your internship history or search for specific opportunities."
       },
+      "evaluationsPersonalizedCard": {
+        "title": "Your Evaluations",
+        "description": "Manage your evaluations for companies where you completed internships. Track both submitted and draft evaluations here.",
+        "badge": "FEEDBACK",
+        "howItWorks": {
+          "submitted": "Submitted",
+          "draft": "Draft",
+          "submittedDescription": "Evaluations you have completed and submitted for your internship experiences.",
+          "draftDescription": "Evaluations you've started but haven't submitted yet. Continue working on these."
+        },
+        "footer": "Your evaluations provide valuable feedback to companies and help future students make informed decisions."
+      },
+      "myReportsPersonalizedCard": {
+        "title": "Student Report Management System",
+        "description": "Welcome to your Student Report Dashboard. Here you can monitor and manage all your internship reports in one place.",
+        "howItWorks": {
+          "pending": "PENDING",
+          "flagged": "FLAGGED",
+          "rejected": "REJECTED",
+          "accepted": "ACCEPTED",
+          "pendingDescription1": "Awaiting Review",
+          "pendingDescription2": "Your report has been submitted but not yet reviewed. No action required.",
+          "flaggedDescription1": "Needs Revision",
+          "flaggedDescription2": "Review faculty feedback and resubmit your updated report.",
+          "rejectedDescription1": "Not Approved",
+          "rejectedDescription2": "Did not meet requirements. See faculty comments for guidance.",
+          "acceptedDescription1": "Approved",
+          "acceptedDescription2": "Your report has been approved. No further action is needed."
+        },
+        "footer1": "reports flagged and",
+        "footer2": "rejected require your attention"
+      },
       "statusPills": {
         "industryMatch": "INDUSTRY MATCH",
         "recommendedByPastInterns": "RECOMMENDED BY PAST INTERNS",
@@ -1122,6 +1154,21 @@
         "contentType": "Content Type",
         "status": "Status",
         "allStatuses": "All Status"
+      },
+      "reportCards": {
+        "tabs": {
+          "submitted": "Submitted Reports",
+          "drafts": "Saved as Drafts"
+        },
+        "makeAnAppeal": "Make an Appeal",
+        "appealPending": "Appeal Pending",
+        "cancel": "Cancel",
+        "submitAppeal": "Submit Appeal",
+        "enterYourAppealMessage": "Enter your appeal message...",
+        "company": "Company",
+        "major": "Major",
+        "submitted": "Submitted",
+        "seeMore": "See More"
       }
     }
   }

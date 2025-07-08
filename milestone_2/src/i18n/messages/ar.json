@@ -1088,6 +1088,38 @@
         },
         "footer": "استخدم المرشحات لتصفية التدريبات حسب الشركة أو المنصب أو الحالة!"
       },
+      "evaluationsPersonalizedCard": {
+        "title": "تقييماتك",
+        "description": "إدارة التقييمات الخاصة بك للشركات التي أنهيت فيها التدريبات. تتبع التقييمات المقدمة والمسودات هنا.",
+        "badge": "تقييمات",
+        "howItWorks": {
+          "submitted": "مقدم",
+          "draft": "مسودة",
+          "submittedDescription": "التقييمات التي أنهيتها وقدمتها لتجربة التدريب.",
+          "draftDescription": "التقييمات التي بدأتها ولم تقدمها بعد. استمر في العمل عليها."
+        },
+        "footer": "تقييماتك توفر تعليقات قيمة للشركات وتساعد الطلاب المستقبليين على اتخاذ قرارات مدروسة."
+      },
+      "myReportsPersonalizedCard": {
+        "title": "نظام إدارة التقارير الطلابية",
+        "description": "مرحبا بك في لوحة تحكم تقاريرك الطلابية. هنا يمكنك مراقبة وإدارة كل تقارير التدريب الخاصة بك في مكان واحد.",
+        "howItWorks": {
+          "pending": "قيد الانتظار",
+          "flagged": "مشار إليه",
+          "rejected": "مرفوض",
+          "accepted": "مقبول",
+          "pendingDescription1": "في انتظار المراجعة",
+          "pendingDescription2": "تم تقديم تقريرك ولكن لم يتم التقييم بعد. لا إجراء إضافي مطلوب.",
+          "flaggedDescription1": "يحتاج إلى مراجعة",
+          "flaggedDescription2": "مراجعة التعليقات المدرسية وإعادة تقديم تقريرك المحدث.",
+          "rejectedDescription1": "غير مقبول",
+          "rejectedDescription2": "لم يتم الوفاء بالمتطلبات. انظر إلى تعليقات المدرس للإرشاد.",
+          "acceptedDescription1": "مقبول",
+          "acceptedDescription2": "تمت الموافقة على تقريرك. لا إجراء إضافي مطلوب."
+        },
+        "footer1": "تقارير مشار إليها و",
+        "footer2": "مرفوضة تحتاج إلى انتباهك"
+      },
       "statusPills": {
         "industryMatch": "توافق المجال",
         "recommendedByPastInterns": "مرشح به من قبل المتدربين السابقين",
@@ -1142,6 +1174,21 @@
         "contentType": "نوع المحتوى",
         "status": "الحالة",
         "allStatuses": "جميع الحالات"
+      },
+      "reportCards": {
+        "tabs": {
+          "submitted": "تقارير مقدمة",
+          "drafts": "محفوظة كمسودات"
+        },
+        "makeAnAppeal": "طلب انتقاء",
+        "appealPending": "انتقاء قيد الانتظار",
+        "cancel": "إلغاء",
+        "submitAppeal": "إرسال انتقاء",
+        "enterYourAppealMessage": "أدخل رسالة الانتقاء الخاصة بك...",
+        "company": "الشركة",
+        "major": "التخصص",
+        "submitted": "مقدمة",
+        "seeMore": "عرض المزيد"
       }
     }
   }

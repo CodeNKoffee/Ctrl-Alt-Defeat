@@ -9,8 +9,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomButton from "./shared/CustomButton";
 import { Tooltip } from 'react-tooltip';
 import DeleteTileConfirmation from "./DeleteTileConfirmation";
+import { useTranslation } from "react-i18next";
+import { createSafeT } from "@/lib/translationUtils";
 
 export default function StudentReportCards() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const reportStatusTooltipMessages = {
   accepted: "Your report has been reviewed and approved by the faculty member. No further action is required for this submission.",
   pending: "Your report has been submitted but not yet reviewed by the responsible faculty member. No action is required at this time.",
@@ -104,49 +108,75 @@ export default function StudentReportCards() {
       <div className="w-full max-w-6xl px-2">
         {/* System info box like SCAD reports */}
         <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
-          <h2 className="text-2xl font-semibold text-[#2a5f74] mb-4">Student Report Management System</h2>
+          <h2 className="text-2xl font-semibold text-[#2a5f74] mb-4">
+            {safeT('student.dashboard.myReportsPersonalizedCard.title')}
+          </h2>
           <p className="text-gray-700 mb-3">
-             Welcome to your Student Report Dashboard. Here you can monitor and manage all your internship reports in one place.
+            {safeT('student.dashboard.myReportsPersonalizedCard.description')}
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-xs font-semibold">PENDING</span>
-                <h3 className="font-medium text-yellow-700">Awaiting Review</h3>
+                <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-xs font-semibold">
+                  {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.pending')}
+                </span>
+                <h3 className="font-medium text-yellow-700">
+                  {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.pendingDescription1')}
+                </h3>
               </div>
-              <p className="text-sm text-gray-600">Your report has been submitted but not yet reviewed. No action required.</p>
+              <p className="text-sm text-gray-600">
+                {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.pendingDescription2')}
+              </p>
             </div>
             
             <div className="bg-orange-50 p-3 rounded-lg border border-orange-200">
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs font-semibold">FLAGGED</span>
-                <h3 className="font-medium text-orange-700">Needs Revision</h3>
+                <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs font-semibold">
+                  {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.flagged')}
+                </span>
+                <h3 className="font-medium text-orange-700">
+                  {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.flaggedDescription1')}
+                </h3>
               </div>
-              <p className="text-sm text-gray-600">Review faculty feedback and resubmit your updated report.</p>
+              <p className="text-sm text-gray-600">
+                {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.flaggedDescription2')}
+              </p>
             </div>
             
             <div className="bg-red-50 p-3 rounded-lg border border-red-200">
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-semibold">REJECTED</span>
-                <h3 className="font-medium text-red-700">Not Approved</h3>
+                <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-semibold">
+                  {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.rejected')}
+                </span>
+                <h3 className="font-medium text-red-700">
+                  {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.rejectedDescription1')}
+                </h3>
               </div>
-              <p className="text-sm text-gray-600">Did not meet requirements. See faculty comments for guidance.</p>
+              <p className="text-sm text-gray-600">
+                {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.rejectedDescription2')}
+              </p>
             </div>
             
             <div className="bg-green-50 p-3 rounded-lg border border-green-200">
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">ACCEPTED</span>
-                <h3 className="font-medium text-green-700">Approved</h3>
+                <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">
+                  {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.accepted')}
+                </span>
+                <h3 className="font-medium text-green-700">
+                  {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.acceptedDescription1')}
+                </h3>
               </div>
-              <p className="text-sm text-gray-600">Your report has been approved. No further action required.</p>
+              <p className="text-sm text-gray-600">
+                {safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.acceptedDescription2')}
+              </p>
             </div>
           </div>
           
           <div className="flex items-center mt-2">
             <div className="h-1.5 w-1.5 rounded-full bg-orange-500 mr-2"></div>
             <p className="text-[#2a5f74] font-medium">
-              {submittedReports.filter(r => r.status === 'flagged').length} reports flagged and {submittedReports.filter(r => r.status === 'rejected').length} rejected require your attention
+              {submittedReports.filter(r => r.status === 'flagged').length} {safeT('student.dashboard.myReportsPersonalizedCard.footer1')} {submittedReports.filter(r => r.status === 'rejected').length} {safeT('student.dashboard.myReportsPersonalizedCard.footer2')}
             </p>
           </div>
         </div>
@@ -164,13 +194,13 @@ export default function StudentReportCards() {
               className={`px-6 py-2 rounded-full font-semibold transition-colors ${activeTab === 'submitted' ? 'bg-metallica-blue-600 text-white' : 'bg-[#eaf3f7] text-metallica-blue-700'}`}
               onClick={() => setActiveTab('submitted')}
             >
-              Submitted Reports
+              {safeT('student.dashboard.reportCards.tabs.submitted')}
             </button>
             <button
               className={`px-6 py-2 rounded-full font-semibold transition-colors ${activeTab === 'drafts' ? 'bg-metallica-blue-600 text-white' : 'bg-[#eaf3f7] text-metallica-blue-700'}`}
               onClick={() => setActiveTab('drafts')}
             >
-              Saved as Drafts
+              {safeT('student.dashboard.reportCards.tabs.drafts')}
             </button>
           </div>
           {activeTab === 'submitted' && (
@@ -224,13 +254,13 @@ export default function StudentReportCards() {
                     />
                   </div>
                   <div className="text-xs text-gray-600 mb-0.5">
-                    <span className="font-medium">Company:</span> {report.companyName}
+                    <span className="font-medium">{safeT('student.dashboard.reportCards.company')}:</span> {report.companyName}
                   </div>
                   <div className="text-xs text-gray-600 mb-0.5">
-                    <span className="font-medium">Major:</span> {report.studentMajor}
+                    <span className="font-medium">{safeT('student.dashboard.reportCards.major')}:</span> {report.studentMajor}
                   </div>
                   <div className="text-xs text-gray-600 mb-0.5">
-                    <span className="font-medium">Submitted:</span> {new Date(report.submissionDate).toLocaleDateString()}
+                    <span className="font-medium">{safeT('student.dashboard.reportCards.submitted')}:</span> {new Date(report.submissionDate).toLocaleDateString()}
                   </div>
                   <div className="text-gray-700 text-xs mt-1 line-clamp-2 whitespace-pre-line">
                     {report.introduction}
@@ -239,7 +269,7 @@ export default function StudentReportCards() {
                     className="mt-2 self-end px-4 py-1 bg-metallica-blue-600 text-white rounded-full text-xs font-semibold hover:bg-metallica-blue-700 transition hover:-translate-y-0.5"
                     onClick={() => setSelectedReport(report)}
                   >
-                    See More
+                    {safeT('student.dashboard.reportCards.seeMore')}
                   </button>
                 </div>
               ))}
@@ -261,14 +291,14 @@ export default function StudentReportCards() {
                           <CustomButton
                             onClick={() => handleAppeal(selectedReport)}
                             variant="danger"
-                            text="Make an Appeal"
+                            text={safeT('student.dashboard.reportCards.makeAnAppeal')}
                             fullWidth={false}
                           />
                         </div>
                       )}
                       {selectedReport.appealStatus === 'pending' && (
                         <div className="mt-6 text-center">
-                          <span className="text-metallica-blue-600 font-semibold italic">Appeal Pending</span>
+                          <span className="text-metallica-blue-600 font-semibold italic">{safeT('student.dashboard.reportCards.appealPending')}</span>
                         </div>
                       )}
                     </div>
@@ -340,14 +370,14 @@ export default function StudentReportCards() {
                           <CustomButton
                             onClick={() => handleAppeal(selectedReport)}
                             variant="danger"
-                            text="Make an Appeal"
+                            text={safeT('student.dashboard.reportCards.makeAnAppeal')}
                             fullWidth={false}
                           />
                         </div>
                       )}
                       {selectedReport.appealStatus === 'pending' && (
                         <div className="mt-6 text-center">
-                          <span className="text-metallica-blue-600 font-semibold italic">Appeal Pending</span>
+                          <span className="text-metallica-blue-600 font-semibold italic">{safeT('student.dashboard.reportCards.appealPending')}</span>
                         </div>
                       )}
                     </div>
@@ -372,11 +402,11 @@ export default function StudentReportCards() {
             >
               &times;
             </button>
-            <h2 className="text-xl font-bold text-[#2A5F74] mb-4">Submit Appeal</h2>
+            <h2 className="text-xl font-bold text-[#2A5F74] mb-4">{safeT('student.dashboard.reportCards.submitAppeal')}</h2>
             <textarea
               value={appealMessage}
               onChange={(e) => setAppealMessage(e.target.value)}
-              placeholder="Enter your appeal message..."
+              placeholder={safeT('student.dashboard.reportCards.enterYourAppealMessage')}
               rows="4"
               className="w-full p-4 border-2 border-metallica-blue-300 rounded-lg mb-4 resize-vertical min-h-[100px] focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
             />
@@ -387,14 +417,14 @@ export default function StudentReportCards() {
                   setAppealMessage("");
                 }}
                 variant="danger"
-                text="Cancel"
+                text={safeT('student.dashboard.reportCards.cancel')}
                 fullWidth={false}
               />
               <CustomButton
                 onClick={handleSubmitAppeal}
                 disabled={!appealMessage.trim()}
                 variant="primary"
-                text="Submit Appeal"
+                text={safeT('student.dashboard.reportCards.submitAppeal')}
                 fullWidth={false}
               />
             </div>

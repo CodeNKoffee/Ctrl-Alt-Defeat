@@ -1598,6 +1598,8 @@ function OnlineAssessmentsView() {
 }
 
 function MyReportsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [reports, setReports] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [deleteIndex, setDeleteIndex] = useState(null);
@@ -1636,51 +1638,53 @@ function MyReportsView() {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              DOCUMENTATION
+              {safeT('student.dashboard.myReportsPersonalizedCard.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Student Report Management System</h2>
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.myReportsPersonalizedCard.title')}
+            </h2>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Welcome to your Student Report Dashboard. Here you can monitor and manage all your internship reports in one place.</p>
+              <p className="mb-3">{safeT('student.dashboard.myReportsPersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-xs font-semibold">PENDING</span>
-                      <h3 className="font-medium text-yellow-700">Awaiting Review</h3>
+                      <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.pending')}</span>
+                      <h3 className="font-medium text-yellow-700">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.pending')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Your report has been submitted but not yet reviewed. No action required.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.pendingDescription')}</p>
                   </div>
 
                   <div className="bg-orange-50 p-3 rounded-lg border border-orange-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs font-semibold">FLAGGED</span>
-                      <h3 className="font-medium text-orange-700">Needs Revision</h3>
+                      <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.flagged')}</span>
+                      <h3 className="font-medium text-orange-700">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.flagged')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Review faculty feedback and resubmit your updated report.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.flaggedDescription')}</p>
                   </div>
 
                   <div className="bg-red-50 p-3 rounded-lg border border-red-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-semibold">REJECTED</span>
-                      <h3 className="font-medium text-red-700">Not Approved</h3>
+                      <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.rejected')}</span>
+                      <h3 className="font-medium text-red-700">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.rejected')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Did not meet requirements. See faculty comments for guidance.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.rejectedDescription')}</p>
                   </div>
 
                   <div className="bg-green-50 p-3 rounded-lg border border-green-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">ACCEPTED</span>
-                      <h3 className="font-medium text-green-700">Approved</h3>
+                      <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.accepted')}</span>
+                      <h3 className="font-medium text-green-700">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.accepted')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Your report has been approved. No further action is needed.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.acceptedDescription')}</p>
                   </div>
                 </div>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Remember to review feedback from faculty on your submitted reports to improve future submissions!
+                {safeT('student.dashboard.myReportsPersonalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -1724,6 +1728,8 @@ function MyReportsView() {
 }
 
 function MyEvaluationsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRating, setSelectedRating] = useState('all');
 
@@ -1760,35 +1766,37 @@ function MyEvaluationsView() {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              FEEDBACK
+              {safeT('student.dashboard.evaluationsPersonalizedCard.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Company Evaluation Management</h2>
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.evaluationsPersonalizedCard.title')}
+            </h2>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Manage your evaluations for companies where you completed internships. Track both submitted and draft evaluations here.</p>
+              <p className="mb-3">{safeT('student.dashboard.evaluationsPersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-semibold">SUBMITTED</span>
-                      <h3 className="font-medium text-blue-700">Published Evaluations</h3>
+                      <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.submitted')}</span>
+                      <h3 className="font-medium text-blue-700">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.submitted')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Evaluations you have completed and submitted for your internship experiences.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.submitted')}</p>
                   </div>
 
                   <div className="bg-purple-50 p-3 rounded-lg border border-purple-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-semibold">DRAFT</span>
-                      <h3 className="font-medium text-purple-700">Work in Progress</h3>
+                      <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.draft')}</span>
+                      <h3 className="font-medium text-purple-700">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.draft')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Evaluations you've started but haven't submitted yet. Continue working on these.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.draftDescription')}</p>
                   </div>
                 </div>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Your evaluations provide valuable feedback to companies and help future students make informed decisions.
+                {safeT('student.dashboard.evaluationsPersonalizedCard.footer')}
               </p>
             </div>
           </div>

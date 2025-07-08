@@ -1071,6 +1071,38 @@
         },
         "footer": "Verwenden Sie die Filter, um Ihre Praktikumsgeschichte oder spezifische Möglichkeiten zu durchsuchen."
       },
+      "evaluationsPersonalizedCard": {
+        "title": "Ihre Bewertungen",
+        "description": "Verwalten Sie Ihre Bewertungen für Unternehmen, bei denen Sie Praktika absolviert haben. Verfolgen Sie sowohl eingereichte als auch Entwürfe hier.",
+        "badge": "RÜCKMELDUNG",
+        "howItWorks": {
+          "submitted": "Eingereicht",
+          "draft": "Entwurf",
+          "submittedDescription": "Bewertungen, die Sie abgeschlossen und eingereicht haben, für Ihre Praktikumserfahrungen.",
+          "draftDescription": "Bewertungen, die Sie begonnen haben, aber noch nicht eingereicht haben. Weiterarbeiten Sie an diesen."
+        },
+        "footer": "Ihre Bewertungen geben wertvolle Rückmeldung an Unternehmen und helfen zukünftigen Studenten informierte Entscheidungen zu treffen."
+      },
+      "myReportsPersonalizedCard": {
+        "title": "Studentenbericht-Verwaltungssystem",
+        "description": "Willkommen in Ihrem Studentenbericht-Dashboard. Hier können Sie alle Ihre Praktikumsberichte an einem Ort verwalten und überwachen.",
+        "howItWorks": {
+          "pending": "AUSSTEHEND",
+          "flagged": "MARKIERT",
+          "rejected": "ABGELEHNT",
+          "accepted": "AKZEPTIERT",
+          "pendingDescription1": "Warten auf Rezension",
+          "pendingDescription2": "Ihr Bericht wurde eingereicht, aber noch nicht überprüft. Keine weitere Aktion erforderlich.",
+          "flaggedDescription1": "Benötigt Revision",
+          "flaggedDescription2": "Überprüfen Sie die Rückmeldung der Fakultät und reichen Sie Ihren aktualisierten Bericht erneut ein.",
+          "rejectedDescription1": "Nicht genehmigt",
+          "rejectedDescription2": "Erfüllt die Anforderungen nicht. Lesen Sie die Kommentare der Fakultät für Richtlinien.",
+          "acceptedDescription1": "Genehmigt",
+          "acceptedDescription2": "Ihr Bericht wurde genehmigt. Keine weitere Aktion erforderlich."
+        },
+        "footer1": "Berichte markiert und",
+        "footer2": "abgelehnt benötigen Ihre Aufmerksamkeit"
+      },
       "statusPills": {
         "industryMatch": "BRANCHENÜBEREINSTIMMUNG",
         "recommendedByPastInterns": "VON VORHERIGEN PRAKTIKANTEN EMPFOHLEN",
@@ -1125,6 +1157,21 @@
         "contentType": "Inhaltstyp",
         "status": "Status",
         "allStatuses": "Alle Status"
+      },
+      "reportCards": {
+        "tabs": {
+          "submitted": "Eingereichte Berichte",
+          "drafts": "Als Entwurf gespeichert"
+        },
+        "makeAnAppeal": "Ein Bericht anfechten",
+        "appealPending": "Anfechtung ausstehend",
+        "cancel": "Abbrechen",
+        "submitAppeal": "Anfechtung einreichen",
+        "enterYourAppealMessage": "Geben Sie Ihre Anfechtungsmeldung ein...",
+        "company": "Unternehmen",
+        "major": "Studiengang",
+        "submitted": "Eingereicht",
+        "seeMore": "Mehr anzeigen"
       }
     }
   }
