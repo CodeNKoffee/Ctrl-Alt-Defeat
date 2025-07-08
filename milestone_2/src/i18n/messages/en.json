@@ -407,6 +407,68 @@
       }
     }
   },
+  "faculty": {
+    "dashboard": {
+      "title": "FACULTY DASHBOARD",
+      "reportReview": {
+        "badge": "REPORT REVIEW", 
+        "title": "Faculty Report Review Dashboard",
+        "welcome": "Welcome to the Faculty Report Review Dashboard. Here you can:",
+        "features": {
+          "reviewReports": "Review student internship reports pending evaluation",
+          "provideFeedback": "Provide feedback and annotations on student submissions", 
+          "trackEvaluated": "Track reports you've already evaluated",
+          "flagReports": "Flag reports that require additional attention"
+        },
+        "pendingReports": "{count} reports are currently awaiting your review."
+      }
+    },
+    "reports": {
+      "statistics": {
+        "totalReports": "Total Reports",
+        "acceptedReports": "Accepted Reports", 
+        "pendingReports": "Pending Reports",
+        "flaggedReports": "Flagged Reports",
+        "rejectedReports": "Rejected Reports"
+      },
+      "table": {
+        "title": "Student Reports",
+        "filterReports": "Filter Reports",
+        "clearFilters": "Clear Filters",
+        "filterByMajor": "Filter by Major",
+        "filterByStatus": "Filter by Status",
+        "allMajors": "All Majors",
+        "allStatus": "All Status",
+        "major": "Major:",
+        "status": "Status:",
+        "headers": {
+          "reportNumber": "Report #",
+          "studentName": "Student Name", 
+          "major": "Major",
+          "internship": "Internship",
+          "company": "Company",
+          "submissionDate": "Submission Date",
+          "status": "Status",
+          "actions": "Actions"
+        },
+        "actions": {
+          "viewReport": "View Report",
+          "evaluateReport": "Evaluate Report"
+        },
+        "statuses": {
+          "pending": "PENDING",
+          "flagged": "FLAGGED", 
+          "rejected": "REJECTED",
+          "accepted": "ACCEPTED"
+        },
+        "noResults": {
+          "noReportsMatch": "No reports match the selected filters",
+          "noReportsAvailable": "No reports available at the moment",
+          "clearAllFilters": "Clear all filters"
+        }
+      }
+    }
+  },
   "internship": {
     "videoSidebar": {
       "defaultTitle": "Internship Requirements",

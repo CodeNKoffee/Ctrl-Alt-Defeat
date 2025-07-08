@@ -407,6 +407,68 @@
       }
     }
   },
+  "faculty": {
+    "dashboard": {
+      "title": "لوحة تحكم الكلية",
+      "reportReview": {
+        "badge": "مراجعة التقارير",
+        "title": "لوحة تحكم مراجعة تقارير الكلية",
+        "welcome": "مرحباً بكم في لوحة تحكم مراجعة تقارير الكلية. يمكنكم هنا:",
+        "features": {
+          "reviewReports": "مراجعة تقارير التدريب الطلابية المعلقة للتقييم",
+          "provideFeedback": "تقديم التغذية الراجعة والتعليقات على مشاركات الطلاب",
+          "trackEvaluated": "تتبع التقارير التي قمتم بتقييمها بالفعل",
+          "flagReports": "وضع علامة على التقارير التي تحتاج اهتماماً إضافياً"
+        },
+        "pendingReports": "{count} تقرير في انتظار المراجعة حالياً."
+      }
+    },
+    "reports": {
+      "statistics": {
+        "totalReports": "إجمالي التقارير",
+        "acceptedReports": "التقارير المقبولة",
+        "pendingReports": "التقارير المعلقة",
+        "flaggedReports": "التقارير المعلمة",
+        "rejectedReports": "التقارير المرفوضة"
+      },
+      "table": {
+        "title": "تقارير الطلاب",
+        "filterReports": "تصفية التقارير",
+        "clearFilters": "مسح المرشحات",
+        "filterByMajor": "تصفية حسب التخصص",
+        "filterByStatus": "تصفية حسب الحالة",
+        "allMajors": "جميع التخصصات",
+        "allStatus": "جميع الحالات",
+        "major": "التخصص:",
+        "status": "الحالة:",
+        "headers": {
+          "reportNumber": "رقم التقرير",
+          "studentName": "اسم الطالب",
+          "major": "التخصص",
+          "internship": "التدريب",
+          "company": "الشركة",
+          "submissionDate": "تاريخ التقديم",
+          "status": "الحالة",
+          "actions": "الإجراءات"
+        },
+        "actions": {
+          "viewReport": "عرض التقرير",
+          "evaluateReport": "تقييم التقرير"
+        },
+        "statuses": {
+          "pending": "معلق",
+          "flagged": "معلم",
+          "rejected": "مرفوض",
+          "accepted": "مقبول"
+        },
+        "noResults": {
+          "noReportsMatch": "لا توجد تقارير تطابق المرشحات المحددة",
+          "noReportsAvailable": "لا توجد تقارير متاحة في الوقت الحالي",
+          "clearAllFilters": "مسح جميع المرشحات"
+        }
+      }
+    }
+  },
   "internship": {
     "videoSidebar": {
       "defaultTitle": "متطلبات التدريب",

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import ReportStatistics from '@/components/ReportStatistics';
 import ReportsTable from '@/components/ReportsTable';
@@ -8,20 +10,12 @@ import { facultyScadReports, MOCK_EVALUATIONS } from '../../../../../constants/m
 import EvaluationsDashboard from '@/components/EvaluationsDashboard';
 import Stats from '@/components/Stats';
 import FacultyReportViewer from './report-viewer/page';
-
-function ViewSection({ title, children }) {
-  return (
-    <section className="mb-10">
-      <h1 className="text-3xl font-bold text-[#2a5f74] mb-6 relative inline-block">
-        {title}
-        <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-      </h1>
-      <div>{children}</div>
-    </section>
-  );
-}
+import ViewSection from '@/components/ViewSection';
 
 function FacultyDashboardView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [reports, setReports] = useState([]);
   const [selectedReportId, setSelectedReportId] = useState(null);
 
@@ -48,68 +42,70 @@ function FacultyDashboardView() {
     );
   }
 
-  const ReportReviewCard = () => (
-    <div className="w-full">
-      <div className="bg-white p-6 rounded-2xl shadow-md border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
-        {/* Decorative background bubbles */}
-        <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
-        <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
-        <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
+  const ReportReviewCard = () => {
+    return (
+      <div className="w-full">
+        <div className="bg-white p-6 rounded-2xl shadow-md border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+          {/* Decorative background bubbles */}
+          <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
+          <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
+          <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        {/* Content */}
-        <div className="flex items-start gap-4 relative z-10">
-          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-6h6v6m-3-12a4 4 0 100 8 4 4 0 000-8z" />
-            </svg>
-          </div>
-
-          <div className="text-left w-full">
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              REPORT REVIEW
+          {/* Content */}
+          <div className="flex items-start gap-4 relative z-10">
+            <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-6h6v6m-3-12a4 4 0 100 8 4 4 0 000-8z" />
+              </svg>
             </div>
 
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
-              Faculty Report Review Dashboard
-            </h2>
+            <div className="text-left w-full">
+              <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
+                {safeT('faculty.dashboard.reportReview.badge')}
+              </div>
 
-            <p className="text-gray-700 mb-3">
-              Welcome to the Faculty Report Review Dashboard. Here you can:
-            </p>
+              <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+                {safeT('faculty.dashboard.reportReview.title')}
+              </h2>
 
-            <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-              <ul className="space-y-2 text-gray-700">
-                <li className="flex items-start">
-                  <span className="text-[#3298BA] mr-2">✓</span>
-                  <span>Review student internship reports pending evaluation</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#3298BA] mr-2">✓</span>
-                  <span>Provide feedback and annotations on student submissions</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#3298BA] mr-2">✓</span>
-                  <span>Track reports you've already evaluated</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#3298BA] mr-2">✓</span>
-                  <span>Flag reports that require additional attention</span>
-                </li>
-              </ul>
-            </div>
+              <p className="text-gray-700 mb-3">
+                {safeT('faculty.dashboard.reportReview.welcome')}
+              </p>
 
-            <div className="bg-[#D9F0F4] text-metallica-blue-700 font-medium px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm w-fit">
-              {reports.filter(r => r.status === 'pending').length} reports are currently awaiting your review.
+              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <ul className="space-y-2 text-gray-700">
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('faculty.dashboard.reportReview.features.reviewReports')}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('faculty.dashboard.reportReview.features.provideFeedback')}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('faculty.dashboard.reportReview.features.trackEvaluated')}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('faculty.dashboard.reportReview.features.flagReports')}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-[#D9F0F4] text-metallica-blue-700 font-medium px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm w-fit">
+                {safeT('faculty.dashboard.reportReview.pendingReports').replace('{count}', reports.filter(r => r.status === 'pending').length)}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="container mx-auto px-4 py-10 space-y-10">
-      <ViewSection title="FACULTY DASHBOARD">
+      <ViewSection title={safeT('faculty.dashboard.title')}>
         <ReportReviewCard />
       </ViewSection>
       <ReportStatistics

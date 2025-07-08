@@ -407,6 +407,68 @@
       }
     }
   },
+  "faculty": {
+    "dashboard": {
+      "title": "FAKULTÄTS DASHBOARD",
+      "reportReview": {
+        "badge": "BERICHT REVIEW",
+        "title": "Fakultäts Bericht Review Dashboard",
+        "welcome": "Willkommen im Fakultäts Bericht Review Dashboard. Hier können Sie:",
+        "features": {
+          "reviewReports": "Studenten-Praktikumsberichte zur Bewertung überprüfen",
+          "provideFeedback": "Feedback und Anmerkungen zu Studenteneinreichungen geben",
+          "trackEvaluated": "Bereits bewertete Berichte verfolgen",
+          "flagReports": "Berichte markieren, die zusätzliche Aufmerksamkeit erfordern"
+        },
+        "pendingReports": "{count} Berichte warten derzeit auf Ihre Überprüfung."
+      }
+    },
+    "reports": {
+      "statistics": {
+        "totalReports": "Gesamt Berichte",
+        "acceptedReports": "Angenommene Berichte",
+        "pendingReports": "Ausstehende Berichte", 
+        "flaggedReports": "Markierte Berichte",
+        "rejectedReports": "Abgelehnte Berichte"
+      },
+      "table": {
+        "title": "Studenten Berichte",
+        "filterReports": "Berichte Filtern",
+        "clearFilters": "Filter Löschen",
+        "filterByMajor": "Nach Studiengang Filtern",
+        "filterByStatus": "Nach Status Filtern",
+        "allMajors": "Alle Studiengänge",
+        "allStatus": "Alle Status",
+        "major": "Studiengang:",
+        "status": "Status:",
+        "headers": {
+          "reportNumber": "Bericht #",
+          "studentName": "Studentenname",
+          "major": "Studiengang",
+          "internship": "Praktikum",
+          "company": "Unternehmen",
+          "submissionDate": "Einreichungsdatum",
+          "status": "Status",
+          "actions": "Aktionen"
+        },
+        "actions": {
+          "viewReport": "Bericht Anzeigen",
+          "evaluateReport": "Bericht Bewerten"
+        },
+        "statuses": {
+          "pending": "AUSSTEHEND",
+          "flagged": "MARKIERT",
+          "rejected": "ABGELEHNT", 
+          "accepted": "ANGENOMMEN"
+        },
+        "noResults": {
+          "noReportsMatch": "Keine Berichte entsprechen den ausgewählten Filtern",
+          "noReportsAvailable": "Derzeit sind keine Berichte verfügbar",
+          "clearAllFilters": "Alle Filter löschen"
+        }
+      }
+    }
+  },
   "internship": {
     "videoSidebar": {
       "defaultTitle": "Praktikumsanforderungen",
