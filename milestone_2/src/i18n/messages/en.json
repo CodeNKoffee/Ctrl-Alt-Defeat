@@ -915,6 +915,15 @@
         }
       },
       "academicNote": "These reports represent the academic culmination of students' internship experiences, connecting professional practice with classroom learning."
+    },
+    "reportsView": {
+      "modal": {
+        "student": "Student",
+        "major": "Major",
+        "company": "Company",
+        "exportPdf": "Export as PDF",
+        "close": "Close"
+      }
     }
   },
   "uploadDocuments": {

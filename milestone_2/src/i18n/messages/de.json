@@ -914,7 +914,18 @@
           "update": "Inhalte bei Bedarf basierend auf Studentenfeedback und Branchenänderungen aktualisieren"
         }
       },
-      "academicNote": "Diese Berichte stellen den akademischen Höhepunkt der Praktikumserfahrungen der Studenten dar und verbinden berufliche Praxis mit Lernen im Klassenzimmer."
+      "academicNote": "Diese Berichte stellen den akademischen Höhepunkt der Praktikumserfahrungen der Studenten dar und verbinden berufliche Praxis mit Lernen im Klassenzimmer.",
+      "modal": {
+        "student": "Studentin",
+        "major": "Studiengang",
+        "company": "Unternehmen",
+        "exportPdf": "Als PDF exportieren",
+        "close": "Schließen",
+        "reviewSubmitted": "Überprüfung eingereicht!",
+        "comments": {
+          "noComments": "Noch keine Anmerkungen. Wählen Sie Text aus, um Hervorhebungen oder Kommentare hinzuzufügen."
+        }
+      }
     }
   },
   "uploadDocuments": {
