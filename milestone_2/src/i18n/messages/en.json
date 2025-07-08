@@ -766,6 +766,67 @@
       "size": "Size",
       "allIndustries": "All Industries",
       "allSizes": "All Sizes"
+    },
+    "studentDirectory": {
+      "title": "STUDENT DIRECTORY",
+      "searchPlaceholder": "Search students by name, email, or major ...",
+      "infoCard": {
+        "badge": "DIRECTORY",
+        "title": "Student Directory Management",
+        "description": "Access comprehensive profiles of all SCAD students registered in the internship system for academic support and opportunity matching.",
+        "studentInfoAvailableTitle": "Student Information Available:",
+        "items": {
+          "academicDetails": "Academic details (major, minor, expected graduation date)",
+          "skillsInventory": "Skills inventory and proficiency levels",
+          "internshipHistory": "Internship history and evaluation outcomes",
+          "assessmentResults": "Assessment results and career interests",
+          "contactInfo": "Contact information and communication preferences"
+        },
+        "privacyNotice": "Privacy Notice: Access to student information is restricted to authorized personnel and subject to educational privacy regulations. Use information only for legitimate educational purposes."
+      },
+      "filters": {
+        "major": "Major",
+        "status": "Status",
+        "semester": "Semester",
+        "allMajors": "All Majors",
+        "allStatuses": "All Statuses",
+        "allSemesters": "All Semesters"
+      }
+    },
+    "studentList": {
+      "tabs": {
+        "all": "ALL",
+        "current": "CURRENT",
+        "completed": "COMPLETED",
+        "evaluated": "EVALUATED"
+      },
+      "emptyState": {
+        "noStudents": "No students found matching your criteria",
+        "adjust": "Try adjusting your search or filter"
+      }
+    },
+    "studentProfile": {
+      "sections": {
+        "academicInformation": "Academic Information",
+        "education": "Education",
+        "skills": "Skills",
+        "personalityTraits": "Personality Traits",
+        "jobInterests": "Job Interests",
+        "experience": "Experience",
+        "internships": "Internships"
+      },
+      "fields": {
+        "studentId": "Student ID",
+        "semester": "Semester",
+        "gpa": "GPA",
+        "major": "Major",
+        "faculty": "Faculty"
+      },
+      "rating": "Rating",
+      "notAvailable": "Not available"
+    },
+    "student": {
+      "viewProfile": "View Profile"
     }
   }
 }

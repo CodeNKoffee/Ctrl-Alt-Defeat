@@ -180,6 +180,9 @@ function ScadDashboardView() {
 }
 
 function StudentListView({ sidebarExpanded }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMajor, setSelectedMajor] = useState('all');
   const [selectedStatus, setSelectedStatus] = useState('all');
@@ -190,13 +193,20 @@ function StudentListView({ sidebarExpanded }) {
     ...new Set(mockStudents.map(student => student.major))
   ].filter(Boolean).map(major => ({ id: major, title: major }));
 
+  // Get unique statuses from mockStudents
   const uniqueStatuses = [
     ...new Set(mockStudents.map(student => student.internshipStatus))
-  ].filter(Boolean).map(status => ({ id: status.toLowerCase(), title: status }));
+  ].filter(Boolean).map(status => ({
+    id: status.toLowerCase(),
+    title: safeT(`scad.studentList.tabs.${status.toLowerCase()}`)
+  }));
 
   const uniqueSemesters = [
     ...new Set(mockStudents.map(student => student.semester))
-  ].filter(Boolean).map(sem => ({ id: sem, title: `Semester ${sem}` }));
+  ].filter(Boolean).map(sem => ({
+    id: sem,
+    title: `${safeT('scad.studentDirectory.filters.semester')} ${sem}`
+  }));
 
   // Filter students by search and major
   const filteredStudents = mockStudents.filter(student => {
@@ -214,25 +224,25 @@ function StudentListView({ sidebarExpanded }) {
 
   const studentFilterSections = [
     {
-      name: 'Major',
+      name: safeT('scad.studentDirectory.filters.major'),
       options: [...uniqueMajors],
       selected: selectedMajor,
       onChange: (value) => setSelectedMajor(value),
-      resetLabel: 'All Majors',
+      resetLabel: safeT('scad.studentDirectory.filters.allMajors'),
     },
     {
-      name: 'Status',
+      name: safeT('scad.studentDirectory.filters.status'),
       options: [...uniqueStatuses],
       selected: selectedStatus,
       onChange: (value) => setSelectedStatus(value),
-      resetLabel: 'All Statuses',
+      resetLabel: safeT('scad.studentDirectory.filters.allStatuses'),
     },
     {
-      name: 'Semester',
+      name: safeT('scad.studentDirectory.filters.semester'),
       options: [...uniqueSemesters],
       selected: selectedSemester,
       onChange: (value) => setSelectedSemester(value),
-      resetLabel: 'All Semesters',
+      resetLabel: safeT('scad.studentDirectory.filters.allSemesters'),
     },
   ];
 
@@ -240,7 +250,7 @@ function StudentListView({ sidebarExpanded }) {
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
         <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          STUDENT DIRECTORY
+          {safeT('scad.studentDirectory.title')}
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
@@ -258,38 +268,38 @@ function StudentListView({ sidebarExpanded }) {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              DIRECTORY
+              {safeT('scad.studentDirectory.infoCard.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Student Directory Management</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">{safeT('scad.studentDirectory.infoCard.title')}</div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Access comprehensive profiles of all SCAD students registered in the internship system for academic support and opportunity matching.</p>
+              <p className="mb-3">{safeT('scad.studentDirectory.infoCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Student Information Available:
+                  {safeT('scad.studentDirectory.infoCard.studentInfoAvailableTitle')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Academic details (major, minor, expected graduation date)</span>
+                    <span>{safeT('scad.studentDirectory.infoCard.items.academicDetails')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Skills inventory and proficiency levels</span>
+                    <span>{safeT('scad.studentDirectory.infoCard.items.skillsInventory')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Internship history and evaluation outcomes</span>
+                    <span>{safeT('scad.studentDirectory.infoCard.items.internshipHistory')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Assessment results and career interests</span>
+                    <span>{safeT('scad.studentDirectory.infoCard.items.assessmentResults')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Contact information and communication preferences</span>
+                    <span>{safeT('scad.studentDirectory.infoCard.items.contactInfo')}</span>
                   </li>
                 </ul>
               </div>
@@ -299,7 +309,7 @@ function StudentListView({ sidebarExpanded }) {
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
-                  Privacy Notice: Access to student information is restricted to authorized personnel and subject to educational privacy regulations. Use information only for legitimate educational purposes.
+                  {safeT('scad.studentDirectory.infoCard.privacyNotice')}
                 </p>
               </div>
             </div>
@@ -316,7 +326,7 @@ function StudentListView({ sidebarExpanded }) {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search students by name, email, or major ..."
+          searchPlaceholder={safeT('scad.studentDirectory.searchPlaceholder')}
           onClearFilters={() => { setSearchTerm(''); setSelectedMajor('all'); setSelectedStatus('all'); setSelectedSemester('all'); }}
           filterSections={studentFilterSections}
         />

@@ -766,6 +766,67 @@
       "size": "الحجم",
       "allIndustries": "جميع الصناعات",
       "allSizes": "جميع الأحجام"
+    },
+    "studentDirectory": {
+      "title": "دليل الطلاب",
+      "searchPlaceholder": "ابحث عن الطلاب بالاسم أو البريد الإلكتروني أو التخصص ...",
+      "infoCard": {
+        "badge": "الدليل",
+        "title": "إدارة دليل الطلاب",
+        "description": "الوصول إلى ملفات شاملة لجميع طلاب SCAD المسجلين في نظام التدريب للدعم الأكاديمي ومواءمة الفرص.",
+        "studentInfoAvailableTitle": "المعلومات المتاحة عن الطلاب:",
+        "items": {
+          "academicDetails": "تفاصيل أكاديمية (التخصص، الفرعي، تاريخ التخرج المتوقع)",
+          "skillsInventory": "جرد المهارات ومستويات الكفاءة",
+          "internshipHistory": "سجل التدريب ونتائج التقييم",
+          "assessmentResults": "نتائج التقييم واهتمامات المهنة",
+          "contactInfo": "معلومات الاتصال وتفضيلات التواصل"
+        },
+        "privacyNotice": "إشعار الخصوصية: الوصول إلى معلومات الطلاب مقصور على الموظفين المصرح لهم ويخضع للوائح خصوصية التعليم. استخدم المعلومات فقط لأغراض تعليمية مشروعة."
+      },
+      "filters": {
+        "major": "التخصص",
+        "status": "الحالة",
+        "semester": "الفصل الدراسي",
+        "allMajors": "جميع التخصصات",
+        "allStatuses": "جميع الحالات",
+        "allSemesters": "جميع الفصول"
+      }
+    },
+    "studentList": {
+      "tabs": {
+        "all": "الكل",
+        "current": "حالي",
+        "completed": "مكتمل",
+        "evaluated": "مُقيم"
+      },
+      "emptyState": {
+        "noStudents": "لم يتم العثور على طلاب يطابقون معاييرك",
+        "adjust": "جرب تعديل البحث أو المرشحات"
+      }
+    },
+    "studentProfile": {
+      "sections": {
+        "academicInformation": "المعلومات الأكاديمية",
+        "education": "التعليم",
+        "skills": "المهارات",
+        "personalityTraits": "سمات الشخصية",
+        "jobInterests": "الاهتمامات المهنية",
+        "experience": "الخبرة",
+        "internships": "التدريبات"
+      },
+      "fields": {
+        "studentId": "معرّف الطالب",
+        "semester": "الفصل الدراسي",
+        "gpa": "المعدل التراكمي",
+        "major": "التخصص",
+        "faculty": "الكلية"
+      },
+      "rating": "التقييم",
+      "notAvailable": "غير متوفر"
+    },
+    "student": {
+      "viewProfile": "عرض الملف الشخصي"
     }
   }
 }

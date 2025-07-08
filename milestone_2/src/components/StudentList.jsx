@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import Student from "./Student";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import SearchBar from "./shared/SearchBar";
 import StudentProfileSidebar from "./StudentProfileSidebar";
 import ApplicationsFilterBar from "./shared/ApplicationsFilterBar";
@@ -19,6 +21,8 @@ const hoverStatusColors = {
 };
 
 export default function StudentList({ students, sidebarExpanded = true, selectedStatus = 'all', onStatusChange = () => { } }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -30,10 +34,10 @@ export default function StudentList({ students, sidebarExpanded = true, selected
   }, []);
 
   const tabs = [
-    { id: 'all', label: 'ALL' },
-    { id: 'current', label: 'CURRENT' },
-    { id: 'completed', label: 'COMPLETED' },
-    { id: 'evaluated', label: 'EVALUATED' }
+    { id: 'all', label: safeT('scad.studentList.tabs.all') },
+    { id: 'current', label: safeT('scad.studentList.tabs.current') },
+    { id: 'completed', label: safeT('scad.studentList.tabs.completed') },
+    { id: 'evaluated', label: safeT('scad.studentList.tabs.evaluated') }
   ];
 
   const filterStudents = (students) => {
@@ -192,8 +196,8 @@ export default function StudentList({ students, sidebarExpanded = true, selected
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-          <p className="text-gray-500 font-medium">No students found matching your criteria</p>
-          <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
+          <p className="text-gray-500 font-medium">{safeT('scad.studentList.emptyState.noStudents')}</p>
+          <p className="text-gray-400 text-sm mt-1">{safeT('scad.studentList.emptyState.adjust')}</p>
         </div>
       )}
 

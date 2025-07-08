@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import CustomButton from './shared/CustomButton';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 const statusColors = {
   current: 'bg-blue-100 text-blue-800 border-blue-400',
@@ -10,7 +12,9 @@ const statusColors = {
 
 
 export default function Student({ student, onViewProfile }) {
-  const { id, name, photo, major, semester, status, internshipStatus} = student;
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+  const { id, name, photo, major, semester, status, internshipStatus } = student;
 
   return (
     <div className="bg-[#F0F9FB] rounded-lg p-6 shadow-sm border-2 border-[#5DB2C7]
@@ -21,7 +25,7 @@ export default function Student({ student, onViewProfile }) {
         <span className={`absolute top-2 right-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border
           ${statusColors[internshipStatus.toLowerCase()] || 'bg-gray-100 text-gray-800 border-gray-400'}`}
         >
-          {internshipStatus.toUpperCase()}
+          {safeT(`scad.studentList.tabs.${internshipStatus.toLowerCase()}`)}
         </span>
         {/* Profile Image */}
         <div className="relative">
@@ -35,33 +39,33 @@ export default function Student({ student, onViewProfile }) {
               priority
             />
           </div>
-          
-        {/* Status Indicator: Only visible if status is "PRO" */}
-        {status === 'PRO' && (
-          <span className="absolute -top-2 -right-2 px-2 py-1 bg-white rounded-full text-xs font-medium text-[#2a5f74] border border-[#3298BA]">
-            {status}
-          </span>
-        )}
+
+          {/* Status Indicator: Only visible if status is "PRO" */}
+          {status === 'PRO' && (
+            <span className="absolute -top-2 -right-2 px-2 py-1 bg-white rounded-full text-xs font-medium text-[#2a5f74] border border-[#3298BA]">
+              {status}
+            </span>
+          )}
         </div>
 
         {/* Student Info */}
         <div className="text-center space-y-1">
           <h3 className="font-semibold text-gray-800">{name}</h3>
           <p className="text-sm text-gray-700">{major}</p>
-          <span className="text-sm text-gray-700">Semester {semester}</span>
+          <span className="text-sm text-gray-700">{safeT('scad.studentDirectory.filters.semester')} {semester}</span>
         </div>
 
         {/* View Profile Button */}
-         <CustomButton
-        
-            variant="primary"
-            text={"View Profile"}
-            // icon={nextStatus === 'rejected' ? faTimesCircle :
-            //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
-            onClick={onViewProfile}
-            width="w-40"
-          />
+        <CustomButton
+
+          variant="primary"
+          text={safeT('scad.student.viewProfile')}
+          // icon={nextStatus === 'rejected' ? faTimesCircle :
+          //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
+          onClick={onViewProfile}
+          width="w-40"
+        />
+      </div>
     </div>
-  </div>
   );
 }

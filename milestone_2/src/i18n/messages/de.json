@@ -766,6 +766,67 @@
       "size": "Größe",
       "allIndustries": "Alle Branchen",
       "allSizes": "Alle Größen"
+    },
+    "studentDirectory": {
+      "title": "STUDENTENVERZEICHNIS",
+      "searchPlaceholder": "Suche Studenten nach Name, E-Mail oder Studiengang ...",
+      "infoCard": {
+        "badge": "VERZEICHNIS",
+        "title": "Studentenverzeichnisverwaltung",
+        "description": "Greifen Sie auf umfassende Profile aller SCAD-Studenten zu, die im Praktikumssystem registriert sind, um akademische Unterstützung und Matching von Möglichkeiten zu ermöglichen.",
+        "studentInfoAvailableTitle": "Verfügbare Studenteninformationen:",
+        "items": {
+          "academicDetails": "Akademische Details (Studiengang, Nebenfach, voraussichtliches Abschlussdatum)",
+          "skillsInventory": "Fähigkeiteninventar und Kompetenzstufen",
+          "internshipHistory": "Praktikumshistorie und Bewertungsergebnisse",
+          "assessmentResults": "Bewertungsergebnisse und Karriereinteressen",
+          "contactInfo": "Kontaktinformationen und Kommunikationspräferenzen"
+        },
+        "privacyNotice": "Datenschutzhinweis: Der Zugriff auf Studenteninformationen ist auf autorisiertes Personal beschränkt und unterliegt den Datenschutzbestimmungen. Verwenden Sie Informationen nur für legitime Bildungszwecke."
+      },
+      "filters": {
+        "major": "Studiengang",
+        "status": "Status",
+        "semester": "Semester",
+        "allMajors": "Alle Studiengänge",
+        "allStatuses": "Alle Status",
+        "allSemesters": "Alle Semester"
+      }
+    },
+    "studentList": {
+      "tabs": {
+        "all": "ALLE",
+        "current": "AKTUELL",
+        "completed": "ABGESCHLOSSEN",
+        "evaluated": "BEWERTET"
+      },
+      "emptyState": {
+        "noStudents": "Keine Studenten gefunden, die Ihren Kriterien entsprechen",
+        "adjust": "Versuchen Sie, Ihre Suche oder Filter anzupassen"
+      }
+    },
+    "studentProfile": {
+      "sections": {
+        "academicInformation": "Akademische Informationen",
+        "education": "Ausbildung",
+        "skills": "Fähigkeiten",
+        "personalityTraits": "Persönlichkeitsmerkmale",
+        "jobInterests": "Berufliche Interessen",
+        "experience": "Erfahrung",
+        "internships": "Praktika"
+      },
+      "fields": {
+        "studentId": "Studenten-ID",
+        "semester": "Semester",
+        "gpa": "Notendurchschnitt",
+        "major": "Studiengang",
+        "faculty": "Fakultät"
+      },
+      "rating": "Bewertung",
+      "notAvailable": "Nicht verfügbar"
+    },
+    "student": {
+      "viewProfile": "Profil ansehen"
     }
   }
 }
