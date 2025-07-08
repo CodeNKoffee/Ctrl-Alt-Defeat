@@ -855,6 +855,48 @@
         },
         "note": "Dieses Dashboard ermöglicht es SCAD-Administratoren, die Qualität und Integrität aller für Studenten verfügbaren Praktikumsmöglichkeiten zu gewährleisten und sicherzustellen, dass sie mit den Bildungszielen und professionellen Standards übereinstimmen."
       }
+    },
+    "evaluationAnalytics": {
+      "title": "EVALUATIONSANALYSEN",
+      "badge": "ANALYSEN",
+      "cardTitle": "Praktikumsbewertungsanalysen",
+      "description": "Greifen Sie auf Studentenfeedback zu Praktikumserfahrungen zu, um Qualitätspartnerschaften aufrechtzuerhalten und Fakultätsberater zu informieren.",
+      "insights": {
+        "title": "Evaluationseinblicke:",
+        "items": {
+          "assessments": "Umfassende Studentenbewertungen von Partnerunternehmen einsehen",
+          "ratings": "Bewertungen über wichtige Metriken überwachen (Mentoring, Lernumgebung, Arbeitsbelastung)",
+          "themes": "Wiederkehrende Themen im qualitativen Feedback verfolgen",
+          "companies": "Herausragende Unternehmen und solche, die Intervention benötigen, identifizieren",
+          "trends": "Bewertungstrends über Branchen und Zeiträume hinweg vergleichen"
+        }
+      },
+      "importantNote": "Wichtig: Studentenbewertungen spielen eine entscheidende Rolle bei der Erneuerung von Partnerschaften und der Entwicklung des Lehrplans."
+    }
+  },
+  "uploadDocuments": {
+    "title": "Laden Sie Ihre Dokumente hoch",
+    "resume": {
+      "label": "Lebenslauf",
+      "required": "*",
+      "error": "Lebenslauf ist erforderlich und muss vollständig hochgeladen werden."
+    },
+    "coverLetter": {
+      "label": "Anschreiben",
+      "textLabel": "Schreiben Sie Ihr eigenes Anschreiben",
+      "placeholder": "Geben Sie hier Ihr Anschreiben ein..."
+    },
+    "links": {
+      "label": "Fügen Sie einen Link zu Ihrem GitHub-Profil und/oder Ihrer Website hinzu",
+      "placeholder": "https://beispiel.de"
+    },
+    "buttons": {
+      "upload": "Hochladen",
+      "cancel": "Abbrechen"
+    },
+    "feedback": {
+      "success": "Erfolgreich!",
+      "successMessage": "Ihre Dokumente wurden erfolgreich hochgeladen."
     }
   }
 }

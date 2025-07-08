@@ -3,6 +3,8 @@
 // Import tools we need: React hooks to manage state and refs, and lottie-web to show animations
 import React, { useState, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 // Import Lottie dynamically with SSR disabled
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
@@ -17,6 +19,9 @@ import CustomButton from './shared/CustomButton';
 
 // Create the main component for uploading documents
 const UploadDocuments = ({ open, onClose, internshipId }) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   // States for Resume
   const [resumeFile, setResumeFile] = useState(null);
   const [isResumeUploading, setIsResumeUploading] = useState(false);
@@ -171,7 +176,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
 
   const handleActualSubmit = () => {
     if (!resumeFile || !resumeUploadComplete) {
-      setResumeError('Resume is required and must finish uploading.');
+      setResumeError(safeT('uploadDocuments.resume.error'));
       return;
     }
     setResumeError('');
@@ -212,14 +217,14 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
     const file = type === 'resume' ? resumeFile : coverLetterFile;
     const uploadComplete = type === 'resume' ? resumeUploadComplete : coverLetterUploadComplete;
     const progress = type === 'resume' ? resumeUploadProgress : coverLetterUploadProgress;
-    const title = type === 'resume' ? 'Resume' : 'Cover Letter';
+    const title = type === 'resume' ? safeT('uploadDocuments.resume.label') : safeT('uploadDocuments.coverLetter.label');
     const isRequired = type === 'resume';
 
     return (
       <div style={{ width: '48%', display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
           <label style={{ color: '#2A5F74', fontSize: '16px', fontWeight: '600', display: 'block', textAlign: 'left' }}>
-            {title} {isRequired && <span style={{ color: '#D32F2F' }}>*</span>}
+            {title} {isRequired && <span style={{ color: '#D32F2F' }}>{safeT('uploadDocuments.resume.required')}</span>}
           </label>
 
           {type === 'resume' && resumeError && (
@@ -342,7 +347,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
                 e.target.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.05)';
               }}>
               <FontAwesomeIcon icon={faCloudArrowUp} style={{ width: '28px', height: '28px', color: '#318FA8' }} />
-              <span style={{ fontWeight: '600', fontSize: '14px' }}>Upload</span>
+              <span style={{ fontWeight: '600', fontSize: '14px' }}>{safeT('uploadDocuments.buttons.upload')}</span>
             </button>
           )}
           <input
@@ -429,10 +434,10 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                Success!
+                {safeT('uploadDocuments.feedback.success')}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
-                Your documents have been successfully uploaded.
+                {safeT('uploadDocuments.feedback.successMessage')}
               </div>
             </motion.div>
           </motion.div>
@@ -481,7 +486,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
           borderBottom: '2px solid rgba(0, 0, 0, 0.1)',
           paddingBottom: '12px'
         }}>
-          Upload Your Documents
+          {safeT('uploadDocuments.title')}
         </h1>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px', marginBottom: '20px' }}>
@@ -497,11 +502,13 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
             marginBottom: '10px',
             display: 'block',
             textAlign: 'left'
-          }}>Write your own Cover Letter</label>
+          }}>
+            {safeT('uploadDocuments.coverLetter.textLabel')}
+          </label>
           <textarea
             value={coverLetterText}
             onChange={handleCoverLetterChange}
-            placeholder="Type your cover letter here..."
+            placeholder={safeT('uploadDocuments.coverLetter.placeholder')}
             style={{
               width: '100%',
               height: '120px',
@@ -535,7 +542,9 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
             display: 'block',
             marginBottom: '10px',
             textAlign: 'left'
-          }}>Include a link to your GitHub profile and/or website</label>
+          }}>
+            {safeT('uploadDocuments.links.label')}
+          </label>
           {links.map((link, index) => (
             <div
               key={link.id}
@@ -556,7 +565,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
                   type="text"
                   value={link.value}
                   onChange={(e) => handleLinkChange(link.id, e.target.value)}
-                  placeholder="https://example.com"
+                  placeholder={safeT('uploadDocuments.links.placeholder')}
                   style={{
                     width: '100%',
                     border: '1px solid #D9F0F4',
@@ -635,13 +644,13 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
           <CustomButton
             onClick={handleCancelAndClose}
             variant="danger"
-            text="Cancel"
+            text={safeT('uploadDocuments.buttons.cancel')}
             style={{ width: '200px' }}
           />
           <CustomButton
             onClick={handleActualSubmit}
             variant="primary"
-            text="Upload"
+            text={safeT('uploadDocuments.buttons.upload')}
             disabled={!resumeFile || !resumeUploadComplete || isResumeUploading}
             isLoading={isResumeUploading}
             style={{

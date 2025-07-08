@@ -1003,6 +1003,9 @@ function WorkshopsView() {
 }
 
 function StudentEvalsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRating, setSelectedRating] = useState('all');
 
@@ -1036,7 +1039,7 @@ function StudentEvalsView() {
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
         <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          EVALUATION ANALYTICS
+          {safeT('scad.evaluationAnalytics.title')}
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
@@ -1054,45 +1057,47 @@ function StudentEvalsView() {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              ANALYTICS
+              {safeT('scad.evaluationAnalytics.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Internships Evaluation Analytics</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('scad.evaluationAnalytics.cardTitle')}
+            </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Access and analyze student feedback on internship experiences to maintain quality partnerships and inform faculty advisors.</p>
+              <p className="mb-3">{safeT('scad.evaluationAnalytics.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Evaluation Insights:
+                  {safeT('scad.evaluationAnalytics.insights.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>View comprehensive student assessments of partner companies</span>
+                    <span>{safeT('scad.evaluationAnalytics.insights.items.assessments')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Monitor ratings across key metrics (mentorship, learning environment, workload)</span>
+                    <span>{safeT('scad.evaluationAnalytics.insights.items.ratings')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Track recurring themes in qualitative feedback</span>
+                    <span>{safeT('scad.evaluationAnalytics.insights.items.themes')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Identify standout companies and those requiring intervention</span>
+                    <span>{safeT('scad.evaluationAnalytics.insights.items.companies')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Compare evaluation trends across industries and time periods</span>
+                    <span>{safeT('scad.evaluationAnalytics.insights.items.trends')}</span>
                   </li>
                 </ul>
               </div>
 
               <div className="bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 <p className="text-metallica-blue-700 font-medium">
-                  Important: Student evaluations play a critical role in determining future partnership renewals and informing curriculum development.
+                  {safeT('scad.evaluationAnalytics.importantNote')}
                 </p>
               </div>
             </div>

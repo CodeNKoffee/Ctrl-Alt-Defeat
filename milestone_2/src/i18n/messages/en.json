@@ -855,6 +855,48 @@
         },
         "note": "This dashboard enables SCAD administrators to maintain the quality and integrity of all internship opportunities available to students, ensuring they align with educational objectives and professional standards."
       }
+    },
+    "evaluationAnalytics": {
+      "title": "EVALUATION ANALYTICS",
+      "badge": "ANALYTICS",
+      "cardTitle": "Internships Evaluation Analytics",
+      "description": "Access and analyze student feedback on internship experiences to maintain quality partnerships and inform faculty advisors.",
+      "insights": {
+        "title": "Evaluation Insights:",
+        "items": {
+          "assessments": "View comprehensive student assessments of partner companies",
+          "ratings": "Monitor ratings across key metrics (mentorship, learning environment, workload)",
+          "themes": "Track recurring themes in qualitative feedback",
+          "companies": "Identify standout companies and those requiring intervention",
+          "trends": "Compare evaluation trends across industries and time periods"
+        }
+      },
+      "importantNote": "Important: Student evaluations play a critical role in determining future partnership renewals and informing curriculum development."
+    }
+  },
+  "uploadDocuments": {
+    "title": "Upload Your Documents",
+    "resume": {
+      "label": "Resume",
+      "required": "*",
+      "error": "Resume is required and must finish uploading."
+    },
+    "coverLetter": {
+      "label": "Cover Letter",
+      "textLabel": "Write your own Cover Letter",
+      "placeholder": "Type your cover letter here..."
+    },
+    "links": {
+      "label": "Include a link to your GitHub profile and/or website",
+      "placeholder": "https://example.com"
+    },
+    "buttons": {
+      "upload": "Upload",
+      "cancel": "Cancel"
+    },
+    "feedback": {
+      "success": "Success!",
+      "successMessage": "Your documents have been successfully uploaded."
     }
   }
 }
