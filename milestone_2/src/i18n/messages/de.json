@@ -1172,6 +1172,87 @@
         "major": "Studiengang",
         "submitted": "Eingereicht",
         "seeMore": "Mehr anzeigen"
+      },
+      "reportCreationDashboard": {
+        "title": {
+          "create": "Praktikumsbericht erstellen",
+          "edit": "Praktikumsbericht bearbeiten"
+        },
+        "form": {
+          "reportTitle": {
+            "label": "Berichtstitel",
+            "placeholder": "Geben Sie einen beschreibenden Titel für Ihren Bericht ein"
+          },
+          "company": {
+            "label": "Unternehmensname/Organisation",
+            "placeholder": "Wo haben Sie Ihre Praktika absolviert?"
+          },
+          "major": {
+            "label": "Studiengang",
+            "placeholder": "Wählen Sie Ihren Studiengang",
+            "options": {
+              "csen": "CSEN",
+              "dmet": "DMET",
+              "biotech": "Biotechnologie",
+              "law": "Recht"
+            }
+          },
+          "courses": {
+            "label": "Kurse, die Ihnen während Ihrer Praktika geholfen haben",
+            "placeholder": "Wählen Sie einen Kurs"
+          }
+        },
+        "guidelines": {
+          "title": "Berichtsstruktur-Richtlinien",
+          "introduction": "Einleitung: Beschreiben Sie das Unternehmen und Ihre ersten Erwartungen",
+          "body": "Körper: Detailieren Sie Ihre Verantwortlichkeiten, Projekte und wichtige Lernerfahrungen",
+          "conclusion": "Schlussfolgerung: Summieren Sie Ihre Erfahrung und was Sie daraus gelernt haben"
+        },
+        "sections": {
+          "introduction": {
+            "label": "Einleitung",
+            "placeholder": "Beschreiben Sie das Unternehmen und Ihre Rolle..."
+          },
+          "body": {
+            "label": "Körper",
+            "placeholder": "Detailieren Sie Ihre Verantwortlichkeiten und Erfahrungen..."
+          },
+          "conclusion": {
+            "label": "Schlussfolgerung",
+            "placeholder": "Summieren Sie Ihre Erfahrung und was Sie daraus gelernt haben"
+          }
+        },
+        "buttons": {
+          "submit": "Bericht einreichen",
+          "submitEdit": "Einreichen",
+          "saveDraft": "Entwurf speichern",
+          "saveChanges": "Änderungen speichern",
+          "saving": "Speichern...",
+          "saved": "✓ Speichern!"
+        },
+        "preview": {
+          "title": "Berichtsvorschau",
+          "defaultTitle": "Ihr Berichtstitel",
+          "defaultCompany": "Unternehmensname",
+          "major": "Studiengang",
+          "notSpecified": "Nicht angegeben",
+          "submittedBy": "Eingereicht von",
+          "studentName": "Studentenname",
+          "relevantCourses": "Relevante Kurse",
+          "notProvided": "Nicht angegeben"
+        },
+        "feedback": {
+          "success": "Erfolgreich!",
+          "updated": "Aktualisiert!",
+          "submitSuccess": {
+            "create": "Ihr Bericht wurde erfolgreich eingereicht.",
+            "edit": "Your report has been successfully updated."
+          },
+          "draftSuccess": {
+            "create": "Ihr Bericht wurde erfolgreich als Entwurf gespeichert.",
+            "edit": "Ihr Bericht wurde erfolgreich als Entwurf aktualisiert."
+          }
+        }
       }
     }
   }

@@ -1169,6 +1169,87 @@
         "major": "Major",
         "submitted": "Submitted",
         "seeMore": "See More"
+      },
+      "reportCreationDashboard": {
+        "title": {
+          "create": "Create Internship Report",
+          "edit": "Edit Internship Report"
+        },
+        "form": {
+          "reportTitle": {
+            "label": "Report Title",
+            "placeholder": "Enter a descriptive title for your report"
+          },
+          "company": {
+            "label": "Company/Organization Name",
+            "placeholder": "Where did you complete your internship?"
+          },
+          "major": {
+            "label": "Select your major",
+            "placeholder": "Select your major",
+            "options": {
+              "csen": "CSEN",
+              "dmet": "DMET",
+              "biotech": "Biotechnology",
+              "law": "Law"
+            }
+          },
+          "courses": {
+            "label": "Add courses that helped you during your internship",
+            "placeholder": "Select a course"
+          }
+        },
+        "guidelines": {
+          "title": "Report Structure Guidelines",
+          "introduction": "Introduction: Describe the company and your initial expectations",
+          "body": "Body: Detail your responsibilities, projects, and key learning experiences",
+          "conclusion": "Conclusion: Summarize your experience and what you gained from it"
+        },
+        "sections": {
+          "introduction": {
+            "label": "Introduction",
+            "placeholder": "Introduce the company and your role..."
+          },
+          "body": {
+            "label": "Body",
+            "placeholder": "Detail your responsibilities and experiences..."
+          },
+          "conclusion": {
+            "label": "Conclusion",
+            "placeholder": "Summarize what you learned and gained..."
+          }
+        },
+        "buttons": {
+          "submit": "Submit Report",
+          "submitEdit": "Submit",
+          "saveDraft": "Save Draft",
+          "saveChanges": "Save Changes",
+          "saving": "Saving...",
+          "saved": "✓ Saved!"
+        },
+        "preview": {
+          "title": "Report Preview",
+          "defaultTitle": "Your Report Title",
+          "defaultCompany": "Company Name",
+          "major": "Major",
+          "notSpecified": "Not specified",
+          "submittedBy": "Submitted By",
+          "studentName": "Student Name",
+          "relevantCourses": "Relevant Courses",
+          "notProvided": "Not provided"
+        },
+        "feedback": {
+          "success": "Success!",
+          "updated": "Updated!",
+          "submitSuccess": {
+            "create": "Your report has been successfully submitted.",
+            "edit": "Your report has been successfully updated."
+          },
+          "draftSuccess": {
+            "create": "Your report has been successfully saved as a draft.",
+            "edit": "Your report has been successfully saved as a draft update."
+          }
+        }
       }
     }
   }

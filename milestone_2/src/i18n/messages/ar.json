@@ -1189,6 +1189,87 @@
         "major": "التخصص",
         "submitted": "مقدمة",
         "seeMore": "عرض المزيد"
+      },
+      "reportCreationDashboard": {
+        "title": {
+          "create": "إنشاء تقرير التدريب",
+          "edit": "تعديل تقرير التدريب"
+        },
+        "form": {
+          "reportTitle": {
+            "label": "عنوان التقرير",
+            "placeholder": "أدخل عنوانًا وصفيًا لتقريرك"
+          },
+          "company": {
+            "label": "اسم الشركة/المنظمة",
+            "placeholder": "أين أنتم أنهيتم التدريب؟"
+          },
+          "major": {
+            "label": "التخصص",
+            "placeholder": "اختر التخصص الخاص بك",
+            "options": {
+              "csen": "CSEN",
+              "dmet": "DMET",
+              "biotech": "Biotechnology",
+              "law": "Law"
+            }
+          },
+          "courses": {
+            "label": "الدورات التي ساعدتك أثناء التدريب",
+            "placeholder": "اختر دورة"
+          }
+        },
+        "guidelines": {
+          "title": "إرشادات بناء التقرير",
+          "introduction": "المقدمة: وصف الشركة والتوقعات الأولية",
+          "body": "الجسم: تفصيل المسؤوليات والمشاريع والتعلم المهم",
+          "conclusion": "الخلاصة: إعادة النظر في التعلم وما تعلمته"
+        },
+        "sections": {
+          "introduction": {
+            "label": "المقدمة",
+            "placeholder": "وصف الشركة ودورك..."
+          },
+          "body": {
+            "label": "الجسم",
+            "placeholder": "تفصيل المسؤوليات والتعلم..."
+          },
+          "conclusion": {
+            "label": "الخلاصة",
+            "placeholder": "إعادة النظر في التعلم وما تعلمته"
+          }
+        },
+        "buttons": {
+          "submit": "إرسال التقرير",
+          "submitEdit": "إرسال",
+          "saveDraft": "حفظ المسودة",
+          "saveChanges": "حفظ التعديلات",
+          "saving": "حفظ...",
+          "saved": "✓ حفظ!"
+        },
+        "preview": {
+          "title": "معاينة التقرير",
+          "defaultTitle": "عنوان التقرير",
+          "defaultCompany": "اسم الشركة",
+          "major": "التخصص",
+          "notSpecified": "غير محدد",
+          "submittedBy": "أرسل من قبل",
+          "studentName": "اسم الطالب",
+          "relevantCourses": "الدورات المتعلقة",
+          "notProvided": "غير مقدم"
+        },
+        "feedback": {
+          "success": "تم بنجاح!",
+          "updated": "تم التحديث!",
+          "submitSuccess": {
+            "create": "تم إرسال التقرير بنجاح.",
+            "edit": "تم تحديث التقرير بنجاح."
+          },
+          "draftSuccess": {
+            "create": "تم حفظ التقرير بنجاح كمسودة.",
+            "edit": "تم تحديث التقرير بنجاح كمسودة."
+          }
+        }
       }
     }
   }
