@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import { faTimes, faCheck, faExpand, faFile, faFileImage, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { INDUSTRY_ICONS } from "../../constants";
@@ -18,6 +20,9 @@ const BG = "bg-[#eaf3f6]";
 
 export default function CompanyDetailsModal({ open, onClose, companyName, companyEmail, companyLogo, industry, size, documentation = [], registrationDate, onCompanyRemoval = () => { } }) {
   if (!open) return null;
+
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
 
   // Notepad state (6 notes for Figma style)
   const [notes, setNotes] = useState(["", "", "", "", "", ""]);
@@ -129,12 +134,12 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                {feedback === 'accepted' ? 'Accepted!' : 'Rejected!'}
+                {feedback === 'accepted' ? safeT('scad.companyDetails.feedback.accepted') : safeT('scad.companyDetails.feedback.rejected')}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
                 {feedback === 'accepted'
-                  ? 'This company has been approved and added to your list.'
-                  : 'This company has been rejected and removed from your list.'}
+                  ? safeT('scad.companyDetails.feedback.acceptedMessage')
+                  : safeT('scad.companyDetails.feedback.rejectedMessage')}
               </div>
             </motion.div>
           </motion.div>
@@ -153,14 +158,14 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
           </button>
           {/* Tab Header */}
           <div className="modal-header">
-            <h2 className="text-xl font-bold text-[#2A5F74]">Company Details</h2>
+            <h2 className="text-xl font-bold text-[#2A5F74]">{safeT('scad.companyDetails.title')}</h2>
           </div>
           <div className="modal-content">
             {/* Top Row: Profile & Notepad */}
             <div className="modal-top-row">
               {/* Profile Card (inlined, with card styling) */}
               <div className="companyprofilecard-root bg-white p-6 flex flex-col items-center justify-center">
-                <div className="companyprofilecard-title">Profile</div>
+                <div className="companyprofilecard-title">{safeT('scad.companyDetails.profile')}</div>
                 <div className="companyprofilecard-logo-container">
                   <Image src={companyLogo} alt="Company Logo" width={72} height={72} className="companyprofilecard-logo" />
                 </div>
@@ -169,7 +174,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
               </div>
               {/* Notepad */}
               <div className="modal-notepad">
-                <div className="modal-notepad-title">Note Pad</div>
+                <div className="modal-notepad-title">{safeT('scad.companyDetails.notePad')}</div>
                 <div className={`modal-notepad-container ${BORDER} ${ROUNDED} ${BG}`} >
                   {/* Inputs */}
                   {notes.map((note, idx) => (
@@ -199,7 +204,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
             <div className="modal-bottom-row">
               {/* Size Card (card style) */}
               <div className="companysizecard-root-big bg-white flex flex-col items-center justify-center p-1">
-                <div className="companysizecard-title">Company Size</div>
+                <div className="companysizecard-title">{safeT('scad.companyDetails.companySize')}</div>
                 <div className="companysizecard-bar-container" style={{ position: 'relative' }}>
                   <div className="companysizecard-bar-with-radius">
 
@@ -229,7 +234,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
               </div>
               {/* Industry Card (card style) */}
               <div className="companyindustrycard-root bg-white flex flex-col items-center justify-center p-1" style={{ minHeight: 200 }}>
-                <div className="companyindustrycard-title">Industry</div>
+                <div className="companyindustrycard-title">{safeT('scad.companyDetails.industry')}</div>
                 <div className="companyindustrycard-icon-container-big companyindustrycard-icon-large">
                   {INDUSTRY_ICONS[industry] && <span>{INDUSTRY_ICONS[industry]}</span>}
                 </div>
@@ -242,9 +247,9 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
               </div>
               {/* Documentation (card style) */}
               <div className="companydetails-third-width companydocumentscard-root bg-white p-1 flex flex-col companydetails-flex-grow">
-                <div className="companydocumentscard-title">Verification Documents</div>
+                <div className="companydocumentscard-title">{safeT('scad.companyDetails.verificationDocs')}</div>
                 <div className="companydocumentscard-list">
-                  {docs.length === 0 && <div className="companydocumentscard-empty">No documents provided.</div>}
+                  {docs.length === 0 && <div className="companydocumentscard-empty">{safeT('scad.companyDetails.noDocuments')}</div>}
                   {docs.map((doc, idx) => (
                     <div key={idx} className="companydocumentscard-item">
                       {/* File Icon logic */}
@@ -268,7 +273,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
               variant="primary"
               onClick={handleAccept}
               icon={faCheck}
-              text="Accept"
+              text={safeT('scad.companyDetails.accept')}
               className="flex-1 w-full"
               width="w-full"
               showIconOnLoading={false}
@@ -277,7 +282,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
               variant="danger"
               onClick={handleReject}
               icon={faTimes}
-              text="Reject"
+              text={safeT('scad.companyDetails.reject')}
               className="flex-1 w-full"
               width="w-full"
               showIconOnLoading={false}

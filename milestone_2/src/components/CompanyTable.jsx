@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import SearchBar from './shared/SearchBar';
 import IndustryFilter from './IndustryFilter';
 import CompanyDetails from './CompanyDetails';
@@ -10,6 +12,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand } from "@fortawesome/free-solid-svg-icons";
 
 export default function CompanyTable({ companies, onSidebarToggle = () => { }, onCompanyRemoval = () => { } }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIndustry, setSelectedIndustry] = useState('');
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -95,9 +100,9 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
           </div> */}
           {/* Column Headers */}
           <div className="grid grid-cols-12 gap-2 mb-3 px-4 text-xs font-medium text-gray-500 tracking-wide">
-            <div className="col-span-5">COMPANY</div>
-            <div className={`col-span-5 pl-0 ${selectedCompany ? "sm:pl-0 md:pl-1 lg:pl-8" : "sm:pl-6 md:pl-8 lg:pl-14"}`}>INDUSTRY</div>
-            <div className="col-span-2 text-right">SIZE</div>
+            <div className="col-span-5">{safeT('scad.companyTable.headers.company')}</div>
+            <div className={`col-span-5 pl-0 ${selectedCompany ? "sm:pl-0 md:pl-1 lg:pl-8" : "sm:pl-6 md:pl-8 lg:pl-14"}`}>{safeT('scad.companyTable.headers.industry')}</div>
+            <div className="col-span-2 text-right">{safeT('scad.companyTable.headers.size')}</div>
           </div>
 
           {/* Company Rows */}
@@ -123,8 +128,8 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              <p className="text-gray-500 font-medium">No companies found matching your criteria</p>
-              <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
+              <p className="text-gray-500 font-medium">{safeT('scad.companyTable.emptyState.noCompanies')}</p>
+              <p className="text-gray-400 text-sm mt-1">{safeT('scad.companyTable.emptyState.tryAdjusting')}</p>
             </div>
           )}
         </div>
@@ -141,7 +146,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
                 onClick={() => handleExpandModal(selectedCompany)}
                 className="companyrow-size-badge bg-white/80 text-metallica-blue-700 !border !border-metallica-blue-400 px-3 py-1 rounded-full text-xs font-medium transition-colors duration-200 hover:bg-white"
               >
-                Expand
+                {safeT('scad.companyTable.sidebar.expand')}
               </button>
               <button
                 onClick={handleCloseSidebar}
@@ -152,7 +157,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
                 </svg>
               </button>
               <div className="absolute top-0 left-0 px-4 py-2 bg-metallica-blue-700 text-white text-lg font-bold rounded-br-lg">
-                Company Details
+                {safeT('scad.companyTable.sidebar.title')}
               </div>
             </div>
             <div className="flex-1 overflow-y-auto p-4">

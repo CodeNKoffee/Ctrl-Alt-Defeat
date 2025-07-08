@@ -709,5 +709,63 @@
       "yes": "Ja",
       "no": "Nein"
     }
+  },
+  "scad": {
+    "dashboard": {
+      "title": "UNTERNEHMENSBEWERBUNGEN",
+      "companyReview": {
+        "badge": "VERWALTUNG",
+        "title": "Unternehmenspartnerschaft Bewertungsportal",
+        "description": "Effiziente Verwaltung und Bewertung von Organisationsbewerbungen für SCAD-Praktikumspartnerschaften. Überprüfen Sie Unternehmensprofile, Praktikumsangebote und historische Leistungsdaten, um fundierte Entscheidungen zu treffen.",
+        "featuresTitle": "Wichtige Partnerschaftsverwaltungsfunktionen:",
+        "features": {
+          "reviewApplications": "Umfassende Überprüfung neuer Unternehmensbewerbungen und Profile",
+          "evaluateQuality": "Bewertung der Praktikumsqualität und Übereinstimmung mit akademischen Anforderungen",
+          "studentFeedback": "Integration von Studenten-Feedback und Zufriedenheitsmetriken",
+          "partnershipTracking": "Verfolgung der Partnerschaftshistorie und Erneuerungsverwaltung"
+        },
+        "qualityNote": "Sorgen Sie für hochwertige Praktikumsmöglichkeiten, indem Sie das Angebot, die Arbeitsumgebung und das Studentenentwicklungspotenzial jedes Unternehmens gründlich bewerten."
+      }
+    },
+    "companyTable": {
+      "headers": {
+        "company": "UNTERNEHMEN",
+        "industry": "BRANCHE", 
+        "size": "GRÖSSE"
+      },
+      "sidebar": {
+        "title": "Unternehmensdetails",
+        "expand": "Erweitern"
+      },
+      "emptyState": {
+        "noCompanies": "Keine Unternehmen gefunden, die Ihren Kriterien entsprechen",
+        "tryAdjusting": "Versuchen Sie, Ihre Suche oder Filter anzupassen"
+      },
+      "searchPlaceholder": "Suche nach Unternehmen nach Name oder Branche ..."
+    },
+    "companyDetails": {
+      "title": "Unternehmensdetails",
+      "profile": "Profil",
+      "notePad": "Notizblock",
+      "companySize": "Unternehmensgröße",
+      "industry": "Branche",
+      "verificationDocs": "Verifizierungsdokumente",
+      "noDocuments": "Keine Dokumente bereitgestellt.",
+      "registeredOn": "Registriert am",
+      "accept": "Akzeptieren",
+      "reject": "Ablehnen",
+      "feedback": {
+        "accepted": "Akzeptiert!",
+        "rejected": "Abgelehnt!",
+        "acceptedMessage": "Dieses Unternehmen wurde genehmigt und zu Ihrer Liste hinzugefügt.",
+        "rejectedMessage": "Dieses Unternehmen wurde abgelehnt und aus Ihrer Liste entfernt."
+      }
+    },
+    "filters": {
+      "industry": "Branche",
+      "size": "Größe",
+      "allIndustries": "Alle Branchen",
+      "allSizes": "Alle Größen"
+    }
   }
 }

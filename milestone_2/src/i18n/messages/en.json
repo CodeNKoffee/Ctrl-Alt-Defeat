@@ -709,5 +709,63 @@
       "yes": "Yes",
       "no": "No"
     }
+  },
+  "scad": {
+    "dashboard": {
+      "title": "COMPANY APPLICATIONS",
+      "companyReview": {
+        "badge": "MANAGEMENT",
+        "title": "Company Partnership Review Portal",
+        "description": "Efficiently manage and evaluate organization applications for SCAD internship partnerships. Review company profiles, internship offerings, and historical performance data to make informed decisions.",
+        "featuresTitle": "Key Partnership Management Features:",
+        "features": {
+          "reviewApplications": "Comprehensive review of new company applications and profiles",
+          "evaluateQuality": "Evaluation of internship quality and alignment with academic requirements",
+          "studentFeedback": "Student feedback integration and satisfaction metrics",
+          "partnershipTracking": "Partnership history tracking and renewal management"
+        },
+        "qualityNote": "Maintain high-quality internship opportunities by thoroughly assessing each company's offerings, workplace environment, and student development potential."
+      }
+    },
+    "companyTable": {
+      "headers": {
+        "company": "COMPANY",
+        "industry": "INDUSTRY", 
+        "size": "SIZE"
+      },
+      "sidebar": {
+        "title": "Company Details",
+        "expand": "Expand"
+      },
+      "emptyState": {
+        "noCompanies": "No companies found matching your criteria",
+        "tryAdjusting": "Try adjusting your search or filter"
+      },
+      "searchPlaceholder": "Search companies by name or industry ..."
+    },
+    "companyDetails": {
+      "title": "Company Details",
+      "profile": "Profile",
+      "notePad": "Note Pad",
+      "companySize": "Company Size",
+      "industry": "Industry",
+      "verificationDocs": "Verification Documents",
+      "noDocuments": "No documents provided.",
+      "registeredOn": "Registered on",
+      "accept": "Accept",
+      "reject": "Reject",
+      "feedback": {
+        "accepted": "Accepted!",
+        "rejected": "Rejected!",
+        "acceptedMessage": "This company has been approved and added to your list.",
+        "rejectedMessage": "This company has been rejected and removed from your list."
+      }
+    },
+    "filters": {
+      "industry": "Industry",
+      "size": "Size",
+      "allIndustries": "All Industries",
+      "allSizes": "All Sizes"
+    }
   }
 }

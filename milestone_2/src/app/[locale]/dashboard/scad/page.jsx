@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { MOCK_COMPANIES, MOCK_EVALUATIONS } from '../../../../../constants/mockData';
@@ -25,6 +27,8 @@ import CustomButton from '@/components/shared/CustomButton';
 import { sampleWorkshops } from '../../../../../constants/mockData';
 
 function ScadDashboardView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const currentUser = useSelector((state) => state.auth.currentUser);
   const router = useRouter();
 
@@ -78,7 +82,7 @@ function ScadDashboardView() {
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
         <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          COMPANY APPLICATIONS
+          {safeT('scad.dashboard.title')}
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
 
@@ -98,40 +102,40 @@ function ScadDashboardView() {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              MANAGEMENT
+              {safeT('scad.dashboard.companyReview.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Company Partnership Review Portal</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">{safeT('scad.dashboard.companyReview.title')}</div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Efficiently manage and evaluate organization applications for SCAD internship partnerships. Review company profiles, internship offerings, and historical performance data to make informed decisions.</p>
+              <p className="mb-3">{safeT('scad.dashboard.companyReview.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Key Partnership Management Features:
+                  {safeT('scad.dashboard.companyReview.featuresTitle')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Comprehensive review of new company applications and profiles</span>
+                    <span>{safeT('scad.dashboard.companyReview.features.reviewApplications')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Evaluation of internship quality and alignment with academic requirements</span>
+                    <span>{safeT('scad.dashboard.companyReview.features.evaluateQuality')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Student feedback integration and satisfaction metrics</span>
+                    <span>{safeT('scad.dashboard.companyReview.features.studentFeedback')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Partnership history tracking and renewal management</span>
+                    <span>{safeT('scad.dashboard.companyReview.features.partnershipTracking')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Maintain high-quality internship opportunities by thoroughly assessing each company's offerings, workplace environment, and student development potential.
+                {safeT('scad.dashboard.companyReview.qualityNote')}
               </p>
             </div>
           </div>
@@ -143,18 +147,18 @@ function ScadDashboardView() {
   // Filter sections config for ApplicationsFilterBar (Industry & Size)
   const companyFilterSections = [
     {
-      name: 'Industry',
+      name: safeT('scad.filters.industry'),
       options: [...uniqueIndustries],
       selected: selectedIndustry,
       onChange: (value) => setSelectedIndustry(value),
-      resetLabel: 'All Industries',
+      resetLabel: safeT('scad.filters.allIndustries'),
     },
     {
-      name: 'Size',
+      name: safeT('scad.filters.size'),
       options: [...uniqueSizes],
       selected: selectedSize,
       onChange: (value) => setSelectedSize(value),
-      resetLabel: 'All Sizes',
+      resetLabel: safeT('scad.filters.allSizes'),
     },
   ];
 
@@ -165,7 +169,7 @@ function ScadDashboardView() {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search companies by name or industry ..."
+          searchPlaceholder={safeT('scad.companyTable.searchPlaceholder')}
           onClearFilters={() => { setSearchTerm(''); setSelectedIndustry('all'); setSelectedSize('all'); }}
           filterSections={companyFilterSections}
         />
