@@ -203,6 +203,9 @@ function StudentEvalsView() {
 
 
 function StatisticsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const ReportStatsCard = () => (
     <div className="w-full">
       <div className="bg-white p-6 rounded-2xl shadow-md border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
@@ -220,40 +223,40 @@ function StatisticsView() {
 
           <div className="text-left w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              INSIGHTS & REPORTS
+              {safeT('faculty.dashboard.statistics.badge')}
             </div>
 
             <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
-              Real-Time Statistics & Reporting
+              {safeT('faculty.dashboard.statistics.title')}
             </h2>
 
             <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4 text-gray-700">
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <span className="text-[#3298BA] mr-2">✓</span>
-                  <span>Track accepted, rejected, and flagged reports per internship cycle</span>
+                  <span>{safeT('faculty.dashboard.statistics.features.trackReports')}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#3298BA] mr-2">✓</span>
-                  <span>Monitor average review time across faculty</span>
+                  <span>{safeT('faculty.dashboard.statistics.features.monitorReviewTime')}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#3298BA] mr-2">✓</span>
-                  <span>View top courses most used in internships</span>
+                  <span>{safeT('faculty.dashboard.statistics.features.viewTopCourses')}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#3298BA] mr-2">✓</span>
-                  <span>Discover top-rated companies based on student evaluations</span>
+                  <span>{safeT('faculty.dashboard.statistics.features.discoverTopCompanies')}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#3298BA] mr-2">✓</span>
-                  <span>Identify companies with highest internship participation</span>
+                  <span>{safeT('faculty.dashboard.statistics.features.identifyParticipation')}</span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-[#D9F0F4] text-metallica-blue-700 font-medium px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm w-fit">
-              Generate comprehensive reports based on real-time statistics for strategic decision making.
+              {safeT('faculty.dashboard.statistics.strategicNote')}
             </div>
           </div>
         </div>
@@ -263,7 +266,7 @@ function StatisticsView() {
 
   return (
     <main className="min-h-screen px-6 py-6">
-      <ViewSection title="STATISTICS DASHBOARD">
+      <ViewSection title={safeT('faculty.dashboard.statistics.sectionTitle')}>
         <ReportStatsCard />
       </ViewSection>
       <div>

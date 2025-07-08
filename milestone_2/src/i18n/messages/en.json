@@ -435,6 +435,19 @@
           "fullReportDescription": "View the student's full evaluation including their feedback, company details, main supervisor, and internship duration."
         },
         "qualityNote": "These evaluations contribute to enhancing internship quality and guide future students in making informed choices."
+      },
+      "statistics": {
+        "badge": "INSIGHTS & REPORTS",
+        "title": "Real-Time Statistics & Reporting",
+        "sectionTitle": "STATISTICS DASHBOARD",
+        "features": {
+          "trackReports": "Track accepted, rejected, and flagged reports per internship cycle",
+          "monitorReviewTime": "Monitor average review time across faculty",
+          "viewTopCourses": "View top courses most used in internships",
+          "discoverTopCompanies": "Discover top-rated companies based on student evaluations",
+          "identifyParticipation": "Identify companies with highest internship participation"
+        },
+        "strategicNote": "Generate comprehensive reports based on real-time statistics for strategic decision making."
       }
     },
     "reports": {

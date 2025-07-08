@@ -435,6 +435,19 @@
           "fullReportDescription": "Sehen Sie sich die vollständige Bewertung des Studenten an, einschließlich seines Feedbacks, der Unternehmensdetails, des Hauptbetreuers und der Praktikumsdauer."
         },
         "qualityNote": "Diese Bewertungen tragen zur Verbesserung der Praktikumsqualität bei und helfen zukünftigen Studenten bei der Entscheidungsfindung."
+      },
+      "statistics": {
+        "badge": "EINBLICKE & BERICHTE",
+        "title": "Echtzeit-Statistiken & Berichterstattung",
+        "sectionTitle": "STATISTIK DASHBOARD",
+        "features": {
+          "trackReports": "Verfolgen Sie angenommene, abgelehnte und markierte Berichte pro Praktikumszyklus",
+          "monitorReviewTime": "Überwachen Sie die durchschnittliche Überprüfungszeit bei der Fakultät",
+          "viewTopCourses": "Anzeigen der am häufigsten in Praktika verwendeten Kurse",
+          "discoverTopCompanies": "Entdecken Sie top-bewertete Unternehmen basierend auf Studentenbewertungen",
+          "identifyParticipation": "Identifizieren Sie Unternehmen mit der höchsten Praktikumsteilnahme"
+        },
+        "strategicNote": "Erstellen Sie umfassende Berichte basierend auf Echtzeit-Statistiken für strategische Entscheidungsfindung."
       }
     },
     "reports": {
