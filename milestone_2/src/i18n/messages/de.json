@@ -872,6 +872,49 @@
         }
       },
       "importantNote": "Wichtig: Studentenbewertungen spielen eine entscheidende Rolle bei der Erneuerung von Partnerschaften und der Entwicklung des Lehrplans."
+    },
+    "statisticsDashboard": {
+      "title": "STATISTIK-DASHBOARD",
+      "badge": "ANALYSEN",
+      "cardTitle": "Statistik-Dashboard & Berichterstattung",
+      "description": "Umfassende Analyseplattform zur Überwachung von Leistungskennzahlen und Trends des Praktikumsprogramms.",
+      "features": {
+        "title": "Wichtige Analysefunktionen:",
+        "items": {
+          "realtime": "Echtzeit-Dashboard mit visuellen Berichten und Kennzahlen",
+          "topPerformers": "Top-Unternehmen und Kurse basierend auf Studentenleistung",
+          "tracking": "Verfolgung des Praktikumsberichtsstatus über akademische Zyklen",
+          "faculty": "Analyse der Fakultätsüberprüfungszeit und Effizienzmetriken",
+          "reports": "Exportierbare PDF-Berichte für die akademische Verwaltung"
+        }
+      },
+      "note": "Nutzen Sie diese Analysesuite, um Trends zu erkennen, die Programmeffektivität zu messen und datengestützte Entscheidungen zur Verbesserung der Praktikumsergebnisse zu treffen."
+    },
+    "reportsView": {
+      "title": "ÜBERPRÜFUNG DER STUDENTENBERICHTE",
+      "badge": "AKADEMISCH",
+      "cardTitle": "Studentenberichts-Überprüfungsportal",
+      "description": "Verwalten und verteilen Sie Praktikumsberichte der Studenten an entsprechende Fakultätsmitglieder zur akademischen Bewertung und Rückmeldung.",
+      "features": {
+        "title": "Berichtsverwaltungsfunktionen:",
+        "items": {
+          "access": "Zugriff auf alle eingereichten Praktikumsberichte, organisiert nach Abteilung und Datum",
+          "status": "Berichtsstatus anzeigen (ausstehend, markiert, abgelehnt, akzeptiert)",
+          "assign": "Berichte basierend auf Expertise bestimmten Fakultätsprüfern zuweisen",
+          "monitor": "Überprüfungszeiten und Abschlussquoten der Fakultät überwachen",
+          "track": "Berichtsüberarbeitungszyklen und Neueinreichungen verfolgen"
+        }
+      },
+      "contentControl": {
+        "title": "Inhaltskontrolle:",
+        "items": {
+          "standards": "Sicherstellen, dass Workshop-Inhalte mit Industriestandards und aufkommenden Trends übereinstimmen",
+          "quality": "Qualität und Konsistenz über alle Angebote zur beruflichen Entwicklung hinweg aufrechterhalten",
+          "coordinate": "Koordination mit Branchenpräsentatoren und Fakultätsmoderatoren",
+          "update": "Inhalte bei Bedarf basierend auf Studentenfeedback und Branchenänderungen aktualisieren"
+        }
+      },
+      "academicNote": "Diese Berichte stellen den akademischen Höhepunkt der Praktikumserfahrungen der Studenten dar und verbinden berufliche Praxis mit Lernen im Klassenzimmer."
     }
   },
   "uploadDocuments": {

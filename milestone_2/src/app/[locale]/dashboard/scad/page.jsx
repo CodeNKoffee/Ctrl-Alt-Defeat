@@ -342,12 +342,15 @@ function StudentListView({ sidebarExpanded }) {
 }
 
 function StatisticsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   // Define the Statistics Dashboard Info Card
   const StatisticsDashboardInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-left text-[#2a5f74] relative">
-          STATISTICS DASHBOARD
+          {safeT('scad.statisticsDashboard.title')}
           <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
@@ -366,44 +369,46 @@ function StatisticsView() {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              ANALYTICS
+              {safeT('scad.statisticsDashboard.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Statistics Dashboard & Reporting</h2>
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('scad.statisticsDashboard.cardTitle')}
+            </h2>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Comprehensive analytics platform for monitoring internship program performance metrics and trends.</p>
+              <p className="mb-3">{safeT('scad.statisticsDashboard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Key Analytics Features:
+                  {safeT('scad.statisticsDashboard.features.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Real-time dashboard with visual reports and metrics</span>
+                    <span>{safeT('scad.statisticsDashboard.features.items.realtime')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Top companies and courses based on student performance</span>
+                    <span>{safeT('scad.statisticsDashboard.features.items.topPerformers')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Internship report status tracking across academic cycles</span>
+                    <span>{safeT('scad.statisticsDashboard.features.items.tracking')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Faculty review time analysis and efficiency metrics</span>
+                    <span>{safeT('scad.statisticsDashboard.features.items.faculty')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Exportable PDF reports for academic administration</span>
+                    <span>{safeT('scad.statisticsDashboard.features.items.reports')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-blue-700 font-medium bg-blue-50 px-4 py-2 rounded-lg border-l-4 border-blue-500 shadow-sm">
-                Use this analytics suite to identify trends, measure program effectiveness, and make data-driven decisions to improve internship outcomes.
+                {safeT('scad.statisticsDashboard.note')}
               </p>
             </div>
           </div>
@@ -421,6 +426,8 @@ function StatisticsView() {
 }
 
 function ReportsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -466,7 +473,7 @@ function ReportsView() {
     <div className="w-full px-6 py-8">
       <div className="w-full max-w-6xl mx-auto mb-8">
         <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          STUDENT REPORTS REVIEW
+          {safeT('scad.reportsView.title')}
           <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
@@ -485,50 +492,76 @@ function ReportsView() {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              ACADEMIC
+              {safeT('scad.reportsView.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Student Report Review Portal</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('scad.reportsView.cardTitle')}
+            </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Manage and distribute student internship reports to appropriate faculty members for academic evaluation and feedback.</p>
+              <p className="mb-3">{safeT('scad.reportsView.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Report Management Features:
+                  {safeT('scad.reportsView.features.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Access all submitted student internship reports organized by department and date</span>
+                    <span>{safeT('scad.reportsView.features.items.access')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>View report status (pending, flagged, rejected, accepted)</span>
+                    <span>{safeT('scad.reportsView.features.items.status')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Assign reports to specific faculty reviewers based on expertise</span>
+                    <span>{safeT('scad.reportsView.features.items.assign')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Monitor faculty review timelines and completion rates</span>
+                    <span>{safeT('scad.reportsView.features.items.monitor')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Track report revision cycles and resubmissions</span>
+                    <span>{safeT('scad.reportsView.features.items.track')}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
+                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
+                  {safeT('scad.reportsView.contentControl.title')}
+                </p>
+                <ul className="space-y-2 mb-2">
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('scad.reportsView.contentControl.items.standards')}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('scad.reportsView.contentControl.items.quality')}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('scad.reportsView.contentControl.items.coordinate')}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('scad.reportsView.contentControl.items.update')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                These reports represent the academic culmination of students' internship experiences, connecting professional practice with classroom learning.
+                {safeT('scad.reportsView.academicNote')}
               </p>
             </div>
           </div>
         </div>
       </div>
-
 
       <ReportStatistics
         total={reports.length}
@@ -580,7 +613,6 @@ function ReportsView() {
                       variant="primary"
                       text={`Export as PDF`}
                       icon={faFilePdf}
-                      //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
                       onClick={handleExportPDF}
                       width="w-60"
                     />

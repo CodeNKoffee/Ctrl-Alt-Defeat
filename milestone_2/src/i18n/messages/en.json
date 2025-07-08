@@ -872,6 +872,49 @@
         }
       },
       "importantNote": "Important: Student evaluations play a critical role in determining future partnership renewals and informing curriculum development."
+    },
+    "statisticsDashboard": {
+      "title": "STATISTICS DASHBOARD",
+      "badge": "ANALYTICS",
+      "cardTitle": "Statistics Dashboard & Reporting",
+      "description": "Comprehensive analytics platform for monitoring internship program performance metrics and trends.",
+      "features": {
+        "title": "Key Analytics Features:",
+        "items": {
+          "realtime": "Real-time dashboard with visual reports and metrics",
+          "topPerformers": "Top companies and courses based on student performance",
+          "tracking": "Internship report status tracking across academic cycles",
+          "faculty": "Faculty review time analysis and efficiency metrics",
+          "reports": "Exportable PDF reports for academic administration"
+        }
+      },
+      "note": "Use this analytics suite to identify trends, measure program effectiveness, and make data-driven decisions to improve internship outcomes."
+    },
+    "reportsView": {
+      "title": "STUDENT REPORTS REVIEW",
+      "badge": "ACADEMIC",
+      "cardTitle": "Student Report Review Portal",
+      "description": "Manage and distribute student internship reports to appropriate faculty members for academic evaluation and feedback.",
+      "features": {
+        "title": "Report Management Features:",
+        "items": {
+          "access": "Access all submitted student internship reports organized by department and date",
+          "status": "View report status (pending, flagged, rejected, accepted)",
+          "assign": "Assign reports to specific faculty reviewers based on expertise",
+          "monitor": "Monitor faculty review timelines and completion rates",
+          "track": "Track report revision cycles and resubmissions"
+        }
+      },
+      "contentControl": {
+        "title": "Content Control:",
+        "items": {
+          "standards": "Ensure workshop content aligns with industry standards and emerging trends",
+          "quality": "Maintain quality and consistency across all professional development offerings",
+          "coordinate": "Coordinate with industry presenters and faculty facilitators",
+          "update": "Update content as needed based on student feedback and industry changes"
+        }
+      },
+      "academicNote": "These reports represent the academic culmination of students' internship experiences, connecting professional practice with classroom learning."
     }
   },
   "uploadDocuments": {
