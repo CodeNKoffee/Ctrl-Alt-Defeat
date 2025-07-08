@@ -229,7 +229,7 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search recommended internships..."
+          searchPlaceholder={safeT('student.dashboard.searchPlaceholder')}
           filterSections={filterSections}
           marginTop={"mt-6"}
           marginBottom="mb-0"

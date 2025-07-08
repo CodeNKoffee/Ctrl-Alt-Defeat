@@ -1010,6 +1010,7 @@
   },
   "student": {
     "dashboard": {
+      "searchPlaceholder": "Search recommended internships...",
       "personalizedCard": {
         "badge": "PERSONALIZED",
         "title": "Your Personalized Internship Matches",

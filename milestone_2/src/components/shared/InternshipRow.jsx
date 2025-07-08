@@ -172,7 +172,13 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                     {/* Show recommendation reason badge */}
                     {isRecommended && internship.recommendedReason && (
                       <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800 border border-pink-400 ml-2">
-                        {internship.recommendedReason.toUpperCase()}
+                        {(() => {
+                          const reason = internship.recommendedReason;
+                          if (reason === 'industry match') return safeT('student.dashboard.statusPills.industryMatch');
+                          if (reason === 'job interest match') return safeT('student.dashboard.statusPills.jobInterestMatch');
+                          if (reason === 'recommended by past interns') return safeT('student.dashboard.statusPills.recommendedByPastInterns');
+                          return reason.toUpperCase(); // fallback
+                        })()}
                       </span>
                     )}
                   </div>

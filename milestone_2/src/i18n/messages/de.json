@@ -1012,6 +1012,7 @@
   },
   "student": {
     "dashboard": {
+      "searchPlaceholder": "Suche nach empfohlenen Praktikumsmöglichkeiten...",
       "personalizedCard": {
         "badge": "PERSONALISIERT",
         "title": "Ihre personalisierten Praktikumsvorschläge",

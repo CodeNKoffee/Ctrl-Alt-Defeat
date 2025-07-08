@@ -1029,6 +1029,7 @@
   },
   "student": {
     "dashboard": {
+      "searchPlaceholder": "ابحث عن فرص التدريب الموصى بها...",
       "personalizedCard": {
         "badge": "مخصص",
         "title": "فرص التدريب المخصصة لك",
