@@ -92,7 +92,6 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
               label={safeT('login.emailLabel')}
               errors={errors}
               touched={touched}
-              hideErrorMessage={true}
             />
           </div>
 

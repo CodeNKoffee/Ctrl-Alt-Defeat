@@ -1593,5 +1593,8 @@
     "emailRequired": "Email is required",
     "emailInvalid": "Invalid email address",
     "passwordRequired": "Password is required"
+  },
+  "footer": {
+    "copyright": "© {{year}} German University in Cairo. All rights reserved."
   }
 }

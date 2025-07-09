@@ -1,11 +1,30 @@
 // Safe translation utility function
 export const createSafeT = (t, ready) => {
-  return (key, fallback = key) => {
+  /**
+   * Safe translation helper
+   * Usage:
+   *   safeT('key')
+   *   safeT('key', 'Fallback')
+   *   safeT('key', { count: 3 })
+   *   safeT('key', { year: 2025 }, 'Fallback')
+   */
+  return (key, arg2 = undefined, arg3 = undefined) => {
+    // Determine if arg2 is options object or fallback string
+    let options = {};
+    let fallback = key;
+
+    if (typeof arg2 === 'object' && arg2 !== null && !Array.isArray(arg2)) {
+      options = arg2;
+      fallback = arg3 ?? key;
+    } else {
+      fallback = arg2 ?? key;
+    }
+
     if (!ready || typeof t !== 'function') {
       return fallback;
     }
     try {
-      const result = t(key);
+      const result = t(key, options);
       return result || fallback;
     } catch (error) {
       console.warn(`Translation failed for key: ${key}`, error);

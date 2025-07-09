@@ -1557,6 +1557,9 @@
       "linkedinInvalid": "Ungültige URL. Bitte geben Sie eine gültige LinkedIn-URL ein",
       "githubInvalid": "Ungültige URL. Bitte geben Sie eine gültige GitHub-URL ein",
       "portfolioInvalid": "Ungültige URL. Bitte geben Sie eine gültige Portfolio-URL ein"
+    },
+    "footer": {
+      "copyright": "© {{year}} Deutsche Universität in Kairo. Alle Rechte vorbehalten."
     }
   },
   "notifications": {
@@ -1601,5 +1604,8 @@
     "emailRequired": "E-Mail ist erforderlich",
     "emailInvalid": "Ungültige E-Mail-Adresse",
     "passwordRequired": "Passwort ist erforderlich"
+  },
+  "footer": {
+    "copyright": "© {{year}} Deutsche Universität in Kairo. Alle Rechte vorbehalten."
   }
 }
