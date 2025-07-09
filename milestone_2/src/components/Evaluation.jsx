@@ -144,7 +144,7 @@ export default function Evaluation({
         {expanded && (
           <div
             id="evaluation-details"
-            className="absolute top-full left-0 right-0 mt-2 bg-white p-6 rounded-2xl shadow-lg border border-[#E2F4F7] text-left text-sm text-[#2A5F74] space-y-2 z-20 animate-fade-in"
+            className="absolute top-full left-0 right-0 mt-2 bg-white p-6 rounded-2xl shadow-lg border border-[#E2F4F7] text-left rtl:text-right text-sm text-[#2A5F74] space-y-2 z-20 animate-fade-in"
             tabIndex={expanded ? 0 : -1}
             role="region"
             aria-label="Evaluation details"
