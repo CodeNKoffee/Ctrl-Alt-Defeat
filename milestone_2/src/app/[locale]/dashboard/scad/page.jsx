@@ -249,10 +249,10 @@ function StudentListView({ sidebarExpanded }) {
   const StudentDirectoryManagementInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
+        <h1 className="text-3xl font-bold mb-0 text-left rtl:text-right text-[#2a5f74]">
           {safeT('scad.studentDirectory.title')}
-          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
+        <span className="block ltr:ml-0 rtl:mr-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74] mt-2 mb-4"></span>
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
@@ -260,13 +260,13 @@ function StudentListView({ sidebarExpanded }) {
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex items-start gap-4 w-full md:w-auto relative z-10 rtl:flex-row">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('scad.studentDirectory.infoCard.badge')}
             </div>

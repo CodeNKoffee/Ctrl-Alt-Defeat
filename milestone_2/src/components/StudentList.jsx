@@ -123,13 +123,23 @@ export default function StudentList({ students, sidebarExpanded = true, selected
   const getContainerPadding = () => {
     const profileSidebarOpen = !!selectedStudent;
     if (profileSidebarOpen) {
-      return "md:pr-[33%]"; // Padding when profile sidebar is open
+      return "ltr:md:pr-[33%] rtl:md:pl-[33%]"; // Padding when profile sidebar is open
     }
     return "pr-0";
   };
 
+  // Overlay for blurring when sidebar is open
+  const profileSidebarOpen = !!selectedStudent;
+
   return (
     <div className="w-full mx-auto relative py-4">
+      {/* Overlay for blurring when sidebar is open */}
+      {profileSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-gray-900 bg-opacity-20 z-40 transition-opacity duration-300"
+          onClick={closeSidebar}
+        />
+      )}
       {/* Title */}
 
       {/* <ApplicationsFilterBar

@@ -13,9 +13,11 @@ const statusColors = {
 export default function StudentProfileSidebar({ student, onClose }) {
   const { t, ready } = useTranslation();
   const safeT = createSafeT(t, ready);
+  // Detect RTL
+  const isRTL = typeof window !== 'undefined' && document?.documentElement?.dir === 'rtl';
   return (
-    <div className={`fixed top-0 right-0 h-full transition-all duration-300 ease-in-out transform ${student ? "translate-x-0" : "translate-x-full"
-      } w-1/3 z-50`}>
+    <div className={`fixed top-0 ltr:right-0 rtl:left-0 h-full transition-all duration-300 ease-in-out transform ${student ? "translate-x-0" : (isRTL ? "-translate-x-full" : "translate-x-full")}
+      w-1/3 z-50`}>
       {student && (
         <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
           {/* Top bar with Internship Status and Close button */}
