@@ -349,18 +349,18 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
     <div className="w-full max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-8 text-left rtl:text-right text-[#2a5f74] relative">
         {safeT('company.browse.title')}
-        <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+        <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
       </h1>
       <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
         <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500 pointer-events-none"></div>
         <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500 pointer-events-none"></div>
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex items-start flex-row gap-4 w-full md:w-full relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
           </div>
-          <div className="text-left w-full">
+          <div className="flex-1 text-left rtl:text-right">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('company.browse.badge')}
             </div>
@@ -375,11 +375,11 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('company.browse.benefits.identifyPartners')}</span>
+                    <span>{safeT('company.browse.benefitsPlus.identifyPartners')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('company.browse.benefits.discoverLeaders')}</span>
+                    <span>{safeT('company.browse.benefitsPlus.discoverLeaders')}</span>
                   </li>
                 </ul>
               </div>
