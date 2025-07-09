@@ -49,6 +49,14 @@ export default function I18nProvider({ children }) {
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'en';
 
+  // Ensure HTML `dir` and `lang` attributes reflect current locale for proper RTL/LTR styling
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('dir', locale === 'ar' ? 'rtl' : 'ltr');
+      document.documentElement.setAttribute('lang', locale);
+    }
+  }, [locale]);
+
   useEffect(() => {
     const initI18n = async () => {
       try {

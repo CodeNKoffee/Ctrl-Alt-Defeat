@@ -332,7 +332,8 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             const icon = iconMap[item.iconId] || faHome;
             const isAccessible = hasProAccess(item);
 
-            const commonClasses = "w-full flex items-center p-2.5 transition-all duration-200 text-base relative z-10 rounded-xl group";
+            // Add rtl:flex-row-reverse so that on RTL layouts the icon appears to the left of the text
+            const commonClasses = "w-full flex items-center rtl:flex-row-reverse p-2.5 transition-all duration-200 text-base relative z-10 rounded-xl group";
             const activeClasses = "text-[#2a5f74] font-semibold border border-[#3298BA] bg-transparent shadow-sm focus:ring-1 focus:ring-[#3298BA] px-1.5";
             const inactiveClasses = "text-[#2a5f74] hover:bg-[#D9F0F4]";
             const disabledClasses = "text-gray-400 cursor-not-allowed opacity-60";
@@ -340,7 +341,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
             const itemContent = (
               <>
-                <span className={`flex-shrink-0 flex items-center ${isExpanded ? 'w-6 ml-1' : 'w-auto'} justify-center text-base`}>
+                <span className={`flex-shrink-0 flex items-center ${isExpanded ? 'w-6 ltr:ml-1 rtl:mr-1' : 'w-auto'} justify-center text-base`}>
                   <FontAwesomeIcon
                     icon={icon}
                     size="lg"
@@ -348,7 +349,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                   />
                 </span>
                 <span
-                  className={`whitespace-nowrap overflow-hidden transition-all duration-200 ${isExpanded ? 'ml-3 opacity-100 w-full' : 'ml-0 opacity-0 w-0'} font-medium text-left`}
+                  className={`whitespace-nowrap overflow-hidden transition-all duration-200 ${isExpanded ? 'ltr:ml-3 rtl:mr-3 opacity-100 w-full' : 'ltr:ml-0 rtl:mr-0 opacity-0 w-0'} font-medium ltr:text-left rtl:text-right`}
                   style={isExpanded ? { maxWidth: '100%' } : {}}
                 >
                   {safeT(item.labelKey)}

@@ -35,11 +35,11 @@ const CompanyPostsInfoCard = () => {
         <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex items-start flex-row gap-4 w-full md:w-full relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <FontAwesomeIcon icon={faBriefcase} className="h-7 w-7 text-white" />
           </div>
-          <div className="text-left">
+          <div className="flex-1 text-left rtl:text-right">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('company.posts.badge')}
             </div>
@@ -154,9 +154,9 @@ function CompanyPostsView() {
   return (
     <div className="container mx-auto p-10">
       <div className="w-full max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+        <h1 className="text-3xl font-bold mb-8 text-left rtl:text-right text-[#2a5f74] relative">
           {safeT('company.posts.title')}
-          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
 
         <CompanyPostsInfoCard />
@@ -347,7 +347,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   // Define the info card JSX/Component here for clarity
   const BrowseInternshipsInfoCard = () => (
     <div className="w-full max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+      <h1 className="text-3xl font-bold mb-8 text-left rtl:text-right text-[#2a5f74] relative">
         {safeT('company.browse.title')}
         <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
       </h1>
@@ -554,7 +554,7 @@ function ApplicationsView() {
     <div className="min-h-screen p-4 isolate">
       <div className="container mx-auto px-6 py-6">
         <div className="w-full max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+          <h1 className="text-3xl font-bold mb-8 text-left rtl:text-right text-[#2a5f74] relative">
             {safeT('company.applications.title')}
             <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
           </h1>
@@ -628,7 +628,7 @@ function CurrentInternsView() {
   // Info card for Intern Management Dashboard
   const InternsInfoCard = () => (
     <div className="w-full max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+      <h1 className="text-3xl font-bold mb-8 text-left rtl:text-right text-[#2a5f74] relative">
         {safeT('company.interns.title')}
         <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
       </h1>
@@ -769,7 +769,7 @@ function MyEvaluationsView() {
   const StudentEvaluationsInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mx-auto px-6">
-        <h1 className="text-3xl font-bold mb-8 text-left text-[#2a5f74] relative">
+        <h1 className="text-3xl font-bold mb-8 text-left rtl:text-right text-[#2a5f74] relative">
           {safeT('company.evaluations.title')}
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
