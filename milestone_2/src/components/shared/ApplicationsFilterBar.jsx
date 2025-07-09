@@ -151,15 +151,15 @@ export default function ApplicationsFilterBar({
               value={searchTerm}
               onChange={e => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              className="w-full py-3 pl-10 pr-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500 h-[46px]"
+              className="w-full py-3 ps-10 pe-10 appearance-none bg-white/90 backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500 h-[46px]"
             />
-            <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
+            <div className="absolute inset-y-0 ltr:left-3.5 rtl:right-3.5 flex items-center pointer-events-none">
               <FontAwesomeIcon icon={faSearch} className="h-4 w-4 text-[#5DB2C7]" />
             </div>
             {searchTerm && (
               <button
                 type="button"
-                className="absolute inset-y-0 right-3.5 flex items-center p-1 rounded-full hover:bg-[#B8E1E9]/50 transition-colors duration-200"
+                className="absolute inset-y-0 ltr:right-3.5 rtl:left-3.5 flex items-center p-1 rounded-full hover:bg-[#B8E1E9]/50 transition-colors duration-200"
                 onClick={() => onSearchChange('')}
               >
                 <FontAwesomeIcon icon={faXmark} className="w-4 h-4 text-[#5DB2C7] hover:text-[#2a5f74]" />
@@ -183,7 +183,7 @@ export default function ApplicationsFilterBar({
         <div className="relative w-full md:w-auto flex-shrink-0">
           <button
             onClick={() => setIsCombinedFilterPopoverOpen(!isCombinedFilterPopoverOpen)}
-            className={`appearance-none w-full md:w-auto ${filterButtonColor} backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-3 px-4 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 flex items-center justify-center gap-2 combined-filter-button min-w-[150px]`}
+            className={`appearance-none w-full md:w-auto ${filterButtonColor} backdrop-blur-sm border-2 border-[#B8E1E9] hover:border-[#5DB2C7] text-sm text-[#1a3f54] py-3 px-4 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 flex items-center justify-center gap-2 combined-filter-button min-w-[150px] rtl:flex-row-reverse`}
           >
             <FontAwesomeIcon icon={faFilter} className="h-4 w-4 text-[#5DB2C7]" />
             <span>{safeT('company.common.filter')}</span>
