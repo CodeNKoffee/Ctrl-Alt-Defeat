@@ -1,10 +1,10 @@
 {
   "sidebar": {
     "logout": "تسجيل الخروج",
-    "companyUser": "الشركة",
+    "companyUser": "شركة",
     "scadUser": "SCAD",
-    "facultyUser": "الجامعة",
-    "studentUser": "الطالب",
+    "facultyUser": "جامعة",
+    "studentUser": "طالب",
     "company": {
       "myPosts": "منشوراتي",
       "browseInternships": "تصفح التدريبات",

@@ -469,7 +469,7 @@ export default function Home() {
                         style={{ transformOrigin: "center center" }}
                       >
                         <ContinueOption
-                          name={option.name}
+                          name={safeT(`sidebar.${option.value}User`)}
                           imageUrl={option.imageUrl}
                           className={option.class}
                           width={option.dimension}
