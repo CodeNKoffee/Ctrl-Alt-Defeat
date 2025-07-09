@@ -722,6 +722,9 @@
     }
   },
   "scad": {
+    "workshop": {
+      "searchBarPlaceholder": "Suche nach Titel oder Dozenten..."
+    },
     "reportsView": {
       "modal": {
         "student": "Studentin",
@@ -944,7 +947,23 @@
         "title": "WORKSHOP-VERWALTUNG",
         "badge": "BERUFLICHE ENTWICKLUNG",
         "cardTitle": "Workshop-Verwaltungsportal",
-        "description": "Erstellen, planen und verwalten Sie Workshops zur beruflichen Entwicklung, die die Berufsvorbereitung und Branchenvorbereitung der Studierenden verbessern."
+        "description": "Erstellen, planen und verwalten Sie Workshops zur beruflichen Entwicklung, die die Berufsvorbereitung und Branchenvorbereitung der Studierenden verbessern.",
+        "features": {
+          "title": "Workshop-Erstellungstools:",
+          "designNewWorkshop": "Neue Workshop-Listen mit detaillierten Beschreibungen und Lernzielen erstellen",
+          "scheduleSessions": "Sitzungen mit flexiblen Zeitoptionen (live, wiederkehrend, oder auf Anfrage) planen",
+          "uploadMaterials": "Materialien, Präsentationen und ergänzende Ressourcen hochladen",
+          "setCapacityLimits": "Kapazitätslimits und Registrierungsanforderungen festlegen",
+          "designateWorkshops": "Workshops für bestimmte Studierendensegmente oder Pro-Mitgliedschaften auswählen",
+          "contentControl": {
+            "title": "Inhaltskontrolle:",
+            "ensureWorkshopContent": "Sicherstellen, dass Workshop-Inhalte mit Industriestandards und aufkommenden Trends übereinstimmen",
+            "maintainQuality": "Qualität und Konsistenz über alle Angebote zur beruflichen Entwicklung hinweg aufrechterhalten",
+            "coordinateWithIndustry": "Koordination mit Branchenpräsentatoren und Fakultätsmoderatoren",
+            "updateContent": "Inhalte bei Bedarf basierend auf Studentenfeedback und Branchenänderungen aktualisieren"
+          }
+        },
+        "note": "Dieses zentrale System vereinfacht den gesamten Workshop-Lebenszyklus von der Erstellung bis zur Bewertung, um wertvolle berufliche Entwicklungsmöglichkeiten für alle Studierenden zu gewährleisten."
       },
       "form": {
         "createNew": "Neuen Workshop erstellen",

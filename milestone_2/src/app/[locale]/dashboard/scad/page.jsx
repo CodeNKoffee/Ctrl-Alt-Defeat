@@ -100,7 +100,7 @@ function ScadDashboardView() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
             </svg>
           </div>
-          <div className="text-left rtl:text-right">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('scad.dashboard.companyReview.badge')}
             </div>
@@ -109,7 +109,7 @@ function ScadDashboardView() {
               <p className="mb-3">{safeT('scad.dashboard.companyReview.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
                   {safeT('scad.dashboard.companyReview.featuresTitle')}
@@ -935,9 +935,9 @@ function WorkshopsView() {
   const WorkshopManagementPortalInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
           {safeT('scad.workshops.management.title')}
-          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
@@ -952,42 +952,42 @@ function WorkshopsView() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v10m2 4h-10a2 2 0 01-2-2v-4a2 2 0 012-2h10a2.5 2.5 0 012.5 2.5V18a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('scad.workshops.management.badge')}
             </div>
             <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
               {safeT('scad.workshops.management.cardTitle')}
             </div>
-            <div className="text-gray-700 mb-3 relative">
+            <div className="text-gray-700 mb-3 relative w-full">
               <p className="mb-3">{safeT('scad.workshops.management.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center w-full">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Workshop Creation Tools:
+                  {safeT('scad.workshops.management.features.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Design new workshop listings with detailed descriptions and learning objectives</span>
+                    <span>{safeT('scad.workshops.management.features.designNewWorkshop')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Schedule sessions with flexible timing options (live, recurring, or on-demand)</span>
+                    <span>{safeT('scad.workshops.management.features.scheduleSessions')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Upload materials, presentations, and supplementary resources</span>
+                    <span>{safeT('scad.workshops.management.features.uploadMaterials')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Set capacity limits and registration requirements</span>
+                    <span>{safeT('scad.workshops.management.features.setCapacityLimits')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Designate workshops for specific student segments or Pro membership</span>
+                    <span>{safeT('scad.workshops.management.features.designateWorkshops')}</span>
                   </li>
                 </ul>
               </div>
@@ -995,30 +995,30 @@ function WorkshopsView() {
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Content Control:
+                  {safeT('scad.workshops.management.features.contentControl.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Ensure workshop content aligns with industry standards and emerging trends</span>
+                    <span>{safeT('scad.workshops.management.features.contentControl.ensureWorkshopContent')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Maintain quality and consistency across all professional development offerings</span>
+                    <span>{safeT('scad.workshops.management.features.contentControl.maintainQuality')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Coordinate with industry presenters and faculty facilitators</span>
+                    <span>{safeT('scad.workshops.management.features.contentControl.coordinateWithIndustry')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Update content as needed based on student feedback and industry changes</span>
+                    <span>{safeT('scad.workshops.management.features.contentControl.updateContent')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                This centralized system streamlines the entire workshop lifecycle from creation through evaluation, ensuring valuable professional development opportunities for all students.
+                {safeT('scad.workshops.management.note')}
               </p>
             </div>
           </div>
@@ -1034,7 +1034,7 @@ function WorkshopsView() {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search by title or instructor..."
+          searchPlaceholder={safeT('scad.workshop.searchBarPlaceholder')}
           onClearFilters={() => { setSearchTerm(''); setSelectedInstructor('all'); }}
           filterSections={workshopFilterSections}
         />

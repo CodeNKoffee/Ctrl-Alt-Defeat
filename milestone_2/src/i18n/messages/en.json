@@ -722,6 +722,9 @@
     }
   },
   "scad": {
+    "workshop": {
+      "searchBarPlaceholder": "Search by title or instructor..."
+    },
     "dashboard": {
       "title": "COMPANY APPLICATIONS",
       "companyReview": {
@@ -933,7 +936,23 @@
         "title": "WORKSHOP MANAGEMENT",
         "badge": "PROFESSIONAL DEVELOPMENT",
         "cardTitle": "Workshop Management Portal",
-        "description": "Create, schedule, and manage professional development workshops that enhance student career readiness and industry preparation."
+        "description": "Create, schedule, and manage professional development workshops that enhance student career readiness and industry preparation.",
+        "features": {
+          "title": "Workshop Creation Tools:",
+          "designNewWorkshop": "Design new workshop listings with detailed descriptions and learning objectives",
+          "scheduleSessions": "Schedule sessions with flexible timing options (live, recurring, or on-demand)",
+          "uploadMaterials": "Upload materials, presentations, and supplementary resources",
+          "setCapacityLimits": "Set capacity limits and registration requirements",
+          "designateWorkshops": "Designate workshops for specific student segments or Pro membership",
+          "contentControl": {
+            "title": "Content Control:",
+            "ensureWorkshopContent": "Ensure workshop content aligns with industry standards and emerging trends",
+            "maintainQuality": "Maintain quality and consistency across all professional development offerings",
+            "coordinateWithIndustry": "Coordinate with industry presenters and faculty facilitators",
+            "updateContent": "Update content as needed based on student feedback and industry changes"
+          }
+        },
+        "note": "This centralized system streamlines the entire workshop lifecycle from creation through evaluation, ensuring valuable professional development opportunities for all students."
       },
       "form": {
         "createNew": "Create New Workshop",
