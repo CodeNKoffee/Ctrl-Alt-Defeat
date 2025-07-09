@@ -21,6 +21,14 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
   const [isExpanded, setIsExpanded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalCompany, setModalCompany] = useState(null);
+  const [isRTL, setIsRTL] = useState(false);
+
+  // Detect document direction once on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsRTL(document.documentElement.getAttribute('dir') === 'rtl');
+    }
+  }, []);
 
   // Notify parent when sidebar visibility changes
   useEffect(() => {
@@ -68,6 +76,10 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
     }
   };
 
+  // Choose correct animation classes depending on direction
+  const slideInClass = isRTL ? 'animate-slide-in-rtl' : 'animate-slide-in';
+  const slideOutClass = isRTL ? 'animate-slide-out-rtl' : 'animate-slide-out';
+
   return (
     <div className="flex flex-col items-center w-full min-h-screen py-4">
       {/* Semi-transparent overlay behind sidebar */}
@@ -81,9 +93,9 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
       {/* Header Section */}
 
 
-      <div className={`relative flex w-full justify-center transition-all duration-600 ${selectedCompany ? 'pr-[420px]' : ''}`}>
+      <div className={`relative flex w-full justify-center transition-all duration-600 ${selectedCompany ? 'ltr:pr-[420px] rtl:pl-[420px]' : ''}`}>
         {/* Table Section */}
-        <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl pr-6' : ''} text-sm transition-all duration-600`}>
+        <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl ltr:pr-6 rtl:pl-6' : ''} text-sm transition-all duration-600`}>
           {/* Filter Controls Container */}
           {/* <div className={`w-full max-w-6xl ${selectedCompany ? 'max-w-4xl' : ''} flex flex-col md:flex-row justify-between gap-4 bg-metallica-blue-100/50 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm mb-6 transition-all duration-600`}>
             <div className="w-full md:w-1/3">
@@ -138,7 +150,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
         {selectedCompany && (
           <div
             // bg-[#002a38]
-            className={`fixed top-0 right-0 h-screen w-1/3 bg-metallica-blue-100/70 backdrop-blur-md shadow-xl z-50 flex flex-col border-l-4 border-[#5DB2C7] ${isExpanded ? 'animate-slide-out' : 'animate-slide-in'}`}
+            className={`fixed top-0 ltr:right-0 rtl:left-0 h-screen w-1/3 bg-metallica-blue-100/70 backdrop-blur-md shadow-xl z-50 flex flex-col ltr:border-l-4 rtl:border-r-4 border-[#5DB2C7] ${isExpanded ? slideOutClass : slideInClass}`}
             style={{ minWidth: 420, maxWidth: 500 }}
           >
             <div className="flex justify-end p-4 gap-4">
@@ -199,11 +211,25 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
           from { transform: translateX(0); opacity: 1; }
           to { transform: translateX(100%); opacity: 0; }
         }
+        @keyframes slide-in-rtl {
+          from { transform: translateX(-100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slide-out-rtl {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(-100%); opacity: 0; }
+        }
         .animate-slide-in {
           animation: slide-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         .animate-slide-out {
           animation: slide-out 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .animate-slide-in-rtl {
+          animation: slide-in-rtl 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .animate-slide-out-rtl {
+          animation: slide-out-rtl 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         body {
           background: #f8fafc;
