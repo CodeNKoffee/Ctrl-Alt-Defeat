@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import PasswordInputField from "@/components/PasswordInputField";
@@ -9,6 +11,8 @@ import { loginValidationSchema } from "../../utils/validationSchemas";
 import { MutatingDots } from 'react-loader-spinner';
 
 export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [rememberMe, setRememberMe] = useState(false);
   const [initialValues, setInitialValues] = useState({
     email: '',
@@ -77,7 +81,7 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
             <FloatingLabelInput
               name="email"
               type="email"
-              label="Email *"
+              label={safeT('login.emailLabel')}
               errors={errors}
               touched={touched}
               hideErrorMessage={true}
@@ -86,7 +90,7 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
 
           <PasswordInputField
             name="password"
-            label="Password *"
+            label={safeT('login.passwordLabel')}
             error={errors.password}
             touched={touched.password}
           />
@@ -100,10 +104,10 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
                 onChange={(e) => handleRememberMeChange(e, setFieldValue, values)}
                 className="w-4 h-4 accent-[#4C798B] border-gray-300 rounded focus:ring-0 focus:ring-offset-0 cursor-pointer"
               />
-              <span className="ml-2 text-sm text-gray-600 select-none cursor-pointer">Remember me</span>
+              <span className="ml-2 text-sm text-gray-600 select-none cursor-pointer">{safeT('login.rememberMe')}</span>
             </label>
             <Link href="/forgot-password" className="text-sm text-metallica-blue-off-charts hover:underline">
-              Forgot password?
+              {safeT('login.forgotPassword')}
             </Link>
           </div>
 
@@ -124,12 +128,12 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
                   ariaLabel="mutating-dots-loading"
                   visible={true}
                 />
-                <span>Logging in...</span>
+                <span>{safeT('login.loggingIn')}</span>
               </div>
             ) : isSubmitting ? (
-              'Logging in...'
+              safeT('login.loggingIn')
             ) : (
-              'Log in'
+              safeT('login.logIn')
             )}
           </button>
 

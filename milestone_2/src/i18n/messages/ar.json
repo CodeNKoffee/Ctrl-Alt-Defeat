@@ -1600,5 +1600,13 @@
     "notRegistered": "ليس لديك حساب بعد؟",
     "signUp": "إنشاء حساب",
     "loading": "جارٍ التحميل..."
+  },
+  "login": {
+    "emailLabel": "البريد الإلكتروني *",
+    "passwordLabel": "كلمة المرور *",
+    "rememberMe": "تذكرني",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "logIn": "تسجيل الدخول",
+    "loggingIn": "جارٍ تسجيل الدخول..."
   }
 }

@@ -17,7 +17,7 @@ export default function PasswordInputField({ name, label, error, touched }) {
               <input
                 {...field}
                 type={showPassword ? "text" : "password"}
-                className={`w-full text-metallica-blue-950 px-0 pr-8 py-2 bg-transparent border-0 border-b-2 border-metallica-blue-off-charts focus:ring-0 ${error && touched ? 'border-red-500' : 'border-gray-300'
+                className={`w-full text-metallica-blue-950 px-0 ltr:pr-8 rtl:pl-8 py-2 bg-transparent border-0 border-b-2 border-metallica-blue-off-charts focus:ring-0 ${error && touched ? 'border-red-500' : 'border-gray-300'
                   } focus:outline-none focus:border-metallica-blue-off-charts`}
                 onFocus={() => setIsFocused(true)}
                 onBlur={(e) => {
@@ -31,17 +31,17 @@ export default function PasswordInputField({ name, label, error, touched }) {
                 }}
               />
               <label
-                className={`absolute left-0 transition-all duration-200 ease-in-out pointer-events-none ${isFocused || hasValue
+                className={`absolute transition-all duration-200 ease-in-out pointer-events-none ltr:left-0 rtl:right-0 ${isFocused || hasValue
                   ? 'text-xs -top-4 text-metallica-blue-off-charts'
                   : 'top-2 text-gray-400'
-                  }`}
+                  } ${isFocused || hasValue ? '' : 'rtl:text-right'}`}
               >
                 {label}
               </label>
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                className="absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0 text-gray-500 hover:text-gray-700 focus:outline-none"
               >
                 <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
               </button>

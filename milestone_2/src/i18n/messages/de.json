@@ -1583,5 +1583,13 @@
     "notRegistered": "Noch nicht registriert?",
     "signUp": "Registrieren",
     "loading": "Laden..."
+  },
+  "login": {
+    "emailLabel": "E-Mail *",
+    "passwordLabel": "Passwort *",
+    "rememberMe": "Angemeldet bleiben",
+    "forgotPassword": "Passwort vergessen?",
+    "logIn": "Anmelden",
+    "loggingIn": "Anmeldung läuft..."
   }
 }
