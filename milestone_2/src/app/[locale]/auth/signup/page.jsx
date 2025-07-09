@@ -7,8 +7,12 @@ import Copyright from "@/components/Copyright";
 import { usersOptions } from "../../../../../constants/index";
 import { useRouter, useParams } from "next/navigation";
 import BackButton from "@/components/shared/BackButton";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function SignupPage() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const router = useRouter();
   const params = useParams();
   const locale = params.locale || 'en';
@@ -35,7 +39,7 @@ export default function SignupPage() {
                 decreaseBorderThickness={true}
               />
             </div>
-            <Header text="Sign up" size="text-6xl" />
+            <Header text={safeT('signup.title')} size="text-6xl" />
           </div>
 
           {/* Form Section */}
@@ -44,14 +48,14 @@ export default function SignupPage() {
           </div>
 
           {/* Login Navigation */}
-          <div className="text-center mt-8">
+          <div className="text-center mt-8 rtl:text-right ltr:text-left">
             <span className="text-black font-medium font-ibm-plex-sans">
-              Already have an account?{" "}
+              {safeT('signup.alreadyHaveAccount')}{" "}
               <button
                 onClick={() => router.push(`/${locale}/auth/login?userType=${userType}`)}
                 className="text-metallica-blue-off-charts underline"
               >
-                Login
+                {safeT('signup.login')}
               </button>
             </span>
           </div>

@@ -1581,6 +1581,51 @@
     "signUp": "Sign up",
     "loading": "Loading..."
   },
+  "signup": {
+    "title": "Sign up",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login",
+    "labels": {
+      "companyName": "Company Name *",
+      "companyEmail": "Company Email *",
+      "industry": "Industry *",
+      "companySize": "Company Size *",
+      "verificationType": "Company Verification Type *",
+      "companyLogo": "Company Logo *",
+      "companyRegistrationDocument": "Company Registration Document *",
+      "taxCardDocument": "Tax Card Document *",
+      "taxId": "Tax ID",
+      "chooseFile": "Choose file...",
+      "browse": "Browse",
+      "acceptedLogoFormats": "Accepted formats: JPG, PNG, SVG (Preferred dimensions: 200x200px)",
+      "acceptedDocFormats": "Accepted formats: JPG, PNG, PDF",
+      "submit": "Complete Registration",
+      "processing": "Processing..."
+    },
+    "placeholders": {
+      "industry": "Select industry",
+      "companySize": "Select size",
+      "taxId": "XXX-XXX-XXX"
+    },
+    "tooltips": {
+      "companyEmail": "Please enter an official company email address that you use for business communications. Free email providers (Gmail, Yahoo, etc.) are not accepted."
+    },
+    "messages": {
+      "success": "Application has been accepted! Please check your email.",
+      "error": "Application has been rejected. Please check your email."
+    },
+    "verificationTypes": {
+      "registration": "Company Registration",
+      "taxCard": "Tax Card",
+      "taxId": "Tax ID"
+    },
+    "companySizes": {
+      "small": "Small (50 employees or less)",
+      "medium": "Medium (51-100 employees)",
+      "large": "Large (101-500 employees)",
+      "corporate": "Corporate (500+ employees)"
+    }
+  },
   "login": {
     "emailLabel": "Email *",
     "passwordLabel": "Password *",
@@ -1592,7 +1637,23 @@
   "validation": {
     "emailRequired": "Email is required",
     "emailInvalid": "Invalid email address",
-    "passwordRequired": "Password is required"
+    "passwordRequired": "Password is required",
+    "companyNameRequired": "Company name is required",
+    "companyNameMin": "Company name must be at least 2 characters",
+    "industryRequired": "Industry is required",
+    "industryInvalid": "Please select a valid industry",
+    "companyEmailRequired": "Company email is required",
+    "companyEmailInvalid": "Please use a valid company email address",
+    "companySizeRequired": "Company size is required",
+    "companySizeInvalid": "Please select a valid company size",
+    "verificationTypeRequired": "Verification type is required",
+    "verificationTypeInvalid": "Please select a valid verification type",
+    "companyLogoRequired": "Company logo is required",
+    "verificationDocumentRequired": "Verification document is required",
+    "fileFormatUnsupported": "Unsupported file format",
+    "fileTooLarge": "File too large",
+    "taxIdRequired": "Tax ID is required",
+    "taxIdFormat": "Tax ID must be in format XXX-XXX-XXX"
   },
   "footer": {
     "copyright": "© {{year}} German University in Cairo. All rights reserved."

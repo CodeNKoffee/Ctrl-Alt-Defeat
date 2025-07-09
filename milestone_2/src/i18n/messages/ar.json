@@ -1607,14 +1607,96 @@
     "rememberMe": "تذكرني",
     "forgotPassword": "هل نسيت كلمة المرور؟",
     "logIn": "تسجيل الدخول",
-    "loggingIn": "جارٍ تسجيل الدخول..."
+    "loggingIn": "جارٍ تسجيل الدخول...",
+    "validation": {
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "البريد الإلكتروني غير صالح",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "companyNameRequired": "اسم الشركة مطلوب",
+      "companyNameMin": "يجب أن يكون اسم الشركة حرفين على الأقل",
+      "industryRequired": "الصناعة مطلوبة",
+      "industryInvalid": "يرجى اختيار صناعة صالحة",
+      "companyEmailRequired": "البريد الإلكتروني للشركة مطلوب",
+      "companyEmailInvalid": "يرجى استخدام بريد إلكتروني رسمي للشركة",
+      "companySizeRequired": "حجم الشركة مطلوب",
+      "companySizeInvalid": "يرجى اختيار حجم شركة صالح",
+      "verificationTypeRequired": "نوع التحقق مطلوب",
+      "verificationTypeInvalid": "يرجى اختيار نوع تحقق صالح",
+      "companyLogoRequired": "شعار الشركة مطلوب",
+      "verificationDocumentRequired": "وثيقة التحقق مطلوبة",
+      "fileFormatUnsupported": "تنسيق ملف غير مدعوم",
+      "fileTooLarge": "الملف كبير جدًا",
+      "taxIdRequired": "الرقم الضريبي مطلوب",
+      "taxIdFormat": "يجب أن يكون الرقم الضريبي بالصيغة XXX-XXX-XXX"
+    }
+  },
+  "signup": {
+    "title": "التسجيل",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول",
+    "labels": {
+      "companyName": "اسم الشركة *",
+      "companyEmail": "البريد الإلكتروني للشركة *",
+      "industry": "الصناعة *",
+      "companySize": "حجم الشركة *",
+      "verificationType": "نوع التحقق من الشركة *",
+      "companyLogo": "شعار الشركة *",
+      "companyRegistrationDocument": "وثيقة تسجيل الشركة *",
+      "taxCardDocument": "وثيقة البطاقة الضريبية *",
+      "taxId": "الرقم الضريبي",
+      "chooseFile": "اختر ملف...",
+      "browse": "استعراض",
+      "acceptedLogoFormats": "الصيغ المقبولة: JPG، PNG، SVG (الأبعاد المفضلة: 200×200 بكسل)",
+      "acceptedDocFormats": "الصيغ المقبولة: JPG، PNG، PDF",
+      "submit": "إتمام التسجيل",
+      "processing": "جارٍ المعالجة...",
+      "companySizes": {
+        "small": "صغيرة (50 موظفًا أو أقل)",
+        "medium": "متوسطة (51-100 موظف)",
+        "large": "كبيرة (101-500 موظف)",
+        "corporate": "شركة كبرى (أكثر من 500 موظف)"
+      }
+    },
+    "placeholders": {
+      "industry": "اختر الصناعة",
+      "companySize": "اختر الحجم",
+      "taxId": "XXX-XXX-XXX"
+    },
+    "tooltips": {
+      "companyEmail": "يرجى إدخال بريد إلكتروني رسمي للشركة تستخدمه في الاتصالات التجارية. لا يتم قبول مزودي البريد المجاني (Gmail، Yahoo، إلخ)."
+    },
+    "messages": {
+      "success": "تم قبول الطلب! يرجى التحقق من بريدك الإلكتروني.",
+      "error": "تم رفض الطلب. يرجى التحقق من بريدك الإلكتروني."
+    },
+    "verificationTypes": {
+      "registration": "تسجيل الشركة",
+      "taxCard": "بطاقة ضريبية",
+      "taxId": "الرقم الضريبي"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} الجامعة الألمانية بالقاهرة. جميع الحقوق محفوظة."
   },
   "validation": {
     "emailRequired": "البريد الإلكتروني مطلوب",
     "emailInvalid": "البريد الإلكتروني غير صالح",
-    "passwordRequired": "كلمة المرور مطلوبة"
-  },
-  "footer": {
-    "copyright": "© {{year}} الجامعة الألمانية بالقاهرة. جميع الحقوق محفوظة."
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "companyNameRequired": "اسم الشركة مطلوب",
+    "companyNameMin": "يجب أن يكون اسم الشركة حرفين على الأقل",
+    "industryRequired": "الصناعة مطلوبة",
+    "industryInvalid": "يرجى اختيار صناعة صالحة",
+    "companyEmailRequired": "البريد الإلكتروني للشركة مطلوب",
+    "companyEmailInvalid": "يرجى استخدام بريد إلكتروني رسمي للشركة",
+    "companySizeRequired": "حجم الشركة مطلوب",
+    "companySizeInvalid": "يرجى اختيار حجم شركة صالح",
+    "verificationTypeRequired": "نوع التحقق مطلوب",
+    "verificationTypeInvalid": "يرجى اختيار نوع تحقق صالح",
+    "companyLogoRequired": "شعار الشركة مطلوب",
+    "verificationDocumentRequired": "وثيقة التحقق مطلوبة",
+    "fileFormatUnsupported": "تنسيق ملف غير مدعوم",
+    "fileTooLarge": "الملف كبير جدًا",
+    "taxIdRequired": "الرقم الضريبي مطلوب",
+    "taxIdFormat": "يجب أن يكون الرقم الضريبي بالصيغة XXX-XXX-XXX"
   }
 }
