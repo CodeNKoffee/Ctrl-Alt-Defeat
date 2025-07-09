@@ -722,6 +722,15 @@
     }
   },
   "scad": {
+    "reportsView": {
+      "modal": {
+        "student": "Studentin",
+        "major": "Studiengang",
+        "company": "Unternehmen",
+        "exportPdf": "Als PDF speichern",
+        "close": "Schließen"
+      }
+    },
     "dashboard": {
       "title": "UNTERNEHMENSBEWERBUNGEN",
       "companyReview": {
@@ -890,7 +899,7 @@
       },
       "note": "Nutzen Sie diese Analysesuite, um Trends zu erkennen, die Programmeffektivität zu messen und datengestützte Entscheidungen zur Verbesserung der Praktikumsergebnisse zu treffen."
     },
-    "reportsView": {
+    "reportView": {
       "title": "ÜBERPRÜFUNG DER STUDENTENBERICHTE",
       "badge": "AKADEMISCH",
       "cardTitle": "Studentenberichts-Überprüfungsportal",

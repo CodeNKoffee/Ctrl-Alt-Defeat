@@ -472,9 +472,9 @@ function ReportsView() {
   return (
     <div className="w-full px-6 py-8">
       <div className="w-full max-w-6xl mx-auto mb-8">
-        <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          {safeT('scad.reportsView.title')}
-          <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('scad.reportView.title')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-24 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
 
@@ -490,42 +490,42 @@ function ReportsView() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              {safeT('scad.reportsView.badge')}
+              {safeT('scad.reportView.badge')}
             </div>
             <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
-              {safeT('scad.reportsView.cardTitle')}
+              {safeT('scad.reportView.cardTitle')}
             </div>
-            <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">{safeT('scad.reportsView.description')}</p>
+            <div className="text-gray-700 mb-3 relative w-full">
+              <p className="mb-3">{safeT('scad.reportView.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  {safeT('scad.reportsView.features.title')}
+                  {safeT('scad.reportView.features.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('scad.reportsView.features.items.access')}</span>
+                    <span>{safeT('scad.reportView.features.items.access')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('scad.reportsView.features.items.status')}</span>
+                    <span>{safeT('scad.reportView.features.items.status')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('scad.reportsView.features.items.assign')}</span>
+                    <span>{safeT('scad.reportView.features.items.assign')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('scad.reportsView.features.items.monitor')}</span>
+                    <span>{safeT('scad.reportView.features.items.monitor')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('scad.reportsView.features.items.track')}</span>
+                    <span>{safeT('scad.reportView.features.items.track')}</span>
                   </li>
                 </ul>
               </div>
@@ -533,30 +533,30 @@ function ReportsView() {
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  {safeT('scad.reportsView.contentControl.title')}
+                  {safeT('scad.reportView.contentControl.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('scad.reportsView.contentControl.items.standards')}</span>
+                    <span>{safeT('scad.reportView.contentControl.items.standards')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('scad.reportsView.contentControl.items.quality')}</span>
+                    <span>{safeT('scad.reportView.contentControl.items.quality')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('scad.reportsView.contentControl.items.coordinate')}</span>
+                    <span>{safeT('scad.reportView.contentControl.items.coordinate')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('scad.reportsView.contentControl.items.update')}</span>
+                    <span>{safeT('scad.reportView.contentControl.items.update')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                {safeT('scad.reportsView.academicNote')}
+                {safeT('scad.reportView.academicNote')}
               </p>
             </div>
           </div>
@@ -595,7 +595,7 @@ function ReportsView() {
                 &times;
               </button>
               <div className="mb-4">
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 items-start rtl:items-end">
                   <h2 className="text-2xl font-bold text-metallica-blue-700">{selectedReport.title}</h2>
                   <div className="flex flex-wrap gap-2 mt-2">
                     <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">

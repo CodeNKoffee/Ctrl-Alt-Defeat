@@ -890,7 +890,7 @@
       },
       "note": "Use this analytics suite to identify trends, measure program effectiveness, and make data-driven decisions to improve internship outcomes."
     },
-    "reportsView": {
+    "reportView": {
       "title": "STUDENT REPORTS REVIEW",
       "badge": "ACADEMIC",
       "cardTitle": "Student Report Review Portal",
