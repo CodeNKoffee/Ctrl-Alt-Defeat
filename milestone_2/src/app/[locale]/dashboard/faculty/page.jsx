@@ -93,7 +93,7 @@ function FacultyDashboardView() {
                 </ul>
               </div>
 
-              <div className="w-full bg-[#D9F0F4] text-metallica-blue-700 font-medium px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm w-fit rtl:text-right">
+              <div className="bg-[#D9F0F4] text-metallica-blue-700 font-medium px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm w-full rtl:text-right">
                 {safeT('faculty.dashboard.reportReview.pendingReports').replace('{count}', reports.filter(r => r.status === 'pending').length)}
               </div>
             </div>

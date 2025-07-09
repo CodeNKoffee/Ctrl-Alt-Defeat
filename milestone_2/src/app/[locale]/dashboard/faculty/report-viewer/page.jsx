@@ -198,7 +198,9 @@ export default function FacultyReportViewer({ reportId, onBack, reportData }) {
                       id="reportStatus"
                       value={reportStatus}
                       onChange={handleStatusChange}
-                      className="w-full px-3 py-2 border border-metallica-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 rt"
+                      className="w-full px-3 py-2 border border-metallica-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 rtl:pr-10 rtl:pl-3"
+                      style={{ backgroundImage: 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%236b7280\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'m6 8 4 4 4-4\'/%3e%3c/svg%3e")', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
+                      dir="auto"
                     >
                       <option value="pending">{safeT('facultyReportViewer.statuses.pending')}</option>
                       <option value="accepted">{safeT('facultyReportViewer.statuses.accepted')}</option>
