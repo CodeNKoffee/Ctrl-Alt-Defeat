@@ -349,9 +349,9 @@ function StatisticsView() {
   const StatisticsDashboardInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-left text-[#2a5f74] relative">
+        <h1 className="text-3xl font-bold mb-6 text-left rtl:text-right text-[#2a5f74] relative">
           {safeT('scad.statisticsDashboard.title')}
-          <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-24 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
 
@@ -367,7 +367,7 @@ function StatisticsView() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="flex-1 text-left rtl:text-right">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('scad.statisticsDashboard.badge')}
             </div>
@@ -815,9 +815,9 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const InternshipListingsManagementInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
+        <h1 className="text-3xl font-bold mb-0 text-left rtl:text-right text-[#2a5f74] relative">
           {safeT('scad.internships.title')}
-          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
@@ -832,7 +832,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('scad.internships.badge')}
             </div>
