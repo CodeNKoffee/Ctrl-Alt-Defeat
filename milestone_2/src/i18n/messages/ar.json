@@ -1575,5 +1575,19 @@
       "githubInvalid": "الرابط غير صالح. يرجى إدخال رابط GitHub صالح",
       "portfolioInvalid": "الرابط غير صالح. يرجى إدخال رابط المحفظة صالح"
     }
+  },
+  "notifications": {
+    "techVisionPosted": "نشرت <b>{{company}}</b> تدريبًا جديدًا يتوافق مع مهاراتك",
+    "brandBoostAccepted": "تم قبول طلب التدريب الخاص بك في <b>{{company}}</b>",
+    "internshipStarts": "تبدأ فترة تدريب <b>{{role}}</b> الخاصة بك بعد {{days}} أيام",
+    "reportUpdated": "تم تحديث حالة تقرير تدريبك من قبل SCAD",
+    "appointmentAccepted": "تم قبول طلب الموعد من قبل {{contact}}",
+    "upcomingWorkshop": "ستبدأ ورشة العمل التي سجلت بها قريبًا",
+    "newMessage": "أرسل لك {{contact}} رسالة",
+    "companyApplicationAccepted": "تم قبول طلب شركتك",
+    "accountSetup": "تم إعداد الحساب بنجاح – تحقق من بريدك الإلكتروني للتفاصيل",
+    "newApplicants": "{{count}} متقدم جديد لتدريب <b>{{role}}</b> الخاص بك",
+    "reportsAwaitingReview": "{{count}} تقرير طالب جديد بانتظار المراجعة",
+    "registrationsPending": "{{count}} تسجيل شركة جديد بانتظار التحقق"
   }
 }

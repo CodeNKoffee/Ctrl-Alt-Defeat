@@ -1376,6 +1376,20 @@
       }
     }
   },
+  "notifications": {
+    "techVisionPosted": "<b>{{company}}</b> posted a new internship that matches your skills",
+    "brandBoostAccepted": "Your internship application at <b>{{company}}</b> was accepted",
+    "internshipStarts": "Your <b>{{role}}</b> internship starts in {{days}} days",
+    "reportUpdated": "Your internship report status has been updated by SCAD",
+    "appointmentAccepted": "{{contact}} has accepted your appointment request",
+    "upcomingWorkshop": "Upcoming workshop you have registered in starts soon",
+    "newMessage": "{{contact}} has sent you a message",
+    "companyApplicationAccepted": "Your company application has been accepted",
+    "accountSetup": "Account setup successful – check your email for details",
+    "newApplicants": "{{count}} new applicants for your <b>{{role}}</b> internship",
+    "reportsAwaitingReview": "{{count}} new student reports awaiting review",
+    "registrationsPending": "{{count}} new company registrations pending verification"
+  },
   "callInterface": {
     "chat": "Chat",
     "notes": "Notes",

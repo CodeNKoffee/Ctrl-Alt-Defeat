@@ -202,7 +202,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 1,
       icon: faBuilding,
-      title: '<b>TechVision</b> posted a new internship that matches your skills',
+      title: t('notifications.techVisionPosted', { company: 'TechVision' }),
       time: '2h',
       isUnread: true,
       userType: ['student']
@@ -210,7 +210,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 2,
       icon: faBell,
-      title: 'Your internship application at <b>BrandBoost</b> was accepted',
+      title: t('notifications.brandBoostAccepted', { company: 'BrandBoost' }),
       time: '1d',
       isUnread: true,
       userType: ['student']
@@ -218,7 +218,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 3,
       icon: faBell,
-      title: 'Your <b>Frontend Developer</b> internship starts in 5 days',
+      title: t('notifications.internshipStarts', { role: 'Frontend Developer', days: 5 }),
       time: '3d',
       isUnread: false,
       userType: ['student']
@@ -226,7 +226,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 13,
       icon: faClipboardList,
-      title: 'Your internship report status has been updated by SCAD',
+      title: t('notifications.reportUpdated'),
       time: '6h',
       isUnread: true,
       userType: ['student']
@@ -236,7 +236,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 4,
       icon: faBell,
-      title: 'SCAD Officer has accepted your appointment request',
+      title: t('notifications.appointmentAccepted', { contact: 'SCAD Officer' }),
       time: '3d',
       isUnread: false,
       userType: ['student'],
@@ -245,7 +245,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 5,
       icon: faBell,
-      title: 'Alien X has accepted your appointment request',
+      title: t('notifications.appointmentAccepted', { contact: 'Alien X' }),
       time: '3d',
       isUnread: false,
       userType: ['student'],
@@ -254,7 +254,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 6,
       icon: faBell,
-      title: 'Upcoming workshop you have registered in',
+      title: t('notifications.upcomingWorkshop'),
       time: '3d',
       isUnread: false,
       userType: ['student'],
@@ -263,7 +263,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 7,
       icon: faBell,
-      title: 'Alien X has sent you a message',
+      title: t('notifications.newMessage', { contact: 'Alien X' }),
       time: '3d',
       isUnread: false,
       userType: ['student'],
@@ -274,7 +274,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 8,
       icon: faBuilding,
-      title: 'Your company application has been accepted',
+      title: t('notifications.companyApplicationAccepted'),
       time: '4h',
       isUnread: true,
       userType: ['company']
@@ -282,7 +282,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 9,
       icon: faBell,
-      title: 'Account setup successful - check your email for details',
+      title: t('notifications.accountSetup'),
       time: '12h',
       isUnread: true,
       userType: ['company']
@@ -290,7 +290,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 10,
       icon: faBuilding,
-      title: '3 new applicants for your <b>Backend Developer</b> internship',
+      title: t('notifications.newApplicants', { count: 3, role: 'Backend Developer' }),
       time: '1d',
       isUnread: true,
       userType: ['company']
@@ -300,7 +300,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 11,
       icon: faClipboardList,
-      title: '5 new student reports awaiting review',
+      title: t('notifications.reportsAwaitingReview', { count: 5 }),
       time: '5h',
       isUnread: true,
       userType: ['scad']
@@ -308,7 +308,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 12,
       icon: faBuilding,
-      title: '2 new company registrations pending verification',
+      title: t('notifications.registrationsPending', { count: 2 }),
       time: '1d',
       isUnread: true,
       userType: ['scad']

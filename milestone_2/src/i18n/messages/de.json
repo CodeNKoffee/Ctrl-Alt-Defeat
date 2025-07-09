@@ -1558,5 +1558,19 @@
       "githubInvalid": "Ungültige URL. Bitte geben Sie eine gültige GitHub-URL ein",
       "portfolioInvalid": "Ungültige URL. Bitte geben Sie eine gültige Portfolio-URL ein"
     }
+  },
+  "notifications": {
+    "techVisionPosted": "<b>{{company}}</b> hat ein neues Praktikum veröffentlicht, das zu deinen Fähigkeiten passt",
+    "brandBoostAccepted": "Deine Bewerbung bei <b>{{company}}</b> wurde angenommen",
+    "internshipStarts": "Dein <b>{{role}}</b> Praktikum beginnt in {{days}} Tagen",
+    "reportUpdated": "Der Status deines Praktikumsberichts wurde von SCAD aktualisiert",
+    "appointmentAccepted": "{{contact}} hat deine Terminanfrage akzeptiert",
+    "upcomingWorkshop": "Der Workshop, für den du dich angemeldet hast, beginnt bald",
+    "newMessage": "{{contact}} hat dir eine Nachricht gesendet",
+    "companyApplicationAccepted": "Deine Unternehmensbewerbung wurde angenommen",
+    "accountSetup": "Konto erfolgreich eingerichtet – prüfe deine E-Mails für Details",
+    "newApplicants": "{{count}} neue Bewerber für dein <b>{{role}}</b> Praktikum",
+    "reportsAwaitingReview": "{{count}} neue Studentenberichte warten auf Überprüfung",
+    "registrationsPending": "{{count}} neue Unternehmensregistrierungen warten auf Verifizierung"
   }
 }
