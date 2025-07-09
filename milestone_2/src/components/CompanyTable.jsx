@@ -153,7 +153,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
             className={`fixed top-0 ltr:right-0 rtl:left-0 h-screen w-1/3 bg-metallica-blue-100/70 backdrop-blur-md shadow-xl z-50 flex flex-col ltr:border-l-4 rtl:border-r-4 border-[#5DB2C7] ${isExpanded ? slideOutClass : slideInClass}`}
             style={{ minWidth: 420, maxWidth: 500 }}
           >
-            <div className="flex justify-end p-4 gap-4">
+            <div className="flex p-4 gap-4 ltr:justify-end rtl:justify-start ltr:flex-row rtl:flex-row-reverse relative">
               <button
                 onClick={() => handleExpandModal(selectedCompany)}
                 className="companyrow-size-badge bg-white/80 text-metallica-blue-700 !border !border-metallica-blue-400 px-3 py-1 rounded-full text-xs font-medium transition-colors duration-200 hover:bg-white"
@@ -168,7 +168,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <div className="absolute top-0 left-0 px-4 py-2 bg-metallica-blue-700 text-white text-lg font-bold rounded-br-lg">
+              <div className="absolute top-0 ltr:left-0 rtl:right-0 px-4 py-2 bg-metallica-blue-700 text-white text-lg font-bold ltr:rounded-br-lg rtl:rounded-bl-lg">
                 {safeT('scad.companyTable.sidebar.title')}
               </div>
             </div>
