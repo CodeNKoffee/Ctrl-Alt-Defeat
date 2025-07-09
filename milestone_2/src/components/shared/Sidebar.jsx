@@ -99,7 +99,7 @@ const sidebarConfig = {
     { id: 'student-evals', iconId: 'my-evaluations', labelKey: 'sidebar.scad.studentEvaluations', path: '/dashboard/scad/student-evals', isPage: false },
     { id: 'statistics', iconId: 'statistics', labelKey: 'sidebar.scad.statistics', path: '/dashboard/scad/statistics', isPage: false },
     { id: 'reports', iconId: 'reports', labelKey: 'sidebar.scad.reports', path: '/dashboard/scad/reports', isPage: false },
-    { id: 'workshops', iconId: 'workshops', labelKey: 'sidebar.scad.workshops', path: '/dashboard/scad/workshops', isPage: false },
+    { id: 'workshops', iconId: 'workshops', labelKey: 'sidebar.scad.workshop', path: '/dashboard/scad/workshops', isPage: false },
   ],
 };
 
