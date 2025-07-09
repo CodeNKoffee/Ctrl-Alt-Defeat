@@ -730,7 +730,7 @@
   "modals": {
     "deleteConfirmation": {
       "title": "تأكيد الحذف",
-      "message": "هل أنت متأكد أنك تريد حذف هذا {type}؟",
+      "message": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
       "cancel": "إلغاء",
       "delete": "حذف",
       "closeModal": "إغلاق النافذة"
@@ -1452,10 +1452,10 @@
   },
   "dashboard": {
     "titles": {
-      "student": "طالب لوحة التحكم",
-      "scad": "SCAD لوحة التحكم", 
-      "company": "شركة لوحة التحكم",
-      "faculty": "كلية لوحة التحكم"
+      "student": "لوحة التحكم الطالب",
+      "scad": "لوحة التحكم SCAD", 
+      "company": "لوحة التحكم الشركة",
+      "faculty": "لوحة التحكم الكلية"
     },
     "userTypes": {
       "student": "طالب",

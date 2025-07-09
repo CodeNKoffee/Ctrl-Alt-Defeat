@@ -674,7 +674,7 @@
   "modals": {
     "deleteConfirmation": {
       "title": "Löschen bestätigen",
-      "message": "Sind Sie sicher, dass Sie dieses {type} löschen möchten?",
+      "message": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
       "cancel": "Abbrechen",
       "delete": "Löschen",
       "closeModal": "Modal schließen"

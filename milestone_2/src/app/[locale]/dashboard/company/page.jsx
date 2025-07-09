@@ -418,7 +418,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         padding="px-4 pt-2 pb-6"
         videoSidebarProps={{
           videoUrl: 'https://www.youtube.com/embed/1EQIXjvXKjM?si=zOgZsOew62AVOVDn',
-          videoTitle: 'Gen-Z are shaping the future',
+          videoTitle: safeT('internship.videoSidebar.genZFuture'),
           isCompany: true
         }}
         searchTerm={searchTerm}
