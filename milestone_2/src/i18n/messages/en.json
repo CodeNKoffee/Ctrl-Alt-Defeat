@@ -1475,7 +1475,10 @@
       "title": "Personalize Your Profile Card Theme",
       "description": "Choose a color to automatically generate a matching theme for your profile card",
       "clickToSelect": "Click to select color",
-      "preview": "Card Color Preview"
+      "preview": "Card Color Preview",
+      "background": "Bg",
+      "text": "Text",
+      "primary": "Primary"
     },
     "socialLinks": {
       "title": "Social Links",

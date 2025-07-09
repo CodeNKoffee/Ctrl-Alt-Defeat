@@ -1478,7 +1478,10 @@
       "title": "Personalisieren Sie Ihr Profilkarten-Thema",
       "description": "Wählen Sie eine Farbe, um automatisch ein passendes Thema für Ihr Profilkarten zu generieren",
       "clickToSelect": "Klicken Sie, um eine Farbe auszuwählen",
-      "preview": "Kartenfarb-Vorschau"
+      "preview": "Kartenfarb-Vorschau",
+      "background": "Hintergrund",
+      "text": "Text",
+      "primary": "Primär"
     },
     "socialLinks": {
       "title": "Soziale Links",
