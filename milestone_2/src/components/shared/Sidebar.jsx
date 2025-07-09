@@ -527,6 +527,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             loadingText="Logging out..."
             useAnimatedDots={true}
             disabled={isLoggingOut}
+            iconPosition={locale === 'ar' ? 'right' : 'left'}
           />
         ) : (
           <button
