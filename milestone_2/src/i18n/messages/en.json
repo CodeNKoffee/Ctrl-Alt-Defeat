@@ -1588,5 +1588,10 @@
     "forgotPassword": "Forgot password?",
     "logIn": "Log in",
     "loggingIn": "Logging in..."
+  },
+  "validation": {
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email address",
+    "passwordRequired": "Password is required"
   }
 }

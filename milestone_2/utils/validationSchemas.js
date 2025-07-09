@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 import { INDUSTRIES, COMPANY_SIZES, VERIFICATION_TYPES, ACCEPTED_FILE_TYPES } from "../constants/index";
 import { FREE_EMAIL_DOMAINS } from "../constants/index";
+import i18next from 'i18next';
 
 export const signupValidationSchema = Yup.object().shape({
   companyName: Yup.string()
@@ -60,8 +61,8 @@ export const signupValidationSchema = Yup.object().shape({
 
 export const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email address')
-    .required('Email is required'),
+    .email(i18next.t('validation.emailInvalid'))
+    .required(i18next.t('validation.emailRequired')),
   password: Yup.string()
-    .required('Password is required')
+    .required(i18next.t('validation.passwordRequired'))
 });

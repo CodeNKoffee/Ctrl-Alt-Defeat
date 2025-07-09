@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import PasswordInputField from "@/components/PasswordInputField";
 import FloatingLabelInput from "@/components/FloatingLabelInput";
-import { loginValidationSchema } from "../../utils/validationSchemas";
+import * as Yup from 'yup';
 import { MutatingDots } from 'react-loader-spinner';
 
 export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
@@ -68,11 +68,19 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
     setFieldValue('remember', isChecked);
   };
 
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email(safeT('validation.emailInvalid'))
+      .required(safeT('validation.emailRequired')),
+    password: Yup.string()
+      .required(safeT('validation.passwordRequired'))
+  });
+
   return (
     <Formik
       innerRef={formikRef}
       initialValues={initialValues}
-      validationSchema={loginValidationSchema}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       {({ errors, touched, isSubmitting, setFieldValue, isValid, dirty, values }) => (

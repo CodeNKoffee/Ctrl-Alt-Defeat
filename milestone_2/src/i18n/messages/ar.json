@@ -1608,5 +1608,10 @@
     "forgotPassword": "هل نسيت كلمة المرور؟",
     "logIn": "تسجيل الدخول",
     "loggingIn": "جارٍ تسجيل الدخول..."
+  },
+  "validation": {
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "البريد الإلكتروني غير صالح",
+    "passwordRequired": "كلمة المرور مطلوبة"
   }
 }
