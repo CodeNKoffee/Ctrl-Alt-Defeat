@@ -1482,5 +1482,95 @@
     "jobInterests": "اهتمامات الوظيفة",
     "experience": "الخبرة",
     "internships": "التدريبات"
+  },
+  "updateProfile": {
+    "title": "تعديل الملف الشخصي",
+    "basicInfo": {
+      "title": "المعلومات الأساسية",
+      "fullName": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "bio": "البيوغرافيا"
+    },
+    "colorTheme": {
+      "title": "تخصيص موضوع بطاقة ملفك الشخصي",
+      "description": "اختر لونًا لتوليد تطبيق الموضوع المتطابق لبطاقة ملفك الشخصي",
+      "clickToSelect": "اضغط لاختيار اللون",
+      "preview": "معاينة لون البطاقة"
+    },
+    "socialLinks": {
+      "title": "الروابط الاجتماعية",
+      "linkedin": "رابط LinkedIn",
+      "github": "رابط GitHub",
+      "portfolio": "رابط المحفظة"
+    },
+    "personalityTraits": {
+      "title": "صفات الشخصية",
+      "traitPlaceholder": "اسم الصفة",
+      "addTrait": "إضافة صفة"
+    },
+    "education": {
+      "title": "التعليم",
+      "degree": "الدرجة",
+      "institution": "المؤسسة",
+      "period": "الفترة",
+      "faculty": "الكلية",
+      "semester": "الفصل",
+      "selectFaculty": "اختر الكلية",
+      "selectSemester": "اختر الفصل",
+      "faculties": {
+        "met": "Media Engineering and Technology (MET)",
+        "cse": "Computer Science and Engineering",
+        "mechanical": "Mechanical Engineering",
+        "electrical": "Electrical Engineering"
+      }
+    },
+    "skills": {
+      "title": "المهارات",
+      "addSkill": "إضافة مهارة"
+    },
+    "jobInterests": {
+      "title": "اهتمامات الوظيفة",
+      "jobTitle": "اسم الوظيفة",
+      "description": "الوصف",
+      "addJobInterest": "إضافة اهتمام بالوظيفة",
+      "removeJobInterest": "إزالة اهتمام بالوظيفة"
+    },
+    "experience": {
+      "title": "Experience",
+      "jobTitle": "اسم الوظيفة",
+      "company": "الشركة",
+      "duration": "المدة",
+      "responsibilities": "المسؤوليات",
+      "addResponsibility": "إضافة مسؤولية",
+      "addExperience": "إضافة الخبرة",
+      "removeExperience": "إزالة الخبرة"
+    },
+    "internships": {
+      "title": "التدريبات",
+      "position": "المنصب",
+      "company": "الشركة",
+      "period": "الفترة",
+      "description": "الوصف",
+      "addInternship": "إضافة التدريب",
+      "removeInternship": "إزالة التدريب"
+    },
+    "actions": {
+      "saveChanges": "حفظ التعديلات"
+    },
+    "feedback": {
+      "updated": "تم التحديث!",
+      "message": "تم تحديث ملفك الشخصي بنجاح."
+    },
+    "validation": {
+      "nameRequired": "الاسم مطلوب",
+      "nameInvalid": "الاسم يمكن أن يحتوي فقط على أحرف ومسافات وشرطات",
+      "nameMinLength": "الاسم يجب أن يكون على الأقل 2 أحرف",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "البريد الإلكتروني غير صالح. يرجى إدخال بريد إلكتروني صالح",
+      "bioMaxLength": "البيوغرافيا لا يمكن أن تتجاوز 500 حرف",
+      "linkedinInvalid": "الرابط غير صالح. يرجى إدخال رابط LinkedIn صالح",
+      "githubInvalid": "الرابط غير صالح. يرجى إدخال رابط GitHub صالح",
+      "portfolioInvalid": "الرابط غير صالح. يرجى إدخال رابط المحفظة صالح"
+    }
   }
 }

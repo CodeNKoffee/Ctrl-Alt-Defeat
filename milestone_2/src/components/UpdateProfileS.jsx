@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faSave, faPlus, faTrash, faCamera, faPalette, faFont, faSquare, faExclamationCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './shared/CustomButton';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 // Validation schema for student profile form
 const ProfileValidationSchema = Yup.object().shape({
@@ -25,6 +27,8 @@ const ProfileValidationSchema = Yup.object().shape({
 });
 
 export default function UpdateProfileS({ isOpen, onClose, studentData, onProfileUpdate }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(studentData?.profileImage || "/images/student.png");
   const [initialValues, setInitialValues] = useState({
@@ -186,7 +190,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
             fontWeight: "600",
             textAlign: "left"
           }}>
-            Edit Profile
+            {safeT('updateProfile.title')}
           </h1>
 
           {/* Close button from CallModal.jsx */}

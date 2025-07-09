@@ -1465,5 +1465,95 @@
     "jobInterests": "Berufliche Interessen",
     "experience": "Erfahrung",
     "internships": "Praktika"
+  },
+  "updateProfile": {
+    "title": "Profil bearbeiten",
+    "basicInfo": {
+      "title": "Grundinformationen",
+      "fullName": "Vollständiger Name",
+      "email": "E-Mail",
+      "bio": "Bio"
+    },
+    "colorTheme": {
+      "title": "Personalisieren Sie Ihr Profilkarten-Thema",
+      "description": "Wählen Sie eine Farbe, um automatisch ein passendes Thema für Ihr Profilkarten zu generieren",
+      "clickToSelect": "Klicken Sie, um eine Farbe auszuwählen",
+      "preview": "Kartenfarb-Vorschau"
+    },
+    "socialLinks": {
+      "title": "Soziale Links",
+      "linkedin": "LinkedIn-URL",
+      "github": "GitHub-URL",
+      "portfolio": "Portfolio-URL"
+    },
+    "personalityTraits": {
+      "title": "Charaktermerkmale",
+      "traitPlaceholder": "Merkmalname",
+      "addTrait": "Merkmal hinzufügen"
+    },
+    "education": {
+      "title": "Ausbildung",
+      "degree": "Abschluss",
+      "institution": "Institut",
+      "period": "Periode",
+      "faculty": "Fakultät",
+      "semester": "Semester",
+      "selectFaculty": "Fakultät auswählen",
+      "selectSemester": "Semester auswählen",
+      "faculties": {
+        "met": "Media Engineering and Technology (MET)",
+        "cse": "Computer Science and Engineering",
+        "mechanical": "Mechanical Engineering",
+        "electrical": "Electrical Engineering"
+      }
+    },
+    "skills": {
+      "title": "Fähigkeiten",
+      "addSkill": "Fähigkeit hinzufügen"
+    },
+    "jobInterests": {
+      "title": "Berufliche Interessen",
+      "jobTitle": "Berufsbezeichnung",
+      "description": "Beschreibung",
+      "addJobInterest": "Berufliche Interesse hinzufügen",
+      "removeJobInterest": "Remove Job Interest"
+    },
+    "experience": {
+      "title": "Erfahrung",
+      "jobTitle": "Berufsbezeichnung",
+      "company": "Unternehmen",
+      "duration": "Dauer",
+      "responsibilities": "Verantwortlichkeiten",
+      "addResponsibility": "Verantwortlichkeit hinzufügen",
+      "addExperience": "Erfahrung hinzufügen",
+      "removeExperience": "Erfahrung entfernen"
+    },
+    "internships": {
+      "title": "Praktika",
+      "position": "Position",
+      "company": "Unternehmen",
+      "period": "Periode",
+      "description": "Beschreibung",
+      "addInternship": "Praktika hinzufügen",
+      "removeInternship": "Praktika entfernen"
+    },
+    "actions": {
+      "saveChanges": "Änderungen speichern"
+    },
+    "feedback": {
+      "updated": "Aktualisiert!",
+      "message": "Ihr Profil wurde erfolgreich aktualisiert."
+    },
+    "validation": {
+      "nameRequired": "Name ist erforderlich",
+      "nameInvalid": "Name kann nur Buchstaben, Leerzeichen und Bindestriche enthalten",
+      "nameMinLength": "Name muss mindestens 2 Zeichen lang sein",
+      "emailRequired": "E-Mail ist erforderlich",
+      "emailInvalid": "Ungültiges E-Mail-Format. Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "bioMaxLength": "Bio darf nicht mehr als 500 Zeichen enthalten",
+      "linkedinInvalid": "Ungültige URL. Bitte geben Sie eine gültige LinkedIn-URL ein",
+      "githubInvalid": "Ungültige URL. Bitte geben Sie eine gültige GitHub-URL ein",
+      "portfolioInvalid": "Ungültige URL. Bitte geben Sie eine gültige Portfolio-URL ein"
+    }
   }
 }

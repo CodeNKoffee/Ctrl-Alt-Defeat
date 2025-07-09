@@ -1462,5 +1462,95 @@
     "jobInterests": "Job Interests",
     "experience": "Experience",
     "internships": "Internships"
+  },
+  "updateProfile": {
+    "title": "Edit Profile",
+    "basicInfo": {
+      "title": "Basic Information",
+      "fullName": "Full Name",
+      "email": "Email",
+      "bio": "Bio"
+    },
+    "colorTheme": {
+      "title": "Personalize Your Profile Card Theme",
+      "description": "Choose a color to automatically generate a matching theme for your profile card",
+      "clickToSelect": "Click to select color",
+      "preview": "Card Color Preview"
+    },
+    "socialLinks": {
+      "title": "Social Links",
+      "linkedin": "LinkedIn URL",
+      "github": "GitHub URL",
+      "portfolio": "Portfolio URL"
+    },
+    "personalityTraits": {
+      "title": "Personality Traits",
+      "traitPlaceholder": "Trait name",
+      "addTrait": "Add Trait"
+    },
+    "education": {
+      "title": "Education",
+      "degree": "Degree",
+      "institution": "Institution",
+      "period": "Period",
+      "faculty": "Faculty",
+      "semester": "Semester",
+      "selectFaculty": "Select Faculty",
+      "selectSemester": "Select Semester",
+      "faculties": {
+        "met": "Media Engineering and Technology (MET)",
+        "cse": "Computer Science and Engineering",
+        "mechanical": "Mechanical Engineering",
+        "electrical": "Electrical Engineering"
+      }
+    },
+    "skills": {
+      "title": "Skills",
+      "addSkill": "Add Skill"
+    },
+    "jobInterests": {
+      "title": "Job Interests",
+      "jobTitle": "Job Title",
+      "description": "Description",
+      "addJobInterest": "Add Job Interest",
+      "removeJobInterest": "Remove Job Interest"
+    },
+    "experience": {
+      "title": "Experience",
+      "jobTitle": "Title",
+      "company": "Company",
+      "duration": "Duration",
+      "responsibilities": "Responsibilities",
+      "addResponsibility": "Add Responsibility",
+      "addExperience": "Add Experience",
+      "removeExperience": "Remove Experience"
+    },
+    "internships": {
+      "title": "Internships",
+      "position": "Position",
+      "company": "Company",
+      "period": "Period",
+      "description": "Description",
+      "addInternship": "Add Internship",
+      "removeInternship": "Remove Internship"
+    },
+    "actions": {
+      "saveChanges": "Save Changes"
+    },
+    "feedback": {
+      "updated": "Updated!",
+      "message": "Your profile has been successfully updated."
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameInvalid": "Name can only contain letters, spaces, and hyphens",
+      "nameMinLength": "Name must be at least 2 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format. Please enter a valid email address",
+      "bioMaxLength": "Bio cannot exceed 500 characters",
+      "linkedinInvalid": "Invalid URL. Please enter a valid LinkedIn URL",
+      "githubInvalid": "Invalid URL. Please enter a valid GitHub URL",
+      "portfolioInvalid": "Invalid URL. Please enter a valid portfolio URL"
+    }
   }
 }
