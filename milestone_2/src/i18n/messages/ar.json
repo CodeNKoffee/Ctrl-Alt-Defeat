@@ -1573,7 +1573,7 @@
       "bioMaxLength": "البيوغرافيا لا يمكن أن تتجاوز 500 حرف",
       "linkedinInvalid": "الرابط غير صالح. يرجى إدخال رابط LinkedIn صالح",
       "githubInvalid": "الرابط غير صالح. يرجى إدخال رابط GitHub صالح",
-      "portfolioInvalid": "الرابط غير صالح. يرجى إدخال رابط المحفظة صالح"
+      "portfolioInvalid": "رابط غير صالح. يرجى إدخال رابط محفظة صالح"
     }
   },
   "notifications": {
@@ -1589,5 +1589,16 @@
     "newApplicants": "{{count}} متقدم جديد لتدريب <b>{{role}}</b> الخاص بك",
     "reportsAwaitingReview": "{{count}} تقرير طالب جديد بانتظار المراجعة",
     "registrationsPending": "{{count}} تسجيل شركة جديد بانتظار التحقق"
+  },
+  "home": {
+    "welcomeTitle": "مرحبًا بك في",
+    "appName": "InternHub",
+    "slogan": "حيث تبدأ الخبرة",
+    "continueAs": "المتابعة كـ",
+    "tailoredExperience": "تجربة مخصصة لكل دور.",
+    "login": "تسجيل الدخول",
+    "notRegistered": "ليس لديك حساب بعد؟",
+    "signUp": "إنشاء حساب",
+    "loading": "جارٍ التحميل..."
   }
 }

@@ -1569,5 +1569,16 @@
       "githubInvalid": "Invalid URL. Please enter a valid GitHub URL",
       "portfolioInvalid": "Invalid URL. Please enter a valid portfolio URL"
     }
+  },
+  "home": {
+    "welcomeTitle": "Welcome to",
+    "appName": "InternHub",
+    "slogan": "WHERE  EXPERIENCE  BEGINS",
+    "continueAs": "Continue As",
+    "tailoredExperience": "Tailored experience for every role.",
+    "login": "Login",
+    "notRegistered": "Not registered yet?",
+    "signUp": "Sign up",
+    "loading": "Loading..."
   }
 }

@@ -1572,5 +1572,16 @@
     "newApplicants": "{{count}} neue Bewerber für dein <b>{{role}}</b> Praktikum",
     "reportsAwaitingReview": "{{count}} neue Studentenberichte warten auf Überprüfung",
     "registrationsPending": "{{count}} neue Unternehmensregistrierungen warten auf Verifizierung"
+  },
+  "home": {
+    "welcomeTitle": "Willkommen bei",
+    "appName": "InternHub",
+    "slogan": "WO ERFAHRUNG BEGINNT",
+    "continueAs": "Weiter als",
+    "tailoredExperience": "Maßgeschneiderte Erfahrung für jede Rolle.",
+    "login": "Anmelden",
+    "notRegistered": "Noch nicht registriert?",
+    "signUp": "Registrieren",
+    "loading": "Laden..."
   }
 }
