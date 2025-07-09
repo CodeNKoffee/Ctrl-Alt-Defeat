@@ -17,12 +17,14 @@ import BackButton from "@/components/shared/BackButton";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ContinueOption from "@/components/ContinueOption";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { createTypingAnimation } from "../../../utils";
 import { MutatingDots } from 'react-loader-spinner';
 
 export default function Home() {
   const router = useRouter();
+  const params = useParams();
+  const locale = params.locale || 'en';
   const dispatch = useDispatch();
 
   // i18n helpers
@@ -169,7 +171,7 @@ export default function Home() {
         payload: userSession
       });
 
-      router.push(`/en/dashboard/${userType}`);
+      router.push(`/${locale}/dashboard/${userType}`);
     } catch (error) {
       setIsLoggingIn(false);
       throw error; // Re-throw so LoginForm can handle it
@@ -558,7 +560,7 @@ export default function Home() {
                       {selectedUserOption.value === 'company' && (
                         <span className="text-black font-medium font-ibm-plex-sans">
                           {safeT('home.notRegistered')}{' '}
-                          <Link href={`/en/auth/signup?userType=${selectedUserOption.value}`} className="text-metallica-blue-off-charts underline">
+                          <Link href={`/${locale}/auth/signup?userType=${selectedUserOption.value}`} className="text-metallica-blue-off-charts underline">
                             {safeT('home.signUp')}
                           </Link>
                         </span>

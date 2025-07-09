@@ -4,6 +4,13 @@ import { NextResponse } from 'next/server';
 const locales = ['en', 'de', 'ar'];
 const defaultLocale = 'en';
 
+// Determine preferred locale from Accept-Language header
+function getPreferredLocale(request) {
+  const acceptLang = request.headers.get('accept-language') || '';
+  const preferred = acceptLang.split(',')[0]?.split('-')[0]?.toLowerCase();
+  return locales.includes(preferred) ? preferred : defaultLocale;
+}
+
 // Helper function to get locale from pathname
 function getLocale(pathname) {
   const segments = pathname.split('/');
@@ -22,9 +29,12 @@ export function middleware(request) {
   // Check if pathname already has a valid locale
   const currentLocale = getLocale(pathname);
 
-  // If no valid locale is found, redirect to default locale with the path
+  // If no valid locale is found, redirect to preferred (or default) locale while preserving path & search
   if (!currentLocale) {
-    return NextResponse.redirect(new URL(`/${defaultLocale}${pathname}`, request.url));
+    const locale = getPreferredLocale(request);
+    const url = request.nextUrl.clone();
+    url.pathname = `/${locale}${pathname}`;
+    return NextResponse.redirect(url);
   }
 
   // If we have a valid locale, continue normally

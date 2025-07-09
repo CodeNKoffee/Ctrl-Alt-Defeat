@@ -1587,6 +1587,51 @@
     "signUp": "Registrieren",
     "loading": "Laden..."
   },
+  "signup": {
+    "title": "Registrieren",
+    "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
+    "login": "Anmelden",
+    "labels": {
+      "companyName": "Firmenname *",
+      "companyEmail": "Firmen-E-Mail *",
+      "industry": "Branche *",
+      "companySize": "Unternehmensgröße *",
+      "verificationType": "Verifizierungstyp *",
+      "companyLogo": "Firmenlogo *",
+      "companyRegistrationDocument": "Firmenregistrierungsdokument *",
+      "taxCardDocument": "Steuerkartendokument *",
+      "taxId": "Steuer-ID",
+      "chooseFile": "Datei auswählen...",
+      "browse": "Durchsuchen",
+      "acceptedLogoFormats": "Zulässige Formate: JPG, PNG, SVG (Bevorzugte Abmessungen: 200x200px)",
+      "acceptedDocFormats": "Zulässige Formate: JPG, PNG, PDF",
+      "submit": "Registrierung abschließen",
+      "processing": "Verarbeite..."
+    },
+    "placeholders": {
+      "industry": "Branche auswählen",
+      "companySize": "Größe auswählen",
+      "taxId": "XXX-XXX-XXX"
+    },
+    "tooltips": {
+      "companyEmail": "Bitte geben Sie eine offizielle Firmen-E-Mail-Adresse an. Kostenlose Anbieter (Gmail, Yahoo usw.) werden nicht akzeptiert."
+    },
+    "messages": {
+      "success": "Antrag wurde akzeptiert! Bitte überprüfen Sie Ihre E-Mail.",
+      "error": "Antrag wurde abgelehnt. Bitte überprüfen Sie Ihre E-Mail."
+    },
+    "verificationTypes": {
+      "registration": "Firmenregistrierung",
+      "taxCard": "Steuerkarte",
+      "taxId": "Steuer-ID"
+    },
+    "companySizes": {
+      "small": "Klein (50 Mitarbeiter oder weniger)",
+      "medium": "Mittel (51-100 Mitarbeiter)",
+      "large": "Groß (101-500 Mitarbeiter)",
+      "corporate": "Konzern (über 500 Mitarbeiter)"
+    }
+  },
   "login": {
     "emailLabel": "E-Mail *",
     "passwordLabel": "Passwort *",
@@ -1597,13 +1642,45 @@
     "validation": {
       "emailRequired": "E-Mail ist erforderlich",
       "emailInvalid": "Ungültige E-Mail-Adresse",
-      "passwordRequired": "Passwort ist erforderlich"
+      "passwordRequired": "Passwort ist erforderlich",
+      "companyNameRequired": "Firmenname ist erforderlich",
+      "companyNameMin": "Firmenname muss mindestens 2 Zeichen lang sein",
+      "industryRequired": "Branche ist erforderlich",
+      "industryInvalid": "Bitte wählen Sie eine gültige Branche aus",
+      "companyEmailRequired": "Firmen-E-Mail ist erforderlich",
+      "companyEmailInvalid": "Bitte verwenden Sie eine gültige Firmen-E-Mail-Adresse",
+      "companySizeRequired": "Unternehmensgröße ist erforderlich",
+      "companySizeInvalid": "Bitte wählen Sie eine gültige Unternehmensgröße aus",
+      "verificationTypeRequired": "Verifizierungstyp ist erforderlich",
+      "verificationTypeInvalid": "Bitte wählen Sie einen gültigen Verifizierungstyp aus",
+      "companyLogoRequired": "Firmenlogo ist erforderlich",
+      "verificationDocumentRequired": "Verifizierungsdokument ist erforderlich",
+      "fileFormatUnsupported": "Nicht unterstütztes Dateiformat",
+      "fileTooLarge": "Datei ist zu groß",
+      "taxIdRequired": "Steuer-ID ist erforderlich",
+      "taxIdFormat": "Steuer-ID muss im Format XXX-XXX-XXX vorliegen"
     }
   },
   "validation": {
     "emailRequired": "E-Mail ist erforderlich",
     "emailInvalid": "Ungültige E-Mail-Adresse",
-    "passwordRequired": "Passwort ist erforderlich"
+    "passwordRequired": "Passwort ist erforderlich",
+    "companyNameRequired": "Firmenname ist erforderlich",
+    "companyNameMin": "Firmenname muss mindestens 2 Zeichen lang sein",
+    "industryRequired": "Branche ist erforderlich",
+    "industryInvalid": "Bitte wählen Sie eine gültige Branche aus",
+    "companyEmailRequired": "Firmen-E-Mail ist erforderlich",
+    "companyEmailInvalid": "Bitte verwenden Sie eine gültige Firmen-E-Mail-Adresse",
+    "companySizeRequired": "Unternehmensgröße ist erforderlich",
+    "companySizeInvalid": "Bitte wählen Sie eine gültige Unternehmensgröße aus",
+    "verificationTypeRequired": "Verifizierungstyp ist erforderlich",
+    "verificationTypeInvalid": "Bitte wählen Sie einen gültigen Verifizierungstyp aus",
+    "companyLogoRequired": "Firmenlogo ist erforderlich",
+    "verificationDocumentRequired": "Verifizierungsdokument ist erforderlich",
+    "fileFormatUnsupported": "Nicht unterstütztes Dateiformat",
+    "fileTooLarge": "Datei ist zu groß",
+    "taxIdRequired": "Steuer-ID ist erforderlich",
+    "taxIdFormat": "Steuer-ID muss im Format XXX-XXX-XXX vorliegen"
   },
   "footer": {
     "copyright": "© {{year}} Deutsche Universität in Kairo. Alle Rechte vorbehalten."
