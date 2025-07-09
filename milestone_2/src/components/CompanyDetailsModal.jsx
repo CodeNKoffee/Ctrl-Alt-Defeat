@@ -150,7 +150,7 @@ export default function CompanyDetailsModal({ open, onClose, companyName, compan
         <div className={`modal-inner ${BG} ${BORDER} rounded-2xl`} style={{ boxShadow: '0 2px 8px #49718410', maxHeight: '90vh', overflow: 'hidden', paddingBottom: '24px' }}>
           {/* Close button - styled like EvaluationModal */}
           <button
-            className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
+            className="absolute top-3 ltr:right-3 rtl:left-3 z-20 flex items-center justify-center w-8 h-8 rounded-full shadow-sm bg-gray-100 hover:bg-gray-200/90 transition-colors"
             onClick={() => onClose && onClose(false)}
             aria-label="Close modal"
           >
