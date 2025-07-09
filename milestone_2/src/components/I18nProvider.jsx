@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { MutatingDots } from 'react-loader-spinner';
 
 // Dynamic import function for translations
 const loadTranslations = async () => {
@@ -105,7 +106,21 @@ export default function I18nProvider({ children }) {
     <I18nextProvider i18n={i18nInstance || i18n}>
       {isReady ? children : (
         <div className="flex items-center justify-center min-h-screen">
-          <div className="text-lg">Loading translations...</div>
+          <div className="flex flex-col items-center space-y-4">
+            <MutatingDots
+              height={120}
+              width={120}
+              color="#2A5F74"
+              secondaryColor="#5DB2C7"
+              radius={12}
+              ariaLabel="mutating-dots-loading-translations"
+              visible={true}
+            />
+            {(() => {
+              const msgs = { en: 'Loading...', ar: 'جارٍ التحميل...', de: 'Laden...' };
+              return <p className="text-metallica-blue-950 font-semibold text-xl mt-4">{msgs[locale] || 'Loading...'}</p>;
+            })()}
+          </div>
         </div>
       )}
     </I18nextProvider>
