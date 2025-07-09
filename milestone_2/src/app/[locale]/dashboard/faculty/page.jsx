@@ -138,22 +138,22 @@ function StudentEvalsView() {
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full relative z-10">
+        <div className="flex items-start gap-4 flex-row rtl:flex-row w-full relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
 
-          <div className="text-left w-full">
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
+          <div className="text-left rtl:text-right w-full">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2 rtl:text-right">
               {safeT('faculty.dashboard.studentEvaluations.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300 rtl:text-right">
               {safeT('faculty.dashboard.studentEvaluations.title')}
             </h2>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">
+              <p className="mb-3 rtl:text-right">
                 {safeT('faculty.dashboard.studentEvaluations.description')}
               </p>
 
@@ -162,24 +162,24 @@ function StudentEvalsView() {
                   <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
                     <div className="flex items-center gap-2 mb-1.5">
                       <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('faculty.dashboard.studentEvaluations.features.filterTitle')}</span>
-                      <h3 className="font-medium text-blue-700">{safeT('faculty.dashboard.studentEvaluations.features.searchSortTitle')}</h3>
+                      <h3 className="font-medium text-blue-700 rtl:text-right">{safeT('faculty.dashboard.studentEvaluations.features.searchSortTitle')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">{safeT('faculty.dashboard.studentEvaluations.features.searchSortDescription')}</p>
+                    <p className="text-sm text-gray-600 rtl:text-right">{safeT('faculty.dashboard.studentEvaluations.features.searchSortDescription')}</p>
                   </div>
 
                   <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
                     <div className="flex items-center gap-2 mb-1.5">
                       <span className="bg-[#146C80] text-white px-3 py-0.5 rounded-full text-xs font-semibold shadow-sm">{safeT('faculty.dashboard.studentEvaluations.features.seeMoreButton')}</span>
-                      <h3 className="font-medium text-[#146C80]">{safeT('faculty.dashboard.studentEvaluations.features.fullReportTitle')}</h3>
+                      <h3 className="font-medium text-[#146C80] rtl:text-right">{safeT('faculty.dashboard.studentEvaluations.features.fullReportTitle')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 rtl:text-right">
                       {safeT('faculty.dashboard.studentEvaluations.features.fullReportDescription')}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
+              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm rtl:text-right">
                 {safeT('faculty.dashboard.studentEvaluations.qualityNote')}
               </p>
             </div>
