@@ -40,66 +40,68 @@ const ChatPanelContent = memo(({
   handleSendMessage,
   handleToggleChat,
   chatScrollRef,
-  safeT,
-  ready
-}) => (
-  <div className="h-full flex flex-col">
-    <div className="flex justify-between items-center p-4 border-b border-white/10">
-      <h3 className="text-lg font-semibold text-blue-100">{safeT('callInterface.chat')}</h3>
-      <button
-        onClick={handleToggleChat}
-        className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
-        title={safeT('callInterface.closeChatPanel')}
-      >
-        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-      </button>
-    </div>
-    <div className="flex flex-col flex-grow overflow-hidden">
-      <div ref={chatScrollRef} className="flex-grow p-4 space-y-4 overflow-y-auto">
-        {chatMessages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center text-sm text-blue-200/60">
-            <FontAwesomeIcon icon={faComments} className="h-8 w-8 mb-3 opacity-50" />
-            <p>{safeT('callInterface.noMessagesYet')}</p>
-            <p className="text-xs mt-1">{safeT('callInterface.startConversation')}</p>
-          </div>
-        ) : (
-          chatMessages.map(message => (
-            <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] rounded-xl px-4 py-2 shadow-lg ${message.isSelf
-                ? 'bg-[#318FA8] text-white rounded-br-none'
-                : 'bg-white/5 text-blue-100 border border-white/10 rounded-bl-none'
-                }`}>
-                <p className="text-sm">{message.content}</p>
-                <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100/70' : 'text-blue-200/60'}`}>
-                  {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </p>
-              </div>
+}) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex justify-between items-center p-4 border-b border-white/10">
+        <h3 className="text-lg font-semibold text-blue-100">{safeT('callInterface.chat')}</h3>
+        <button
+          onClick={handleToggleChat}
+          className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
+          title={safeT('callInterface.closeChatPanel')}
+        >
+          <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="flex flex-col flex-grow overflow-hidden">
+        <div ref={chatScrollRef} className="flex-grow p-4 space-y-4 overflow-y-auto">
+          {chatMessages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-center text-sm text-blue-200/60">
+              <FontAwesomeIcon icon={faComments} className="h-8 w-8 mb-3 opacity-50" />
+              <p>{safeT('callInterface.noMessagesYet')}</p>
+              <p className="text-xs mt-1">{safeT('callInterface.startConversation')}</p>
             </div>
-          ))
-        )}
-      </div>
-      <div className="p-4 border-t border-white/10">
-        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-          <input
-            type="text"
-            value={currentMessage}
-            onChange={(e) => setCurrentMessage(e.target.value)}
-            className="flex-grow bg-white/5 border border-white/10 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 text-sm text-blue-100 placeholder-blue-200/40"
-            placeholder={safeT('callInterface.typeMessage')}
-          />
-          <button
-            type="submit"
-            className={`w-10 h-10 rounded-full bg-[#318FA8] hover:bg-[#2A5F74] text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''} shadow-lg hover:shadow-xl`}
-            disabled={!currentMessage.trim()}
-            title={safeT('callInterface.sendMessage')}
-          >
-            <FontAwesomeIcon icon={faPaperPlane} className="h-4 w-4" />
-          </button>
-        </form>
+          ) : (
+            chatMessages.map(message => (
+              <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] rounded-xl px-4 py-2 shadow-lg ${message.isSelf
+                  ? 'bg-[#318FA8] text-white rounded-br-none'
+                  : 'bg-white/5 text-blue-100 border border-white/10 rounded-bl-none'
+                  }`}>
+                  <p className="text-sm">{message.content}</p>
+                  <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100/70' : 'text-blue-200/60'}`}>
+                    {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+        <div className="p-4 border-t border-white/10">
+          <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+            <input
+              type="text"
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              className="flex-grow bg-white/5 border border-white/10 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 text-sm text-blue-100 placeholder-blue-200/40"
+              placeholder={safeT('callInterface.typeMessage')}
+            />
+            <button
+              type="submit"
+              className={`w-10 h-10 rounded-full bg-[#318FA8] hover:bg-[#2A5F74] text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''} shadow-lg hover:shadow-xl`}
+              disabled={!currentMessage.trim()}
+              title={safeT('callInterface.sendMessage')}
+            >
+              <FontAwesomeIcon icon={faPaperPlane} className="h-4 w-4" />
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-));
+  );
+});
 
 // Extract NotesPanelContent to be outside of CallInterface
 const NotesPanelContent = memo(({
@@ -107,39 +109,45 @@ const NotesPanelContent = memo(({
   setNoteContent,
   handleSaveNotes,
   handleToggleNotes
-}) => (
-  <div className="h-full flex flex-col">
-    <div className="flex justify-between items-center p-4 border-b border-white/10">
-      <h3 className="text-lg font-semibold text-blue-100">Notes</h3>
-      <button
-        onClick={handleToggleNotes}
-        className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
-        title={safeT('callInterface.closeNotesPanel')}
-      >
-        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-      </button>
+}) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex justify-between items-center p-4 border-b border-white/10">
+        <h3 className="text-lg font-semibold text-blue-100">Notes</h3>
+        <button
+          onClick={handleToggleNotes}
+          className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
+          title={safeT('callInterface.closeNotesPanel')}
+        >
+          <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="flex flex-col flex-grow p-4">
+        <textarea
+          value={noteContent}
+          onChange={(e) => setNoteContent(e.target.value)}
+          className="flex-grow w-full p-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 resize-none text-sm text-blue-100 placeholder-blue-200/40 mb-4"
+          placeholder={safeT('callInterface.takeNotes')}
+        />
+        <button
+          onClick={handleSaveNotes}
+          className="w-full bg-[#318FA8] hover:bg-[#2A5F74] text-white py-3 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors shadow-lg hover:shadow-xl border border-[#41B9D9]/30"
+          title={safeT('callInterface.saveNotes')}
+        >
+          <FontAwesomeIcon icon={faSave} className="h-4 w-4" />
+          {safeT('callInterface.saveNotes')}
+        </button>
+      </div>
     </div>
-    <div className="flex flex-col flex-grow p-4">
-      <textarea
-        value={noteContent}
-        onChange={(e) => setNoteContent(e.target.value)}
-        className="flex-grow w-full p-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 resize-none text-sm text-blue-100 placeholder-blue-200/40 mb-4"
-        placeholder={safeT('callInterface.takeNotes')}
-      />
-      <button
-        onClick={handleSaveNotes}
-        className="w-full bg-[#318FA8] hover:bg-[#2A5F74] text-white py-3 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors shadow-lg hover:shadow-xl border border-[#41B9D9]/30"
-        title={safeT('callInterface.saveNotes')}
-      >
-        <FontAwesomeIcon icon={faSave} className="h-4 w-4" />
-        Save Notes
-      </button>
-    </div>
-  </div>
-));
+  );
+});
 
 const CallInterface = () => {
   const dispatch = useDispatch();
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const instanceId = useRef(Math.random().toString(36).substring(2, 7)).current; // Unique ID for this instance
   console.log(`[CallInterface ${instanceId}] Function body executing.`); // Log instance invocation
 
