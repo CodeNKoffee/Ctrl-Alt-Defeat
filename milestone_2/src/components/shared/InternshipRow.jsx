@@ -57,6 +57,10 @@ const createTimeAgo = (safeT) => (isoDate) => {
     const unit = minutes > 1 ? safeT('internship.row.timeAgo.minutesAgoPlural') : safeT('internship.row.timeAgo.minutesAgo');
     return `${safeT('internship.row.timeAgo.posted')} ${minutes} ${unit} ${safeT('internship.row.timeAgo.ago')}`;
   }
+  // Render 'just now' with RTL direction in Arabic
+  if (typeof window !== 'undefined' && document?.documentElement?.dir === 'rtl') {
+    return <span dir="rtl">{safeT('internship.row.timeAgo.justNow')}</span>;
+  }
   return safeT('internship.row.timeAgo.justNow');
 };
 
@@ -232,7 +236,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             />
 
             {/* Posted/Applied/Started Date (Header Row) */}
-            <span className="absolute bottom-2 right-2 text-xs text-gray-500">
+            <span className="absolute bottom-2 ltr:right-2 rtl:left-2 text-xs text-gray-500">
               {type === 'my' && `${safeT('internship.row.labels.startedOn')} ${formatDate(internship.startDate)}`}
               {type === 'applied' && `${safeT('internship.row.labels.appliedOn')} ${formatDate(internship.appliedDate)}`}
               {(type === 'recommnded' || type === 'browsing') && timeAgo(internship.postedDate)}
