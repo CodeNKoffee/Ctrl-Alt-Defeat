@@ -1152,6 +1152,8 @@ function MyInternshipsView({ onTriggerReportCreate }) {
 }
 
 function NotificationsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [filters, setFilters] = useState({ category: 'all', read: 'all' });
 
   const handleFilterChange = (filterName, value) => {
@@ -1201,24 +1203,26 @@ function NotificationsView() {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              ALERTS
+              {safeT('student.dashboard.notificationsPersonalizedInfoCard.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Notifications Center</h2>
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.notificationsPersonalizedInfoCard.title')}
+            </h2>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Stay informed and never miss important updates related to your professional development journey.</p>
+              <p className="mb-3">{safeT('student.dashboard.notificationsPersonalizedInfoCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <h3 className="font-medium text-[#2a5f74] mb-2">Your Notification Hub:</h3>
+                <h3 className="font-medium text-[#2a5f74] mb-2">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.title')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 rounded-lg border border-blue-200 bg-blue-50">
                     <div className="flex items-center gap-2 mb-1.5">
                       <div className="flex-shrink-0 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">1</span>
                       </div>
-                      <span className="font-medium text-blue-700">Application Updates</span>
+                      <span className="font-medium text-blue-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type1')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">Status changes and feedback on your internship applications</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type1Description')}</p>
                   </div>
 
                   <div className="p-3 rounded-lg border border-green-200 bg-green-50">
@@ -1226,9 +1230,9 @@ function NotificationsView() {
                       <div className="flex-shrink-0 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">2</span>
                       </div>
-                      <span className="font-medium text-green-700">Report Alerts</span>
+                      <span className="font-medium text-green-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type2')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">New comments or status changes on your submitted reports</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type2Description')}</p>
                   </div>
 
                   <div className="p-3 rounded-lg border border-purple-200 bg-purple-50">
@@ -1236,9 +1240,9 @@ function NotificationsView() {
                       <div className="flex-shrink-0 w-5 h-5 bg-purple-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">3</span>
                       </div>
-                      <span className="font-medium text-purple-700">Workshop Reminders</span>
+                      <span className="font-medium text-purple-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type3')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">Upcoming sessions you've registered for and last-minute availabilities</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type3Description')}</p>
                   </div>
 
                   <div className="p-3 rounded-lg border border-orange-200 bg-orange-50">
@@ -1246,9 +1250,9 @@ function NotificationsView() {
                       <div className="flex-shrink-0 w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">4</span>
                       </div>
-                      <span className="font-medium text-orange-700">Deadline Notifications</span>
+                      <span className="font-medium text-orange-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type4')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">Important dates for application submissions and report due dates</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type4Description')}</p>
                   </div>
 
                   <div className="p-3 rounded-lg border border-indigo-200 bg-indigo-50">
@@ -1256,9 +1260,9 @@ function NotificationsView() {
                       <div className="flex-shrink-0 w-5 h-5 bg-indigo-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">5</span>
                       </div>
-                      <span className="font-medium text-indigo-700">Personalized Opportunities</span>
+                      <span className="font-medium text-indigo-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type5')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">New internships or workshops matching your profile</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type5Description')}</p>
                   </div>
 
                   <div className="p-3 rounded-lg border border-yellow-200 bg-yellow-50">
@@ -1266,15 +1270,15 @@ function NotificationsView() {
                       <div className="flex-shrink-0 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">6</span>
                       </div>
-                      <span className="font-medium text-yellow-700">Premium Content</span>
+                      <span className="font-medium text-yellow-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type6')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">Exclusive workshops and events for Pro students only</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type6Description')}</p>
                   </div>
                 </div>
               </div>
               <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
                 <p className="text-sm text-yellow-800">
-                  <span className="font-medium">Note:</span> Some workshop notifications are exclusively for students with Pro membership. Upgrade your account to access these premium professional development opportunities.
+                  <span className="font-medium">{safeT('student.dashboard.notificationsPersonalizedInfoCard.footerLabel')}</span> {safeT('student.dashboard.notificationsPersonalizedInfoCard.footer')}
                 </p>
               </div>
             </div>

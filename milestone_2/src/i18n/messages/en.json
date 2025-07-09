@@ -69,7 +69,7 @@
       "postUpdatedSuccess": "Post Updated Successfully!",
       "form": {
         "jobTitle": "Job Title",
-        "jobDescription": "Job Description", 
+        "jobDescription": "Job Description",
         "startDate": "Start Date",
         "duration": "Duration",
         "internshipType": "Internship Type",
@@ -144,13 +144,13 @@
       "keyBenefits": "Key Benefits for Partner Companies",
       "benefits": {
         "talentedStudents": "Access to talented students with specialized skills",
-        "freshPerspectives": "Fresh perspectives and innovative approaches", 
+        "freshPerspectives": "Fresh perspectives and innovative approaches",
         "futureTalent": "Potential to develop future full-time talent"
       },
       "addListingNote": "To add your own internship listing, use the \"Post New Internship\" option in your company dashboard.",
       "filters": {
         "position": "Position",
-        "allPositions": "All Positions", 
+        "allPositions": "All Positions",
         "allCompanies": "All Companies",
         "company": "Company",
         "industry": "Industry",
@@ -173,13 +173,13 @@
     },
     "applications": {
       "title": "APPLICATIONS MANAGEMENT",
-      "badge": "APPLICANT PORTAL", 
+      "badge": "APPLICANT PORTAL",
       "heading": "Applicant Management Portal",
       "description": "Monitor and evaluate all student applications to your posted internship opportunities in one centralized location.",
       "trackingFeatures": "Applicant Tracking Features:",
       "features": {
         "viewApplications": "View all applications organized by position and submission date",
-        "accessProfiles": "Access comprehensive candidate profiles and application materials", 
+        "accessProfiles": "Access comprehensive candidate profiles and application materials",
         "reviewDocuments": "Review attached documents (resumes, portfolios, cover letters)",
         "exploreLinks": "Explore professional social links and relevant student work",
         "trackStatus": "Track application status (new, reviewed, interviewed, selected, declined)"
@@ -246,7 +246,7 @@
     "common": {
       "filter": "Filters",
       "hideFilters": "Hide Filters",
-      "clearFilters": "Clear Filters", 
+      "clearFilters": "Clear Filters",
       "search": "Search",
       "all": "All",
       "activeFilters": "Active Filters",
@@ -281,7 +281,7 @@
     "months": {
       "full": {
         "january": "January",
-        "february": "February", 
+        "february": "February",
         "march": "March",
         "april": "April",
         "may": "May",
@@ -422,12 +422,12 @@
     "dashboard": {
       "title": "FACULTY DASHBOARD",
       "reportReview": {
-        "badge": "REPORT REVIEW", 
+        "badge": "REPORT REVIEW",
         "title": "Faculty Report Review Dashboard",
         "welcome": "Welcome to the Faculty Report Review Dashboard. Here you can:",
         "features": {
           "reviewReports": "Review student internship reports pending evaluation",
-          "provideFeedback": "Provide feedback and annotations on student submissions", 
+          "provideFeedback": "Provide feedback and annotations on student submissions",
           "trackEvaluated": "Track reports you've already evaluated",
           "flagReports": "Flag reports that require additional attention"
         },
@@ -465,7 +465,7 @@
     "reports": {
       "statistics": {
         "totalReports": "Total Reports",
-        "acceptedReports": "Accepted Reports", 
+        "acceptedReports": "Accepted Reports",
         "pendingReports": "Pending Reports",
         "flaggedReports": "Flagged Reports",
         "rejectedReports": "Rejected Reports"
@@ -482,7 +482,7 @@
         "status": "Status:",
         "headers": {
           "reportNumber": "Report #",
-          "studentName": "Student Name", 
+          "studentName": "Student Name",
           "major": "Major",
           "internship": "Internship",
           "company": "Company",
@@ -496,7 +496,7 @@
         },
         "statuses": {
           "pending": "PENDING",
-          "flagged": "FLAGGED", 
+          "flagged": "FLAGGED",
           "rejected": "REJECTED",
           "accepted": "ACCEPTED"
         },
@@ -546,7 +546,7 @@
     },
     "statuses": {
       "pending": "PENDING",
-      "accepted": "ACCEPTED", 
+      "accepted": "ACCEPTED",
       "rejected": "REJECTED",
       "flagged": "FLAGGED",
       "reviewed": "REVIEWED"
@@ -592,7 +592,7 @@
     },
     "colors": {
       "yellow": "Yellow",
-      "green": "Green", 
+      "green": "Green",
       "pink": "Pink",
       "blue": "Blue"
     },
@@ -622,7 +622,7 @@
         "posted": "posted",
         "monthsAgo": "month",
         "monthsAgoPlural": "months",
-        "weeksAgo": "week", 
+        "weeksAgo": "week",
         "weeksAgoPlural": "weeks",
         "daysAgo": "day",
         "daysAgoPlural": "days",
@@ -651,7 +651,7 @@
       },
       "buttons": {
         "createReport": "Create Report",
-        "evaluateCompany": "Evaluate Company", 
+        "evaluateCompany": "Evaluate Company",
         "apply": "Apply",
         "applied": "Applied"
       },
@@ -659,7 +659,7 @@
         "paid": "Paid",
         "unpaid": "Unpaid",
         "current": "CURRENT",
-        "completed": "COMPLETED", 
+        "completed": "COMPLETED",
         "evaluated": "EVALUATED",
         "pending": "PENDING",
         "accepted": "ACCEPTED",
@@ -741,7 +741,7 @@
     "companyTable": {
       "headers": {
         "company": "COMPANY",
-        "industry": "INDUSTRY", 
+        "industry": "INDUSTRY",
         "size": "SIZE"
       },
       "sidebar": {
@@ -1126,6 +1126,38 @@
         },
         "footer": "Each workshop is carefully designed to address critical skills and knowledge areas that complement your academic learning and prepare you for professional success."
       },
+      "notificationsPersonalizedInfoCard": {
+        "title": "Notifications Center",
+        "description": "Stay informed and never miss important updates related to your professional development journey.",
+        "badge": "ALERTS",
+        "notificationHub": {
+          "title": "Your Notification Hub:",
+          "type1": "Application Updates",
+          "type1Description": "Status changes and feedback on your internship applications",
+          "type2": "Report Alerts",
+          "type2Description": "New comments or status changes on your submitted reports",
+          "type3": "Workshop Reminders",
+          "type3Description": "Upcoming sessions you've registered for and last-minute availabilities",
+          "type4": "Deadline Notifications",
+          "type4Description": "Important dates for application submissions and report due dates",
+          "type5": "Personalized Opportunities",
+          "type5Description": "New internships or workshops matching your profile",
+          "type6": "Premium Content",
+          "type6Description": "Exclusive workshops and events for Pro students only"
+        },
+        "footer": "Some workshop notifications are exclusively for students with Pro membership. Upgrade your account to access these premium professional development opportunities.",
+        "footerLabel": "Note:"
+      },
+      "notificationsList": {
+        "proNote": "Details locked - Upgrade to PRO to see who viewed your profile",
+        "profileViews": "Profile Views",
+        "all": "All",
+        "noProfileViewsFoundMatchingYourCriteria": "No profile views found matching your criteria",
+        "tryAdjustingYourFilters": "Try adjusting your filters",
+        "completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile": "Complete your internship duration to unlock PRO features and see which companies are interested in your profile",
+        "companies": "companies",
+        "haveViewedYourProfile": "have viewed your profile"
+      },
       "statusPills": {
         "industryMatch": "INDUSTRY MATCH",
         "recommendedByPastInterns": "RECOMMENDED BY PAST INTERNS",
@@ -1363,6 +1395,22 @@
     "noDescriptionAvailable": "No description available.",
     "incomingVideoCall": "Incoming Video Call",
     "decline": "Decline",
-    "accept": "Accept"
+    "accept": "Accept",
+    "callPROStudents": "Call PRO Students",
+    "callSCADAdmin": "Call SCAD Admin"
+  },
+  "dashboard": {
+    "titles": {
+      "student": "Student Portal",
+      "scad": "SCAD Portal", 
+      "company": "Company Portal",
+      "faculty": "Faculty Portal"
+    },
+    "userTypes": {
+      "student": "Student",
+      "scad": "SCAD",
+      "company": "Company", 
+      "faculty": "Faculty"
+    }
   }
 }

@@ -1145,6 +1145,38 @@
         },
         "footer": "يتم تصميم كل ورشة العمل بعناية للتعامل مع المهارات والمجالات المهمة التي تدعم تعلمك الأكاديمي وتستعد للنجاح المهني."
       },
+      "notificationsPersonalizedInfoCard": {
+        "title": "مركز الإشعارات",
+        "description": "ابق على اطلاع ولا تفوت على التحديثات المهمة المتعلقة برحلتك المهنية.",
+        "badge": "إشعارات",
+        "notificationHub": {
+          "title": "مركز الإشعارات الخاص بك:",
+          "type1": "تحديثات التطبيق",
+          "type1Description": "تغييرات الحالة والتعليقات على تطبيقات التدريب الخاصة بك",
+          "type2": "تنبيهات التقارير",
+          "type2Description": "تعليقات جديدة أو تغييرات الحالة على تقاريرك المقدمة",
+          "type3": "تذكيرات الورشات",
+          "type3Description": "الجلسات القادمة التي قمت بالتسجيل لها والفرص المتاحة في اللحظة الأخيرة",
+          "type4": "تنبيهات المواعيد",
+          "type4Description": "التوقيت المهم لتطبيقات التدريب وتوقيت تقديم التقارير",
+          "type5": "فرص مخصصة",
+          "type5Description": "تدريبات جديدة أو ورشات تتطابق مع ملفك الشخصي",
+          "type6": "محتوى مميز",
+          "type6Description": "ورشات وفعاليات مميزة للطلاب المتميزين فقط"
+        },
+        "footer": "بعض إشعارات الورشات مخصصة للطلاب المتميزين فقط. قم بترقية ملفك للوصول إلى هذه الفرص المهنية المميزة.",
+        "footerLabel": "ملاحظة:"
+      },
+      "notificationsList": {
+        "proNote": "تفاصيل مقفلة - قم بترقية للوصول إلى تفاصيل المتدرب الذي عرض ملفك",
+        "profileViews": "عرض الملف الشخصي",
+        "all": "جميع",
+        "noProfileViewsFoundMatchingYourCriteria": "لا يوجد عرض ملف شخصي يتطابق مع معاييرك",
+        "tryAdjustingYourFilters": "حاول ضبط المرشحات",
+        "completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile": "أكمل مدة التدريب لفتح الميزات المميزة للوصول إلى الشركات التي تهتم بملفك الشخصي",
+        "companies": "شركات",
+        "haveViewedYourProfile": "عرض ملفك الشخصي"
+      },
       "statusPills": {
         "industryMatch": "توافق المجال",
         "recommendedByPastInterns": "مرشح به من قبل المتدربين السابقين",
@@ -1383,6 +1415,22 @@
     "noDescriptionAvailable": "لا يوجد وصف متاح.",
     "incomingVideoCall": "مكالمة فيديو مستقبلة",
     "decline": "رفض",
-    "accept": "قبول"
+    "accept": "قبول",
+    "callPROStudents": "اتصل بالطلاب المتميزين",
+    "callSCADAdmin": "اتصل بمدير SCAD"
+  },
+  "dashboard": {
+    "titles": {
+      "student": "طالب لوحة التحكم",
+      "scad": "SCAD لوحة التحكم", 
+      "company": "شركة لوحة التحكم",
+      "faculty": "كلية لوحة التحكم"
+    },
+    "userTypes": {
+      "student": "طالب",
+      "scad": "SCAD",
+      "company": "شركة", 
+      "faculty": "كلية"
+    }
   }
 }

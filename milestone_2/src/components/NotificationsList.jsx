@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faClock, faBell, faFilter, faEllipsisH, faSearch, faXmark, faLock, faChevronDown, faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 // Mock data
 const MOCK_COMPANIES = [
@@ -126,6 +128,8 @@ const ProUpgradePrompt = ({ durationCompleted, durationRequired = 12 }) => {
 };
 
 export default function NotificationsList({ selectedCompanies = [], hideFilters = false }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -505,14 +509,14 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
               className={`flex-1 py-3 px-4 text-sm font-medium transition-all duration-200 ${activeTab === 'all' ? 'text-[#3298BA] border-b-2 border-[#3298BA]' : 'text-gray-500 hover:text-[#5DB2C7]'}`}
               onClick={() => setActiveTab('all')}
             >
-              All
+              {safeT('student.dashboard.notificationsList.all')}
             </button>
             {userData?.role === 'student' && (
               <button
                 className={`flex-1 py-3 px-4 text-sm font-medium transition-all duration-200 ${activeTab === 'profile' ? 'text-[#3298BA] border-b-2 border-[#3298BA]' : 'text-gray-500 hover:text-[#5DB2C7]'}`}
                 onClick={() => setActiveTab('profile')}
               >
-                Profile Views
+                {safeT('student.dashboard.notificationsList.profileViews')}
               </button>
             )}
           </div>
@@ -570,8 +574,8 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                           </svg>
                         </div>
-                        <p className="text-gray-500 font-medium">No profile views found matching your criteria</p>
-                        <p className="text-gray-400 text-sm mt-1">Try adjusting your filters</p>
+                        <p className="text-gray-500 font-medium">{safeT('student.dashboard.notificationsList.noProfileViewsFoundMatchingYourCriteria')}</p>
+                        <p className="text-gray-400 text-sm mt-1">{safeT('student.dashboard.notificationsList.tryAdjustingYourFilters')}</p>
                       </div>
                     ) : (
                       filteredCompanyViews.map((company, index) => (
@@ -589,10 +593,10 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
                       <FontAwesomeIcon icon={faLock} size="lg" />
                     </div>
                     <p className="text-sm text-[#2a5f74] mb-2">
-                      <span className="font-medium">{filteredCompanyViews.length} companies</span> have viewed your profile
+                      <span className="font-medium">{filteredCompanyViews.length} {safeT('student.dashboard.notificationsList.companies')}</span> {safeT('student.dashboard.notificationsList.haveViewedYourProfile')}
                     </p>
                     <p className="text-xs text-gray-500 max-w-md mx-auto">
-                      Complete your internship duration to unlock PRO features and see which companies are interested in your profile
+                      {safeT('student.dashboard.notificationsList.completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile')}
                     </p>
                   </div>
                 )}

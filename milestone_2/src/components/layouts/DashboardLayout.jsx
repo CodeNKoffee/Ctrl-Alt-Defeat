@@ -10,6 +10,8 @@ import ProfileIcon from '@/components/shared/ProfileIcon';
 import ProBadge from '@/components/shared/ProBadge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSuitcase } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function DashboardLayout({
   children,
@@ -20,6 +22,8 @@ export default function DashboardLayout({
   onViewChange,
   sidebarOpen = false,
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const router = useRouter();
   const [sidebarExpanded, setSidebarExpanded] = useState(true);
@@ -160,9 +164,9 @@ export default function DashboardLayout({
       <div className="flex-1 overflow-auto">
         <div className="p-4 md:p-6 min-h-screen flex flex-col">
           <div className="mb-6 flex flex-row justify-between items-center">
-            <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
-              {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
-            </h1>
+          <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
+            {safeT(`dashboard.titles.${userType}`)}
+          </h1>
 
             <div className="flex flex-row items-center gap-4">
               {/* SCAD internship cycle */}

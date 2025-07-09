@@ -1128,6 +1128,38 @@
         },
         "footer": "Jeder Workshop ist sorgfältig entworfen, um kritische Fähigkeiten und Wissensbereiche zu adressieren, die Ihr akademisches Lernen ergänzen und Sie für berufliches Erfolg vorbereiten."
       },
+      "notificationsPersonalizedInfoCard": {
+        "title": "Benachrichtigungszentrum",
+        "description": "Bleiben Sie informiert und verpassen Sie keine wichtigen Updates zu Ihrer beruflichen Entwicklung.",
+        "badge": "ALERTS",
+        "notificationHub": {
+          "title": "Ihr Benachrichtigungszentrum:",
+          "type1": "Anwendungsaktualisierungen",
+          "type1Description": "Statusänderungen und Rückmeldungen zu Ihren Praktikumsanwendungen",
+          "type2": "Bericht-Warnungen", 
+          "type2Description": "Neue Kommentare oder Statusänderungen zu Ihren eingereichten Berichten",
+          "type3": "Workshop-Erinnerungen",
+          "type3Description": "Bevorstehende Sitzungen, für die Sie registriert sind, und letzte Minuten-Verfügbarkeiten",
+          "type4": "Frist-Benachrichtigungen",
+          "type4Description": "Wichtige Termine für Praktikumsanwendungen und Bericht-Fristen",
+          "type5": "Personalisierte Möglichkeiten",
+          "type5Description": "Neue Praktika oder Workshops, die Ihrem Profil entsprechen",
+          "type6": "Premium-Inhalte",
+          "type6Description": "Exklusive Workshops und Veranstaltungen für Pro-Studierende"
+        },
+        "footer": "Einige Workshop-Benachrichtigungen sind ausschließlich für Studierende mit Pro-Mitgliedschaft verfügbar. Aktualisieren Sie Ihr Konto, um auf diese Premium-Berufsentwicklungsmöglichkeiten zuzugreifen.",
+        "footerLabel": "Hinweis:"
+      },
+      "notificationsList": {
+        "proNote": "Details gesperrt - Upgrade zu PRO, um zu sehen, wer Ihr Profil angesehen hat",
+        "profileViews": "Profil-Ansichten",
+        "all": "Alle",
+        "noProfileViewsFoundMatchingYourCriteria": "Keine Profil-Ansichten gefunden, die Ihren Kriterien entsprechen",
+        "tryAdjustingYourFilters": "Versuchen Sie, Ihre Filter anzupassen",
+        "completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile": "Vervollständigen Sie Ihre Praktikumsdauer, um PRO-Funktionen zu entsperren und zu sehen, welche Unternehmen Ihr Profil interessieren",
+        "companies": "Unternehmen",
+        "haveViewedYourProfile": "haben Ihr Profil angesehen"
+      },
       "statusPills": {
         "industryMatch": "BRANCHENÜBEREINSTIMMUNG",
         "recommendedByPastInterns": "VON VORHERIGEN PRAKTIKANTEN EMPFOHLEN",
@@ -1366,6 +1398,22 @@
     "noDescriptionAvailable": "Keine Beschreibung verfügbar.",
     "incomingVideoCall": "Eingehender Videoanruf",
     "decline": "Ablehnen",
-    "accept": "Akzeptieren"
+    "accept": "Akzeptieren",
+    "callPROStudents": "PRO-Studierende anrufen",
+    "callSCADAdmin": "SCAD-Admin anrufen"
+  },
+  "dashboard": {
+    "titles": {
+      "student": "Studentin Portal",
+      "scad": "SCAD Portal", 
+      "company": "Firma Portal",
+      "faculty": "Fakultät Portal"
+    },
+    "userTypes": {
+      "student": "Studentin",
+      "scad": "SCAD",
+      "company": "Firma", 
+      "faculty": "Fakultät"
+    }
   }
 }
