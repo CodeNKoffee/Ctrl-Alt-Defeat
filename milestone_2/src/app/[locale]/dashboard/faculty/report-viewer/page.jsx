@@ -198,7 +198,7 @@ export default function FacultyReportViewer({ reportId, onBack, reportData }) {
                       id="reportStatus"
                       value={reportStatus}
                       onChange={handleStatusChange}
-                      className="w-full px-3 py-2 border border-metallica-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
+                      className="w-full px-3 py-2 border border-metallica-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 rt"
                     >
                       <option value="pending">{safeT('facultyReportViewer.statuses.pending')}</option>
                       <option value="accepted">{safeT('facultyReportViewer.statuses.accepted')}</option>
