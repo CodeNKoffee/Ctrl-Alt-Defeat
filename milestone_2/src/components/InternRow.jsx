@@ -91,7 +91,7 @@ const InternRow = ({ intern, onSelect, onEvaluate }) => {
               <AvatarImage profilePic={intern.profilePic} />
             </div>
             <div className="flex-1 min-w-0 flex items-start justify-between">
-              <div className="text-left pt-1">
+              <div className="text-left rtl:text-right pt-1">
                 <h3 className="text-lg font-bold text-gray-800">{intern.name}</h3>
                 <p className="text-sm text-gray-600 mt-1">{intern.jobTitle}</p>
               </div>
