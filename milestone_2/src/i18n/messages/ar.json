@@ -1,6 +1,7 @@
 {
   "sidebar": {
     "logout": "تسجيل الخروج",
+    "loggingOut": "جار تسجيل الخروج...",
     "companyUser": "شركة",
     "scadUser": "SCAD",
     "facultyUser": "جامعة",
@@ -1011,23 +1012,53 @@
         "title": "إدارة ورش العمل",
         "badge": "التطوير المهني",
         "cardTitle": "بوابة إدارة ورش العمل",
-        "description": "إنشاء وجدولة وإدارة ورش عمل التطوير المهني التي تعزز الجاهزية المهنية للطلاب والإعداد للصناعة.",
-        "features": {
-          "title": "أدوات إنشاء ورش العمل:",
-          "designNewWorkshop": "إنشاء قوائم ورش عمل جديدة بوصفات وأهداف تعلم مفصلة",
-          "scheduleSessions": "جدولة الجلسات بخيارات زمنية مرنة (حية، متكررة، أو على الطلب)",
-          "uploadMaterials": "تحميل مواد وعروض تقديمية وموارد متكاملة",
-          "setCapacityLimits": "تحديد حدود السعة والمتطلبات اللازمة للتسجيل",
-          "designateWorkshops": "تحديد ورش العمل لمجموعات طلابية محددة أو أعضاء البرو",
-          "contentControl": {
-            "title": "تحكم في المحتوى:",
-            "ensureWorkshopContent": "التأكد من توافق محتوى ورش العمل مع المعايير الصناعية والاتجاهات المستقبلية",
-            "maintainQuality": "الحفاظ على الجودة والتوافق عبر جميع العروض التعليمية المهنية",
-            "coordinateWithIndustry": "التعاون مع المتحدثين الصناعيين ومدربي المحاضرات",
-            "updateContent": "تحديث المحتوى حسب الحاجة بناءً على تعليقات الطلاب وتغييرات الصناعة"
-          }
+        "description": "إنشاء وجدولة وإدارة ورش عمل التطوير المهني التي تعزز الجاهزية المهنية للطلاب والإعداد للصناعة."
+      },
+      "form": {
+        "createNew": "إنشاء ورشة عمل جديدة",
+        "editWorkshop": "تعديل ورشة العمل",
+        "title": "عنوان ورشة العمل",
+        "titlePlaceholder": "أدخل عنوان ورشة العمل",
+        "description": "الوصف",
+        "descriptionPlaceholder": "أدخل وصف ورشة العمل",
+        "startDate": "تاريخ البدء",
+        "endDate": "تاريخ الانتهاء",
+        "location": "الموقع",
+        "locationPlaceholder": "أدخل الموقع (الافتراضي: عبر الإنترنت)",
+        "maxAttendees": "الحد الأقصى للحضور",
+        "maxAttendeesPlaceholder": "الحد الأقصى لعدد الحضور",
+        "category": "الفئة",
+        "categoryPlaceholder": "أدخل فئة ورشة العمل",
+        "imageUrl": "رابط صورة ورشة العمل",
+        "imageUrlPlaceholder": "أدخل رابط الصورة",
+        "instructorInfo": "معلومات المدرب",
+        "instructorName": "اسم المدرب",
+        "instructorNamePlaceholder": "أدخل اسم المدرب",
+        "instructorBio": "السيرة الذاتية للمدرب",
+        "instructorBioPlaceholder": "أدخل السيرة الذاتية للمدرب",
+        "instructorImage": "رابط صورة المدرب",
+        "instructorImagePlaceholder": "أدخل رابط صورة المدرب",
+        "agenda": "جدول أعمال ورشة العمل",
+        "agendaPlaceholder": "إضافة بند لجدول الأعمال",
+        "noAgendaItems": "لم تتم إضافة بنود لجدول الأعمال بعد",
+        "required": "*",
+        "preview": "معاينة ورشة العمل",
+        "dateTime": "التاريخ والوقت",
+        "cancel": "إلغاء",
+        "create": "إنشاء ورشة العمل",
+        "update": "تحديث ورشة العمل",
+        "success": {
+          "created": "تم إنشاء ورشة العمل بنجاح.",
+          "updated": "تم تحديث ورشة العمل بنجاح."
         },
-        "note": "يعمل هذا النظام المركزي على تبسيط كامل حياة ورش العمل من الإنشاء حتى التقييم، مما يضمن فرص التطوير المهني القيمة لجميع الطلاب."
+        "validation": {
+          "titleRequired": "عنوان ورشة العمل مطلوب",
+          "descriptionRequired": "الوصف مطلوب",
+          "instructorRequired": "اسم المدرب مطلوب",
+          "instructorBioRequired": "السيرة الذاتية للمدرب مطلوبة",
+          "agendaRequired": "يجب إضافة بند واحد على الأقل لجدول الأعمال",
+          "endDateAfterStart": "يجب أن يكون وقت الانتهاء بعد وقت البدء"
+        }
       }
     }
   },

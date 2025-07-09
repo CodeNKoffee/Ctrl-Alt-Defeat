@@ -524,7 +524,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             width="w-full"
             className="rounded-lg"
             isLoading={isLoggingOut}
-            loadingText="Logging out..."
+            loadingText={safeT('sidebar.loggingOut')}
             useAnimatedDots={true}
             disabled={isLoggingOut}
             iconPosition={locale === 'ar' ? 'right' : 'left'}

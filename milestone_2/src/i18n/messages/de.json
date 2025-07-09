@@ -1,6 +1,7 @@
 {
   "sidebar": {
     "logout": "Abmelden",
+    "loggingOut": "Abmelden...",
     "companyUser": "Firma",
     "scadUser": "SCAD",
     "facultyUser": "Fakultät",
