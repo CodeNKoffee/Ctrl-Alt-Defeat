@@ -715,7 +715,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                     width: 60,
                     height: 60,
                     borderRadius: '50%',
-                    background: '#318FA8',
+                    background: '#22C55E',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
