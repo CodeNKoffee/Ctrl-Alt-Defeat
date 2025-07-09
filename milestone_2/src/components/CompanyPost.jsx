@@ -93,7 +93,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
       <div className={containerClasses}>
         {/* Edit/Delete Icon Buttons (top-right, only here) */}
         <div
-          className="absolute top-2 right-4 flex items-center gap-2 z-10"
+          className="absolute top-2 ltr:right-4 rtl:left-4 flex items-center gap-2 z-10"
           style={{ backgroundColor: 'rgba(255,255,255,0.8)', padding: '4px', borderRadius: '4px' }}
           onClick={e => e.stopPropagation()}
         >
