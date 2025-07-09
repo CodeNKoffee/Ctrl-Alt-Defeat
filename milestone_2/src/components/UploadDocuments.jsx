@@ -210,6 +210,9 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
 
   const handleCoverLetterChange = (event) => setCoverLetterText(event.target.value);
 
+  // Detect RTL
+  const isRTL = typeof window !== 'undefined' && document?.documentElement?.dir === 'rtl';
+
   if (!open) return null;
 
   const renderUploadBox = (type) => {
@@ -223,12 +226,12 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
     return (
       <div style={{ width: '48%', display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-          <label style={{ color: '#2A5F74', fontSize: '16px', fontWeight: '600', display: 'block', textAlign: 'left' }}>
+          <label style={{ color: '#2A5F74', fontSize: '16px', fontWeight: '600', display: 'block', textAlign: isRTL ? 'right' : 'left' }}>
             {title} {isRequired && <span style={{ color: '#D32F2F' }}>{safeT('uploadDocuments.resume.required')}</span>}
           </label>
 
           {type === 'resume' && resumeError && (
-            <div style={{ color: '#D32F2F', fontSize: '12px', textAlign: 'right', marginLeft: '12px' }}>{resumeError}</div>
+            <div style={{ color: '#D32F2F', fontSize: '12px', textAlign: isRTL ? 'right' : 'left', marginLeft: '12px' }}>{resumeError}</div>
           )}
         </div>
 
@@ -236,7 +239,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
           border: '1px dashed #318FA8',
           borderRadius: '12px',
           padding: '20px',
-          textAlign: 'left',
+          textAlign: isRTL ? 'right' : 'left',
           backgroundColor: '#F8FAFB',
           position: 'relative',
           display: 'flex',
@@ -272,7 +275,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
               position: 'relative',
               paddingRight: '35px',
               width: 'calc(100% - 60px)',
-              textAlign: 'left',
+              textAlign: isRTL ? 'right' : 'left',
               margin: '0 auto',
               boxShadow: '0 3px 10px rgba(0, 0, 0, 0.05)',
               display: 'flex',
@@ -368,7 +371,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
       backgroundColor: 'rgba(0, 0, 0, 0.6)', display: 'flex',
       alignItems: 'center', justifyContent: 'center', zIndex: 9999,
       backdropFilter: 'blur(2px)'
-    }}>
+    }} dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Feedback overlay */}
       <AnimatePresence>
         {feedback && (
@@ -459,7 +462,8 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
         border: '1px solid rgba(0, 0, 0, 0.1)'
       }}>
         <button onClick={handleCancelAndClose} style={{
-          position: 'absolute', top: '20px', right: '20px',
+          position: 'absolute', top: '20px',
+          ...(isRTL ? { left: '20px', right: 'unset' } : { right: '20px', left: 'unset' }),
           background: '#F0F0F0',
           border: 'none',
           cursor: 'pointer',
@@ -482,7 +486,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
           fontSize: '22px',
           fontWeight: '600',
           marginBottom: '24px',
-          textAlign: 'left',
+          textAlign: isRTL ? 'right' : 'left',
           borderBottom: '2px solid rgba(0, 0, 0, 0.1)',
           paddingBottom: '12px'
         }}>
@@ -501,7 +505,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
             fontWeight: '600',
             marginBottom: '10px',
             display: 'block',
-            textAlign: 'left'
+            textAlign: isRTL ? 'right' : 'left'
           }}>
             {safeT('uploadDocuments.coverLetter.textLabel')}
           </label>
@@ -541,7 +545,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
             fontWeight: '600',
             display: 'block',
             marginBottom: '10px',
-            textAlign: 'left'
+            textAlign: isRTL ? 'right' : 'left'
           }}>
             {safeT('uploadDocuments.links.label')}
           </label>
