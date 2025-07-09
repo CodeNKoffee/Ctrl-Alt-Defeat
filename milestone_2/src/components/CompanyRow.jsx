@@ -18,7 +18,7 @@ export default function CompanyRow({ company, onClick, selected }) {
       <div className="companyrow-industry-col col-span-5 text-gray-600">
         <p className="companyrow-industry text-center">{company.industry}</p>
       </div>
-      <div className="companyrow-size-col col-span-2 text-right">
+      <div className="companyrow-size-col col-span-2 text-right rtl:text-center">
         <span className={`companyrow-size-badge inline-block px-3 py-1 rounded-full text-xs font-medium group-hover:bg-white group-hover:text-metallica-blue-800 
           ${company.size.toLowerCase().includes('large') ? 'companyrow-size-large bg-blue-50 text-blue-700 border border-blue-100' :
             company.size.toLowerCase().includes('medium') ? 'companyrow-size-medium bg-purple-50 text-purple-700 border border-purple-100' :
