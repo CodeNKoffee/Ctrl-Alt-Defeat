@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faShare } from '@fortawesome/free-solid-svg-icons';// Correct import path
 import CustomButton from "../components/shared/CustomButton";
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
+
 const likertOptions = [
   { id: 1, text: 'Strongly Disagree', color: 'border-[#FCA5A5] bg-[#FEE2E2]', selected: 'border-[#EF4444] bg-[#FCA5A5]/40' },
   { id: 2, text: 'Disagree', color: 'border-[#FDE68A] bg-[#FEF9C3]', selected: 'border-[#FBBF24] bg-[#FDE68A]/40' },
@@ -13,6 +16,8 @@ const likertOptions = [
 ];
 
 const AssessmentSidebar = ({ assessment, onClose }) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [answers, setAnswers] = useState([]);
   const [testStarted, setTestStarted] = useState(false);
   const [testCompleted, setTestCompleted] = useState(false);
@@ -145,7 +150,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
               <CustomButton
                 onClick={() => setTestStarted(true)}
                 variant="primary"
-                text="Take the Test"
+                text={safeT('assessment.takeTheTest')}
                 width="w-full"
               />
             </div>
@@ -203,7 +208,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
                 onClick={handleSubmitTest}
                 className="w-full mt-6 bg-[#3298BA] text-white py-2 px-4 rounded-full hover:bg-[#267a8c] transition-colors duration-200"
               >
-                Submit Test
+                {safeT('assessment.submitTest')}
               </button>
             </div>
           </div>

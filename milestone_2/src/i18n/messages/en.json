@@ -1148,6 +1148,37 @@
         "footer": "Some workshop notifications are exclusively for students with Pro membership. Upgrade your account to access these premium professional development opportunities.",
         "footerLabel": "Note:"
       },
+      "onlineAssessmentsInfoCard": {
+        "title": "Online Assessments Center",
+        "description": "Discover your professional strengths and preferences through our comprehensive assessment tools.",
+        "badge": "SELF-DISCOVERY",
+        "assessmentBenefits": {
+          "title": "Assessment Benefits:",
+          "benefit1": "Gain valuable insights into your natural strengths and work preferences",
+          "benefit2": "Receive personalized internship and workshop recommendations",
+          "benefit3": "Better articulate your unique qualities to potential employers",
+          "benefit4": "Identify career paths that align with your personality and aptitudes"
+        },
+        "assessmentTypes": {
+          "personalityAssessment": {
+            "title": "Personality Assessment",
+            "description": "Understand your work style and team dynamics preferences"
+          },
+          "skillsProficiency": {
+            "title": "Skills Proficiency",
+            "description": "Measure your technical and soft skills competency levels"
+          },
+          "careerInterestInventory": {
+            "title": "Career Interest Inventory",
+            "description": "Discover fields and roles that match your interests"
+          },
+          "aptitudeIndicators": {
+            "title": "Aptitude Indicators",
+            "description": "Identify your natural abilities across different domains"
+          }
+        },
+        "footer": "Results are analyzed to create your personalized profile that helps tailor recommendations throughout the platform."
+      },
       "notificationsList": {
         "proNote": "Details locked - Upgrade to PRO to see who viewed your profile",
         "profileViews": "Profile Views",
@@ -1402,15 +1433,34 @@
   "dashboard": {
     "titles": {
       "student": "Student Portal",
-      "scad": "SCAD Portal", 
+      "scad": "SCAD Portal",
       "company": "Company Portal",
       "faculty": "Faculty Portal"
     },
     "userTypes": {
       "student": "Student",
       "scad": "SCAD",
-      "company": "Company", 
+      "company": "Company",
       "faculty": "Faculty"
     }
+  },
+  "assessment": {
+    "takeTheTest": "Take the Test",
+    "submitTest": "Submit Test"
+  },
+  "studentCard": {
+    "major": "Major",
+    "graduatingClass": "Graduating Class",
+    "edit": "Edit",
+    "clickToViewLess": "Click to view less",
+    "clickToViewMore": "Click to view more"
+  },
+  "studentDetails": {
+    "personalityTraits": "Personality Traits",
+    "education": "Education",
+    "skills": "Skills",
+    "jobInterests": "Job Interests",
+    "experience": "Experience",
+    "internships": "Internships"
   }
 }

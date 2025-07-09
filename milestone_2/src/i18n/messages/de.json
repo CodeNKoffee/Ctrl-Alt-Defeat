@@ -1150,6 +1150,37 @@
         "footer": "Einige Workshop-Benachrichtigungen sind ausschließlich für Studierende mit Pro-Mitgliedschaft verfügbar. Aktualisieren Sie Ihr Konto, um auf diese Premium-Berufsentwicklungsmöglichkeiten zuzugreifen.",
         "footerLabel": "Hinweis:"
       },
+      "onlineAssessmentsInfoCard": {
+        "title": "Online-Bewertungszentrum",
+        "description": "Entdecken Sie Ihre beruflichen Stärken und Präferenzen durch unsere umfassenden Bewertungstools.",
+        "badge": "SELBSTENTDECKUNG",
+        "assessmentBenefits": {
+          "title": "Bewertungsvorteile:",
+          "benefit1": "Wertvolle Einblicke in Ihre natürlichen Stärken und Arbeitspräferenzen",
+          "benefit2": "Erhalten Sie personalisierte Praktika- und Workshop-Empfehlungen",
+          "benefit3": "Besser Ihre einzigartigen Qualitäten ansprechen, um potenzielle Arbeitgeber zu überzeugen",
+          "benefit4": "Identifizieren Sie Karrierewege, die mit Ihrer Persönlichkeit und Fähigkeiten übereinstimmen"
+        },
+        "assessmentTypes": {
+          "personalityAssessment": {
+            "title": "Persönlichkeitsbewertung",
+            "description": "Verstehen Sie Ihr Arbeitsstil und Ihre Präferenzen für Teamdynamik"
+          },
+          "skillsProficiency": {
+            "title": "Fähigkeitsbewertung",
+            "description": "Messen Sie Ihre technischen und Soft-Skills-Kompetenzniveaus"
+          },
+          "careerInterestInventory": {
+            "title": "Karriereinteressen-Inventar",
+            "description": "Entdecken Sie Felder und Rollen, die Ihren Interessen entsprechen"
+          },
+          "aptitudeIndicators": {
+            "title": "Fähigkeitsindikatoren",
+            "description": "Identifizieren Sie Ihre natürlichen Fähigkeiten in verschiedenen Bereichen"
+          }
+        },
+        "footer": "Ergebnisse werden analysiert, um Ihr persönliches Profil zu erstellen, das Empfehlungen über die gesamte Plattform hinweg unterstützt."
+      },
       "notificationsList": {
         "proNote": "Details gesperrt - Upgrade zu PRO, um zu sehen, wer Ihr Profil angesehen hat",
         "profileViews": "Profil-Ansichten",
@@ -1415,5 +1446,24 @@
       "company": "Firma", 
       "faculty": "Fakultät"
     }
+  },
+  "assessment": {
+    "takeTheTest": "Test durchführen",
+    "submitTest": "Test einreichen"
+  },
+  "studentCard": {
+    "major": "Studiengang",
+    "graduatingClass": "Abschlussklasse",
+    "edit": "Bearbeiten",
+    "clickToViewLess": "Klicken Sie, um weniger anzuzeigen",
+    "clickToViewMore": "Klicken Sie, um mehr anzuzeigen"
+  },
+  "studentDetails": {
+    "personalityTraits": "Charakter",
+    "education": "Ausbildung",
+    "skills": "Fähigkeiten",
+    "jobInterests": "Berufliche Interessen",
+    "experience": "Erfahrung",
+    "internships": "Praktika"
   }
 }

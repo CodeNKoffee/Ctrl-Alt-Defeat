@@ -1500,15 +1500,17 @@ function WorkshopsView({ sidebarExpanded }) {
 }
 
 function OnlineAssessmentsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   // Define the Online Assessments Info Card
-  const OnlineAssessmentsInfoCard = () => (
+  const OnlineAssessmentsInfoCard = ({ t }) => (
     <div className="w-full mx-auto">
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -bottom-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-45 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 top-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 top-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-
+  
         <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1517,74 +1519,74 @@ function OnlineAssessmentsView() {
           </div>
           <div className="text-left flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              SELF-DISCOVERY
+              {safeT('student.dashboard.onlineAssessmentsInfoCard.badge')}
             </div>
             <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
-              Online Assessments Center
+              {safeT('student.dashboard.onlineAssessmentsInfoCard.title')}
             </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Discover your professional strengths and preferences through our comprehensive assessment tools.</p>
-
+              <p className="mb-3">{safeT('student.dashboard.onlineAssessmentsInfoCard.description')}</p>
+  
               {/* Assessment Benefits */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Assessment Benefits:
+                  {safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.title')}
                 </p>
                 <ul className="space-y-2 mb-4">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Gain valuable insights into your natural strengths and work preferences</span>
+                    <span>{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.benefit1')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Receive personalized internship and workshop recommendations</span>
+                    <span>{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.benefit2')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Better articulate your unique qualities to potential employers</span>
+                    <span>{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.benefit3')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Identify career paths that align with your personality and aptitudes</span>
+                    <span>{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.benefit4')}</span>
                   </li>
                 </ul>
-
+  
                 {/* Assessment Types */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
                   <div className="p-3 bg-blue-50 rounded-lg border border-blue-100">
                     <div className="font-medium text-blue-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                      Personality Assessment
+                      {safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.personalityAssessment.title')}
                     </div>
-                    <p className="text-sm text-gray-600">Understand your work style and team dynamics preferences</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.personalityAssessment.description')}</p>
                   </div>
                   <div className="p-3 bg-green-50 rounded-lg border border-green-100">
                     <div className="font-medium text-green-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                      Skills Proficiency
+                      {safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.skillsProficiency.title')}
                     </div>
-                    <p className="text-sm text-gray-600">Measure your technical and soft skills competency levels</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.skillsProficiency.description')}</p>
                   </div>
                   <div className="p-3 bg-purple-50 rounded-lg border border-purple-100">
                     <div className="font-medium text-purple-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                      Career Interest Inventory
+                      {safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.careerInterestInventory.title')}
                     </div>
-                    <p className="text-sm text-gray-600">Discover fields and roles that match your interests</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.careerInterestInventory.description')}</p>
                   </div>
                   <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-100">
                     <div className="font-medium text-yellow-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
-                      Aptitude Indicators
+                      {safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.aptitudeIndicators.title')}
                     </div>
-                    <p className="text-sm text-gray-600">Identify your natural abilities across different domains</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.aptitudeIndicators.description')}</p>
                   </div>
                 </div>
               </div>
-
+  
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Results are analyzed to create your personalized profile that helps tailor recommendations throughout the platform.
+                {safeT('student.dashboard.onlineAssessmentsInfoCard.footer')}
               </p>
             </div>
           </div>
