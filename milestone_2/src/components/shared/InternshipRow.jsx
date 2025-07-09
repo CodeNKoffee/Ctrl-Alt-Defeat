@@ -159,11 +159,11 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             </div>
 
             {/* Center: Job Details */}
-            <div className="flex-1 min-w-0 ml-2">
+            <div className="flex-1 min-w-0 ltr:ml-2 rtl:mr-2">
               <div className="flex flex-col space-y-1">
-                <h3 className="text-lg font-bold text-gray-800 text-left">{internship.title}</h3>
+                <h3 className="text-lg font-bold text-gray-800 text-left rtl:text-right">{internship.title}</h3>
                 <div className="flex flex-col space-y-2">
-                  <p className="text-sm text-gray-600 text-left">{translateFilterValue(safeT, internship.type, 'jobType')}</p>
+                  <p className="text-sm text-gray-600 text-left rtl:text-right">{translateFilterValue(safeT, internship.type, 'jobType')}</p>
                   <div className="inline-flex">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-800">
                       {translateFilterValue(safeT, internship.jobSetting, 'jobSetting')}
