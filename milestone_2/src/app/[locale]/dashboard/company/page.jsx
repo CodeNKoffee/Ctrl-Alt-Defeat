@@ -556,7 +556,7 @@ function ApplicationsView() {
         <div className="w-full max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold mb-8 text-left rtl:text-right text-[#2a5f74] relative">
             {safeT('company.applications.title')}
-            <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+            <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
           </h1>
 
           <ApplicationInfoCard />
