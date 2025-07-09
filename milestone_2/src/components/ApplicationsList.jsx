@@ -307,9 +307,9 @@ export default function ApplicationsList({
               </div>
 
               {/* Status badge - Adjusting width since University is hidden */}
-              <div className="flex-shrink-0 md:w-auto lg:w-1/4 text-right"> {/* Added text-right for better alignment of badge content */}
+              <div className="flex-shrink-0 md:w-auto lg:w-1/4 rtl:text-left text-right">
                 <StatusBadge color={STATUS_CONFIG[application.status].color}>
-                  <span className="flex items-center">
+                  <span className="flex items-center rtl:flex-row-reverse">
                     <span className={`inline-block w-2 h-2 rounded-full ${STATUS_CONFIG[application.status].badgeColor} mr-1.5`}></span>
                     {STATUS_CONFIG[application.status].label}
                   </span>

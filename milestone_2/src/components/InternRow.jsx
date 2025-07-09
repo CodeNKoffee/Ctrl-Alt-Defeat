@@ -96,7 +96,7 @@ const InternRow = ({ intern, onSelect, onEvaluate }) => {
                 <p className="text-sm text-gray-600 mt-1">{intern.jobTitle}</p>
               </div>
               <span className={`
-                inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border
+                inline-flex items-center rtl:flex-row-reverse px-3 py-1 rounded-full text-xs font-medium border
                 ${statusColors[intern.status]}
               `}>
                 {safeT(`company.interns.statuses.${intern.status}`).toUpperCase()}
