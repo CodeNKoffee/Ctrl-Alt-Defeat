@@ -1041,6 +1041,19 @@
   },
   "student": {
     "dashboard": {
+      "titles": {
+        "home": "EMPFOHLENE MÖGLICHKEITEN",
+        "browse": "PRAKTIKUMSMÖGLICHKEITEN",
+        "applied": "BEWORBENE PRAKTIKA",
+        "my-internships": "MEINE PRAKTIKA",
+        "my-reports": "MEINE BERICHTE",
+        "my-evaluations": "MEINE BEWERTUNGEN",
+        "workshops": "WORKSHOPS",
+        "live-workshops": "LIVE WORKSHOPS",
+        "online-assessments": "ONLINE BEWERTUNGEN",
+        "notifications": "BENACHRICHTIGUNGEN",
+        "profile": "MEIN PROFIL"
+      },
       "workshops": {
         "backToWorkshops": "Zurück zu Workshops"
       },

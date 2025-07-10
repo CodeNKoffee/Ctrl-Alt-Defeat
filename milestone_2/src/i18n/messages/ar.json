@@ -1453,6 +1453,19 @@
           "download": "تحميل الشهادة"
         },
         "successMessage": "لقد سجلت بنجاح لهذه الورشة"
+      },
+      "titles": {
+        "home": "الفرص الموصى بها",
+        "browse": "فرص التدريب",
+        "applied": "التدريبات المتقدمة",
+        "my-internships": "تدريباتي",
+        "my-reports": "تقاريري",
+        "my-evaluations": "تقييماتي",
+        "workshops": "ورش العمل",
+        "live-workshops": "ورش العمل المباشرة",
+        "online-assessments": "التقييمات عبر الإنترنت",
+        "notifications": "الإشعارات",
+        "profile": "ملفي الشخصي"
       }
     }
   },

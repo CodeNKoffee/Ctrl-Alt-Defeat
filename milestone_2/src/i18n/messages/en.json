@@ -1030,6 +1030,19 @@
   },
   "student": {
     "dashboard": {
+      "titles": {
+        "home": "RECOMMENDED OPPORTUNITIES",
+        "browse": "INTERNSHIP OPPORTUNITIES",
+        "applied": "APPLIED INTERNSHIPS",
+        "my-internships": "MY INTERNSHIPS",
+        "my-reports": "MY REPORTS",
+        "my-evaluations": "MY EVALUATIONS",
+        "workshops": "WORKSHOPS",
+        "live-workshops": "LIVE WORKSHOPS",
+        "online-assessments": "ONLINE ASSESSMENTS",
+        "notifications": "NOTIFICATIONS",
+        "profile": "MY PROFILE"
+      },
       "workshops": {
         "backToWorkshops": "Back to Workshops"
       },

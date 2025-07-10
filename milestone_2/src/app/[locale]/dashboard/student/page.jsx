@@ -163,30 +163,36 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
 
   const RecommendedOpportunitiesInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.home')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-2 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex items-start gap-4 w-full md:w-auto relative z-10 flex-row rtl:flex-row">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
           </div>
-          <div className="text-left">
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
+          <div className="text-left rtl:text-right w-full">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2 rtl:text-right">
               {safeT('student.dashboard.personalizedCard.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300 rtl:text-right">
               {safeT('student.dashboard.personalizedCard.title')}
             </div>
-            <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">{safeT('student.dashboard.personalizedCard.description')}</p>
+            <div className="text-gray-700 mb-3 relative w-full">
+              <p className="mb-3 rtl:text-right">{safeT('student.dashboard.personalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
-                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center w-full">
+                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2 rtl:ml-2 rtl:mr-0"></span>
                   {safeT('student.dashboard.personalizedCard.howItWorks.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
@@ -554,8 +560,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
-        <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
-        <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
+        <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
+        <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
         <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
@@ -1510,7 +1516,7 @@ function OnlineAssessmentsView() {
         <div className="absolute -right-12 -bottom-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-45 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 top-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 top-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-  
+
         <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1526,7 +1532,7 @@ function OnlineAssessmentsView() {
             </div>
             <div className="text-gray-700 mb-3 relative">
               <p className="mb-3">{safeT('student.dashboard.onlineAssessmentsInfoCard.description')}</p>
-  
+
               {/* Assessment Benefits */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
@@ -1551,7 +1557,7 @@ function OnlineAssessmentsView() {
                     <span>{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.benefit4')}</span>
                   </li>
                 </ul>
-  
+
                 {/* Assessment Types */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
                   <div className="p-3 bg-blue-50 rounded-lg border border-blue-100">
@@ -1584,7 +1590,7 @@ function OnlineAssessmentsView() {
                   </div>
                 </div>
               </div>
-  
+
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 {safeT('student.dashboard.onlineAssessmentsInfoCard.footer')}
               </p>
@@ -1954,29 +1960,27 @@ function LiveWorkshopsView() {
   );
 }
 
-// Define the page components map with all views including profile
+// Map view keys to their respective components and translation keys
 const viewComponents = {
-  'home': DashboardHomeView,
-  'browse': BrowseInternshipsView,
-  'applied': AppliedInternshipsView,
-  'my-internships': MyInternshipsView,
-  'my-reports': MyReportsView,
-  'my-evaluations': MyEvaluationsView,
-  'workshops': WorkshopsView,
-  'live-workshops': LiveWorkshopsView,
-  'online-assessments': OnlineAssessmentsView,
-  'notifications': NotificationsView,
-  'profile': ProfileView
+  'home': { component: DashboardHomeView, titleKey: 'home' },
+  'browse': { component: BrowseInternshipsView, titleKey: 'browse' },
+  'applied': { component: AppliedInternshipsView, titleKey: 'applied' },
+  'my-internships': { component: MyInternshipsView, titleKey: 'my-internships' },
+  'my-reports': { component: MyReportsView, titleKey: 'my-reports' },
+  'my-evaluations': { component: MyEvaluationsView, titleKey: 'my-evaluations' },
+  'workshops': { component: WorkshopsView, titleKey: 'workshops' },
+  'live-workshops': { component: LiveWorkshopsView, titleKey: 'live-workshops' },
+  'online-assessments': { component: OnlineAssessmentsView, titleKey: 'online-assessments' },
+  'notifications': { component: NotificationsView, titleKey: 'notifications' },
+  'profile': { component: ProfileView, titleKey: 'profile' }
 };
 
 export default function StudentDashboardPage() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [appliedIdsSet, setAppliedIdsSet] = useState(new Set());
   const [isCreatingReport, setIsCreatingReport] = useState(false);
   const [selectedInternship, setSelectedInternship] = useState(null);
-
-  const handleApplicationCompleted = (internshipId) => {
-    setAppliedIdsSet(prevSet => new Set(prevSet).add(internshipId));
-  };
 
   const [currentView, setCurrentView] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -1988,86 +1992,32 @@ export default function StudentDashboardPage() {
     return 'home';
   });
 
-  const getInitialTitle = (viewId) => {
-    switch (viewId) {
-      case 'home':
-        return "RECOMMENDED OPPORTUNITIES";
-      case 'browse':
-        return "INTERNSHIP OPPORTUNITIES";
-      case 'applied':
-        return "APPLIED INTERNSHIPS";
-      case 'my-internships':
-        return "MY INTERNSHIPS";
-      case 'notifications':
-        return "NOTIFICATIONS";
-      case 'profile':
-        return "MY PROFILE";
-      case 'workshops':
-        return "WORKSHOPS";
-      case 'online-assessments':
-        return "ONLINE ASSESSMENTS";
-      case 'my-reports':
-        return "MY REPORTS";
-      default:
-        return "RECOMMENDED OPPORTUNITIES";
-    }
+  const handleApplicationCompleted = (internshipId) => {
+    setAppliedIdsSet(prevSet => new Set(prevSet).add(internshipId));
   };
-
-  // Base title is determined by the current view
-  const [currentTitle, setCurrentTitle] = useState(() => getInitialTitle(currentView));
 
   // Report creation handlers (moved up from MyInternshipsView)
   const handleReportCreation = (internship) => {
     setSelectedInternship(internship);
     setIsCreatingReport(true);
-    // Directly set the title here
-    setCurrentTitle("Create Internship Report");
   };
 
   const handleReportCancel = () => {
     setIsCreatingReport(false);
     setSelectedInternship(null);
-    // Reset the title when returning to the list
-    setCurrentTitle("MY INTERNSHIPS");
   };
 
   const handleReportSubmit = (reportData) => {
     console.log('Report submitted:', reportData);
     setIsCreatingReport(false);
     setSelectedInternship(null);
-    // Reset the title when returning to the list
-    setCurrentTitle("MY INTERNSHIPS");
   };
 
   const handleViewChange = (viewId) => {
-    // Only change view if we're not in report creation mode
-    // This prevents losing the report form when clicking on sidebar navigation
     if (!isCreatingReport) {
       setCurrentView(viewId);
-      setCurrentTitle(getInitialTitle(viewId));
     }
   };
-
-  useEffect(() => {
-    // When currentView changes, set the title (but not if we're creating a report)
-    if (!isCreatingReport) {
-      setCurrentTitle(getInitialTitle(currentView));
-    }
-  }, [currentView, isCreatingReport]);
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      if (typeof window !== 'undefined') {
-        const hash = window.location.hash.replace('#', '');
-        // Only change view based on hash if we're not in report creation mode
-        if (hash && viewComponents[hash] && hash !== currentView && !isCreatingReport) {
-          setCurrentView(hash);
-        }
-      }
-    };
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [currentView, isCreatingReport]);
 
   // Special case: If we're on the My Internships view and creating a report,
   // render the ReportCreationDashboard component directly instead of the CurrentViewComponent
@@ -2075,7 +2025,7 @@ export default function StudentDashboardPage() {
     return (
       <DashboardLayout
         userType="student"
-        title={currentTitle}
+        title={safeT('student.dashboard.titles.my-internships')}
         currentViewId={currentView}
         onViewChange={handleViewChange}
       >
@@ -2092,7 +2042,9 @@ export default function StudentDashboardPage() {
   }
 
   // Normal case: render the current view based on navigation
-  const CurrentViewComponent = viewComponents[currentView];
+  const viewConfig = viewComponents[currentView];
+  const CurrentViewComponent = viewConfig?.component;
+  const titleKey = viewConfig?.titleKey;
 
   let viewProps = {};
   if (currentView === 'home' || currentView === 'browse') {
@@ -2110,7 +2062,7 @@ export default function StudentDashboardPage() {
   return (
     <DashboardLayout
       userType="student"
-      title={currentTitle}
+      // title={safeT(`student.dashboard.titles.${titleKey}`)}
       currentViewId={currentView}
       onViewChange={handleViewChange}
     >
