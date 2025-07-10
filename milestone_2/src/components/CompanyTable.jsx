@@ -150,7 +150,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
         {selectedCompany && (
           <div
             // bg-[#002a38]
-            className={`fixed top-0 ltr:right-0 rtl:left-0 h-screen w-1/3 bg-metallica-blue-100/70 backdrop-blur-md shadow-xl z-50 flex flex-col ltr:border-l-4 rtl:border-r-4 border-[#5DB2C7] ${isExpanded ? slideOutClass : slideInClass}`}
+            className={`fixed top-0 ltr:right-0 rtl:left-0 h-screen w-1/3 bg-metallica-blue-100/70 backdrop-blur-md shadow-xl z-50 flex flex-col ltr:border-l-2 rtl:border-r-4 border-[#5DB2C7] ${isExpanded ? slideOutClass : slideInClass}`}
             style={{ minWidth: 420, maxWidth: 500 }}
           >
             <div className="flex p-4 gap-4 ltr:justify-end rtl:justify-start ltr:flex-row rtl:flex-row-reverse relative">
