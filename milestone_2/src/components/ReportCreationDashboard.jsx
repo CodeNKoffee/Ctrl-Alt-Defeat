@@ -100,44 +100,49 @@ export default function ReportCreationDashboard({ onAddTile, onCancel, initialRe
       <AnimatePresence>
         {feedback && ready && (
           <motion.div
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10000,
-              background: 'rgba(42, 95, 116, 0.18)'
-            }}
+            className="fixed inset-0 z-[10001] flex items-center justify-center bg-[rgba(42,95,116,0.18)] backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              style={{
-                background: 'white',
-                padding: '40px',
-                borderRadius: '12px',
-                textAlign: 'center',
-                maxWidth: '400px',
-                position: 'relative'
-              }}
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
+              className="bg-white p-6 rounded-xl shadow-2xl flex flex-col items-center max-w-sm w-full mx-4"
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
             >
+              <motion.div
+                style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+              >
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    background: feedbackType === 'submit' ? '#22C55E' : '#318FA8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    style={{ fontSize: 32, color: 'white' }}
+                  />
+                </div>
+              </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                {safeT(feedbackType === 'draft' ? 'student.dashboard.reportCreationDashboard.feedback.updated' : 'student.dashboard.reportCreationDashboard.feedback.success')}
+                {feedbackType === 'draft' ? safeT('student.dashboard.reportCreationDashboard.feedback.updated') : safeT('student.dashboard.reportCreationDashboard.feedback.success')}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
                 {feedbackType === 'submit'
                   ? safeT(`student.dashboard.reportCreationDashboard.feedback.submitSuccess.${isEditMode ? 'edit' : 'create'}`)
                   : safeT(`student.dashboard.reportCreationDashboard.feedback.draftSuccess.${isEditMode ? 'edit' : 'create'}`)}
               </div>
-              <FontAwesomeIcon icon={faCheck} style={{ color: '#2A5F74', fontSize: '48px', marginTop: '20px' }} />
             </motion.div>
           </motion.div>
         )}
