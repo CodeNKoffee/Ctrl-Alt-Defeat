@@ -19,9 +19,9 @@ export default function StudentProfileSidebar({ student, onClose }) {
     <div className={`fixed top-0 ltr:right-0 rtl:left-0 h-full transition-all duration-300 ease-in-out transform ${student ? "translate-x-0" : (isRTL ? "-translate-x-full" : "translate-x-full")}
       w-1/3 z-50`}>
       {student && (
-        <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
+        <div className="bg-metallica-blue-100/70 border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
           {/* Top bar with Internship Status and Close button */}
-          <div className="flex justify-between items-center sticky top-0 bg-white z-10 px-4 py-2">
+          <div className="flex justify-between items-center sticky top-0 bg-metallica-blue-100/70  z-10 px-4 py-2">
             {/* Internship Status badge */}
             <span className={`
                 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border
