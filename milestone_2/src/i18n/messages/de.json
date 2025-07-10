@@ -1,5 +1,6 @@
 {
   "sidebar": {
+    "language": "Sprache",
     "logout": "Abmelden",
     "loggingOut": "Abmelden...",
     "companyUser": "Firma",

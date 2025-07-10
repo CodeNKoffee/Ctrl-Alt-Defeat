@@ -446,7 +446,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             <button
               onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
               className="w-full flex items-center justify-center bg-[#5DB2C7]/20 rounded-xl p-3 transition-all duration-200 hover:bg-[#5DB2C7]/30 border border-[#E0ECF2]"
-              onMouseEnter={(e) => handleTooltipShow('language', 'Language', e)}
+              onMouseEnter={(e) => handleTooltipShow('language', safeT('sidebar.language'), e)}
               onMouseLeave={handleTooltipHide}
             >
               <FontAwesomeIcon
