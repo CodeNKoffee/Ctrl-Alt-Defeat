@@ -168,7 +168,7 @@ export default function CompanyTable({ companies, onSidebarToggle = () => { }, o
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <div className="absolute top-0 ltr:left-0 rtl:right-0 px-4 py-2 bg-metallica-blue-700 text-white text-lg font-bold ltr:rounded-br-lg rtl:rounded-bl-lg">
+              <div className="absolute top-0 ltr:left-0 rtl:right-0 px-4 py-2 text-metallica-blue-700 text-lg font-bold ltr:rounded-br-lg rtl:rounded-bl-lg">
                 {safeT('scad.companyTable.sidebar.title')}
               </div>
             </div>
