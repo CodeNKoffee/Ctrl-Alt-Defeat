@@ -1126,7 +1126,7 @@
         "description": "تتبع وإدارة كل تطبيقات التدريب الخاصة بك في لوحة تحكم مركزية.",
         "badge": "تطبيقات",
         "howItWorks": {
-          "pending": "Pending",
+          "pending": "قيد الانتظار",
           "accepted": "مقبول",
           "rejected": "مرفوض",
           "finalized": "مكتمل",
@@ -1273,6 +1273,7 @@
         "recommendedByPastInterns": "مرشح به من قبل المتدربين السابقين",
         "jobInterestMatch": "توافق الاهتمامات المهنية",
         "all": "جميع",
+        "recent": "جديد",
         "recommended": "مرشح به",
         "applied": "متقدم",
         "current": "حالي",
