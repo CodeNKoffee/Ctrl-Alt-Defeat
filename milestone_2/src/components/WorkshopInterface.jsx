@@ -529,10 +529,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
         isOpen={showFeedback}
         onClose={() => {
           setShowFeedback(false);
-          // If feedback modal is closed without submit, return to workshop list
-          if (!showCertificate && onBack) {
-            onBack();
-          }
+          // Do NOT call onBack here; only close the modal and stay on the page
         }}
         onSubmit={handleFeedbackSubmit}
         workshop={workshop}
@@ -541,6 +538,10 @@ export default function WorkshopInterface({ workshop, onBack }) {
       <CertificateSimulatorButton
         isOpen={showCertificate}
         onClose={() => {
+          setShowCertificate(false);
+          if (onBack) onBack();
+        }}
+        onDownload={() => {
           setShowCertificate(false);
           if (onBack) onBack();
         }}

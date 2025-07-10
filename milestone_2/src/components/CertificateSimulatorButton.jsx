@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from "react-i18next";
 import { createSafeT } from "@/lib/translationUtils";
 
-export default function CertificateSimulatorButton({ isOpen, onClose }) {
+export default function CertificateSimulatorButton({ isOpen, onClose, onDownload }) {
   const { t, ready } = useTranslation();
   const safeT = createSafeT(t, ready);
   if (!isOpen) return null;
@@ -16,8 +16,9 @@ export default function CertificateSimulatorButton({ isOpen, onClose }) {
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
-    })
-  }
+    });
+    if (onDownload) onDownload();
+  };
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center z-50">

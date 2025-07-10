@@ -334,6 +334,10 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
           setShowCertificate(false);
           if (onBack) onBack();
         }}
+        onDownload={() => {
+          setShowCertificate(false);
+          if (onBack) onBack();
+        }}
       />
     </div>
   );
