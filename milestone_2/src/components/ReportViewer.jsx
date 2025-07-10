@@ -508,13 +508,13 @@ export default function ReportViewer({ report, userType = "faculty" }) {
           <div className="mt-8 p-4 bg-metallica-blue-50 rounded-lg border border-metallica-blue-200">
             <h3 className="text-metallica-blue-800 font-semibold mb-2">{safeT('reportViewer.scadForm.title')}</h3>
             <textarea
-              className="w-full p-2 border border-metallica-blue-200 rounded mb-2"
+              className="w-full p-2 border border-metallica-blue-200 rounded mb-2 focus:outline-none focus:border-metallica-blue-500 focus:ring-2 focus:ring-metallica-blue-200 transition-all duration-200"
               placeholder={safeT('reportViewer.scadForm.placeholder')}
               value={scadReason || ''}
               onChange={e => setScadReason(e.target.value)}
             />
             <button
-              className="inline-flex items-center justify-center w-40 min-w-[10rem] px-0 py-2 rounded-full font-medium shadow-sm bg-metallica-blue-500 text-metallica-blue-100 border border-metallica-blue-200 hover:bg-metallica-blue-900 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
+              className="inline-flex items-center justify-center w-40 min-w-[10rem] px-0 py-2 rounded-full font-medium shadow-sm bg-metallica-blue-500 text-white border border-metallica-blue-200 hover:bg-metallica-blue-900 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
               onClick={() => {
                 if (onSubmitReason) onSubmitReason(scadReason);
                 setScadReasonSubmitted(true);
