@@ -1736,27 +1736,63 @@
     }
   },
   "footer": {
-    "copyright": "© {{year}} الجامعة الألمانية بالقاهرة. جميع الحقوق محفوظة."
+    "copyright": "© {{year}} الجامعة الألمانية في القاهرة. جميع الحقوق محفوظة."
   },
-  "validation": {
-    "emailRequired": "البريد الإلكتروني مطلوب",
-    "emailInvalid": "البريد الإلكتروني غير صالح",
-    "passwordRequired": "كلمة المرور مطلوبة",
-    "companyNameRequired": "اسم الشركة مطلوب",
-    "companyNameMin": "يجب أن يكون اسم الشركة حرفين على الأقل",
-    "industryRequired": "الصناعة مطلوبة",
-    "industryInvalid": "يرجى اختيار صناعة صالحة",
-    "companyEmailRequired": "البريد الإلكتروني للشركة مطلوب",
-    "companyEmailInvalid": "يرجى استخدام بريد إلكتروني رسمي للشركة",
-    "companySizeRequired": "حجم الشركة مطلوب",
-    "companySizeInvalid": "يرجى اختيار حجم شركة صالح",
-    "verificationTypeRequired": "نوع التحقق مطلوب",
-    "verificationTypeInvalid": "يرجى اختيار نوع تحقق صالح",
-    "companyLogoRequired": "شعار الشركة مطلوب",
-    "verificationDocumentRequired": "وثيقة التحقق مطلوبة",
-    "fileFormatUnsupported": "تنسيق ملف غير مدعوم",
-    "fileTooLarge": "الملف كبير جدًا",
-    "taxIdRequired": "الرقم الضريبي مطلوب",
-    "taxIdFormat": "يجب أن يكون الرقم الضريبي بالصيغة XXX-XXX-XXX"
+  "callModal": {
+    "title": "مكالمات الفيديو والمواعيد",
+    "appointmentPolicy": {
+      "title": "سياسة المواعيد أولاً:",
+      "description": "يمكنك الاتصال فقط بالجهات التي لديها مواعيد مؤكدة. يرجى طلب موعد والانتظار للحصول على التأكيد."
+    },
+    "sections": {
+      "availableContacts": "جهات الاتصال المتاحة",
+      "pendingRequests": "الطلبات المعلقة",
+      "confirmedAppointments": "المواعيد المؤكدة",
+      "pastRejected": "الماضي / المرفوض"
+    },
+    "noContacts": "لم يتم العثور على جهات اتصال.",
+    "userRoles": {
+      "scadAdmin": "مدير SCAD",
+      "student": "طالب"
+    },
+    "statuses": {
+      "requested": "مطلوب",
+      "confirmed": "مؤكد"
+    },
+    "buttons": {
+      "callNow": "اتصل الآن",
+      "requestAppointment": "طلب موعد",
+      "cancelScheduling": "إلغاء الجدولة",
+      "confirmRequest": "تأكيد الطلب",
+      "acceptAppointment": "قبول الموعد",
+      "rejectAppointment": "رفض الموعد",
+      "cancelAppointment": "إلغاء الموعد"
+    },
+    "tooltips": {
+      "callNow": "اتصل الآن",
+      "confirmedAppointmentRequired": "موعد مؤكد مطلوب",
+      "requestAppointment": "طلب موعد",
+      "cancelScheduling": "إلغاء الجدولة",
+      "confirmRequest": "تأكيد طلب الموعد",
+      "acceptAppointment": "قبول الموعد",
+      "rejectAppointment": "رفض الموعد",
+      "cancelAppointment": "إلغاء الموعد"
+    },
+    "calling": {
+      "title": "جاري الاتصال...",
+      "cancelCall": "إلغاء المكالمة"
+    },
+    "appointments": {
+      "wantsToSchedule": "يريد تحديد موعد",
+      "confirmedNoDate": "مؤكد (لم يتم تحديد تاريخ)",
+      "youRequested": "لقد طلبت {name}",
+      "requestedYou": "{name} طلب منك",
+      "rejected": "مرفوض"
+    }
+  },
+  "callButton": {
+    "callPROStudents": "اتصل بطلاب PRO",
+    "callSCADAdmin": "اتصل بمدير SCAD",
+    "videoCall": "مكالمة فيديو"
   }
 }

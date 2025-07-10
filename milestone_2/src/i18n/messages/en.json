@@ -1677,5 +1677,62 @@
   },
   "footer": {
     "copyright": "© {{year}} German University in Cairo. All rights reserved."
+  },
+  "callModal": {
+    "title": "Video Calls & Appointments",
+    "appointmentPolicy": {
+      "title": "Appointment-First Policy:",
+      "description": "You can only call contacts with confirmed appointments. Please request an appointment and wait for confirmation."
+    },
+    "sections": {
+      "availableContacts": "Available Contacts",
+      "pendingRequests": "Pending Requests",
+      "confirmedAppointments": "Confirmed Appointments",
+      "pastRejected": "Past / Rejected"
+    },
+    "noContacts": "No contacts found.",
+    "userRoles": {
+      "scadAdmin": "SCAD Admin",
+      "student": "Student"
+    },
+    "statuses": {
+      "requested": "Requested",
+      "confirmed": "Confirmed"
+    },
+    "buttons": {
+      "callNow": "Call Now",
+      "requestAppointment": "Request Appointment",
+      "cancelScheduling": "Cancel Scheduling",
+      "confirmRequest": "Confirm Request",
+      "acceptAppointment": "Accept Appointment",
+      "rejectAppointment": "Reject Appointment",
+      "cancelAppointment": "Cancel Appointment"
+    },
+    "tooltips": {
+      "callNow": "Call Now",
+      "confirmedAppointmentRequired": "Confirmed appointment required",
+      "requestAppointment": "Request Appointment",
+      "cancelScheduling": "Cancel Scheduling",
+      "confirmRequest": "Confirm Appointment Request",
+      "acceptAppointment": "Accept Appointment",
+      "rejectAppointment": "Reject Appointment",
+      "cancelAppointment": "Cancel Appointment"
+    },
+    "calling": {
+      "title": "Calling...",
+      "cancelCall": "Cancel call"
+    },
+    "appointments": {
+      "wantsToSchedule": "Wants to schedule",
+      "confirmedNoDate": "Confirmed (No date set)",
+      "youRequested": "You requested {name}",
+      "requestedYou": "{name} requested you",
+      "rejected": "Rejected"
+    }
+  },
+  "callButton": {
+    "callPROStudents": "Call PRO Students",
+    "callSCADAdmin": "Call SCAD Admin",
+    "videoCall": "Video Call"
   }
 }

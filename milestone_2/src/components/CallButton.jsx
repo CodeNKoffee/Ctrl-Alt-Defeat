@@ -59,8 +59,8 @@ const CallButton = () => {
       <button
         onClick={handleButtonClick}
         className="relative w-11 h-11 rounded-full bg-gray-50 text-metallica-blue-700 flex items-center justify-center shadow-md hover:bg-metallica-blue-50 hover:-translate-y-0.5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2 transition-all duration-150 ease-in"
-        aria-label="Video Call"
-        title={userData.role === 'scad' ? safeT('student.dashboard.callButton.callPROStudents') : safeT('student.dashboard.callButton.callSCADAdmin')}
+        aria-label={safeT('callButton.videoCall')}
+        title={userData.role === 'scad' ? safeT('callButton.callPROStudents') : safeT('callButton.callSCADAdmin')}
         data-testid="call-button"
         type="button"
       >

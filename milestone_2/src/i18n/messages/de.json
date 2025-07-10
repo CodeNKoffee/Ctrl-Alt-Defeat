@@ -1713,5 +1713,62 @@
   },
   "footer": {
     "copyright": "© {{year}} Deutsche Universität in Kairo. Alle Rechte vorbehalten."
+  },
+  "callModal": {
+    "title": "Videoanrufe & Termine",
+    "appointmentPolicy": {
+      "title": "Termin-zuerst-Richtlinie:",
+      "description": "Sie können nur Kontakte mit bestätigten Terminen anrufen. Bitte fordern Sie einen Termin an und warten Sie auf die Bestätigung."
+    },
+    "sections": {
+      "availableContacts": "Verfügbare Kontakte",
+      "pendingRequests": "Ausstehende Anfragen",
+      "confirmedAppointments": "Bestätigte Termine",
+      "pastRejected": "Vergangen / Abgelehnt"
+    },
+    "noContacts": "Keine Kontakte gefunden.",
+    "userRoles": {
+      "scadAdmin": "SCAD Admin",
+      "student": "Student"
+    },
+    "statuses": {
+      "requested": "Angefordert",
+      "confirmed": "Bestätigt"
+    },
+    "buttons": {
+      "callNow": "Jetzt anrufen",
+      "requestAppointment": "Termin anfordern",
+      "cancelScheduling": "Terminplanung abbrechen",
+      "confirmRequest": "Anfrage bestätigen",
+      "acceptAppointment": "Termin akzeptieren",
+      "rejectAppointment": "Termin ablehnen",
+      "cancelAppointment": "Termin abbrechen"
+    },
+    "tooltips": {
+      "callNow": "Jetzt anrufen",
+      "confirmedAppointmentRequired": "Bestätigter Termin erforderlich",
+      "requestAppointment": "Termin anfordern",
+      "cancelScheduling": "Terminplanung abbrechen",
+      "confirmRequest": "Terminanfrage bestätigen",
+      "acceptAppointment": "Termin akzeptieren",
+      "rejectAppointment": "Termin ablehnen",
+      "cancelAppointment": "Termin abbrechen"
+    },
+    "calling": {
+      "title": "Anrufen...",
+      "cancelCall": "Anruf abbrechen"
+    },
+    "appointments": {
+      "wantsToSchedule": "Möchte einen Termin vereinbaren",
+      "confirmedNoDate": "Bestätigt (Kein Datum festgelegt)",
+      "youRequested": "Sie haben {name} angefragt",
+      "requestedYou": "{name} hat Sie angefragt",
+      "rejected": "Abgelehnt"
+    }
+  },
+  "callButton": {
+    "callPROStudents": "PRO-Studenten anrufen",
+    "callSCADAdmin": "SCAD-Admin anrufen",
+    "videoCall": "Videoanruf"
   }
 }
