@@ -1312,6 +1312,8 @@
         "allStatuses": "Alle Status"
       },
       "reportCards": {
+        "appealSuccessTitle": "Erfolgreich!",
+        "appealSuccessMessage": "Ihre Anfechtung wurde erfolgreich eingereicht und wird nun überprüft.",
         "tabs": {
           "submitted": "Eingereichte Berichte",
           "drafts": "Als Entwurf gespeichert"

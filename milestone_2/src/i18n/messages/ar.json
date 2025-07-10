@@ -1347,6 +1347,8 @@
         "allStatuses": "جميع الحالات"
       },
       "reportCards": {
+        "appealSuccessTitle": "تم بنجاح!",
+        "appealSuccessMessage": "تم إرسال طلب الانتقاء بنجاح ويتم التحقق منه.",
         "tabs": {
           "submitted": "تقارير مقدمة",
           "drafts": "محفوظة كمسودات"

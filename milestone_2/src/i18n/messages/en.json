@@ -1300,6 +1300,8 @@
         "allStatuses": "All Status"
       },
       "reportCards": {
+        "appealSuccessTitle": "Success!",
+        "appealSuccessMessage": "Your appeal has been submitted and is pending review.",
         "tabs": {
           "submitted": "Submitted Reports",
           "drafts": "Saved as Drafts"
