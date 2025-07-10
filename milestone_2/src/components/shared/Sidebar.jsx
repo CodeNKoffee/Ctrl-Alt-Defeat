@@ -566,11 +566,12 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
               borderRadius: '0.75rem',
               boxShadow: '0 8px 32px 0 rgba(42,95,116,0.18)',
               fontWeight: 400,
-              minWidth: '200px',
-              maxWidth: '260px',
               fontSize: '0.95rem',
               transition: 'all 0.2s',
-              zIndex: 9999
+              zIndex: 9999,
+              width: 'fit-content',
+              minWidth: 0,
+              maxWidth: '100vw'
             }}
           >
             {hoveredTooltip.label}
