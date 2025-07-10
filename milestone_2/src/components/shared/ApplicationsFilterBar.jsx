@@ -55,7 +55,7 @@ const STATUS_PILL_STYLE_MAP = {
     badgeColor: 'bg-[#5DB2C7]',
   },
   recommended: {
-    color: 'bg-pink-100 text-pink-800 border-2 border-pink-400',
+    color: 'bg-pink-100 text-pink-800 border-2 border-pink-800',
     badgeColor: 'bg-pink-800',
   },
 };
