@@ -1314,7 +1314,14 @@
         "company": "Company",
         "major": "Major",
         "submitted": "Submitted",
-        "seeMore": "See More"
+        "seeMore": "See More",
+        "statusInfo": "Status Info",
+        "statusTooltips": {
+          "accepted": "Your report has been reviewed and approved by the faculty member. No further action is required for this submission.",
+          "pending": "Your report has been submitted but not yet reviewed by the responsible faculty member. No action is required at this time.",
+          "flagged": "Your report requires revisions based on faculty feedback. Review the comments provided and resubmit your updated report.",
+          "rejected": "Your report did not meet the requirements and cannot be resubmitted. See faculty comments for explanation and guidance on next steps."
+        }
       },
       "reportCreationDashboard": {
         "title": {

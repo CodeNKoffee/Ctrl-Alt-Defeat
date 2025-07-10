@@ -1326,7 +1326,14 @@
         "company": "Unternehmen",
         "major": "Studiengang",
         "submitted": "Eingereicht",
-        "seeMore": "Mehr anzeigen"
+        "seeMore": "Mehr anzeigen",
+        "statusInfo": "Status-Informationen",
+        "statusTooltips": {
+          "accepted": "Ihr Bericht wurde von der Fakultät geprüft und genehmigt. Für diese Einreichung sind keine weiteren Maßnahmen erforderlich.",
+          "pending": "Ihr Bericht wurde eingereicht, aber noch nicht vom zuständigen Fakultätsmitglied geprüft. Derzeit sind keine Maßnahmen erforderlich.",
+          "flagged": "Ihr Bericht erfordert Überarbeitungen basierend auf dem Feedback der Fakultät. Überprüfen Sie die bereitgestellten Kommentare und reichen Sie Ihren aktualisierten Bericht erneut ein.",
+          "rejected": "Ihr Bericht erfüllt nicht die Anforderungen und kann nicht erneut eingereicht werden. Siehe Kommentare der Fakultät für eine Erklärung und weitere Anweisungen."
+        }
       },
       "reportCreationDashboard": {
         "title": {

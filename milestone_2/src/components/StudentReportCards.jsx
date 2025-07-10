@@ -18,10 +18,10 @@ export default function StudentReportCards() {
   const { t, ready } = useTranslation();
   const safeT = createSafeT(t, ready);
   const reportStatusTooltipMessages = {
-    accepted: "Your report has been reviewed and approved by the faculty member. No further action is required for this submission.",
-    pending: "Your report has been submitted but not yet reviewed by the responsible faculty member. No action is required at this time.",
-    flagged: "Your report requires revisions based on faculty feedback. Review the comments provided and resubmit your updated report.",
-    rejected: "Your report did not meet the requirements and cannot be resubmitted. See faculty comments for explanation and guidance on next steps.",
+    accepted: safeT('student.dashboard.reportCards.statusTooltips.accepted'),
+    pending: safeT('student.dashboard.reportCards.statusTooltips.pending'),
+    flagged: safeT('student.dashboard.reportCards.statusTooltips.flagged'),
+    rejected: safeT('student.dashboard.reportCards.statusTooltips.rejected'),
   };
   const [selectedReport, setSelectedReport] = useState(null);
   const [activeTab, setActiveTab] = useState("submitted");
@@ -257,7 +257,7 @@ export default function StudentReportCards() {
                       arrowColor="#2a5f74"
                       render={({ content }) => (
                         <div className="flex flex-col">
-                          <span className="font-semibold text-base mb-1">Status Info</span>
+                          <span className="font-semibold text-base mb-1">{safeT('student.dashboard.reportCards.statusInfo')}</span>
                           <span className="text-white text-sm font-normal">{content}</span>
                         </div>
                       )}
