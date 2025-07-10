@@ -106,7 +106,7 @@
         "contract": "Vertrag",
         "internship": "Praktikum",
         "remote": "Fernarbeit",
-        "onSite": "Vor Ort",
+        "onSite": "Vor Ort", 
         "hybrid": "Hybrid",
         "paid": "Bezahlt",
         "unpaid": "Unbezahlt"
@@ -176,14 +176,14 @@
     "applications": {
       "title": "BEWERBUNGSMANAGEMENT",
       "badge": "BEWERBER PORTAL",
-      "heading": "Bewerber Management Portal",
+      "heading": "Bewerber Management Portal", 
       "description": "Überwachen und bewerten Sie alle Studentenbewerbungen für Ihre veröffentlichten Praktikumsmöglichkeiten an einem zentralen Ort.",
       "trackingFeatures": "Bewerber-Tracking-Funktionen:",
       "features": {
         "viewApplications": "Alle Bewerbungen nach Position und Einreichungsdatum organisiert anzeigen",
         "accessProfiles": "Zugriff auf umfassende Kandidatenprofile und Bewerbungsunterlagen",
         "reviewDocuments": "Angehängte Dokumente überprüfen (Lebensläufe, Portfolios, Anschreiben)",
-        "exploreLinks": "Professionelle Social Links und relevante Studentenarbeiten erkunden",
+        "exploreLinks": "Professionelle Social Links und relevante Studentenarbeiten erkunden", 
         "trackStatus": "Bewerbungsstatus verfolgen (neu, überprüft, interviewt, ausgewählt, abgelehnt)"
       },
       "standardizedNote": "Alle Bewerbungsunterlagen werden in einem standardisierten Format für effizienten Vergleich präsentiert, während der einzigartige Präsentationsstil jedes Studenten erhalten bleibt.",
@@ -468,7 +468,7 @@
       "statistics": {
         "totalReports": "Gesamt Berichte",
         "acceptedReports": "Angenommene Berichte",
-        "pendingReports": "Ausstehende Berichte",
+        "pendingReports": "Ausstehende Berichte", 
         "flaggedReports": "Markierte Berichte",
         "rejectedReports": "Abgelehnte Berichte"
       },
@@ -499,7 +499,7 @@
         "statuses": {
           "pending": "AUSSTEHEND",
           "flagged": "MARKIERT",
-          "rejected": "ABGELEHNT",
+          "rejected": "ABGELEHNT", 
           "accepted": "ANGENOMMEN"
         },
         "noResults": {
@@ -625,7 +625,7 @@
         "monthsAgo": "Monat",
         "monthsAgoPlural": "Monate",
         "weeksAgo": "Woche",
-        "weeksAgoPlural": "Wochen",
+        "weeksAgoPlural": "Wochen", 
         "daysAgo": "Tag",
         "daysAgoPlural": "Tage",
         "hoursAgo": "Stunde",
@@ -662,7 +662,7 @@
         "unpaid": "Unbezahlt",
         "current": "AKTUELL",
         "completed": "ABGESCHLOSSEN",
-        "evaluated": "BEWERTET",
+        "evaluated": "BEWERTET", 
         "pending": "AUSSTEHEND",
         "accepted": "ANGENOMMEN",
         "rejected": "ABGELEHNT",
@@ -759,7 +759,7 @@
     "companyTable": {
       "headers": {
         "company": "UNTERNEHMEN",
-        "industry": "BRANCHE",
+        "industry": "BRANCHE", 
         "size": "GRÖSSE"
       },
       "sidebar": {
@@ -1183,7 +1183,7 @@
           "title": "Ihr Benachrichtigungszentrum:",
           "type1": "Anwendungsaktualisierungen",
           "type1Description": "Statusänderungen und Rückmeldungen zu Ihren Praktikumsanwendungen",
-          "type2": "Bericht-Warnungen",
+          "type2": "Bericht-Warnungen", 
           "type2Description": "Neue Kommentare oder Statusänderungen zu Ihren eingereichten Berichten",
           "type3": "Workshop-Erinnerungen",
           "type3Description": "Bevorstehende Sitzungen, für die Sie registriert sind, und letzte Minuten-Verfügbarkeiten",
@@ -1280,7 +1280,7 @@
         "partTime": "Teilzeit",
         "contract": "Vertrag",
         "remote": "Fernarbeit",
-        "onSite": "Vor Ort",
+        "onSite": "Vor Ort", 
         "hybrid": "Hybrid",
         "paid": "Bezahlt",
         "unpaid": "Unbezahlt",
@@ -1521,14 +1521,14 @@
     "save": "Speichern",
     "titles": {
       "student": "Studentin Portal",
-      "scad": "SCAD Portal",
+      "scad": "SCAD Portal", 
       "company": "Firma Portal",
       "faculty": "Fakultät Portal"
     },
     "userTypes": {
       "student": "Studentin",
       "scad": "SCAD",
-      "company": "Firma",
+      "company": "Firma", 
       "faculty": "Fakultät"
     }
   },
@@ -1547,12 +1547,12 @@
     "experience": "Erfahrung",
     "internships": "Praktika"
   },
-  "updateProfile": {
-    "saveChanges": "Änderungen speichern",
-    "addInternship": "Praktika hinzufügen",
-    "title": "Profil bearbeiten",
-    "updated": "Aktualisiert!",
-    "message": "Ihr Profil wurde erfolgreich aktualisiert.",
+      "updateProfile": {
+      "saveChanges": "Änderungen speichern",
+      "addInternship": "Praktika hinzufügen",
+      "title": "Profil bearbeiten",
+      "updated": "Aktualisiert!",
+      "message": "Ihr Profil wurde erfolgreich aktualisiert.",
     "basicInfo": {
       "title": "Grundinformationen",
       "fullName": "Vollständiger Name",

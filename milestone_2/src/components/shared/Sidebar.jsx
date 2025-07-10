@@ -556,11 +556,27 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             left: tooltipPosition.left,
           }}
         >
-          <div className="bg-gray-900 text-white text-sm px-3 py-2 rounded-lg shadow-lg whitespace-nowrap">
+          <div
+            className="text-white text-sm px-3 py-2 rounded-lg shadow-lg whitespace-nowrap"
+            style={{
+              background: '#2a5f74',
+              color: '#fff',
+              opacity: 0.97,
+              border: 'none',
+              borderRadius: '0.75rem',
+              boxShadow: '0 8px 32px 0 rgba(42,95,116,0.18)',
+              fontWeight: 400,
+              minWidth: '200px',
+              maxWidth: '260px',
+              fontSize: '0.95rem',
+              transition: 'all 0.2s',
+              zIndex: 9999
+            }}
+          >
             {hoveredTooltip.label}
             {/* Small arrow pointing left */}
             <div className="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-1">
-              <div className="w-2 h-2 bg-gray-900 rotate-45"></div>
+              <div className="w-2 h-2 bg-[#2a5f74] rotate-45"></div>
             </div>
           </div>
         </div>
