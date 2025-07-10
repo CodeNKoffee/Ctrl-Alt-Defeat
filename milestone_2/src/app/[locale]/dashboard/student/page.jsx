@@ -1,5 +1,5 @@
 // View a list of suggested companies based on my job interests, industry and recommendations from past interns
-
+// yay
 'use client';
 
 import { useState, useEffect } from 'react';
