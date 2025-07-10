@@ -1465,6 +1465,12 @@
     "callSCADAdmin": "Call SCAD Admin"
   },
   "dashboard": {
+    "setInternshipCycle": "Set Internship Cycle",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "cycle": "Cycle",
+    "year": "Year",
+    "save": "Save",
     "titles": {
       "student": "Student Portal",
       "scad": "SCAD Portal",

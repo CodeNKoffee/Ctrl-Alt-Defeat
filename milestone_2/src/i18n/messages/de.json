@@ -1463,6 +1463,12 @@
     "callSCADAdmin": "SCAD-Admin anrufen"
   },
   "dashboard": {
+    "setInternshipCycle": "Praktikumszyklus festlegen",
+    "startDate": "Startdatum",
+    "endDate": "Enddatum",
+    "cycle": "Zyklus",
+    "year": "Jahr",
+    "save": "Speichern",
     "titles": {
       "student": "Studentin Portal",
       "scad": "SCAD Portal", 

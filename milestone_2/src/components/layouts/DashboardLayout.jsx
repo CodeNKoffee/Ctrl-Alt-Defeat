@@ -203,7 +203,7 @@ export default function DashboardLayout({
                           <FontAwesomeIcon icon={faSuitcase} className="text-xl text-white mr-3" />
                           <span className={`font-semibold text-white text-base text-center transition-all duration-300 overflow-hidden ${((hovered || formOpen) ? 'max-w-xs opacity-100 delay-300' : 'max-w-0 opacity-0')}`}
                             style={{ display: 'inline-block' }}>
-                            Set Internship Cycle
+                            {safeT('dashboard.setInternshipCycle')}
                           </span>
                         </span>
                       ) : (
@@ -226,14 +226,14 @@ export default function DashboardLayout({
                           }}
                           className="flex flex-col gap-3"
                         >
-                          <label className="text-sm font-semibold text-[#2a5f74]">Start Date</label>
+                          <label className="text-sm font-semibold text-[#2a5f74]">{safeT('dashboard.startDate')}</label>
                           <input
                             type="date"
                             value={startDate}
                             onChange={e => setStartDate(e.target.value)}
                             className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-white/90 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
                           />
-                          <label className="text-sm font-semibold text-[#2a5f74]">End Date</label>
+                          <label className="text-sm font-semibold text-[#2a5f74]">{safeT('dashboard.endDate')}</label>
                           <input
                             type="date"
                             value={endDate}
@@ -241,14 +241,14 @@ export default function DashboardLayout({
                             onChange={e => setEndDate(e.target.value)}
                             className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-white/90 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
                           />
-                          <label className="text-sm font-semibold text-[#2a5f74]">Cycle</label>
+                          <label className="text-sm font-semibold text-[#2a5f74]">{safeT('dashboard.cycle')}</label>
                           <input
                             type="text"
                             value={cycleType}
                             readOnly
                             className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-gray-100 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500 cursor-not-allowed"
                           />
-                          <label className="text-sm font-semibold text-[#2a5f74]">Year</label>
+                          <label className="text-sm font-semibold text-[#2a5f74]">{safeT('dashboard.year')}</label>
                           <input
                             type="text"
                             value={cycleYear}
@@ -257,7 +257,7 @@ export default function DashboardLayout({
                           />
                           {error && <div className="text-red-500 text-xs text-center mt-1">{error}</div>}
                           <div className="mt-2 text-sm text-gray-700 text-center">
-                            <span className="font-semibold">Cycle: </span>
+                            <span className="font-semibold">{safeT('dashboard.cycle')}: </span>
                             <span className="text-[#3298BA]">{getCycleString()}</span>
                           </div>
                           <button
@@ -265,7 +265,7 @@ export default function DashboardLayout({
                             className="mt-2 bg-[#5DB2C7] hover:bg-[#3298BA] text-white rounded-full px-4 py-2 font-semibold shadow-md transition-all duration-200 hover:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={!!error || !cycleType || !startDate || !endDate}
                           >
-                            Save
+                            {safeT('dashboard.save')}
                           </button>
                         </form>
                       </div>
@@ -277,7 +277,7 @@ export default function DashboardLayout({
               {showCallButton && (
                 <div className="flex items-center">
                   <span className="mr-2 text-sm font-medium text-gray-600 hidden sm:inline">
-                    {userData.role === 'scad' ? 'Call PRO Students' : 'Call SCAD Admin'}
+                    {userData.role === 'scad' ? safeT('callInterface.callPROStudents') : safeT('callInterface.callSCADAdmin')}
                   </span>
                   <div className="relative">
                     <CallButton />

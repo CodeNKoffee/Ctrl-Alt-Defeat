@@ -373,7 +373,7 @@ const CallModal = ({ isOpen, onClose }) => {
                             <motion.div layout>
                               <div className="flex items-center justify-between mb-3">
                                 <div className="flex items-center flex-grow min-w-0 mr-2 rtl:ml-2 rtl:mr-0">
-                                  <div className="relative mr-3 rtl:ml-3 rtl:mr-0 flex-shrink-0">
+                                  <div className="relative mr-3 rtl:ml-3 rtl:mr-3 flex-shrink-0">
                                     <div className="bg-metallica-blue-100 text-metallica-blue-700 rounded-full h-10 w-10 flex items-center justify-center font-medium text-base shadow-sm">
                                       {user.name.charAt(0)}
                                     </div>

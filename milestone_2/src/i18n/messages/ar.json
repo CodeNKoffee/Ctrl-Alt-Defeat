@@ -1511,6 +1511,12 @@
     "callSCADAdmin": "اتصل بمدير SCAD"
   },
   "dashboard": {
+    "setInternshipCycle": "تحديد دورة التدريب",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ النهاية",
+    "cycle": "دورة",
+    "year": "سنة",
+    "save": "حفظ",
     "titles": {
       "student": "لوحة التحكم الطالب",
       "scad": "لوحة التحكم SCAD",
