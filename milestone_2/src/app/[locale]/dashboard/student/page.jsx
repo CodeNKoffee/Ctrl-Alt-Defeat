@@ -557,50 +557,40 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   // Define the info card JSX/Component here for clarity
   const BrowseInternshipsInfoCard = () => (
     <div className="w-full mx-auto">
-      <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+      <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
-        <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
-        <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
-        <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
-          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
+        <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
+        <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500 pointer-events-none"></div>
+        <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500 pointer-events-none"></div>
+        <div className="flex items-start flex-row gap-4 w-full md:w-full relative z-10 rtl:flex-row">
+          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
           </div>
-          <div className="text-left">
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              {safeT('student.dashboard.browseInternshipsPersonalizedCard.badge')}
+          <div className="flex-1 text-left rtl:text-right">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2 rtl:text-right">
+              {safeT('company.browse.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
-              {safeT('student.dashboard.browseInternshipsPersonalizedCard.title')}
-            </div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300 rtl:text-right">{safeT('company.browse.heading')}</div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">{safeT('student.dashboard.browseInternshipsPersonalizedCard.description')}</p>
-
-              {/* Card content with improved styling */}
+              <p className="mb-3 rtl:text-right">{safeT('company.browse.description')}</p>
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
-                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  {safeT('student.dashboard.browseInternshipsPersonalizedCard.howItWorks.title')}
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center w-full">
+                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2 rtl:ml-2 rtl:mr-0"></span>
+                  {safeT('company.browse.whyUse')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('student.dashboard.browseInternshipsPersonalizedCard.howItWorks.potential')}</span>
+                    <span className="text-[#3298BA] mr-2 rtl:ml-2 rtl:mr-0">✓</span>
+                    <span>{safeT('company.browse.benefitsPlus.identifyPartners')}</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('student.dashboard.browseInternshipsPersonalizedCard.howItWorks.networking')}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>{safeT('student.dashboard.browseInternshipsPersonalizedCard.howItWorks.portfolio')}</span>
+                    <span className="text-[#3298BA] mr-2 rtl:ml-2 rtl:mr-0">✓</span>
+                    <span>{safeT('company.browse.benefitsPlus.discoverLeaders')}</span>
                   </li>
                 </ul>
               </div>
-
-              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                {safeT('student.dashboard.browseInternshipsPersonalizedCard.footer')}
+              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm rtl:text-right">
+                {safeT('company.browse.note')}
               </p>
             </div>
           </div>
@@ -633,7 +623,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
                 setActiveTab('all');
                 setFilters(prev => ({ ...prev, contentType: 'all' }));
               }}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center ${activeTab === 'all'
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex rtl:mr-2 items-center ${activeTab === 'all'
                 ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
                 : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
                 }`}
