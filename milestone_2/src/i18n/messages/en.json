@@ -1450,7 +1450,8 @@
     "accountSetup": "Account setup successful – check your email for details",
     "newApplicants": "{{count}} new applicants for your <b>{{role}}</b> internship",
     "reportsAwaitingReview": "{{count}} new student reports awaiting review",
-    "registrationsPending": "{{count}} new company registrations pending verification"
+    "registrationsPending": "{{count}} new company registrations pending verification",
+    "studentSubmittedAppeal": "A student has submitted an appeal for a report. Please review it."
   },
   "callInterface": {
     "chat": "Chat",

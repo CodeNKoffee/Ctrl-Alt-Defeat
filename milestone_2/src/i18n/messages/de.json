@@ -1651,7 +1651,8 @@
     "accountSetup": "Konto erfolgreich eingerichtet – prüfe deine E-Mails für Details",
     "newApplicants": "{{count}} neue Bewerber für dein <b>{{role}}</b> Praktikum",
     "reportsAwaitingReview": "{{count}} neue Studentenberichte warten auf Überprüfung",
-    "registrationsPending": "{{count}} neue Unternehmensregistrierungen warten auf Verifizierung"
+    "registrationsPending": "{{count}} neue Unternehmensregistrierungen warten auf Verifizierung",
+    "studentSubmittedAppeal": "Ein Student hat eine Anfechtung für einen Bericht eingereicht. Bitte überprüfen Sie diese."
   },
   "home": {
     "welcomeTitle": "Willkommen bei",

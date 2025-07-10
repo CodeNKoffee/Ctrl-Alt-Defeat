@@ -1696,7 +1696,8 @@
     "accountSetup": "تم إعداد الحساب بنجاح – تحقق من بريدك الإلكتروني للتفاصيل",
     "newApplicants": "{{count}} متقدم جديد لتدريب <b>{{role}}</b> الخاص بك",
     "reportsAwaitingReview": "{{count}} تقرير طالب جديد بانتظار المراجعة",
-    "registrationsPending": "{{count}} تسجيل شركة جديد بانتظار التحقق"
+    "registrationsPending": "{{count}} تسجيل شركة جديد بانتظار التحقق",
+    "studentSubmittedAppeal": "قام طالب بتقديم طلب انتقاء لتقرير. يرجى مراجعته."
   },
   "home": {
     "welcomeTitle": "مرحبًا بك في",

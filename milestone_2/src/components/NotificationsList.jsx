@@ -44,7 +44,7 @@ const MOCK_COMPANIES = [
 const ProfileViewItem = ({ company, isPro }) => {
   const { t, ready } = useTranslation();
   const safeT = createSafeT(t, ready);
-  
+
   return (
     <div className="flex items-start p-4 border-b hover:bg-metallica-blue-50 transition-colors duration-200 cursor-pointer">
       <div className="flex-shrink-0 mr-3">
@@ -233,6 +233,16 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
       time: '6h',
       isUnread: true,
       userType: ['student']
+    },
+
+    // Faculty notification: student submitted an appeal
+    {
+      id: 1001,
+      icon: faClipboardList,
+      title: t('notifications.studentSubmittedAppeal'),
+      time: '1h',
+      isUnread: true,
+      userType: ['faculty']
     },
 
     // PRO student only notifications
