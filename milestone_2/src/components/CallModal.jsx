@@ -492,7 +492,7 @@ const CallModal = ({ isOpen, onClose }) => {
                                   </p>
                                 </div>
                               </div>
-                              <div className="flex items-center space-x-2 ml-2 rtl:mr-2 rtl:ml-0">
+                              <div className="flex items-center space-x-2 ml-2 rtl:mr-2 rtl:ml-0 flex-row rtl:flex-row-reverse">
                                 <button
                                   onClick={() => handleAcceptAppointment(appt.id)}
                                   className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
@@ -538,7 +538,7 @@ const CallModal = ({ isOpen, onClose }) => {
                                     </p>
                                   </div>
                                 </div>
-                                <div className="flex items-center space-x-2 ml-2 rtl:mr-2 rtl:ml-0">
+                                <div className="flex items-center space-x-2 ml-2 rtl:mr-2 rtl:ml-0 flex-row rtl:flex-row-reverse">
                                   <button
                                     onClick={() => initiateCall(otherPartyId, otherPartyName)}
                                     className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
