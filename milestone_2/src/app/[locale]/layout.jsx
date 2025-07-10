@@ -10,7 +10,7 @@ export default function RootLayout({ children, params }) {
       <I18nProvider>
         <GlobalCallHandler />
         {children}
-        <IncomingCallTester />
+        {/* <IncomingCallTester /> */}
         {/* <SpeedInsights /> */}
       </I18nProvider>
     </ReduxProvider>

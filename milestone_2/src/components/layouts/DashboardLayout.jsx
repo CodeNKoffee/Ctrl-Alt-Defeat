@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSuitcase } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { createSafeT } from '@/lib/translationUtils';
+import IncomingCallTester from '../IncomingCallTester';
 
 export default function DashboardLayout({
   children,
@@ -36,6 +37,8 @@ export default function DashboardLayout({
   const [endDate, setEndDate] = useState("");
   const [error, setError] = useState("");
   const [savedCycle, setSavedCycle] = useState(null);
+  const [devMode, setDevMode] = useState(false);
+  const [testerGlow, setTesterGlow] = useState(false);
 
   const handleSidebarToggle = (isExpanded) => {
     setSidebarExpanded(isExpanded);
@@ -164,10 +167,35 @@ export default function DashboardLayout({
       <div className="flex-1 overflow-auto">
         <div className="p-4 md:p-6 min-h-screen flex flex-col">
           <div className="mb-6 flex flex-row justify-between items-center">
-          <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
-            {safeT(`dashboard.titles.${userType}`)}
-          </h1>
-
+            <div className="flex items-center gap-4">
+              <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
+                {safeT(`dashboard.titles.${userType}`)}
+              </h1>
+              {/* Dev Mode Button */}
+              <button
+                className={`ml-2 px-3 py-1 rounded-full border border-metallica-blue-200 bg-white/80 text-metallica-blue-500 text-xs font-medium transition-colors duration-200 hover:bg-white focus:outline-none focus:ring-1 focus:ring-metallica-blue-200 flex items-center`}
+                style={{ height: '28px', minWidth: '110px', lineHeight: '1.1', boxShadow: 'none' }}
+                onClick={() => setDevMode((v) => !v)}
+                aria-label="Enable Dev Mode"
+                type="button"
+              >
+                {devMode ? 'Dev Mode: ON' : 'Enable Dev Mode'}
+              </button>
+              {/* IncomingCallTester slides in when devMode is enabled */}
+              <div
+                className={`relative transition-all duration-500 ${devMode ? 'ml-2 w-10 opacity-100' : 'ml-0 w-0 opacity-0 pointer-events-none'}`}
+                style={{ overflow: 'visible' }}
+              >
+                <div
+                  className={`transition-all duration-500 ${testerGlow ? 'ring-4 ring-purple-400 ring-opacity-60' : ''}`}
+                  onAnimationEnd={() => setTesterGlow(false)}
+                >
+                  <IncomingCallTester
+                    onClick={() => setTesterGlow(true)}
+                  />
+                </div>
+              </div>
+            </div>
             <div className="flex flex-row items-center gap-4">
               {/* SCAD internship cycle */}
               {userData?.role === 'scad' && (
