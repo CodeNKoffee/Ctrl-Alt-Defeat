@@ -42,6 +42,9 @@ const MOCK_COMPANIES = [
 ];
 
 const ProfileViewItem = ({ company, isPro }) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+  
   return (
     <div className="flex items-start p-4 border-b hover:bg-metallica-blue-50 transition-colors duration-200 cursor-pointer">
       <div className="flex-shrink-0 mr-3">
@@ -58,7 +61,7 @@ const ProfileViewItem = ({ company, isPro }) => {
         {isPro ? (
           <>
             <p className="text-xs text-gray-600">
-              HR Manager at {company.name} viewed your profile
+              {safeT('student.dashboard.notificationsList.viewedProfile1')}{company.name}{safeT('student.dashboard.notificationsList.viewedProfile2')}
             </p>
             <p className="text-xs text-gray-500 mt-1">
               <FontAwesomeIcon icon={faClock} className="mr-1 text-gray-400" />
@@ -69,7 +72,7 @@ const ProfileViewItem = ({ company, isPro }) => {
           <div className="flex items-center">
             <FontAwesomeIcon icon={faLock} className="text-gray-400 mr-1 text-xs" />
             <p className="text-xs text-gray-500">
-              Details locked - Upgrade to PRO to see who viewed your profile
+              {safeT('student.dashboard.notificationsList.proNote')}
             </p>
           </div>
         )}
@@ -555,12 +558,12 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
 
                 <div className="p-4 border-b bg-[#F8FCFD]">
                   <h3 className="text-sm font-medium text-[#2a5f74] mb-1">
-                    Companies that viewed your profile
+                    {safeT('student.dashboard.notificationsList.profileViews')}
                   </h3>
                   <p className="text-xs text-gray-500">
                     {isPro
-                      ? `${selectedCompanies.length > 0 ? 'Filtered' : 'All'} companies that viewed your profile${selectedCompanies.length > 0 ? ' (filtered)' : ''}`
-                      : `${filteredCompanyViews.length} companies viewed your profile recently. Upgrade to PRO to see details.`
+                      ? `${selectedCompanies.length > 0 ? safeT('student.dashboard.notificationsList.filtered') : safeT('student.dashboard.notificationsList.all')} ${safeT('student.dashboard.notificationsList.companies')} ${safeT('student.dashboard.notificationsList.haveViewedYourProfile')}${selectedCompanies.length > 0 ? ` (${safeT('student.dashboard.notificationsList.filtered')})` : ''}`
+                      : `${filteredCompanyViews.length} ${safeT('student.dashboard.notificationsList.companies')} ${safeT('student.dashboard.notificationsList.haveViewedYourProfile')} ${safeT('student.dashboard.notificationsList.recently')}. ${safeT('student.dashboard.notificationsList.upgradeToPROToSeeDetails')}`
                     }
                   </p>
                 </div>

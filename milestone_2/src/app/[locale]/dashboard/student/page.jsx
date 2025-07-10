@@ -1191,24 +1191,24 @@ function NotificationsView() {
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex rtl:flex-row items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('student.dashboard.notificationsPersonalizedInfoCard.badge')}
             </div>
             <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
               {safeT('student.dashboard.notificationsPersonalizedInfoCard.title')}
             </h2>
-            <div className="text-gray-700 mb-3 relative">
+            <div className="w-full text-gray-700 mb-3 relative">
               <p className="mb-3">{safeT('student.dashboard.notificationsPersonalizedInfoCard.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <h3 className="font-medium text-[#2a5f74] mb-2">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.title')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 rounded-lg border border-blue-200 bg-blue-50">
@@ -1299,6 +1299,9 @@ function NotificationsView() {
 }
 
 function ProfileView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   // Define the Profile Info Card in the same way as other pages
   const ProfileInfoCard = () => (
     <div className="w-full mx-auto">
@@ -1308,45 +1311,45 @@ function ProfileView() {
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex rtl:flex-row items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              PORTFOLIO
+              {safeT('student.dashboard.profilePersonalizedCard.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Student Profile Management</h2>
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">{safeT('student.dashboard.profilePersonalizedCard.title')}</h2>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Your professional profile is your digital portfolio and the foundation of your career development journey.</p>
+              <p className="mb-3">{safeT('student.dashboard.profilePersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <h3 className="font-medium text-[#2a5f74] mb-2">Why Your Profile Matters:</h3>
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <h3 className="font-medium text-[#2a5f74] mb-2">{safeT('student.dashboard.profilePersonalizedCard.whyYourProfileMatters.title')}</h3>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Powers the personalized recommendation engine for internships and workshops</span>
+                    <span>{safeT('student.dashboard.profilePersonalizedCard.whyYourProfileMatters.point1')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Visible to potential employers when you apply for positions</span>
+                    <span>{safeT('student.dashboard.profilePersonalizedCard.whyYourProfileMatters.point2')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Helps faculty provide more targeted guidance and support</span>
+                    <span>{safeT('student.dashboard.profilePersonalizedCard.whyYourProfileMatters.point3')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Creates a foundation for your professional brand development</span>
+                    <span>{safeT('student.dashboard.profilePersonalizedCard.whyYourProfileMatters.point4')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Remember: Update your profile regularly to reflect new skills, experiences, and career goals as you grow professionally.
+                {safeT('student.dashboard.profilePersonalizedCard.remember')}
               </p>
             </div>
           </div>

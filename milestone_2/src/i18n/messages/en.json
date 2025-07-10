@@ -1220,7 +1220,25 @@
         "tryAdjustingYourFilters": "Try adjusting your filters",
         "completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile": "Complete your internship duration to unlock PRO features and see which companies are interested in your profile",
         "companies": "companies",
-        "haveViewedYourProfile": "have viewed your profile"
+        "haveViewedYourProfile": "have viewed your profile",
+        "viewedProfile1": "HR Manager at ",
+        "viewedProfile2": " viewed your profile",
+        "filtered": "Filtered",
+        "recently": "recently",
+        "upgradeToPROToSeeDetails": "Upgrade to PRO to see details"
+      },
+      "profilePersonalizedCard": {
+        "badge": "PORTFOLIO",
+        "title": "Student Profile Management",
+        "description": "Your professional profile is your digital portfolio and the foundation of your career development journey.",
+        "whyYourProfileMatters": {
+          "title": "Why Your Profile Matters:",
+          "point1": "Powers the personalized recommendation engine for internships and workshops",
+          "point2": "Visible to potential employers when you apply for positions",
+          "point3": "Helps faculty provide more targeted guidance and support",
+          "point4": "Creates a foundation for your professional brand development"
+        },
+        "remember": "Remember: Update your profile regularly to reflect new skills, experiences, and career goals as you grow professionally."
       },
       "statusPills": {
         "industryMatch": "INDUSTRY MATCH",
@@ -1518,6 +1536,8 @@
     "internships": "Internships"
   },
   "updateProfile": {
+    "saveChanges": "Save Changes",
+    "addInternship": "Add Internship",
     "title": "Edit Profile",
     "basicInfo": {
       "title": "Basic Information",

@@ -642,7 +642,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                             onClick={() => push({ title: "", company: "", period: "", description: "" })}
 
 
-                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Internship</button>
+                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> {safeT('updateProfile.addInternship')}</button>
                         </>
                       )}
                     </FieldArray>

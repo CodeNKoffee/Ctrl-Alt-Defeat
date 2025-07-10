@@ -1266,7 +1266,25 @@
         "tryAdjustingYourFilters": "حاول ضبط المرشحات",
         "completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile": "أكمل مدة التدريب لفتح الميزات المميزة للوصول إلى الشركات التي تهتم بملفك الشخصي",
         "companies": "شركات",
-        "haveViewedYourProfile": "عرض ملفك الشخصي"
+        "haveViewedYourProfile": "عرض ملفك الشخصي",
+        "viewedProfile1": "مدير الموارد البشرية في ",
+        "viewedProfile2": " قام بعرض ملفك الشخصي",
+        "filtered": "مفلتر",
+        "recently": "مؤخراً",
+        "upgradeToPROToSeeDetails": "قم بالترقية إلى PRO لرؤية التفاصيل"
+      },
+      "profilePersonalizedCard": {
+        "badge": "ملفك الشخصي",
+        "title": "إدارة ملفك الشخصي",
+        "description": "ملفك الشخصي هو الأساس لرحلتك المهنية.",
+        "whyYourProfileMatters": {
+          "title": "لماذا يهم ملفك الشخصي:",
+          "point1": "يعمل على محرك التوصيات المخصص للتدريبات والورشات",
+          "point2": "يكون مرئيًا للشركات عندما تقدم للوظائف",
+          "point3": "يساعد المدرسين على تقديم توصيات ودعم أكثر تحديدًا",
+          "point4": "يعمل كأساس لتطوير العلامة التجارية المهنية الخاصة بك"
+        },
+        "remember": "تذكر: قم بتحديث ملفك الشخصي بشكل منتظم لتعكس المهارات والخبرات والأهداف المهنية الجديدة كما تتطور."
       },
       "statusPills": {
         "industryMatch": "توافق المجال",
@@ -1564,6 +1582,8 @@
     "internships": "التدريبات"
   },
   "updateProfile": {
+    "saveChanges": "حفظ التعديلات",
+    "addInternship": "إضافة التدريب",
     "title": "تعديل الملف الشخصي",
     "basicInfo": {
       "title": "المعلومات الأساسية",

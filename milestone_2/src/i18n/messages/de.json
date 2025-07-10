@@ -1231,7 +1231,25 @@
         "tryAdjustingYourFilters": "Versuchen Sie, Ihre Filter anzupassen",
         "completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile": "Vervollständigen Sie Ihre Praktikumsdauer, um PRO-Funktionen zu entsperren und zu sehen, welche Unternehmen Ihr Profil interessieren",
         "companies": "Unternehmen",
-        "haveViewedYourProfile": "haben Ihr Profil angesehen"
+        "haveViewedYourProfile": "haben Ihr Profil angesehen",
+        "viewedProfile1": "Personalmanager bei ",
+        "viewedProfile2": " hat Ihr Profil angesehen",
+        "filtered": "Gefiltert",
+        "recently": "kürzlich",
+        "upgradeToPROToSeeDetails": "Upgrade zu PRO, um Details zu sehen"
+      },
+      "profilePersonalizedCard": {
+        "badge": "PORTFOLIO",
+        "title": "Student Profile Management",
+        "description": "Your professional profile is your digital portfolio and the foundation of your career development journey.",
+        "whyYourProfileMatters": {
+          "title": "Why Your Profile Matters:",
+          "point1": "Powers the personalized recommendation engine for internships and workshops",
+          "point2": "Visible to potential employers when you apply for positions",
+          "point3": "Helps faculty provide more targeted guidance and support",
+          "point4": "Creates a foundation for your professional brand development"
+        },
+        "remember": "Remember: Update your profile regularly to reflect new skills, experiences, and career goals as you grow professionally."
       },
       "statusPills": {
         "industryMatch": "BRANCHENÜBEREINSTIMMUNG",
@@ -1516,6 +1534,8 @@
     "internships": "Praktika"
   },
   "updateProfile": {
+    "saveChanges": "Änderungen speichern",
+    "addInternship": "Praktika hinzufügen",
     "title": "Profil bearbeiten",
     "basicInfo": {
       "title": "Grundinformationen",
