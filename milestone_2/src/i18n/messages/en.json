@@ -927,7 +927,11 @@
         "major": "Major",
         "company": "Company",
         "exportPdf": "Export as PDF",
-        "close": "Close"
+        "close": "Close",
+        "comments": {
+          "title": "Comments",
+          "noComments": "No comments yet. Select text to add highlights or comments."
+        }
       }
     },
     "workshops": {

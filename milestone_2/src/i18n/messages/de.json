@@ -733,7 +733,11 @@
         "major": "Studiengang",
         "company": "Unternehmen",
         "exportPdf": "Als PDF speichern",
-        "close": "Schließen"
+        "close": "Schließen",
+        "comments": {
+          "title": "Kommentare",
+          "noComments": "Noch keine Kommentare. Wählen Sie Text aus, um Hervorhebungen oder Kommentare hinzuzufügen."
+        }
       }
     },
     "dashboard": {
