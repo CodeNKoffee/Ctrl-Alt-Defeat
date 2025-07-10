@@ -82,6 +82,24 @@ export default function Home() {
     }
   }, [animationState, view, showWelcome]);
 
+  useEffect(() => {
+    // If already logged in (persistent session), redirect to dashboard
+    if (typeof window !== 'undefined') {
+      const userSessionData = localStorage.getItem('userSession') || sessionStorage.getItem('userSession');
+      if (userSessionData) {
+        try {
+          const user = JSON.parse(userSessionData);
+          if (user && user.role) {
+            router.push(`/${locale}/dashboard/${user.role}`);
+            return;
+          }
+        } catch (e) {
+          // Ignore parse errors
+        }
+      }
+    }
+  }, []);
+
   const handleOptionClick = (userType) => {
     const userDetails = usersOptions.find(option => option.value === userType);
     if (userDetails) {

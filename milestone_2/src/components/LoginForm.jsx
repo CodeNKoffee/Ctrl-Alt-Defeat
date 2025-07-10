@@ -14,27 +14,13 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
   const { t, ready } = useTranslation();
   const safeT = createSafeT(t, ready);
   const [rememberMe, setRememberMe] = useState(false);
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues] = useState({
     email: '',
     password: '',
     remember: false
   });
 
-  // Load saved credentials on mount
-  useEffect(() => {
-    const savedEmail = localStorage.getItem('rememberedEmail');
-    const savedPassword = localStorage.getItem('rememberedPassword');
-    const wasRemembered = localStorage.getItem('rememberMe') === 'true';
-
-    if (wasRemembered && savedEmail && savedPassword) {
-      setRememberMe(true);
-      setInitialValues({
-        email: savedEmail,
-        password: savedPassword,
-        remember: true
-      });
-    }
-  }, []);
+  // Remove pre-fill logic for credentials
 
   const formikRef = React.useRef(null);
 

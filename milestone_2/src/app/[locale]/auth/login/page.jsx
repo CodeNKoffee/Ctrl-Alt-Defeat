@@ -38,6 +38,24 @@ export default function LoginPage() {
     }
   }, [userType, userDetails, router]);
 
+  useEffect(() => {
+    // If already logged in (persistent session), redirect to dashboard
+    if (typeof window !== 'undefined') {
+      const userSessionData = localStorage.getItem('userSession') || sessionStorage.getItem('userSession');
+      if (userSessionData) {
+        try {
+          const user = JSON.parse(userSessionData);
+          if (user && user.role) {
+            router.push(`/en/dashboard/${user.role}`);
+            return;
+          }
+        } catch (e) {
+          // Ignore parse errors
+        }
+      }
+    }
+  }, []);
+
   const handleLogin = async (values) => {
     setError('');
 
