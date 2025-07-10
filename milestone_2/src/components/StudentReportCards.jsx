@@ -106,6 +106,12 @@ export default function StudentReportCards() {
   return (
     <div className="p-8 flex justify-center">
       <div className="w-full max-w-6xl px-2">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.my-reports')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
         {/* System info box like SCAD reports */}
         <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border border-metallica-blue-200">
           <h2 className="text-2xl font-semibold text-[#2a5f74] mb-4">

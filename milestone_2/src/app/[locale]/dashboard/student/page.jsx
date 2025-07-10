@@ -557,6 +557,12 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   // Define the info card JSX/Component here for clarity
   const BrowseInternshipsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.browse')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
@@ -778,6 +784,12 @@ function AppliedInternshipsView() {
   // Define the Applied Internships Info Card
   const AppliedInternshipsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.applied')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
@@ -977,6 +989,12 @@ function MyInternshipsView({ onTriggerReportCreate }) {
 
   const MyInternshipsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.my-internships')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -left-12 -bottom-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-45 group-hover:scale-110 transition-transform duration-500"></div>
@@ -1185,6 +1203,12 @@ function NotificationsView() {
   // Define the Notifications Info Card similar to other pages
   const NotificationsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.notifications')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
@@ -1305,6 +1329,12 @@ function ProfileView() {
   // Define the Profile Info Card in the same way as other pages
   const ProfileInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.profile')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
@@ -1382,6 +1412,12 @@ function WorkshopsView({ sidebarExpanded }) {
   // Define the Workshops Info Card
   const WorkshopsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.workshops')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
@@ -1504,6 +1540,12 @@ function OnlineAssessmentsView() {
   // Define the Online Assessments Info Card
   const OnlineAssessmentsInfoCard = ({ t }) => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.online-assessments')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -bottom-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-45 group-hover:scale-110 transition-transform duration-500"></div>
@@ -1631,6 +1673,12 @@ function MyReportsView() {
   // Define the Report Info Card in the same way as other pages
   const ReportInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.my-reports')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
@@ -1759,6 +1807,12 @@ function MyEvaluationsView() {
   // Define the Evaluations Info Card in the same way as other pages
   const EvaluationsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.my-evaluations')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
@@ -1814,7 +1868,7 @@ function MyEvaluationsView() {
 
   return (
     <div className="min-h-screen bg-[#f4fafd] py-10 px-4">
-      <div className="px-4 pt-6">
+      <div className="px-4 !pt-0">
         <EvaluationsInfoCard />
 
         {/* <ApplicationsFilterBar

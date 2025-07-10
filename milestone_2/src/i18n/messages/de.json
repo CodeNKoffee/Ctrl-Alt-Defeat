@@ -1514,10 +1514,6 @@
       "faculty": "Fakultät"
     }
   },
-  "assessment": {
-    "takeTheTest": "Test durchführen",
-    "submitTest": "Test einreichen"
-  },
   "studentCard": {
     "major": "Studiengang",
     "graduatingClass": "Abschlussklasse",

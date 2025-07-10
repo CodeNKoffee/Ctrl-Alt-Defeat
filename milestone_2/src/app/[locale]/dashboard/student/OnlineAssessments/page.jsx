@@ -4,7 +4,7 @@ import AssessmentList from "@/components/AssessmentList.jsx"; // Adjust the impo
 export default function Page() {
   return (
     <main className="container mx-auto min-h-screen">
-    <AssessmentList />
+      <AssessmentList />
     </main>
   );
 }

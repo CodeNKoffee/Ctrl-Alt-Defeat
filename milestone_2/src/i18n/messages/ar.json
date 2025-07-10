@@ -1562,10 +1562,6 @@
       "faculty": "كلية"
     }
   },
-  "assessment": {
-    "takeTheTest": "إجراء الاختبار",
-    "submitTest": "إرسال الاختبار"
-  },
   "studentCard": {
     "major": "التخصص",
     "graduatingClass": "الفصل الدراسي",
