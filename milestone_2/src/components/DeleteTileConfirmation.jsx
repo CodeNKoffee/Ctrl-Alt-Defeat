@@ -52,7 +52,7 @@ export default function DeleteTileConfirmation({ type, onConfirm, onCancel }) {
           {ready ? t('modals.deleteConfirmation.message', { type }) : `Are you sure you want to delete this ${type}?`}
         </p>
 
-        <div className="w-full flex items-center space-x-2">
+        <div className={"w-full flex items-center space-x-2 rtl:flex-row-reverse rtl:space-x-reverse"}>
           <CustomButton
             variant="primary"
             text={safeT('modals.deleteConfirmation.cancel')}
