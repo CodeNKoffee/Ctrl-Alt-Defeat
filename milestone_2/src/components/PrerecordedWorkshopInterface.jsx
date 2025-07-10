@@ -10,6 +10,7 @@ import Image from "next/image";
 import WorkshopFeedback from "./WorkshopFeedback";
 import { useTranslation } from "react-i18next";
 import { createSafeT } from "@/lib/translationUtils";
+import CertificateSimulatorButton from './CertificateSimulatorButton';
 
 export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
   const { t, ready } = useTranslation();
@@ -26,6 +27,7 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
   const [isSaved, setIsSaved] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
 
   const videoRef = useRef(null);
   const controlsTimeout = useRef(null);
@@ -140,14 +142,14 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
     setIsSaved(!isSaved);
   };
 
+  const handleBack = () => {
+    setShowFeedback(true);
+  };
+
   const handleFeedbackSubmit = (feedbackData) => {
     console.log("Feedback submitted:", feedbackData);
-    // Here you would typically save the feedback to your backend
-
-    // Directly navigate back to workshop list without delay
-    if (onBack) {
-      onBack();
-    }
+    setShowFeedback(false);
+    setShowCertificate(true);
   };
 
   const handleCompleteVideo = () => {
@@ -166,7 +168,7 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
       >
         {/* Back button overlay in top-left corner */}
         <button
-          onClick={onBack}
+          onClick={handleBack}
           className="absolute top-4 left-4 z-10 bg-black/50 text-white hover:bg-black/70 p-2 rounded-full transition-colors"
         >
           <FontAwesomeIcon icon={faArrowLeft} /> {safeT('callInterface.backToWorkshops')}
@@ -318,13 +320,20 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
         isOpen={showFeedback}
         onClose={() => {
           setShowFeedback(false);
-          // Automatically return to workshop list when closing feedback modal
-          if (onBack) {
+          if (!showCertificate && onBack) {
             onBack();
           }
         }}
         onSubmit={handleFeedbackSubmit}
         workshop={workshop}
+      />
+      {/* Certificate Modal */}
+      <CertificateSimulatorButton
+        isOpen={showCertificate}
+        onClose={() => {
+          setShowCertificate(false);
+          if (onBack) onBack();
+        }}
       />
     </div>
   );

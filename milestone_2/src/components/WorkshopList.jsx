@@ -197,6 +197,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
     <div className="w-full max-w-7xl mx-auto px-4 pb-8">
       {/* Flex row: WORKSHOPS title and feedback button */}
       <div className="flex items-center justify-between mb-8">
+        {/*
         <button
           onClick={() => setShowFeedback(true)}
           className="relative w-11 h-11 rounded-full bg-gray-50 text-metallica-blue-700 flex items-center justify-center shadow-md hover:bg-metallica-blue-50 hover:-translate-y-0.5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2 transition-all duration-150 ease-in"
@@ -206,6 +207,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         >
           <FontAwesomeIcon icon={faCommentDots} className="h-6 w-6" />
         </button>
+        */}
       </div>
       <WorkshopFeedback
         isOpen={showFeedback}

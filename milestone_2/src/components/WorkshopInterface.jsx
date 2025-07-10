@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import WorkshopFeedback from './WorkshopFeedback';
 import { useTranslation } from "react-i18next";
 import { createSafeT } from "@/lib/translationUtils";
+import CertificateSimulatorButton from './CertificateSimulatorButton';
 
 // Extract ChatPanelContent to be outside of WorkshopInterface
 const ChatPanelContent = ({
@@ -24,63 +25,63 @@ const ChatPanelContent = ({
 }) => {
   const { t, ready } = useTranslation();
   const safeT = createSafeT(t, ready);
-  
+
   return (
     <div className="h-full flex flex-col">
-    <div className="flex justify-between items-center p-4 border-b border-white/10">
-      <h3 className="text-lg font-semibold text-blue-100">{safeT('callInterface.chat')}</h3>
-      <button
-        onClick={handleToggleChat}
-        className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
-        title={safeT('callInterface.closeChatPanel')}
-      >
-        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-      </button>
-    </div>
-    <div className="flex flex-col flex-grow overflow-hidden">
-      <div ref={chatScrollRef} className="flex-grow p-4 space-y-4 overflow-y-auto">
-        {chatMessages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center text-sm text-blue-200/60">
-            <FontAwesomeIcon icon={faComments} className="h-8 w-8 mb-3 opacity-50" />
-            <p>{safeT('callInterface.noMessagesYet')}</p>
-            <p className="text-xs mt-1">{safeT('callInterface.startConversation')}</p>
-          </div>
-        ) : (
-          chatMessages.map(message => (
-            <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] rounded-xl px-4 py-2 shadow-lg ${message.isSelf
-                ? 'bg-[#318FA8] text-white rounded-br-none'
-                : 'bg-white/5 text-blue-100 border border-white/10 rounded-bl-none'
-                }`}>
-                <p className="text-sm">{message.content}</p>
-                <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100/70' : 'text-blue-200/60'}`}>
-                  {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </p>
-              </div>
+      <div className="flex justify-between items-center p-4 border-b border-white/10">
+        <h3 className="text-lg font-semibold text-blue-100">{safeT('callInterface.chat')}</h3>
+        <button
+          onClick={handleToggleChat}
+          className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
+          title={safeT('callInterface.closeChatPanel')}
+        >
+          <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="flex flex-col flex-grow overflow-hidden">
+        <div ref={chatScrollRef} className="flex-grow p-4 space-y-4 overflow-y-auto">
+          {chatMessages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-center text-sm text-blue-200/60">
+              <FontAwesomeIcon icon={faComments} className="h-8 w-8 mb-3 opacity-50" />
+              <p>{safeT('callInterface.noMessagesYet')}</p>
+              <p className="text-xs mt-1">{safeT('callInterface.startConversation')}</p>
             </div>
-          ))
-        )}
+          ) : (
+            chatMessages.map(message => (
+              <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] rounded-xl px-4 py-2 shadow-lg ${message.isSelf
+                  ? 'bg-[#318FA8] text-white rounded-br-none'
+                  : 'bg-white/5 text-blue-100 border border-white/10 rounded-bl-none'
+                  }`}>
+                  <p className="text-sm">{message.content}</p>
+                  <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100/70' : 'text-blue-200/60'}`}>
+                    {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+        <div className="p-4 border-t border-white/10">
+          <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+            <input
+              type="text"
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              className="flex-grow bg-white/5 border border-white/10 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 text-sm text-blue-100 placeholder-blue-200/40"
+              placeholder={safeT('callInterface.typeMessage')}
+            />
+            <button
+              type="submit"
+              className={`w-10 h-10 rounded-full bg-[#318FA8] hover:bg-[#2A5F74] text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''} shadow-lg hover:shadow-xl`}
+              disabled={!currentMessage.trim()}
+              title={safeT('callInterface.sendMessage')}
+            >
+              <FontAwesomeIcon icon={faPaperPlane} className="h-4 w-4" />
+            </button>
+          </form>
+        </div>
       </div>
-      <div className="p-4 border-t border-white/10">
-        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-          <input
-            type="text"
-            value={currentMessage}
-            onChange={(e) => setCurrentMessage(e.target.value)}
-            className="flex-grow bg-white/5 border border-white/10 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 text-sm text-blue-100 placeholder-blue-200/40"
-            placeholder={safeT('callInterface.typeMessage')}
-          />
-          <button
-            type="submit"
-            className={`w-10 h-10 rounded-full bg-[#318FA8] hover:bg-[#2A5F74] text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''} shadow-lg hover:shadow-xl`}
-            disabled={!currentMessage.trim()}
-            title={safeT('callInterface.sendMessage')}
-          >
-            <FontAwesomeIcon icon={faPaperPlane} className="h-4 w-4" />
-          </button>
-        </form>
-      </div>
-    </div>
     </div>
   );
 };
@@ -94,7 +95,7 @@ const NotesPanelContent = ({
 }) => {
   const { t, ready } = useTranslation();
   const safeT = createSafeT(t, ready);
-  
+
   return (
     <div className="h-full flex flex-col">
       <div className="flex justify-between items-center p-4 border-b border-white/10">
@@ -148,6 +149,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
   const [workshopStartTime, setWorkshopStartTime] = useState(null);
   const chatScrollRef = useRef(null);
   const [workshopEnded, setWorkshopEnded] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -289,23 +291,15 @@ export default function WorkshopInterface({ workshop, onBack }) {
   };
 
   const handleLeaveWorkshop = () => {
-    // Immediately return to workshop list without feedback
-    console.log("Leave workshop clicked, attempting to navigate back");
-    if (onBack) {
-      onBack();
-    } else {
-      console.error("onBack function is not available");
-    }
+    // Show feedback modal instead of navigating away
+    setShowFeedback(true);
   };
 
   const handleFeedbackSubmit = (feedbackData) => {
     console.log("Feedback submitted:", feedbackData);
-    // Here you would typically save the feedback to your backend
-
-    // Directly navigate back to workshop list without delay
-    if (onBack) {
-      onBack();
-    }
+    // Show certificate modal after feedback
+    setShowFeedback(false);
+    setShowCertificate(true);
   };
 
   const handleToggleSubtitles = () => {
@@ -521,10 +515,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
           <div className="h-8 w-px bg-white/10"></div>
 
           <button
-            onClick={() => {
-              console.log("Disconnect button clicked");
-              handleLeaveWorkshop();
-            }}
+            onClick={handleLeaveWorkshop}
             className={`${baseButtonClass} ${redButtonClass} transform hover:scale-110 transition-all duration-200`}
             title={safeT('callInterface.leaveWorkshop')}
           >
@@ -538,13 +529,21 @@ export default function WorkshopInterface({ workshop, onBack }) {
         isOpen={showFeedback}
         onClose={() => {
           setShowFeedback(false);
-          // Automatically return to workshop list when closing feedback modal
-          if (onBack) {
+          // If feedback modal is closed without submit, return to workshop list
+          if (!showCertificate && onBack) {
             onBack();
           }
         }}
         onSubmit={handleFeedbackSubmit}
         workshop={workshop}
+      />
+      {/* Certificate Modal */}
+      <CertificateSimulatorButton
+        isOpen={showCertificate}
+        onClose={() => {
+          setShowCertificate(false);
+          if (onBack) onBack();
+        }}
       />
     </div>
   );
