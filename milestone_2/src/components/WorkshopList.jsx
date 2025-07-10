@@ -28,7 +28,15 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedInstructor, setSelectedInstructor] = useState('all');
+  const [isRTL, setIsRTL] = useState(false);
   const router = useRouter();
+
+  // Detect document direction once on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsRTL(document.documentElement.getAttribute('dir') === 'rtl');
+    }
+  }, []);
 
   // Unique instructors for filter
   const uniqueInstructors = [
@@ -271,7 +279,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
       {/* Main content area with relative positioning */}
       <div className="relative">
         {/* Workshop grid - will adjust width when sidebar is open */}
-        <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? "md:pr-[55%] lg:pr-[38%]" : "pr-0"
+        <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? isRTL ? "md:pl-[55%] lg:pl-[38%]" : "md:pr-[55%] lg:pr-[38%]" : "pr-0 pl-0"
           }`}>
           {/* Upcoming Workshops */}
           {filteredWorkshops.upcoming.length > 0 && (
@@ -280,7 +288,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.upcoming.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()} pr-2`}>
+                    <div className={`w-full ${getCardContainerClass()} ltr:pr-2 rtl:pl-2`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}
@@ -300,7 +308,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.live.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()} pr-2`}>
+                    <div className={`w-full ${getCardContainerClass()} ltr:pr-2 rtl:pl-2`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}
@@ -320,7 +328,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.prerecorded.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()} pr-2`}>
+                    <div className={`w-full ${getCardContainerClass()} ltr:pr-2 rtl:pl-2`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}

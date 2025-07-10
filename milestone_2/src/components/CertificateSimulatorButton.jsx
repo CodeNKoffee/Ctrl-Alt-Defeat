@@ -10,7 +10,7 @@ export default function CertificateSimulatorButton({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const handleDownloadCertificate = () => {
-    toast.success('Certificate downloaded successfully', {
+    toast.success(safeT('toast.certificateDownloaded'), {
       position: 'top-right',
       autoClose: 5000,
       hideProgressBar: false,

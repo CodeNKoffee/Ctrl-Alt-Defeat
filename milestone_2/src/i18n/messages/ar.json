@@ -93,7 +93,7 @@
       "myEvaluations": "تقييماتي",
       "workshops": "ورش العمل",
       "notifications": "الإشعارات",
-      "onlineAssessments": "التقييمات الموجودة على الإنترنت",
+      "onlineAssessments": "التقييمات على الإنترنت",
       "myProfile": "ملفي الشخصي"
     }
   },
@@ -1228,7 +1228,7 @@
         "footerLabel": "ملاحظة:"
       },
       "onlineAssessmentsInfoCard": {
-        "title": "مركز التقييمات الموجودة على الإنترنت",
+        "title": "مركز التقييمات على الإنترنت",
         "description": "اكتشف قدراتك المهنية وتفضيلاتك من خلال أدوات التقييم الشاملة.",
         "badge": "تحديد الذات",
         "assessmentBenefits": {
@@ -1581,10 +1581,12 @@
     "experience": "الخبرة",
     "internships": "التدريبات"
   },
-  "updateProfile": {
-    "saveChanges": "حفظ التعديلات",
-    "addInternship": "إضافة التدريب",
-    "title": "تعديل الملف الشخصي",
+      "updateProfile": {
+      "saveChanges": "حفظ التعديلات",
+      "addInternship": "إضافة التدريب",
+      "title": "تعديل الملف الشخصي",
+      "updated": "تم التحديث!",
+      "message": "تم تحديث ملفك الشخصي بنجاح.",
     "basicInfo": {
       "title": "المعلومات الأساسية",
       "fullName": "الاسم الكامل",
@@ -1834,5 +1836,8 @@
     "callPROStudents": "اتصل بطلاب PRO",
     "callSCADAdmin": "اتصل بمدير SCAD",
     "videoCall": "مكالمة فيديو"
+  },
+  "toast": {
+    "certificateDownloaded": "تم تحميل الشهادة بنجاح"
   }
 }

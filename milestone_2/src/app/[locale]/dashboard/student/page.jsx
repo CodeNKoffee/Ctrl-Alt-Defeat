@@ -1388,13 +1388,13 @@ function WorkshopsView({ sidebarExpanded }) {
         <div className="absolute right-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute left-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
+        <div className="flex rtl:flex-row items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
             </svg>
           </div>
-          <div className="text-left flex-grow">
+          <div className="text-left rtl:text-right flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('student.dashboard.workshopsInfoPersonalizedCard.badge')}
             </div>
@@ -1510,13 +1510,13 @@ function OnlineAssessmentsView() {
         <div className="absolute left-40 top-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 top-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
+        <div className="flex rtl:flex-row items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
             </svg>
           </div>
-          <div className="text-left flex-grow">
+          <div className="text-left rtl:text-right flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('student.dashboard.onlineAssessmentsInfoCard.badge')}
             </div>

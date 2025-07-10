@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,14 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
   const { t, ready } = useTranslation();
   const safeT = createSafeT(t, ready);
   const [registrationFeedback, setRegistrationFeedback] = useState(null);
+  const [isRTL, setIsRTL] = useState(false);
+
+  // Detect document direction once on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsRTL(document.documentElement.getAttribute('dir') === 'rtl');
+    }
+  }, []);
 
   const handleAction = () => {
     if (!workshop) return;
@@ -66,10 +74,10 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
           onClick={onClose}
         />
       )}
-      <div className={`fixed top-0 right-0 h-full transition-all duration-300 ease-in-out transform ${workshop ? "translate-x-0" : "translate-x-full"
+      <div className={`fixed top-0 ltr:right-0 rtl:left-0 h-full transition-all duration-300 ease-in-out transform ${workshop ? "translate-x-0" : isRTL ? "-translate-x-full" : "translate-x-full"
         } w-full md:w-1/2 lg:w-1/3 z-50`}>
         {workshop && (
-          <div className="bg-white border-l-4 border-[#5DB2C7] h-full flex flex-col shadow-xl relative">
+          <div className={`bg-white ltr:border-l-4 rtl:border-r-4 border-[#5DB2C7] h-full flex flex-col shadow-xl relative`}>
             {/* Success Feedback Overlay */}
             <AnimatePresence>
               {registrationFeedback === 'success' && (
@@ -195,7 +203,7 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
                 </div>
               </div>
             </div>
- 
+
             {/* Action Button */}
             <div className="sticky bottom-0 bg-white py-4 px-6 border-t border-gray-100">
               <CustomButton
@@ -211,6 +219,24 @@ export default function WorkshopSidebar({ workshop, onClose, onJoinLive, onWatch
           </div>
         )}
       </div>
+
+      {/* Add RTL animation styles */}
+      <style jsx global>{`
+        @keyframes slide-in-rtl {
+          from { transform: translateX(-100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slide-out-rtl {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(-100%); opacity: 0; }
+        }
+        .animate-slide-in-rtl {
+          animation: slide-in-rtl 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .animate-slide-out-rtl {
+          animation: slide-out-rtl 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+      `}</style>
     </>
   );
 }

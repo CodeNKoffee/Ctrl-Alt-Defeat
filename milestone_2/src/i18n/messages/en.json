@@ -1539,6 +1539,8 @@
     "saveChanges": "Save Changes",
     "addInternship": "Add Internship",
     "title": "Edit Profile",
+    "updated": "Updated!",
+    "message": "Your profile has been successfully updated.",
     "basicInfo": {
       "title": "Basic Information",
       "fullName": "Full Name",
@@ -1774,5 +1776,8 @@
     "callPROStudents": "Call PRO Students",
     "callSCADAdmin": "Call SCAD Admin",
     "videoCall": "Video Call"
+  },
+  "toast": {
+    "certificateDownloaded": "Certificate downloaded successfully"
   }
 }

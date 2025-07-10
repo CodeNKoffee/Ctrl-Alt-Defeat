@@ -1533,10 +1533,12 @@
     "experience": "Erfahrung",
     "internships": "Praktika"
   },
-  "updateProfile": {
-    "saveChanges": "Änderungen speichern",
-    "addInternship": "Praktika hinzufügen",
-    "title": "Profil bearbeiten",
+      "updateProfile": {
+      "saveChanges": "Änderungen speichern",
+      "addInternship": "Praktika hinzufügen",
+      "title": "Profil bearbeiten",
+      "updated": "Aktualisiert!",
+      "message": "Ihr Profil wurde erfolgreich aktualisiert.",
     "basicInfo": {
       "title": "Grundinformationen",
       "fullName": "Vollständiger Name",
@@ -1810,5 +1812,8 @@
     "callPROStudents": "PRO-Studenten anrufen",
     "callSCADAdmin": "SCAD-Admin anrufen",
     "videoCall": "Videoanruf"
+  },
+  "toast": {
+    "certificateDownloaded": "Zertifikat erfolgreich heruntergeladen"
   }
 }
