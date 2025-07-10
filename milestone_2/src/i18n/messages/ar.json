@@ -1553,6 +1553,10 @@
     "callSCADAdmin": "اتصل بSCAD"
   },
   "dashboard": {
+    "incomingCaller": {
+      "devModeOn": "وضع المطور: مفعل",
+      "enableDevMode": "تفعيل وضع المطور"
+    },
     "setInternshipCycle": "تحديد دورة التدريب",
     "startDate": "تاريخ البدء",
     "endDate": "تاريخ النهاية",
@@ -1587,12 +1591,12 @@
     "experience": "الخبرة",
     "internships": "التدريبات"
   },
-      "updateProfile": {
-      "saveChanges": "حفظ التعديلات",
-      "addInternship": "إضافة التدريب",
-      "title": "تعديل الملف الشخصي",
-      "updated": "تم التحديث!",
-      "message": "تم تحديث ملفك الشخصي بنجاح.",
+  "updateProfile": {
+    "saveChanges": "حفظ التعديلات",
+    "addInternship": "إضافة التدريب",
+    "title": "تعديل الملف الشخصي",
+    "updated": "تم التحديث!",
+    "message": "تم تحديث ملفك الشخصي بنجاح.",
     "basicInfo": {
       "title": "المعلومات الأساسية",
       "fullName": "الاسم الكامل",

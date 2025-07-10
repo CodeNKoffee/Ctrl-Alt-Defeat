@@ -1508,6 +1508,10 @@
     "callSCADAdmin": "Call SCAD Admin"
   },
   "dashboard": {
+    "incomingCaller": {
+      "devModeOn": "Dev Mode: ON",
+      "enableDevMode": "Enable Dev Mode"
+    },
     "setInternshipCycle": "Set Internship Cycle",
     "startDate": "Start Date",
     "endDate": "End Date",

@@ -179,7 +179,7 @@ export default function DashboardLayout({
                 aria-label="Enable Dev Mode"
                 type="button"
               >
-                {devMode ? 'Dev Mode: ON' : 'Enable Dev Mode'}
+                {devMode ? safeT('dashboard.incomingCaller.devModeOn') : safeT('dashboard.incomingCaller.enableDevMode')}
               </button>
               {/* IncomingCallTester slides in when devMode is enabled */}
               <div
