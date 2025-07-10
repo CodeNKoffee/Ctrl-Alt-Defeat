@@ -897,7 +897,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       <InternshipList
         title=""
         internships={hasActiveFilters ? filteredInternships : baseInternships}
-        type="browsing"
+        type="company-view"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}

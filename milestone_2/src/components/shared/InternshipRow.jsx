@@ -341,7 +341,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             )}
 
             {/* Apply button for recommended or browsing internships */}
-            {(type === 'recommended' || type === 'browsing') && type !== 'company-view' && (
+            {(type === 'recommended' || type === 'browsing') && type !=='company-view' && (
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
                 className="p font-bold py-2 px-3 rounded-full transition-all duration-200 
