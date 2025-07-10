@@ -6,6 +6,14 @@ import { mockAssessments } from "../../constants/mockData";
 export default function AssessmentList() {
   const [selectedAssessment, setSelectedAssessment] = useState(null);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const [isRTL, setIsRTL] = useState(false);
+
+  // Detect document direction once on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsRTL(document.documentElement.getAttribute('dir') === 'rtl');
+    }
+  }, []);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -45,7 +53,7 @@ export default function AssessmentList() {
       {/* Main content area with relative positioning */}
       <div className="relative">
         {/* Assessment grid - adjusted spacing when sidebar is open */}
-        <div className={`transition-all duration-300 ease-in-out ${selectedAssessment ? "md:pr-[calc(33%+24px)] lg:pr-[calc(33%+32px)]" : "pr-0"}`}>
+        <div className={`transition-all duration-300 ease-in-out ${selectedAssessment ? isRTL ? "md:pl-[calc(33%+24px)] lg:pl-[calc(33%+32px)]" : "md:pr-[calc(33%+24px)] lg:pr-[calc(33%+32px)]" : "pr-0 pl-0"}`}>
           {mockAssessments.length === 0 ? (
             <div className="p-16 text-center">
               <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">

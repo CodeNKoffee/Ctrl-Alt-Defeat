@@ -1815,5 +1815,20 @@
   },
   "toast": {
     "certificateDownloaded": "Zertifikat erfolgreich heruntergeladen"
+  },
+  "assessment": {
+    "takeTheTest": "Test machen",
+    "submitTest": "Test einreichen",
+    "whyTakeTheTest": "Warum den Test machen?",
+    "testCompleted": "Test abgeschlossen!",
+    "yourScore": "Ihr Ergebnis:",
+    "detailedResultsSent": "Detaillierte Ergebnisse wurden an Ihre E-Mail gesendet.",
+    "wouldYouLikeToShare": "Möchten Sie Ihr Ergebnis teilen?",
+    "yesPostIt": "Ja, veröffentlichen",
+    "noThanks": "Nein, danke",
+    "scorePostedToProfile": "Ergebnis in Ihrem Profil veröffentlicht!",
+    "testScoreToastBefore": "Ihr Testergebnis ist ",
+    "testScoreToastAfter": "%. Bitte überprüfen Sie Ihre E-Mail für detaillierte Ergebnisse.",
+    "errorSubmittingTest": "Fehler beim Einreichen des Tests"
   }
 }

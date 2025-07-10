@@ -1839,5 +1839,20 @@
   },
   "toast": {
     "certificateDownloaded": "تم تحميل الشهادة بنجاح"
+  },
+  "assessment": {
+    "takeTheTest": "أخذ الاختبار",
+    "submitTest": "إرسال الاختبار",
+    "whyTakeTheTest": "لماذا تأخذ الاختبار؟",
+    "testCompleted": "تم إكمال الاختبار!",
+    "yourScore": "نتيجتك:",
+    "detailedResultsSent": "تم إرسال النتائج التفصيلية إلى بريدك الإلكتروني.",
+    "wouldYouLikeToShare": "هل تريد مشاركة نتيجتك؟",
+    "yesPostIt": "نعم، انشرها",
+    "noThanks": "لا، شكراً",
+    "scorePostedToProfile": "تم نشر النتيجة في ملفك الشخصي!",
+    "testScoreToastBefore": "نتيجة اختبارك هي ",
+    "testScoreToastAfter": "%. يرجى التحقق من بريدك الإلكتروني للحصول على النتائج التفصيلية.",
+    "errorSubmittingTest": "خطأ في إرسال الاختبار"
   }
 }

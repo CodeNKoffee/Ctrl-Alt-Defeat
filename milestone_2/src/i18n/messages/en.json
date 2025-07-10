@@ -1779,5 +1779,20 @@
   },
   "toast": {
     "certificateDownloaded": "Certificate downloaded successfully"
+  },
+  "assessment": {
+    "takeTheTest": "Take the Test",
+    "submitTest": "Submit Test",
+    "whyTakeTheTest": "Why take the test?",
+    "testCompleted": "Test Completed!",
+    "yourScore": "Your Score:",
+    "detailedResultsSent": "Detailed results have been sent to your email.",
+    "wouldYouLikeToShare": "Would you like to share your score?",
+    "yesPostIt": "Yes, post it",
+    "noThanks": "No, thanks",
+    "scorePostedToProfile": "Score posted to your profile!",
+    "testScoreToastBefore": "Your test score is ",
+    "testScoreToastAfter": "%. Please check your email for detailed results.",
+    "errorSubmittingTest": "Error submitting test"
   }
 }
