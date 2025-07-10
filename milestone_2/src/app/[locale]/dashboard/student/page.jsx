@@ -983,13 +983,13 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         <div className="absolute right-40 top-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute left-20 top-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
+        <div className="flex rtl:flex-row items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <div className="text-left flex-grow">
+          <div className="text-left rtl:text-right flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
               {safeT('student.dashboard.myInternshipsPersonalizedCard.badge')}
             </div>
@@ -1002,7 +1002,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="flex space-x-4 mb-2">
-                  <div className="flex-1 p-2 bg-blue-50 rounded-lg border border-blue-100 text-center">
+                  <div className="flex-1 p-2 bg-blue-50 rounded-lg border border-blue-100 text-center rtl:mr-4">
                     <div className="w-3 h-3 bg-blue-500 rounded-full mx-auto mb-1"></div>
                     <p className="text-xs font-medium text-blue-800">{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.current')}</p>
                   </div>
