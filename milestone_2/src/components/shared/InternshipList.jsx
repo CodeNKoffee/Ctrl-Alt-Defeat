@@ -381,7 +381,7 @@ export default function InternshipList({
                   >
                     <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
                       }`}></span>
-                    ALL
+                    {safeT('student.dashboard.statusPills.all')}
                   </button>
 
                   {/* Status pills based on type */}
