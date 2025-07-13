@@ -1,21 +1,26 @@
 "use client";
 
 import { Formik, Form } from "formik";
-import { signupValidationSchema } from "../../utils/validationSchemas";
 import FloatingLabelInput from "@/components/FloatingLabelInput";
-import { INDUSTRIES, COMPANY_SIZES, VERIFICATION_TYPES, ACCEPTED_FILE_TYPES } from "../../constants/index";
+import { INDUSTRIES, COMPANY_SIZES, VERIFICATION_TYPES, ACCEPTED_FILE_TYPES, FREE_EMAIL_DOMAINS } from "../../constants/index";
 import { capitalizeWords } from "../../utils/index";
 import SearchableSelect from "@/components/SearchableSelect";
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
+import * as Yup from 'yup';
 
 export default function SignupForm() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       // TODO: Implement signup logic
       console.log('Form values:', values);
 
       // Show success toast notification
-      toast.success('Application has been accepted! Please check your email.', {
+      toast.success(safeT('signup.messages.success'), {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -37,7 +42,7 @@ export default function SignupForm() {
       console.error('Signup error:', error);
 
       // Show error toast notification
-      toast.error('Application has been rejected. Please check your email.', {
+      toast.error(safeT('signup.messages.error'), {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -49,6 +54,63 @@ export default function SignupForm() {
       setSubmitting(false);
     }
   };
+
+  // Dynamic validation schema with translations
+  const validationSchema = Yup.object().shape({
+    companyName: Yup.string()
+      .required(safeT('validation.companyNameRequired'))
+      .min(2, safeT('validation.companyNameMin')),
+    industry: Yup.string()
+      .required(safeT('validation.industryRequired'))
+      .oneOf(INDUSTRIES, safeT('validation.industryInvalid')),
+    companyEmail: Yup.string()
+      .email(safeT('validation.emailInvalid'))
+      .required(safeT('validation.companyEmailRequired'))
+      .test('is-company-email', safeT('validation.companyEmailInvalid'), value => {
+        if (!value) return false;
+        const domain = value.split('@')[1];
+        return !FREE_EMAIL_DOMAINS.includes(domain?.toLowerCase());
+      }),
+    companySize: Yup.string()
+      .required(safeT('validation.companySizeRequired'))
+      .oneOf(COMPANY_SIZES.map(size => size.value), safeT('validation.companySizeInvalid')),
+    verificationType: Yup.string()
+      .required(safeT('validation.verificationTypeRequired'))
+      .oneOf(VERIFICATION_TYPES.map(type => type.value), safeT('validation.verificationTypeInvalid')),
+    companyLogo: Yup.mixed()
+      .required(safeT('validation.companyLogoRequired'))
+      .test('fileFormat', safeT('validation.fileFormatUnsupported'), value => {
+        if (!value) return false;
+        return [...ACCEPTED_FILE_TYPES.images].includes(value.type);
+      })
+      .test('fileSize', safeT('validation.fileTooLarge'), value => {
+        if (!value) return false;
+        return value.size <= 5 * 1024 * 1024;
+      }),
+    verificationDocument: Yup.mixed()
+      .when('verificationType', {
+        is: (value) => value === 'registration' || value === 'taxCard',
+        then: (schema) => schema
+          .required(safeT('validation.verificationDocumentRequired'))
+          .test('fileFormat', safeT('validation.fileFormatUnsupported'), value => {
+            if (!value) return false;
+            return [...ACCEPTED_FILE_TYPES.images, ...ACCEPTED_FILE_TYPES.documents].includes(value.type);
+          })
+          .test('fileSize', safeT('validation.fileTooLarge'), value => {
+            if (!value) return false;
+            return value.size <= 5 * 1024 * 1024;
+          }),
+        otherwise: (schema) => schema.notRequired()
+      }),
+    taxId: Yup.string()
+      .when('verificationType', {
+        is: 'taxId',
+        then: (schema) => schema
+          .required(safeT('validation.taxIdRequired'))
+          .matches(/^[0-9]{3}-[0-9]{3}-[0-9]{3}$/, safeT('validation.taxIdFormat')),
+        otherwise: (schema) => schema.notRequired()
+      }),
+  });
 
   return (
     <Formik
@@ -62,7 +124,7 @@ export default function SignupForm() {
         verificationDocument: null,
         taxId: '',
       }}
-      validationSchema={signupValidationSchema}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       {({ errors, touched, isSubmitting, setFieldValue, isValid, dirty, values }) => (
@@ -73,7 +135,7 @@ export default function SignupForm() {
               <FloatingLabelInput
                 name="companyName"
                 type="text"
-                label="Company Name *"
+                label={safeT('signup.labels.companyName')}
                 errors={errors}
                 touched={touched}
                 onChange={(e) => {
@@ -88,10 +150,10 @@ export default function SignupForm() {
               <FloatingLabelInput
                 name="companyEmail"
                 type="email"
-                label="Company Email *"
+                label={safeT('signup.labels.companyEmail')}
                 errors={errors}
                 touched={touched}
-                tooltip="Please enter an official company email address that you use for business communications. Free email providers (Gmail, Yahoo, etc.) are not accepted."
+                tooltip={safeT('signup.tooltips.companyEmail')}
               />
             </div>
 
@@ -99,14 +161,14 @@ export default function SignupForm() {
             <div className="w-full md:w-[calc(50%-16px)]">
               <SearchableSelect
                 name="industry"
-                label="Industry *"
+                label={safeT('signup.labels.industry')}
                 value={values.industry}
                 options={INDUSTRIES.map(i => ({ label: i, value: i }))}
                 onChange={e => setFieldValue('industry', e.target.value)}
                 onBlur={e => setFieldValue('industry', e.target.value)}
                 error={errors.industry}
                 touched={touched.industry}
-                placeholder="Select industry"
+                placeholder={safeT('signup.placeholders.industry')}
               />
             </div>
 
@@ -114,14 +176,14 @@ export default function SignupForm() {
             <div className="w-full md:w-[calc(50%-16px)]">
               <SearchableSelect
                 name="companySize"
-                label="Company Size *"
+                label={safeT('signup.labels.companySize')}
                 value={values.companySize}
-                options={COMPANY_SIZES.map(s => ({ label: s.label, value: s.value }))}
+                options={COMPANY_SIZES.map(s => ({ label: safeT(`signup.companySizes.${s.value}`), value: s.value }))}
                 onChange={e => setFieldValue('companySize', e.target.value)}
                 onBlur={e => setFieldValue('companySize', e.target.value)}
                 error={errors.companySize}
                 touched={touched.companySize}
-                placeholder="Select size"
+                placeholder={safeT('signup.placeholders.companySize')}
               />
             </div>
 
@@ -129,8 +191,8 @@ export default function SignupForm() {
             <div className="flex flex-wrap gap-8 w-full">
               {/* Verification Type */}
               <div className="w-full md:w-[calc(50%-16px)] space-y-3">
-                <label className="block text-lg font-medium text-metallica-blue-off-charts">
-                  Company Verification Type *
+                <label className="block text-lg font-medium text-metallica-blue-off-charts rtl:text-right ltr:text-left">
+                  {safeT('signup.labels.verificationType')}
                 </label>
                 <div className="space-y-2">
                   {VERIFICATION_TYPES.map((type) => (
@@ -142,7 +204,7 @@ export default function SignupForm() {
                         onChange={(e) => setFieldValue('verificationType', e.target.value)}
                         className="h-4 w-4 text-metallica-blue-off-charts focus:ring-metallica-blue-off-charts"
                       />
-                      <span className="text-sm text-gray-700">{type.label}</span>
+                      <span className="text-sm text-gray-700">{safeT(`signup.verificationTypes.${type.value}`)}</span>
                     </label>
                   ))}
                 </div>
@@ -153,8 +215,8 @@ export default function SignupForm() {
 
               {/* Company Logo */}
               <div className="w-full md:w-[calc(50%-16px)] space-y-3">
-                <label className="block text-lg font-medium text-metallica-blue-off-charts">
-                  Company Logo *
+                <label className="block text-lg font-medium text-metallica-blue-off-charts rtl:text-right ltr:text-left">
+                  {safeT('signup.labels.companyLogo')}
                 </label>
                 <div className="relative">
                   <input
@@ -173,15 +235,15 @@ export default function SignupForm() {
                       }`}
                   >
                     <span className="text-gray-500">
-                      {values.companyLogo?.name || 'Choose file...'}
+                      {values.companyLogo?.name || safeT('signup.labels.chooseFile')}
                     </span>
                     <span className="ml-auto bg-gray-100 px-4 py-2 rounded-lg text-sm text-gray-700">
-                      Browse
+                      {safeT('signup.labels.browse')}
                     </span>
                   </label>
                 </div>
-                <div className="text-sm text-gray-500">
-                  Accepted formats: JPG, PNG, SVG (Preferred dimensions: 200x200px)
+                <div className="text-sm text-gray-500 rtl:text-right ltr:text-left">
+                  {safeT('signup.labels.acceptedLogoFormats')}
                 </div>
                 {errors.companyLogo && touched.companyLogo && (
                   <div className="text-red-500 text-sm">{errors.companyLogo}</div>
@@ -197,16 +259,16 @@ export default function SignupForm() {
                     <FloatingLabelInput
                       name="taxId"
                       type="text"
-                      label="Tax ID"
-                      placeholder="XXX-XXX-XXX"
+                      label={safeT('signup.labels.taxId')}
+                      placeholder={safeT('signup.placeholders.taxId')}
                       errors={errors}
                       touched={touched}
                     />
                   </div>
                 ) : (
                   <div className="w-full md:w-[calc(50%-16px)] space-y-3 animate-slideIn">
-                    <label className="block text-lg font-medium text-metallica-blue-off-charts">
-                      {values.verificationType === 'registration' ? 'Company Registration Document *' : 'Tax Card Document *'}
+                    <label className="block text-lg font-medium text-metallica-blue-off-charts rtl:text-right ltr:text-left">
+                      {values.verificationType === 'registration' ? safeT('signup.labels.companyRegistrationDocument') : safeT('signup.labels.taxCardDocument')}
                     </label>
                     <div className="relative">
                       <input
@@ -225,15 +287,15 @@ export default function SignupForm() {
                           }`}
                       >
                         <span className="text-gray-500">
-                          {values.verificationDocument?.name || 'Choose file...'}
+                          {values.verificationDocument?.name || safeT('signup.labels.chooseFile')}
                         </span>
                         <span className="ml-auto bg-gray-100 px-4 py-2 rounded-lg text-sm text-gray-700">
-                          Browse
+                          {safeT('signup.labels.browse')}
                         </span>
                       </label>
                     </div>
-                    <div className="text-sm text-gray-500">
-                      Accepted formats: JPG, PNG, PDF
+                    <div className="text-sm text-gray-500 rtl:text-right ltr:text-left">
+                      {safeT('signup.labels.acceptedDocFormats')}
                     </div>
                     {errors.verificationDocument && touched.verificationDocument && (
                       <div className="text-red-500 text-sm">{errors.verificationDocument}</div>
@@ -246,7 +308,7 @@ export default function SignupForm() {
                     disabled={isSubmitting || !isValid || !dirty}
                     className="font-bold w-full py-3 px-4 bg-metallica-blue-off-charts text-white rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed enabled:hover:bg-metallica-blue-950"
                   >
-                    {isSubmitting ? 'Processing...' : 'Complete Registration'}
+                    {isSubmitting ? safeT('signup.labels.processing') : safeT('signup.labels.submit')}
                   </button>
                   {/* <pre className="text-xs bg-gray-100 p-2 rounded mt-2 overflow-x-auto">{JSON.stringify({ isValid, dirty, errors, values }, null, 2)}</pre> */}
                 </div>
@@ -259,7 +321,7 @@ export default function SignupForm() {
                 disabled={isSubmitting || !isValid || !dirty}
                 className="font-bold w-full py-3 px-4 bg-metallica-blue-off-charts text-white rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed enabled:hover:bg-metallica-blue-950"
               >
-                {isSubmitting ? 'Processing...' : 'Complete Registration'}
+                {isSubmitting ? safeT('signup.labels.processing') : safeT('signup.labels.submit')}
               </button>
             )}
           </div>

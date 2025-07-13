@@ -2,8 +2,13 @@ import { useEffect, useState } from 'react';
 import { format, isBefore, startOfDay, isValid, parseISO } from 'date-fns';
 import CustomButton from './shared/CustomButton';
 import DatePicker from './DatePicker';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost, isEditing, onClose }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [form, setForm] = useState({
     title: '',
     description: '',
@@ -205,31 +210,31 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
       )}
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Job Title</label>
+        <label className={labelClasses}>{safeT('company.posts.form.jobTitle')}</label>
         <input
           name="title"
           value={form.title}
           onChange={handleChange}
-          placeholder="Enter job title"
+          placeholder={safeT('company.posts.form.jobTitlePlaceholder')}
           required
           className={inputClasses}
         />
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Job Description</label>
+        <label className={labelClasses}>{safeT('company.posts.form.jobDescription')}</label>
         <textarea
           name="description"
           value={form.description}
           onChange={handleChange}
-          placeholder="Enter detailed job description"
+          placeholder={safeT('company.posts.form.jobDescriptionPlaceholder')}
           required
           className={`${inputClasses} min-h-[100px] resize-vertical`}
         />
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Start Date <span className="text-red-500">*</span></label>
+        <label className={labelClasses}>{safeT('company.posts.form.startDate')} <span className="text-red-500">*</span></label>
         <div className="mt-1">
           <DatePicker
             selectedDate={form.startDate ? new Date(form.startDate) : null}
@@ -247,31 +252,31 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
             disabled={false}
             inputProps={{
               readOnly: false,
-              placeholder: 'Select a date',
+              placeholder: safeT('company.posts.form.selectDate'),
               className: inputClasses + ' cursor-pointer bg-white',
               onFocus: e => e.target.blur && e.target.blur(), // Remove if DatePicker handles focus
             }}
           />
         </div>
         {!form.startDate && (
-          <p className="text-red-500 text-xs mt-1">Please select a start date</p>
+          <p className="text-red-500 text-xs mt-1">{safeT('company.posts.form.pleaseSelectStartDate')}</p>
         )}
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Duration</label>
+        <label className={labelClasses}>{safeT('company.posts.form.duration')}</label>
         <input
           name="duration"
           value={form.duration}
           onChange={handleChange}
-          placeholder="e.g., 3 months, 6 months"
+          placeholder={safeT('company.posts.form.durationPlaceholder')}
           required
           className={inputClasses}
         />
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Internship Type</label>
+        <label className={labelClasses}>{safeT('company.posts.form.internshipType')}</label>
         <div className="flex flex-wrap gap-4 mt-2">
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -282,7 +287,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700]">Full-time</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">{safeT('company.posts.filters.fullTime')}</span>
           </label>
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -293,13 +298,13 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700]">Part-time</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">{safeT('company.posts.filters.partTime')}</span>
           </label>
         </div>
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Internship Setting</label>
+        <label className={labelClasses}>{safeT('company.posts.form.internshipSetting')}</label>
         <div className="flex flex-wrap gap-4 mt-2">
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -310,7 +315,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700]">Remote</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">{safeT('company.posts.filters.remote')}</span>
           </label>
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -321,7 +326,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700]">On-site</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">{safeT('company.posts.filters.onSite')}</span>
           </label>
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -332,32 +337,32 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
               onChange={handleChange}
               className="form-radio h-4 w-4 text-[var(--metallica-blue-600)] border-[var(--metallica-blue-300)]"
             />
-            <span className="ml-2 text-[var(--metallica-blue-700]">Hybrid</span>
+            <span className="ml-2 text-[var(--metallica-blue-700]">{safeT('company.posts.filters.hybrid')}</span>
           </label>
         </div>
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Payment Status</label>
+        <label className={labelClasses}>{safeT('company.posts.form.paymentStatus')}</label>
         <select
           name="paid"
           value={form.paid}
           onChange={handleChange}
           className={inputClasses}
         >
-          <option value="Paid">Paid</option>
-          <option value="Unpaid">Unpaid</option>
+          <option value="Paid">{safeT('company.posts.filters.paid')}</option>
+          <option value="Unpaid">{safeT('company.posts.filters.unpaid')}</option>
         </select>
       </div>
 
       {paidValidation && (
         <div className={sectionClasses}>
-          <label className={labelClasses}>Salary</label>
+          <label className={labelClasses}>{safeT('company.posts.form.salary')}</label>
           <input
             name="salary"
             value={form.salary}
             onChange={handleChange}
-            placeholder="e.g., $500/month, $15/hour"
+            placeholder={safeT('company.posts.form.salaryPlaceholder')}
             required
             className={inputClasses}
           />
@@ -365,26 +370,26 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
       )}
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Requirements</label>
+        <label className={labelClasses}>{safeT('company.posts.form.requirements')}</label>
         <textarea
           name="requirements"
           value={form.requirements}
           onChange={handleChange}
-          placeholder="Enter detailed job requirements, qualifications, and expectations"
+          placeholder={safeT('company.posts.form.requirementsPlaceholder')}
           required
           className={`${inputClasses} min-h-[100px] resize-vertical`}
         />
       </div>
 
       <div className={sectionClasses}>
-        <label className={labelClasses}>Skills</label>
+        <label className={labelClasses}>{safeT('company.posts.form.skills')}</label>
         <div className="w-full">
           <input
             type="text"
             value={skillInput}
             onChange={handleSkillInputChange}
             onKeyDown={handleSkillInputKeyDown}
-            placeholder="Type a skill and press Enter (e.g., JavaScript, React, UI/UX)"
+            placeholder={safeT('company.posts.form.skillsPlaceholder')}
             className={inputClasses}
           />
           <div className="flex flex-wrap gap-2 mt-3">
@@ -406,7 +411,7 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
           </div>
           {form.skills.length === 0 && (
             <p className="text-sm text-[var(--metallica-blue-500)] mt-2">
-              Skills will appear here as bubbles after you press Enter
+              {safeT('company.posts.form.skillsHelpText')}
             </p>
           )}
         </div>
@@ -418,14 +423,14 @@ export default function CompanyCreatePost({ onAddPost, onFormChange, initialPost
             type="submit"
             variant="secondary"
             loadingText="Saving"
-            text="Save Changes"
+            text={safeT('company.posts.form.saveChanges')}
           />
         ) : (
           <CustomButton
             type="submit"
             variant="primary"
             loadingText="Creating"
-            text="Create Post"
+            text={safeT('company.posts.form.createPost')}
           />
         )}
       </div>

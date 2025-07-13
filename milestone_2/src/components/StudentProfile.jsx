@@ -7,8 +7,13 @@ import StudentCard from "./StudentCard";
 import StudentDetails from "./StudentDetails";
 import UpdateProfileS from "./UpdateProfileS";
 import './styles/StudentProfile.css'; // Importing CSS for styling
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function Student() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+  
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -256,10 +261,10 @@ export default function Student() {
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                Success!
+                {safeT('updateProfile.updated')}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
-                Your profile has been successfully updated.
+                {safeT('updateProfile.message')}
               </div>
             </motion.div>
           </motion.div>

@@ -2,8 +2,12 @@ import React from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from "react-i18next";
+import { createSafeT } from "@/lib/translationUtils";
 
 export default function WorkshopCard({ workshop, onClick, className = "" }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   // Format date for display
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString); // Ensure dateString is parsed correctly
@@ -20,19 +24,19 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
     switch (workshop.type) {
       case "live":
         return {
-          text: "Live",
+          text: safeT('student.dashboard.statusPills.live'),
           bgColor: "bg-red-500",
           textColor: "text-white"
         };
       case "prerecorded":
         return {
-          text: "Prerecorded",
+          text: safeT('student.dashboard.statusPills.prerecorded'),
           bgColor: " bg-amber-200 ",
           textColor: "text-amber-900"
         };
       default: // regular/upcoming
         return {
-          text: "Upcoming",
+          text: safeT('student.dashboard.statusPills.upcoming'),
           bgColor: "bg-green-600",
           textColor: "text-white"
         };
@@ -43,11 +47,11 @@ export default function WorkshopCard({ workshop, onClick, className = "" }) {
   const getButtonText = () => {
     switch (workshop.type) {
       case "live":
-        return "Join Now";
+        return safeT('student.dashboard.joinNow');
       case "prerecorded":
-        return "Watch Now";
+        return safeT('student.dashboard.watchNow');
       default: // regular/upcoming
-        return "Register Now";
+        return safeT('student.dashboard.registerNow');
     }
   };
 

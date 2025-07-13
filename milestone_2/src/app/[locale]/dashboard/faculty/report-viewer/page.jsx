@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import ReportViewer from "@/components/ReportViewer";
 import Header from "@/components/Header";
 import StatusBadge from "@/components/shared/StatusBadge";
@@ -9,6 +11,9 @@ import { faArrowLeft, faSave, faCheckCircle, faExclamationTriangle, faThumbsUp, 
 import { facultyScadReports } from '../../../../../../constants/mockData';
 
 export default function FacultyReportViewer({ reportId, onBack, reportData }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [isSaving, setIsSaving] = useState(false);
   const [savedFeedback, setSavedFeedback] = useState(false);
   const [reports, setReports] = useState(facultyScadReports);
@@ -40,7 +45,7 @@ export default function FacultyReportViewer({ reportId, onBack, reportData }) {
   const handleSaveFeedback = () => {
     setIsSaving(true);
     if ((reportStatus === 'flagged' || reportStatus === 'rejected') && !statusChangeReason.trim()) {
-      alert('Please provide a reason for flagging or rejecting the report.');
+      alert(safeT('facultyReportViewer.alerts.reasonRequired'));
       setIsSaving(false);
       return;
     }
@@ -71,14 +76,14 @@ export default function FacultyReportViewer({ reportId, onBack, reportData }) {
   };
 
   const getButtonText = () => {
-    if (isSaving) return 'Saving...';
-    if (savedFeedback) return 'Saved!';
+    if (isSaving) return safeT('facultyReportViewer.actions.saving');
+    if (savedFeedback) return safeT('facultyReportViewer.actions.saved');
     switch (reportStatus) {
-      case 'pending': return 'Save Review';
+      case 'pending': return safeT('facultyReportViewer.actions.saveReview');
       case 'accepted':
       case 'rejected':
-      case 'flagged': return 'Submit Review';
-      default: return 'Save Review';
+      case 'flagged': return safeT('facultyReportViewer.actions.submitReview');
+      default: return safeT('facultyReportViewer.actions.saveReview');
     }
   };
 
@@ -104,11 +109,22 @@ export default function FacultyReportViewer({ reportId, onBack, reportData }) {
     return statusIcons[status] || faExclamationTriangle;
   };
 
+  const getTranslatedStatus = (status) => {
+    const statusMap = {
+      'pending': safeT('facultyReportViewer.statuses.pending'),
+      'flagged': safeT('facultyReportViewer.statuses.flagged'),
+      'rejected': safeT('facultyReportViewer.statuses.rejected'),
+      'accepted': safeT('facultyReportViewer.statuses.accepted'),
+      'reviewed': safeT('facultyReportViewer.statuses.reviewed')
+    };
+    return statusMap[status] || status.toUpperCase();
+  };
+
   if (!report) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
-        <p className="text-metallica-blue-600 text-xl">Loading report...</p>
-        <p className="text-gray-500 mt-2">If this persists, the report may not exist</p>
+        <p className="text-metallica-blue-600 text-xl">{safeT('facultyReportViewer.header.loadingReport')}</p>
+        <p className="text-gray-500 mt-2">{safeT('facultyReportViewer.header.reportNotFound')}</p>
       </div>
     );
   }
@@ -126,33 +142,32 @@ export default function FacultyReportViewer({ reportId, onBack, reportData }) {
             className="mb-6 flex items-center text-metallica-blue-700 hover:text-metallica-blue-900 transition-colors"
           >
             <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
-            <span>Back to Reports</span>
+            <span>{safeT('facultyReportViewer.navigation.backToReports')}</span>
           </button>
-          <Header text="Report Review & Annotation" size="text-3xl md:text-4xl" className="mb-2 mt-0" />
+          <Header text={safeT('facultyReportViewer.header.title')} size="text-3xl md:text-4xl" className="mb-2 mt-0" />
         </div>
         <div className="flex items-center">
-          <span className="text-metallica-blue-700 mr-2 text-sm">Student: <strong>{report.studentName}</strong></span>
+          <span className="text-metallica-blue-700 mr-2 text-sm">{safeT('facultyReportViewer.header.student')} <strong>{report.studentName}</strong></span>
           <span className="bg-metallica-blue-100 text-metallica-blue-800 px-2 py-1 rounded text-xs mr-2">
-            Submitted: {new Date(report.submissionDate).toLocaleDateString()}
+            {safeT('facultyReportViewer.header.submitted')} {new Date(report.submissionDate).toLocaleDateString()}
           </span>
           <StatusBadge color={getStatusBadgeClasses(report.status)}>
             <div className="flex items-center">
               <FontAwesomeIcon icon={getStatusIcon(report.status)} className="mr-1" />
-              <span>{report.status.toUpperCase()}</span>
+              <span>{getTranslatedStatus(report.status)}</span>
             </div>
           </StatusBadge>
         </div>
       </div>
       <div className="bg-white shadow-md rounded-lg p-6 mb-8">
         <div className="bg-metallica-blue-50 border-l-4 border-metallica-blue-600 p-4 mb-6 rounded-r">
-          <h3 className="text-metallica-blue-800 font-semibold mb-1">Evaluation Mode</h3>
+          <h3 className="text-metallica-blue-800 font-semibold mb-1">{safeT('facultyReportViewer.evaluationMode.title')}</h3>
           <p className="text-metallica-blue-700">
-            You're evaluating this student's report. Select any text to highlight key sections or add comments.
-            Your annotations help provide constructive feedback and assess the report quality.
+            {safeT('facultyReportViewer.evaluationMode.description')}
           </p>
         </div>
         <p className="text-metallica-blue-800 mb-6">
-          Select any text in the report below to highlight important sections or add comments. Your annotations will appear in the sidebar.
+          {safeT('facultyReportViewer.evaluationMode.instructions')}
         </p>
         <div className="min-h-[600px]">
           <ReportViewer report={report} />
@@ -161,53 +176,55 @@ export default function FacultyReportViewer({ reportId, onBack, reportData }) {
           <div className="mt-8 pt-6 border-t border-metallica-blue-200">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="text-lg font-semibold text-metallica-blue-800 mb-3">Overall Feedback</h3>
+                <h3 className="text-lg font-semibold text-metallica-blue-800 mb-3">{safeT('facultyReportViewer.feedback.overallFeedback')}</h3>
                 <textarea
                   value={overallFeedback}
                   onChange={(e) => setOverallFeedback(e.target.value)}
-                  placeholder="Provide overall feedback on the student's report..."
+                  placeholder={safeT('facultyReportViewer.feedback.overallFeedbackPlaceholder')}
                   className="w-full min-h-[150px] p-3 border border-metallica-blue-300 rounded focus:ring-2 focus:ring-metallica-blue-500 focus:border-metallica-blue-500 outline-none"
                 />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-metallica-blue-800 mb-3">Report Status</h3>
+                <h3 className="text-lg font-semibold text-metallica-blue-800 mb-3">{safeT('facultyReportViewer.feedback.reportStatus')}</h3>
                 <div className="p-4 bg-metallica-blue-50 rounded-lg border border-metallica-blue-100">
                   <p className="text-sm text-metallica-blue-800 mb-3">
-                    Choose the final status for this report after your review:
+                    {safeT('facultyReportViewer.feedback.chooseStatus')}
                   </p>
                   <div className="mb-4">
                     <label htmlFor="reportStatus" className="block text-sm font-medium text-metallica-blue-800 mb-1">
-                      Status
+                      {safeT('facultyReportViewer.feedback.status')}
                     </label>
                     <select
                       id="reportStatus"
                       value={reportStatus}
                       onChange={handleStatusChange}
-                      className="w-full px-3 py-2 border border-metallica-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
+                      className="w-full px-3 py-2 border border-metallica-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 rtl:pr-10 rtl:pl-3"
+                      style={{ backgroundImage: 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%236b7280\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'m6 8 4 4 4-4\'/%3e%3c/svg%3e")', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
+                      dir="auto"
                     >
-                      <option value="pending">PENDING</option>
-                      <option value="accepted">ACCEPTED</option>
-                      <option value="rejected">REJECTED</option>
-                      <option value="flagged">FLAGGED</option>
+                      <option value="pending">{safeT('facultyReportViewer.statuses.pending')}</option>
+                      <option value="accepted">{safeT('facultyReportViewer.statuses.accepted')}</option>
+                      <option value="rejected">{safeT('facultyReportViewer.statuses.rejected')}</option>
+                      <option value="flagged">{safeT('facultyReportViewer.statuses.flagged')}</option>
                     </select>
                   </div>
                   {showStatusReasonField && (
                     <div className="mb-2">
                       <label htmlFor="statusReason" className="block text-sm font-medium text-metallica-blue-800 mb-1">
-                        Reason for {reportStatus === 'flagged' ? 'Flagging' : 'Rejecting'}
+                        {safeT('facultyReportViewer.feedback.reasonFor').replace('{action}', reportStatus === 'flagged' ? safeT('facultyReportViewer.actions.flagging') : safeT('facultyReportViewer.actions.rejecting'))}
                       </label>
                       <textarea
                         id="statusReason"
                         value={statusChangeReason}
                         onChange={(e) => setStatusChangeReason(e.target.value)}
-                        placeholder={`Please explain why this report is being ${reportStatus === 'flagged' ? 'flagged' : 'rejected'}...`}
+                        placeholder={safeT('facultyReportViewer.feedback.reasonPlaceholder').replace('{status}', reportStatus === 'flagged' ? 'flagged' : 'rejected')}
                         className="w-full p-3 border border-metallica-blue-300 rounded focus:ring-2 focus:ring-metallica-blue-500 focus:border-metallica-blue-500 outline-none min-h-[80px]"
                         required={reportStatus === 'flagged' || reportStatus === 'rejected'}
                       />
                       <p className="text-xs text-metallica-blue-600 mt-1">
                         {reportStatus === 'flagged'
-                          ? 'Flagging a report indicates issues that need resolution before acceptance.'
-                          : 'Please provide specific reasons why this report does not meet requirements.'}
+                          ? safeT('facultyReportViewer.feedback.flaggingHelp')
+                          : safeT('facultyReportViewer.feedback.rejectionHelp')}
                       </p>
                     </div>
                   )}
@@ -215,10 +232,10 @@ export default function FacultyReportViewer({ reportId, onBack, reportData }) {
                     <div className="flex items-center">
                       <FontAwesomeIcon icon={getStatusIcon(reportStatus)} className="mr-2" />
                       <span className="font-medium">
-                        {reportStatus === 'pending' && 'Report will remain under review'}
-                        {reportStatus === 'accepted' && 'Report will be marked as accepted'}
-                        {reportStatus === 'rejected' && 'Report will be returned to student with feedback'}
-                        {reportStatus === 'flagged' && 'Report will be flagged for specific issues'}
+                        {reportStatus === 'pending' && safeT('facultyReportViewer.statusMessages.pendingMessage')}
+                        {reportStatus === 'accepted' && safeT('facultyReportViewer.statusMessages.acceptedMessage')}
+                        {reportStatus === 'rejected' && safeT('facultyReportViewer.statusMessages.rejectedMessage')}
+                        {reportStatus === 'flagged' && safeT('facultyReportViewer.statusMessages.flaggedMessage')}
                       </span>
                     </div>
                   </StatusBadge>
@@ -230,8 +247,8 @@ export default function FacultyReportViewer({ reportId, onBack, reportData }) {
                 onClick={handleSaveFeedback}
                 disabled={isSaving || (showStatusReasonField && !statusChangeReason.trim())}
                 className={`flex items-center px-4 py-2 rounded ${isSaving || savedFeedback || (showStatusReasonField && !statusChangeReason.trim())
-                    ? 'bg-metallica-blue-400 cursor-not-allowed'
-                    : 'bg-metallica-blue-600 hover:bg-metallica-blue-700'
+                  ? 'bg-metallica-blue-400 cursor-not-allowed'
+                  : 'bg-metallica-blue-600 hover:bg-metallica-blue-700'
                   } text-white transition-colors`}
               >
                 <FontAwesomeIcon icon={savedFeedback ? faCheckCircle : faSave} className="mr-2" />
@@ -245,16 +262,16 @@ export default function FacultyReportViewer({ reportId, onBack, reportData }) {
               <StatusBadge color={getStatusBadgeClasses(report.status)} className="mb-4 w-full flex items-center justify-center">
                 <div className="flex items-center">
                   <FontAwesomeIcon icon={getStatusIcon(report.status)} className="mr-2" />
-                  <span className="font-medium text-lg">{report.status.toUpperCase()}</span>
+                  <span className="font-medium text-lg">{getTranslatedStatus(report.status)}</span>
                 </div>
               </StatusBadge>
               <div className="mb-3 p-3 border border-metallica-blue-200 rounded bg-white/40">
-                <div className="text-metallica-blue-800 font-semibold mb-1">Faculty Feedback</div>
+                <div className="text-metallica-blue-800 font-semibold mb-1">{safeT('facultyReportViewer.feedback.facultyFeedback')}</div>
                 <div className="text-metallica-blue-700 text-sm">{mockFeedback}</div>
               </div>
               {mockReason && (
                 <div className="p-3 border border-metallica-blue-200 rounded bg-white/40">
-                  <div className="text-metallica-blue-800 font-semibold mb-1">Reason</div>
+                  <div className="text-metallica-blue-800 font-semibold mb-1">{safeT('facultyReportViewer.feedback.reason')}</div>
                   <div className="text-metallica-blue-700 text-sm">{mockReason}</div>
                 </div>
               )}

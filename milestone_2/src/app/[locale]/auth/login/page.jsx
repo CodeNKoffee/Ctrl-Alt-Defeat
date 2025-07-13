@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, useParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { MOCK_USERS } from '../../../../../constants/mockData';
 import { usersOptions } from '../../../../../constants/index';
@@ -13,11 +13,17 @@ import LoginForm from "@/components/LoginForm";
 import BackButton from "@/components/shared/BackButton";
 import { ToastContainer, toast } from 'react-toastify';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function LoginPage() {
   const router = useRouter();
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
+  const params = useParams();
+  const locale = params.locale || 'en';
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const userType = searchParams.get('userType');
 
   const [error, setError] = useState('');
@@ -31,6 +37,24 @@ export default function LoginPage() {
       router.push('/en');
     }
   }, [userType, userDetails, router]);
+
+  useEffect(() => {
+    // If already logged in (persistent session), redirect to dashboard
+    if (typeof window !== 'undefined') {
+      const userSessionData = localStorage.getItem('userSession') || sessionStorage.getItem('userSession');
+      if (userSessionData) {
+        try {
+          const user = JSON.parse(userSessionData);
+          if (user && user.role) {
+            router.push(`/en/dashboard/${user.role}`);
+            return;
+          }
+        } catch (e) {
+          // Ignore parse errors
+        }
+      }
+    }
+  }, []);
 
   const handleLogin = async (values) => {
     setError('');
@@ -212,9 +236,9 @@ export default function LoginPage() {
             <div className="text-center mt-0 mb-16 xl:mb-0 xl:mt-8">
               {userType === 'company' && (
                 <span className="text-black font-medium font-ibm-plex-sans">
-                  Not registered yet?{' '}
-                  <Link href={`/en/auth/signup?userType=${userType}`} className="text-metallica-blue-off-charts underline">
-                    Sign up
+                  {safeT('home.notRegistered')} {' '}
+                  <Link href={`/${locale}/auth/signup?userType=${userType}`} className="text-metallica-blue-off-charts underline">
+                    {safeT('home.signUp')}
                   </Link>
                 </span>
               )}
@@ -232,13 +256,13 @@ export default function LoginPage() {
                   />
                 </div>
                 <Header
-                  text={`Login`}
+                  text={safeT('login.logIn')}
                   className="block xl:hidden"
                   size="text-6xl"
                 />
               </div>
               <Header
-                text={`Login`}
+                text={safeT('login.logIn')}
                 className="hidden xl:block"
                 size="text-6xl"
               />

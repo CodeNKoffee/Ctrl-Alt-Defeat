@@ -4,6 +4,8 @@ import { mockStudents } from '../../constants/mockData';
 import InternRow from './InternRow';
 import CompanyEvaluationModal from './CompanyEvaluationModal';
 import StatusPills from './shared/StatusPills';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '../lib/translationUtils';
 
 // Helper to infer internship status from period
 const inferStatus = (period) => {
@@ -61,15 +63,18 @@ const transformStudentsToInterns = (students) => {
 };
 
 export default function CurrentInterns({ searchTerm, selectedStatus = 'all', onStatusChange }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [interns, setInterns] = useState([]);
   const [evaluationModalOpen, setEvaluationModalOpen] = useState(false);
   const [selectedIntern, setSelectedIntern] = useState(null);
 
   // Statuses to display
   const displayStatuses = [
-    { value: 'current', label: 'CURRENT', color: 'bg-blue-100 text-blue-800 border-2 border-blue-400', badgeColor: 'bg-blue-600' },
-    { value: 'completed', label: 'COMPLETED', color: 'bg-green-100 text-green-800 border-2 border-green-400', badgeColor: 'bg-green-600' },
-    { value: 'evaluated', label: 'EVALUATED', color: 'bg-purple-100 text-purple-800 border-2 border-purple-400', badgeColor: 'bg-purple-600' },
+    { value: 'current', label: safeT('company.interns.statuses.current'), color: 'bg-blue-100 text-blue-800 border-2 border-blue-400', badgeColor: 'bg-blue-600' },
+    { value: 'completed', label: safeT('company.interns.statuses.completed'), color: 'bg-green-100 text-green-800 border-2 border-green-400', badgeColor: 'bg-green-600' },
+    { value: 'evaluated', label: safeT('company.interns.statuses.evaluated'), color: 'bg-purple-100 text-purple-800 border-2 border-purple-400', badgeColor: 'bg-purple-600' },
   ];
 
   useEffect(() => {
@@ -143,8 +148,8 @@ export default function CurrentInterns({ searchTerm, selectedStatus = 'all', onS
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            <p className="text-gray-500 font-medium">No interns found matching your criteria</p>
-            <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
+            <p className="text-gray-500 font-medium">{safeT('company.internDetails.noInternsFound')}</p>
+            <p className="text-gray-400 text-sm mt-1">{safeT('company.internDetails.adjustSearchFilter')}</p>
           </div>
         )}
       </div>

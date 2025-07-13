@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileLines, faClock, faCircleCheck, faFlag } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function ReportStatistics({
   total = 0,
@@ -7,6 +9,9 @@ export default function ReportStatistics({
   pending = 0,
   flagged = 0
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       {/* Total Reports Card */}
@@ -15,7 +20,7 @@ export default function ReportStatistics({
           <FontAwesomeIcon icon={faFileLines} className="w-5 h-5" />
         </div>
         <div className="min-w-0">
-          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Total Reports</h3>
+          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">{safeT('faculty.reports.statistics.totalReports')}</h3>
           <p className="text-2xl font-semibold mt-1 truncate">{total}</p>
         </div>
       </div>
@@ -25,7 +30,7 @@ export default function ReportStatistics({
           <FontAwesomeIcon icon={faCircleCheck} className="w-5 h-5" />
         </div>
         <div className="min-w-0">
-          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Accepted Reports</h3>
+          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">{safeT('faculty.reports.statistics.acceptedReports')}</h3>
           <p className="text-2xl font-semibold mt-1 text-green-600 truncate">{accepted}</p>
         </div>
       </div>
@@ -35,7 +40,7 @@ export default function ReportStatistics({
           <FontAwesomeIcon icon={faClock} className="w-5 h-5" />
         </div>
         <div className="min-w-0">
-          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Pending Reports</h3>
+          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">{safeT('faculty.reports.statistics.pendingReports')}</h3>
           <p className="text-2xl font-semibold mt-1 text-yellow-600 truncate">{pending}</p>
         </div>
       </div>
@@ -45,7 +50,7 @@ export default function ReportStatistics({
           <FontAwesomeIcon icon={faFlag} className="w-5 h-5" />
         </div>
         <div className="min-w-0">
-          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">Flagged Reports</h3>
+          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider truncate">{safeT('faculty.reports.statistics.flaggedReports')}</h3>
           <p className="text-2xl font-semibold mt-1 text-orange-600 truncate">{flagged}</p>
         </div>
       </div>

@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from 'react-i18next';
+import { createSafeT, translateFilterValue } from '../lib/translationUtils';
 import CustomButton from './shared/CustomButton';
 
 export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compact = false }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [expanded, setExpanded] = useState(false);
 
   // Mock data for applicants count - in real app this would come from post prop
   const applicantsCount = post.applicantsCount || Math.floor(Math.random() * 20);
 
   const formatDate = (dateString) => {
-    if (!dateString) return "Not specified";
+    if (!dateString) return safeT('company.posts.post.notSpecified');
 
     try {
       const date = new Date(dateString);
@@ -88,20 +93,20 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
       <div className={containerClasses}>
         {/* Edit/Delete Icon Buttons (top-right, only here) */}
         <div
-          className="absolute top-2 right-4 flex items-center gap-2 z-10"
+          className="absolute top-2 ltr:right-4 rtl:left-4 flex items-center gap-2 z-10"
           style={{ backgroundColor: 'rgba(255,255,255,0.8)', padding: '4px', borderRadius: '4px' }}
           onClick={e => e.stopPropagation()}
         >
           <button
             onClick={handleUpdateClick}
-            title="Edit post"
+            title={safeT('company.posts.post.editPost')}
             className="text-[#3298BA] hover:text-[#65bedc] p-1"
           >
             <FontAwesomeIcon icon={faEdit} className="w-4 h-4" />
           </button>
           <button
             onClick={handleDeleteClick}
-            title="Delete post"
+            title={safeT('company.posts.post.deletePost')}
             className="text-red-500 hover:text-red-700 p-1"
           >
             <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
@@ -112,7 +117,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
         <div className="flex justify-between items-start mb-3">
           <div className="flex-grow">
             <h3 className={titleClasses}>
-              {post.title || "Job Title"}
+              {post.title || safeT('company.posts.post.jobTitle')}
             </h3>
             <div className="flex flex-wrap items-center gap-2 mt-2">
               {post.jobSetting && (
@@ -132,7 +137,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
                       <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                     </svg>
                   )}
-                  {post.jobSetting}
+                  {translateFilterValue(safeT, post.jobSetting, 'jobSetting')}
                 </span>
               )}
 
@@ -154,18 +159,16 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
                       <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
                     </svg>
                   )}
-                  {post.jobType}
+                  {translateFilterValue(safeT, post.jobType, 'jobType')}
                 </span>
               )}
             </div>
           </div>
-
-          {/* Remove edit button from here for single icon group */}
         </div>
 
         <div className="border-t border-gray-200 pt-3 mb-3 flex-grow overflow-hidden">
           <div className="flex justify-between items-start">
-            <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">Description</h4>
+            <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">{safeT('company.posts.post.description')}</h4>
             {/* Small applicants indicator in the top right corner */}
             {compact && !expanded && (
               <div className={`${getApplicantPulseClass()} flex items-center gap-1 px-2 py-1 rounded-full text-[var(--metallica-blue-800)] text-opacity-90`}>
@@ -177,21 +180,21 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
             )}
           </div>
           <p className={descriptionClasses}>
-            {post.description || "No description provided"}
+            {post.description || safeT('company.posts.post.noDescription')}
           </p>
 
           {(!compact || expanded) && (
             <div className="flex flex-col gap-2 mb-6">
               <div>
-                <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">Start Date</h4>
+                <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">{safeT('company.posts.post.startDate')}</h4>
                 <p className="text-gray-700 text-sm">
                   {formatDate(post.startDate)}
                 </p>
               </div>
               <div>
-                <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">Duration</h4>
+                <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">{safeT('company.posts.post.duration')}</h4>
                 <p className="text-gray-700 text-sm">
-                  {post.duration || "Not specified"}
+                  {post.duration || safeT('company.posts.post.notSpecified')}
                 </p>
               </div>
             </div>
@@ -200,12 +203,12 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
           {compact && !expanded && (
             <div className="flex flex-col text-xs mb-2 space-y-1">
               <div className="truncate pr-1">
-                <span className="font-medium text-[var(--metallica-blue-700)]">Start:</span>{' '}
-                {post.startDate ? formatDate(post.startDate) : "Not specified"}
+                <span className="font-medium text-[var(--metallica-blue-700)]">{safeT('company.posts.post.start')}</span>{' '}
+                {post.startDate ? formatDate(post.startDate) : safeT('company.posts.post.notSpecified')}
               </div>
               <div className="truncate">
-                <span className="font-medium text-[var(--metallica-blue-700)]">Duration:</span>{' '}
-                {post.duration || "Not specified"}
+                <span className="font-medium text-[var(--metallica-blue-700)]">{safeT('company.posts.post.duration')}:</span>{' '}
+                {post.duration || safeT('company.posts.post.notSpecified')}
               </div>
             </div>
           )}
@@ -213,14 +216,14 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
 
         {(!compact || expanded) && post.requirements && (
           <div className="mb-4">
-            <h4 className="font-medium mb-2 text-[var(--metallica-blue-700)] text-sm">Requirements</h4>
+            <h4 className="font-medium mb-2 text-[var(--metallica-blue-700)] text-sm">{safeT('company.posts.post.requirements')}</h4>
             <p className="text-gray-700 text-sm">{post.requirements}</p>
           </div>
         )}
 
         {(!compact || expanded) && post.skills && post.skills.length > 0 && (
           <div className="mb-3">
-            <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">Skills</h4>
+            <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)] text-sm">{safeT('company.posts.post.skills')}</h4>
             <div className="flex flex-wrap gap-1">
               {post.skills.map((skill, index) => (
                 <span
@@ -240,15 +243,15 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
               <div className="flex items-center">
                 <div className="mr-3 bg-[var(--metallica-blue-600)] rounded-full p-2">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-sm font-medium text-[var(--metallica-blue-800)]">Applicants</h4>
+                  <h4 className="text-sm font-medium text-[var(--metallica-blue-800)]">{safeT('company.posts.post.applicants')}</h4>
                   <p className="text-xs text-gray-600">
                     {applicantsCount === 0
-                      ? "Be the first to apply!"
-                      : `${applicantsCount} ${applicantsCount === 1 ? 'person has' : 'people have'} applied`}
+                      ? safeT('company.posts.post.beFirstToApply')
+                      : `${applicantsCount} ${applicantsCount === 1 ? safeT('company.posts.post.personHasApplied') : safeT('company.posts.post.peopleHaveApplied')}`}
                   </p>
                 </div>
               </div>
@@ -270,7 +273,7 @@ export default function CompanyPost({ post, onUpdateClick, onDeleteClick, compac
                 }}
                 className="w-80 bg-metallica-blue-600 text-white font-semibold rounded-full py-2 mt-2 shadow-md hover:bg-metallica-blue-700 transition hover:-translate-y-0.5"
               >
-                {expanded ? 'See less' : 'See more'}
+                {expanded ? safeT('company.posts.post.seeLess') : safeT('company.posts.post.seeMore')}
               </button>
             )}
           </div>

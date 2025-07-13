@@ -3,8 +3,12 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faDownload } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from "./shared/CustomButton";
+import { useTranslation } from "react-i18next";
+import { createSafeT } from "@/lib/translationUtils";
 
 export default function WorkshopFeedback({ isOpen, onClose, onSubmit, workshop }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -52,9 +56,9 @@ export default function WorkshopFeedback({ isOpen, onClose, onSubmit, workshop }
         {/* Removed conditional rendering for showCertificateMessage */}
         {/* Always show feedback form when modal is open */}
         <form onSubmit={handleSubmit}>
-          <h2 className="text-2xl font-bold text-[#2a5f74] mb-6 text-center">Workshop Feedback</h2>
+          <h2 className="text-2xl font-bold text-[#2a5f74] mb-6 text-center">{safeT('student.dashboard.workshopFeedback.title')}</h2>
           <div className="mb-6">
-            <h3 className="text-lg font-medium text-[#2a5f74] mb-3 text-center">How would you rate this workshop?</h3>
+            <h3 className="text-lg font-medium text-[#2a5f74] mb-3 text-center">{safeT('student.dashboard.workshopFeedback.subtitle')}</h3>
             <div className="flex justify-center space-x-2 mb-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
@@ -78,7 +82,7 @@ export default function WorkshopFeedback({ isOpen, onClose, onSubmit, workshop }
             <textarea
               className="w-full p-4 border-2 border-[#D9F0F4] rounded-lg focus:ring-2 focus:ring-[#3298BA] focus:outline-none resize-none"
               rows="6"
-              placeholder="Share your thoughts about the workshop..."
+              placeholder={safeT('student.dashboard.workshopFeedback.placeholder')}
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
             ></textarea>
@@ -87,9 +91,9 @@ export default function WorkshopFeedback({ isOpen, onClose, onSubmit, workshop }
             <CustomButton
               type="submit"
               variant="primary"
-              text="Submit Feedback"
+              text={safeT('student.dashboard.workshopFeedback.submitButton')}
               isLoading={submitting}
-              loadingText="Submitting..."
+              loadingText={safeT('student.dashboard.workshopFeedback.submitting')}
               disabled={rating === 0}
               width="w-full"
               showIconOnLoading={false}

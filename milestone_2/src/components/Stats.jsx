@@ -1,6 +1,8 @@
 "use client";
 import { useState } from 'react';
-import { FiDownload, FiFileText} from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
+import { FiDownload, FiFileText } from 'react-icons/fi';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import ReportPDF from './ReportPDF';
 import TopCoursesCard from './charts/TopCoursesCard';
@@ -13,6 +15,9 @@ import WeeklyActivityLineChart from './charts/WeeklyActivityLineChart';
 import CustomButton from './shared/CustomButton';
 
 export default function Stats() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [dateRange, setDateRange] = useState({
     start: new Date(new Date().setMonth(new Date().getMonth() - 1)),
     end: new Date(),
@@ -32,39 +37,39 @@ export default function Stats() {
     },
     totalReports: 100,
     avgReviewTime: '2.5 days',
-topCourses: [
-  {
-    name: 'ITEC 3100 - Systems Analysis',
-    count: 42,
-    testimonial: 'This course provided great insights into system design.',
-    rating: 4.8,
-  },
-  {
-    name: 'ITEC 3200 - Database Design',
-    count: 38,
-    testimonial: 'Helped me understand database structures effectively.',
-    rating: 4.6,
-  },
-  {
-    name: 'ITEC 3300 - Web Development',
-    count: 35,
-    testimonial: 'A must-have course for aspiring web developers.',
-    rating: 4.0,
-  },
-  {
-    name: 'DESN 2200 - Introduction to Graphic Design',
-    count: 26,
-    testimonial: 'Great hands-on projects that built my design skills.',
-    rating: 4.7,
-  },
+    topCourses: [
+      {
+        name: 'ITEC 3100 - Systems Analysis',
+        count: 42,
+        testimonial: 'This course provided great insights into system design.',
+        rating: 4.8,
+      },
+      {
+        name: 'ITEC 3200 - Database Design',
+        count: 38,
+        testimonial: 'Helped me understand database structures effectively.',
+        rating: 4.6,
+      },
+      {
+        name: 'ITEC 3300 - Web Development',
+        count: 35,
+        testimonial: 'A must-have course for aspiring web developers.',
+        rating: 4.0,
+      },
+      {
+        name: 'DESN 2200 - Introduction to Graphic Design',
+        count: 26,
+        testimonial: 'Great hands-on projects that built my design skills.',
+        rating: 4.7,
+      },
 
-],
+    ],
     topCompanies: [
       { name: 'Ora', rating: 4.9 },
       { name: 'TechCorp', rating: 4.8 },
-      { name: 'DesignCo', rating: 4.0},
+      { name: 'DesignCo', rating: 4.0 },
       { name: 'Sumerge', rating: 4.6 },
-      { name : 'Deloitte', rating: 4.5 },
+      { name: 'Deloitte', rating: 4.5 },
       { name: 'Pharco', rating: 4.0 },
     ],
     topInternshipCompanies: [
@@ -72,10 +77,10 @@ topCourses: [
       { name: 'Sumerge', count: 60 },
       { name: 'DesignCo', count: 76 },
       { name: 'Ora', count: 120 },
-      { name: 'Alkan', count: 20},
+      { name: 'Alkan', count: 20 },
       { name: 'Pharco', count: 45 },
       { name: 'ITEC', count: 50 },
-      { name: 'Sewedy', count: 30}
+      { name: 'Sewedy', count: 30 }
     ],
   };
 
@@ -83,14 +88,14 @@ topCourses: [
     <div className="py-4 min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center mb-6 px-4">
-      <PDFDownloadLink
-        document={<ReportPDF data={dashboardData} dateRange={dateRange} />}
-        fileName={`stats_report_${dateRange.start.toDateString()}_to_${dateRange.end.toDateString()}.pdf`}
-        className="text-white bg-[#2A5F74] px-4 py-3 rounded-full flex items-center gap-2 hover:cursor-pointer transition-all text-sm font-bold hover:translate-y-0.5 shadow-md hover:shadow-lg"
-      >
-        <FiDownload size={16}/>
-            Generate Report
-      </PDFDownloadLink>
+        <PDFDownloadLink
+          document={<ReportPDF data={dashboardData} dateRange={dateRange} />}
+          fileName={`stats_report_${dateRange.start.toDateString()}_to_${dateRange.end.toDateString()}.pdf`}
+          className="text-white bg-[#2A5F74] px-4 py-3 rounded-full flex items-center gap-2 hover:cursor-pointer transition-all text-sm font-bold hover:translate-y-0.5 shadow-md hover:shadow-lg"
+        >
+          <FiDownload size={16} />
+          {safeT('faculty.dashboard.statistics.generateReport')}
+        </PDFDownloadLink>
       </div>
 
       {/* Charts and Additional Data */}

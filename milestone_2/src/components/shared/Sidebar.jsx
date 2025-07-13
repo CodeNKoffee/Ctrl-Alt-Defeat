@@ -25,13 +25,23 @@ import {
   faVideo,
   faLock,
   faListAlt,
-  faSpinner
+  faSpinner,
+  faGlobe,
+  faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
 import { LOGOUT_USER } from '@/store/authReducer';
 import ProfileIcon from './ProfileIcon';
 import ProBadge from './ProBadge';
+import { useTranslation } from 'react-i18next';
+
+// Language configuration
+const languages = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' }
+];
 
 // Icon mapping for different menu items
 const iconMap = {
@@ -59,37 +69,37 @@ const iconMap = {
 // Map of sidebar items for different user types
 const sidebarConfig = {
   student: [
-    { id: 'home', iconId: 'home', label: 'Dashboard', path: '/dashboard/student', isPage: false },
-    { id: 'browse', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/student/browse-internships', isPage: false },
-    { id: 'applied', iconId: 'applied', label: 'My Applications', path: '/dashboard/student/applied-internships', isPage: false },
-    { id: 'my-internships', iconId: 'my-internships', label: 'My Internships', path: '/dashboard/student/my-internships', isPage: false },
-    { id: 'my-reports', iconId: 'my-reports', label: 'My Reports', path: '/dashboard/student/my-reports', isPage: false },
-    { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/student/my-evaluations', isPage: false },
-    { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/student/workshops', isPage: false, requiresPro: true },
-    { id: 'notifications', iconId: 'notifications', label: 'Notifications', path: '/dashboard/student/notifications', isPage: false },
-    { id: 'online-assessments', iconId: 'online-assessments', label: 'Online Assessments', path: '/dashboard/student/online-assessments', isPage: false, requiresPro: true },
-    { id: 'profile', iconId: 'profile', label: 'My Profile', path: '/dashboard/student/profile', isPage: false },
+    { id: 'home', iconId: 'home', labelKey: 'sidebar.student.dashboard', path: '/dashboard/student', isPage: false },
+    { id: 'browse', iconId: 'browse', labelKey: 'sidebar.student.browseInternships', path: '/dashboard/student/browse-internships', isPage: false },
+    { id: 'applied', iconId: 'applied', labelKey: 'sidebar.student.myApplications', path: '/dashboard/student/applied-internships', isPage: false },
+    { id: 'my-internships', iconId: 'my-internships', labelKey: 'sidebar.student.myInternships', path: '/dashboard/student/my-internships', isPage: false },
+    { id: 'my-reports', iconId: 'my-reports', labelKey: 'sidebar.student.myReports', path: '/dashboard/student/my-reports', isPage: false },
+    { id: 'my-evaluations', iconId: 'my-evaluations', labelKey: 'sidebar.student.myEvaluations', path: '/dashboard/student/my-evaluations', isPage: false },
+    { id: 'workshops', iconId: 'workshops', labelKey: 'sidebar.student.workshops', path: '/dashboard/student/workshops', isPage: false, requiresPro: true },
+    { id: 'notifications', iconId: 'notifications', labelKey: 'sidebar.student.notifications', path: '/dashboard/student/notifications', isPage: false },
+    { id: 'online-assessments', iconId: 'online-assessments', labelKey: 'sidebar.student.onlineAssessments', path: '/dashboard/student/online-assessments', isPage: false, requiresPro: true },
+    { id: 'profile', iconId: 'profile', labelKey: 'sidebar.student.myProfile', path: '/dashboard/student/profile', isPage: false },
   ],
   faculty: [
-    { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/faculty', isPage: false },
-    { id: 'student-evals', iconId: 'my-evaluations', label: 'Evaluations', path: '/dashboard/faculty/student-evals', isPage: false },
-    { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/faculty/statistics', isPage: false },
+    { id: 'dashboard', iconId: 'home', labelKey: 'sidebar.faculty.dashboard', path: '/dashboard/faculty', isPage: false },
+    { id: 'student-evals', iconId: 'my-evaluations', labelKey: 'sidebar.faculty.evaluations', path: '/dashboard/faculty/student-evals', isPage: false },
+    { id: 'statistics', iconId: 'statistics', labelKey: 'sidebar.faculty.statistics', path: '/dashboard/faculty/statistics', isPage: false },
   ],
   company: [
-    { id: 'companyposts', iconId: 'listings', label: 'My Posts', path: '/dashboard/company/companyposts', isPage: false },
-    { id: 'browse-internships', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/company/browse-internships', isPage: false },
-    { id: 'applications', iconId: 'applications', label: 'My Applicants', path: '/dashboard/company/applications', isPage: false },
-    { id: 'current-interns', iconId: 'my-internships', label: 'My Interns', path: '/dashboard/company/current-interns', isPage: false },
-    { id: 'my-evaluations', iconId: 'my-evaluations', label: 'My Evaluations', path: '/dashboard/company/my-evaluations', isPage: false },
+    { id: 'companyposts', iconId: 'listings', labelKey: 'sidebar.company.myPosts', path: '/dashboard/company/companyposts', isPage: false },
+    { id: 'browse-internships', iconId: 'browse', labelKey: 'sidebar.company.browseInternships', path: '/dashboard/company/browse-internships', isPage: false },
+    { id: 'applications', iconId: 'applications', labelKey: 'sidebar.company.myApplicants', path: '/dashboard/company/applications', isPage: false },
+    { id: 'current-interns', iconId: 'my-internships', labelKey: 'sidebar.company.myInterns', path: '/dashboard/company/current-interns', isPage: false },
+    { id: 'my-evaluations', iconId: 'my-evaluations', labelKey: 'sidebar.company.myEvaluations', path: '/dashboard/company/my-evaluations', isPage: false },
   ],
   scad: [
-    { id: 'dashboard', iconId: 'home', label: 'Dashboard', path: '/dashboard/scad', isPage: false },
-    { id: 'student-list', iconId: 'student-list', label: 'Student List', path: '/dashboard/scad/student-list', isPage: false },
-    { id: 'browse-internships', iconId: 'browse', label: 'Browse Internships', path: '/dashboard/scad/browse-internships', isPage: false },
-    { id: 'student-evals', iconId: 'my-evaluations', label: 'Student Evaluations', path: '/dashboard/scad/student-evals', isPage: false },
-    { id: 'statistics', iconId: 'statistics', label: 'Statistics', path: '/dashboard/scad/statistics', isPage: false },
-    { id: 'reports', iconId: 'reports', label: 'Reports', path: '/dashboard/scad/reports', isPage: false },
-    { id: 'workshops', iconId: 'workshops', label: 'Workshops', path: '/dashboard/scad/workshops', isPage: false },
+    { id: 'dashboard', iconId: 'home', labelKey: 'sidebar.scad.dashboard', path: '/dashboard/scad', isPage: false },
+    { id: 'student-list', iconId: 'student-list', labelKey: 'sidebar.scad.studentList', path: '/dashboard/scad/student-list', isPage: false },
+    { id: 'browse-internships', iconId: 'browse', labelKey: 'sidebar.scad.browseInternships', path: '/dashboard/scad/browse-internships', isPage: false },
+    { id: 'student-evals', iconId: 'my-evaluations', labelKey: 'sidebar.scad.studentEvaluations', path: '/dashboard/scad/student-evals', isPage: false },
+    { id: 'statistics', iconId: 'statistics', labelKey: 'sidebar.scad.statistics', path: '/dashboard/scad/statistics', isPage: false },
+    { id: 'reports', iconId: 'reports', labelKey: 'sidebar.scad.reports', path: '/dashboard/scad/reports', isPage: false },
+    { id: 'workshops', iconId: 'workshops', labelKey: 'sidebar.scad.workshop', path: '/dashboard/scad/workshops', isPage: false },
   ],
 };
 
@@ -101,15 +111,32 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [hoveredTooltip, setHoveredTooltip] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const itemRefs = useRef({});
+  const languageDropdownRef = useRef(null);
+
+  const { t, ready } = useTranslation();
 
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useDispatch();
   const sidebarItems = sidebarConfig[userType] || [];
 
+  // Safe translation function that provides fallback
+  const safeT = (key) => {
+    if (!ready || !t) {
+      // Fallback to key without prefix for display
+      const fallbackKey = key.split('.').pop();
+      return fallbackKey.charAt(0).toUpperCase() + fallbackKey.slice(1);
+    }
+    return t(key);
+  };
+
   // Extract locale from pathname
   const locale = pathname.split('/')[1] || 'en';
+
+  // Get current language info
+  const currentLanguage = languages.find(lang => lang.code === locale) || languages[0];
 
   // Add locale to paths
   const localizedItems = sidebarItems.map(item => ({
@@ -135,6 +162,18 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
     // Cleanup
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Handle click outside language dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target)) {
+        setShowLanguageDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   // Update indicator position when active item changes
@@ -240,6 +279,16 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
     setHoveredTooltip(null);
   };
 
+  // Handle language change
+  const handleLanguageChange = (languageCode) => {
+    const pathSegments = pathname.split('/');
+    pathSegments[1] = languageCode; // Replace the locale segment
+    const newPath = pathSegments.join('/');
+
+    setShowLanguageDropdown(false);
+    router.push(newPath);
+  };
+
   return (
     <div
       className={`z-30 bg-[#E2F4F7] h-screen flex flex-col border-r border-[#5DB2C7] sticky top-0 transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-20'}`}
@@ -283,7 +332,8 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             const icon = iconMap[item.iconId] || faHome;
             const isAccessible = hasProAccess(item);
 
-            const commonClasses = "w-full flex items-center p-2.5 transition-all duration-200 text-base relative z-10 rounded-xl group";
+            // Add rtl:flex-row-reverse so that on RTL layouts the icon appears to the left of the text
+            const commonClasses = "w-full flex items-center rtl:flex-row-reverse p-2.5 transition-all duration-200 text-base relative z-10 rounded-xl group";
             const activeClasses = "text-[#2a5f74] font-semibold border border-[#3298BA] bg-transparent shadow-sm focus:ring-1 focus:ring-[#3298BA] px-1.5";
             const inactiveClasses = "text-[#2a5f74] hover:bg-[#D9F0F4]";
             const disabledClasses = "text-gray-400 cursor-not-allowed opacity-60";
@@ -291,7 +341,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
             const itemContent = (
               <>
-                <span className={`flex-shrink-0 flex items-center ${isExpanded ? 'w-6 ml-1' : 'w-auto'} justify-center text-base`}>
+                <span className={`flex-shrink-0 flex items-center ${isExpanded ? 'w-6 ltr:ml-1 rtl:mr-1' : 'w-auto'} justify-center text-base`}>
                   <FontAwesomeIcon
                     icon={icon}
                     size="lg"
@@ -299,10 +349,10 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                   />
                 </span>
                 <span
-                  className={`whitespace-nowrap overflow-hidden transition-all duration-200 ${isExpanded ? 'ml-3 opacity-100 w-full' : 'ml-0 opacity-0 w-0'} font-medium text-left`}
+                  className={`whitespace-nowrap overflow-hidden transition-all duration-200 ${isExpanded ? 'ltr:ml-3 rtl:mr-3 opacity-100 w-full' : 'ltr:ml-0 rtl:mr-0 opacity-0 w-0'} font-medium ltr:text-left rtl:text-right`}
                   style={isExpanded ? { maxWidth: '100%' } : {}}
                 >
-                  {item.label}
+                  {safeT(item.labelKey)}
                 </span>
                 {item.requiresPro && !isAccessible && isExpanded && (
                   <span className="ml-auto">
@@ -321,7 +371,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                       className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
                       onClick={() => !isExpanded && setIsExpanded(false)}
                       ref={el => itemRefs.current[item.id] = el}
-                      onMouseEnter={(e) => handleTooltipShow(item.id, item.label, e)}
+                      onMouseEnter={(e) => handleTooltipShow(item.id, safeT(item.labelKey), e)}
                       onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
@@ -330,7 +380,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     <div
                       className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
-                      onMouseEnter={(e) => handleTooltipShow(item.id, `PRO feature - ${item.label}`, e)}
+                      onMouseEnter={(e) => handleTooltipShow(item.id, `PRO feature - ${safeT(item.labelKey)}`, e)}
                       onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
@@ -346,7 +396,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                       onClick={() => handleViewChange(item.id)}
                       className={`${commonClasses} ${alignmentClass} ${isActive ? activeClasses : inactiveClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
-                      onMouseEnter={(e) => handleTooltipShow(item.id, item.label, e)}
+                      onMouseEnter={(e) => handleTooltipShow(item.id, safeT(item.labelKey), e)}
                       onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
@@ -355,7 +405,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                     <div
                       className={`${commonClasses} ${alignmentClass} ${disabledClasses}`}
                       ref={el => itemRefs.current[item.id] = el}
-                      onMouseEnter={(e) => handleTooltipShow(item.id, `PRO feature - ${item.label}`, e)}
+                      onMouseEnter={(e) => handleTooltipShow(item.id, `PRO feature - ${safeT(item.labelKey)}`, e)}
                       onMouseLeave={handleTooltipHide}
                     >
                       {itemContent}
@@ -371,6 +421,62 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
 
       {/* User Profile Section at bottom */}
       <div className="mt-auto px-4 py-4 mb-2">
+        {/* Language Selector */}
+        <div className="relative mb-3" ref={languageDropdownRef}>
+          {isExpanded ? (
+            <button
+              onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+              className="w-full flex items-center justify-between bg-[#5DB2C7]/20 rounded-xl p-3 transition-all duration-200 hover:bg-[#5DB2C7]/30 border border-[#E0ECF2] group"
+            >
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon
+                  icon={faGlobe}
+                  className="text-[#2a5f74] h-4 w-4"
+                />
+                <span className="text-[#2a5f74] font-medium text-sm">
+                  {currentLanguage.flag} {currentLanguage.name}
+                </span>
+              </div>
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={`text-[#2a5f74] h-3 w-3 transition-transform duration-200 ${showLanguageDropdown ? 'rotate-180' : ''}`}
+              />
+            </button>
+          ) : (
+            <button
+              onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+              className="w-full flex items-center justify-center bg-[#5DB2C7]/20 rounded-xl p-3 transition-all duration-200 hover:bg-[#5DB2C7]/30 border border-[#E0ECF2]"
+              onMouseEnter={(e) => handleTooltipShow('language', safeT('sidebar.language'), e)}
+              onMouseLeave={handleTooltipHide}
+            >
+              <FontAwesomeIcon
+                icon={faGlobe}
+                className="text-[#2a5f74] h-4 w-4"
+              />
+            </button>
+          )}
+
+          {/* Language Dropdown */}
+          {showLanguageDropdown && (
+            <div className={`absolute bottom-full mb-2 ${isExpanded ? 'left-0 right-0' : 'left-1/2 -translate-x-1/2 w-48'} bg-white rounded-lg shadow-lg border border-[#E0ECF2] z-50 overflow-hidden`}>
+              {languages.map((language) => (
+                <button
+                  key={language.code}
+                  onClick={() => handleLanguageChange(language.code)}
+                  className={`w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-gray-50 transition-colors duration-150 ${currentLanguage.code === language.code ? 'bg-[#5DB2C7]/10 text-[#2a5f74] font-medium' : 'text-gray-700'
+                    }`}
+                >
+                  <span className="text-base">{language.flag}</span>
+                  <span className="text-sm">{language.name}</span>
+                  {currentLanguage.code === language.code && (
+                    <span className="ml-auto w-2 h-2 bg-[#5DB2C7] rounded-full"></span>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
         {isExpanded ? (
           <div className="flex items-center bg-[#5DB2C7]/20 rounded-xl p-3 transition-all duration-200 cursor-pointer gap-3 border border-[#E0ECF2]">
             <div className="flex-shrink-0 mr-2">
@@ -391,7 +497,7 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
                 {currentUser?.accountType === 'PRO' && <ProBadge size="sm" />}
               </div>
               <span className="text-gray-500 text-xs capitalize truncate">
-                {userType}
+                {safeT(`sidebar.${userType}User`)}
               </span>
             </div>
           </div>
@@ -414,13 +520,14 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             variant="danger"
             onClick={handleLogout}
             icon={faRightFromBracket}
-            text="Logout"
+            text={safeT('sidebar.logout')}
             width="w-full"
             className="rounded-lg"
             isLoading={isLoggingOut}
-            loadingText="Logging out..."
+            loadingText={safeT('sidebar.loggingOut')}
             useAnimatedDots={true}
             disabled={isLoggingOut}
+            iconPosition={locale === 'ar' ? 'right' : 'left'}
           />
         ) : (
           <button
@@ -449,11 +556,28 @@ export default function Sidebar({ userType, onViewChange, currentView, currentUs
             left: tooltipPosition.left,
           }}
         >
-          <div className="bg-gray-900 text-white text-sm px-3 py-2 rounded-lg shadow-lg whitespace-nowrap">
+          <div
+            className="text-white text-sm px-3 py-2 rounded-lg shadow-lg whitespace-nowrap"
+            style={{
+              background: '#2a5f74',
+              color: '#fff',
+              opacity: 0.97,
+              border: 'none',
+              borderRadius: '0.75rem',
+              boxShadow: '0 8px 32px 0 rgba(42,95,116,0.18)',
+              fontWeight: 400,
+              fontSize: '0.95rem',
+              transition: 'all 0.2s',
+              zIndex: 9999,
+              width: 'fit-content',
+              minWidth: 0,
+              maxWidth: '100vw'
+            }}
+          >
             {hoveredTooltip.label}
             {/* Small arrow pointing left */}
             <div className="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-1">
-              <div className="w-2 h-2 bg-gray-900 rotate-45"></div>
+              <div className="w-2 h-2 bg-[#2a5f74] rotate-45"></div>
             </div>
           </div>
         </div>

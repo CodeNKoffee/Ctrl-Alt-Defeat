@@ -1,8 +1,14 @@
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
+
 export default function CompanyIndustryCard({ industry, icon, registrationMessage, className = '' }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   return (
     <div className={`companyindustrycard-root ${className}`}>
       <div className="companyindustrycard-title">
-        Industry
+        {safeT('scad.companyDetails.industry')}
         <div className="companyindustrycard-icon-container">
           {icon && <span className="companyindustrycard-icon">{icon}</span>}
         </div>

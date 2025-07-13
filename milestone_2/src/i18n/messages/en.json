@@ -1,0 +1,1814 @@
+{
+  "sidebar": {
+    "language": "Language",
+    "logout": "Logout",
+    "loggingOut": "Logging out...",
+    "companyUser": "Company",
+    "scadUser": "SCAD",
+    "facultyUser": "Faculty",
+    "studentUser": "Student",
+    "company": {
+      "myPosts": "My Posts",
+      "browseInternships": "Browse Internships",
+      "myApplicants": "My Applicants",
+      "myInterns": "My Interns",
+      "myEvaluations": "My Evaluations"
+    },
+    "scad": {
+      "dashboard": "Dashboard",
+      "studentList": "Student List",
+      "browseInternships": "Browse Internships",
+      "studentEvaluations": "Student Evaluations",
+      "statistics": "Statistics",
+      "reports": "Reports",
+      "workshop": "Workshops"
+    },
+    "faculty": {
+      "dashboard": "Dashboard",
+      "evaluations": "Evaluations",
+      "statistics": "Statistics"
+    },
+    "student": {
+      "dashboard": "Dashboard",
+      "browseInternships": "Browse Internships",
+      "myApplications": "My Applications",
+      "myInternships": "My Internships",
+      "myReports": "My Reports",
+      "myEvaluations": "My Evaluations",
+      "workshops": "Workshops",
+      "notifications": "Notifications",
+      "onlineAssessments": "Online Assessments",
+      "myProfile": "My Profile"
+    }
+  },
+  "company": {
+    "posts": {
+      "title": "INTERNSHIP POSTS",
+      "badge": "EMPLOYER PORTAL",
+      "heading": "Employer Internship Portal",
+      "description": "Welcome to the Employer Dashboard where you can create and manage internship opportunities for talented GUC students.",
+      "postOpportunities": "Post New Opportunities:",
+      "features": {
+        "createListings": "Create detailed internship listings with custom titles and descriptions",
+        "specifySkills": "Specify required skills, qualifications, and preferred majors",
+        "setTimeframes": "Set clear timeframes, work settings (remote/hybrid/on-site), and compensation details",
+        "addCompanyInfo": "Add company information and supervisor contacts"
+      },
+      "connectionNote": "Our platform connects you directly with pre-screened, motivated students whose skills and interests align with your organization's needs.",
+      "searchPlaceholder": "Search internships by job title, description, skills...",
+      "createPost": "Create Post",
+      "createFirstPost": "Create Your First Post",
+      "updatePost": "Update Post",
+      "createNewPost": "Create New Post",
+      "postPreview": "Post Preview",
+      "noPostsFound": "No internship posts found",
+      "createFirstMessage": "Create your first post to get started",
+      "noMatchingPosts": "No posts found matching your criteria",
+      "adjustSearchFilter": "Try adjusting your search or filter",
+      "success": "Success!",
+      "updated": "Updated!",
+      "postCreatedSuccess": "Post Created Successfully!",
+      "postUpdatedSuccess": "Post Updated Successfully!",
+      "form": {
+        "jobTitle": "Job Title",
+        "jobDescription": "Job Description",
+        "startDate": "Start Date",
+        "duration": "Duration",
+        "internshipType": "Internship Type",
+        "internshipSetting": "Internship Setting",
+        "paymentStatus": "Payment Status",
+        "salary": "Salary",
+        "requirements": "Requirements",
+        "skills": "Skills",
+        "jobTitlePlaceholder": "Enter job title",
+        "jobDescriptionPlaceholder": "Enter detailed job description",
+        "selectDate": "Select a date",
+        "durationPlaceholder": "e.g., 3 months, 6 months",
+        "salaryPlaceholder": "e.g., $500/month, $15/hour",
+        "requirementsPlaceholder": "Enter detailed job requirements, qualifications, and expectations",
+        "skillsPlaceholder": "Type a skill and press Enter (e.g., JavaScript, React, UI/UX)",
+        "pleaseSelectStartDate": "Please select a start date",
+        "skillsHelpText": "Skills will appear here as bubbles after you press Enter",
+        "saveChanges": "Save Changes",
+        "createPost": "Create Post",
+        "notSpecified": "Not specified",
+        "jobTitlePreview": "Job Title"
+      },
+      "filters": {
+        "jobType": "Job Type",
+        "jobSetting": "Job Setting",
+        "paymentStatus": "Payment Status",
+        "allJobTypes": "All Job Types",
+        "allSettings": "All Settings",
+        "allPaymentStatuses": "All Payment Statuses",
+        "fullTime": "Full-time",
+        "partTime": "Part-time",
+        "contract": "Contract",
+        "internship": "Internship",
+        "remote": "Remote",
+        "onSite": "On-site",
+        "hybrid": "Hybrid",
+        "paid": "Paid",
+        "unpaid": "Unpaid"
+      },
+      "post": {
+        "jobTitle": "Job Title",
+        "description": "Description",
+        "noDescription": "No description provided",
+        "startDate": "Start Date",
+        "duration": "Duration",
+        "requirements": "Requirements",
+        "skills": "Skills",
+        "applicants": "Applicants",
+        "notSpecified": "Not specified",
+        "start": "Start:",
+        "editPost": "Edit post",
+        "deletePost": "Delete post",
+        "seeMore": "See more",
+        "seeLess": "See less",
+        "beFirstToApply": "Be the first to apply!",
+        "personHasApplied": "person has applied",
+        "peopleHaveApplied": "people have applied"
+      }
+    },
+    "browse": {
+      "title": "BROWSE INTERNSHIPS",
+      "badge": "INTERNSHIP EXPLORER",
+      "heading": "Company Internship Explorer",
+      "description": "Browse internship opportunities posted by partner organizations across industries and locations.",
+      "whyUse": "Why Use This Explorer:",
+      "benefitsPlus": {
+        "identifyPartners": "This explorer helps you identify potential internship partners and examine their past engagement with SCAD students.",
+        "discoverLeaders": "Discover industry leaders and hidden gems that align with your students' career interests."
+      },
+      "note": "Note: All displayed companies have been vetted by SCAD and maintain active partnerships with our institution.",
+      "searchPlaceholder": "Search internships by job title or company name ...",
+      "keyBenefits": "Key Benefits for Partner Companies",
+      "benefits": {
+        "talentedStudents": "Access to talented students with specialized skills",
+        "freshPerspectives": "Fresh perspectives and innovative approaches",
+        "futureTalent": "Potential to develop future full-time talent"
+      },
+      "addListingNote": "To add your own internship listing, use the \"Post New Internship\" option in your company dashboard.",
+      "filters": {
+        "position": "Position",
+        "allPositions": "All Positions",
+        "allCompanies": "All Companies",
+        "company": "Company",
+        "industry": "Industry",
+        "duration": "Duration",
+        "payment": "Payment",
+        "paid": "Paid",
+        "unpaid": "Unpaid",
+        "durationValue": "{duration} months",
+        "allDurations": "All Durations",
+        "allIndustries": "All Industries",
+        "allPaymentStatuses": "All Payment Statuses",
+        "monthsLabel": "months",
+        "industries": {
+          "technology": "Technology",
+          "marketing": "Marketing",
+          "design": "Design",
+          "healthcare": "Healthcare"
+        }
+      }
+    },
+    "applications": {
+      "title": "APPLICATIONS MANAGEMENT",
+      "badge": "APPLICANT PORTAL",
+      "heading": "Applicant Management Portal",
+      "description": "Monitor and evaluate all student applications to your posted internship opportunities in one centralized location.",
+      "trackingFeatures": "Applicant Tracking Features:",
+      "features": {
+        "viewApplications": "View all applications organized by position and submission date",
+        "accessProfiles": "Access comprehensive candidate profiles and application materials",
+        "reviewDocuments": "Review attached documents (resumes, portfolios, cover letters)",
+        "exploreLinks": "Explore professional social links and relevant student work",
+        "trackStatus": "Track application status (new, reviewed, interviewed, selected, declined)"
+      },
+      "standardizedNote": "All application materials are presented in a standardized format for efficient comparison while preserving each student's unique presentation style.",
+      "privacyNotice": "Privacy Notice: Student information is protected and should only be used for evaluation purposes related to your internship opportunities.",
+      "searchPlaceholder": "Search by name, email, or position...",
+      "filters": {
+        "position": "Position",
+        "status": "Status",
+        "allPositions": "All Positions",
+        "allStatus": "All Status"
+      },
+      "statuses": {
+        "pending": "PENDING",
+        "accepted": "ACCEPTED",
+        "rejected": "REJECTED",
+        "finalized": "FINALIZED",
+        "current": "CURRENT INTERN",
+        "completed": "COMPLETED",
+        "evaluated": "EVALUATED"
+      }
+    },
+    "interns": {
+      "title": "INTERN MANAGEMENT DASHBOARD",
+      "badge": "INTERN MANAGEMENT DASHBOARD",
+      "heading": "Intern Management Dashboard",
+      "description": "This comprehensive view displays all SCAD students who have interned with your organization across all programs and time periods.",
+      "viewByCategory": "View By Category:",
+      "categories": {
+        "current": "Current Interns: Students actively working in their positions",
+        "completed": "Completed Internships: Past interns awaiting evaluation",
+        "evaluated": "Evaluated Interns: Students with completed feedback assessments"
+      },
+      "managementFeatures": "Management Features:",
+      "features": {
+        "filter": "Filter students by department, position, time period, or evaluation status",
+        "identify": "Identify students with outstanding evaluations"
+      },
+      "note": "Note: Student information is protected and should be handled according to your confidentiality agreement with SCAD.",
+      "searchPlaceholder": "Search interns by name, department, position...",
+      "statuses": {
+        "current": "CURRENT",
+        "completed": "COMPLETED",
+        "evaluated": "EVALUATED",
+        "all": "ALL"
+      }
+    },
+    "evaluations": {
+      "title": "EVALUATION PORTAL",
+      "badge": "EVALUATION PORTAL",
+      "heading": "Your Student Evaluation Portal",
+      "description": "Provide valuable feedback on interns who have completed positions at your organization. Your assessments help shape students' professional development and inform future placements.",
+      "components": "Evaluation Components:",
+      "features": {
+        "rateProfessional": "Rate professional competencies (adaptability, communication, problem-solving)",
+        "assessTechnical": "Assess technical skills relevant to the position",
+        "provideExamples": "Provide specific examples of achievements and areas for growth",
+        "answerQuestions": "Answer structured questions about performance and potential",
+        "addComments": "Add private comments for school administrators (optional)"
+      },
+      "confidentialityNote": "Evaluations remain confidential between your company and authorized faculty and SCAD members."
+    },
+    "common": {
+      "filter": "Filters",
+      "hideFilters": "Hide Filters",
+      "clearFilters": "Clear Filters",
+      "search": "Search",
+      "all": "All",
+      "activeFilters": "Active Filters",
+      "noFiltersApplied": "No filters currently applied",
+      "noFiltersAvailable": "No filters available at the moment",
+      "status": "Status"
+    },
+    "applicationDetails": {
+      "appliedOn": "Applied on",
+      "applicantDetails": "Applicant Details",
+      "major": "Major:",
+      "semester": "Semester:",
+      "applicationDocuments": "Application Documents",
+      "resume": "Resume",
+      "coverLetter": "Cover Letter",
+      "portfolio": "Portfolio",
+      "currentApplicationStatus": "Current Application Status",
+      "markAs": "Mark as",
+      "noFurtherChanges": "No further status changes available"
+    },
+    "internDetails": {
+      "startDate": "Start Date:",
+      "skills": "Skills:",
+      "degree": "Degree",
+      "jobInterests": "Job Interests",
+      "endedOn": "Ended on",
+      "startedOn": "started on",
+      "evaluateIntern": "Evaluate Intern",
+      "noInternsFound": "No interns found matching your criteria",
+      "adjustSearchFilter": "Try adjusting your search or filter"
+    },
+    "months": {
+      "full": {
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+      },
+      "short": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Apr",
+        "may": "May",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Aug",
+        "sep": "Sep",
+        "oct": "Oct",
+        "nov": "Nov",
+        "dec": "Dec"
+      }
+    },
+    "evaluation": {
+      "skillAttributes": {
+        "adaptToChange": "Ability to adapt to change",
+        "analyticalSkills": "Analytical skills",
+        "dataCollection": "Collecting data/ research data skills",
+        "creativity": "Creativity",
+        "followUp": "Follow up skills",
+        "interpersonal": "Interpersonal skills with peers, supervisors, and clients",
+        "problemSolving": "Problem solving",
+        "punctuality": "Punctuality",
+        "reporting": "Reporting skills",
+        "responsibility": "Responsibility and accountability",
+        "stressHandling": "Stress handling",
+        "takingInitiatives": "Taking initiatives",
+        "teamwork": "Teamwork",
+        "timeManagement": "Time management"
+      },
+      "technicalAttributes": {
+        "technicalBackground": "Technical Background",
+        "technicalKnowledge": "Technical Knowledge",
+        "compatibility": "Compatibility of technical skills with the job"
+      },
+      "ratingLabels": {
+        "unsatisfactory": "Unsatisfactory",
+        "belowAverage": "Below Average",
+        "satisfactory": "Satisfactory",
+        "aboveAverage": "Above Average",
+        "excellent": "Excellent"
+      },
+      "tabs": {
+        "skillsAndProfessional": "Skills & Professional Attributes",
+        "technical": "Technical"
+      },
+      "buttons": {
+        "submitEvaluation": "Submit Evaluation",
+        "saveChanges": "Save Changes",
+        "saveAsDraft": "Save as Draft",
+        "submitting": "Submitting...",
+        "saving": "Saving..."
+      },
+      "feedback": {
+        "updated": "Updated!",
+        "success": "Success!",
+        "submittedSuccess": "Your evaluation has been successfully submitted.",
+        "savedSuccess": "Your changes have been successfully saved.",
+        "updatedSuccess": "Your evaluation has been successfully updated.",
+        "draftSaved": "Your evaluation has been successfully saved as a draft."
+      },
+      "placeholders": {
+        "skillsOther": "Add any other feedback on skills...",
+        "technicalOther": "Add any other technical feedback...",
+        "technicalFeedback": "Add feedback on {attribute}...",
+        "otherComments": "Add any additional feedback about the intern's performance...",
+        "tasks": "Describe the tasks you performed during your internship...",
+        "environment": "Describe the work environment and company culture..."
+      },
+      "labels": {
+        "other": "Other:",
+        "yourRating": "Your rating",
+        "recommend": "Do you recommend this internship to other students?",
+        "yes": "Yes",
+        "no": "No",
+        "supervisorName": "Company Supervisor Name",
+        "supervisorEmail": "Company Supervisor Email",
+        "tasks": "What tasks have you done?",
+        "environment": "How was the work environment?",
+        "otherComments": "Other Comments",
+        "yourEvaluation": "Your Evaluation",
+        "editEvaluation": "Edit Your Evaluation",
+        "mostLikedComments": "Most liked comments",
+        "ratingScale": "Rating Scale",
+        "noReviews": "No reviews available",
+        "liked": "Liked"
+      },
+      "helpText": {
+        "otherCommentsHelp": "Please provide any additional comments about the intern's strengths, areas for improvement, or overall performance not covered in the skills assessment."
+      }
+    },
+    "evaluationsDashboard": {
+      "tabs": {
+        "submittedEvaluations": "Submitted Evaluations",
+        "savedAsDraft": "Saved as Draft"
+      },
+      "actions": {
+        "seeMore": "See more",
+        "editEvaluation": "Edit Evaluation",
+        "deleteEvaluation": "Delete Evaluation",
+        "clearSearchFilter": "Clear search filter",
+        "close": "Close"
+      },
+      "labels": {
+        "draft": "Draft",
+        "company": "Company:",
+        "date": "Date:",
+        "skillsAndProfessional": "Skills & Professional Attributes",
+        "technical": "Technical",
+        "skills": "skills",
+        "items": "items",
+        "other": "Other:",
+        "comments": "Comments"
+      },
+      "emptyStates": {
+        "noSubmittedEvaluations": "No submitted evaluations found.",
+        "noDraftEvaluations": "No draft evaluations found.",
+        "noEvaluations": "No evaluations found.",
+        "noSearchResults": "No {type} evaluations found matching \"{searchTerm}\".",
+        "adjustFilters": "Try adjusting your search or filter"
+      }
+    }
+  },
+  "faculty": {
+    "dashboard": {
+      "title": "FACULTY DASHBOARD",
+      "reportReview": {
+        "badge": "REPORT REVIEW",
+        "title": "Faculty Report Review Dashboard",
+        "welcome": "Welcome to the Faculty Report Review Dashboard. Here you can:",
+        "features": {
+          "reviewReports": "Review student internship reports pending evaluation",
+          "provideFeedback": "Provide feedback and annotations on student submissions",
+          "trackEvaluated": "Track reports you've already evaluated",
+          "flagReports": "Flag reports that require additional attention"
+        },
+        "pendingReports": "{count} reports are currently awaiting your review."
+      },
+      "studentEvaluations": {
+        "badge": "STUDENT EVALUATIONS",
+        "title": "Review Internship Evaluation Reports",
+        "description": "Browse and access evaluations submitted by students regarding their internship experiences. View ratings, company information, and detailed feedback per student.",
+        "features": {
+          "filterTitle": "FILTER",
+          "searchSortTitle": "Search & Sort",
+          "searchSortDescription": "Easily search evaluations by student name, company, or supervisor to quickly access relevant reports.",
+          "seeMoreButton": "See more",
+          "fullReportTitle": "Full Evaluation Report",
+          "fullReportDescription": "View the student's full evaluation including their feedback, company details, main supervisor, and internship duration."
+        },
+        "qualityNote": "These evaluations contribute to enhancing internship quality and guide future students in making informed choices."
+      },
+      "statistics": {
+        "badge": "INSIGHTS & REPORTS",
+        "title": "Real-Time Statistics & Reporting",
+        "sectionTitle": "STATISTICS DASHBOARD",
+        "features": {
+          "trackReports": "Track accepted, rejected, and flagged reports per internship cycle",
+          "monitorReviewTime": "Monitor average review time across faculty",
+          "viewTopCourses": "View top courses most used in internships",
+          "discoverTopCompanies": "Discover top-rated companies based on student evaluations",
+          "identifyParticipation": "Identify companies with highest internship participation"
+        },
+        "strategicNote": "Generate comprehensive reports based on real-time statistics for strategic decision making.",
+        "generateReport": "Generate Report"
+      }
+    },
+    "reports": {
+      "statistics": {
+        "totalReports": "Total Reports",
+        "acceptedReports": "Accepted Reports",
+        "pendingReports": "Pending Reports",
+        "flaggedReports": "Flagged Reports",
+        "rejectedReports": "Rejected Reports"
+      },
+      "table": {
+        "title": "Student Reports",
+        "filterReports": "Filter Reports",
+        "clearFilters": "Clear Filters",
+        "filterByMajor": "Filter by Major",
+        "filterByStatus": "Filter by Status",
+        "allMajors": "All Majors",
+        "allStatus": "All Status",
+        "major": "Major:",
+        "status": "Status:",
+        "headers": {
+          "reportNumber": "Report #",
+          "studentName": "Student Name",
+          "major": "Major",
+          "internship": "Internship",
+          "company": "Company",
+          "submissionDate": "Submission Date",
+          "status": "Status",
+          "actions": "Actions"
+        },
+        "actions": {
+          "viewReport": "View Report",
+          "evaluateReport": "Evaluate Report"
+        },
+        "statuses": {
+          "pending": "PENDING",
+          "flagged": "FLAGGED",
+          "rejected": "REJECTED",
+          "accepted": "ACCEPTED"
+        },
+        "noResults": {
+          "noReportsMatch": "No reports match the selected filters",
+          "noReportsAvailable": "No reports available at the moment",
+          "clearAllFilters": "Clear all filters"
+        }
+      }
+    },
+    "evaluationsDashboard": {
+      "searchPlaceholder": {
+        "submitted": "Search submitted evaluations by student, company or supervisor...",
+        "draft": "Search draft evaluations by student, company or supervisor..."
+      },
+      "filterLabel": "Filters"
+    }
+  },
+  "facultyReportViewer": {
+    "navigation": {
+      "backToReports": "Back to Reports"
+    },
+    "header": {
+      "title": "Report Review & Annotation",
+      "student": "Student:",
+      "submitted": "Submitted:",
+      "loadingReport": "Loading report...",
+      "reportNotFound": "If this persists, the report may not exist"
+    },
+    "evaluationMode": {
+      "title": "Evaluation Mode",
+      "description": "You're evaluating this student's report. Select any text to highlight key sections or add comments. Your annotations help provide constructive feedback and assess the report quality.",
+      "instructions": "Select any text in the report below to highlight important sections or add comments. Your annotations will appear in the sidebar."
+    },
+    "feedback": {
+      "overallFeedback": "Overall Feedback",
+      "overallFeedbackPlaceholder": "Provide overall feedback on the student's report...",
+      "reportStatus": "Report Status",
+      "chooseStatus": "Choose the final status for this report after your review:",
+      "status": "Status",
+      "reasonFor": "Reason for {action}",
+      "reasonPlaceholder": "Please explain why this report is being {status}...",
+      "flaggingHelp": "Flagging a report indicates issues that need resolution before acceptance.",
+      "rejectionHelp": "Please provide specific reasons why this report does not meet requirements.",
+      "facultyFeedback": "Faculty Feedback",
+      "reason": "Reason"
+    },
+    "statuses": {
+      "pending": "PENDING",
+      "accepted": "ACCEPTED",
+      "rejected": "REJECTED",
+      "flagged": "FLAGGED",
+      "reviewed": "REVIEWED"
+    },
+    "statusMessages": {
+      "pendingMessage": "Report will remain under review",
+      "acceptedMessage": "Report will be marked as accepted",
+      "rejectedMessage": "Report will be returned to student with feedback",
+      "flaggedMessage": "Report will be flagged for specific issues"
+    },
+    "actions": {
+      "saving": "Saving...",
+      "saved": "Saved!",
+      "saveReview": "Save Review",
+      "submitReview": "Submit Review",
+      "flagging": "Flagging",
+      "rejecting": "Rejecting"
+    },
+    "alerts": {
+      "reasonRequired": "Please provide a reason for flagging or rejecting the report."
+    }
+  },
+  "reportViewer": {
+    "annotations": {
+      "title": "Annotations",
+      "noAnnotations": "No annotations yet. Select text to add highlights or comments.",
+      "deleteTooltip": "Delete annotation"
+    },
+    "annotationTypes": {
+      "comment": "Comment",
+      "highlight": "Highlight"
+    },
+    "commentForm": {
+      "title": "Add Comment",
+      "placeholder": "Add your comment here...",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "highlightForm": {
+      "title": "Select Highlight Color",
+      "preview": "Preview:",
+      "cancel": "Cancel"
+    },
+    "colors": {
+      "yellow": "Yellow",
+      "green": "Green",
+      "pink": "Pink",
+      "blue": "Blue"
+    },
+    "errors": {
+      "noTextFound": "No text found for this highlight"
+    },
+    "scadForm": {
+      "title": "State your reason for flagging/rejecting this report",
+      "placeholder": "Enter your reason here...",
+      "submitButton": "Submit Reason",
+      "successMessage": "Reason submitted!"
+    }
+  },
+  "internship": {
+    "videoSidebar": {
+      "defaultTitle": "Internship Requirements",
+      "watchFor": "Watch: Internships for",
+      "genZFuture": "Gen-Z are shaping the future",
+      "requirementsText": "Learn which internships count toward your graduation requirements based on your major and academic plan.",
+      "quickResources": "Quick Resources",
+      "academicGuide": "Academic Requirements Guide",
+      "contactAdvisor": "Contact Academic Advisor",
+      "faqsInternships": "FAQs About Internships"
+    },
+    "row": {
+      "timeAgo": {
+        "posted": "posted",
+        "monthsAgo": "month",
+        "monthsAgoPlural": "months",
+        "weeksAgo": "week",
+        "weeksAgoPlural": "weeks",
+        "daysAgo": "day",
+        "daysAgoPlural": "days",
+        "hoursAgo": "hour",
+        "hoursAgoPlural": "hours",
+        "minutesAgo": "minute",
+        "minutesAgoPlural": "minutes",
+        "justNow": "posted just now",
+        "ago": "ago"
+      },
+      "statusTooltips": {
+        "accepted": "Your application has been accepted by the company! Congratulations!",
+        "pending": "Your application has been submitted but not yet reviewed by the company.",
+        "finalized": "You are among the top applicants, and the company may proceed with an offer soon. Awaiting final confirmation.",
+        "rejected": "Unfortunately, your application was not selected for this position this time."
+      },
+      "labels": {
+        "startDate": "Start Date:",
+        "duration": "Duration:",
+        "skills": "Skills:",
+        "jobDescription": "Job Description",
+        "requirements": "Requirements",
+        "rateNotSpecified": "Rate not specified",
+        "startedOn": "started on",
+        "appliedOn": "applied on"
+      },
+      "buttons": {
+        "createReport": "Create Report",
+        "evaluateCompany": "Evaluate Company",
+        "apply": "Apply",
+        "applied": "Applied"
+      },
+      "statuses": {
+        "paid": "Paid",
+        "unpaid": "Unpaid",
+        "current": "CURRENT",
+        "completed": "COMPLETED",
+        "evaluated": "EVALUATED",
+        "pending": "PENDING",
+        "accepted": "ACCEPTED",
+        "rejected": "REJECTED",
+        "finalized": "FINALIZED"
+      },
+      "tooltip": {
+        "statusInfo": "Status Info"
+      }
+    }
+  },
+  "modals": {
+    "deleteConfirmation": {
+      "title": "Confirm Delete",
+      "message": "Are you sure you want to delete this item?",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "closeModal": "Close modal"
+    }
+  },
+  "deleteTypes": {
+    "evaluation": "evaluation",
+    "evaluationDraft": "evaluation draft",
+    "post": "post",
+    "workshop": "workshop"
+  },
+  "common": {
+    "noResults": {
+      "notFound": "No {type} found matching your criteria",
+      "tryAdjusting": "Try adjusting your search or filter",
+      "noResultsGeneric": "No results found matching your criteria",
+      "noInternships": "No internships found matching your criteria",
+      "noApplications": "No applications found matching your criteria",
+      "noCompanies": "No companies found matching your criteria",
+      "noReports": "No reports found matching your criteria",
+      "noNotifications": "No notifications found matching your criteria",
+      "noWorkshops": "No workshops found matching your criteria",
+      "noStudents": "No students found matching your criteria",
+      "noAssessments": "No assessments found matching your criteria"
+    }
+  },
+  "evaluation": {
+    "card": {
+      "seeMore": "See More",
+      "hide": "Hide",
+      "draft": "Draft",
+      "editTooltip": "Edit evaluation",
+      "deleteTooltip": "Delete evaluation"
+    },
+    "details": {
+      "supervisorName": "Supervisor Name:",
+      "supervisorEmail": "Supervisor Email:",
+      "tasks": "Tasks:",
+      "workEnvironment": "Work Environment:",
+      "recommendToOthers": "Recommend to Others:",
+      "internshipStart": "Internship Start:",
+      "internshipEnd": "Internship End:",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "scad": {
+    "workshop": {
+      "searchBarPlaceholder": "Search by title or instructor..."
+    },
+    "dashboard": {
+      "title": "COMPANY APPLICATIONS",
+      "companyReview": {
+        "badge": "MANAGEMENT",
+        "title": "Company Partnership Review Portal",
+        "description": "Efficiently manage and evaluate organization applications for SCAD internship partnerships. Review company profiles, internship offerings, and historical performance data to make informed decisions.",
+        "featuresTitle": "Key Partnership Management Features:",
+        "features": {
+          "reviewApplications": "Comprehensive review of new company applications and profiles",
+          "evaluateQuality": "Evaluation of internship quality and alignment with academic requirements",
+          "studentFeedback": "Student feedback integration and satisfaction metrics",
+          "partnershipTracking": "Partnership history tracking and renewal management"
+        },
+        "qualityNote": "Maintain high-quality internship opportunities by thoroughly assessing each company's offerings, workplace environment, and student development potential."
+      }
+    },
+    "companyTable": {
+      "headers": {
+        "company": "COMPANY",
+        "industry": "INDUSTRY",
+        "size": "SIZE"
+      },
+      "sidebar": {
+        "title": "Company Details",
+        "expand": "Expand"
+      },
+      "emptyState": {
+        "noCompanies": "No companies found matching your criteria",
+        "tryAdjusting": "Try adjusting your search or filter"
+      },
+      "searchPlaceholder": "Search companies by name or industry ..."
+    },
+    "companyDetails": {
+      "title": "Company Details",
+      "profile": "Profile",
+      "notePad": "Note Pad",
+      "companySize": "Company Size",
+      "industry": "Industry",
+      "verificationDocs": "Verification Documents",
+      "noDocuments": "No documents provided.",
+      "registeredOn": "Registered on",
+      "accept": "Accept",
+      "reject": "Reject",
+      "feedback": {
+        "accepted": "Accepted!",
+        "rejected": "Rejected!",
+        "acceptedMessage": "This company has been approved and added to your list.",
+        "rejectedMessage": "This company has been rejected and removed from your list."
+      }
+    },
+    "filters": {
+      "industry": "Industry",
+      "size": "Size",
+      "allIndustries": "All Industries",
+      "allSizes": "All Sizes"
+    },
+    "studentDirectory": {
+      "title": "STUDENT DIRECTORY",
+      "searchPlaceholder": "Search students by name, email, or major ...",
+      "infoCard": {
+        "badge": "DIRECTORY",
+        "title": "Student Directory Management",
+        "description": "Access comprehensive profiles of all SCAD students registered in the internship system for academic support and opportunity matching.",
+        "studentInfoAvailableTitle": "Student Information Available:",
+        "items": {
+          "academicDetails": "Academic details (major, minor, expected graduation date)",
+          "skillsInventory": "Skills inventory and proficiency levels",
+          "internshipHistory": "Internship history and evaluation outcomes",
+          "assessmentResults": "Assessment results and career interests",
+          "contactInfo": "Contact information and communication preferences"
+        },
+        "privacyNotice": "Privacy Notice: Access to student information is restricted to authorized personnel and subject to educational privacy regulations. Use information only for legitimate educational purposes."
+      },
+      "filters": {
+        "major": "Major",
+        "status": "Status",
+        "semester": "Semester",
+        "allMajors": "All Majors",
+        "allStatuses": "All Statuses",
+        "allSemesters": "All Semesters"
+      }
+    },
+    "studentList": {
+      "tabs": {
+        "all": "ALL",
+        "current": "CURRENT",
+        "completed": "COMPLETED",
+        "evaluated": "EVALUATED"
+      },
+      "emptyState": {
+        "noStudents": "No students found matching your criteria",
+        "adjust": "Try adjusting your search or filter"
+      }
+    },
+    "studentProfile": {
+      "sections": {
+        "academicInformation": "Academic Information",
+        "education": "Education",
+        "skills": "Skills",
+        "personalityTraits": "Personality Traits",
+        "jobInterests": "Job Interests",
+        "experience": "Experience",
+        "internships": "Internships"
+      },
+      "fields": {
+        "studentId": "Student ID",
+        "semester": "Semester",
+        "gpa": "GPA",
+        "major": "Major",
+        "faculty": "Faculty"
+      },
+      "rating": "Rating",
+      "notAvailable": "Not available"
+    },
+    "student": {
+      "viewProfile": "View Profile"
+    },
+    "internships": {
+      "title": "INTERNSHIP LISTINGS",
+      "badge": "OVERSIGHT",
+      "management": {
+        "title": "Internship Listings Management",
+        "description": "Monitor and oversee all active internship opportunities posted by approved partner companies across the platform.",
+        "features": {
+          "title": "Oversight Features:",
+          "viewDetails": "View complete details of all current internship listings",
+          "filterOpportunities": "Filter opportunities by company, industry, location, or status",
+          "verifyCompliance": "Verify compliance with posting guidelines and requirements",
+          "reviewCompensation": "Review compensation details and working conditions",
+          "ensureSkills": "Ensure appropriate skill level requirements and educational alignment"
+        },
+        "note": "This dashboard enables SCAD administrators to maintain the quality and integrity of all internship opportunities available to students, ensuring they align with educational objectives and professional standards."
+      }
+    },
+    "evaluationAnalytics": {
+      "title": "EVALUATION ANALYTICS",
+      "badge": "ANALYTICS",
+      "cardTitle": "Internships Evaluation Analytics",
+      "description": "Access and analyze student feedback on internship experiences to maintain quality partnerships and inform faculty advisors.",
+      "insights": {
+        "title": "Evaluation Insights:",
+        "items": {
+          "assessments": "View comprehensive student assessments of partner companies",
+          "ratings": "Monitor ratings across key metrics (mentorship, learning environment, workload)",
+          "themes": "Track recurring themes in qualitative feedback",
+          "companies": "Identify standout companies and those requiring intervention",
+          "trends": "Compare evaluation trends across industries and time periods"
+        }
+      },
+      "importantNote": "Important: Student evaluations play a critical role in determining future partnership renewals and informing curriculum development."
+    },
+    "statisticsDashboard": {
+      "title": "STATISTICS DASHBOARD",
+      "badge": "ANALYTICS",
+      "cardTitle": "Statistics Dashboard & Reporting",
+      "description": "Comprehensive analytics platform for monitoring internship program performance metrics and trends.",
+      "features": {
+        "title": "Key Analytics Features:",
+        "items": {
+          "realtime": "Real-time dashboard with visual reports and metrics",
+          "topPerformers": "Top companies and courses based on student performance",
+          "tracking": "Internship report status tracking across academic cycles",
+          "faculty": "Faculty review time analysis and efficiency metrics",
+          "reports": "Exportable PDF reports for academic administration"
+        }
+      },
+      "note": "Use this analytics suite to identify trends, measure program effectiveness, and make data-driven decisions to improve internship outcomes."
+    },
+    "reportView": {
+      "title": "STUDENT REPORTS REVIEW",
+      "badge": "ACADEMIC",
+      "cardTitle": "Student Report Review Portal",
+      "description": "Manage and distribute student internship reports to appropriate faculty members for academic evaluation and feedback.",
+      "features": {
+        "title": "Report Management Features:",
+        "items": {
+          "access": "Access all submitted student internship reports organized by department and date",
+          "status": "View report status (pending, flagged, rejected, accepted)",
+          "assign": "Assign reports to specific faculty reviewers based on expertise",
+          "monitor": "Monitor faculty review timelines and completion rates",
+          "track": "Track report revision cycles and resubmissions"
+        }
+      },
+      "contentControl": {
+        "title": "Content Control:",
+        "items": {
+          "standards": "Ensure workshop content aligns with industry standards and emerging trends",
+          "quality": "Maintain quality and consistency across all professional development offerings",
+          "coordinate": "Coordinate with industry presenters and faculty facilitators",
+          "update": "Update content as needed based on student feedback and industry changes"
+        }
+      },
+      "academicNote": "These reports represent the academic culmination of students' internship experiences, connecting professional practice with classroom learning."
+    },
+    "reportsView": {
+      "modal": {
+        "student": "Student",
+        "major": "Major",
+        "company": "Company",
+        "exportPdf": "Export as PDF",
+        "close": "Close",
+        "comments": {
+          "title": "Comments",
+          "noComments": "No comments yet. Select text to add highlights or comments."
+        }
+      }
+    },
+    "workshops": {
+      "instructor": "Instructor",
+      "allInstructors": "All Instructors",
+      "addNewWorkshop": "Add New Workshop",
+      "management": {
+        "title": "WORKSHOP MANAGEMENT",
+        "badge": "PROFESSIONAL DEVELOPMENT",
+        "cardTitle": "Workshop Management Portal",
+        "description": "Create, schedule, and manage professional development workshops that enhance student career readiness and industry preparation.",
+        "features": {
+          "title": "Workshop Creation Tools:",
+          "designNewWorkshop": "Design new workshop listings with detailed descriptions and learning objectives",
+          "scheduleSessions": "Schedule sessions with flexible timing options (live, recurring, or on-demand)",
+          "uploadMaterials": "Upload materials, presentations, and supplementary resources",
+          "setCapacityLimits": "Set capacity limits and registration requirements",
+          "designateWorkshops": "Designate workshops for specific student segments or Pro membership",
+          "contentControl": {
+            "title": "Content Control:",
+            "ensureWorkshopContent": "Ensure workshop content aligns with industry standards and emerging trends",
+            "maintainQuality": "Maintain quality and consistency across all professional development offerings",
+            "coordinateWithIndustry": "Coordinate with industry presenters and faculty facilitators",
+            "updateContent": "Update content as needed based on student feedback and industry changes"
+          }
+        },
+        "note": "This centralized system streamlines the entire workshop lifecycle from creation through evaluation, ensuring valuable professional development opportunities for all students."
+      },
+      "form": {
+        "createNew": "Create New Workshop",
+        "editWorkshop": "Edit Workshop",
+        "title": "Workshop Title",
+        "titlePlaceholder": "Enter workshop title",
+        "description": "Description",
+        "descriptionPlaceholder": "Enter workshop description",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "location": "Location",
+        "locationPlaceholder": "Enter location (default: Online)",
+        "maxAttendees": "Maximum Attendees",
+        "maxAttendeesPlaceholder": "Maximum number of attendees",
+        "category": "Category",
+        "categoryPlaceholder": "Enter workshop category",
+        "imageUrl": "Workshop Image URL",
+        "imageUrlPlaceholder": "Enter image URL",
+        "instructorInfo": "Instructor Information",
+        "instructorName": "Instructor Name",
+        "instructorNamePlaceholder": "Enter instructor name",
+        "instructorBio": "Instructor Bio",
+        "instructorBioPlaceholder": "Enter instructor biography",
+        "instructorImage": "Instructor Image URL",
+        "instructorImagePlaceholder": "Enter instructor image URL",
+        "agenda": "Workshop Agenda",
+        "agendaPlaceholder": "Add agenda item",
+        "noAgendaItems": "No agenda items added yet",
+        "required": "*",
+        "preview": "Workshop Preview",
+        "dateTime": "Date & Time",
+        "cancel": "Cancel",
+        "create": "Create Workshop",
+        "update": "Update Workshop",
+        "success": {
+          "created": "Workshop has been successfully created.",
+          "updated": "Workshop has been successfully updated."
+        },
+        "validation": {
+          "titleRequired": "Workshop title is required",
+          "descriptionRequired": "Description is required",
+          "instructorRequired": "Instructor name is required",
+          "instructorBioRequired": "Instructor bio is required",
+          "agendaRequired": "At least one agenda item is required",
+          "endDateAfterStart": "End time must be after start time"
+        }
+      }
+    }
+  },
+  "uploadDocuments": {
+    "title": "Upload Your Documents",
+    "resume": {
+      "label": "Resume",
+      "required": "*",
+      "error": "Resume is required and must finish uploading."
+    },
+    "coverLetter": {
+      "label": "Cover Letter",
+      "textLabel": "Write your own Cover Letter",
+      "placeholder": "Type your cover letter here..."
+    },
+    "links": {
+      "label": "Include a link to your GitHub profile and/or website",
+      "placeholder": "https://example.com"
+    },
+    "buttons": {
+      "upload": "Upload",
+      "cancel": "Cancel"
+    },
+    "feedback": {
+      "success": "Success!",
+      "successMessage": "Your documents have been successfully uploaded."
+    }
+  },
+  "student": {
+    "dashboard": {
+      "titles": {
+        "home": "RECOMMENDED OPPORTUNITIES",
+        "browse": "INTERNSHIP OPPORTUNITIES",
+        "applied": "APPLIED INTERNSHIPS",
+        "my-internships": "MY INTERNSHIPS",
+        "my-reports": "MY REPORTS",
+        "my-evaluations": "MY EVALUATIONS",
+        "workshops": "WORKSHOPS",
+        "live-workshops": "LIVE WORKSHOPS",
+        "online-assessments": "ONLINE ASSESSMENTS",
+        "notifications": "NOTIFICATIONS",
+        "profile": "MY PROFILE"
+      },
+      "workshops": {
+        "backToWorkshops": "Back to Workshops"
+      },
+      "searchPlaceholder": "Search recommended internships...",
+      "browseInternshipsSearchPlaceholder": "Search internships by job title or company name ...",
+      "appliedInternshipsSearchPlaceholder": "Search applications by company or position...",
+      "myInternshipsSearchPlaceholder": "Search internships by company or position...",
+      "personalizedCard": {
+        "badge": "PERSONALIZED",
+        "title": "Your Personalized Internship Matches",
+        "description": "This page showcases internship opportunities specifically curated for you based on your unique profile and preferences.",
+        "howItWorks": {
+          "title": "How These Recommendations Work:",
+          "jobInterests": "Matched to your specified job interests and career goals",
+          "industries": "Filtered by your preferred industries and work environments",
+          "ratings": "Includes positions highly rated by previous SCAD interns",
+          "updates": "Updated regularly as new opportunities become available"
+        },
+        "footer": "Take time to explore these tailored suggestions—they represent opportunities where your specific talents and interests could truly shine."
+      },
+      "browseInternshipsPersonalizedCard": {
+        "title": "Browse Career-Building Internships",
+        "description": "Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.",
+        "badge": "OPPORTUNITIES",
+        "howItWorks": {
+          "title": "Why These Opportunities Matter:",
+          "potential": "Potential for academic credit and professional references",
+          "networking": "Networking connections that could lead to full-time employment",
+          "portfolio": "Portfolio-building projects to showcase your skills"
+        },
+        "footer": "Remember to watch our informational video \"What Makes Your Internship Count\" to learn how to maximize your internship experience!"
+      },
+      "appliedInternshipsPersonalizedCard": {
+        "title": "Your Internship Applications",
+        "description": "Track and manage all your internship applications in one centralized dashboard.",
+        "badge": "APPLICATIONS",
+        "howItWorks": {
+          "pending": "Pending",
+          "accepted": "Accepted",
+          "rejected": "Rejected",
+          "finalized": "Finalized",
+          "pendingDescription": "Pending applications are still being reviewed by companies",
+          "acceptedDescription": "Accepted applications mean you've qualified for the next steps",
+          "rejectedDescription": "Rejected applications weren't successful this time",
+          "finalizedDescription": "Finalized applications are confirmed and ready to start"
+        },
+        "footer": "Use the filters to sort through your applications by company, position, or status!"
+      },
+      "myInternshipsPersonalizedCard": {
+        "title": "Your Internships Dashboard",
+        "description": "Manage all your internships in one place.",
+        "badge": "DASHBOARD",
+        "howItWorks": {
+          "current": "Current",
+          "completed": "Completed",
+          "evaluated": "Evaluated",
+          "currentDescription": "Current internships are ongoing",
+          "completedDescription": "Completed internships are awaiting your report and evaluation submissions",
+          "evaluatedDescription": "Evaluated ones have been reviewed by your supervisor"
+        },
+        "footer": "Use the filters to sort through your internship history or search for specific opportunities."
+      },
+      "evaluationsPersonalizedCard": {
+        "title": "Your Evaluations",
+        "description": "Manage your evaluations for companies where you completed internships. Track both submitted and draft evaluations here.",
+        "badge": "FEEDBACK",
+        "howItWorks": {
+          "submitted": "Submitted",
+          "draft": "Draft",
+          "submittedDescription": "Evaluations you have completed and submitted for your internship experiences.",
+          "draftDescription": "Evaluations you've started but haven't submitted yet. Continue working on these."
+        },
+        "footer": "Your evaluations provide valuable feedback to companies and help future students make informed decisions."
+      },
+      "myReportsPersonalizedCard": {
+        "title": "Student Report Management System",
+        "description": "Welcome to your Student Report Dashboard. Here you can monitor and manage all your internship reports in one place.",
+        "howItWorks": {
+          "pending": "PENDING",
+          "flagged": "FLAGGED",
+          "rejected": "REJECTED",
+          "accepted": "ACCEPTED",
+          "pendingDescription1": "Awaiting Review",
+          "pendingDescription2": "Your report has been submitted but not yet reviewed. No action required.",
+          "flaggedDescription1": "Needs Revision",
+          "flaggedDescription2": "Review faculty feedback and resubmit your updated report.",
+          "rejectedDescription1": "Not Approved",
+          "rejectedDescription2": "Did not meet requirements. See faculty comments for guidance.",
+          "acceptedDescription1": "Approved",
+          "acceptedDescription2": "Your report has been approved. No further action is needed."
+        },
+        "footer1": "reports flagged and",
+        "footer2": "rejected require your attention"
+      },
+      "workshopsInfoPersonalizedCard": {
+        "title": "Workshops & Professional Development Hub",
+        "description": "Enhance your skills and expand your professional knowledge through our comprehensive workshop center.",
+        "badge": "PROFESSIONAL DEVELOPMENT",
+        "availableWorkshops": {
+          "title": "Available Workshop Types:",
+          "type1": "Upcoming Workshops",
+          "type1Description": "Browse and register for scheduled future sessions",
+          "type2": "Live Now",
+          "type2Description": "Join active workshops happening in real-time",
+          "type3": "On-Demand Library",
+          "type3Description": "Access pre-recorded sessions available anytime"
+        },
+        "workshopBenefits": {
+          "title": "Workshop Benefits:",
+          "benefit1": "Build industry-specific skills valued by employers",
+          "benefit2": "Learn practical techniques from working professionals",
+          "benefit3": "Network with industry representatives and peers",
+          "benefit4": "Receive certificates of completion for your portfolio"
+        },
+        "footer": "Each workshop is carefully designed to address critical skills and knowledge areas that complement your academic learning and prepare you for professional success."
+      },
+      "notificationsPersonalizedInfoCard": {
+        "title": "Notifications Center",
+        "description": "Stay informed and never miss important updates related to your professional development journey.",
+        "badge": "ALERTS",
+        "notificationHub": {
+          "title": "Your Notification Hub:",
+          "type1": "Application Updates",
+          "type1Description": "Status changes and feedback on your internship applications",
+          "type2": "Report Alerts",
+          "type2Description": "New comments or status changes on your submitted reports",
+          "type3": "Workshop Reminders",
+          "type3Description": "Upcoming sessions you've registered for and last-minute availabilities",
+          "type4": "Deadline Notifications",
+          "type4Description": "Important dates for application submissions and report due dates",
+          "type5": "Personalized Opportunities",
+          "type5Description": "New internships or workshops matching your profile",
+          "type6": "Premium Content",
+          "type6Description": "Exclusive workshops and events for Pro students only"
+        },
+        "footer": "Some workshop notifications are exclusively for students with Pro membership. Upgrade your account to access these premium professional development opportunities.",
+        "footerLabel": "Note:"
+      },
+      "onlineAssessmentsInfoCard": {
+        "title": "Online Assessments Center",
+        "description": "Discover your professional strengths and preferences through our comprehensive assessment tools.",
+        "badge": "SELF-DISCOVERY",
+        "assessmentBenefits": {
+          "title": "Assessment Benefits:",
+          "benefit1": "Gain valuable insights into your natural strengths and work preferences",
+          "benefit2": "Receive personalized internship and workshop recommendations",
+          "benefit3": "Better articulate your unique qualities to potential employers",
+          "benefit4": "Identify career paths that align with your personality and aptitudes"
+        },
+        "assessmentTypes": {
+          "personalityAssessment": {
+            "title": "Personality Assessment",
+            "description": "Understand your work style and team dynamics preferences"
+          },
+          "skillsProficiency": {
+            "title": "Skills Proficiency",
+            "description": "Measure your technical and soft skills competency levels"
+          },
+          "careerInterestInventory": {
+            "title": "Career Interest Inventory",
+            "description": "Discover fields and roles that match your interests"
+          },
+          "aptitudeIndicators": {
+            "title": "Aptitude Indicators",
+            "description": "Identify your natural abilities across different domains"
+          }
+        },
+        "footer": "Results are analyzed to create your personalized profile that helps tailor recommendations throughout the platform."
+      },
+      "notificationsList": {
+        "proNote": "Details locked - Upgrade to PRO to see who viewed your profile",
+        "profileViews": "Profile Views",
+        "all": "All",
+        "noProfileViewsFoundMatchingYourCriteria": "No profile views found matching your criteria",
+        "tryAdjustingYourFilters": "Try adjusting your filters",
+        "completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile": "Complete your internship duration to unlock PRO features and see which companies are interested in your profile",
+        "companies": "companies",
+        "haveViewedYourProfile": "have viewed your profile",
+        "viewedProfile1": "HR Manager at ",
+        "viewedProfile2": " viewed your profile",
+        "filtered": "Filtered",
+        "recently": "recently",
+        "upgradeToPROToSeeDetails": "Upgrade to PRO to see details"
+      },
+      "profilePersonalizedCard": {
+        "badge": "PORTFOLIO",
+        "title": "Student Profile Management",
+        "description": "Your professional profile is your digital portfolio and the foundation of your career development journey.",
+        "whyYourProfileMatters": {
+          "title": "Why Your Profile Matters:",
+          "point1": "Powers the personalized recommendation engine for internships and workshops",
+          "point2": "Visible to potential employers when you apply for positions",
+          "point3": "Helps faculty provide more targeted guidance and support",
+          "point4": "Creates a foundation for your professional brand development"
+        },
+        "remember": "Remember: Update your profile regularly to reflect new skills, experiences, and career goals as you grow professionally."
+      },
+      "statusPills": {
+        "industryMatch": "INDUSTRY MATCH",
+        "recommendedByPastInterns": "RECOMMENDED BY PAST INTERNS",
+        "jobInterestMatch": "JOB INTEREST MATCH",
+        "all": "ALL",
+        "recent": "RECENT",
+        "recommended": "RECOMMENDED",
+        "applied": "APPLIED",
+        "current": "CURRENT",
+        "completed": "COMPLETED",
+        "evaluated": "EVALUATED",
+        "pending": "PENDING",
+        "rejected": "REJECTED",
+        "accepted": "ACCEPTED",
+        "finalized": "FINALIZED",
+        "upcoming": "UPCOMING",
+        "live": "LIVE",
+        "prerecorded": "PRERECORDED"
+      },
+      "filterSections": {
+        "fullTime": "Full-time",
+        "partTime": "Part-time",
+        "contract": "Contract",
+        "remote": "Remote",
+        "hybrid": "Hybrid",
+        "onSite": "On-site",
+        "paid": "Paid",
+        "unpaid": "Unpaid",
+        "jobType": "Job Type",
+        "jobSetting": "Job Setting",
+        "paymentStatus": "Payment Status",
+        "allJobTypes": "All Job Types",
+        "allJobSettings": "All Job Settings",
+        "allPaymentTypes": "All Payment Types",
+        "technology": "Technology",
+        "marketing": "Marketing",
+        "design": "Design",
+        "healthcare": "Healthcare",
+        "3 months": "3 months",
+        "6 months": "6 months",
+        "12 months": "12 months",
+        "allDurations": "All Durations",
+        "allIndustries": "All Industries",
+        "allCompanies": "All Companies",
+        "allContent": "All Content",
+        "recommended": "Recommended",
+        "applied": "Applied",
+        "current": "Current",
+        "company": "Company",
+        "industry": "Industry",
+        "position": "Position",
+        "duration": "Duration",
+        "allInternships": "All Internships",
+        "allPositions": "All Positions",
+        "contentType": "Content Type",
+        "status": "Status",
+        "allStatuses": "All Status"
+      },
+      "reportCards": {
+        "appealSuccessTitle": "Success!",
+        "appealSuccessMessage": "Your appeal has been submitted and is pending review.",
+        "tabs": {
+          "submitted": "Submitted Reports",
+          "drafts": "Saved as Drafts"
+        },
+        "makeAnAppeal": "Make an Appeal",
+        "appealPending": "Appeal Pending",
+        "cancel": "Cancel",
+        "submitAppeal": "Submit Appeal",
+        "enterYourAppealMessage": "Enter your appeal message...",
+        "company": "Company",
+        "major": "Major",
+        "submitted": "Submitted",
+        "seeMore": "See More",
+        "statusInfo": "Status Info",
+        "statusTooltips": {
+          "accepted": "Your report has been reviewed and approved by the faculty member. No further action is required for this submission.",
+          "pending": "Your report has been submitted but not yet reviewed by the responsible faculty member. No action is required at this time.",
+          "flagged": "Your report requires revisions based on faculty feedback. Review the comments provided and resubmit your updated report.",
+          "rejected": "Your report did not meet the requirements and cannot be resubmitted. See faculty comments for explanation and guidance on next steps."
+        }
+      },
+      "reportCreationDashboard": {
+        "title": {
+          "create": "Create Internship Report",
+          "edit": "Edit Internship Report"
+        },
+        "form": {
+          "reportTitle": {
+            "label": "Report Title",
+            "placeholder": "Enter a descriptive title for your report"
+          },
+          "company": {
+            "label": "Company/Organization Name",
+            "placeholder": "Where did you complete your internship?"
+          },
+          "major": {
+            "label": "Select your major",
+            "placeholder": "Select your major",
+            "options": {
+              "csen": "CSEN",
+              "dmet": "DMET",
+              "biotech": "Biotechnology",
+              "law": "Law"
+            }
+          },
+          "courses": {
+            "label": "Add courses that helped you during your internship",
+            "placeholder": "Select a course"
+          }
+        },
+        "guidelines": {
+          "title": "Report Structure Guidelines",
+          "introduction": "Introduction: Describe the company and your initial expectations",
+          "body": "Body: Detail your responsibilities, projects, and key learning experiences",
+          "conclusion": "Conclusion: Summarize your experience and what you gained from it"
+        },
+        "sections": {
+          "introduction": {
+            "label": "Introduction",
+            "placeholder": "Introduce the company and your role..."
+          },
+          "body": {
+            "label": "Body",
+            "placeholder": "Detail your responsibilities and experiences..."
+          },
+          "conclusion": {
+            "label": "Conclusion",
+            "placeholder": "Summarize what you learned and gained..."
+          }
+        },
+        "buttons": {
+          "submit": "Submit Report",
+          "submitEdit": "Submit",
+          "saveDraft": "Save Draft",
+          "saveChanges": "Save Changes",
+          "saving": "Saving...",
+          "saved": "✓ Saved!"
+        },
+        "preview": {
+          "title": "Report Preview",
+          "defaultTitle": "Your Report Title",
+          "defaultCompany": "Company Name",
+          "major": "Major",
+          "notSpecified": "Not specified",
+          "submittedBy": "Submitted By",
+          "studentName": "Student Name",
+          "relevantCourses": "Relevant Courses",
+          "notProvided": "Not provided"
+        },
+        "feedback": {
+          "success": "Success!",
+          "updated": "Updated!",
+          "submitSuccess": {
+            "create": "Your report has been successfully submitted.",
+            "edit": "Your report has been successfully updated."
+          },
+          "draftSuccess": {
+            "create": "Your report has been successfully saved as a draft.",
+            "edit": "Your report has been successfully saved as a draft update."
+          }
+        }
+      },
+      "upcomingWorkshops": "Upcoming Workshops",
+      "liveWorkshops": "Live Workshops",
+      "prerecordedWorkshops": "Prerecorded Workshops",
+      "upcoming": "Upcoming",
+      "live": "Live",
+      "prerecorded": "Prerecorded",
+      "joinNow": "Join Now",
+      "watchNow": "Watch Now",
+      "registerNow": "Register Now",
+      "workshopFeedback": {
+        "title": "Workshop Feedback",
+        "subtitle": "How would you rate this workshop?",
+        "placeholder": "Share your thoughts about the workshop...",
+        "submitButton": "Submit Feedback",
+        "submitting": "Submitting...",
+        "success": "Success!",
+        "updated": "Updated!",
+        "submitSuccess": {
+          "create": "Your report has been successfully submitted.",
+          "edit": "Your report has been successfully updated."
+        },
+        "draftSuccess": {
+          "create": "Your report has been successfully saved as a draft.",
+          "edit": "Your report has been successfully saved as a draft update."
+        },
+        "certificateSimulator": {
+          "title": "Congratulations!",
+          "message": "You've successfully completed the workshop!",
+          "download": "Download Certificate"
+        },
+        "successMessage": "You've registered to this workshop successfully"
+      }
+    }
+  },
+  "notifications": {
+    "techVisionPosted": "<b>{{company}}</b> posted a new internship that matches your skills",
+    "brandBoostAccepted": "Your internship application at <b>{{company}}</b> was accepted",
+    "internshipStarts": "Your <b>{{role}}</b> internship starts in {{days}} days",
+    "reportUpdated": "Your internship report status has been updated by SCAD",
+    "appointmentAccepted": "{{contact}} has accepted your appointment request",
+    "upcomingWorkshop": "Upcoming workshop you have registered in starts soon",
+    "newMessage": "{{contact}} has sent you a message",
+    "companyApplicationAccepted": "Your company application has been accepted",
+    "accountSetup": "Account setup successful – check your email for details",
+    "newApplicants": "{{count}} new applicants for your <b>{{role}}</b> internship",
+    "reportsAwaitingReview": "{{count}} new student reports awaiting review",
+    "registrationsPending": "{{count}} new company registrations pending verification",
+    "studentSubmittedAppeal": "A student has submitted an appeal for a report. Please review it."
+  },
+  "callInterface": {
+    "chat": "Chat",
+    "notes": "Notes",
+    "closeChatPanel": "Close Chat Panel",
+    "closeNotesPanel": "Close Notes Panel",
+    "noMessagesYet": "No messages yet",
+    "startConversation": "Start the conversation!",
+    "typeMessage": "Type your message...",
+    "sendMessage": "Send Message",
+    "saveNotes": "Save Notes",
+    "takeNotes": "Take notes here...",
+    "connectingTo": "Connecting to...",
+    "callInProgress": "Call in progress",
+    "connectedWith": "Connected (camera off)",
+    "simulateOtherPartyLeaving": "Simulate other party leaving",
+    "toggleCam": "Toggle Cam",
+    "toggleCameraState": "Toggle camera state",
+    "cameraIsTurnedOff": "Camera is turned off",
+    "cameraIsOn": "Camera is on",
+    "connecting": "Connecting...",
+    "otherPartyLeft": "{otherParty  Name} has left the call",
+    "you": "You",
+    "muted": "Muted",
+    "unmute": "Unmute",
+    "mute": "Mute",
+    "stopVideo": "Stop Video",
+    "startVideo": "Start Video",
+    "stopSharing": "Stop Sharing",
+    "shareScreen": "Share Screen",
+    "endCall": "End Call",
+    "simLeave": "Sim Leave",
+    "presenter": "Presenter",
+    "liveSession": "Live Session",
+    "subtitles": "This is sample subtitle text that would appear here during the workshop...",
+    "hideSubtitles": "Hide Subtitles",
+    "showSubtitles": "Show Subtitles",
+    "leaveWorkshop": "Leave Workshop",
+    "leaveWorkshopConfirmation": "Are you sure you want to leave the workshop?",
+    "leaveWorkshopConfirmationMessage": "You will be redirected to the workshop list.",
+    "prerequisites": "Prerequisites",
+    "workshopTitle": "Workshop Title",
+    "instructor": "Instructor",
+    "instructorName": "Instructor Name",
+    "like": "Like",
+    "save": "Save",
+    "share": "Share",
+    "backToWorkshops": "Back to Workshops",
+    "noDescriptionAvailable": "No description available.",
+    "incomingVideoCall": "Incoming Video Call",
+    "decline": "Decline",
+    "accept": "Accept",
+    "callPROStudents": "Call PRO Students",
+    "callSCADAdmin": "Call SCAD Admin"
+  },
+  "dashboard": {
+    "incomingCaller": {
+      "devModeOn": "Dev Mode: ON",
+      "enableDevMode": "Enable Dev Mode"
+    },
+    "setInternshipCycle": "Set Internship Cycle",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "cycle": "Cycle",
+    "year": "Year",
+    "save": "Save",
+    "titles": {
+      "student": "Student Portal",
+      "scad": "SCAD Portal",
+      "company": "Company Portal",
+      "faculty": "Faculty Portal"
+    },
+    "userTypes": {
+      "student": "Student",
+      "scad": "SCAD",
+      "company": "Company",
+      "faculty": "Faculty"
+    }
+  },
+
+  "studentCard": {
+    "major": "Major",
+    "graduatingClass": "Graduating Class",
+    "edit": "Edit",
+    "clickToViewLess": "Click to view less",
+    "clickToViewMore": "Click to view more"
+  },
+  "studentDetails": {
+    "personalityTraits": "Personality Traits",
+    "education": "Education",
+    "skills": "Skills",
+    "jobInterests": "Job Interests",
+    "experience": "Experience",
+    "internships": "Internships"
+  },
+  "updateProfile": {
+    "saveChanges": "Save Changes",
+    "addInternship": "Add Internship",
+    "title": "Edit Profile",
+    "updated": "Updated!",
+    "message": "Your profile has been successfully updated.",
+    "basicInfo": {
+      "title": "Basic Information",
+      "fullName": "Full Name",
+      "email": "Email",
+      "bio": "Bio"
+    },
+    "colorTheme": {
+      "title": "Personalize Your Profile Card Theme",
+      "description": "Choose a color to automatically generate a matching theme for your profile card",
+      "clickToSelect": "Click to select color",
+      "preview": "Card Color Preview",
+      "background": "Bg",
+      "text": "Text",
+      "primary": "Primary"
+    },
+    "socialLinks": {
+      "title": "Social Links",
+      "linkedin": "LinkedIn URL",
+      "github": "GitHub URL",
+      "portfolio": "Portfolio URL"
+    },
+    "personalityTraits": {
+      "title": "Personality Traits",
+      "traitPlaceholder": "Trait name",
+      "addTrait": "Add Trait"
+    },
+    "education": {
+      "title": "Education",
+      "degree": "Degree",
+      "institution": "Institution",
+      "period": "Period",
+      "faculty": "Faculty",
+      "semester": "Semester",
+      "selectFaculty": "Select Faculty",
+      "selectSemester": "Select Semester",
+      "faculties": {
+        "met": "Media Engineering and Technology (MET)",
+        "cse": "Computer Science and Engineering",
+        "mechanical": "Mechanical Engineering",
+        "electrical": "Electrical Engineering"
+      }
+    },
+    "skills": {
+      "title": "Skills",
+      "addSkill": "Add Skill"
+    },
+    "jobInterests": {
+      "title": "Job Interests",
+      "jobTitle": "Job Title",
+      "description": "Description",
+      "addJobInterest": "Add Job Interest",
+      "removeJobInterest": "Remove Job Interest"
+    },
+    "experience": {
+      "title": "Experience",
+      "jobTitle": "Title",
+      "company": "Company",
+      "duration": "Duration",
+      "responsibilities": "Responsibilities",
+      "addResponsibility": "Add Responsibility",
+      "addExperience": "Add Experience",
+      "removeExperience": "Remove Experience"
+    },
+    "internships": {
+      "title": "Internships",
+      "position": "Position",
+      "company": "Company",
+      "period": "Period",
+      "description": "Description",
+      "addInternship": "Add Internship",
+      "removeInternship": "Remove Internship"
+    },
+    "actions": {
+      "saveChanges": "Save Changes"
+    },
+    "feedback": {
+      "updated": "Updated!",
+      "message": "Your profile has been successfully updated."
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameInvalid": "Name can only contain letters, spaces, and hyphens",
+      "nameMinLength": "Name must be at least 2 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format. Please enter a valid email address",
+      "bioMaxLength": "Bio cannot exceed 500 characters",
+      "linkedinInvalid": "Invalid URL. Please enter a valid LinkedIn URL",
+      "githubInvalid": "Invalid URL. Please enter a valid GitHub URL",
+      "portfolioInvalid": "Invalid URL. Please enter a valid portfolio URL"
+    }
+  },
+  "home": {
+    "welcomeTitle": "Welcome to",
+    "appName": "InternHub",
+    "slogan": "WHERE  EXPERIENCE  BEGINS",
+    "continueAs": "Continue As",
+    "tailoredExperience": "Tailored experience for every role.",
+    "login": "Login",
+    "notRegistered": "Not registered yet?",
+    "signUp": "Sign up",
+    "loading": "Loading..."
+  },
+  "signup": {
+    "title": "Sign up",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login",
+    "labels": {
+      "companyName": "Company Name *",
+      "companyEmail": "Company Email *",
+      "industry": "Industry *",
+      "companySize": "Company Size *",
+      "verificationType": "Company Verification Type *",
+      "companyLogo": "Company Logo *",
+      "companyRegistrationDocument": "Company Registration Document *",
+      "taxCardDocument": "Tax Card Document *",
+      "taxId": "Tax ID",
+      "chooseFile": "Choose file...",
+      "browse": "Browse",
+      "acceptedLogoFormats": "Accepted formats: JPG, PNG, SVG (Preferred dimensions: 200x200px)",
+      "acceptedDocFormats": "Accepted formats: JPG, PNG, PDF",
+      "submit": "Complete Registration",
+      "processing": "Processing..."
+    },
+    "placeholders": {
+      "industry": "Select industry",
+      "companySize": "Select size",
+      "taxId": "XXX-XXX-XXX"
+    },
+    "tooltips": {
+      "companyEmail": "Please enter an official company email address that you use for business communications. Free email providers (Gmail, Yahoo, etc.) are not accepted."
+    },
+    "messages": {
+      "success": "Application has been accepted! Please check your email.",
+      "error": "Application has been rejected. Please check your email."
+    },
+    "verificationTypes": {
+      "registration": "Company Registration",
+      "taxCard": "Tax Card",
+      "taxId": "Tax ID"
+    },
+    "companySizes": {
+      "small": "Small (50 employees or less)",
+      "medium": "Medium (51-100 employees)",
+      "large": "Large (101-500 employees)",
+      "corporate": "Corporate (500+ employees)"
+    }
+  },
+  "login": {
+    "emailLabel": "Email *",
+    "passwordLabel": "Password *",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "logIn": "Log in",
+    "loggingIn": "Logging in..."
+  },
+  "validation": {
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email address",
+    "passwordRequired": "Password is required",
+    "companyNameRequired": "Company name is required",
+    "companyNameMin": "Company name must be at least 2 characters",
+    "industryRequired": "Industry is required",
+    "industryInvalid": "Please select a valid industry",
+    "companyEmailRequired": "Company email is required",
+    "companyEmailInvalid": "Please use a valid company email address",
+    "companySizeRequired": "Company size is required",
+    "companySizeInvalid": "Please select a valid company size",
+    "verificationTypeRequired": "Verification type is required",
+    "verificationTypeInvalid": "Please select a valid verification type",
+    "companyLogoRequired": "Company logo is required",
+    "verificationDocumentRequired": "Verification document is required",
+    "fileFormatUnsupported": "Unsupported file format",
+    "fileTooLarge": "File too large",
+    "taxIdRequired": "Tax ID is required",
+    "taxIdFormat": "Tax ID must be in format XXX-XXX-XXX"
+  },
+  "footer": {
+    "copyright": "© {{year}} German University in Cairo. All rights reserved."
+  },
+  "callModal": {
+    "title": "Video Calls & Appointments",
+    "appointmentPolicy": {
+      "title": "Appointment-First Policy:",
+      "description": "You can only call contacts with confirmed appointments. Please request an appointment and wait for confirmation."
+    },
+    "sections": {
+      "availableContacts": "Available Contacts",
+      "pendingRequests": "Pending Requests",
+      "confirmedAppointments": "Confirmed Appointments",
+      "pastRejected": "Past / Rejected"
+    },
+    "noContacts": "No contacts found.",
+    "userRoles": {
+      "scadAdmin": "SCAD Admin",
+      "student": "Student"
+    },
+    "statuses": {
+      "requested": "Requested",
+      "confirmed": "Confirmed"
+    },
+    "buttons": {
+      "callNow": "Call Now",
+      "requestAppointment": "Request Appointment",
+      "cancelScheduling": "Cancel Scheduling",
+      "confirmRequest": "Confirm Request",
+      "acceptAppointment": "Accept Appointment",
+      "rejectAppointment": "Reject Appointment",
+      "cancelAppointment": "Cancel Appointment"
+    },
+    "tooltips": {
+      "callNow": "Call Now",
+      "confirmedAppointmentRequired": "Confirmed appointment required",
+      "requestAppointment": "Request Appointment",
+      "cancelScheduling": "Cancel Scheduling",
+      "confirmRequest": "Confirm Appointment Request",
+      "acceptAppointment": "Accept Appointment",
+      "rejectAppointment": "Reject Appointment",
+      "cancelAppointment": "Cancel Appointment"
+    },
+    "calling": {
+      "title": "Calling...",
+      "cancelCall": "Cancel call"
+    },
+    "appointments": {
+      "wantsToSchedule": "Wants to schedule",
+      "confirmedNoDate": "Confirmed (No date set)",
+      "youRequested": "You requested {name}",
+      "requestedYou": "{name} requested you",
+      "rejected": "Rejected"
+    }
+  },
+  "callButton": {
+    "callPROStudents": "Call PRO Students",
+    "callSCADAdmin": "Call SCAD Admin",
+    "videoCall": "Video Call"
+  },
+  "toast": {
+    "certificateDownloaded": "Certificate downloaded successfully"
+  },
+  "assessment": {
+    "takeTheTest": "Take the Test",
+    "submitTest": "Submit Test",
+    "whyTakeTheTest": "Why take the test?",
+    "testCompleted": "Test Completed!",
+    "yourScore": "Your Score:",
+    "detailedResultsSent": "Detailed results have been sent to your email.",
+    "wouldYouLikeToShare": "Would you like to share your score?",
+    "yesPostIt": "Yes, post it",
+    "noThanks": "No, thanks",
+    "scorePostedToProfile": "Score posted to your profile!",
+    "testScoreToastBefore": "Your test score is ",
+    "testScoreToastAfter": "%. Please check your email for detailed results.",
+    "errorSubmittingTest": "Error submitting test"
+  }
+}

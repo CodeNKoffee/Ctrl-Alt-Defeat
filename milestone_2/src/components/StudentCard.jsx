@@ -1,8 +1,12 @@
 import './styles/StudentProfile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function StudentCard({ isOpen, toggleDetails, onEditProfile, studentData }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   // Function to generate a gradient based on the selected color
   const generateGradient = (baseColor) => {
     if (!baseColor) return "linear-gradient(135deg, var(--metallica-blue-300) 0%, var(--metallica-blue-600) 100%)";
@@ -66,7 +70,7 @@ export default function StudentCard({ isOpen, toggleDetails, onEditProfile, stud
           onEditProfile();
         }}
       >
-        <FontAwesomeIcon icon={faEdit} className="mr-1.5" /> Edit
+        <FontAwesomeIcon icon={faEdit} className="mr-1.5" /> {safeT('studentCard.edit')}
       </button>
 
       <div
@@ -89,9 +93,9 @@ export default function StudentCard({ isOpen, toggleDetails, onEditProfile, stud
           <span className="quote-mark">"</span>
         </p>
         <div className="student-info-section">
-          <h3 className="section-title" style={sectionTitleStyle}>MAJOR</h3>
+          <h3 className="section-title" style={sectionTitleStyle}>{safeT('studentCard.major')}</h3>
           <p className="section-value" style={sectionValueStyle}>{studentData.major || "Compute Science and Engineering"}</p>
-          <h3 className="section-title" style={sectionTitleStyle}>GRADUATING CLASS</h3>
+          <h3 className="section-title" style={sectionTitleStyle}>{safeT('studentCard.graduatingClass')}</h3>
           <p className="section-value" style={sectionValueStyle}>{studentData.year || "2027"}</p>
         </div>
         <div className="social-links">
@@ -114,7 +118,7 @@ export default function StudentCard({ isOpen, toggleDetails, onEditProfile, stud
 
         <div className="action-indicator mt-6">
           <div className="text-center text-sm text-gray-500">
-            {isOpen ? 'Click to view less' : 'Click to view more'}
+            {isOpen ? safeT('studentCard.clickToViewLess') : safeT('studentCard.clickToViewMore')}
           </div>
         </div>
       </div>

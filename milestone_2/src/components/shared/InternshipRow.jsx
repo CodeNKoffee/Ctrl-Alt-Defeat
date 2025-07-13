@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import CustomButton from "../shared/CustomButton";
+import { useTranslation } from 'react-i18next';
+import { createSafeT, translateFilterValue } from '@/lib/translationUtils';
 
 const formatDate = (isoDate) => {
   if (!isoDate) return "-";
@@ -23,7 +25,7 @@ const formatDate = (isoDate) => {
 };
 
 // Helper to show how long ago a date was
-const timeAgo = (isoDate) => {
+const createTimeAgo = (safeT) => (isoDate) => {
   if (!isoDate) return "-";
   const now = new Date();
   const date = new Date(isoDate);
@@ -34,29 +36,55 @@ const timeAgo = (isoDate) => {
   const days = Math.floor(hours / 24);
   const weeks = Math.floor(days / 7);
   const months = Math.floor(days / 30);
-  if (months > 0) return `posted ${months} month${months > 1 ? 's' : ''} ago`;
-  if (weeks > 0) return `posted ${weeks} week${weeks > 1 ? 's' : ''} ago`;
-  if (days > 0) return `posted ${days} day${days > 1 ? 's' : ''} ago`;
-  if (hours > 0) return `posted ${hours} hour${hours > 1 ? 's' : ''} ago`;
-  if (minutes > 0) return `posted ${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-  return 'posted just now';
+
+  if (months > 0) {
+    const unit = months > 1 ? safeT('internship.row.timeAgo.monthsAgoPlural') : safeT('internship.row.timeAgo.monthsAgo');
+    return `${safeT('internship.row.timeAgo.posted')} ${months} ${unit} ${safeT('internship.row.timeAgo.ago')}`;
+  }
+  if (weeks > 0) {
+    const unit = weeks > 1 ? safeT('internship.row.timeAgo.weeksAgoPlural') : safeT('internship.row.timeAgo.weeksAgo');
+    return `${safeT('internship.row.timeAgo.posted')} ${weeks} ${unit} ${safeT('internship.row.timeAgo.ago')}`;
+  }
+  if (days > 0) {
+    const unit = days > 1 ? safeT('internship.row.timeAgo.daysAgoPlural') : safeT('internship.row.timeAgo.daysAgo');
+    return `${safeT('internship.row.timeAgo.posted')} ${days} ${unit} ${safeT('internship.row.timeAgo.ago')}`;
+  }
+  if (hours > 0) {
+    const unit = hours > 1 ? safeT('internship.row.timeAgo.hoursAgoPlural') : safeT('internship.row.timeAgo.hoursAgo');
+    return `${safeT('internship.row.timeAgo.posted')} ${hours} ${unit} ${safeT('internship.row.timeAgo.ago')}`;
+  }
+  if (minutes > 0) {
+    const unit = minutes > 1 ? safeT('internship.row.timeAgo.minutesAgoPlural') : safeT('internship.row.timeAgo.minutesAgo');
+    return `${safeT('internship.row.timeAgo.posted')} ${minutes} ${unit} ${safeT('internship.row.timeAgo.ago')}`;
+  }
+  // Render 'just now' with RTL direction in Arabic
+  if (typeof window !== 'undefined' && document?.documentElement?.dir === 'rtl') {
+    return <span dir="rtl">{safeT('internship.row.timeAgo.justNow')}</span>;
+  }
+  return safeT('internship.row.timeAgo.justNow');
 };
 
 // Tooltip messages specifically for APPLIED internship statuses
-const appliedStatusTooltipMessages = {
-  accepted: "Your application has been accepted by the company! Congratulations!",
-  pending: "Your application has been submitted but not yet reviewed by the company.",
-  finalized: "You are among the top applicants, and the company may proceed with an offer soon. Awaiting final confirmation.",
-  rejected: "Unfortunately, your application was not selected for this position this time.",
-};
+const createAppliedStatusTooltipMessages = (safeT) => ({
+  accepted: safeT('internship.row.statusTooltips.accepted'),
+  pending: safeT('internship.row.statusTooltips.pending'),
+  finalized: safeT('internship.row.statusTooltips.finalized'),
+  rejected: safeT('internship.row.statusTooltips.rejected'),
+});
 
 export default function InternshipRow({ internship, type, onApplicationCompleted, isApplied, onTriggerReportCreate, isRecommended }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isHeightAnimating, setIsHeightAnimating] = useState(false);
   const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [showEvaluation, setShowEvaluation] = useState(false);
   const router = useRouter();
+
+  const timeAgo = createTimeAgo(safeT);
+  const appliedStatusTooltipMessages = createAppliedStatusTooltipMessages(safeT);
 
   const handleToggle = () => {
     if (!isOpen) {
@@ -135,20 +163,26 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             </div>
 
             {/* Center: Job Details */}
-            <div className="flex-1 min-w-0 ml-2">
+            <div className="flex-1 min-w-0 ltr:ml-2 rtl:mr-2">
               <div className="flex flex-col space-y-1">
-                <h3 className="text-lg font-bold text-gray-800 text-left">{internship.title}</h3>
+                <h3 className="text-lg font-bold text-gray-800 text-left rtl:text-right">{internship.title}</h3>
                 <div className="flex flex-col space-y-2">
-                  <p className="text-sm text-gray-600 text-left">{internship.type}</p>
+                  <p className="text-sm text-gray-600 text-left rtl:text-right">{translateFilterValue(safeT, internship.type, 'jobType')}</p>
                   <div className="inline-flex">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-800">
-                      {internship.locationType}
+                      {translateFilterValue(safeT, internship.jobSetting, 'jobSetting')}
                     </span>
 
                     {/* Show recommendation reason badge */}
                     {isRecommended && internship.recommendedReason && (
                       <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800 border border-pink-400 ml-2">
-                        {internship.recommendedReason.toUpperCase()}
+                        {(() => {
+                          const reason = internship.recommendedReason;
+                          if (reason === 'industry match') return safeT('student.dashboard.statusPills.industryMatch');
+                          if (reason === 'job interest match') return safeT('student.dashboard.statusPills.jobInterestMatch');
+                          if (reason === 'recommended by past interns') return safeT('student.dashboard.statusPills.recommendedByPastInterns');
+                          return reason.toUpperCase(); // fallback
+                        })()}
                       </span>
                     )}
                   </div>
@@ -160,7 +194,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             <div className="flex flex-col items-end w-28 flex-shrink-0 space-y-2">
               {type === 'recommended' || type === 'browsing' && (
                 <StatusBadge color={internship.paid ? 'bg-green-100 text-green-800 border-green-400' : 'bg-gray-100 text-gray-600 border-gray-400'} className="border">
-                  {internship.paid ? '$ Paid' : 'Unpaid'}
+                  {internship.paid ? `$ ${safeT('internship.row.statuses.paid')}` : safeT('internship.row.statuses.unpaid')}
                 </StatusBadge>
               )}
 
@@ -174,7 +208,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                   }
                   className="border"
                 >
-                  {internship.status ? internship.status.toUpperCase() : 'CURRENT'}
+                  {internship.status ? safeT(`internship.row.statuses.${internship.status}`) : safeT('internship.row.statuses.current')}
                 </StatusBadge>
               )}
 
@@ -190,7 +224,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                   }
                   className="border"
                 >
-                  {internship.status ? internship.status.toUpperCase() : 'PENDING'}
+                  {internship.status ? safeT(`internship.row.statuses.${internship.status}`) : safeT('internship.row.statuses.pending')}
                 </StatusBadge>
               )}
             </div>
@@ -202,9 +236,9 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             />
 
             {/* Posted/Applied/Started Date (Header Row) */}
-            <span className="absolute bottom-2 right-2 text-xs text-gray-500">
-              {type === 'my' && `started on ${formatDate(internship.startDate)}`}
-              {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
+            <span className="absolute bottom-2 ltr:right-2 rtl:left-2 text-xs text-gray-500">
+              {type === 'my' && `${safeT('internship.row.labels.startedOn')} ${formatDate(internship.startDate)}`}
+              {type === 'applied' && `${safeT('internship.row.labels.appliedOn')} ${formatDate(internship.appliedDate)}`}
               {(type === 'recommnded' || type === 'browsing') && timeAgo(internship.postedDate)}
             </span>
           </div>
@@ -235,16 +269,16 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
               {/* Start Date & Duration */}
               <div className="space-y-2">
                 <p className="text-sm text-gray-700">
-                  <span className="font-semibold">Start Date:</span> {formatDate(internship.startDate)}
+                  <span className="font-semibold">{safeT('internship.row.labels.startDate')}</span> {formatDate(internship.startDate)}
                 </p>
                 <p className="text-sm text-gray-700">
-                  <span className="font-semibold">Duration:</span> {internship.duration}
+                  <span className="font-semibold">{safeT('internship.row.labels.duration')}</span> {internship.duration}
                 </p>
               </div>
 
               {/* Skills */}
               <div className="space-y-2">
-                <h4 className="text-sm font-semibold text-gray-600">Skills:</h4>
+                <h4 className="text-sm font-semibold text-gray-600">{safeT('internship.row.labels.skills')}</h4>
                 <div className="flex flex-wrap gap-2">
                   {internship.skills?.map((skill, index) => (
                     <span
@@ -261,12 +295,12 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             {/* Right */}
             <div className="flex-1 space-y-1 p-3">
               {/* Job Description Title */}
-              <h4 className="text-sm font-semibold text-gray-600 mb-1">Job Description</h4>
+              <h4 className="text-sm font-semibold text-gray-600 mb-1">{safeT('internship.row.labels.jobDescription')}</h4>
               <div className="border border-[#5DB2C7] rounded-md p-2">
                 <p className="text-sm text-gray-600">{internship.description}</p>
               </div>
               {/* Requirements Title */}
-              <h4 className="text-sm font-semibold text-gray-600 mb-1">Requirements</h4>
+              <h4 className="text-sm font-semibold text-gray-600 mb-1">{safeT('internship.row.labels.requirements')}</h4>
               <div className="border border-[#5DB2C7] rounded-md p-2">
                 <p className="text-sm text-gray-600">{internship.requirements || "N/A"}</p>
               </div>
@@ -277,11 +311,11 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-t border-gray-400 mt-6 pt-3">
             <div className="flex flex-col">
               <p className="text-base font-bold text-gray-800">
-                {internship.rate || "Rate not specified"}
+                {internship.rate || safeT('internship.row.labels.rateNotSpecified')}
               </p>
               <p className="text-xs text-gray-500 mt-0.5">
-                {type === 'my' && `started on ${formatDate(internship.startDate)}`}
-                {type === 'applied' && `applied on ${formatDate(internship.appliedDate)}`}
+                {type === 'my' && `${safeT('internship.row.labels.startedOn')} ${formatDate(internship.startDate)}`}
+                {type === 'applied' && `${safeT('internship.row.labels.appliedOn')} ${formatDate(internship.appliedDate)}`}
                 {(type === 'browsing' || type === 'recommended') && timeAgo(internship.postedDate)}
               </p>
             </div>
@@ -292,14 +326,14 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
                 <CustomButton
                   variant="primary"
                   onClick={() => onTriggerReportCreate(internship)}
-                  text="Create Report"
+                  text={safeT('internship.row.buttons.createReport')}
                   className="text-sm py-2 px-4"
                 />
 
                 <CustomButton
                   variant="secondary"
                   onClick={() => setShowEvaluation(true)}
-                  text="Evaluate Company"
+                  text={safeT('internship.row.buttons.evaluateCompany')}
                   className="text-sm py-2 px-4 bg-green-100 text-green-800 border-green-400 hover:bg-[#aeeac5]"
                 />
               </div>
@@ -307,7 +341,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
             )}
 
             {/* Apply button for recommended or browsing internships */}
-            {(type === 'recommended' || type === 'browsing') && type !== 'company-view' && (
+            {(type === 'recommended' || type === 'browsing') && type !=='company-view' && (
               <button
                 onClick={isApplied ? undefined : handleOpenUploadModal}
                 className="p font-bold py-2 px-3 rounded-full transition-all duration-200 
@@ -316,7 +350,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
         w-24 hover:-translate-y-0.5 shadow-md hover:shadow-lg  border letter-spacing-1"
                 disabled={isApplied}
               >
-                {isApplied ? 'Applied' : 'Apply'}
+                {isApplied ? safeT('internship.row.buttons.applied') : safeT('internship.row.buttons.apply')}
               </button>
             )}
           </div>
@@ -343,7 +377,7 @@ export default function InternshipRow({ internship, type, onApplicationCompleted
           arrowColor="#2a5f74"
           render={({ content }) => (
             <div className="flex flex-col">
-              <span className="font-semibold text-base mb-1">Status Info</span>
+              <span className="font-semibold text-base mb-1">{safeT('internship.row.tooltip.statusInfo')}</span>
               <span className="text-white text-sm font-normal">{content}</span>
             </div>
           )}

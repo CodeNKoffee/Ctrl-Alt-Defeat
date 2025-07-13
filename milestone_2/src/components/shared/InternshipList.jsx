@@ -9,6 +9,8 @@ import ApplicationsFilterBar from './ApplicationsFilterBar';
 import StatusBadge from './StatusBadge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faFilter, faTimes, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '../../lib/translationUtils';
 import InternshipVideoSidebar from './InternshipVideoSidebar';
 import ReportCreationDashboard from '../ReportCreationDashboard';
 
@@ -48,6 +50,9 @@ export default function InternshipList({
   selectedDate: controlledSelectedDate,
   setSelectedDate: controlledSetSelectedDate,
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [selectedIndustry, setSelectedIndustry] = useState('all');
   const [selectedStatus, setSelectedStatus] = useState('all');
@@ -75,38 +80,38 @@ export default function InternshipList({
   const STATUS_CONFIG = {
     // For applied internships
     pending: {
-      label: "PENDING",
+      label: safeT('student.dashboard.statusPills.pending'),
       color: "bg-yellow-100 text-yellow-800 border-2 border-yellow-400",
       badgeColor: "bg-yellow-600",
     },
     accepted: {
-      label: "ACCEPTED",
+      label: safeT('student.dashboard.statusPills.accepted'),
       color: "bg-green-100 text-green-800 border-2 border-green-400 ",
       badgeColor: "bg-green-600",
     },
     rejected: {
-      label: "REJECTED",
+      label: safeT('student.dashboard.statusPills.rejected'),
       color: "bg-red-100 text-red-800 border-2 border-red-400 ",
       badgeColor: "bg-red-600",
     },
     finalized: {
-      label: "FINALIZED",
+      label: safeT('student.dashboard.statusPills.finalized'),
       color: "bg-purple-100 text-purple-800 border-2 border-purple-400",
       badgeColor: "bg-purple-600",
     },
     // For my internships
     current: {
-      label: "CURRENT",
+      label: safeT('student.dashboard.statusPills.current'),
       color: "bg-blue-100 text-blue-800 border-2 border-blue-400",
       badgeColor: "bg-blue-600",
     },
     completed: {
-      label: "COMPLETED",
+      label: safeT('student.dashboard.statusPills.completed'),
       color: "bg-green-100 text-green-800 border-2 border-green-400",
       badgeColor: "bg-green-600",
     },
     evaluated: {
-      label: "EVALUATED",
+      label: safeT('student.dashboard.statusPills.evaluated'),
       color: "bg-purple-100 text-purple-800 border-2 border-purple-400",
       badgeColor: "bg-purple-600",
     }
@@ -114,38 +119,38 @@ export default function InternshipList({
   const STATUS_CONFIG_HOVER = {
     // For applied internships
     pending: {
-      label: "PENDING",
+      label: safeT('student.dashboard.statusPills.pending'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-yellow-100 hover:text-yellow-800 hover:border-yellow-400",
       badgeColor: "bg-yellow-600",
     },
     accepted: {
-      label: "ACCEPTED",
+      label: safeT('student.dashboard.statusPills.accepted'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400",
       badgeColor: "bg-green-600",
     },
     rejected: {
-      label: "REJECTED",
+      label: safeT('student.dashboard.statusPills.rejected'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-red-100 hover:text-red-800 hover:border-red-400",
       badgeColor: "bg-red-600",
     },
     finalized: {
-      label: "FINALIZED",
+      label: safeT('student.dashboard.statusPills.finalized'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400",
       badgeColor: "bg-purple-600",
     },
     // For my internships
     current: {
-      label: "CURRENT",
+      label: safeT('student.dashboard.statusPills.current'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-blue-200 hover:text-blue-900 hover:border-blue-500",
       badgeColor: "bg-blue-600",
     },
     completed: {
-      label: "COMPLETED",
+      label: safeT('student.dashboard.statusPills.completed'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-green-100 hover:text-green-800 hover:border-green-400",
       badgeColor: "bg-green-600",
     },
     evaluated: {
-      label: "EVALUATED",
+      label: safeT('student.dashboard.statusPills.evaluated'),
       color: "bg-white text-gray-600 border border-gray-300 hover:bg-purple-100 hover:text-purple-800 hover:border-purple-400",
       badgeColor: "bg-purple-600",
     }
@@ -376,7 +381,7 @@ export default function InternshipList({
                   >
                     <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
                       }`}></span>
-                    ALL
+                    {safeT('student.dashboard.statusPills.all')}
                   </button>
 
                   {/* Status pills based on type */}
@@ -408,15 +413,10 @@ export default function InternshipList({
                 {/* Internship List */}
                 <div className="space-y-3 relative">
                   {filteredInternships.length === 0 ? (
-                    <div className="p-16 text-center">
-                      <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-                        <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                      </div>
-                      <p className="text-gray-500 font-medium">No internships found matching your criteria</p>
-                      <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
-                    </div>
+                    <NoResults
+                      mainMessage={safeT('common.noResults.noInternships')}
+                      subMessage={safeT('common.noResults.tryAdjusting')}
+                    />
                   ) : (
                     filteredInternships.map(internship => (
                       <InternshipRow

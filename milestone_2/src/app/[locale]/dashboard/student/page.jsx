@@ -1,5 +1,5 @@
 // View a list of suggested companies based on my job interests, industry and recommendations from past interns
-
+// yay
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -32,6 +32,8 @@ import { MOCK_EVALUATIONS } from '../../../../../constants/mockData';
 import EvaluationsDashboard from '@/components/EvaluationsDashboard';
 import WorkshopInterface from '@/components/WorkshopInterface';
 import ApplicationsFilterBar from '@/components/shared/ApplicationsFilterBar';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 // Video Sidebar Component
 function InternshipVideoSidebar({ userMajor }) {
@@ -69,6 +71,8 @@ function InternshipVideoSidebar({ userMajor }) {
 
 // Dashboard Home View Component
 function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [personalizedInternships, setPersonalizedInternships] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -109,31 +113,39 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
 
   const filterSections = [
     {
-      name: 'Job Type',
-      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      name: safeT('student.dashboard.filterSections.jobType'),
+      options: [
+        { id: 'fullTime', title: safeT('student.dashboard.filterSections.fullTime') },
+        { id: 'partTime', title: safeT('student.dashboard.filterSections.partTime') },
+        { id: 'contract', title: safeT('student.dashboard.filterSections.contract') },
+      ],
       selected: filters.jobType || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
-      resetLabel: 'All Job Types',
+      resetLabel: safeT('student.dashboard.filterSections.allJobTypes'),
     },
     {
-      name: 'Job Setting',
-      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      name: safeT('student.dashboard.filterSections.jobSetting'),
+      options: [
+        { id: 'remote', title: safeT('student.dashboard.filterSections.remote') },
+        { id: 'hybrid', title: safeT('student.dashboard.filterSections.hybrid') },
+        { id: 'onSite', title: safeT('student.dashboard.filterSections.onSite') },
+      ],
       selected: filters.jobSetting || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
-      resetLabel: 'All Job Settings',
+      resetLabel: safeT('student.dashboard.filterSections.allJobSettings'),
     },
     {
-      name: 'Payment Status',
+      name: safeT('student.dashboard.filterSections.paymentStatus'),
       options: [
-        { id: 'paid', title: 'Paid' },
-        { id: 'unpaid', title: 'Unpaid' }
+        { id: 'paid', title: safeT('student.dashboard.filterSections.paid') },
+        { id: 'unpaid', title: safeT('student.dashboard.filterSections.unpaid') }
       ],
       selected: filters.isPaid === true ? 'paid' : filters.isPaid === false ? 'unpaid' : 'all',
       onChange: (value) => setFilters(prev => ({
         ...prev,
         isPaid: value === 'paid' ? true : value === 'unpaid' ? false : null
       })),
-      resetLabel: 'All Payment Types',
+      resetLabel: safeT('student.dashboard.filterSections.allPaymentTypes'),
     }
   ];
 
@@ -151,52 +163,60 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
 
   const RecommendedOpportunitiesInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.home')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-2 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex items-start gap-4 w-full md:w-auto relative z-10 flex-row rtl:flex-row">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
           </div>
-          <div className="text-left">
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              PERSONALIZED
+          <div className="text-left rtl:text-right w-full">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2 rtl:text-right">
+              {safeT('student.dashboard.personalizedCard.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Personalized Internship Matches</div>
-            <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">This page showcases internship opportunities specifically curated for you based on your unique profile and preferences.</p>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300 rtl:text-right">
+              {safeT('student.dashboard.personalizedCard.title')}
+            </div>
+            <div className="text-gray-700 mb-3 relative w-full">
+              <p className="mb-3 rtl:text-right">{safeT('student.dashboard.personalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
-                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  How These Recommendations Work:
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center w-full">
+                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2 rtl:ml-2 rtl:mr-0"></span>
+                  {safeT('student.dashboard.personalizedCard.howItWorks.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Matched to your specified job interests and career goals</span>
+                    <span>{safeT('student.dashboard.personalizedCard.howItWorks.jobInterests')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Filtered by your preferred industries and work environments</span>
+                    <span>{safeT('student.dashboard.personalizedCard.howItWorks.industries')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Includes positions highly rated by previous SCAD interns</span>
+                    <span>{safeT('student.dashboard.personalizedCard.howItWorks.ratings')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Updated regularly as new opportunities become available</span>
+                    <span>{safeT('student.dashboard.personalizedCard.howItWorks.updates')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Take time to explore these tailored suggestions—they represent opportunities where your specific talents and interests could truly shine.
+                {safeT('student.dashboard.personalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -205,6 +225,17 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
     </div>
   );
 
+  const getInitialTitle = (view) => {
+    const titleKey = view === 'recommended'
+      ? 'student.dashboard.titles.recommended'
+      : view === 'applied'
+        ? 'student.dashboard.titles.applied'
+        : 'student.dashboard.titles.current';
+    return safeT(titleKey);
+  };
+
+  const [currentTitle, setCurrentTitle] = useState(() => getInitialTitle('recommended'));
+
   return (
     <div className="w-full px-6 py-4">
       <div className="px-4 pt-6">
@@ -212,7 +243,7 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search recommended internships..."
+          searchPlaceholder={safeT('student.dashboard.searchPlaceholder')}
           filterSections={filterSections}
           marginTop={"mt-6"}
           marginBottom="mb-0"
@@ -223,7 +254,7 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
         />
       </div>
       <InternshipList
-        title=""
+        title={currentTitle}
         internships={filteredPersonalizedInternships}
         type={"recommended"}
         onApplicationCompleted={onApplicationCompleted}
@@ -245,6 +276,8 @@ function DashboardHomeView({ onApplicationCompleted, appliedInternshipIds }) {
 
 // Using the actual page components for each view
 function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [filters, setFilters] = useState({
     industry: '',
     duration: '',
@@ -437,117 +470,133 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 
   const filterSections = [
     {
-      name: 'Content Type',
+      name: safeT('student.dashboard.filterSections.contentType'),
       options: [
-        { id: 'all', title: 'All Internships' },
-        { id: 'recommended', title: 'Recommended' }
+        // { id: 'all', title: safeT('student.dashboard.filterSections.allInternships') },
+        { id: 'recommended', title: safeT('student.dashboard.filterSections.recommended') }
       ],
       selected: filters.contentType,
       onChange: (value) => handleFilterChange('contentType', value),
-      resetLabel: 'All Content',
+      resetLabel: safeT('student.dashboard.filterSections.allContent'),
     },
     {
-      name: 'Position',
+      name: safeT('student.dashboard.filterSections.position'),
       options: uniquePositions.map(pos => ({ id: pos, title: pos })),
       selected: filters.position || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, position: value === 'all' ? '' : value })),
-      resetLabel: 'All Positions',
+      resetLabel: safeT('student.dashboard.filterSections.allPositions'),
     },
     {
-      name: 'Job Type',
-      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      name: safeT('student.dashboard.filterSections.jobType'),
+      options: [
+        { id: 'fullTime', title: safeT('student.dashboard.filterSections.fullTime') },
+        { id: 'partTime', title: safeT('student.dashboard.filterSections.partTime') },
+        { id: 'contract', title: safeT('student.dashboard.filterSections.contract') },
+      ],
       selected: filters.jobType || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobType: value === 'all' ? '' : value })),
-      resetLabel: 'All Job Types',
+      resetLabel: safeT('student.dashboard.filterSections.allJobTypes'),
     },
     {
-      name: 'Job Setting',
-      options: uniqueJobSettings.map(setting => ({ id: setting, title: setting })),
+      name: safeT('student.dashboard.filterSections.jobSetting'),
+      options: [
+        { id: 'remote', title: safeT('student.dashboard.filterSections.remote') },
+        { id: 'hybrid', title: safeT('student.dashboard.filterSections.hybrid') },
+        { id: 'onSite', title: safeT('student.dashboard.filterSections.onSite') },
+      ],
       selected: filters.jobSetting || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, jobSetting: value === 'all' ? '' : value })),
-      resetLabel: 'All Job Settings',
+      resetLabel: safeT('student.dashboard.filterSections.allJobSettings'),
     },
     {
-      name: 'Company',
+      name: safeT('student.dashboard.filterSections.company'),
       options: uniqueCompanies.map(company => ({ id: company, title: company })),
       selected: filters.company || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, company: value === 'all' ? '' : value })),
-      resetLabel: 'All Companies',
+      resetLabel: safeT('student.dashboard.filterSections.allCompanies'),
     },
     {
-      name: 'Industry',
-      options: uniqueIndustries.map(ind => ({ id: ind, title: ind })),
+      name: safeT('student.dashboard.filterSections.industry'),
+      options: [
+        { id: 'technology', title: safeT('student.dashboard.filterSections.technology') },
+        { id: 'design', title: safeT('student.dashboard.filterSections.design') },
+        { id: 'marketing', title: safeT('student.dashboard.filterSections.marketing') },
+        { id: 'healthcare', title: safeT('student.dashboard.filterSections.healthcare') },
+      ],
       selected: filters.industry || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, industry: value === 'all' ? '' : value })),
       resetLabel: 'All Industries',
     },
     {
-      name: 'Duration',
-      options: uniqueDurations.map(dur => ({ id: dur, title: dur })),
+      name: safeT('student.dashboard.filterSections.duration'),
+      options: [
+        { id: '3 months', title: safeT('student.dashboard.filterSections.3 months') },
+        { id: '4 months', title: safeT('student.dashboard.filterSections.4 months') },
+        { id: '6 months', title: safeT('student.dashboard.filterSections.6 months') },
+        { id: '12 months', title: safeT('student.dashboard.filterSections.12 months') },
+      ],
       selected: filters.duration || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, duration: value === 'all' ? '' : value })),
-      resetLabel: 'All Durations',
+      resetLabel: safeT('student.dashboard.filterSections.allDurations'),
     },
     {
-      name: 'Payment Status',
+      name: safeT('student.dashboard.filterSections.paymentStatus'),
       options: [
-        { id: 'paid', title: 'Paid' },
-        { id: 'unpaid', title: 'Unpaid' }
+        { id: 'paid', title: safeT('student.dashboard.filterSections.paid') },
+        { id: 'unpaid', title: safeT('student.dashboard.filterSections.unpaid') }
       ],
       selected: filters.isPaid === true ? 'paid' : filters.isPaid === false ? 'unpaid' : 'all',
       onChange: (value) => setFilters(prev => ({
         ...prev,
         isPaid: value === 'paid' ? true : value === 'unpaid' ? false : null
       })),
-      resetLabel: 'All Payment Types',
+      resetLabel: safeT('student.dashboard.filterSections.allPaymentTypes'),
     }
   ];
 
   // Define the info card JSX/Component here for clarity
   const BrowseInternshipsInfoCard = () => (
     <div className="w-full mx-auto">
-      <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.browse')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
+      <div className="bg-white p-6 rounded-2xl mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
-        <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
-        <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
-        <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
-
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
-          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
+        <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none"></div>
+        <div className="absolute right-20 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500 pointer-events-none"></div>
+        <div className="absolute left-40 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500 pointer-events-none"></div>
+        <div className="flex items-start flex-row gap-4 w-full md:w-full relative z-10 rtl:flex-row">
+          <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
           </div>
-          <div className="text-left">
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              OPPORTUNITIES
+          <div className="flex-1 text-left rtl:text-right">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2 rtl:text-right">
+              {safeT('company.browse.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Browse Career-Building Internships</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300 rtl:text-right">{safeT('company.browse.heading')}</div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Explore curated internship opportunities provided by SCAD and our partner companies. These positions are designed to give you real-world experience while building your professional portfolio.</p>
-
-              {/* Card content with improved styling */}
+              <p className="mb-3 rtl:text-right">{safeT('company.browse.description')}</p>
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
-                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Why These Opportunities Matter:
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center w-full">
+                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2 rtl:ml-2 rtl:mr-0"></span>
+                  {safeT('company.browse.whyUse')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Potential for academic credit and professional references</span>
+                    <span className="text-[#3298BA] mr-2 rtl:ml-2 rtl:mr-0">✓</span>
+                    <span>{safeT('company.browse.benefitsPlus.identifyPartners')}</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Networking connections that could lead to full-time employment</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Portfolio-building projects to showcase your skills</span>
+                    <span className="text-[#3298BA] mr-2 rtl:ml-2 rtl:mr-0">✓</span>
+                    <span>{safeT('company.browse.benefitsPlus.discoverLeaders')}</span>
                   </li>
                 </ul>
               </div>
-
-              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Remember to watch our informational video "What Makes Your Internship Count" to learn how to maximize your internship experience!
+              <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm rtl:text-right">
+                {safeT('company.browse.note')}
               </p>
             </div>
           </div>
@@ -564,7 +613,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search internships by job title or company name ..."
+          searchPlaceholder={safeT('student.dashboard.browseInternshipsSearchPlaceholder')}
           onClearFilters={clearAllFilters}
           filterSections={filterSections}
           // showDatePicker={true}
@@ -580,14 +629,14 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
                 setActiveTab('all');
                 setFilters(prev => ({ ...prev, contentType: 'all' }));
               }}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center ${activeTab === 'all'
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex rtl:mr-2 items-center ${activeTab === 'all'
                 ? 'bg-[#D9F0F4] text-[#2a5f74] border-2 border-[#5DB2C7]'
                 : 'bg-white text-gray-600 border border-gray-300 hover:bg-[#D9F0F4] hover:text-[#2a5f74] hover:border-[1px] hover:border-[#5DB2C7]'
                 }`}
             >
               <span className={`w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
                 }`}></span>
-              ALL
+              {safeT('student.dashboard.statusPills.all')}
             </button>
             <button
               onClick={() => {
@@ -601,7 +650,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
             >
               <span className={`w-3 h-3 rounded-full mr-2 ${activeTab === 'recommended' ? 'bg-pink-800' : 'bg-gray-300'
                 }`}></span>
-              RECOMMENDED
+              {safeT('student.dashboard.statusPills.recommended')}
             </button>
           </div>
         </div>
@@ -630,6 +679,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 }
 
 function AppliedInternshipsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const { currentUser } = useSelector(state => state.auth);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -657,37 +708,41 @@ function AppliedInternshipsView() {
 
   const filterSections = [
     {
-      name: 'Status',
+      name: safeT('student.dashboard.filterSections.status'),
       options: [
-        { id: 'pending', title: 'Pending' },
-        { id: 'accepted', title: 'Accepted' },
-        { id: 'finalized', title: 'Finalized' },
-        { id: 'rejected', title: 'Rejected' }
+        { id: 'pending', title: safeT('student.dashboard.statusPills.pending') },
+        { id: 'accepted', title: safeT('student.dashboard.statusPills.accepted') },
+        { id: 'finalized', title: safeT('student.dashboard.statusPills.finalized') },
+        { id: 'rejected', title: safeT('student.dashboard.statusPills.rejected') }
       ],
       selected: filters.status,
       onChange: (value) => handleFilterChange('status', value),
-      resetLabel: 'All Statuses',
+      resetLabel: safeT('student.dashboard.filterSections.allStatuses'),
     },
     {
-      name: 'Company',
+      name: safeT('student.dashboard.filterSections.company'),
       options: uniqueCompanies.map(company => ({ id: company, title: company })),
       selected: filters.company,
       onChange: (value) => handleFilterChange('company', value),
-      resetLabel: 'All Companies',
+      resetLabel: safeT('student.dashboard.filterSections.allCompanies'),
     },
     {
-      name: 'Position',
+      name: safeT('student.dashboard.filterSections.position'),
       options: uniquePositions.map(pos => ({ id: pos, title: pos })),
       selected: filters.position,
       onChange: (value) => handleFilterChange('position', value),
-      resetLabel: 'All Positions',
+      resetLabel: safeT('student.dashboard.filterSections.allPositions'),
     },
     {
-      name: 'Job Type',
-      options: uniqueJobTypes.map(type => ({ id: type, title: type })),
+      name: safeT('student.dashboard.filterSections.jobType'),
+      options: [
+        { id: 'fullTime', title: safeT('student.dashboard.filterSections.fullTime') },
+        { id: 'partTime', title: safeT('student.dashboard.filterSections.partTime') },
+        { id: 'contract', title: safeT('student.dashboard.filterSections.contract') },
+      ],
       selected: filters.jobType,
       onChange: (value) => handleFilterChange('jobType', value),
-      resetLabel: 'All Job Types',
+      resetLabel: safeT('student.dashboard.filterSections.allJobTypes'),
     }
   ];
 
@@ -705,22 +760,22 @@ function AppliedInternshipsView() {
   // Mock statuses for AppliedInternshipsView
   const APPLIED_INTERNSHIP_STATUSES = {
     pending: {
-      label: "PENDING",
+      label: safeT('student.dashboard.statusPills.pending'),
       color: "bg-yellow-100 text-yellow-800 border border-yellow-400",
       badgeColor: "bg-yellow-600",
     },
     accepted: {
-      label: "ACCEPTED",
+      label: safeT('student.dashboard.statusPills.accepted'),
       color: "bg-green-100 text-green-800 border border-green-400",
       badgeColor: "bg-green-600",
     },
     rejected: {
-      label: "REJECTED",
+      label: safeT('student.dashboard.statusPills.rejected'),
       color: "bg-red-100 text-red-800 border border-red-400",
       badgeColor: "bg-red-600",
     },
     finalized: {
-      label: "FINALIZED",
+      label: safeT('student.dashboard.statusPills.finalized'),
       color: "bg-purple-100 text-purple-800 border border-purple-400",
       badgeColor: "bg-purple-600",
     }
@@ -729,68 +784,76 @@ function AppliedInternshipsView() {
   // Define the Applied Internships Info Card
   const AppliedInternshipsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.applied')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
+        <div className="flex rtl:flex-row items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <div className="text-left flex-grow">
+          <div className="text-left rtl:text-right flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              APPLICATIONS
+              {safeT('student.dashboard.appliedInternshipsPersonalizedCard.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Internship Applications</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.appliedInternshipsPersonalizedCard.title')}
+            </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Track and manage all your internship applications in one centralized dashboard.</p>
+              <p className="mb-3">{safeT('student.dashboard.appliedInternshipsPersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="flex justify-center space-x-4 mb-2 mx-auto">
-                  <div className="flex-1 p-2 bg-yellow-50 rounded-lg border border-yellow-100 text-center">
+                  <div className="flex-1 p-2 bg-yellow-50 rounded-lg border border-yellow-100 text-center rtl:mr-4">
                     <div className="w-3 h-3 bg-yellow-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-yellow-800">Pending</p>
+                    <p className="text-xs font-medium text-yellow-800">{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.pending')}</p>
                   </div>
                   <div className="flex-1 p-2 bg-green-50 rounded-lg border border-green-100 text-center">
                     <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-green-800">Accepted</p>
+                    <p className="text-xs font-medium text-green-800">{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.accepted')}</p>
                   </div>
                   <div className="flex-1 p-2 bg-purple-50 rounded-lg border border-purple-100 text-center">
                     <div className="w-3 h-3 bg-purple-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-purple-800">Finalized</p>
+                    <p className="text-xs font-medium text-purple-800">{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.finalized')}</p>
                   </div>
                   <div className="flex-1 p-2 bg-red-50 rounded-lg border border-red-100 text-center">
                     <div className="w-3 h-3 bg-red-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-red-800">Rejected</p>
+                    <p className="text-xs font-medium text-red-800">{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.rejected')}</p>
                   </div>
                 </div>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-yellow-500 mr-2">•</span>
-                    <span>Pending applications are still being reviewed by companies</span>
+                    <span>{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.pendingDescription')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-green-500 mr-2">•</span>
-                    <span>Accepted applications mean you've qualified for the next steps</span>
+                    <span>{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.acceptedDescription')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-500 mr-2">•</span>
-                    <span>Finalized applications are confirmed and ready to start</span>
+                    <span>{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.finalizedDescription')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-red-500 mr-2">•</span>
-                    <span>Rejected applications weren't successful this time</span>
+                    <span>{safeT('student.dashboard.appliedInternshipsPersonalizedCard.howItWorks.rejectedDescription')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Use the filters to sort through your applications by company, position, or status!
+                {safeT('student.dashboard.appliedInternshipsPersonalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -807,7 +870,7 @@ function AppliedInternshipsView() {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search applications by company or position..."
+          searchPlaceholder={safeT('student.dashboard.appliedInternshipsSearchPlaceholder')}
           filterSections={filterSections}
           // showDatePicker={true}
           selectedDate={selectedDate}
@@ -842,6 +905,8 @@ function AppliedInternshipsView() {
 }
 
 function MyInternshipsView({ onTriggerReportCreate }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const { currentUser } = useSelector(state => state.auth);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -867,29 +932,29 @@ function MyInternshipsView({ onTriggerReportCreate }) {
 
   const filterSections = [
     {
-      name: 'Status',
+      name: safeT('student.dashboard.filterSections.status'),
       options: [
-        { id: 'current', title: 'Current' },
-        { id: 'completed', title: 'Completed' },
-        { id: 'evaluated', title: 'Evaluated' }
+        { id: 'current', title: safeT('student.dashboard.statusPills.current') },
+        { id: 'completed', title: safeT('student.dashboard.statusPills.completed') },
+        { id: 'evaluated', title: safeT('student.dashboard.statusPills.evaluated') }
       ],
       selected: filters.status,
       onChange: (value) => handleFilterChange('status', value),
-      resetLabel: 'All Statuses',
+      resetLabel: safeT('student.dashboard.filterSections.allStatuses'),
     },
     {
-      name: 'Company',
+      name: safeT('student.dashboard.filterSections.company'),
       options: uniqueCompanies.map(company => ({ id: company, title: company })),
       selected: filters.company,
       onChange: (value) => handleFilterChange('company', value),
-      resetLabel: 'All Companies',
+      resetLabel: safeT('student.dashboard.filterSections.allCompanies'),
     },
     {
-      name: 'Position',
+      name: safeT('student.dashboard.filterSections.position'),
       options: uniquePositions.map(pos => ({ id: pos, title: pos })),
       selected: filters.position,
       onChange: (value) => handleFilterChange('position', value),
-      resetLabel: 'All Positions',
+      resetLabel: safeT('student.dashboard.filterSections.allPositions'),
     },
   ];
 
@@ -906,17 +971,17 @@ function MyInternshipsView({ onTriggerReportCreate }) {
   // Mock statuses for MyInternshipsView
   const MY_INTERNSHIP_STATUSES = {
     current: {
-      label: "CURRENT",
+      label: safeT('student.dashboard.statusPills.current'),
       color: "bg-blue-100 text-blue-800 border border-blue-400",
       badgeColor: "bg-blue-600",
     },
     completed: {
-      label: "COMPLETED",
+      label: safeT('student.dashboard.statusPills.completed'),
       color: "bg-green-100 text-green-800 border border-green-400",
       badgeColor: "bg-green-600",
     },
     evaluated: {
-      label: "EVALUATED",
+      label: safeT('student.dashboard.statusPills.evaluated'),
       color: "bg-purple-100 text-purple-800 border border-purple-400",
       badgeColor: "bg-purple-600",
     }
@@ -924,60 +989,68 @@ function MyInternshipsView({ onTriggerReportCreate }) {
 
   const MyInternshipsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.my-internships')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -left-12 -bottom-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-45 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute right-40 top-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute left-20 top-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
+        <div className="flex rtl:flex-row items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <div className="text-left flex-grow">
+          <div className="text-left rtl:text-right flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              DASHBOARD
+              {safeT('student.dashboard.myInternshipsPersonalizedCard.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Your Internships Dashboard</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.myInternshipsPersonalizedCard.title')}
+            </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Manage all your internships in one place.</p>
+              <p className="mb-3">{safeT('student.dashboard.myInternshipsPersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="flex space-x-4 mb-2">
-                  <div className="flex-1 p-2 bg-blue-50 rounded-lg border border-blue-100 text-center">
+                  <div className="flex-1 p-2 bg-blue-50 rounded-lg border border-blue-100 text-center rtl:mr-4">
                     <div className="w-3 h-3 bg-blue-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-blue-800">Current</p>
+                    <p className="text-xs font-medium text-blue-800">{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.current')}</p>
                   </div>
                   <div className="flex-1 p-2 bg-green-50 rounded-lg border border-green-100 text-center">
                     <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-green-800">Completed</p>
+                    <p className="text-xs font-medium text-green-800">{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.completed')}</p>
                   </div>
                   <div className="flex-1 p-2 bg-purple-50 rounded-lg border border-purple-100 text-center">
                     <div className="w-3 h-3 bg-purple-500 rounded-full mx-auto mb-1"></div>
-                    <p className="text-xs font-medium text-purple-800">Evaluated</p>
+                    <p className="text-xs font-medium text-purple-800">{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.evaluated')}</p>
                   </div>
                 </div>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-blue-500 mr-2">•</span>
-                    <span>Current internships are ongoing</span>
+                    <span>{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.currentDescription')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-green-500 mr-2">•</span>
-                    <span>Completed internships are awaiting your report and evaluation submissions</span>
+                    <span>{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.completedDescription')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-500 mr-2">•</span>
-                    <span>Evaluated ones have been reviewed by your supervisor</span>
+                    <span>{safeT('student.dashboard.myInternshipsPersonalizedCard.howItWorks.evaluatedDescription')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Use the filters to sort through your internship history or search for specific opportunities.
+                {safeT('student.dashboard.myInternshipsPersonalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -994,7 +1067,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search internships by company or position..."
+          searchPlaceholder={safeT('student.dashboard.myInternshipsSearchPlaceholder')}
           filterSections={filterSections}
           // showDatePicker={true}
           selectedDate={selectedDate}
@@ -1021,7 +1094,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'
                 }`}></span>
-              ALL
+              {safeT('student.dashboard.statusPills.all')}
             </button>
             <button
               onClick={() => {
@@ -1035,7 +1108,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'current' ? 'bg-blue-600' : 'bg-gray-300'
                 }`}></span>
-              CURRENT
+              {safeT('student.dashboard.statusPills.current')}
             </button>
             <button
               onClick={() => {
@@ -1049,7 +1122,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'completed' ? 'bg-green-600' : 'bg-gray-300'
                 }`}></span>
-              COMPLETED
+              {safeT('student.dashboard.statusPills.completed')}
             </button>
             <button
               onClick={() => {
@@ -1063,7 +1136,7 @@ function MyInternshipsView({ onTriggerReportCreate }) {
             >
               <span className={`inline-block w-3 h-3 rounded-full mr-2 ${activeTab === 'evaluated' ? 'bg-purple-600' : 'bg-gray-300'
                 }`}></span>
-              EVALUATED
+              {safeT('student.dashboard.statusPills.evaluated')}
             </button>
           </div>
         </div>
@@ -1093,6 +1166,8 @@ function MyInternshipsView({ onTriggerReportCreate }) {
 }
 
 function NotificationsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [filters, setFilters] = useState({ category: 'all', read: 'all' });
 
   const handleFilterChange = (filterName, value) => {
@@ -1128,38 +1203,46 @@ function NotificationsView() {
   // Define the Notifications Info Card similar to other pages
   const NotificationsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.notifications')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex rtl:flex-row items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              ALERTS
+              {safeT('student.dashboard.notificationsPersonalizedInfoCard.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Notifications Center</h2>
-            <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Stay informed and never miss important updates related to your professional development journey.</p>
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.notificationsPersonalizedInfoCard.title')}
+            </h2>
+            <div className="w-full text-gray-700 mb-3 relative">
+              <p className="mb-3">{safeT('student.dashboard.notificationsPersonalizedInfoCard.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <h3 className="font-medium text-[#2a5f74] mb-2">Your Notification Hub:</h3>
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <h3 className="font-medium text-[#2a5f74] mb-2">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.title')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 rounded-lg border border-blue-200 bg-blue-50">
                     <div className="flex items-center gap-2 mb-1.5">
                       <div className="flex-shrink-0 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">1</span>
                       </div>
-                      <span className="font-medium text-blue-700">Application Updates</span>
+                      <span className="font-medium text-blue-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type1')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">Status changes and feedback on your internship applications</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type1Description')}</p>
                   </div>
 
                   <div className="p-3 rounded-lg border border-green-200 bg-green-50">
@@ -1167,9 +1250,9 @@ function NotificationsView() {
                       <div className="flex-shrink-0 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">2</span>
                       </div>
-                      <span className="font-medium text-green-700">Report Alerts</span>
+                      <span className="font-medium text-green-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type2')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">New comments or status changes on your submitted reports</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type2Description')}</p>
                   </div>
 
                   <div className="p-3 rounded-lg border border-purple-200 bg-purple-50">
@@ -1177,9 +1260,9 @@ function NotificationsView() {
                       <div className="flex-shrink-0 w-5 h-5 bg-purple-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">3</span>
                       </div>
-                      <span className="font-medium text-purple-700">Workshop Reminders</span>
+                      <span className="font-medium text-purple-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type3')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">Upcoming sessions you've registered for and last-minute availabilities</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type3Description')}</p>
                   </div>
 
                   <div className="p-3 rounded-lg border border-orange-200 bg-orange-50">
@@ -1187,9 +1270,9 @@ function NotificationsView() {
                       <div className="flex-shrink-0 w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">4</span>
                       </div>
-                      <span className="font-medium text-orange-700">Deadline Notifications</span>
+                      <span className="font-medium text-orange-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type4')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">Important dates for application submissions and report due dates</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type4Description')}</p>
                   </div>
 
                   <div className="p-3 rounded-lg border border-indigo-200 bg-indigo-50">
@@ -1197,9 +1280,9 @@ function NotificationsView() {
                       <div className="flex-shrink-0 w-5 h-5 bg-indigo-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">5</span>
                       </div>
-                      <span className="font-medium text-indigo-700">Personalized Opportunities</span>
+                      <span className="font-medium text-indigo-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type5')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">New internships or workshops matching your profile</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type5Description')}</p>
                   </div>
 
                   <div className="p-3 rounded-lg border border-yellow-200 bg-yellow-50">
@@ -1207,15 +1290,15 @@ function NotificationsView() {
                       <div className="flex-shrink-0 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs">6</span>
                       </div>
-                      <span className="font-medium text-yellow-700">Premium Content</span>
+                      <span className="font-medium text-yellow-700">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type6')}</span>
                     </div>
-                    <p className="text-sm text-gray-600">Exclusive workshops and events for Pro students only</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.notificationsPersonalizedInfoCard.notificationHub.type6Description')}</p>
                   </div>
                 </div>
               </div>
               <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
                 <p className="text-sm text-yellow-800">
-                  <span className="font-medium">Note:</span> Some workshop notifications are exclusively for students with Pro membership. Upgrade your account to access these premium professional development opportunities.
+                  <span className="font-medium">{safeT('student.dashboard.notificationsPersonalizedInfoCard.footerLabel')}</span> {safeT('student.dashboard.notificationsPersonalizedInfoCard.footer')}
                 </p>
               </div>
             </div>
@@ -1240,54 +1323,63 @@ function NotificationsView() {
 }
 
 function ProfileView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   // Define the Profile Info Card in the same way as other pages
   const ProfileInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.profile')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex rtl:flex-row items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              PORTFOLIO
+              {safeT('student.dashboard.profilePersonalizedCard.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Student Profile Management</h2>
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">{safeT('student.dashboard.profilePersonalizedCard.title')}</h2>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Your professional profile is your digital portfolio and the foundation of your career development journey.</p>
+              <p className="mb-3">{safeT('student.dashboard.profilePersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <h3 className="font-medium text-[#2a5f74] mb-2">Why Your Profile Matters:</h3>
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <h3 className="font-medium text-[#2a5f74] mb-2">{safeT('student.dashboard.profilePersonalizedCard.whyYourProfileMatters.title')}</h3>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Powers the personalized recommendation engine for internships and workshops</span>
+                    <span>{safeT('student.dashboard.profilePersonalizedCard.whyYourProfileMatters.point1')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Visible to potential employers when you apply for positions</span>
+                    <span>{safeT('student.dashboard.profilePersonalizedCard.whyYourProfileMatters.point2')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Helps faculty provide more targeted guidance and support</span>
+                    <span>{safeT('student.dashboard.profilePersonalizedCard.whyYourProfileMatters.point3')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Creates a foundation for your professional brand development</span>
+                    <span>{safeT('student.dashboard.profilePersonalizedCard.whyYourProfileMatters.point4')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Remember: Update your profile regularly to reflect new skills, experiences, and career goals as you grow professionally.
+                {safeT('student.dashboard.profilePersonalizedCard.remember')}
               </p>
             </div>
           </div>
@@ -1307,6 +1399,8 @@ function ProfileView() {
 }
 
 function WorkshopsView({ sidebarExpanded }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [selectedLiveWorkshop, setSelectedLiveWorkshop] = useState(null);
 
   const handleWorkshopSelection = (workshop) => {
@@ -1318,85 +1412,91 @@ function WorkshopsView({ sidebarExpanded }) {
   // Define the Workshops Info Card
   const WorkshopsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.workshops')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -left-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform -rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute right-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute left-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
+        <div className="flex rtl:flex-row items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
             </svg>
           </div>
-          <div className="text-left flex-grow">
+          <div className="text-left rtl:text-right flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              PROFESSIONAL DEVELOPMENT
+              {safeT('student.dashboard.workshopsInfoPersonalizedCard.badge')}
             </div>
             <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
-              Workshops & Professional Development Hub
+              {safeT('student.dashboard.workshopsInfoPersonalizedCard.title')}
             </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Enhance your skills and expand your professional knowledge through our comprehensive workshop center.</p>
+              <p className="mb-3">{safeT('student.dashboard.workshopsInfoPersonalizedCard.description')}</p>
 
               {/* Workshop Types */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Available Workshop Types:
+                  {safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.title')}
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-2">
                   <div className="p-3 bg-blue-50 rounded-lg border border-blue-100">
                     <div className="font-medium text-blue-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                      Upcoming Workshops
+                      {safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type1')}
                     </div>
-                    <p className="text-sm text-gray-600">Browse and register for scheduled future sessions</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type1Description')}</p>
                   </div>
                   <div className="p-3 bg-green-50 rounded-lg border border-green-100">
                     <div className="font-medium text-green-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                      Live Now
+                      {safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type2')}
                     </div>
-                    <p className="text-sm text-gray-600">Join active workshops happening in real-time</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type2Description')}</p>
                   </div>
                   <div className="p-3 bg-purple-50 rounded-lg border border-purple-100">
                     <div className="font-medium text-purple-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                      On-Demand Library
+                      {safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type3')}
                     </div>
-                    <p className="text-sm text-gray-600">Access pre-recorded sessions available anytime</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.workshopsInfoPersonalizedCard.availableWorkshops.type3Description')}</p>
                   </div>
                 </div>
 
                 {/* Workshop Benefits */}
                 <p className="text-metallica-blue-700 font-medium mt-4 mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Workshop Benefits:
+                  {safeT('student.dashboard.workshopsInfoPersonalizedCard.workshopBenefits.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Build industry-specific skills valued by employers</span>
+                    <span>{safeT('student.dashboard.workshopsInfoPersonalizedCard.workshopBenefits.benefit1')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Learn practical techniques from working professionals</span>
+                    <span>{safeT('student.dashboard.workshopsInfoPersonalizedCard.workshopBenefits.benefit2')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Network with industry representatives and peers</span>
+                    <span>{safeT('student.dashboard.workshopsInfoPersonalizedCard.workshopBenefits.benefit3')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Receive certificates of completion for your portfolio</span>
+                    <span>{safeT('student.dashboard.workshopsInfoPersonalizedCard.workshopBenefits.benefit4')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Each workshop is carefully designed to address critical skills and knowledge areas that complement your academic learning and prepare you for professional success.
+                {safeT('student.dashboard.workshopsInfoPersonalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -1417,7 +1517,7 @@ function WorkshopsView({ sidebarExpanded }) {
               <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              Back to Workshops
+              {safeT('student.dashboard.workshops.backToWorkshops')}
             </button>
           </div>
           <WorkshopInterface workshop={selectedLiveWorkshop} onBack={() => setSelectedLiveWorkshop(null)} />
@@ -1435,53 +1535,61 @@ function WorkshopsView({ sidebarExpanded }) {
 }
 
 function OnlineAssessmentsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   // Define the Online Assessments Info Card
-  const OnlineAssessmentsInfoCard = () => (
+  const OnlineAssessmentsInfoCard = ({ t }) => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.online-assessments')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -bottom-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-45 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 top-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 top-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
+        <div className="flex rtl:flex-row items-start gap-4 w-full relative z-10 max-w-5xl mx-auto">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
             </svg>
           </div>
-          <div className="text-left flex-grow">
+          <div className="text-left rtl:text-right flex-grow">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              SELF-DISCOVERY
+              {safeT('student.dashboard.onlineAssessmentsInfoCard.badge')}
             </div>
             <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
-              Online Assessments Center
+              {safeT('student.dashboard.onlineAssessmentsInfoCard.title')}
             </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Discover your professional strengths and preferences through our comprehensive assessment tools.</p>
+              <p className="mb-3">{safeT('student.dashboard.onlineAssessmentsInfoCard.description')}</p>
 
               {/* Assessment Benefits */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Assessment Benefits:
+                  {safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.title')}
                 </p>
                 <ul className="space-y-2 mb-4">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Gain valuable insights into your natural strengths and work preferences</span>
+                    <span>{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.benefit1')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Receive personalized internship and workshop recommendations</span>
+                    <span>{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.benefit2')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Better articulate your unique qualities to potential employers</span>
+                    <span>{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.benefit3')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Identify career paths that align with your personality and aptitudes</span>
+                    <span>{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentBenefits.benefit4')}</span>
                   </li>
                 </ul>
 
@@ -1490,36 +1598,36 @@ function OnlineAssessmentsView() {
                   <div className="p-3 bg-blue-50 rounded-lg border border-blue-100">
                     <div className="font-medium text-blue-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                      Personality Assessment
+                      {safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.personalityAssessment.title')}
                     </div>
-                    <p className="text-sm text-gray-600">Understand your work style and team dynamics preferences</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.personalityAssessment.description')}</p>
                   </div>
                   <div className="p-3 bg-green-50 rounded-lg border border-green-100">
                     <div className="font-medium text-green-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                      Skills Proficiency
+                      {safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.skillsProficiency.title')}
                     </div>
-                    <p className="text-sm text-gray-600">Measure your technical and soft skills competency levels</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.skillsProficiency.description')}</p>
                   </div>
                   <div className="p-3 bg-purple-50 rounded-lg border border-purple-100">
                     <div className="font-medium text-purple-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                      Career Interest Inventory
+                      {safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.careerInterestInventory.title')}
                     </div>
-                    <p className="text-sm text-gray-600">Discover fields and roles that match your interests</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.careerInterestInventory.description')}</p>
                   </div>
                   <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-100">
                     <div className="font-medium text-yellow-700 mb-1 flex items-center">
                       <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
-                      Aptitude Indicators
+                      {safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.aptitudeIndicators.title')}
                     </div>
-                    <p className="text-sm text-gray-600">Identify your natural abilities across different domains</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.onlineAssessmentsInfoCard.assessmentTypes.aptitudeIndicators.description')}</p>
                   </div>
                 </div>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Results are analyzed to create your personalized profile that helps tailor recommendations throughout the platform.
+                {safeT('student.dashboard.onlineAssessmentsInfoCard.footer')}
               </p>
             </div>
           </div>
@@ -1539,6 +1647,8 @@ function OnlineAssessmentsView() {
 }
 
 function MyReportsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [reports, setReports] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [deleteIndex, setDeleteIndex] = useState(null);
@@ -1563,6 +1673,12 @@ function MyReportsView() {
   // Define the Report Info Card in the same way as other pages
   const ReportInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.my-reports')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
@@ -1577,51 +1693,53 @@ function MyReportsView() {
           </div>
           <div className="text-left">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              DOCUMENTATION
+              {safeT('student.dashboard.myReportsPersonalizedCard.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Student Report Management System</h2>
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.myReportsPersonalizedCard.title')}
+            </h2>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Welcome to your Student Report Dashboard. Here you can monitor and manage all your internship reports in one place.</p>
+              <p className="mb-3">{safeT('student.dashboard.myReportsPersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-xs font-semibold">PENDING</span>
-                      <h3 className="font-medium text-yellow-700">Awaiting Review</h3>
+                      <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.pending')}</span>
+                      <h3 className="font-medium text-yellow-700">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.pending')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Your report has been submitted but not yet reviewed. No action required.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.pendingDescription')}</p>
                   </div>
 
                   <div className="bg-orange-50 p-3 rounded-lg border border-orange-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs font-semibold">FLAGGED</span>
-                      <h3 className="font-medium text-orange-700">Needs Revision</h3>
+                      <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.flagged')}</span>
+                      <h3 className="font-medium text-orange-700">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.flagged')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Review faculty feedback and resubmit your updated report.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.flaggedDescription')}</p>
                   </div>
 
                   <div className="bg-red-50 p-3 rounded-lg border border-red-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-semibold">REJECTED</span>
-                      <h3 className="font-medium text-red-700">Not Approved</h3>
+                      <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.rejected')}</span>
+                      <h3 className="font-medium text-red-700">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.rejected')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Did not meet requirements. See faculty comments for guidance.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.rejectedDescription')}</p>
                   </div>
 
                   <div className="bg-green-50 p-3 rounded-lg border border-green-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">ACCEPTED</span>
-                      <h3 className="font-medium text-green-700">Approved</h3>
+                      <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.accepted')}</span>
+                      <h3 className="font-medium text-green-700">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.accepted')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Your report has been approved. No further action is needed.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.myReportsPersonalizedCard.howItWorks.acceptedDescription')}</p>
                   </div>
                 </div>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Remember to review feedback from faculty on your submitted reports to improve future submissions!
+                {safeT('student.dashboard.myReportsPersonalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -1665,6 +1783,8 @@ function MyReportsView() {
 }
 
 function MyEvaluationsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRating, setSelectedRating] = useState('all');
 
@@ -1687,49 +1807,57 @@ function MyEvaluationsView() {
   // Define the Evaluations Info Card in the same way as other pages
   const EvaluationsInfoCard = () => (
     <div className="w-full mx-auto">
+      <div className="w-full max-w-6xl mb-8 mx-auto">
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('student.dashboard.titles.my-evaluations')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
+        </h1>
+      </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
         <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#E8F7FB] rounded-full opacity-60 transform rotate-12 group-hover:scale-110 transition-transform duration-500"></div>
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex rtl:flex-row items-start gap-4 w-full md:w-auto relative z-10">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              FEEDBACK
+              {safeT('student.dashboard.evaluationsPersonalizedCard.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Company Evaluation Management</h2>
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('student.dashboard.evaluationsPersonalizedCard.title')}
+            </h2>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Manage your evaluations for companies where you completed internships. Track both submitted and draft evaluations here.</p>
+              <p className="mb-3">{safeT('student.dashboard.evaluationsPersonalizedCard.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-semibold">SUBMITTED</span>
-                      <h3 className="font-medium text-blue-700">Published Evaluations</h3>
+                      <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.submitted')}</span>
+                      <h3 className="font-medium text-blue-700">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.submitted')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Evaluations you have completed and submitted for your internship experiences.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.submitted')}</p>
                   </div>
 
                   <div className="bg-purple-50 p-3 rounded-lg border border-purple-200">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-semibold">DRAFT</span>
-                      <h3 className="font-medium text-purple-700">Work in Progress</h3>
+                      <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-semibold">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.draft')}</span>
+                      <h3 className="font-medium text-purple-700">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.draft')}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">Evaluations you've started but haven't submitted yet. Continue working on these.</p>
+                    <p className="text-sm text-gray-600">{safeT('student.dashboard.evaluationsPersonalizedCard.howItWorks.draftDescription')}</p>
                   </div>
                 </div>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Your evaluations provide valuable feedback to companies and help future students make informed decisions.
+                {safeT('student.dashboard.evaluationsPersonalizedCard.footer')}
               </p>
             </div>
           </div>
@@ -1740,7 +1868,7 @@ function MyEvaluationsView() {
 
   return (
     <div className="min-h-screen bg-[#f4fafd] py-10 px-4">
-      <div className="px-4 pt-6">
+      <div className="px-4 !pt-0">
         <EvaluationsInfoCard />
 
         {/* <ApplicationsFilterBar
@@ -1879,29 +2007,27 @@ function LiveWorkshopsView() {
   );
 }
 
-// Define the page components map with all views including profile
+// Map view keys to their respective components and translation keys
 const viewComponents = {
-  'home': DashboardHomeView,
-  'browse': BrowseInternshipsView,
-  'applied': AppliedInternshipsView,
-  'my-internships': MyInternshipsView,
-  'my-reports': MyReportsView,
-  'my-evaluations': MyEvaluationsView,
-  'workshops': WorkshopsView,
-  'live-workshops': LiveWorkshopsView,
-  'online-assessments': OnlineAssessmentsView,
-  'notifications': NotificationsView,
-  'profile': ProfileView
+  'home': { component: DashboardHomeView, titleKey: 'home' },
+  'browse': { component: BrowseInternshipsView, titleKey: 'browse' },
+  'applied': { component: AppliedInternshipsView, titleKey: 'applied' },
+  'my-internships': { component: MyInternshipsView, titleKey: 'my-internships' },
+  'my-reports': { component: MyReportsView, titleKey: 'my-reports' },
+  'my-evaluations': { component: MyEvaluationsView, titleKey: 'my-evaluations' },
+  'workshops': { component: WorkshopsView, titleKey: 'workshops' },
+  'live-workshops': { component: LiveWorkshopsView, titleKey: 'live-workshops' },
+  'online-assessments': { component: OnlineAssessmentsView, titleKey: 'online-assessments' },
+  'notifications': { component: NotificationsView, titleKey: 'notifications' },
+  'profile': { component: ProfileView, titleKey: 'profile' }
 };
 
 export default function StudentDashboardPage() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [appliedIdsSet, setAppliedIdsSet] = useState(new Set());
   const [isCreatingReport, setIsCreatingReport] = useState(false);
   const [selectedInternship, setSelectedInternship] = useState(null);
-
-  const handleApplicationCompleted = (internshipId) => {
-    setAppliedIdsSet(prevSet => new Set(prevSet).add(internshipId));
-  };
 
   const [currentView, setCurrentView] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -1913,86 +2039,32 @@ export default function StudentDashboardPage() {
     return 'home';
   });
 
-  const getInitialTitle = (viewId) => {
-    switch (viewId) {
-      case 'home':
-        return "RECOMMENDED OPPORTUNITIES";
-      case 'browse':
-        return "INTERNSHIP OPPORTUNITIES";
-      case 'applied':
-        return "APPLIED INTERNSHIPS";
-      case 'my-internships':
-        return "MY INTERNSHIPS";
-      case 'notifications':
-        return "NOTIFICATIONS";
-      case 'profile':
-        return "MY PROFILE";
-      case 'workshops':
-        return "WORKSHOPS";
-      case 'online-assessments':
-        return "ONLINE ASSESSMENTS";
-      case 'my-reports':
-        return "MY REPORTS";
-      default:
-        return "RECOMMENDED OPPORTUNITIES";
-    }
+  const handleApplicationCompleted = (internshipId) => {
+    setAppliedIdsSet(prevSet => new Set(prevSet).add(internshipId));
   };
-
-  // Base title is determined by the current view
-  const [currentTitle, setCurrentTitle] = useState(() => getInitialTitle(currentView));
 
   // Report creation handlers (moved up from MyInternshipsView)
   const handleReportCreation = (internship) => {
     setSelectedInternship(internship);
     setIsCreatingReport(true);
-    // Directly set the title here
-    setCurrentTitle("Create Internship Report");
   };
 
   const handleReportCancel = () => {
     setIsCreatingReport(false);
     setSelectedInternship(null);
-    // Reset the title when returning to the list
-    setCurrentTitle("MY INTERNSHIPS");
   };
 
   const handleReportSubmit = (reportData) => {
     console.log('Report submitted:', reportData);
     setIsCreatingReport(false);
     setSelectedInternship(null);
-    // Reset the title when returning to the list
-    setCurrentTitle("MY INTERNSHIPS");
   };
 
   const handleViewChange = (viewId) => {
-    // Only change view if we're not in report creation mode
-    // This prevents losing the report form when clicking on sidebar navigation
     if (!isCreatingReport) {
       setCurrentView(viewId);
-      setCurrentTitle(getInitialTitle(viewId));
     }
   };
-
-  useEffect(() => {
-    // When currentView changes, set the title (but not if we're creating a report)
-    if (!isCreatingReport) {
-      setCurrentTitle(getInitialTitle(currentView));
-    }
-  }, [currentView, isCreatingReport]);
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      if (typeof window !== 'undefined') {
-        const hash = window.location.hash.replace('#', '');
-        // Only change view based on hash if we're not in report creation mode
-        if (hash && viewComponents[hash] && hash !== currentView && !isCreatingReport) {
-          setCurrentView(hash);
-        }
-      }
-    };
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [currentView, isCreatingReport]);
 
   // Special case: If we're on the My Internships view and creating a report,
   // render the ReportCreationDashboard component directly instead of the CurrentViewComponent
@@ -2000,7 +2072,7 @@ export default function StudentDashboardPage() {
     return (
       <DashboardLayout
         userType="student"
-        title={currentTitle}
+        title={safeT('student.dashboard.titles.my-internships')}
         currentViewId={currentView}
         onViewChange={handleViewChange}
       >
@@ -2017,7 +2089,9 @@ export default function StudentDashboardPage() {
   }
 
   // Normal case: render the current view based on navigation
-  const CurrentViewComponent = viewComponents[currentView];
+  const viewConfig = viewComponents[currentView];
+  const CurrentViewComponent = viewConfig?.component;
+  const titleKey = viewConfig?.titleKey;
 
   let viewProps = {};
   if (currentView === 'home' || currentView === 'browse') {
@@ -2035,7 +2109,7 @@ export default function StudentDashboardPage() {
   return (
     <DashboardLayout
       userType="student"
-      title={currentTitle}
+      // title={safeT(`student.dashboard.titles.${titleKey}`)}
       currentViewId={currentView}
       onViewChange={handleViewChange}
     >

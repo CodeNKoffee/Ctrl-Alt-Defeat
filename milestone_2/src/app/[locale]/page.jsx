@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import { MOCK_USERS } from "../../../constants/mockData";
 import { usersOptions } from "../../../constants/index";
 import Header from "@/components/Header";
@@ -15,13 +17,19 @@ import BackButton from "@/components/shared/BackButton";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ContinueOption from "@/components/ContinueOption";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { createTypingAnimation } from "../../../utils";
 import { MutatingDots } from 'react-loader-spinner';
 
 export default function Home() {
   const router = useRouter();
+  const params = useParams();
+  const locale = params.locale || 'en';
   const dispatch = useDispatch();
+
+  // i18n helpers
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
 
   const [showWelcome, setShowWelcome] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -39,10 +47,10 @@ export default function Home() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const textContent = [
-    { title: "", subtitle: "" },                             // Initial state
-    { title: "Welcome to", subtitle: "" },                   // Typing "WELCOME TO"
-    { title: "InternHub", subtitle: "" },                    // "InternHub" with merge
-    { title: "InternHub", subtitle: "WHERE  EXPERIENCE  BEGINS" } // Slogan with shift
+    { title: "", subtitle: "" }, // Initial state
+    { title: safeT('home.welcomeTitle'), subtitle: "" },
+    { title: safeT('home.appName'), subtitle: "" },
+    { title: safeT('home.appName'), subtitle: safeT('home.slogan') }
   ];
 
   // Create typing animation variants
@@ -73,6 +81,24 @@ export default function Home() {
       return () => clearTimeout(timer);
     }
   }, [animationState, view, showWelcome]);
+
+  useEffect(() => {
+    // If already logged in (persistent session), redirect to dashboard
+    if (typeof window !== 'undefined') {
+      const userSessionData = localStorage.getItem('userSession') || sessionStorage.getItem('userSession');
+      if (userSessionData) {
+        try {
+          const user = JSON.parse(userSessionData);
+          if (user && user.role) {
+            router.push(`/${locale}/dashboard/${user.role}`);
+            return;
+          }
+        } catch (e) {
+          // Ignore parse errors
+        }
+      }
+    }
+  }, []);
 
   const handleOptionClick = (userType) => {
     const userDetails = usersOptions.find(option => option.value === userType);
@@ -163,7 +189,7 @@ export default function Home() {
         payload: userSession
       });
 
-      router.push(`/en/dashboard/${userType}`);
+      router.push(`/${locale}/dashboard/${userType}`);
     } catch (error) {
       setIsLoggingIn(false);
       throw error; // Re-throw so LoginForm can handle it
@@ -442,7 +468,7 @@ export default function Home() {
                     transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   >
                     <Header
-                      text="Continue As"
+                      text={safeT('home.continueAs')}
                       className="continue-text"
                       isFullWidth={true}
                       size="1xl"
@@ -463,7 +489,7 @@ export default function Home() {
                         style={{ transformOrigin: "center center" }}
                       >
                         <ContinueOption
-                          name={option.name}
+                          name={safeT(`sidebar.${option.value}User`)}
                           imageUrl={option.imageUrl}
                           className={option.class}
                           width={option.dimension}
@@ -481,7 +507,7 @@ export default function Home() {
                     transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   >
                     <div className="motivational-text font-ibm-plex-sans">
-                      Tailored experience for every role.
+                      {safeT('home.tailoredExperience')}
                     </div>
                   </motion.div>
                 </div>
@@ -511,7 +537,7 @@ export default function Home() {
                 wrapperClass=""
                 visible={true}
               />
-              <p className="text-metallica-blue-950 font-semibold text-xl mt-4">Loading...</p>
+              <p className="text-metallica-blue-950 font-semibold text-xl mt-4">{safeT('home.loading')}</p>
             </div>
           </motion.div>
         )}
@@ -551,9 +577,9 @@ export default function Home() {
                     >
                       {selectedUserOption.value === 'company' && (
                         <span className="text-black font-medium font-ibm-plex-sans">
-                          Not registered yet?{' '}
-                          <Link href={`/en/auth/signup?userType=${selectedUserOption.value}`} className="text-metallica-blue-off-charts underline">
-                            Sign up
+                          {safeT('home.notRegistered')}{' '}
+                          <Link href={`/${locale}/auth/signup?userType=${selectedUserOption.value}`} className="text-metallica-blue-off-charts underline">
+                            {safeT('home.signUp')}
                           </Link>
                         </span>
                       )}
@@ -568,7 +594,7 @@ export default function Home() {
                   >
                     <div className="w-full max-w-md">
                       <Header
-                        text="Login"
+                        text={safeT('home.login')}
                         className="mb-8"
                         size="text-6xl"
                       />

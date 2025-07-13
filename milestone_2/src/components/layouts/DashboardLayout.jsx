@@ -10,6 +10,9 @@ import ProfileIcon from '@/components/shared/ProfileIcon';
 import ProBadge from '@/components/shared/ProBadge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSuitcase } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
+import IncomingCallTester from '../IncomingCallTester';
 
 export default function DashboardLayout({
   children,
@@ -20,6 +23,8 @@ export default function DashboardLayout({
   onViewChange,
   sidebarOpen = false,
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const { currentUser, isAuthenticated } = useSelector(state => state.auth);
   const router = useRouter();
   const [sidebarExpanded, setSidebarExpanded] = useState(true);
@@ -32,6 +37,8 @@ export default function DashboardLayout({
   const [endDate, setEndDate] = useState("");
   const [error, setError] = useState("");
   const [savedCycle, setSavedCycle] = useState(null);
+  const [devMode, setDevMode] = useState(false);
+  const [testerGlow, setTesterGlow] = useState(false);
 
   const handleSidebarToggle = (isExpanded) => {
     setSidebarExpanded(isExpanded);
@@ -160,144 +167,175 @@ export default function DashboardLayout({
       <div className="flex-1 overflow-auto">
         <div className="p-4 md:p-6 min-h-screen flex flex-col">
           <div className="mb-6 flex flex-row justify-between items-center">
-            <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
-              {userType.charAt(0).toUpperCase() + userType.slice(1)} Portal
-            </h1>
-
-            <div className="flex flex-row items-center gap-4">
-              {/* SCAD internship cycle */}
-              {userData?.role === 'scad' && (
-                savedCycle ? (
-                  <div className="flex items-center gap-3 bg-[#E2F4F7] border-2 border-[#5DB2C7] rounded-full px-6 py-2 shadow font-semibold text-[#2a5f74] text-base" style={{ minHeight: 56 }}>
-                    <span className="font-bold flex items-center gap-2">
-                      <FontAwesomeIcon icon={faSuitcase} className="w-5 h-5 text-[#3298BA]" />
-                      {savedCycle.cycleType}'{String(savedCycle.cycleYear).slice(-2)}
-                    </span>
-                    <span className="text-sm text-gray-600">{formatDateRange(savedCycle.startDate, savedCycle.endDate)}</span>
+            <div className="flex items-center gap-4 w-full justify-between">
+              <div className="flex items-center gap-4">
+                <h1 className="text-2xl font-medium text-[#2a5f74] font-ibm-plex-sans">
+                  {safeT(`dashboard.titles.${userType}`)}
+                </h1>
+                {/* Dev Mode Button: only for SCAD or Student */}
+                {(userType === 'scad' || userType === 'student') && (
+                  <>
                     <button
-                      className="ml-2 p-1 rounded-full hover:bg-[#B8E1E9]/60 transition"
-                      onClick={() => { setSavedCycle(null); setFormOpen(true); setShowCycleModal(true); }}
-                      title="Edit cycle"
+                      className={`ml-2 px-3 py-1 rounded-full border border-metallica-blue-200 bg-white/80 text-metallica-blue-500 text-xs font-medium transition-colors duration-200 hover:bg-white focus:outline-none focus:ring-1 focus:ring-metallica-blue-200 flex items-center`}
+                      style={{ height: '28px', minWidth: '110px', lineHeight: '1.1', boxShadow: 'none' }}
+                      onClick={() => setDevMode((v) => !v)}
+                      aria-label="Enable Dev Mode"
+                      type="button"
                     >
-                      <FontAwesomeIcon icon={faEdit} className="w-4 h-4 text-[#3298BA]" />
+                      {devMode ? safeT('dashboard.incomingCaller.devModeOn') : safeT('dashboard.incomingCaller.enableDevMode')}
                     </button>
-                  </div>
-                ) : (
-                  <div
-                    className="relative"
-                    onMouseEnter={() => setHovered(true)}
-                    onMouseLeave={() => { setHovered(false); if (!formOpen) setShowCycleModal(false); }}
-                  >
-                    <button
-                      className={`group relative z-10 bg-[#5DB2C7] hover:bg-[#4AA0B5] text-white rounded-full shadow-md transition-all duration-500 flex items-center justify-center overflow-hidden h-10`}
-                      style={{ minWidth: 40, width: (hovered || formOpen) ? 320 : 40 }}
-                      onClick={() => { setFormOpen(!formOpen); setShowCycleModal(true); }}
-                      aria-label="Set Internship Cycle"
+                    {/* IncomingCallTester slides in when devMode is enabled */}
+                    <div
+                      className={`relative transition-all duration-500 ${devMode ? 'ml-2 w-10 opacity-100' : 'ml-0 w-0 opacity-0 pointer-events-none'}`}
+                      style={{ overflow: 'visible' }}
                     >
-                      {(hovered || formOpen) ? (
-                        <span className="flex items-center justify-center w-full">
-                          <FontAwesomeIcon icon={faSuitcase} className="text-xl text-white mr-3" />
-                          <span className={`font-semibold text-white text-base text-center transition-all duration-300 overflow-hidden ${((hovered || formOpen) ? 'max-w-xs opacity-100 delay-300' : 'max-w-0 opacity-0')}`}
-                            style={{ display: 'inline-block' }}>
-                            Set Internship Cycle
-                          </span>
-                        </span>
-                      ) : (
-                        <span className="flex items-center justify-center w-10 h-10">
-                          <FontAwesomeIcon icon={faSuitcase} className="text-xl text-white" />
-                        </span>
-                      )}
-                    </button>
-                    {/* Modal/Form */}
-                    {(hovered || formOpen) && showCycleModal && (
-                      <div className={`absolute left-1/2 -translate-x-1/2 top-14 bg-white rounded-xl shadow-xl p-6 z-50 w-80 transition-all duration-300 ${formOpen ? 'block' : 'hidden'}`}
-                        style={{ minWidth: 320 }}
+                      <div
+                        className={`transition-all duration-500 ${testerGlow ? 'ring-4 ring-purple-400 ring-opacity-60' : ''}`}
+                        onAnimationEnd={() => setTesterGlow(false)}
                       >
-                        <form
-                          onSubmit={e => {
-                            e.preventDefault();
-                            if (error || !cycleType || !startDate || !endDate) return;
-                            setSavedCycle({ cycleType, cycleYear, startDate, endDate });
-                            setFormOpen(false); setShowCycleModal(false);
-                          }}
-                          className="flex flex-col gap-3"
+                        <IncomingCallTester
+                          onClick={() => setTesterGlow(true)}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div className="flex flex-row items-center gap-4">
+                {/* SCAD internship cycle */}
+                {userData?.role === 'scad' && (
+                  savedCycle ? (
+                    <div className="flex items-center gap-3 bg-[#E2F4F7] border-2 border-[#5DB2C7] rounded-full px-6 py-2 shadow font-semibold text-[#2a5f74] text-base" style={{ minHeight: 56 }}>
+                      <span className="font-bold flex items-center gap-2">
+                        <FontAwesomeIcon icon={faSuitcase} className="w-5 h-5 text-[#3298BA]" />
+                        {savedCycle.cycleType}'{String(savedCycle.cycleYear).slice(-2)}
+                      </span>
+                      <span className="text-sm text-gray-600">{formatDateRange(savedCycle.startDate, savedCycle.endDate)}</span>
+                      <button
+                        className="ml-2 p-1 rounded-full hover:bg-[#B8E1E9]/60 transition"
+                        onClick={() => { setSavedCycle(null); setFormOpen(true); setShowCycleModal(true); }}
+                        title="Edit cycle"
+                      >
+                        <FontAwesomeIcon icon={faEdit} className="w-4 h-4 text-[#3298BA]" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setHovered(true)}
+                      onMouseLeave={() => { setHovered(false); if (!formOpen) setShowCycleModal(false); }}
+                    >
+                      <button
+                        className={`group relative z-10 bg-[#5DB2C7] hover:bg-[#4AA0B5] text-white rounded-full shadow-md transition-all duration-500 flex items-center justify-center overflow-hidden h-10`}
+                        style={{ minWidth: 40, width: (hovered || formOpen) ? 320 : 40 }}
+                        onClick={() => { setFormOpen(!formOpen); setShowCycleModal(true); }}
+                        aria-label="Set Internship Cycle"
+                      >
+                        {(hovered || formOpen) ? (
+                          <span className="flex items-center justify-center w-full">
+                            <FontAwesomeIcon icon={faSuitcase} className="text-xl text-white mr-3" />
+                            <span className={`font-semibold text-white text-base text-center transition-all duration-300 overflow-hidden ${((hovered || formOpen) ? 'max-w-xs opacity-100 delay-300' : 'max-w-0 opacity-0')}`}
+                              style={{ display: 'inline-block' }}>
+                              {safeT('dashboard.setInternshipCycle')}
+                            </span>
+                          </span>
+                        ) : (
+                          <span className="flex items-center justify-center w-10 h-10">
+                            <FontAwesomeIcon icon={faSuitcase} className="text-xl text-white" />
+                          </span>
+                        )}
+                      </button>
+                      {/* Modal/Form */}
+                      {(hovered || formOpen) && showCycleModal && (
+                        <div className={`absolute left-1/2 -translate-x-1/2 top-14 bg-white rounded-xl shadow-xl p-6 z-50 w-80 transition-all duration-300 ${formOpen ? 'block' : 'hidden'}`}
+                          style={{ minWidth: 320 }}
                         >
-                          <label className="text-sm font-semibold text-[#2a5f74]">Start Date</label>
-                          <input
-                            type="date"
-                            value={startDate}
-                            onChange={e => setStartDate(e.target.value)}
-                            className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-white/90 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
-                          />
-                          <label className="text-sm font-semibold text-[#2a5f74]">End Date</label>
-                          <input
-                            type="date"
-                            value={endDate}
-                            min={startDate}
-                            onChange={e => setEndDate(e.target.value)}
-                            className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-white/90 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
-                          />
-                          <label className="text-sm font-semibold text-[#2a5f74]">Cycle</label>
-                          <input
-                            type="text"
-                            value={cycleType}
-                            readOnly
-                            className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-gray-100 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500 cursor-not-allowed"
-                          />
-                          <label className="text-sm font-semibold text-[#2a5f74]">Year</label>
-                          <input
-                            type="text"
-                            value={cycleYear}
-                            readOnly
-                            className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-gray-100 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500 cursor-not-allowed"
-                          />
-                          {error && <div className="text-red-500 text-xs text-center mt-1">{error}</div>}
-                          <div className="mt-2 text-sm text-gray-700 text-center">
-                            <span className="font-semibold">Cycle: </span>
-                            <span className="text-[#3298BA]">{getCycleString()}</span>
-                          </div>
-                          <button
-                            type="submit"
-                            className="mt-2 bg-[#5DB2C7] hover:bg-[#3298BA] text-white rounded-full px-4 py-2 font-semibold shadow-md transition-all duration-200 hover:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
-                            disabled={!!error || !cycleType || !startDate || !endDate}
+                          <form
+                            onSubmit={e => {
+                              e.preventDefault();
+                              if (error || !cycleType || !startDate || !endDate) return;
+                              setSavedCycle({ cycleType, cycleYear, startDate, endDate });
+                              setFormOpen(false); setShowCycleModal(false);
+                            }}
+                            className="flex flex-col gap-3"
                           >
-                            Save
-                          </button>
-                        </form>
+                            <label className="text-sm font-semibold text-[#2a5f74]">{safeT('dashboard.startDate')}</label>
+                            <input
+                              type="date"
+                              value={startDate}
+                              onChange={e => setStartDate(e.target.value)}
+                              className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-white/90 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
+                            />
+                            <label className="text-sm font-semibold text-[#2a5f74]">{safeT('dashboard.endDate')}</label>
+                            <input
+                              type="date"
+                              value={endDate}
+                              min={startDate}
+                              onChange={e => setEndDate(e.target.value)}
+                              className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-white/90 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500"
+                            />
+                            <label className="text-sm font-semibold text-[#2a5f74]">{safeT('dashboard.cycle')}</label>
+                            <input
+                              type="text"
+                              value={cycleType}
+                              readOnly
+                              className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-gray-100 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500 cursor-not-allowed"
+                            />
+                            <label className="text-sm font-semibold text-[#2a5f74]">{safeT('dashboard.year')}</label>
+                            <input
+                              type="text"
+                              value={cycleYear}
+                              readOnly
+                              className="rounded-full px-4 py-2 border-2 border-[#B8E1E9] bg-gray-100 text-[#1a3f54] shadow-md focus:outline-none focus:ring-2 focus:ring-[#5DB2C7] focus:border-[#5DB2C7] transition-all duration-300 placeholder-gray-500 cursor-not-allowed"
+                            />
+                            {error && <div className="text-red-500 text-xs text-center mt-1">{error}</div>}
+                            <div className="mt-2 text-sm text-gray-700 text-center">
+                              <span className="font-semibold">{safeT('dashboard.cycle')}: </span>
+                              <span className="text-[#3298BA]">{getCycleString()}</span>
+                            </div>
+                            <button
+                              type="submit"
+                              className="mt-2 bg-[#5DB2C7] hover:bg-[#3298BA] text-white rounded-full px-4 py-2 font-semibold shadow-md transition-all duration-200 hover:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                              disabled={!!error || !cycleType || !startDate || !endDate}
+                            >
+                              {safeT('dashboard.save')}
+                            </button>
+                          </form>
+                        </div>
+                      )}
+                    </div>
+                  )
+                )}
+                {/* Call button prominently displayed for eligible users */}
+                {showCallButton && (
+                  <div className="flex items-center">
+                    <span className="mr-2 text-sm font-medium text-gray-600 hidden sm:inline">
+                      {userData.role === 'scad' ? safeT('callInterface.callPROStudents') : safeT('callInterface.callSCADAdmin')}
+                    </span>
+                    <div className="relative">
+                      <CallButton />
+                      {/* Animated pulse effect to draw attention */}
+                      <span className="absolute -inset-1 rounded-full animate-ping bg-indigo-300 opacity-75" style={{ animationDuration: '3s' }}></span>
+                    </div>
+                  </div>
+                )}
+                <NotificationButton />
+                {/* Profile Icon and Badge Section */}
+                {userData && (
+                  <div className="flex items-center ml-4 relative">
+                    <ProfileIcon
+                      src={userData.profileImage}
+                      alt={userData.name || 'User'}
+                      size="lg"
+                    />
+                    {userData.accountType === 'PRO' && (
+                      <div className="absolute top-[-4px] right-[-10px]">
+                        <ProBadge size="sm" />
                       </div>
                     )}
                   </div>
-                )
-              )}
-              {/* Call button prominently displayed for eligible users */}
-              {showCallButton && (
-                <div className="flex items-center">
-                  <span className="mr-2 text-sm font-medium text-gray-600 hidden sm:inline">
-                    {userData.role === 'scad' ? 'Call PRO Students' : 'Call SCAD Admin'}
-                  </span>
-                  <div className="relative">
-                    <CallButton />
-                    {/* Animated pulse effect to draw attention */}
-                    <span className="absolute -inset-1 rounded-full animate-ping bg-indigo-300 opacity-75" style={{ animationDuration: '3s' }}></span>
-                  </div>
-                </div>
-              )}
-              <NotificationButton />
-              {/* Profile Icon and Badge Section */}
-              {userData && (
-                <div className="flex items-center ml-4 relative">
-                  <ProfileIcon
-                    src={userData.profileImage}
-                    alt={userData.name || 'User'}
-                    size="lg"
-                  />
-                  {userData.accountType === 'PRO' && (
-                    <div className="absolute top-[-4px] right-[-10px]">
-                      <ProBadge size="sm" />
-                    </div>
-                  )}
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
 

@@ -1,0 +1,1873 @@
+{
+  "sidebar": {
+    "language": "اللغة",
+    "logout": "تسجيل الخروج",
+    "loggingOut": "جار تسجيل الخروج...",
+    "companyUser": "شركة",
+    "scadUser": "SCAD",
+    "facultyUser": "جامعة",
+    "studentUser": "طالب",
+    "company": {
+      "myPosts": "منشوراتي",
+      "browseInternships": "تصفح التدريبات",
+      "myApplicants": "المتقدمين",
+      "myInterns": "المتدربين",
+      "myEvaluations": "تقييماتي"
+    },
+    "scad": {
+      "dashboard": "الرئيسية",
+      "studentList": "قائمة الطلاب",
+      "browseInternships": "تصفح التدريبات",
+      "studentEvaluations": "تقييمات الطلاب",
+      "statistics": "الإحصائيات",
+      "reports": "التقارير",
+      "workshop": "ورش العمل",
+      "workshops": {
+        "instructor": "المدرب",
+        "allInstructors": "جميع المدربين",
+        "addNewWorkshop": "إضافة ورشة عمل جديدة",
+        "management": {
+          "title": "إدارة ورش العمل",
+          "badge": "التطوير المهني",
+          "cardTitle": "بوابة إدارة ورش العمل",
+          "description": "إنشاء وجدولة وإدارة ورش عمل التطوير المهني التي تعزز الجاهزية المهنية للطلاب والإعداد للصناعة."
+        },
+        "form": {
+          "createNew": "إنشاء ورشة عمل جديدة",
+          "editWorkshop": "تعديل ورشة العمل",
+          "title": "عنوان ورشة العمل",
+          "titlePlaceholder": "أدخل عنوان ورشة العمل",
+          "description": "الوصف",
+          "descriptionPlaceholder": "أدخل وصف ورشة العمل",
+          "startDate": "تاريخ البدء",
+          "endDate": "تاريخ الانتهاء",
+          "location": "الموقع",
+          "locationPlaceholder": "أدخل الموقع (الافتراضي: عبر الإنترنت)",
+          "maxAttendees": "الحد الأقصى للحضور",
+          "maxAttendeesPlaceholder": "الحد الأقصى لعدد الحضور",
+          "category": "الفئة",
+          "categoryPlaceholder": "أدخل فئة ورشة العمل",
+          "imageUrl": "رابط صورة ورشة العمل",
+          "imageUrlPlaceholder": "أدخل رابط الصورة",
+          "instructorInfo": "معلومات المدرب",
+          "instructorName": "اسم المدرب",
+          "instructorNamePlaceholder": "أدخل اسم المدرب",
+          "instructorBio": "السيرة الذاتية للمدرب",
+          "instructorBioPlaceholder": "أدخل السيرة الذاتية للمدرب",
+          "instructorImage": "رابط صورة المدرب",
+          "instructorImagePlaceholder": "أدخل رابط صورة المدرب",
+          "agenda": "جدول أعمال ورشة العمل",
+          "agendaPlaceholder": "إضافة بند لجدول الأعمال",
+          "noAgendaItems": "لم تتم إضافة بنود لجدول الأعمال بعد",
+          "required": "*",
+          "preview": "معاينة ورشة العمل",
+          "dateTime": "التاريخ والوقت",
+          "cancel": "إلغاء",
+          "create": "إنشاء ورشة العمل",
+          "update": "تحديث ورشة العمل",
+          "success": {
+            "created": "تم إنشاء ورشة العمل بنجاح.",
+            "updated": "تم تحديث ورشة العمل بنجاح."
+          },
+          "validation": {
+            "titleRequired": "عنوان ورشة العمل مطلوب",
+            "descriptionRequired": "الوصف مطلوب",
+            "instructorRequired": "اسم المدرب مطلوب",
+            "instructorBioRequired": "السيرة الذاتية للمدرب مطلوبة",
+            "agendaRequired": "يجب إضافة بند واحد على الأقل لجدول الأعمال",
+            "endDateAfterStart": "يجب أن يكون وقت الانتهاء بعد وقت البدء"
+          }
+        }
+      }
+    },
+    "faculty": {
+      "dashboard": "الرئيسية",
+      "evaluations": "تقييمات",
+      "statistics": "الإحصائيات"
+    },
+    "student": {
+      "dashboard": "الرئيسية",
+      "browseInternships": "تصفح التدريبات",
+      "myApplications": "طلباتي",
+      "myInternships": "تدريباتي",
+      "myReports": "تقاريري",
+      "myEvaluations": "تقييماتي",
+      "workshops": "ورش العمل",
+      "notifications": "الإشعارات",
+      "onlineAssessments": "التقييمات على الإنترنت",
+      "myProfile": "ملفي الشخصي"
+    }
+  },
+  "company": {
+    "posts": {
+      "title": "منشورات التدريب",
+      "badge": "بوابة صاحب العمل",
+      "heading": "بوابة التدريب لأصحاب العمل",
+      "description": "مرحباً بكم في لوحة تحكم صاحب العمل حيث يمكنكم إنشاء وإدارة فرص التدريب للطلاب الموهوبين في جامعة GUC.",
+      "postOpportunities": "نشر فرص جديدة:",
+      "features": {
+        "createListings": "إنشاء قوائم تدريب مفصلة بعناوين وأوصاف مخصصة",
+        "specifySkills": "تحديد المهارات المطلوبة والمؤهلات والتخصصات المفضلة",
+        "setTimeframes": "وضع أطر زمنية واضحة وإعدادات العمل (عن بُعد/مختلط/في الموقع) وتفاصيل التعويض",
+        "addCompanyInfo": "إضافة معلومات الشركة وجهات اتصال المشرفين"
+      },
+      "connectionNote": "منصتنا تربطكم مباشرة بطلاب محفزين ومختارين مسبقاً تتوافق مهاراتهم واهتماماتهم مع احتياجات مؤسستكم.",
+      "searchPlaceholder": "البحث في التدريبات حسب المسمى الوظيفي، الوصف، المهارات...",
+      "createPost": "إنشاء منشور",
+      "createFirstPost": "إنشاء منشورك الأول",
+      "updatePost": "تحديث المنشور",
+      "createNewPost": "إنشاء منشور جديد",
+      "postPreview": "معاينة المنشور",
+      "noPostsFound": "لم يتم العثور على منشورات تدريب",
+      "createFirstMessage": "أنشئ منشورك الأول للبدء",
+      "noMatchingPosts": "لم يتم العثور على منشورات تطابق معاييرك",
+      "adjustSearchFilter": "جرب تعديل البحث أو المرشحات",
+      "success": "نجح!",
+      "updated": "تم التحديث!",
+      "postCreatedSuccess": "تم إنشاء المنشور بنجاح!",
+      "postUpdatedSuccess": "تم تحديث المنشور بنجاح!",
+      "form": {
+        "jobTitle": "المسمى الوظيفي",
+        "jobDescription": "وصف الوظيفة",
+        "startDate": "تاريخ البداية",
+        "duration": "المدة",
+        "internshipType": "نوع التدريب",
+        "internshipSetting": "بيئة العمل",
+        "paymentStatus": "حالة الدفع",
+        "salary": "الراتب",
+        "requirements": "المتطلبات",
+        "skills": "المهارات",
+        "jobTitlePlaceholder": "أدخل المسمى الوظيفي",
+        "jobDescriptionPlaceholder": "أدخل وصف الوظيفة بالتفصيل",
+        "selectDate": "اختر التاريخ",
+        "durationPlaceholder": "مثال: 3 أشهر، 6 أشهر",
+        "salaryPlaceholder": "مثال: 500$/شهر، 15$/ساعة",
+        "requirementsPlaceholder": "أدخل متطلبات الوظيفة والمؤهلات والتوقعات بالتفصيل",
+        "skillsPlaceholder": "اكتب مهارة واضغط Enter (مثال: JavaScript، React، UI/UX)",
+        "pleaseSelectStartDate": "يرجى اختيار تاريخ البداية",
+        "skillsHelpText": "ستظهر المهارات هنا كفقاعات بعد الضغط على Enter",
+        "saveChanges": "حفظ التغييرات",
+        "createPost": "إنشاء منشور",
+        "notSpecified": "غير محدد",
+        "jobTitlePreview": "المسمى الوظيفي"
+      },
+      "filters": {
+        "jobType": "نوع الوظيفة",
+        "jobSetting": "بيئة العمل",
+        "paymentStatus": "حالة الدفع",
+        "allJobTypes": "جميع أنواع الوظائف",
+        "allSettings": "جميع الإعدادات",
+        "allPaymentStatuses": "جميع حالات الدفع",
+        "fullTime": "دوام كامل",
+        "partTime": "دوام جزئي",
+        "contract": "عقد",
+        "internship": "تدريب",
+        "remote": "عن بُعد",
+        "onSite": "في الموقع",
+        "hybrid": "مختلط",
+        "paid": "مدفوع",
+        "unpaid": "غير مدفوع"
+      },
+      "post": {
+        "jobTitle": "المسمى الوظيفي",
+        "description": "الوصف",
+        "noDescription": "لم يتم توفير وصف",
+        "startDate": "تاريخ البداية",
+        "duration": "المدة",
+        "requirements": "المتطلبات",
+        "skills": "المهارات",
+        "applicants": "المتقدمين",
+        "notSpecified": "غير محدد",
+        "start": "البداية:",
+        "editPost": "تعديل المنشور",
+        "deletePost": "حذف المنشور",
+        "seeMore": "عرض المزيد",
+        "seeLess": "عرض أقل",
+        "beFirstToApply": "كن أول من يتقدم!",
+        "personHasApplied": "شخص واحد تقدم",
+        "peopleHaveApplied": "أشخاص تقدموا"
+      }
+    },
+    "browse": {
+      "title": "تصفح التدريبات",
+      "badge": "مستكشف التدريبات",
+      "heading": "مستكشف تدريبات الشركات",
+      "description": "تصفح فرص التدريب المنشورة من قبل المنظمات الشريكة عبر الصناعات والمواقع.",
+      "whyUse": "لماذا استخدام هذا المستكشف:",
+      "benefitsPlus": {
+        "identifyPartners": "يساعدكم هذا المستكشف في تحديد شركاء التدريب المحتملين وفحص مشاركتهم السابقة مع طلاب SCAD.",
+        "discoverLeaders": "اكتشفوا قادة الصناعة والجواهر المخفية التي تتوافق مع اهتمامات طلابكم المهنية."
+      },
+      "note": "ملاحظة: جميع الشركات المعروضة تم فحصها من قبل SCAD وتحتفظ بشراكات نشطة مع مؤسستنا.",
+      "searchPlaceholder": "البحث في التدريبات حسب المسمى الوظيفي أو اسم الشركة...",
+      "keyBenefits": "الفوائد الرئيسية للشركات الشريكة",
+      "benefits": {
+        "talentedStudents": "الوصول إلى طلاب موهوبين ذوي مهارات متخصصة",
+        "freshPerspectives": "وجهات نظر جديدة ونهج مبتكرة",
+        "futureTalent": "إمكانية تطوير مواهب مستقبلية بدوام كامل"
+      },
+      "addListingNote": "لإضافة إعلان التدريب الخاص بكم، استخدموا خيار \"نشر تدريب جديد\" في لوحة تحكم الشركة.",
+      "filters": {
+        "position": "المنصب",
+        "allPositions": "جميع المناصب",
+        "allCompanies": "جميع الشركات",
+        "company": "الشركة",
+        "industry": "الصناعة",
+        "duration": "المدة",
+        "payment": "الدفع",
+        "paid": "مدفوع",
+        "unpaid": "غير مدفوع",
+        "durationValue": "{duration} أشهر",
+        "allDurations": "جميع المدد",
+        "allIndustries": "جميع الصناعات",
+        "allPaymentStatuses": "جميع حالات الدفع",
+        "monthsLabel": "أشهر",
+        "industries": {
+          "technology": "تكنولوجيا",
+          "marketing": "تسويق",
+          "design": "تصميم",
+          "healthcare": "رعاية صحية"
+        }
+      }
+    },
+    "applications": {
+      "title": "إدارة الطلبات",
+      "badge": "بوابة المتقدمين",
+      "heading": "بوابة إدارة المتقدمين",
+      "description": "مراقبة وتقييم جميع طلبات الطلاب لفرص التدريب المنشورة في موقع مركزي واحد.",
+      "trackingFeatures": "ميزات تتبع المتقدمين:",
+      "features": {
+        "viewApplications": "عرض جميع الطلبات منظمة حسب المنصب وتاريخ التقديم",
+        "accessProfiles": "الوصول إلى ملفات شخصية شاملة للمرشحين ومواد التطبيق",
+        "reviewDocuments": "مراجعة الوثائق المرفقة (السير الذاتية، المحافظ، خطابات التقديم)",
+        "exploreLinks": "استكشاف الروابط الاجتماعية المهنية وأعمال الطلاب ذات الصلة",
+        "trackStatus": "تتبع حالة الطلب (جديد، تمت المراجعة، تمت المقابلة، تم الاختيار، مرفوض)"
+      },
+      "standardizedNote": "يتم عرض جميع مواد التطبيق بتنسيق موحد للمقارنة الفعالة مع الحفاظ على أسلوب العرض الفريد لكل طالب.",
+      "privacyNotice": "إشعار الخصوصية: معلومات الطلاب محمية ويجب استخدامها فقط لأغراض التقييم المتعلقة بفرص التدريب الخاصة بكم.",
+      "searchPlaceholder": "البحث بالاسم، البريد الإلكتروني، أو المنصب...",
+      "filters": {
+        "position": "المنصب",
+        "status": "الحالة",
+        "allPositions": "جميع المناصب",
+        "allStatus": "جميع الحالات"
+      },
+      "statuses": {
+        "pending": "قيد الانتظار",
+        "accepted": "مقبول",
+        "rejected": "مرفوض",
+        "finalized": "منتهي",
+        "current": "متدرب حالي",
+        "completed": "مكتمل",
+        "evaluated": "مُقيم"
+      }
+    },
+    "interns": {
+      "title": "لوحة إدارة المتدربين",
+      "badge": "لوحة إدارة المتدربين",
+      "heading": "لوحة إدارة المتدربين",
+      "description": "تعرض هذه النظرة الشاملة جميع طلاب SCAD الذين تدربوا في مؤسستكم عبر جميع البرامج والفترات الزمنية.",
+      "viewByCategory": "عرض حسب الفئة:",
+      "categories": {
+        "current": "المتدربون الحاليون: الطلاب الذين يعملون بنشاط في مناصبهم",
+        "completed": "التدريبات المكتملة: المتدربون السابقون في انتظار التقييم",
+        "evaluated": "المتدربون المقيمون: الطلاب مع تقييمات التغذية الراجعة المكتملة"
+      },
+      "managementFeatures": "ميزات الإدارة:",
+      "features": {
+        "filter": "تصفية الطلاب حسب القسم، المنصب، الفترة الزمنية، أو حالة التقييم",
+        "identify": "تحديد الطلاب مع التقييمات المعلقة"
+      },
+      "note": "ملاحظة: معلومات الطلاب محمية ويجب التعامل معها وفقاً لاتفاقية السرية الخاصة بكم مع SCAD.",
+      "searchPlaceholder": "البحث في المتدربين بالاسم، القسم، المنصب...",
+      "statuses": {
+        "current": "حالي",
+        "completed": "مكتمل",
+        "evaluated": "مُقيم",
+        "all": "الكل"
+      }
+    },
+    "evaluations": {
+      "title": "بوابة التقييم",
+      "badge": "بوابة التقييم",
+      "heading": "بوابة تقييم الطلاب الخاصة بكم",
+      "description": "قدموا تغذية راجعة قيمة حول المتدربين الذين أكملوا مناصب في مؤسستكم. تقييماتكم تساعد في تشكيل التطوير المهني للطلاب وتوجه التوظيفات المستقبلية.",
+      "components": "مكونات التقييم:",
+      "features": {
+        "rateProfessional": "تقييم الكفاءات المهنية (القدرة على التكيف، التواصل، حل المشاكل)",
+        "assessTechnical": "تقييم المهارات التقنية ذات الصلة بالمنصب",
+        "provideExamples": "تقديم أمثلة محددة على الإنجازات ومجالات النمو",
+        "answerQuestions": "الإجابة على أسئلة منظمة حول الأداء والإمكانات",
+        "addComments": "إضافة تعليقات خاصة لمديري المدرسة (اختياري)"
+      },
+      "confidentialityNote": "التقييمات تبقى سرية بين شركتكم وأعضاء هيئة التدريس المعتمدين وأعضاء SCAD."
+    },
+    "common": {
+      "filter": "تصفية",
+      "hideFilters": "إخفاء المرشحات",
+      "clearFilters": "مسح المرشحات",
+      "search": "بحث",
+      "all": "الكل",
+      "activeFilters": "المرشحات النشطة",
+      "noFiltersApplied": "لا توجد مرشحات مطبقة حالياً",
+      "noFiltersAvailable": "لا توجد مرشحات متاحة في الوقت الحالي",
+      "status": "الحالة"
+    },
+    "applicationDetails": {
+      "appliedOn": "تقدم في",
+      "applicantDetails": "تفاصيل المتقدم",
+      "major": "التخصص:",
+      "semester": "الفصل الدراسي:",
+      "applicationDocuments": "وثائق الطلب",
+      "resume": "السيرة الذاتية",
+      "coverLetter": "خطاب التقديم",
+      "portfolio": "الأعمال",
+      "currentApplicationStatus": "حالة الطلب الحالية",
+      "markAs": "تحديد كـ",
+      "noFurtherChanges": "لا توجد تغييرات أخرى متاحة للحالة"
+    },
+    "internDetails": {
+      "startDate": "تاريخ البداية:",
+      "skills": "المهارات:",
+      "degree": "الدرجة العلمية",
+      "jobInterests": "الاهتمامات المهنية",
+      "endedOn": "انتهى في",
+      "startedOn": "بدأ في",
+      "evaluateIntern": "تقييم المتدرب",
+      "noInternsFound": "لم يتم العثور على متدربين يطابقون معاييرك",
+      "adjustSearchFilter": "جرب تعديل البحث أو المرشحات"
+    },
+    "months": {
+      "full": {
+        "january": "يناير",
+        "february": "فبراير",
+        "march": "مارس",
+        "april": "أبريل",
+        "may": "مايو",
+        "june": "يونيو",
+        "july": "يوليو",
+        "august": "أغسطس",
+        "september": "سبتمبر",
+        "october": "أكتوبر",
+        "november": "نوفمبر",
+        "december": "ديسمبر"
+      },
+      "short": {
+        "jan": "ينا",
+        "feb": "فبر",
+        "mar": "مار",
+        "apr": "أبر",
+        "may": "ماي",
+        "jun": "يون",
+        "jul": "يول",
+        "aug": "أغس",
+        "sep": "سبت",
+        "oct": "أكت",
+        "nov": "نوف",
+        "dec": "ديس"
+      }
+    },
+    "evaluation": {
+      "skillAttributes": {
+        "adaptToChange": "القدرة على التكيف مع التغيير",
+        "analyticalSkills": "المهارات التحليلية",
+        "dataCollection": "مهارات جمع البيانات/بيانات البحث",
+        "creativity": "الإبداع",
+        "followUp": "مهارات المتابعة",
+        "interpersonal": "المهارات الشخصية مع الزملاء والمشرفين والعملاء",
+        "problemSolving": "حل المشكلات",
+        "punctuality": "الالتزام بالمواعيد",
+        "reporting": "مهارات إعداد التقارير",
+        "responsibility": "المسؤولية والمساءلة",
+        "stressHandling": "التعامل مع الضغط",
+        "takingInitiatives": "أخذ المبادرات",
+        "teamwork": "العمل الجماعي",
+        "timeManagement": "إدارة الوقت"
+      },
+      "technicalAttributes": {
+        "technicalBackground": "الخلفية التقنية",
+        "technicalKnowledge": "المعرفة التقنية",
+        "compatibility": "توافق المهارات التقنية مع الوظيفة"
+      },
+      "ratingLabels": {
+        "unsatisfactory": "غير مرضي",
+        "belowAverage": "دون المتوسط",
+        "satisfactory": "مرضي",
+        "aboveAverage": "فوق المتوسط",
+        "excellent": "ممتاز"
+      },
+      "tabs": {
+        "skillsAndProfessional": "المهارات والصفات المهنية",
+        "technical": "تقني"
+      },
+      "buttons": {
+        "submitEvaluation": "إرسال التقييم",
+        "saveChanges": "حفظ التغييرات",
+        "saveAsDraft": "حفظ كمسودة",
+        "submitting": "جارٍ الإرسال...",
+        "saving": "جارٍ الحفظ..."
+      },
+      "feedback": {
+        "updated": "تم التحديث!",
+        "success": "نجح!",
+        "submittedSuccess": "تم إرسال تقييمك بنجاح.",
+        "savedSuccess": "تم حفظ تغييراتك بنجاح.",
+        "updatedSuccess": "تم تحديث تقييمك بنجاح.",
+        "draftSaved": "تم حفظ تقييمك كمسودة بنجاح."
+      },
+      "placeholders": {
+        "skillsOther": "أضف أي ملاحظات أخرى حول المهارات...",
+        "technicalOther": "أضف أي ملاحظات تقنية أخرى...",
+        "technicalFeedback": "أضف ملاحظات حول {attribute}...",
+        "otherComments": "أضف أي ملاحظات إضافية حول أداء المتدرب...",
+        "tasks": "صف المهام التي قمت بها خلال فترة التدريب...",
+        "environment": "صف بيئة العمل وثقافة الشركة..."
+      },
+      "labels": {
+        "other": "أخرى:",
+        "yourRating": "تقييمك",
+        "recommend": "هل توصي بهذا التدريب للطلاب الآخرين؟",
+        "yes": "نعم",
+        "no": "لا",
+        "supervisorName": "اسم المشرف في الشركة",
+        "supervisorEmail": "بريد المشرف الإلكتروني",
+        "tasks": "ما هي المهام التي قمت بها؟",
+        "environment": "كيف كانت بيئة العمل؟",
+        "otherComments": "تعليقات أخرى",
+        "yourEvaluation": "تقييمك",
+        "editEvaluation": "تعديل التقييم",
+        "mostLikedComments": "التعليقات الأكثر إعجاباً",
+        "ratingScale": "مقياس التقييم",
+        "noReviews": "لا توجد مراجعات متاحة",
+        "liked": "أعجب"
+      },
+      "helpText": {
+        "otherCommentsHelp": "يرجى تقديم أي تعليقات إضافية حول نقاط القوة، مجالات التحسين، أو الأداء العام للمتدرب غير المغطاة في تقييم المهارات."
+      }
+    },
+    "evaluationsDashboard": {
+      "tabs": {
+        "submittedEvaluations": "التقييمات المرسلة",
+        "savedAsDraft": "محفوظ كمسودة"
+      },
+      "actions": {
+        "seeMore": "عرض المزيد",
+        "editEvaluation": "تعديل التقييم",
+        "deleteEvaluation": "حذف التقييم",
+        "clearSearchFilter": "مسح مرشح البحث",
+        "close": "إغلاق"
+      },
+      "labels": {
+        "draft": "مسودة",
+        "company": "الشركة:",
+        "date": "التاريخ:",
+        "skillsAndProfessional": "المهارات والصفات المهنية",
+        "technical": "تقني",
+        "skills": "مهارات",
+        "items": "عناصر",
+        "other": "أخرى:",
+        "comments": "تعليقات"
+      },
+      "emptyStates": {
+        "noSubmittedEvaluations": "لم يتم العثور على تقييمات مرسلة.",
+        "noDraftEvaluations": "لم يتم العثور على مسودات تقييمات.",
+        "noEvaluations": "لم يتم العثور على تقييمات.",
+        "noSearchResults": "لم يتم العثور على تقييمات {type} تطابق \"{searchTerm}\".",
+        "adjustFilters": "جرب تعديل البحث أو المرشحات"
+      }
+    }
+  },
+  "faculty": {
+    "dashboard": {
+      "title": "لوحة تحكم الكلية",
+      "reportReview": {
+        "badge": "مراجعة التقارير",
+        "title": "لوحة تحكم مراجعة تقارير الكلية",
+        "welcome": "مرحباً بكم في لوحة تحكم مراجعة تقارير الكلية. يمكنكم هنا:",
+        "features": {
+          "reviewReports": "مراجعة تقارير التدريب الطلابية المعلقة للتقييم",
+          "provideFeedback": "تقديم التغذية الراجعة والتعليقات على مشاركات الطلاب",
+          "trackEvaluated": "تتبع التقارير التي قمتم بتقييمها بالفعل",
+          "flagReports": "وضع علامة على التقارير التي تحتاج اهتماماً إضافياً"
+        },
+        "pendingReports": "{count} تقرير في انتظار المراجعة حالياً."
+      },
+      "studentEvaluations": {
+        "badge": "تقييمات الطلاب",
+        "title": "مراجعة تقارير تقييم التدريب",
+        "description": "تصفح واحصل على التقييمات المقدمة من الطلاب حول تجاربهم في التدريب. اعرض التقييمات ومعلومات الشركات والتغذية الراجعة التفصيلية لكل طالب.",
+        "features": {
+          "filterTitle": "تصفية",
+          "searchSortTitle": "البحث والترتيب",
+          "searchSortDescription": "ابحث بسهولة في التقييمات حسب اسم الطالب أو الشركة أو المشرف للوصول السريع إلى التقارير ذات الصلة.",
+          "seeMoreButton": "عرض المزيد",
+          "fullReportTitle": "تقرير التقييم الكامل",
+          "fullReportDescription": "اعرض تقييم الطالب الكامل بما في ذلك تغذيته الراجعة وتفاصيل الشركة والمشرف الرئيسي ومدة التدريب."
+        },
+        "qualityNote": "تساهم هذه التقييمات في تحسين جودة التدريب وتوجه الطلاب المستقبليين في اتخاذ خيارات مدروسة."
+      },
+      "statistics": {
+        "badge": "رؤى وتقارير",
+        "title": "إحصائيات وتقارير في الوقت الفعلي",
+        "sectionTitle": "لوحة تحكم الإحصائيات",
+        "features": {
+          "trackReports": "تتبع التقارير المقبولة والمرفوضة والمعلمة لكل دورة تدريبية",
+          "monitorReviewTime": "مراقبة متوسط وقت المراجعة عبر أعضاء هيئة التدريس",
+          "viewTopCourses": "عرض أهم الدورات المستخدمة في التدريبات",
+          "discoverTopCompanies": "اكتشاف الشركات الأعلى تقييماً بناءً على تقييمات الطلاب",
+          "identifyParticipation": "تحديد الشركات ذات أعلى مشاركة في التدريبات"
+        },
+        "strategicNote": "إنشاء تقارير شاملة بناءً على إحصائيات الوقت الفعلي لاتخاذ قرارات استراتيجية.",
+        "generateReport": "إنشاء تقرير"
+      }
+    },
+    "reports": {
+      "statistics": {
+        "totalReports": "إجمالي التقارير",
+        "acceptedReports": "التقارير المقبولة",
+        "pendingReports": "التقارير المعلقة",
+        "flaggedReports": "التقارير المعلمة",
+        "rejectedReports": "التقارير المرفوضة"
+      },
+      "table": {
+        "title": "تقارير الطلاب",
+        "filterReports": "تصفية التقارير",
+        "clearFilters": "مسح المرشحات",
+        "filterByMajor": "تصفية حسب التخصص",
+        "filterByStatus": "تصفية حسب الحالة",
+        "allMajors": "جميع التخصصات",
+        "allStatus": "جميع الحالات",
+        "major": "التخصص:",
+        "status": "الحالة:",
+        "headers": {
+          "reportNumber": "رقم التقرير",
+          "studentName": "اسم الطالب",
+          "major": "التخصص",
+          "internship": "التدريب",
+          "company": "الشركة",
+          "submissionDate": "تاريخ التقديم",
+          "status": "الحالة",
+          "actions": "الإجراءات"
+        },
+        "actions": {
+          "viewReport": "عرض التقرير",
+          "evaluateReport": "تقييم التقرير"
+        },
+        "statuses": {
+          "pending": "معلق",
+          "flagged": "معلم",
+          "rejected": "مرفوض",
+          "accepted": "مقبول"
+        },
+        "noResults": {
+          "noReportsMatch": "لا توجد تقارير تطابق المرشحات المحددة",
+          "noReportsAvailable": "لا توجد تقارير متاحة في الوقت الحالي",
+          "clearAllFilters": "مسح جميع المرشحات"
+        }
+      }
+    },
+    "evaluationsDashboard": {
+      "searchPlaceholder": {
+        "submitted": "ابحث في التقييمات المرسلة حسب الطالب أو الشركة أو المشرف...",
+        "draft": "ابحث في مسودات التقييمات حسب الطالب أو الشركة أو المشرف..."
+      },
+      "filterLabel": "المرشحات"
+    }
+  },
+  "facultyReportViewer": {
+    "navigation": {
+      "backToReports": "العودة إلى التقارير"
+    },
+    "header": {
+      "title": "مراجعة التقرير والتعليق",
+      "student": "الطالب:",
+      "submitted": "تم التقديم:",
+      "loadingReport": "جارٍ تحميل التقرير...",
+      "reportNotFound": "إذا استمر هذا، قد لا يكون التقرير موجوداً"
+    },
+    "evaluationMode": {
+      "title": "وضع التقييم",
+      "description": "أنت تقيم تقرير هذا الطالب. حدد أي نص لتمييز الأقسام الهامة أو إضافة تعليقات. تساعد تعليقاتك في تقديم ملاحظات بناءة وتقييم جودة التقرير.",
+      "instructions": "حدد أي نص في التقرير أدناه لتمييز الأقسام المهمة أو إضافة تعليقات. ستظهر تعليقاتك في الشريط الجانبي."
+    },
+    "feedback": {
+      "overallFeedback": "التغذية الراجعة الإجمالية",
+      "overallFeedbackPlaceholder": "قدم تغذية راجعة شاملة حول تقرير الطالب...",
+      "reportStatus": "حالة التقرير",
+      "chooseStatus": "اختر الحالة النهائية لهذا التقرير بعد مراجعتك:",
+      "status": "الحالة",
+      "reasonFor": "سبب {action}",
+      "reasonPlaceholder": "يرجى توضيح سبب {status} هذا التقرير...",
+      "flaggingHelp": "وضع علامة على التقرير يشير إلى مشاكل تحتاج حل قبل القبول.",
+      "rejectionHelp": "يرجى تقديم أسباب محددة لعدم استيفاء هذا التقرير للمتطلبات.",
+      "facultyFeedback": "ملاحظات الكلية",
+      "reason": "السبب"
+    },
+    "statuses": {
+      "pending": "معلق",
+      "accepted": "مقبول",
+      "rejected": "مرفوض",
+      "flagged": "معلم",
+      "reviewed": "تمت المراجعة"
+    },
+    "statusMessages": {
+      "pendingMessage": "سيبقى التقرير قيد المراجعة",
+      "acceptedMessage": "سيتم وضع علامة على التقرير كمقبول",
+      "rejectedMessage": "سيتم إرجاع التقرير للطالب مع التغذية الراجعة",
+      "flaggedMessage": "سيتم وضع علامة على التقرير لمشاكل محددة"
+    },
+    "actions": {
+      "saving": "جارٍ الحفظ...",
+      "saved": "تم الحفظ!",
+      "saveReview": "حفظ المراجعة",
+      "submitReview": "إرسال المراجعة",
+      "flagging": "وضع علامة",
+      "rejecting": "الرفض"
+    },
+    "alerts": {
+      "reasonRequired": "يرجى تقديم سبب لوضع علامة على التقرير أو رفضه."
+    }
+  },
+  "reportViewer": {
+    "annotations": {
+      "title": "التعليقات التوضيحية",
+      "noAnnotations": "لا توجد تعليقات توضيحية بعد. حدد النص لإضافة تمييزات أو تعليقات.",
+      "deleteTooltip": "حذف التعليق التوضيحي"
+    },
+    "annotationTypes": {
+      "comment": "تعليق",
+      "highlight": "تمييز"
+    },
+    "commentForm": {
+      "title": "إضافة تعليق",
+      "placeholder": "أضف تعليقك هنا...",
+      "save": "حفظ",
+      "cancel": "إلغاء"
+    },
+    "highlightForm": {
+      "title": "اختيار لون التمييز",
+      "preview": "معاينة:",
+      "cancel": "إلغاء"
+    },
+    "colors": {
+      "yellow": "أصفر",
+      "green": "أخضر",
+      "pink": "وردي",
+      "blue": "أزرق"
+    },
+    "errors": {
+      "noTextFound": "لم يتم العثور على نص لهذا التمييز"
+    },
+    "scadForm": {
+      "title": "اذكر سبب وضع علامة/رفض هذا التقرير",
+      "placeholder": "أدخل سببك هنا...",
+      "submitButton": "إرسال السبب",
+      "successMessage": "تم إرسال السبب!"
+    }
+  },
+  "internship": {
+    "videoSidebar": {
+      "defaultTitle": "متطلبات التدريب",
+      "watchFor": "شاهد: التدريبات لتخصص",
+      "genZFuture": "جيل Z يصوغ المستقبل",
+      "requirementsText": "تعرف على التدريبات التي تحتسب ضمن متطلبات التخرج بناءً على تخصصك وخطتك الأكاديمية.",
+      "quickResources": "موارد سريعة",
+      "academicGuide": "دليل المتطلبات الأكاديمية",
+      "contactAdvisor": "التواصل مع المرشد الأكاديمي",
+      "faqsInternships": "الأسئلة الشائعة حول التدريب"
+    },
+    "row": {
+      "timeAgo": {
+        "posted": "تم النشر",
+        "monthsAgo": "شهر",
+        "monthsAgoPlural": "أشهر",
+        "weeksAgo": "أسبوع",
+        "weeksAgoPlural": "أسابيع",
+        "daysAgo": "يوم",
+        "daysAgoPlural": "أيام",
+        "hoursAgo": "ساعة",
+        "hoursAgoPlural": "ساعات",
+        "minutesAgo": "دقيقة",
+        "minutesAgoPlural": "دقائق",
+        "justNow": "تم النشر للتو",
+        "ago": "منذ"
+      },
+      "statusTooltips": {
+        "accepted": "تم قبول طلبك من قبل الشركة! مبروك!",
+        "pending": "تم تقديم طلبك ولكن لم تتم مراجعته من قبل الشركة بعد.",
+        "finalized": "أنت من بين أفضل المتقدمين، وقد تقوم الشركة بتقديم عرض قريباً. في انتظار التأكيد النهائي.",
+        "rejected": "للأسف، لم يتم اختيار طلبك لهذا المنصب هذه المرة."
+      },
+      "labels": {
+        "startDate": "تاريخ البداية:",
+        "duration": "المدة:",
+        "skills": "المهارات:",
+        "jobDescription": "وصف الوظيفة",
+        "requirements": "المتطلبات",
+        "rateNotSpecified": "المعدل غير محدد",
+        "startedOn": "بدأ في",
+        "appliedOn": "تقدم في"
+      },
+      "buttons": {
+        "createReport": "إنشاء تقرير",
+        "evaluateCompany": "تقييم الشركة",
+        "apply": "تقدم",
+        "applied": "تم التقديم"
+      },
+      "statuses": {
+        "paid": "مدفوع",
+        "unpaid": "غير مدفوع",
+        "current": "حالي",
+        "completed": "مكتمل",
+        "evaluated": "مُقيم",
+        "pending": "قيد الانتظار",
+        "accepted": "مقبول",
+        "rejected": "مرفوض",
+        "finalized": "منتهي"
+      },
+      "tooltip": {
+        "statusInfo": "معلومات الحالة"
+      }
+    }
+  },
+  "modals": {
+    "deleteConfirmation": {
+      "title": "تأكيد الحذف",
+      "message": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "closeModal": "إغلاق النافذة"
+    }
+  },
+  "deleteTypes": {
+    "evaluation": "التقييم",
+    "evaluationDraft": "مسودة التقييم",
+    "post": "المنشور",
+    "workshop": "الورشة"
+  },
+  "common": {
+    "noResults": {
+      "notFound": "لم يتم العثور على {type} تطابق معاييرك",
+      "tryAdjusting": "جرب تعديل البحث أو المرشحات",
+      "noResultsGeneric": "لم يتم العثور على نتائج تطابق معاييرك",
+      "noInternships": "لم يتم العثور على تدريبات تطابق معاييرك",
+      "noApplications": "لم يتم العثور على طلبات تطابق معاييرك",
+      "noCompanies": "لم يتم العثور على شركات تطابق معاييرك",
+      "noReports": "لم يتم العثور على تقارير تطابق معاييرك",
+      "noNotifications": "لم يتم العثور على إشعارات تطابق معاييرك",
+      "noWorkshops": "لم يتم العثور على ورشات تطابق معاييرك",
+      "noStudents": "لم يتم العثور على طلاب يطابقون معاييرك",
+      "noAssessments": "لم يتم العثور على تقييمات تطابق معاييرك"
+    }
+  },
+  "evaluation": {
+    "card": {
+      "seeMore": "عرض المزيد",
+      "hide": "إخفاء",
+      "draft": "مسودة",
+      "editTooltip": "تعديل التقييم",
+      "deleteTooltip": "حذف التقييم"
+    },
+    "details": {
+      "supervisorName": "اسم المشرف:",
+      "supervisorEmail": "بريد المشرف الإلكتروني:",
+      "tasks": "المهام:",
+      "workEnvironment": "بيئة العمل:",
+      "recommendToOthers": "التوصية للآخرين:",
+      "internshipStart": "بداية التدريب:",
+      "internshipEnd": "نهاية التدريب:",
+      "yes": "نعم",
+      "no": "لا"
+    }
+  },
+  "scad": {
+    "workshop": {
+      "searchBarPlaceholder": "ابحث حسب العنوان أو اسم المحاضر..."
+    },
+    "reportsView": {
+      "modal": {
+        "student": "الطالب",
+        "major": "التخصص",
+        "company": "الشركة",
+        "exportPdf": "حفظ كملف PDF",
+        "close": "إغلاق"
+      },
+      "comments": {
+        "title": "التعليقات",
+        "noComments": "لا توجد تعليقات بعد. حدد النص لإضافة تمييز أو تعليقات."
+      }
+    },
+    "dashboard": {
+      "title": "طلبات الشركات",
+      "companyReview": {
+        "badge": "الإدارة",
+        "title": "بوابة مراجعة شراكة الشركات",
+        "description": "إدارة وتقييم طلبات المؤسسات للشراكة في التدريبات مع SCAD بكفاءة. مراجعة ملفات الشركات وعروض التدريب وبيانات الأداء التاريخية لاتخاذ قرارات مدروسة.",
+        "featuresTitle": "الميزات الرئيسية لإدارة الشراكات:",
+        "features": {
+          "reviewApplications": "مراجعة شاملة لطلبات وملفات الشركات الجديدة",
+          "evaluateQuality": "تقييم جودة التدريب ومدى توافقه مع المتطلبات الأكاديمية",
+          "studentFeedback": "دمج تغذية راجعة من الطلاب ومقاييس الرضا",
+          "partnershipTracking": "تتبع تاريخ الشراكات وإدارة التجديد"
+        },
+        "qualityNote": "الحفاظ على فرص تدريب عالية الجودة من خلال التقييم الشامل لعروض كل شركة وبيئة العمل وإمكانات تطوير الطلاب."
+      }
+    },
+    "reportView": {
+      "title": "مراجعة تقارير الطلاب",
+      "badge": "أكاديمي",
+      "cardTitle": "بوابة مراجعة تقارير الطلاب",
+      "description": "إدارة وتوزيع تقارير التدريب الداخلي للطلاب على أعضاء هيئة التدريس المناسبين للتقييم الأكاديمي والتغذية الراجعة.",
+      "features": {
+        "title": "ميزات إدارة التقارير:",
+        "items": {
+          "access": "الوصول إلى جميع تقارير التدريب الداخلي المقدمة منظمة حسب القسم والتاريخ",
+          "status": "عرض حالة التقرير (قيد الانتظار، مميز، مرفوض، مقبول)",
+          "assign": "تعيين التقارير لمراجعين من أعضاء هيئة التدريس بناءً على الخبرة",
+          "monitor": "مراقبة جداول المراجعة ومعدلات الإكمال للكلية",
+          "track": "تتبع دورات مراجعة التقارير وإعادة التقديم"
+        }
+      },
+      "contentControl": {
+        "title": "التحكم في المحتوى:",
+        "items": {
+          "standards": "ضمان توافق محتوى ورش العمل مع معايير الصناعة والاتجاهات الناشئة",
+          "quality": "الحفاظ على الجودة والاتساق عبر جميع عروض التطوير المهني",
+          "coordinate": "التنسيق مع مقدمي العروض من الصناعة وميسري الكلية",
+          "update": "تحديث المحتوى حسب الحاجة بناءً على تعليقات الطلاب وتغييرات الصناعة"
+        }
+      },
+      "academicNote": "تمثل هذه التقارير ذروة الخبرات الأكاديمية للتدريب الداخلي للطلاب، حيث تربط بين الممارسة المهنية والتعلم في الفصل الدراسي.",
+      "modal": {
+        "student": "الطالب",
+        "major": "التخصص",
+        "company": "الشركة",
+        "exportPdf": "حفظ كملف PDF",
+        "close": "إغلاق",
+        "reviewSubmitted": "تم إرسال المراجعة!",
+        "comments": {
+          "noComments": "لا توجد تعليقات بعد. حدد النص لإضافة تمييز أو تعليقات."
+        }
+      }
+    },
+    "modal": {
+      "student": "الطالب",
+      "major": "التخصص",
+      "company": "الشركة",
+      "exportPdf": "حفظ كملف PDF",
+      "close": "إغلاق"
+    },
+    "companyTable": {
+      "headers": {
+        "company": "الشركة",
+        "industry": "الصناعة",
+        "size": "الحجم"
+      },
+      "sidebar": {
+        "title": "تفاصيل الشركة",
+        "expand": "توسيع"
+      },
+      "emptyState": {
+        "noCompanies": "لم يتم العثور على شركات تطابق معاييرك",
+        "tryAdjusting": "جرب تعديل البحث أو المرشحات"
+      },
+      "searchPlaceholder": "البحث في الشركات حسب الاسم أو الصناعة ..."
+    },
+    "companyDetails": {
+      "title": "تفاصيل الشركة",
+      "profile": "الملف الشخصي",
+      "notePad": "مفكرة",
+      "companySize": "حجم الشركة",
+      "industry": "الصناعة",
+      "verificationDocs": "وثائق التحقق",
+      "noDocuments": "لم يتم تقديم وثائق.",
+      "registeredOn": "مسجل في",
+      "accept": "قبول",
+      "reject": "رفض",
+      "feedback": {
+        "accepted": "تم القبول!",
+        "rejected": "تم الرفض!",
+        "acceptedMessage": "تم الموافقة على هذه الشركة وإضافتها إلى قائمتك.",
+        "rejectedMessage": "تم رفض هذه الشركة وإزالتها من قائمتك."
+      }
+    },
+    "filters": {
+      "industry": "الصناعة",
+      "size": "الحجم",
+      "allIndustries": "جميع الصناعات",
+      "allSizes": "جميع الأحجام"
+    },
+    "studentDirectory": {
+      "title": "دليل الطلاب",
+      "searchPlaceholder": "ابحث عن الطلاب بالاسم أو البريد الإلكتروني أو التخصص ...",
+      "infoCard": {
+        "badge": "الدليل",
+        "title": "إدارة دليل الطلاب",
+        "description": "الوصول إلى ملفات شاملة لجميع طلاب SCAD المسجلين في نظام التدريب للدعم الأكاديمي ومواءمة الفرص.",
+        "studentInfoAvailableTitle": "المعلومات المتاحة عن الطلاب:",
+        "items": {
+          "academicDetails": "تفاصيل أكاديمية (التخصص، الفرعي، تاريخ التخرج المتوقع)",
+          "skillsInventory": "جرد المهارات ومستويات الكفاءة",
+          "internshipHistory": "سجل التدريب ونتائج التقييم",
+          "assessmentResults": "نتائج التقييم واهتمامات المهنة",
+          "contactInfo": "معلومات الاتصال وتفضيلات التواصل"
+        },
+        "privacyNotice": "إشعار الخصوصية: الوصول إلى معلومات الطلاب مقصور على الموظفين المصرح لهم ويخضع للوائح خصوصية التعليم. استخدم المعلومات فقط لأغراض تعليمية مشروعة."
+      },
+      "filters": {
+        "major": "التخصص",
+        "status": "الحالة",
+        "semester": "الفصل الدراسي",
+        "allMajors": "جميع التخصصات",
+        "allStatuses": "جميع الحالات",
+        "allSemesters": "جميع الفصول"
+      }
+    },
+    "studentList": {
+      "tabs": {
+        "all": "الكل",
+        "current": "حالي",
+        "completed": "مكتمل",
+        "evaluated": "مُقيم"
+      },
+      "emptyState": {
+        "noStudents": "لم يتم العثور على طلاب يطابقون معاييرك",
+        "adjust": "جرب تعديل البحث أو المرشحات"
+      }
+    },
+    "studentProfile": {
+      "sections": {
+        "academicInformation": "المعلومات الأكاديمية",
+        "education": "التعليم",
+        "skills": "المهارات",
+        "personalityTraits": "سمات الشخصية",
+        "jobInterests": "الاهتمامات المهنية",
+        "experience": "الخبرة",
+        "internships": "التدريبات"
+      },
+      "fields": {
+        "studentId": "معرّف الطالب",
+        "semester": "الفصل الدراسي",
+        "gpa": "المعدل التراكمي",
+        "major": "التخصص",
+        "faculty": "الكلية"
+      },
+      "rating": "التقييم",
+      "notAvailable": "غير متوفر"
+    },
+    "student": {
+      "viewProfile": "عرض الملف الشخصي"
+    },
+    "internships": {
+      "title": "قائمة التدريبات",
+      "badge": "الإشراف",
+      "management": {
+        "title": "إدارة قائمة التدريبات",
+        "description": "مراقبة والإشراف على جميع فرص التدريب النشطة المنشورة من قبل الشركات الشريكة المعتمدة على المنصة.",
+        "features": {
+          "title": "ميزات الإشراف:",
+          "viewDetails": "عرض التفاصيل الكاملة لجميع قوائم التدريب الحالية",
+          "filterOpportunities": "تصفية الفرص حسب الشركة، الصناعة، الموقع، أو الحالة",
+          "verifyCompliance": "التحقق من الامتثال لإرشادات ومتطلبات النشر",
+          "reviewCompensation": "مراجعة تفاصيل التعويضات وظروف العمل",
+          "ensureSkills": "ضمان متطلبات مستوى المهارات المناسبة والتوافق التعليمي"
+        },
+        "note": "تمكن لوحة المعلومات هذه مديري SCAD من الحفاظ على جودة وسلامة جميع فرص التدريب المتاحة للطلاب، مع ضمان توافقها مع الأهداف التعليمية والمعايير المهنية."
+      }
+    },
+    "evaluationAnalytics": {
+      "title": "تحليلات التقييم",
+      "badge": "تحليلات",
+      "cardTitle": "تحليلات تقييم التدريب الميداني",
+      "description": "الوصول إلى تعليقات الطلاب حول تجارب التدريب وتحليلها للحفاظ على شراكات عالية الجودة وإبلاغ المستشارين الأكاديميين.",
+      "insights": {
+        "title": "رؤى التقييم:",
+        "items": {
+          "assessments": "عرض تقييمات الطلاب الشاملة للشركات الشريكة",
+          "ratings": "مراقبة التقييمات عبر المقاييس الرئيسية (الإرشاد، بيئة التعلم، عبء العمل)",
+          "themes": "تتبع المواضيع المتكررة في التعليقات النوعية",
+          "companies": "تحديد الشركات المتميزة وتلك التي تحتاج إلى تدخل",
+          "trends": "مقارنة اتجاهات التقييم عبر الصناعات والفترات الزمنية"
+        }
+      },
+      "importantNote": "هام: تلعب تقييمات الطلاب دوراً حاسماً في تحديد تجديد الشراكات المستقبلية وتطوير المناهج الدراسية."
+    },
+    "statisticsDashboard": {
+      "title": "لوحة الإحصائيات",
+      "badge": "تحليلات",
+      "cardTitle": "لوحة الإحصائيات والتقارير",
+      "description": "منصة تحليلية شاملة لمراقبة مؤشرات أداء برنامج التدريب والاتجاهات.",
+      "features": {
+        "title": "ميزات التحليلات الرئيسية:",
+        "items": {
+          "realtime": "لوحة معلومات في الوقت الفعلي مع تقارير ومقاييس مرئية",
+          "topPerformers": "أفضل الشركات والدورات بناءً على أداء الطلاب",
+          "tracking": "تتبع حالة تقارير التدريب عبر الدورات الأكاديمية",
+          "faculty": "تحليل وقت مراجعة أعضاء هيئة التدريس ومقاييس الكفاءة",
+          "reports": "تقارير PDF قابلة للحفظ للإدارة الأكاديمية"
+        }
+      },
+      "note": "استخدم مجموعة التحليلات هذه لتحديد الاتجاهات وقياس فعالية البرنامج واتخاذ قرارات مبنية على البيانات لتحسين نتائج التدريب."
+    },
+    "workshops": {
+      "instructor": "المدرب",
+      "allInstructors": "جميع المدربين",
+      "addNewWorkshop": "إضافة ورشة عمل جديدة",
+      "management": {
+        "title": "إدارة ورش العمل",
+        "badge": "التطوير المهني",
+        "cardTitle": "بوابة إدارة ورش العمل",
+        "description": "إنشاء وجدولة وإدارة ورش عمل التطوير المهني التي تعزز الجاهزية المهنية للطلاب والإعداد للصناعة."
+      },
+      "form": {
+        "createNew": "إنشاء ورشة عمل جديدة",
+        "editWorkshop": "تعديل ورشة العمل",
+        "title": "عنوان ورشة العمل",
+        "titlePlaceholder": "أدخل عنوان ورشة العمل",
+        "description": "الوصف",
+        "descriptionPlaceholder": "أدخل وصف ورشة العمل",
+        "startDate": "تاريخ البدء",
+        "endDate": "تاريخ الانتهاء",
+        "location": "الموقع",
+        "locationPlaceholder": "أدخل الموقع (الافتراضي: عبر الإنترنت)",
+        "maxAttendees": "الحد الأقصى للحضور",
+        "maxAttendeesPlaceholder": "الحد الأقصى لعدد الحضور",
+        "category": "الفئة",
+        "categoryPlaceholder": "أدخل فئة ورشة العمل",
+        "imageUrl": "رابط صورة ورشة العمل",
+        "imageUrlPlaceholder": "أدخل رابط الصورة",
+        "instructorInfo": "معلومات المدرب",
+        "instructorName": "اسم المدرب",
+        "instructorNamePlaceholder": "أدخل اسم المدرب",
+        "instructorBio": "السيرة الذاتية للمدرب",
+        "instructorBioPlaceholder": "أدخل السيرة الذاتية للمدرب",
+        "instructorImage": "رابط صورة المدرب",
+        "instructorImagePlaceholder": "أدخل رابط صورة المدرب",
+        "agenda": "جدول أعمال ورشة العمل",
+        "agendaPlaceholder": "إضافة بند لجدول الأعمال",
+        "noAgendaItems": "لم تتم إضافة بنود لجدول الأعمال بعد",
+        "required": "*",
+        "preview": "معاينة ورشة العمل",
+        "dateTime": "التاريخ والوقت",
+        "cancel": "إلغاء",
+        "create": "إنشاء ورشة العمل",
+        "update": "تحديث ورشة العمل",
+        "success": {
+          "created": "تم إنشاء ورشة العمل بنجاح.",
+          "updated": "تم تحديث ورشة العمل بنجاح."
+        },
+        "validation": {
+          "titleRequired": "عنوان ورشة العمل مطلوب",
+          "descriptionRequired": "الوصف مطلوب",
+          "instructorRequired": "اسم المدرب مطلوب",
+          "instructorBioRequired": "السيرة الذاتية للمدرب مطلوبة",
+          "agendaRequired": "يجب إضافة بند واحد على الأقل لجدول الأعمال",
+          "endDateAfterStart": "يجب أن يكون وقت الانتهاء بعد وقت البدء"
+        }
+      }
+    }
+  },
+  "uploadDocuments": {
+    "title": "تحميل المستندات",
+    "resume": {
+      "label": "السيرة الذاتية",
+      "required": "*",
+      "error": "السيرة الذاتية مطلوبة ويجب اكتمال تحميلها."
+    },
+    "coverLetter": {
+      "label": "خطاب التقديم",
+      "textLabel": "اكتب خطاب التقديم الخاص بك",
+      "placeholder": "اكتب خطاب التقديم هنا..."
+    },
+    "links": {
+      "label": "أضف رابط لملفك الشخصي على GitHub و/أو موقعك الإلكتروني",
+      "placeholder": "https://example.com"
+    },
+    "buttons": {
+      "upload": "تحميل",
+      "cancel": "إلغاء"
+    },
+    "feedback": {
+      "success": "تم بنجاح!",
+      "successMessage": "تم تحميل المستندات الخاصة بك بنجاح."
+    }
+  },
+  "student": {
+    "dashboard": {
+      "workshops": {
+        "backToWorkshops": "العودة إلى ورش العمل"
+      },
+      "searchPlaceholder": "ابحث عن فرص التدريب المرشح بها...",
+      "browseInternshipsSearchPlaceholder": "ابحث عن فرص التدريب حسب المنصب أو الشركة ...",
+      "appliedInternshipsSearchPlaceholder": "ابحث عن فرص التدريب المتقدم حسب الشركة أو المنصب ...",
+      "myInternshipsSearchPlaceholder": "ابحث عن فرص التدريب حسب الشركة أو المنصب ...",
+      "personalizedCard": {
+        "badge": "مخصص",
+        "title": "فرص التدريب المخصصة لك",
+        "description": "تعرض هذه الصفحة فرص التدريب المختارة خصيصاً لك بناءً على ملفك الشخصي وتفضيلاتك الفريدة.",
+        "howItWorks": {
+          "title": "كيف تعمل هذه التوصيات:",
+          "jobInterests": "متوافقة مع اهتماماتك الوظيفية وأهدافك المهنية المحددة",
+          "industries": "مصفاة حسب الصناعات وبيئات العمل المفضلة لديك",
+          "ratings": "تتضمن المناصب التي حصلت على تقييمات عالية من متدربي SCAD السابقين",
+          "updates": "يتم تحديثها بانتظام عند توفر فرص جديدة"
+        },
+        "footer": "خذ وقتك لاستكشاف هذه الاقتراحات المخصصة - فهي تمثل الفرص التي يمكن أن تتألق فيها مواهبك واهتماماتك المحددة."
+      },
+      "browseInternshipsPersonalizedCard": {
+        "title": "استكشف فرص التدريب المهنية",
+        "description": "استكشف فرص التدريب المختارة خصيصاً من قبل SCAD وشركائنا. تم تصميم هذه المناصب لتعطيك تجربة العالم الحقيقي أثناء بناء محفظتك المهنية.",
+        "badge": "فرص",
+        "howItWorks": {
+          "title": "لماذا تهم هذه الفرص:",
+          "potential": "المرجعية الأكاديمية والمرجعية المهنية",
+          "networking": "الإتصالات المهنية التي يمكن أن تؤدي إلى العمل الدوامي",
+          "portfolio": "المشاريع المهنية لبناء محفظتك"
+        },
+        "footer": "تذكر أن تشاهد فيديونا المعلومية الخاصة بنا \"ما الذي يجعل تدريبك مهماً\" لتتعلم كيفية تحقيق أقصى استفادة من تجربة التدريب!"
+      },
+      "appliedInternshipsPersonalizedCard": {
+        "title": "تتبع وإدارة كل تطبيقات التدريب الخاصة بك في لوحة تحكم مركزية.",
+        "description": "تتبع وإدارة كل تطبيقات التدريب الخاصة بك في لوحة تحكم مركزية.",
+        "badge": "تطبيقات",
+        "howItWorks": {
+          "pending": "قيد الانتظار",
+          "accepted": "مقبول",
+          "rejected": "مرفوض",
+          "finalized": "مكتمل",
+          "pendingDescription": "تطبيقات الانتظار لا تزال تقيمها الشركات",
+          "acceptedDescription": "تطبيقات مقبولة تعني أنك حاصل على الخطوات التالية",
+          "rejectedDescription": "تطبيقات مرفوضة غير ناجحة هذه المرة",
+          "finalizedDescription": "تطبيقات مكتملة مؤكدة وجاهزة للبدء"
+        },
+        "footer": "استخدم المرشحات لتصفية التطبيقات حسب الشركة أو المنصب أو الحالة!"
+      },
+      "myInternshipsPersonalizedCard": {
+        "title": "لوحة تحكم التدريبات الخاصة بك",
+        "description": "إدارة كل تدريباتك في مكان واحد.",
+        "badge": "لوحة تحكم",
+        "howItWorks": {
+          "current": "حالي",
+          "completed": "مكتمل",
+          "evaluated": "مُقيم",
+          "currentDescription": "التدريبات الحالية تستمر",
+          "completedDescription": "التدريبات المكتملة تنتظر تقريرك وتقييمك",
+          "evaluatedDescription": "التدريبات المُقيمة قد تمت مراجعتها من قبل مديرك"
+        },
+        "footer": "استخدم المرشحات لتصفية التدريبات حسب الشركة أو المنصب أو الحالة!"
+      },
+      "evaluationsPersonalizedCard": {
+        "title": "تقييماتك",
+        "description": "إدارة التقييمات الخاصة بك للشركات التي أنهيت فيها التدريبات. تتبع التقييمات المقدمة والمسودات هنا.",
+        "badge": "تقييمات",
+        "howItWorks": {
+          "submitted": "مقدم",
+          "draft": "مسودة",
+          "submittedDescription": "التقييمات التي أنهيتها وقدمتها لتجربة التدريب.",
+          "draftDescription": "التقييمات التي بدأتها ولم تقدمها بعد. استمر في العمل عليها."
+        },
+        "footer": "تقييماتك توفر تعليقات قيمة للشركات وتساعد الطلاب المستقبليين على اتخاذ قرارات مدروسة."
+      },
+      "myReportsPersonalizedCard": {
+        "title": "نظام إدارة التقارير الطلابية",
+        "description": "مرحبا بك في لوحة تحكم تقاريرك الطلابية. هنا يمكنك مراقبة وإدارة كل تقارير التدريب الخاصة بك في مكان واحد.",
+        "howItWorks": {
+          "pending": "قيد الانتظار",
+          "flagged": "مشار إليه",
+          "rejected": "مرفوض",
+          "accepted": "مقبول",
+          "pendingDescription1": "في انتظار المراجعة",
+          "pendingDescription2": "تم تقديم تقريرك ولكن لم يتم التقييم بعد. لا إجراء إضافي مطلوب.",
+          "flaggedDescription1": "يحتاج إلى مراجعة",
+          "flaggedDescription2": "مراجعة التعليقات المدرسية وإعادة تقديم تقريرك المحدث.",
+          "rejectedDescription1": "غير مقبول",
+          "rejectedDescription2": "لم يتم الوفاء بالمتطلبات. انظر إلى تعليقات المدرس للإرشاد.",
+          "acceptedDescription1": "مقبول",
+          "acceptedDescription2": "تمت الموافقة على تقريرك. لا إجراء إضافي مطلوب."
+        },
+        "footer1": "تقارير مشار إليها و",
+        "footer2": "مرفوضة تحتاج إلى انتباهك"
+      },
+      "workshopsInfoPersonalizedCard": {
+        "title": "ورش العمل ومركز التطوير المهني",
+        "description": "تعزز مهاراتك وتوسع علمك المهني من خلال مركز ورش العمل الموسع.",
+        "badge": "تطوير مهني",
+        "availableWorkshops": {
+          "title": "أنواع ورش العمل المتاحة:",
+          "type1": "ورش العمل القادمة",
+          "type1Description": "تصفح وقم بالتسجيل للجلسات المجدولة في المستقبل",
+          "type2": "مباشر",
+          "type2Description": "انضم إلى ورش العمل النشطة التي تحدث في الوقت الفعلي",
+          "type3": "مكتبة الطلب",
+          "type3Description": "الوصول إلى الجلسات المسجلة المتاحة في أي وقت"
+        },
+        "workshopBenefits": {
+          "title": "فوائد ورش العمل:",
+          "benefit1": "تعزيز مهارات صناعية مقدرة على قبولها من قبل الشركات",
+          "benefit2": "تعلم التقنيات العملية من المهنيين العاملين",
+          "benefit3": "الاتصال بالممثلين الصناعيين والزملاء",
+          "benefit4": "استلام شهادات الانتهاء لمحفظتك"
+        },
+        "footer": "يتم تصميم كل ورشة العمل بعناية للتعامل مع المهارات والمجالات المهمة التي تدعم تعلمك الأكاديمي وتستعد للنجاح المهني."
+      },
+      "notificationsPersonalizedInfoCard": {
+        "title": "مركز الإشعارات",
+        "description": "ابق على اطلاع ولا تفوت على التحديثات المهمة المتعلقة برحلتك المهنية.",
+        "badge": "إشعارات",
+        "notificationHub": {
+          "title": "مركز الإشعارات الخاص بك:",
+          "type1": "تحديثات التطبيق",
+          "type1Description": "تغييرات الحالة والتعليقات على تطبيقات التدريب الخاصة بك",
+          "type2": "تنبيهات التقارير",
+          "type2Description": "تعليقات جديدة أو تغييرات الحالة على تقاريرك المقدمة",
+          "type3": "تذكيرات الورشات",
+          "type3Description": "الجلسات القادمة التي قمت بالتسجيل لها والفرص المتاحة في اللحظة الأخيرة",
+          "type4": "تنبيهات المواعيد",
+          "type4Description": "التوقيت المهم لتطبيقات التدريب وتوقيت تقديم التقارير",
+          "type5": "فرص مخصصة",
+          "type5Description": "تدريبات جديدة أو ورشات تتطابق مع ملفك الشخصي",
+          "type6": "محتوى مميز",
+          "type6Description": "ورشات وفعاليات مميزة للطلاب المتميزين فقط"
+        },
+        "footer": "بعض إشعارات الورشات مخصصة للطلاب المتميزين فقط. قم بترقية ملفك للوصول إلى هذه الفرص المهنية المميزة.",
+        "footerLabel": "ملاحظة:"
+      },
+      "onlineAssessmentsInfoCard": {
+        "title": "مركز التقييمات على الإنترنت",
+        "description": "اكتشف قدراتك المهنية وتفضيلاتك من خلال أدوات التقييم الشاملة.",
+        "badge": "تحديد الذات",
+        "assessmentBenefits": {
+          "title": "فوائد التقييم:",
+          "benefit1": "الحصول على رؤى قيمة لقدراتك الطبيعية وتفضيلاتك المهنية",
+          "benefit2": "الحصول على توصيات تدريبية وورشات مخصصة",
+          "benefit3": "التعبير عن خصائصك الفريدة للشركات المستهدفة",
+          "benefit4": "تحديد المسارات المهنية التي تتوافق مع شخصيتك وقدراتك"
+        },
+        "assessmentTypes": {
+          "personalityAssessment": {
+            "title": "تقييم الشخصية",
+            "description": "فهم أسلوب عملك وتفضيلات الفريق"
+          },
+          "skillsProficiency": {
+            "title": "مهارات المهنية",
+            "description": "قياس مستويات تناسقك المهنية والمهارات الناشئة"
+          },
+          "careerInterestInventory": {
+            "title": "مخزن الاهتمامات المهنية",
+            "description": "اكتشف المجالات والمناصب التي تتوافق مع اهتماماتك"
+          },
+          "aptitudeIndicators": {
+            "title": "مؤشرات القدرة",
+            "description": "تحديد قدراتك الطبيعية في مختلف المجالات"
+          }
+        },
+        "footer": "تم تحليل النتائج لإنشاء ملفك الشخصي المخصص الذي يساعد على تخصيص التوصيات عبر المنصة."
+      },
+      "notificationsList": {
+        "proNote": "تفاصيل مقفلة - قم بترقية للوصول إلى تفاصيل المتدرب الذي عرض ملفك",
+        "profileViews": "عرض الملف الشخصي",
+        "all": "جميع",
+        "noProfileViewsFoundMatchingYourCriteria": "لا يوجد عرض ملف شخصي يتطابق مع معاييرك",
+        "tryAdjustingYourFilters": "حاول ضبط المرشحات",
+        "completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile": "أكمل مدة التدريب لفتح الميزات المميزة للوصول إلى الشركات التي تهتم بملفك الشخصي",
+        "companies": "شركات",
+        "haveViewedYourProfile": "عرض ملفك الشخصي",
+        "viewedProfile1": "مدير الموارد البشرية في ",
+        "viewedProfile2": " قام بعرض ملفك الشخصي",
+        "filtered": "مفلتر",
+        "recently": "مؤخراً",
+        "upgradeToPROToSeeDetails": "قم بالترقية إلى PRO لرؤية التفاصيل"
+      },
+      "profilePersonalizedCard": {
+        "badge": "ملفك الشخصي",
+        "title": "إدارة ملفك الشخصي",
+        "description": "ملفك الشخصي هو الأساس لرحلتك المهنية.",
+        "whyYourProfileMatters": {
+          "title": "لماذا يهم ملفك الشخصي:",
+          "point1": "يعمل على محرك التوصيات المخصص للتدريبات والورشات",
+          "point2": "يكون مرئيًا للشركات عندما تقدم للوظائف",
+          "point3": "يساعد المدرسين على تقديم توصيات ودعم أكثر تحديدًا",
+          "point4": "يعمل كأساس لتطوير العلامة التجارية المهنية الخاصة بك"
+        },
+        "remember": "تذكر: قم بتحديث ملفك الشخصي بشكل منتظم لتعكس المهارات والخبرات والأهداف المهنية الجديدة كما تتطور."
+      },
+      "statusPills": {
+        "industryMatch": "توافق المجال",
+        "recommendedByPastInterns": "مرشح به من قبل المتدربين السابقين",
+        "jobInterestMatch": "توافق الاهتمامات المهنية",
+        "all": "جميع",
+        "recent": "جديد",
+        "recommended": "مرشح به",
+        "applied": "متقدم",
+        "current": "حالي",
+        "completed": "مكتمل",
+        "evaluated": "مُقيم",
+        "pending": "قيد الانتظار",
+        "rejected": "مرفوض",
+        "accepted": "مقبول",
+        "finalized": "مكتمل",
+        "upcoming": "قادم",
+        "live": "مباشر",
+        "prerecorded": "مسجل مسبقاً"
+      },
+      "filterSections": {
+        "fullTime": "وقت كامل",
+        "partTime": "وقت جزئي",
+        "contract": "عقد",
+        "remote": "عن بعد",
+        "onSite": "في الموقع",
+        "hybrid": "مختلط",
+        "paid": "مدفوع",
+        "unpaid": "غير مدفوع",
+        "jobType": "نوع الوظيفة",
+        "jobSetting": "بيئة العمل",
+        "paymentStatus": "حالة الدفع",
+        "allJobTypes": "جميع الأنواع",
+        "allJobSettings": "جميع البيئات",
+        "allPaymentTypes": "جميع الحالات",
+        "technology": "تكنولوجيا",
+        "design": "تصميم",
+        "marketing": "تسويق",
+        "healthcare": "صحة",
+        "3 months": "3 أشهر",
+        "6 months": "6 أشهر",
+        "4 months": "4 أشهر",
+        "12 months": "12 أشهر",
+        "allDurations": "جميع المدد",
+        "allIndustries": "جميع الصناعات",
+        "allCompanies": "جميع الشركات",
+        "allContent": "جميع المحتويات",
+        "recommended": "مرشح به",
+        "applied": "متقدم",
+        "current": "حالي",
+        "company": "الشركة",
+        "industry": "الصناعة",
+        "position": "المنصب",
+        "duration": "المدة",
+        "allInternships": "جميع التدريبات",
+        "allPositions": "جميع المناصب",
+        "contentType": "نوع المحتوى",
+        "status": "الحالة",
+        "allStatuses": "جميع الحالات"
+      },
+      "reportCards": {
+        "appealSuccessTitle": "تم بنجاح!",
+        "appealSuccessMessage": "تم إرسال طلب الانتقاء بنجاح ويتم التحقق منه.",
+        "tabs": {
+          "submitted": "تقارير مقدمة",
+          "drafts": "محفوظة كمسودات"
+        },
+        "makeAnAppeal": "طلب انتقاء",
+        "appealPending": "انتقاء قيد الانتظار",
+        "cancel": "إلغاء",
+        "submitAppeal": "إرسال انتقاء",
+        "enterYourAppealMessage": "أدخل رسالة الانتقاء الخاصة بك...",
+        "company": "الشركة",
+        "major": "التخصص",
+        "submitted": "مقدمة",
+        "seeMore": "عرض المزيد",
+        "statusInfo": "معلومات الحالة",
+        "statusTooltips": {
+          "accepted": "تمت مراجعة تقريرك والموافقة عليه من قبل عضو هيئة التدريس. لا يلزم اتخاذ أي إجراء آخر لهذا التسليم.",
+          "pending": "تم تقديم تقريرك ولكن لم تتم مراجعته بعد من قبل عضو هيئة التدريس المسؤول. لا يلزم اتخاذ أي إجراء في الوقت الحالي.",
+          "flagged": "يتطلب تقريرك تعديلات بناءً على ملاحظات عضو هيئة التدريس. راجع التعليقات المقدمة وأعد تقديم تقريرك المحدث.",
+          "rejected": "لم يستوفِ تقريرك المتطلبات ولا يمكن إعادة تقديمه. راجع تعليقات عضو هيئة التدريس للحصول على شرح وإرشادات حول الخطوات التالية."
+        }
+      },
+      "reportCreationDashboard": {
+        "title": {
+          "create": "إنشاء تقرير التدريب",
+          "edit": "تعديل تقرير التدريب"
+        },
+        "form": {
+          "reportTitle": {
+            "label": "عنوان التقرير",
+            "placeholder": "أدخل عنوانًا وصفيًا لتقريرك"
+          },
+          "company": {
+            "label": "اسم الشركة/المنظمة",
+            "placeholder": "أين أنتم أنهيتم التدريب؟"
+          },
+          "major": {
+            "label": "التخصص",
+            "placeholder": "اختر التخصص الخاص بك",
+            "options": {
+              "csen": "CSEN",
+              "dmet": "DMET",
+              "biotech": "Biotechnology",
+              "law": "Law"
+            }
+          },
+          "courses": {
+            "label": "الدورات التي ساعدتك أثناء التدريب",
+            "placeholder": "اختر دورة"
+          }
+        },
+        "guidelines": {
+          "title": "إرشادات بناء التقرير",
+          "introduction": "المقدمة: وصف الشركة والتوقعات الأولية",
+          "body": "الجسم: تفصيل المسؤوليات والمشاريع والتعلم المهم",
+          "conclusion": "الخلاصة: إعادة النظر في التعلم وما تعلمته"
+        },
+        "sections": {
+          "introduction": {
+            "label": "المقدمة",
+            "placeholder": "وصف الشركة ودورك..."
+          },
+          "body": {
+            "label": "الجسم",
+            "placeholder": "تفصيل المسؤوليات والتعلم..."
+          },
+          "conclusion": {
+            "label": "الخلاصة",
+            "placeholder": "إعادة النظر في التعلم وما تعلمته"
+          }
+        },
+        "buttons": {
+          "submit": "إرسال التقرير",
+          "submitEdit": "إرسال",
+          "saveDraft": "حفظ المسودة",
+          "saveChanges": "حفظ التعديلات",
+          "saving": "حفظ...",
+          "saved": "✓ حفظ!"
+        },
+        "preview": {
+          "title": "معاينة التقرير",
+          "defaultTitle": "عنوان التقرير",
+          "defaultCompany": "اسم الشركة",
+          "major": "التخصص",
+          "notSpecified": "غير محدد",
+          "submittedBy": "أرسل من قبل",
+          "studentName": "اسم الطالب",
+          "relevantCourses": "الدورات المتعلقة",
+          "notProvided": "غير مقدم"
+        },
+        "feedback": {
+          "success": "تم بنجاح!",
+          "updated": "تم التحديث!",
+          "submitSuccess": {
+            "create": "تم إرسال التقرير بنجاح.",
+            "edit": "تم تحديث التقرير بنجاح."
+          },
+          "draftSuccess": {
+            "create": "تم حفظ التقرير بنجاح كمسودة.",
+            "edit": "تم تحديث التقرير بنجاح كمسودة."
+          }
+        }
+      },
+      "upcomingWorkshops": "ورش العمل القادمة",
+      "liveWorkshops": "ورش العمل المباشرة",
+      "prerecordedWorkshops": "ورش العمل المسجلة مسبقاً",
+      "upcoming": "قادم",
+      "live": "مباشر",
+      "prerecorded": "مسجل مسبقاً",
+      "joinNow": "انضم الآن",
+      "watchNow": "شاهد الآن",
+      "registerNow": "تسجيل الآن",
+      "workshopFeedback": {
+        "title": "تقييم الورشة",
+        "subtitle": "كيف تقيم هذه الورشة؟",
+        "placeholder": "شارك أفكارك حول الورشة...",
+        "submitButton": "إرسال التقييم",
+        "submitting": "إرسال...",
+        "success": "تم بنجاح!",
+        "updated": "تم التحديث!",
+        "submitSuccess": {
+          "create": "تم إرسال التقرير بنجاح.",
+          "edit": "تم تحديث التقرير بنجاح."
+        },
+        "draftSuccess": {
+          "create": "تم حفظ التقرير بنجاح كمسودة.",
+          "edit": "تم تحديث التقرير بنجاح كمسودة."
+        },
+        "certificateSimulator": {
+          "title": "تهانينا!",
+          "message": "لقد إنهيت الورشة بنجاح!",
+          "download": "تحميل الشهادة"
+        },
+        "successMessage": "لقد سجلت بنجاح لهذه الورشة"
+      },
+      "titles": {
+        "home": "الفرص الموصى بها",
+        "browse": "فرص التدريب",
+        "applied": "التدريبات المتقدمة",
+        "my-internships": "تدريباتي",
+        "my-reports": "تقاريري",
+        "my-evaluations": "تقييماتي",
+        "workshops": "ورش العمل",
+        "live-workshops": "ورش العمل المباشرة",
+        "online-assessments": "التقييمات عبر الإنترنت",
+        "notifications": "الإشعارات",
+        "profile": "ملفي الشخصي"
+      }
+    }
+  },
+  "callInterface": {
+    "chat": "الدردشة",
+    "notes": "الملاحظات",
+    "closeChatPanel": "إغلاق لوحة الدردشة",
+    "closeNotesPanel": "إغلاق لوحة الملاحظات",
+    "noMessagesYet": "لا يوجد رسائل بعد",
+    "startConversation": "ابدأ المحادثة!",
+    "typeMessage": "أدخل رسالتك...",
+    "sendMessage": "إرسال الرسالة",
+    "saveNotes": "حفظ الملاحظات",
+    "takeNotes": "أدخل الملاحظات هنا...",
+    "connectingTo": "جاري الاتصال...",
+    "callInProgress": "المكالمة قيد التنفيذ",
+    "connectedWith": "متصل (الكاميرا مغلقة)",
+    "simulateOtherPartyLeaving": "إصلاح المكالمة",
+    "toggleCam": "تبديل الكاميرا",
+    "toggleCameraState": "تبديل حالة الكاميرا",
+    "cameraIsTurnedOff": "الكاميرا مغلقة",
+    "cameraIsOn": "الكاميرا مفتوحة",
+    "connecting": "جاري الاتصال...",
+    "otherPartyLeft": "قام بالتوقف",
+    "you": "أنت",
+    "muted": "مقفل",
+    "unmute": "فتح الصوت",
+    "mute": "إيقاف الصوت",
+    "stopVideo": "إيقاف الفيديو",
+    "startVideo": "بدء الفيديو",
+    "stopSharing": "إيقاف المشاركة",
+    "shareScreen": "مشاركة الشاشة",
+    "endCall": "إنهاء المكالمة",
+    "simLeave": "إصلاح المكالمة",
+    "presenter": "المتحدث",
+    "liveSession": "جلسة مباشرة",
+    "subtitles": "هذا هو نص الترجمة المثالي الذي سيظهر هنا أثناء الورشة...",
+    "hideSubtitles": "إخفاء الترجمات",
+    "showSubtitles": "عرض الترجمات",
+    "leaveWorkshop": "إنهاء الورشة",
+    "leaveWorkshopConfirmation": "هل أنت متأكد من أنك تريد إنهاء الورشة؟",
+    "leaveWorkshopConfirmationMessage": "سيتم توجيهك إلى قائمة الورشات.",
+    "prerequisites": "المتطلبات الأساسية",
+    "workshopTitle": "عنوان الورشة",
+    "instructor": "المتحدث",
+    "instructorName": "اسم المتحدث",
+    "like": "معجب",
+    "save": "حفظ",
+    "share": "مشاركة",
+    "backToWorkshops": "العودة إلى الورشات",
+    "noDescriptionAvailable": "لا يوجد وصف متاح.",
+    "incomingVideoCall": "مكالمة فيديو مستقبلة",
+    "decline": "رفض",
+    "accept": "قبول",
+    "callPROStudents": "اتصل بالطلاب المتميزين",
+    "callSCADAdmin": "اتصل بSCAD"
+  },
+  "dashboard": {
+    "incomingCaller": {
+      "devModeOn": "وضع المطور: مفعل",
+      "enableDevMode": "تفعيل وضع المطور"
+    },
+    "setInternshipCycle": "تحديد دورة التدريب",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ النهاية",
+    "cycle": "دورة",
+    "year": "سنة",
+    "save": "حفظ",
+    "titles": {
+      "student": "لوحة التحكم الطالب",
+      "scad": "لوحة التحكم SCAD",
+      "company": "لوحة التحكم الشركة",
+      "faculty": "لوحة التحكم الكلية"
+    },
+    "userTypes": {
+      "student": "طالب",
+      "scad": "SCAD",
+      "company": "شركة",
+      "faculty": "كلية"
+    }
+  },
+  "studentCard": {
+    "major": "التخصص",
+    "graduatingClass": "الفصل الدراسي",
+    "edit": "تعديل",
+    "clickToViewLess": "اضغط لعرض أقل",
+    "clickToViewMore": "اضغط لعرض أكثر"
+  },
+  "studentDetails": {
+    "personalityTraits": "صفات الشخصية",
+    "education": "التعليم",
+    "skills": "المهارات",
+    "jobInterests": "اهتمامات الوظيفة",
+    "experience": "الخبرة",
+    "internships": "التدريبات"
+  },
+      "updateProfile": {
+      "saveChanges": "حفظ التعديلات",
+      "addInternship": "إضافة التدريب",
+      "title": "تعديل الملف الشخصي",
+      "updated": "تم التحديث!",
+      "message": "تم تحديث ملفك الشخصي بنجاح.",
+    "basicInfo": {
+      "title": "المعلومات الأساسية",
+      "fullName": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "bio": "البيوغرافيا"
+    },
+    "colorTheme": {
+      "title": "تخصيص موضوع بطاقة ملفك الشخصي",
+      "description": "اختر لونًا لتوليد تطبيق الموضوع المتطابق لبطاقة ملفك الشخصي",
+      "clickToSelect": "اضغط لاختيار اللون",
+      "preview": "معاينة لون البطاقة",
+      "background": "الخلفية",
+      "text": "النص",
+      "primary": "الرئيسي"
+    },
+    "socialLinks": {
+      "title": "الروابط الاجتماعية",
+      "linkedin": "رابط LinkedIn",
+      "github": "رابط GitHub",
+      "portfolio": "رابط المحفظة"
+    },
+    "personalityTraits": {
+      "title": "صفات الشخصية",
+      "traitPlaceholder": "اسم الصفة",
+      "addTrait": "إضافة صفة"
+    },
+    "education": {
+      "title": "التعليم",
+      "degree": "الدرجة",
+      "institution": "المؤسسة",
+      "period": "الفترة",
+      "faculty": "الكلية",
+      "semester": "الفصل",
+      "selectFaculty": "اختر الكلية",
+      "selectSemester": "اختر الفصل",
+      "faculties": {
+        "met": "Media Engineering and Technology (MET)",
+        "cse": "Computer Science and Engineering",
+        "mechanical": "Mechanical Engineering",
+        "electrical": "Electrical Engineering"
+      }
+    },
+    "skills": {
+      "title": "المهارات",
+      "addSkill": "إضافة مهارة"
+    },
+    "jobInterests": {
+      "title": "اهتمامات الوظيفة",
+      "jobTitle": "اسم الوظيفة",
+      "description": "الوصف",
+      "addJobInterest": "إضافة اهتمام بالوظيفة",
+      "removeJobInterest": "إزالة اهتمام بالوظيفة"
+    },
+    "experience": {
+      "title": "Experience",
+      "jobTitle": "اسم الوظيفة",
+      "company": "الشركة",
+      "duration": "المدة",
+      "responsibilities": "المسؤوليات",
+      "addResponsibility": "إضافة مسؤولية",
+      "addExperience": "إضافة الخبرة",
+      "removeExperience": "إزالة الخبرة"
+    },
+    "internships": {
+      "title": "التدريبات",
+      "position": "المنصب",
+      "company": "الشركة",
+      "period": "الفترة",
+      "description": "الوصف",
+      "addInternship": "إضافة التدريب",
+      "removeInternship": "إزالة التدريب"
+    },
+    "actions": {
+      "saveChanges": "حفظ التعديلات"
+    },
+    "feedback": {
+      "updated": "تم التحديث!",
+      "message": "تم تحديث ملفك الشخصي بنجاح."
+    },
+    "validation": {
+      "nameRequired": "الاسم مطلوب",
+      "nameInvalid": "الاسم يمكن أن يحتوي فقط على أحرف ومسافات وشرطات",
+      "nameMinLength": "الاسم يجب أن يكون على الأقل 2 أحرف",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "البريد الإلكتروني غير صالح. يرجى إدخال بريد إلكتروني صالح",
+      "bioMaxLength": "البيوغرافيا لا يمكن أن تتجاوز 500 حرف",
+      "linkedinInvalid": "الرابط غير صالح. يرجى إدخال رابط LinkedIn صالح",
+      "githubInvalid": "الرابط غير صالح. يرجى إدخال رابط GitHub صالح",
+      "portfolioInvalid": "رابط غير صالح. يرجى إدخال رابط محفظة صالح"
+    }
+  },
+  "notifications": {
+    "techVisionPosted": "نشرت <b>{{company}}</b> تدريبًا جديدًا يتوافق مع مهاراتك",
+    "brandBoostAccepted": "تم قبول طلب التدريب الخاص بك في <b>{{company}}</b>",
+    "internshipStarts": "تبدأ فترة تدريب <b>{{role}}</b> الخاصة بك بعد {{days}} أيام",
+    "reportUpdated": "تم تحديث حالة تقرير تدريبك من قبل SCAD",
+    "appointmentAccepted": "تم قبول طلب الموعد من قبل {{contact}}",
+    "upcomingWorkshop": "ستبدأ ورشة العمل التي سجلت بها قريبًا",
+    "newMessage": "أرسل لك {{contact}} رسالة",
+    "companyApplicationAccepted": "تم قبول طلب شركتك",
+    "accountSetup": "تم إعداد الحساب بنجاح – تحقق من بريدك الإلكتروني للتفاصيل",
+    "newApplicants": "{{count}} متقدم جديد لتدريب <b>{{role}}</b> الخاص بك",
+    "reportsAwaitingReview": "{{count}} تقرير طالب جديد بانتظار المراجعة",
+    "registrationsPending": "{{count}} تسجيل شركة جديد بانتظار التحقق",
+    "studentSubmittedAppeal": "قام طالب بتقديم طلب انتقاء لتقرير. يرجى مراجعته."
+  },
+  "home": {
+    "welcomeTitle": "مرحبًا بك في",
+    "appName": "InternHub",
+    "slogan": "حيث تبدأ الخبرة",
+    "continueAs": "المتابعة كـ",
+    "tailoredExperience": "تجربة مخصصة لكل دور.",
+    "login": "تسجيل الدخول",
+    "notRegistered": "ليس لديك حساب بعد؟",
+    "signUp": "إنشاء حساب",
+    "loading": "جارٍ التحميل..."
+  },
+  "login": {
+    "emailLabel": "البريد الإلكتروني *",
+    "passwordLabel": "كلمة المرور *",
+    "rememberMe": "تذكرني",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "logIn": "تسجيل الدخول",
+    "loggingIn": "جارٍ تسجيل الدخول...",
+    "validation": {
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "البريد الإلكتروني غير صالح",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "companyNameRequired": "اسم الشركة مطلوب",
+      "companyNameMin": "يجب أن يكون اسم الشركة حرفين على الأقل",
+      "industryRequired": "الصناعة مطلوبة",
+      "industryInvalid": "يرجى اختيار صناعة صالحة",
+      "companyEmailRequired": "البريد الإلكتروني للشركة مطلوب",
+      "companyEmailInvalid": "يرجى استخدام بريد إلكتروني رسمي للشركة",
+      "companySizeRequired": "حجم الشركة مطلوب",
+      "companySizeInvalid": "يرجى اختيار حجم شركة صالح",
+      "verificationTypeRequired": "نوع التحقق مطلوب",
+      "verificationTypeInvalid": "يرجى اختيار نوع تحقق صالح",
+      "companyLogoRequired": "شعار الشركة مطلوب",
+      "verificationDocumentRequired": "وثيقة التحقق مطلوبة",
+      "fileFormatUnsupported": "تنسيق ملف غير مدعوم",
+      "fileTooLarge": "الملف كبير جدًا",
+      "taxIdRequired": "الرقم الضريبي مطلوب",
+      "taxIdFormat": "يجب أن يكون الرقم الضريبي بالصيغة XXX-XXX-XXX"
+    }
+  },
+  "signup": {
+    "title": "التسجيل",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول",
+    "labels": {
+      "companyName": "اسم الشركة *",
+      "companyEmail": "البريد الإلكتروني للشركة *",
+      "industry": "الصناعة *",
+      "companySize": "حجم الشركة *",
+      "verificationType": "نوع التحقق من الشركة *",
+      "companyLogo": "شعار الشركة *",
+      "companyRegistrationDocument": "وثيقة تسجيل الشركة *",
+      "taxCardDocument": "وثيقة البطاقة الضريبية *",
+      "taxId": "الرقم الضريبي",
+      "chooseFile": "اختر ملف...",
+      "browse": "استعراض",
+      "acceptedLogoFormats": "الصيغ المقبولة: JPG، PNG، SVG (الأبعاد المفضلة: 200×200 بكسل)",
+      "acceptedDocFormats": "الصيغ المقبولة: JPG، PNG، PDF",
+      "submit": "إتمام التسجيل",
+      "processing": "جارٍ المعالجة...",
+      "companySizes": {
+        "small": "صغيرة (50 موظفًا أو أقل)",
+        "medium": "متوسطة (51-100 موظف)",
+        "large": "كبيرة (101-500 موظف)",
+        "corporate": "شركة كبرى (أكثر من 500 موظف)"
+      }
+    },
+    "placeholders": {
+      "industry": "اختر الصناعة",
+      "companySize": "اختر الحجم",
+      "taxId": "XXX-XXX-XXX"
+    },
+    "tooltips": {
+      "companyEmail": "يرجى إدخال بريد إلكتروني رسمي للشركة تستخدمه في الاتصالات التجارية. لا يتم قبول مزودي البريد المجاني (Gmail، Yahoo، إلخ)."
+    },
+    "messages": {
+      "success": "تم قبول الطلب! يرجى التحقق من بريدك الإلكتروني.",
+      "error": "تم رفض الطلب. يرجى التحقق من بريدك الإلكتروني."
+    },
+    "verificationTypes": {
+      "registration": "تسجيل الشركة",
+      "taxCard": "بطاقة ضريبية",
+      "taxId": "الرقم الضريبي"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} الجامعة الألمانية في القاهرة. جميع الحقوق محفوظة."
+  },
+  "callModal": {
+    "title": "مكالمات الفيديو والمواعيد",
+    "appointmentPolicy": {
+      "title": "سياسة المواعيد أولاً:",
+      "description": "يمكنك الاتصال فقط بالجهات التي لديها مواعيد مؤكدة. يرجى طلب موعد والانتظار للحصول على التأكيد."
+    },
+    "sections": {
+      "availableContacts": "جهات الاتصال المتاحة",
+      "pendingRequests": "الطلبات المعلقة",
+      "confirmedAppointments": "المواعيد المؤكدة",
+      "pastRejected": "الماضي / المرفوض"
+    },
+    "noContacts": "لم يتم العثور على جهات اتصال.",
+    "userRoles": {
+      "scadAdmin": "مدير SCAD",
+      "student": "طالب"
+    },
+    "statuses": {
+      "requested": "مطلوب",
+      "confirmed": "مؤكد"
+    },
+    "buttons": {
+      "callNow": "اتصل الآن",
+      "requestAppointment": "طلب موعد",
+      "cancelScheduling": "إلغاء الجدولة",
+      "confirmRequest": "تأكيد الطلب",
+      "acceptAppointment": "قبول الموعد",
+      "rejectAppointment": "رفض الموعد",
+      "cancelAppointment": "إلغاء الموعد"
+    },
+    "tooltips": {
+      "callNow": "اتصل الآن",
+      "confirmedAppointmentRequired": "موعد مؤكد مطلوب",
+      "requestAppointment": "طلب موعد",
+      "cancelScheduling": "إلغاء الجدولة",
+      "confirmRequest": "تأكيد طلب الموعد",
+      "acceptAppointment": "قبول الموعد",
+      "rejectAppointment": "رفض الموعد",
+      "cancelAppointment": "إلغاء الموعد"
+    },
+    "calling": {
+      "title": "جاري الاتصال...",
+      "cancelCall": "إلغاء المكالمة"
+    },
+    "appointments": {
+      "wantsToSchedule": "يريد تحديد موعد",
+      "confirmedNoDate": "مؤكد (لم يتم تحديد تاريخ)",
+      "youRequested": "لقد طلبت {name}",
+      "requestedYou": "{name} طلب منك",
+      "rejected": "مرفوض"
+    }
+  },
+  "callButton": {
+    "callPROStudents": "اتصل بطلاب PRO",
+    "callSCADAdmin": "اتصل بمدير SCAD",
+    "videoCall": "مكالمة فيديو"
+  },
+  "toast": {
+    "certificateDownloaded": "تم تحميل الشهادة بنجاح"
+  },
+  "assessment": {
+    "takeTheTest": "أخذ الاختبار",
+    "submitTest": "إرسال الاختبار",
+    "whyTakeTheTest": "لماذا تأخذ الاختبار؟",
+    "testCompleted": "تم إكمال الاختبار!",
+    "yourScore": "نتيجتك:",
+    "detailedResultsSent": "تم إرسال النتائج التفصيلية إلى بريدك الإلكتروني.",
+    "wouldYouLikeToShare": "هل تريد مشاركة نتيجتك؟",
+    "yesPostIt": "نعم، انشرها",
+    "noThanks": "لا، شكراً",
+    "scorePostedToProfile": "تم نشر النتيجة في ملفك الشخصي!",
+    "testScoreToastBefore": "نتيجة اختبارك هي ",
+    "testScoreToastAfter": "%. يرجى التحقق من بريدك الإلكتروني للحصول على النتائج التفصيلية.",
+    "errorSubmittingTest": "خطأ في إرسال الاختبار"
+  }
+}

@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faClock, faBell, faFilter, faEllipsisH, faSearch, faXmark, faLock, faChevronDown, faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 // Mock data
 const MOCK_COMPANIES = [
@@ -40,6 +42,9 @@ const MOCK_COMPANIES = [
 ];
 
 const ProfileViewItem = ({ company, isPro }) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   return (
     <div className="flex items-start p-4 border-b hover:bg-metallica-blue-50 transition-colors duration-200 cursor-pointer">
       <div className="flex-shrink-0 mr-3">
@@ -56,7 +61,7 @@ const ProfileViewItem = ({ company, isPro }) => {
         {isPro ? (
           <>
             <p className="text-xs text-gray-600">
-              HR Manager at {company.name} viewed your profile
+              {safeT('student.dashboard.notificationsList.viewedProfile1')}{company.name}{safeT('student.dashboard.notificationsList.viewedProfile2')}
             </p>
             <p className="text-xs text-gray-500 mt-1">
               <FontAwesomeIcon icon={faClock} className="mr-1 text-gray-400" />
@@ -67,7 +72,7 @@ const ProfileViewItem = ({ company, isPro }) => {
           <div className="flex items-center">
             <FontAwesomeIcon icon={faLock} className="text-gray-400 mr-1 text-xs" />
             <p className="text-xs text-gray-500">
-              Details locked - Upgrade to PRO to see who viewed your profile
+              {safeT('student.dashboard.notificationsList.proNote')}
             </p>
           </div>
         )}
@@ -126,6 +131,8 @@ const ProUpgradePrompt = ({ durationCompleted, durationRequired = 12 }) => {
 };
 
 export default function NotificationsList({ selectedCompanies = [], hideFilters = false }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -198,7 +205,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 1,
       icon: faBuilding,
-      title: '<b>TechVision</b> posted a new internship that matches your skills',
+      title: t('notifications.techVisionPosted', { company: 'TechVision' }),
       time: '2h',
       isUnread: true,
       userType: ['student']
@@ -206,7 +213,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 2,
       icon: faBell,
-      title: 'Your internship application at <b>BrandBoost</b> was accepted',
+      title: t('notifications.brandBoostAccepted', { company: 'BrandBoost' }),
       time: '1d',
       isUnread: true,
       userType: ['student']
@@ -214,7 +221,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 3,
       icon: faBell,
-      title: 'Your <b>Frontend Developer</b> internship starts in 5 days',
+      title: t('notifications.internshipStarts', { role: 'Frontend Developer', days: 5 }),
       time: '3d',
       isUnread: false,
       userType: ['student']
@@ -222,17 +229,27 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 13,
       icon: faClipboardList,
-      title: 'Your internship report status has been updated by SCAD',
+      title: t('notifications.reportUpdated'),
       time: '6h',
       isUnread: true,
       userType: ['student']
+    },
+
+    // Faculty notification: student submitted an appeal
+    {
+      id: 1001,
+      icon: faClipboardList,
+      title: t('notifications.studentSubmittedAppeal'),
+      time: '1h',
+      isUnread: true,
+      userType: ['faculty']
     },
 
     // PRO student only notifications
     {
       id: 4,
       icon: faBell,
-      title: 'SCAD Officer has accepted your appointment request',
+      title: t('notifications.appointmentAccepted', { contact: 'SCAD Officer' }),
       time: '3d',
       isUnread: false,
       userType: ['student'],
@@ -241,7 +258,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 5,
       icon: faBell,
-      title: 'Alien X has accepted your appointment request',
+      title: t('notifications.appointmentAccepted', { contact: 'Alien X' }),
       time: '3d',
       isUnread: false,
       userType: ['student'],
@@ -250,7 +267,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 6,
       icon: faBell,
-      title: 'Upcoming workshop you have registered in',
+      title: t('notifications.upcomingWorkshop'),
       time: '3d',
       isUnread: false,
       userType: ['student'],
@@ -259,7 +276,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 7,
       icon: faBell,
-      title: 'Alien X has sent you a message',
+      title: t('notifications.newMessage', { contact: 'Alien X' }),
       time: '3d',
       isUnread: false,
       userType: ['student'],
@@ -270,7 +287,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 8,
       icon: faBuilding,
-      title: 'Your company application has been accepted',
+      title: t('notifications.companyApplicationAccepted'),
       time: '4h',
       isUnread: true,
       userType: ['company']
@@ -278,7 +295,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 9,
       icon: faBell,
-      title: 'Account setup successful - check your email for details',
+      title: t('notifications.accountSetup'),
       time: '12h',
       isUnread: true,
       userType: ['company']
@@ -286,7 +303,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 10,
       icon: faBuilding,
-      title: '3 new applicants for your <b>Backend Developer</b> internship',
+      title: t('notifications.newApplicants', { count: 3, role: 'Backend Developer' }),
       time: '1d',
       isUnread: true,
       userType: ['company']
@@ -296,7 +313,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 11,
       icon: faClipboardList,
-      title: '5 new student reports awaiting review',
+      title: t('notifications.reportsAwaitingReview', { count: 5 }),
       time: '5h',
       isUnread: true,
       userType: ['scad']
@@ -304,7 +321,7 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
     {
       id: 12,
       icon: faBuilding,
-      title: '2 new company registrations pending verification',
+      title: t('notifications.registrationsPending', { count: 2 }),
       time: '1d',
       isUnread: true,
       userType: ['scad']
@@ -505,14 +522,14 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
               className={`flex-1 py-3 px-4 text-sm font-medium transition-all duration-200 ${activeTab === 'all' ? 'text-[#3298BA] border-b-2 border-[#3298BA]' : 'text-gray-500 hover:text-[#5DB2C7]'}`}
               onClick={() => setActiveTab('all')}
             >
-              All
+              {safeT('student.dashboard.notificationsList.all')}
             </button>
             {userData?.role === 'student' && (
               <button
                 className={`flex-1 py-3 px-4 text-sm font-medium transition-all duration-200 ${activeTab === 'profile' ? 'text-[#3298BA] border-b-2 border-[#3298BA]' : 'text-gray-500 hover:text-[#5DB2C7]'}`}
                 onClick={() => setActiveTab('profile')}
               >
-                Profile Views
+                {safeT('student.dashboard.notificationsList.profileViews')}
               </button>
             )}
           </div>
@@ -551,12 +568,12 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
 
                 <div className="p-4 border-b bg-[#F8FCFD]">
                   <h3 className="text-sm font-medium text-[#2a5f74] mb-1">
-                    Companies that viewed your profile
+                    {safeT('student.dashboard.notificationsList.profileViews')}
                   </h3>
                   <p className="text-xs text-gray-500">
                     {isPro
-                      ? `${selectedCompanies.length > 0 ? 'Filtered' : 'All'} companies that viewed your profile${selectedCompanies.length > 0 ? ' (filtered)' : ''}`
-                      : `${filteredCompanyViews.length} companies viewed your profile recently. Upgrade to PRO to see details.`
+                      ? `${selectedCompanies.length > 0 ? safeT('student.dashboard.notificationsList.filtered') : safeT('student.dashboard.notificationsList.all')} ${safeT('student.dashboard.notificationsList.companies')} ${safeT('student.dashboard.notificationsList.haveViewedYourProfile')}${selectedCompanies.length > 0 ? ` (${safeT('student.dashboard.notificationsList.filtered')})` : ''}`
+                      : `${filteredCompanyViews.length} ${safeT('student.dashboard.notificationsList.companies')} ${safeT('student.dashboard.notificationsList.haveViewedYourProfile')} ${safeT('student.dashboard.notificationsList.recently')}. ${safeT('student.dashboard.notificationsList.upgradeToPROToSeeDetails')}`
                     }
                   </p>
                 </div>
@@ -570,8 +587,8 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                           </svg>
                         </div>
-                        <p className="text-gray-500 font-medium">No profile views found matching your criteria</p>
-                        <p className="text-gray-400 text-sm mt-1">Try adjusting your filters</p>
+                        <p className="text-gray-500 font-medium">{safeT('student.dashboard.notificationsList.noProfileViewsFoundMatchingYourCriteria')}</p>
+                        <p className="text-gray-400 text-sm mt-1">{safeT('student.dashboard.notificationsList.tryAdjustingYourFilters')}</p>
                       </div>
                     ) : (
                       filteredCompanyViews.map((company, index) => (
@@ -589,10 +606,10 @@ export default function NotificationsList({ selectedCompanies = [], hideFilters 
                       <FontAwesomeIcon icon={faLock} size="lg" />
                     </div>
                     <p className="text-sm text-[#2a5f74] mb-2">
-                      <span className="font-medium">{filteredCompanyViews.length} companies</span> have viewed your profile
+                      <span className="font-medium">{filteredCompanyViews.length} {safeT('student.dashboard.notificationsList.companies')}</span> {safeT('student.dashboard.notificationsList.haveViewedYourProfile')}
                     </p>
                     <p className="text-xs text-gray-500 max-w-md mx-auto">
-                      Complete your internship duration to unlock PRO features and see which companies are interested in your profile
+                      {safeT('student.dashboard.notificationsList.completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile')}
                     </p>
                   </div>
                 )}

@@ -4,7 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSearch, faUser, faBuilding, faXmark, faChevronDown, faChevronUp, faEnvelope, faPhone, faCalendarAlt, faMapMarkerAlt, faGraduationCap, faLink, faCheckCircle, faTimesCircle, faClock } from '@fortawesome/free-solid-svg-icons';
 import StatusBadge from './shared/StatusBadge';
 import CustomButton from './shared/CustomButton';
+import NoResults from './shared/NoResults';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '../lib/translationUtils';
 
 // Mock applications data
 const MOCK_APPLICATIONS = [
@@ -115,54 +118,59 @@ const MOCK_INTERNSHIPS = [
   { id: 5, title: "Marketing Intern" }
 ];
 
-// Status configuration with colors and available transitions
-const STATUS_CONFIG = {
-  pending: {
-    label: "PENDING",
-    color: "bg-yellow-100 text-yellow-800 border border-yellow-400",
-    badgeColor: "bg-yellow-600",
-    transitions: ["accepted", "rejected"]
-  },
-  accepted: {
-    label: "ACCEPTED",
-    color: "bg-green-100 text-green-800 border border-green-400",
-    badgeColor: "bg-green-600",
-    transitions: ["finalized", "rejected"]
-  },
-  rejected: {
-    label: "REJECTED",
-    color: "bg-red-100 text-red-800 border border-red-400",
-    badgeColor: "bg-red-600",
-    transitions: []
-  },
-  finalized: {
-    label: "FINALIZED",
-    color: "bg-purple-100 text-purple-800 border border-purple-400",
-    badgeColor: "bg-purple-600",
-    transitions: ["current"]
-  },
-  current: {
-    label: "CURRENT INTERN",
-    color: "bg-blue-100 text-blue-800 border border-blue-400",
-    badgeColor: "bg-blue-600",
-    transitions: ["completed"]
-  },
-  completed: {
-    label: "COMPLETED",
-    color: "bg-green-100 text-green-800 border border-green-400",
-    badgeColor: "bg-green-600",
-    transitions: []
-  }
-};
+
 
 export default function ApplicationsList({
   searchTerm = '',
   selectedStatus = 'all',
   selectedInternship = 'all'
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [applications, setApplications] = useState(MOCK_APPLICATIONS);
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [selectedStatusLocal, setSelectedStatusLocal] = useState(selectedStatus);
+
+  // Status configuration with colors and available transitions
+  const STATUS_CONFIG = {
+    pending: {
+      label: safeT('company.applications.statuses.pending'),
+      color: "bg-yellow-100 text-yellow-800 border border-yellow-400",
+      badgeColor: "bg-yellow-600",
+      transitions: ["accepted", "rejected"]
+    },
+    accepted: {
+      label: safeT('company.applications.statuses.accepted'),
+      color: "bg-green-100 text-green-800 border border-green-400",
+      badgeColor: "bg-green-600",
+      transitions: ["finalized", "rejected"]
+    },
+    rejected: {
+      label: safeT('company.applications.statuses.rejected'),
+      color: "bg-red-100 text-red-800 border border-red-400",
+      badgeColor: "bg-red-600",
+      transitions: []
+    },
+    finalized: {
+      label: safeT('company.applications.statuses.finalized'),
+      color: "bg-purple-100 text-purple-800 border border-purple-400",
+      badgeColor: "bg-purple-600",
+      transitions: ["current"]
+    },
+    current: {
+      label: safeT('company.applications.statuses.current'),
+      color: "bg-blue-100 text-blue-800 border border-blue-400",
+      badgeColor: "bg-blue-600",
+      transitions: ["completed"]
+    },
+    completed: {
+      label: safeT('company.applications.statuses.completed'),
+      color: "bg-green-100 text-green-800 border border-green-400",
+      badgeColor: "bg-green-600",
+      transitions: []
+    }
+  };
 
   // Update local state if prop changes
   useEffect(() => {
@@ -244,15 +252,10 @@ export default function ApplicationsList({
         </div>
       </div> */}
       {filteredApplications.length === 0 ? (
-        <div className="p-16 text-center">
-          <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-            <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-          <p className="text-gray-500 font-medium">No applications found matching your criteria</p>
-          <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filter</p>
-        </div>
+        <NoResults
+          mainMessage={safeT('common.noResults.noApplications')}
+          subMessage={safeT('common.noResults.tryAdjusting')}
+        />
       ) : (
         filteredApplications.map(application => (
           <div
@@ -293,7 +296,7 @@ export default function ApplicationsList({
 
               {/* Applied date - Adjusting width since University is hidden */}
               <div className="hidden md:block md:w-1/3 lg:w-1/4 flex-shrink-0">
-                <p className="text-xs text-gray-500">Applied on</p>
+                <p className="text-xs text-gray-500">{safeT('company.applicationDetails.appliedOn')}</p>
                 <p className="text-sm text-gray-600">
                   {new Date(application.appliedDate).toLocaleDateString('en-US', {
                     year: 'numeric',
@@ -304,9 +307,9 @@ export default function ApplicationsList({
               </div>
 
               {/* Status badge - Adjusting width since University is hidden */}
-              <div className="flex-shrink-0 md:w-auto lg:w-1/4 text-right"> {/* Added text-right for better alignment of badge content */}
+              <div className="flex-shrink-0 md:w-auto lg:w-1/4 rtl:text-left text-right">
                 <StatusBadge color={STATUS_CONFIG[application.status].color}>
-                  <span className="flex items-center">
+                  <span className="flex items-center rtl:flex-row-reverse">
                     <span className={`inline-block w-2 h-2 rounded-full ${STATUS_CONFIG[application.status].badgeColor} mr-1.5`}></span>
                     {STATUS_CONFIG[application.status].label}
                   </span>
@@ -340,7 +343,7 @@ export default function ApplicationsList({
               >
                 {/* Left column - Student details (removed animate-slideInFromLeft and py-4) */}
                 <div className="flex-1 md:pr-4">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3">Applicant Details</h4>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-3">{safeT('company.applicationDetails.applicantDetails')}</h4>
 
                   <div className="space-y-2">
                     <div className="flex items-center group">
@@ -364,13 +367,13 @@ export default function ApplicationsList({
                         <FontAwesomeIcon icon={faGraduationCap} className="text-purple-500" />
                       </div>
                       <div>
-                        <p className="text-sm text-gray-700">Major: {application.studentMajor}</p>
-                        <p className="text-xs text-gray-500">Semester: {application.studentSemester || 'N/A'}</p>
+                        <p className="text-sm text-gray-700">{safeT('company.applicationDetails.major')} {application.studentMajor}</p>
+                        <p className="text-xs text-gray-500">{safeT('company.applicationDetails.semester')} {application.studentSemester || 'N/A'}</p>
                       </div>
                     </div>
                   </div>
 
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3 mt-4">Application Documents</h4>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-3 mt-4">{safeT('company.applicationDetails.applicationDocuments')}</h4>
 
                   <div className="space-y-2">
                     <a
@@ -395,7 +398,7 @@ export default function ApplicationsList({
                       <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center mr-2 transition-transform duration-300 group-hover:scale-110">
                         <FontAwesomeIcon icon={faLink} className="text-amber-500" />
                       </div>
-                      <span className="text-sm group-hover:underline transition-all duration-300">Resume</span>
+                      <span className="text-sm group-hover:underline transition-all duration-300">{safeT('company.applicationDetails.resume')}</span>
                     </a>
 
                     <a
@@ -420,7 +423,7 @@ export default function ApplicationsList({
                       <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center mr-2 transition-transform duration-300 group-hover:scale-110">
                         <FontAwesomeIcon icon={faLink} className="text-amber-500" />
                       </div>
-                      <span className="text-sm group-hover:underline transition-all duration-300">Cover Letter</span>
+                      <span className="text-sm group-hover:underline transition-all duration-300">{safeT('company.applicationDetails.coverLetter')}</span>
                     </a>
 
                     {application.portfolioLink && (
@@ -433,7 +436,7 @@ export default function ApplicationsList({
                         <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center mr-2 transition-transform duration-300 group-hover:scale-110">
                           <FontAwesomeIcon icon={faLink} className="text-amber-500" />
                         </div>
-                        <span className="text-sm group-hover:underline transition-all duration-300">Portfolio</span>
+                        <span className="text-sm group-hover:underline transition-all duration-300">{safeT('company.applicationDetails.portfolio')}</span>
                       </a>
                     )}
                   </div>
@@ -441,7 +444,7 @@ export default function ApplicationsList({
 
                 {/* Right column - Status management (removed animate-slideInFromRight and adjusted padding/borders) */}
                 <div className="w-full md:w-72 flex-shrink-0 md:border-l border-gray-200 md:pl-4 mt-6 md:mt-0 border-t md:border-t-0 pt-6 md:pt-0">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3">Current Application Status</h4>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-3">{safeT('company.applicationDetails.currentApplicationStatus')}</h4>
 
                   <div className="flex items-center mb-4 bg-white p-3 rounded-lg shadow-sm border border-gray-100">
                     <div className={`w-3 h-3 rounded-full mr-2 ${STATUS_CONFIG[application.status].badgeColor}`}></div>
@@ -456,7 +459,7 @@ export default function ApplicationsList({
                       <CustomButton
                         key={nextStatus}
                         variant={nextStatus === 'rejected' ? 'danger' : 'primary'}
-                        text={`Mark as ${STATUS_CONFIG[nextStatus].label}`}
+                        text={`${safeT('company.applicationDetails.markAs')} ${STATUS_CONFIG[nextStatus].label}`}
                         // icon={nextStatus === 'rejected' ? faTimesCircle :
                         //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
                         onClick={() => handleStatusChange(application.id, nextStatus)}
@@ -467,7 +470,7 @@ export default function ApplicationsList({
                     {STATUS_CONFIG[application.status].transitions.length === 0 && (
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center w-full">
                         <p className="text-sm text-gray-500 italic">
-                          No further status changes available
+                          {safeT('company.applicationDetails.noFurtherChanges')}
                         </p>
                       </div>
                     )}

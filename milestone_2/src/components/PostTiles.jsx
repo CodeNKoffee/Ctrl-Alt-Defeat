@@ -5,8 +5,13 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import CompanyPost from './CompanyPost';
 import CompanyCreatePost from './CompanyCreatePost';
 import DeleteTileConfirmation from './DeleteTileConfirmation';
+import { useTranslation } from 'react-i18next';
+import { createSafeT, translateFilterValue } from '@/lib/translationUtils';
 
 export default function PostTiles({ searchOverride, filterOverride }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [posts, setPosts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
@@ -76,10 +81,10 @@ export default function PostTiles({ searchOverride, filterOverride }) {
         )
       );
       setEditingPost(null);
-      setFeedbackModal({ show: true, type: 'update', message: 'Post Updated Successfully!' });
+      setFeedbackModal({ show: true, type: 'update', message: safeT('company.posts.postUpdatedSuccess') });
     } else {
       setPosts((prevPosts) => [newPostData, ...prevPosts]);
-      setFeedbackModal({ show: true, type: 'create', message: 'Post Created Successfully!' });
+      setFeedbackModal({ show: true, type: 'create', message: safeT('company.posts.postCreatedSuccess') });
     }
     setPostPreview({
       title: '',
@@ -264,7 +269,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                 />
               </motion.div>
               <div style={{ fontSize: '22px', fontWeight: '600', color: '#2A5F74', marginBottom: '8px' }}>
-                {feedbackModal.type === 'create' ? 'Success!' : 'Updated!'}
+                {feedbackModal.type === 'create' ? safeT('company.posts.success') : safeT('company.posts.updated')}
               </div>
               <div style={{ fontSize: '16px', color: '#4B5563' }}>
                 {feedbackModal.message}
@@ -284,7 +289,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                   </svg>
-                  {editingPost ? 'Update Post' : 'Create New Post'}
+                  {editingPost ? safeT('company.posts.updatePost') : safeT('company.posts.createNewPost')}
                 </h2>
                 <button
                   onClick={toggleCreatePost}
@@ -319,12 +324,12 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                       <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                       <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
                     </svg>
-                    Post Preview</h2>
+                    {safeT('company.posts.postPreview')}</h2>
                   <div className="bg-white rounded-lg shadow-md p-6 border border-[var(--metallica-blue-100)] flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1 min-w-0 mr-4">
                         <h3 className="text-xl font-bold text-[var(--metallica-blue-800)] break-words overflow-wrap-anywhere">
-                          {postPreview.title || "Job Title"}
+                          {postPreview.title || safeT('company.posts.form.jobTitlePreview')}
                         </h3>
                         <div className="flex flex-wrap items-center gap-2 mt-1">
                           {postPreview.jobSetting && (
@@ -333,7 +338,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                               ${postPreview.jobSetting === 'On-site' ? 'bg-indigo-100 text-indigo-700 border-indigo-200' : ''}
                               ${postPreview.jobSetting === 'Hybrid' ? 'bg-cyan-100 text-cyan-700 border-cyan-200' : ''}
                             `}>
-                              {postPreview.jobSetting}
+                              {translateFilterValue(safeT, postPreview.jobSetting, 'jobSetting')}
                             </span>
                           )}
 
@@ -342,14 +347,14 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                               ${postPreview.jobType === 'Full-time' ? 'bg-green-100 text-green-700 border-green-200' : ''}
                               ${postPreview.jobType === 'Part-time' ? 'bg-blue-100 text-blue-700 border-blue-200' : ''}
                             `}>
-                              {postPreview.jobType}
+                              {translateFilterValue(safeT, postPreview.jobType, 'jobType')}
                             </span>
                           )}
                         </div>
                       </div>
                       <div className="text-right">
                         <span className="inline-block bg-[var(--metallica-blue-100)] text-[var(--metallica-blue-800)] px-2 py-1 rounded text-sm">
-                          {postPreview.paid || "Payment Status"}
+                          {postPreview.paid ? translateFilterValue(safeT, postPreview.paid, 'paymentStatus') : safeT('company.posts.form.paymentStatus')}
                         </span>
                         {postPreview.paid === 'Paid' && postPreview.salary && (
                           <p className="text-[var(--metallica-green-pop-color)] font-medium mt-1">{postPreview.salary}</p>
@@ -358,22 +363,22 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                     </div>
 
                     <div className="border-t border-gray-200 pt-4 mb-4">
-                      <h4 className="font-medium mb-2 text-[var(--metallica-blue-700)]">Description</h4>
+                      <h4 className="font-medium mb-2 text-[var(--metallica-blue-700)]">{safeT('company.posts.form.jobDescription')}</h4>
                       <p className="text-gray-700 mb-4 text-sm break-words">
-                        {postPreview.description || "Job description will appear here..."}
+                        {postPreview.description || safeT('company.posts.form.jobDescriptionPlaceholder')}
                       </p>
 
                       <div className="grid grid-cols-2 gap-4 mb-4">
                         <div>
-                          <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)]">Start Date</h4>
+                          <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)]">{safeT('company.posts.form.startDate')}</h4>
                           <p className="text-gray-700 text-sm">
-                            {formatDate(postPreview.startDate) || "Not specified"}
+                            {formatDate(postPreview.startDate) || safeT('company.posts.form.notSpecified')}
                           </p>
                         </div>
                         <div>
-                          <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)]">Duration</h4>
+                          <h4 className="font-medium mb-1 text-[var(--metallica-blue-700)]">{safeT('company.posts.form.duration')}</h4>
                           <p className="text-gray-700 text-sm">
-                            {postPreview.duration || "Not specified"}
+                            {postPreview.duration || safeT('company.posts.form.notSpecified')}
                           </p>
                         </div>
                       </div>
@@ -381,14 +386,14 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
                     {postPreview.requirements && (
                       <div className="mb-4">
-                        <h4 className="font-medium mb-2 text-[var(--metallica-blue-700)]">Requirements</h4>
+                        <h4 className="font-medium mb-2 text-[var(--metallica-blue-700)]">{safeT('company.posts.form.requirements')}</h4>
                         <p className="text-gray-700 text-sm">{postPreview.requirements}</p>
                       </div>
                     )}
 
                     {postPreview.skills.length > 0 && (
                       <div>
-                        <h4 className="font-medium mb-2 text-[var(--metallica-blue-700)]">Skills</h4>
+                        <h4 className="font-medium mb-2 text-[var(--metallica-blue-700)]">{safeT('company.posts.form.skills')}</h4>
                         <div className="flex flex-wrap gap-2">
                           {postPreview.skills.map((skill, index) => (
                             <span
@@ -437,7 +442,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                   {/* Text part that expands on hover - now with bold text and slower transition */}
                   <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
 
-                    <span className="font-semibold">Create Post</span>
+                    <span className="font-semibold">{safeT('company.posts.createPost')}</span>
                   </span>
                 </button>
               </div>
@@ -462,10 +467,10 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                 </svg>
               </div>
               <p className="text-gray-500 font-medium">
-                {posts.length > 0 ? 'No posts found matching your criteria' : 'No internship posts found'}
+                {posts.length > 0 ? safeT('company.posts.noMatchingPosts') : safeT('company.posts.noPostsFound')}
               </p>
               <p className="text-gray-400 text-sm mt-1">
-                {posts.length > 0 ? 'Try adjusting your search or filter' : 'Create your first post to get started'}
+                {posts.length > 0 ? safeT('company.posts.adjustSearchFilter') : safeT('company.posts.createFirstMessage')}
               </p>
 
               {/* Only show the "+ Post" button when we have posts but filtering returns none */}
@@ -483,7 +488,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
 
                     {/* Text part that expands on hover - now with bold text and slower transition */}
                     <span className="max-w-0 group-hover:max-w-xs transition-all duration-700 ease-in-out overflow-hidden whitespace-nowrap pr-0 group-hover:pr-4 ml-0 group-hover:ml-1">
-                      <span className="font-semibold">Create Post</span>
+                      <span className="font-semibold">{safeT('company.posts.createPost')}</span>
                     </span>
                   </button>
                 </div>
@@ -495,7 +500,7 @@ export default function PostTiles({ searchOverride, filterOverride }) {
                   onClick={toggleCreatePost}
                   className="mt-4 bg-[var(--metallica-blue-600)] hover:bg-[var(--metallica-blue-700)] text-white px-6 py-2 rounded-md shadow-sm transition-colors font-medium"
                 >
-                  Create Your First Post
+                  {safeT('company.posts.createFirstPost')}
                 </button>
               )}
             </div>

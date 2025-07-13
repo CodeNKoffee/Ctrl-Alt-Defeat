@@ -12,8 +12,12 @@ import DatePicker from './DatePicker';
 import { format as formatDateFns } from 'date-fns';
 import CallInterface from './CallInterface';
 import CallNotification from './CallNotification';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 const CallModal = ({ isOpen, onClose }) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
   const callState = useSelector((state) => state.call);
@@ -301,13 +305,13 @@ const CallModal = ({ isOpen, onClose }) => {
                 <h2 className="text-2xl font-young-serif text-metallica-blue-600 font-semibold mt-2">
                   {selectedUser.name}
                 </h2>
-                <p className="text-metallica-metallica-blue-900 mb-6 text-sm">Calling...</p>
+                <p className="text-metallica-metallica-blue-900 mb-6 text-sm">{safeT('callModal.calling.title')}</p>
                 {/* Cancel Button */}
                 <div className="flex items-center justify-center space-x-4 mt-4">
                   <button
                     onClick={cancelCall}
                     className="flex items-center justify-center w-14 h-14 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
-                    aria-label="Cancel call"
+                    aria-label={safeT('callModal.calling.cancelCall')}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
@@ -317,19 +321,21 @@ const CallModal = ({ isOpen, onClose }) => {
               </div>
             ) : (
               <div>
-                {/* Close button - positioned relative to the main light background */}
-                <button
-                  className="absolute top-3 right-3 z-20 flex items-center justify-center w-7 h-7 rounded-full shadow-sm bg-gray-200/70 hover:bg-gray-300/90 transition-colors"
-                  onClick={onClose}
-                  aria-label="Close modal"
-                >
-                  <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
-                </button>
-
                 {/* Header Tab */}
                 <div className="relative z-10">
-                  <div className="inline-block text-metallica-blue-700 px-6 py-3 rounded-tl-2xl rounded-br-xl">
-                    <h3 className="text-xl font-bold pt-2">Video Calls & Appointments</h3>
+                  <div className="flex items-center justify-between px-6 py-3 rtl:flex-row-reverse">
+                    {/* Title */}
+                    <div className="inline-block text-metallica-blue-700 rounded-tl-2xl rounded-br-xl">
+                      <h3 className="text-xl font-bold pt-2 rtl:text-right">{safeT('callModal.title')}</h3>
+                    </div>
+                    {/* Close button */}
+                    <button
+                      className="z-20 flex items-center justify-center w-7 h-7 rounded-full shadow-sm bg-gray-200/70 hover:bg-gray-300/90 transition-colors"
+                      onClick={onClose}
+                      aria-label="Close modal"
+                    >
+                      <FontAwesomeIcon icon={faTimes} className="text-xl text-gray-500 font-normal" />
+                    </button>
                   </div>
                 </div>
 
@@ -341,18 +347,18 @@ const CallModal = ({ isOpen, onClose }) => {
                       <div className="flex-shrink-0">
                         <FontAwesomeIcon icon={faUserClock} className="h-5 w-5 text-metallica-blue-700" />
                       </div>
-                      <div className="ml-3">
-                        <p className="text-sm text-metallica-blue-700">
-                          <strong>Appointment-First Policy:</strong> You can only call contacts with confirmed appointments. Please request an appointment and wait for confirmation.
+                      <div className="ml-3 rtl:mr-3 rtl:ml-0">
+                        <p className="text-sm text-metallica-blue-700 rtl:text-right">
+                          <strong>{safeT('callModal.appointmentPolicy.title')}</strong> {safeT('callModal.appointmentPolicy.description')}
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Available Contacts Section */}
-                  <h4 className="text-lg font-semibold text-metallica-blue-700 mb-3 font-ibm-plex-sans border-b pb-2">Available Contacts</h4>
+                  <h4 className="text-lg font-semibold text-metallica-blue-700 mb-3 font-ibm-plex-sans border-b pb-2 rtl:text-right">{safeT('callModal.sections.availableContacts')}</h4>
                   {availableUsers.length === 0 ? (
-                    <div className="bg-white rounded-xl p-4 shadow-sm text-center text-gray-500 mb-6"><FontAwesomeIcon icon={faUsers} className="mr-2" />No contacts found.</div>
+                    <div className="bg-white rounded-xl p-4 shadow-sm text-center text-gray-500 mb-6 rtl:text-right"><FontAwesomeIcon icon={faUsers} className="mr-2 rtl:ml-2 rtl:mr-0" />{safeT('callModal.noContacts')}</div>
                   ) : (
                     <div className="space-y-3 mb-6">
                       {availableUsers.map((user) => {
@@ -366,8 +372,8 @@ const CallModal = ({ isOpen, onClose }) => {
                           <div key={user.id} className="bg-white rounded-xl p-4 shadow-sm border border-metallica-blue-100 transition-all duration-200">
                             <motion.div layout>
                               <div className="flex items-center justify-between mb-3">
-                                <div className="flex items-center flex-grow min-w-0 mr-2">
-                                  <div className="relative mr-3 flex-shrink-0">
+                                <div className="flex items-center flex-grow min-w-0 mr-2 rtl:ml-2 rtl:mr-0">
+                                  <div className="relative mr-3 rtl:ml-3 rtl:mr-3 flex-shrink-0">
                                     <div className="bg-metallica-blue-100 text-metallica-blue-700 rounded-full h-10 w-10 flex items-center justify-center font-medium text-base shadow-sm">
                                       {user.name.charAt(0)}
                                     </div>
@@ -378,19 +384,20 @@ const CallModal = ({ isOpen, onClose }) => {
                                       />
                                     )}
                                   </div>
-                                  <div className="text-left">
+                                  <div className="text-left rtl:text-right">
                                     <h3 className="font-medium text-sm text-metallica-blue-700 font-ibm-plex-sans">{user.name}</h3>
                                     <p className="text-xs text-metallica-metallica-blue-900 mt-0.5 font-ibm-plex-sans">
-                                      {user.role === 'scad' ? 'SCAD Admin' : `${user.major || 'Student'}`}
-                                      {user.role === 'student' && <span className="ml-2 inline-block bg-green-100 text-green-800 text-[10px] px-1.5 py-0.5 rounded font-semibold">PRO</span>}
+                                      {user.role === 'scad' ? safeT('callModal.userRoles.scadAdmin') : `${user.major || safeT('callModal.userRoles.student')}`}
+                                      {user.role === 'student' && <span className="ml-2 rtl:mr-2 rtl:ml-0 inline-block bg-green-100 text-green-800 text-[10px] px-1.5 py-0.5 rounded font-semibold">PRO</span>}
                                     </p>
                                   </div>
                                 </div>
-                                <div className="flex items-center space-x-2 ml-2 flex-shrink-0">
+                                {/* Button group: Call/Schedule/Cancel */}
+                                <div className="flex items-center space-x-2 ml-2 rtl:mr-2 rtl:ml-0 flex-shrink-0 flex-row rtl:flex-row-reverse">
                                   <button
                                     onClick={() => initiateCall(user.id, user.name)}
                                     className={`${isConfirmed ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-400 cursor-not-allowed'} text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9`}
-                                    title={isConfirmed ? "Call Now" : "Confirmed appointment required"}
+                                    title={isConfirmed ? safeT('callModal.tooltips.callNow') : safeT('callModal.tooltips.confirmedAppointmentRequired')}
                                     disabled={!isConfirmed || isThisUserScheduling}
                                   >
                                     <FontAwesomeIcon icon={faVideo} className="h-4 w-4" />
@@ -399,7 +406,7 @@ const CallModal = ({ isOpen, onClose }) => {
                                     <button
                                       onClick={() => handleOpenScheduler(user.id)}
                                       className="bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
-                                      title="Request Appointment"
+                                      title={safeT('callModal.tooltips.requestAppointment')}
                                     >
                                       <FontAwesomeIcon icon={faCalendarPlus} className="h-4 w-4" />
                                     </button>
@@ -408,19 +415,19 @@ const CallModal = ({ isOpen, onClose }) => {
                                     <button
                                       onClick={handleCancelScheduling}
                                       className="bg-gray-400 hover:bg-gray-500 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
-                                      title="Cancel Scheduling"
+                                      title={safeT('callModal.tooltips.cancelScheduling')}
                                     >
                                       <FontAwesomeIcon icon={faTimes} className="h-4 w-4" />
                                     </button>
                                   )}
                                   {isPending && !isThisUserScheduling && (
                                     <span className="text-xs text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full font-medium flex items-center h-9">
-                                      <FontAwesomeIcon icon={faUserClock} className="mr-1.5 h-3 w-3" /> Requested
+                                      <FontAwesomeIcon icon={faUserClock} className="mr-1.5 rtl:ml-1.5 rtl:mr-0 h-3 w-3" /> {safeT('callModal.statuses.requested')}
                                     </span>
                                   )}
                                   {isConfirmed && !isThisUserScheduling && (
                                     <span className="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full font-medium flex items-center h-9">
-                                      <FontAwesomeIcon icon={faUserCheck} className="mr-1.5 h-3 w-3" /> Confirmed
+                                      <FontAwesomeIcon icon={faUserCheck} className="mr-1.5 rtl:ml-1.5 rtl:mr-0 h-3 w-3" /> {safeT('callModal.statuses.confirmed')}
                                     </span>
                                   )}
                                 </div>
@@ -449,10 +456,10 @@ const CallModal = ({ isOpen, onClose }) => {
                                         onClick={() => handleConfirmAppointmentRequest(user)}
                                         className="bg-metallica-blue-700 hover:bg-metallica-blue-800 text-white py-1.5 px-4 rounded-full text-xs font-medium flex items-center justify-center shadow-sm transition-colors h-9 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                                         disabled={!pendingDateTime}
-                                        title="Confirm Appointment Request"
+                                        title={safeT('callModal.tooltips.confirmRequest')}
                                       >
-                                        <FontAwesomeIcon icon={faPaperPlane} className="mr-2 h-3.5 w-3.5" />
-                                        Confirm Request
+                                        <FontAwesomeIcon icon={faPaperPlane} className="mr-2 rtl:ml-2 rtl:mr-0 h-3.5 w-3.5" />
+                                        {safeT('callModal.buttons.confirmRequest')}
                                       </button>
                                     </div>
                                   </motion.div>
@@ -468,35 +475,35 @@ const CallModal = ({ isOpen, onClose }) => {
                   {/* Pending Appointments Received */}
                   {pendingReceivedAppointments.length > 0 && (
                     <div className="mb-6">
-                      <h4 className="text-lg font-semibold text-metallica-blue-700 mb-3 font-ibm-plex-sans border-b pb-2">Pending Requests</h4>
+                      <h4 className="text-lg font-semibold text-metallica-blue-700 mb-3 font-ibm-plex-sans border-b pb-2 rtl:text-right">{safeT('callModal.sections.pendingRequests')}</h4>
                       <div className="space-y-3">
                         {pendingReceivedAppointments.map(appt => (
                           <div key={appt.id} className="bg-yellow-50 rounded-xl p-4 shadow-sm border border-yellow-200">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center">
-                                <div className="bg-yellow-100 text-yellow-700 rounded-full h-10 w-10 flex items-center justify-center mr-3 font-medium text-base shadow-sm flex-shrink-0">
+                                <div className="bg-yellow-100 text-yellow-700 rounded-full h-10 w-10 flex items-center justify-center mr-3 rtl:ml-3 rtl:mr-0 font-medium text-base shadow-sm flex-shrink-0">
                                   {appt.requesterName.charAt(0)}
                                 </div>
                                 <div>
                                   <h3 className="font-medium text-sm text-yellow-800 font-ibm-plex-sans">{appt.requesterName}</h3>
                                   <p className="text-xs text-yellow-600 mt-0.5 font-ibm-plex-sans flex items-center">
-                                    <FontAwesomeIcon icon={faClock} className="mr-1.5 h-3 w-3" />
-                                    {appt.dateTime ? formatDateFns(new Date(appt.dateTime), 'MMM d, yyyy') : 'Wants to schedule'}
+                                    <FontAwesomeIcon icon={faClock} className="mr-1.5 rtl:ml-1.5 rtl:mr-0 h-3 w-3" />
+                                    {appt.dateTime ? formatDateFns(new Date(appt.dateTime), 'MMM d, yyyy') : safeT('callModal.appointments.wantsToSchedule')}
                                   </p>
                                 </div>
                               </div>
-                              <div className="flex items-center space-x-2 ml-2">
+                              <div className="flex items-center space-x-2 ml-2 rtl:mr-2 rtl:ml-0 flex-row rtl:flex-row-reverse">
                                 <button
                                   onClick={() => handleAcceptAppointment(appt.id)}
                                   className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
-                                  title="Accept Appointment"
+                                  title={safeT('callModal.tooltips.acceptAppointment')}
                                 >
                                   <FontAwesomeIcon icon={faCheck} className="h-4 w-4" />
                                 </button>
                                 <button
                                   onClick={() => handleRejectAppointment(appt.id)}
                                   className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
-                                  title="Reject Appointment"
+                                  title={safeT('callModal.tooltips.rejectAppointment')}
                                 >
                                   <FontAwesomeIcon icon={faTimes} className="h-4 w-4" />
                                 </button>
@@ -511,7 +518,7 @@ const CallModal = ({ isOpen, onClose }) => {
                   {/* Confirmed Appointments */}
                   {confirmedAppointments.length > 0 && (
                     <div className="mb-6">
-                      <h4 className="text-lg font-semibold text-metallica-blue-700 mb-3 font-ibm-plex-sans border-b pb-2">Confirmed Appointments</h4>
+                      <h4 className="text-lg font-semibold text-metallica-blue-700 mb-3 font-ibm-plex-sans border-b pb-2 rtl:text-right">{safeT('callModal.sections.confirmedAppointments')}</h4>
                       <div className="space-y-3">
                         {confirmedAppointments.map(appt => {
                           const otherPartyName = appt.requesterId === effectiveUser?.id ? appt.requestedUserName : appt.requesterName;
@@ -520,29 +527,29 @@ const CallModal = ({ isOpen, onClose }) => {
                             <div key={appt.id} className="bg-green-50 rounded-xl p-4 shadow-sm border border-green-200">
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center">
-                                  <div className="bg-green-100 text-green-700 rounded-full h-10 w-10 flex items-center justify-center mr-3 font-medium text-base shadow-sm flex-shrink-0">
+                                  <div className="bg-green-100 text-green-700 rounded-full h-10 w-10 flex items-center justify-center mr-3 rtl:ml-3 rtl:mr-0 font-medium text-base shadow-sm flex-shrink-0">
                                     {otherPartyName.charAt(0)}
                                   </div>
                                   <div>
                                     <h3 className="font-medium text-sm text-green-800 font-ibm-plex-sans">{otherPartyName}</h3>
                                     <p className="text-xs text-green-600 mt-0.5 font-ibm-plex-sans flex items-center">
-                                      <FontAwesomeIcon icon={faClock} className="mr-1.5 h-3 w-3" />
-                                      {appt.dateTime ? formatDateFns(new Date(appt.dateTime), 'MMM d, yyyy') : 'Confirmed (No date set)'}
+                                      <FontAwesomeIcon icon={faClock} className="mr-1.5 rtl:ml-1.5 rtl:mr-0 h-3 w-3" />
+                                      {appt.dateTime ? formatDateFns(new Date(appt.dateTime), 'MMM d, yyyy') : safeT('callModal.appointments.confirmedNoDate')}
                                     </p>
                                   </div>
                                 </div>
-                                <div className="flex items-center space-x-2 ml-2">
+                                <div className="flex items-center space-x-2 ml-2 rtl:mr-2 rtl:ml-0 flex-row rtl:flex-row-reverse">
                                   <button
                                     onClick={() => initiateCall(otherPartyId, otherPartyName)}
                                     className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
-                                    title="Call Now"
+                                    title={safeT('callModal.tooltips.callNow')}
                                   >
                                     <FontAwesomeIcon icon={faVideo} className="h-4 w-4" />
                                   </button>
                                   <button
                                     onClick={() => handleRejectAppointment(appt.id)}
                                     className="bg-gray-400 hover:bg-gray-500 text-white p-2 rounded-full flex items-center justify-center transition-colors shadow-sm h-9 w-9"
-                                    title="Cancel Appointment"
+                                    title={safeT('callModal.tooltips.cancelAppointment')}
                                   >
                                     <FontAwesomeIcon icon={faTimes} className="h-4 w-4" />
                                   </button>
@@ -558,7 +565,7 @@ const CallModal = ({ isOpen, onClose }) => {
                   {/* Rejected Appointments (Optional Display) */}
                   {rejectedAppointments.length > 0 && (
                     <div className="mb-6 opacity-60">
-                      <h4 className="text-md font-medium text-gray-500 mb-3 font-ibm-plex-sans border-b pb-2">Past / Rejected</h4>
+                      <h4 className="text-md font-medium text-gray-500 mb-3 font-ibm-plex-sans border-b pb-2 rtl:text-right">{safeT('callModal.sections.pastRejected')}</h4>
                       <div className="space-y-2">
                         {rejectedAppointments.map(appt => {
                           const otherPartyName = appt.requesterId === effectiveUser?.id ? appt.requestedUserName : appt.requesterName;
@@ -566,19 +573,19 @@ const CallModal = ({ isOpen, onClose }) => {
                             <div key={appt.id} className="bg-gray-100 rounded-lg p-3 shadow-sm border border-gray-200">
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center">
-                                  <div className="bg-gray-200 text-gray-500 rounded-full h-8 w-8 flex items-center justify-center mr-3 font-medium text-sm flex-shrink-0">
+                                  <div className="bg-gray-200 text-gray-500 rounded-full h-8 w-8 flex items-center justify-center mr-3 rtl:ml-3 rtl:mr-0 font-medium text-sm flex-shrink-0">
                                     {otherPartyName.charAt(0)}
                                   </div>
                                   <div>
                                     <h3 className="font-normal text-xs text-gray-600 font-ibm-plex-sans">
-                                      {appt.requesterId === effectiveUser?.id ? `You requested ${otherPartyName}` : `${otherPartyName} requested you`}
+                                      {appt.requesterId === effectiveUser?.id ? safeT('callModal.appointments.youRequested', { name: otherPartyName }) : safeT('callModal.appointments.requestedYou', { name: otherPartyName })}
                                     </h3>
-                                    <p className="text-[10px] text-red-500 mt-0.5 font-ibm-plex-sans font-medium">Rejected</p>
+                                    <p className="text-[10px] text-red-500 mt-0.5 font-ibm-plex-sans font-medium">{safeT('callModal.appointments.rejected')}</p>
                                   </div>
                                 </div>
                                 {appt.dateTime && (
-                                  <p className="text-[10px] text-gray-400 mt-0.5 font-ibm-plex-sans flex items-center ml-auto">
-                                    <FontAwesomeIcon icon={faClock} className="mr-1 h-2.5 w-2.5" />
+                                  <p className="text-[10px] text-gray-400 mt-0.5 font-ibm-plex-sans flex items-center ml-auto rtl:mr-auto rtl:ml-0">
+                                    <FontAwesomeIcon icon={faClock} className="mr-1 rtl:ml-1 rtl:mr-0 h-2.5 w-2.5" />
                                     {formatDateFns(new Date(appt.dateTime), 'MMM d, yyyy')}
                                   </p>
                                 )}

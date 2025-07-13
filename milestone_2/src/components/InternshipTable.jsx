@@ -4,8 +4,13 @@ import InternshipRow from './InternshipRow';
 import Filter from './Filter';
 import SearchBar from './SearchBar';
 import { mockInternships } from '../../constants/index';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function InternshipTable({ internships = mockInternships }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
@@ -55,9 +60,9 @@ export default function InternshipTable({ internships = mockInternships }) {
       <div className="w-full max-w-3xl mx-auto px-4">
         {/* Title */}
         <h1 className="text-3xl font-bold mb-6 text-left text-[#2a5f74] relative">
-            INTERNSHIP OPPORTUNITIES
-            <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
-          </h1>
+          INTERNSHIP OPPORTUNITIES
+          <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
+        </h1>
 
         {/* Search and Filter Button Row */}
         <div className="flex gap-4 w-full mb-4">
@@ -69,7 +74,7 @@ export default function InternshipTable({ internships = mockInternships }) {
               placeholder="Search by job title or company..."
             />
           </div>
-          
+
           <button
             onClick={toggleFilters}
             className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-300 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
@@ -83,7 +88,7 @@ export default function InternshipTable({ internships = mockInternships }) {
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
             </svg>
-            <span>{showFilters ? 'Hide Filters' : 'Filters'}</span>
+            <span>{showFilters ? safeT('company.common.hideFilters') : safeT('company.common.filter')}</span>
           </button>
         </div>
 

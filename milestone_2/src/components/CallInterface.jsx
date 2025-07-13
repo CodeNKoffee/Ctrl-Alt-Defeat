@@ -28,73 +28,80 @@ import {
   faExpand
 } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from "react-i18next";
+import { createSafeT } from "@/lib/translationUtils";
 
 // Extract ChatPanelContent to be outside of CallInterface
+
 const ChatPanelContent = memo(({
   chatMessages = [],
   currentMessage = '',
   setCurrentMessage,
   handleSendMessage,
   handleToggleChat,
-  chatScrollRef
-}) => (
-  <div className="h-full flex flex-col">
-    <div className="flex justify-between items-center p-4 border-b border-white/10">
-      <h3 className="text-lg font-semibold text-blue-100">Chat</h3>
-      <button
-        onClick={handleToggleChat}
-        className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
-        title="Close Chat Panel"
-      >
-        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-      </button>
-    </div>
-    <div className="flex flex-col flex-grow overflow-hidden">
-      <div ref={chatScrollRef} className="flex-grow p-4 space-y-4 overflow-y-auto">
-        {chatMessages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center text-sm text-blue-200/60">
-            <FontAwesomeIcon icon={faComments} className="h-8 w-8 mb-3 opacity-50" />
-            <p>No messages yet</p>
-            <p className="text-xs mt-1">Start the conversation!</p>
-          </div>
-        ) : (
-          chatMessages.map(message => (
-            <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] rounded-xl px-4 py-2 shadow-lg ${message.isSelf
-                ? 'bg-[#318FA8] text-white rounded-br-none'
-                : 'bg-white/5 text-blue-100 border border-white/10 rounded-bl-none'
-                }`}>
-                <p className="text-sm">{message.content}</p>
-                <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100/70' : 'text-blue-200/60'}`}>
-                  {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </p>
-              </div>
+  chatScrollRef,
+}) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex justify-between items-center p-4 border-b border-white/10">
+        <h3 className="text-lg font-semibold text-blue-100">{safeT('callInterface.chat')}</h3>
+        <button
+          onClick={handleToggleChat}
+          className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
+          title={safeT('callInterface.closeChatPanel')}
+        >
+          <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="flex flex-col flex-grow overflow-hidden">
+        <div ref={chatScrollRef} className="flex-grow p-4 space-y-4 overflow-y-auto">
+          {chatMessages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-center text-sm text-blue-200/60">
+              <FontAwesomeIcon icon={faComments} className="h-8 w-8 mb-3 opacity-50" />
+              <p>{safeT('callInterface.noMessagesYet')}</p>
+              <p className="text-xs mt-1">{safeT('callInterface.startConversation')}</p>
             </div>
-          ))
-        )}
-      </div>
-      <div className="p-4 border-t border-white/10">
-        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-          <input
-            type="text"
-            value={currentMessage}
-            onChange={(e) => setCurrentMessage(e.target.value)}
-            className="flex-grow bg-white/5 border border-white/10 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 text-sm text-blue-100 placeholder-blue-200/40"
-            placeholder="Type your message..."
-          />
-          <button
-            type="submit"
-            className={`w-10 h-10 rounded-full bg-[#318FA8] hover:bg-[#2A5F74] text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''} shadow-lg hover:shadow-xl`}
-            disabled={!currentMessage.trim()}
-            title="Send Message"
-          >
-            <FontAwesomeIcon icon={faPaperPlane} className="h-4 w-4" />
-          </button>
-        </form>
+          ) : (
+            chatMessages.map(message => (
+              <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] rounded-xl px-4 py-2 shadow-lg ${message.isSelf
+                  ? 'bg-[#318FA8] text-white rounded-br-none'
+                  : 'bg-white/5 text-blue-100 border border-white/10 rounded-bl-none'
+                  }`}>
+                  <p className="text-sm">{message.content}</p>
+                  <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100/70' : 'text-blue-200/60'}`}>
+                    {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+        <div className="p-4 border-t border-white/10">
+          <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+            <input
+              type="text"
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              className="flex-grow bg-white/5 border border-white/10 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 text-sm text-blue-100 placeholder-blue-200/40"
+              placeholder={safeT('callInterface.typeMessage')}
+            />
+            <button
+              type="submit"
+              className={`w-10 h-10 rounded-full bg-[#318FA8] hover:bg-[#2A5F74] text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''} shadow-lg hover:shadow-xl`}
+              disabled={!currentMessage.trim()}
+              title={safeT('callInterface.sendMessage')}
+            >
+              <FontAwesomeIcon icon={faPaperPlane} className="h-4 w-4" />
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-));
+  );
+});
 
 // Extract NotesPanelContent to be outside of CallInterface
 const NotesPanelContent = memo(({
@@ -102,39 +109,45 @@ const NotesPanelContent = memo(({
   setNoteContent,
   handleSaveNotes,
   handleToggleNotes
-}) => (
-  <div className="h-full flex flex-col">
-    <div className="flex justify-between items-center p-4 border-b border-white/10">
-      <h3 className="text-lg font-semibold text-blue-100">Notes</h3>
-      <button
-        onClick={handleToggleNotes}
-        className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
-        title="Close Notes Panel"
-      >
-        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-      </button>
+}) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex justify-between items-center p-4 border-b border-white/10">
+        <h3 className="text-lg font-semibold text-blue-100">Notes</h3>
+        <button
+          onClick={handleToggleNotes}
+          className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
+          title={safeT('callInterface.closeNotesPanel')}
+        >
+          <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="flex flex-col flex-grow p-4">
+        <textarea
+          value={noteContent}
+          onChange={(e) => setNoteContent(e.target.value)}
+          className="flex-grow w-full p-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 resize-none text-sm text-blue-100 placeholder-blue-200/40 mb-4"
+          placeholder={safeT('callInterface.takeNotes')}
+        />
+        <button
+          onClick={handleSaveNotes}
+          className="w-full bg-[#318FA8] hover:bg-[#2A5F74] text-white py-3 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors shadow-lg hover:shadow-xl border border-[#41B9D9]/30"
+          title={safeT('callInterface.saveNotes')}
+        >
+          <FontAwesomeIcon icon={faSave} className="h-4 w-4" />
+          {safeT('callInterface.saveNotes')}
+        </button>
+      </div>
     </div>
-    <div className="flex flex-col flex-grow p-4">
-      <textarea
-        value={noteContent}
-        onChange={(e) => setNoteContent(e.target.value)}
-        className="flex-grow w-full p-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 resize-none text-sm text-blue-100 placeholder-blue-200/40 mb-4"
-        placeholder="Take notes here..."
-      />
-      <button
-        onClick={handleSaveNotes}
-        className="w-full bg-[#318FA8] hover:bg-[#2A5F74] text-white py-3 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors shadow-lg hover:shadow-xl border border-[#41B9D9]/30"
-        title="Save Notes"
-      >
-        <FontAwesomeIcon icon={faSave} className="h-4 w-4" />
-        Save Notes
-      </button>
-    </div>
-  </div>
-));
+  );
+});
 
 const CallInterface = () => {
   const dispatch = useDispatch();
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const instanceId = useRef(Math.random().toString(36).substring(2, 7)).current; // Unique ID for this instance
   console.log(`[CallInterface ${instanceId}] Function body executing.`); // Log instance invocation
 
@@ -471,33 +484,33 @@ const CallInterface = () => {
           {showConnectingOverlay ? (
             <>
               <div className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse mr-2"></div>
-              Connecting to {otherPartyName}...
+              {safeT('callInterface.connectingTo', { otherPartyName })}
             </>
           ) : otherPartyCameraOn ? (
             <>
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div>
-              Call in progress with {otherPartyName}
+              {safeT('callInterface.callInProgress', { otherPartyName })}
             </>
           ) : (
             <>
               <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse mr-2"></div>
-              Connected with {otherPartyName} (camera off)
+              {safeT('callInterface.connectedWith', { otherPartyName })}
             </>
           )}
           <div className="flex items-center gap-2 ml-4 pl-4 border-l border-white/10">
             <button
               onClick={triggerLeaveToast}
               className="text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 px-2 py-1 rounded-full border border-red-500/30 transition-colors"
-              title="Simulate other party leaving"
+              title={safeT('callInterface.simulateOtherPartyLeaving')}
             >
-              Sim Leave
+              {safeT('callInterface.simLeave')}
             </button>
             <button
               onClick={() => setOtherPartyCameraOn(prev => !prev)}
               className="text-xs bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 px-2 py-1 rounded-full border border-blue-500/30 transition-colors"
-              title="Toggle camera state"
+              title={safeT('callInterface.toggleCameraState')}
             >
-              Toggle Cam
+              {safeT('callInterface.toggleCam')}
             </button>
           </div>
         </div>
@@ -509,7 +522,7 @@ const CallInterface = () => {
               {otherPartyName?.charAt(0).toUpperCase() || 'U'}
             </div>
             <h2 className="text-xl font-semibold text-blue-100">{otherPartyName}</h2>
-            <p className="text-sm text-blue-200/60 mt-2">Camera is turned off</p>
+            <p className="text-sm text-blue-200/60 mt-2">{safeT('callInterface.cameraIsTurnedOff')}</p>
           </div>
         )}
 
@@ -524,7 +537,7 @@ const CallInterface = () => {
             />
             <div className="absolute bottom-8 left-0 right-0 text-center">
               <p className="text-lg sm:text-xl text-white bg-[#1E3A5F]/80 backdrop-blur-sm py-2 px-4 mx-auto inline-block rounded-full border border-white/10">
-                {otherPartyName}'s camera is on
+                {safeT('callInterface.cameraIsOn', { otherPartyName })}
               </p>
             </div>
           </div>
@@ -535,7 +548,7 @@ const CallInterface = () => {
           <div className="absolute inset-0 flex items-center justify-center bg-[#0a1118]/90 backdrop-blur-sm">
             <div className="text-blue-100 text-xl flex flex-col items-center">
               <div className="w-16 h-16 rounded-full border-4 border-[#318FA8] border-t-transparent animate-spin mb-4"></div>
-              Connecting...
+              {safeT('callInterface.connecting')}
             </div>
           </div>
         )}
@@ -543,7 +556,7 @@ const CallInterface = () => {
         {/* Party left notification */}
         {hasOtherPartyLeft && (
           <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-500/20 backdrop-blur-sm text-red-400 px-4 py-2 rounded-full shadow-lg border border-red-500/30">
-            {otherPartyName} has left the call
+            {safeT('callInterface.otherPartyLeft', { otherPartyName })}
           </div>
         )}
 
@@ -562,11 +575,11 @@ const CallInterface = () => {
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#318FA8] to-[#41B9D9] flex items-center justify-center text-xl font-bold mb-2 shadow-lg">
                 {currentUser?.name?.charAt(0).toUpperCase() || 'U'}
               </div>
-              <span className="text-sm font-medium text-blue-100">You</span>
+              <span className="text-sm font-medium text-blue-100">{safeT('callInterface.you')}</span>
               {isMuted && (
                 <div className="mt-2 flex items-center text-red-400 text-xs bg-red-500/20 px-2 py-1 rounded-full">
                   <FontAwesomeIcon icon={faMicrophoneSlash} className="h-3 w-3 mr-1" />
-                  Muted
+                  {safeT('callInterface.muted')}
                 </div>
               )}
             </div>
@@ -580,7 +593,7 @@ const CallInterface = () => {
           <button
             onClick={() => dispatch(toggleMute())}
             className={`${baseButtonClass} ${isMuted ? redButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title={isMuted ? 'Unmute' : 'Mute'}
+            title={isMuted ? safeT('callInterface.unmute') : safeT('callInterface.mute')}
           >
             <FontAwesomeIcon icon={isMuted ? faMicrophoneSlash : faMicrophone} className="h-5 w-5" />
           </button>
@@ -588,7 +601,7 @@ const CallInterface = () => {
           <button
             onClick={() => dispatch(toggleVideo())}
             className={`${baseButtonClass} ${!isVideoEnabled ? redButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title={isVideoEnabled ? 'Stop Video' : 'Start Video'}
+            title={isVideoEnabled ? safeT('callInterface.stopVideo') : safeT('callInterface.startVideo')}
           >
             <FontAwesomeIcon icon={isVideoEnabled ? faVideo : faVideoSlash} className="h-5 w-5" />
           </button>
@@ -596,7 +609,7 @@ const CallInterface = () => {
           <button
             onClick={() => dispatch(toggleScreenShare())}
             className={`${baseButtonClass} ${isScreenSharing ? greenButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title={isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
+            title={isScreenSharing ? safeT('callInterface.stopSharing') : safeT('callInterface.shareScreen')}
           >
             <FontAwesomeIcon icon={faDesktop} className="h-5 w-5" />
           </button>
@@ -606,7 +619,7 @@ const CallInterface = () => {
           <button
             onClick={handleToggleChat}
             className={`${baseButtonClass} ${showChat ? activeButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title="Chat"
+            title={safeT('callInterface.chat')}
           >
             <FontAwesomeIcon icon={faComments} className="h-5 w-5" />
           </button>
@@ -614,7 +627,7 @@ const CallInterface = () => {
           <button
             onClick={handleToggleNotes}
             className={`${baseButtonClass} ${showNotes ? activeButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title="Notes"
+            title={safeT('callInterface.notes')}
           >
             <FontAwesomeIcon icon={faNoteSticky} className="h-5 w-5" />
           </button>
@@ -624,7 +637,7 @@ const CallInterface = () => {
           <button
             onClick={handleEndCall}
             className={`${baseButtonClass} ${redButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title="End Call"
+            title={safeT('callInterface.endCall')}
           >
             <FontAwesomeIcon icon={faPhone} className="h-5 w-5 transform rotate-135" />
           </button>

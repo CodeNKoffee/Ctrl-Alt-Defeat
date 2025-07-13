@@ -3,8 +3,12 @@ import './styles/StudentProfile.css';
 import './styles/SectionStyles.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faGraduationCap, faCode, faBriefcase, faBuilding, faClipboard } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function StudentDetails({ isOpen, studentData }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   // Ref for the details-content div to manage scroll effects
   const detailsContentRef = useRef(null);
   const [showFade, setShowFade] = useState(true);
@@ -113,7 +117,7 @@ export default function StudentDetails({ isOpen, studentData }) {
                 <span className="section-badge">
                   <FontAwesomeIcon icon={faUser} />
                 </span>
-                Personality Traits
+                {safeT('studentDetails.personalityTraits')}
               </h3>
               <div className="personality-traits">
                 {studentData.personalityTraits && studentData.personalityTraits.map((trait, index) => (
@@ -132,10 +136,10 @@ export default function StudentDetails({ isOpen, studentData }) {
                 <span className="section-badge">
                   <FontAwesomeIcon icon={faGraduationCap} />
                 </span>
-                Education
+                {safeT('studentDetails.education')}
               </h3>
               <div className="education-content">
-               {studentData.education && studentData.education[0] && (
+                {studentData.education && studentData.education[0] && (
                   <div className="education-item">
                     <h4 style={headingStyle}>{studentData.education[0].degree}</h4>
                     <p style={textStyle}>{studentData.education[0].institution}</p>
@@ -157,7 +161,7 @@ export default function StudentDetails({ isOpen, studentData }) {
                 <span className="section-badge">
                   <FontAwesomeIcon icon={faCode} />
                 </span>
-                Skills
+                {safeT('studentDetails.skills')}
               </h3>
               <div className="skills-container">
                 {studentData.skills && studentData.skills.map((skill, index) => (
@@ -171,7 +175,7 @@ export default function StudentDetails({ isOpen, studentData }) {
                 <span className="section-badge">
                   <FontAwesomeIcon icon={faBriefcase} />
                 </span>
-                Job Interests
+                {safeT('studentDetails.jobInterests')}
               </h3>
               <div className="job-interests-container">
                 {studentData.jobInterests && studentData.jobInterests.map((interest, index) => (
@@ -193,7 +197,7 @@ export default function StudentDetails({ isOpen, studentData }) {
                 <span className="section-badge">
                   <FontAwesomeIcon icon={faBuilding} />
                 </span>
-                Experience
+                {safeT('studentDetails.experience')}
               </h3>
               <div className="experience-content">
                 {studentData.experience && studentData.experience.map((exp, index) => (
@@ -217,7 +221,7 @@ export default function StudentDetails({ isOpen, studentData }) {
                 <span className="section-badge">
                   <FontAwesomeIcon icon={faClipboard} />
                 </span>
-                Internships
+                {safeT('studentDetails.internships')}
               </h3>
               <div className="internships-container">
                 {studentData.internships && studentData.internships.map((internship, index) => (

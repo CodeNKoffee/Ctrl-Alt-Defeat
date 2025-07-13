@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import CompanyProfileCard from './cards/CompanyProfileCard';
 import CompanyIndustryCard from './cards/CompanyIndustryCard';
 import CompanySizeCard from './cards/CompanySizeCard';
@@ -20,10 +22,12 @@ export default function CompanyDetails({
   onCollapse,
   onCompanyRemoval = () => { },
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [feedback, setFeedback] = useState(null); // 'accepted' | 'rejected' | null
 
   // Compose registration message
-  const registrationMessage = `Registered on 03 May, 2025`;
+  const registrationMessage = `${safeT('scad.companyDetails.registeredOn')} 03 May, 2025`;
   // Compose docs array for card
   const docs = Array.isArray(documentation)
     ? documentation
@@ -116,12 +120,12 @@ export default function CompanyDetails({
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                {feedback === 'accepted' ? 'Accepted!' : 'Rejected!'}
+                {feedback === 'accepted' ? safeT('scad.companyDetails.feedback.accepted') : safeT('scad.companyDetails.feedback.rejected')}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
                 {feedback === 'accepted'
-                  ? 'This company has been approved and added to your list.'
-                  : 'This company has been rejected and removed from your list.'}
+                  ? safeT('scad.companyDetails.feedback.acceptedMessage')
+                  : safeT('scad.companyDetails.feedback.rejectedMessage')}
               </div>
             </motion.div>
           </motion.div>
@@ -141,14 +145,14 @@ export default function CompanyDetails({
               variant="primary"
               onClick={handleAccept}
               icon={faCheck}
-              text="Accept"
+              text={safeT('scad.companyDetails.accept')}
               width="w-1/2"
             />
             <CustomButton
               variant="danger"
               onClick={handleReject}
               icon={faTimes}
-              text="Reject"
+              text={safeT('scad.companyDetails.reject')}
               width="w-1/2"
             />
           </div>

@@ -12,8 +12,12 @@ import NotificationButton from "./NotificationButton";
 import WorkshopFeedback from "./WorkshopFeedback";
 import CertificateSimulatorButton from "./CertificateSimulatorButton";
 import ApplicationsFilterBar from './shared/ApplicationsFilterBar';
+import { useTranslation } from "react-i18next";
+import { createSafeT } from "@/lib/translationUtils";
 
 export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSelectLive, sidebarExpanded }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
   const [workshops, setWorkshops] = useState(sampleWorkshops);
   const [showLiveInterface, setShowLiveInterface] = useState(false);
@@ -24,7 +28,15 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedInstructor, setSelectedInstructor] = useState('all');
+  const [isRTL, setIsRTL] = useState(false);
   const router = useRouter();
+
+  // Detect document direction once on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsRTL(document.documentElement.getAttribute('dir') === 'rtl');
+    }
+  }, []);
 
   // Unique instructors for filter
   const uniqueInstructors = [
@@ -185,6 +197,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
     <div className="w-full max-w-7xl mx-auto px-4 pb-8">
       {/* Flex row: WORKSHOPS title and feedback button */}
       <div className="flex items-center justify-between mb-8">
+        {/*
         <button
           onClick={() => setShowFeedback(true)}
           className="relative w-11 h-11 rounded-full bg-gray-50 text-metallica-blue-700 flex items-center justify-center shadow-md hover:bg-metallica-blue-50 hover:-translate-y-0.5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-metallica-blue-500 focus:ring-offset-2 transition-all duration-150 ease-in"
@@ -194,6 +207,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
         >
           <FontAwesomeIcon icon={faCommentDots} className="h-6 w-6" />
         </button>
+        */}
       </div>
       <WorkshopFeedback
         isOpen={showFeedback}
@@ -230,7 +244,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
             }`}
         >
           <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'all' ? 'bg-[#5DB2C7]' : 'bg-gray-300'}`}></span>
-          ALL
+          {safeT('student.dashboard.statusPills.all')}
         </button>
         <button
           onClick={() => setActiveFilter('upcoming')}
@@ -240,7 +254,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
             }`}
         >
           <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'upcoming' ? 'bg-green-600' : 'bg-gray-300'}`}></span>
-          UPCOMING
+          {safeT('student.dashboard.statusPills.upcoming')}
         </button>
         <button
           onClick={() => setActiveFilter('live')}
@@ -250,7 +264,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
             }`}
         >
           <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'live' ? 'bg-red-600' : 'bg-gray-300'}`}></span>
-          LIVE
+          {safeT('student.dashboard.statusPills.live')}
         </button>
         <button
           onClick={() => setActiveFilter('prerecorded')}
@@ -260,14 +274,14 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
             }`}
         >
           <span className={`h-2.5 w-2.5 rounded-full ${activeFilter === 'prerecorded' ? 'bg-yellow-600' : 'bg-gray-300'}`}></span>
-          PRERECORDED
+          {safeT('student.dashboard.statusPills.prerecorded')}
         </button>
       </div>
 
       {/* Main content area with relative positioning */}
       <div className="relative">
         {/* Workshop grid - will adjust width when sidebar is open */}
-        <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? "md:pr-[55%] lg:pr-[38%]" : "pr-0"
+        <div className={`transition-all duration-300 ease-in-out ${selectedWorkshop ? isRTL ? "md:pl-[55%] lg:pl-[38%]" : "md:pr-[55%] lg:pr-[38%]" : "pr-0 pl-0"
           }`}>
           {/* Upcoming Workshops */}
           {filteredWorkshops.upcoming.length > 0 && (
@@ -276,7 +290,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.upcoming.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()} pr-2`}>
+                    <div className={`w-full ${getCardContainerClass()} ltr:pr-2 rtl:pl-2`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}
@@ -296,7 +310,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.live.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()} pr-2`}>
+                    <div className={`w-full ${getCardContainerClass()} ltr:pr-2 rtl:pl-2`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}
@@ -316,7 +330,7 @@ export default function WorkshopList({ canCreate = false, onCreateWorkshop, onSe
               <div className={`grid ${getGridColumns()} gap-5`}>
                 {filteredWorkshops.prerecorded.map((ws) => (
                   <div key={ws.id} className="flex justify-center">
-                    <div className={`w-full ${getCardContainerClass()} pr-2`}>
+                    <div className={`w-full ${getCardContainerClass()} ltr:pr-2 rtl:pl-2`}>
                       <WorkshopCard
                         workshop={ws}
                         onClick={handleWorkshopClick}

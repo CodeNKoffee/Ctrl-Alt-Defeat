@@ -10,6 +10,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import WorkshopFeedback from './WorkshopFeedback';
+import { useTranslation } from "react-i18next";
+import { createSafeT } from "@/lib/translationUtils";
+import CertificateSimulatorButton from './CertificateSimulatorButton';
 
 // Extract ChatPanelContent to be outside of WorkshopInterface
 const ChatPanelContent = ({
@@ -19,64 +22,69 @@ const ChatPanelContent = ({
   handleSendMessage,
   handleToggleChat,
   chatScrollRef
-}) => (
-  <div className="h-full flex flex-col">
-    <div className="flex justify-between items-center p-4 border-b border-white/10">
-      <h3 className="text-lg font-semibold text-blue-100">Chat</h3>
-      <button
-        onClick={handleToggleChat}
-        className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
-        title="Close Chat Panel"
-      >
-        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-      </button>
-    </div>
-    <div className="flex flex-col flex-grow overflow-hidden">
-      <div ref={chatScrollRef} className="flex-grow p-4 space-y-4 overflow-y-auto">
-        {chatMessages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center text-sm text-blue-200/60">
-            <FontAwesomeIcon icon={faComments} className="h-8 w-8 mb-3 opacity-50" />
-            <p>No messages yet</p>
-            <p className="text-xs mt-1">Start the conversation!</p>
-          </div>
-        ) : (
-          chatMessages.map(message => (
-            <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] rounded-xl px-4 py-2 shadow-lg ${message.isSelf
-                ? 'bg-[#318FA8] text-white rounded-br-none'
-                : 'bg-white/5 text-blue-100 border border-white/10 rounded-bl-none'
-                }`}>
-                <p className="text-sm">{message.content}</p>
-                <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100/70' : 'text-blue-200/60'}`}>
-                  {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </p>
-              </div>
+}) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex justify-between items-center p-4 border-b border-white/10">
+        <h3 className="text-lg font-semibold text-blue-100">{safeT('callInterface.chat')}</h3>
+        <button
+          onClick={handleToggleChat}
+          className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
+          title={safeT('callInterface.closeChatPanel')}
+        >
+          <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="flex flex-col flex-grow overflow-hidden">
+        <div ref={chatScrollRef} className="flex-grow p-4 space-y-4 overflow-y-auto">
+          {chatMessages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-center text-sm text-blue-200/60">
+              <FontAwesomeIcon icon={faComments} className="h-8 w-8 mb-3 opacity-50" />
+              <p>{safeT('callInterface.noMessagesYet')}</p>
+              <p className="text-xs mt-1">{safeT('callInterface.startConversation')}</p>
             </div>
-          ))
-        )}
-      </div>
-      <div className="p-4 border-t border-white/10">
-        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-          <input
-            type="text"
-            value={currentMessage}
-            onChange={(e) => setCurrentMessage(e.target.value)}
-            className="flex-grow bg-white/5 border border-white/10 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 text-sm text-blue-100 placeholder-blue-200/40"
-            placeholder="Type your message..."
-          />
-          <button
-            type="submit"
-            className={`w-10 h-10 rounded-full bg-[#318FA8] hover:bg-[#2A5F74] text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''} shadow-lg hover:shadow-xl`}
-            disabled={!currentMessage.trim()}
-            title="Send Message"
-          >
-            <FontAwesomeIcon icon={faPaperPlane} className="h-4 w-4" />
-          </button>
-        </form>
+          ) : (
+            chatMessages.map(message => (
+              <div key={message.id} className={`flex ${message.isSelf ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] rounded-xl px-4 py-2 shadow-lg ${message.isSelf
+                  ? 'bg-[#318FA8] text-white rounded-br-none'
+                  : 'bg-white/5 text-blue-100 border border-white/10 rounded-bl-none'
+                  }`}>
+                  <p className="text-sm">{message.content}</p>
+                  <p className={`text-xs mt-1 ${message.isSelf ? 'text-blue-100/70' : 'text-blue-200/60'}`}>
+                    {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+        <div className="p-4 border-t border-white/10">
+          <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+            <input
+              type="text"
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              className="flex-grow bg-white/5 border border-white/10 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 text-sm text-blue-100 placeholder-blue-200/40"
+              placeholder={safeT('callInterface.typeMessage')}
+            />
+            <button
+              type="submit"
+              className={`w-10 h-10 rounded-full bg-[#318FA8] hover:bg-[#2A5F74] text-white flex items-center justify-center transition-colors disabled:opacity-50 ${!currentMessage.trim() ? 'cursor-not-allowed' : ''} shadow-lg hover:shadow-xl`}
+              disabled={!currentMessage.trim()}
+              title={safeT('callInterface.sendMessage')}
+            >
+              <FontAwesomeIcon icon={faPaperPlane} className="h-4 w-4" />
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // Extract NotesPanelContent to be outside of WorkshopInterface
 const NotesPanelContent = ({
@@ -84,38 +92,45 @@ const NotesPanelContent = ({
   setNotes,
   handleSaveNotes,
   handleToggleNotes
-}) => (
-  <div className="h-full flex flex-col">
-    <div className="flex justify-between items-center p-4 border-b border-white/10">
-      <h3 className="text-lg font-semibold text-blue-100">Notes</h3>
-      <button
-        onClick={handleToggleNotes}
-        className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
-        title="Close Notes Panel"
-      >
-        <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
-      </button>
+}) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex justify-between items-center p-4 border-b border-white/10">
+        <h3 className="text-lg font-semibold text-blue-100">Notes</h3>
+        <button
+          onClick={handleToggleNotes}
+          className="text-blue-200/60 hover:text-blue-200 p-2 rounded-full hover:bg-white/5 transition-colors"
+          title={safeT('callInterface.closeNotesPanel')}
+        >
+          <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="flex flex-col flex-grow p-4">
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          className="flex-grow w-full p-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#318fc8] focus:border-[#41B9D9]/30 resize-none text-sm text-blue-100 placeholder-blue-200/40 mb-4"
+          placeholder={safeT('callInterface.takeNotes')}
+        />
+        <button
+          onClick={handleSaveNotes}
+          className="w-full bg-[#318FA8] hover:bg-[#2A5F74] text-white py-3 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors shadow-lg hover:shadow-xl border border-[#41B9D9]/30"
+          title={safeT('callInterface.saveNotes')}
+        >
+          <FontAwesomeIcon icon={faSave} className="h-4 w-4" />
+          {safeT('callInterface.saveNotes')}
+        </button>
+      </div>
     </div>
-    <div className="flex flex-col flex-grow p-4">
-      <textarea
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-        className="flex-grow w-full p-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#318FA8] focus:border-[#41B9D9]/30 resize-none text-sm text-blue-100 placeholder-blue-200/40 mb-4"
-        placeholder="Take workshop notes here..."
-      />
-      <button
-        onClick={handleSaveNotes}
-        className="w-full bg-[#318FA8] hover:bg-[#2A5F74] text-white py-3 px-4 rounded-full font-medium flex items-center justify-center gap-2 transition-colors shadow-lg hover:shadow-xl border border-[#41B9D9]/30"
-        title="Save Notes"
-      >
-        <FontAwesomeIcon icon={faSave} className="h-4 w-4" />
-        Save Notes
-      </button>
-    </div>
-  </div>
-);
+  );
+};
 
 export default function WorkshopInterface({ workshop, onBack }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [notes, setNotes] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
@@ -134,6 +149,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
   const [workshopStartTime, setWorkshopStartTime] = useState(null);
   const chatScrollRef = useRef(null);
   const [workshopEnded, setWorkshopEnded] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -275,23 +291,15 @@ export default function WorkshopInterface({ workshop, onBack }) {
   };
 
   const handleLeaveWorkshop = () => {
-    // Immediately return to workshop list without feedback
-    console.log("Leave workshop clicked, attempting to navigate back");
-    if (onBack) {
-      onBack();
-    } else {
-      console.error("onBack function is not available");
-    }
+    // Show feedback modal instead of navigating away
+    setShowFeedback(true);
   };
 
   const handleFeedbackSubmit = (feedbackData) => {
     console.log("Feedback submitted:", feedbackData);
-    // Here you would typically save the feedback to your backend
-
-    // Directly navigate back to workshop list without delay
-    if (onBack) {
-      onBack();
-    }
+    // Show certificate modal after feedback
+    setShowFeedback(false);
+    setShowCertificate(true);
   };
 
   const handleToggleSubtitles = () => {
@@ -323,7 +331,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
             </div>
             <p className="text-sm text-blue-200/80 mt-1 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              {workshop?.instructor ? `Presenter: ${workshop.instructor}` : "Live Session"}
+              {workshop?.instructor ? `${safeT('callInterface.presenter')}: ${workshop.instructor}` : safeT('callInterface.liveSession')}
             </p>
           </div>
           <button
@@ -331,7 +339,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-200 border border-white/10 text-sm font-medium"
           >
             <FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4" />
-            Back to Workshops
+            {safeT('student.dashboard.workshops.backToWorkshops')}
           </button>
         </div>
       </div>
@@ -351,7 +359,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
           {showSubtitles && (
             <div className="absolute bottom-32 left-0 right-0 text-center">
               <div className="inline-block bg-black/75 backdrop-blur-sm text-white px-6 py-3 rounded-xl max-w-2xl mx-auto text-base border border-white/10">
-                This is sample subtitle text that would appear here during the workshop...
+                {safeT('callInterface.subtitles')}
               </div>
             </div>
           )}
@@ -371,11 +379,11 @@ export default function WorkshopInterface({ workshop, onBack }) {
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#318FA8] to-[#41B9D9] flex items-center justify-center text-xl font-bold mb-2 shadow-lg">
                   <FontAwesomeIcon icon={faUserCircle} />
                 </div>
-                <span className="text-sm font-medium text-blue-100">You</span>
+                <span className="text-sm font-medium text-blue-100">{safeT('callInterface.you')}</span>
                 {!isMicOn && (
                   <div className="mt-2 flex items-center text-red-400 text-xs bg-red-500/20 px-2 py-1 rounded-full">
                     <FontAwesomeIcon icon={faMicrophoneSlash} className="h-3 w-3 mr-1" />
-                    Muted
+                    {safeT('callInterface.muted')}
                   </div>
                 )}
               </div>
@@ -457,7 +465,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
           <button
             onClick={toggleMicrophone}
             className={`${baseButtonClass} ${!isMicOn ? redButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title={isMicOn ? 'Mute' : 'Unmute'}
+            title={isMicOn ? safeT('callInterface.mute') : safeT('callInterface.unmute')}
           >
             <FontAwesomeIcon icon={isMicOn ? faMicrophone : faMicrophoneSlash} className="h-5 w-5" />
           </button>
@@ -465,7 +473,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
           <button
             onClick={toggleCamera}
             className={`${baseButtonClass} ${!isCameraOn ? redButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title={isCameraOn ? 'Stop Video' : 'Start Video'}
+            title={isCameraOn ? safeT('callInterface.stopVideo') : safeT('callInterface.startVideo')}
           >
             <FontAwesomeIcon icon={isCameraOn ? faVideo : faVideoSlash} className="h-5 w-5" />
           </button>
@@ -473,7 +481,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
           <button
             onClick={toggleScreenShare}
             className={`${baseButtonClass} ${isScreenSharing ? greenButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title={isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
+            title={isScreenSharing ? safeT('callInterface.stopSharing') : safeT('callInterface.shareScreen')}
           >
             <FontAwesomeIcon icon={faDesktop} className="h-5 w-5" />
           </button>
@@ -483,7 +491,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
           <button
             onClick={handleToggleChat}
             className={`${baseButtonClass} ${isChatOpen ? activeButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title="Chat"
+            title={safeT('callInterface.chat')}
           >
             <FontAwesomeIcon icon={faComments} className="h-5 w-5" />
           </button>
@@ -491,7 +499,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
           <button
             onClick={handleToggleNotes}
             className={`${baseButtonClass} ${isNotesOpen ? activeNotesButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title="Notes"
+            title={safeT('callInterface.notes')}
           >
             <FontAwesomeIcon icon={faNoteSticky} className="h-5 w-5" />
           </button>
@@ -499,7 +507,7 @@ export default function WorkshopInterface({ workshop, onBack }) {
           <button
             onClick={handleToggleSubtitles}
             className={`${baseButtonClass} ${showSubtitles ? activeButtonClass : defaultButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title={showSubtitles ? 'Hide Subtitles' : 'Show Subtitles'}
+            title={showSubtitles ? safeT('callInterface.hideSubtitles') : safeT('callInterface.showSubtitles')}
           >
             <FontAwesomeIcon icon={faClosedCaptioning} className="h-5 w-5" />
           </button>
@@ -507,12 +515,9 @@ export default function WorkshopInterface({ workshop, onBack }) {
           <div className="h-8 w-px bg-white/10"></div>
 
           <button
-            onClick={() => {
-              console.log("Disconnect button clicked");
-              handleLeaveWorkshop();
-            }}
+            onClick={handleLeaveWorkshop}
             className={`${baseButtonClass} ${redButtonClass} transform hover:scale-110 transition-all duration-200`}
-            title="Leave Workshop"
+            title={safeT('callInterface.leaveWorkshop')}
           >
             <FontAwesomeIcon icon={faPhone} className="h-5 w-5 transform rotate-135" />
           </button>
@@ -524,13 +529,22 @@ export default function WorkshopInterface({ workshop, onBack }) {
         isOpen={showFeedback}
         onClose={() => {
           setShowFeedback(false);
-          // Automatically return to workshop list when closing feedback modal
-          if (onBack) {
-            onBack();
-          }
+          // Do NOT call onBack here; only close the modal and stay on the page
         }}
         onSubmit={handleFeedbackSubmit}
         workshop={workshop}
+      />
+      {/* Certificate Modal */}
+      <CertificateSimulatorButton
+        isOpen={showCertificate}
+        onClose={() => {
+          setShowCertificate(false);
+          if (onBack) onBack();
+        }}
+        onDownload={() => {
+          setShowCertificate(false);
+          if (onBack) onBack();
+        }}
       />
     </div>
   );

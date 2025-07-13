@@ -81,6 +81,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // RTL/LTR support – automatically flips direction-aware utilities based on the `dir` attribute on <html>
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('tailwindcss-flip'),
+  ],
 }
 export default config 

@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { MOCK_COMPANIES, MOCK_EVALUATIONS } from '../../../../../constants/mockData';
@@ -25,6 +27,8 @@ import CustomButton from '@/components/shared/CustomButton';
 import { sampleWorkshops } from '../../../../../constants/mockData';
 
 function ScadDashboardView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const currentUser = useSelector((state) => state.auth.currentUser);
   const router = useRouter();
 
@@ -77,9 +81,9 @@ function ScadDashboardView() {
   const CompanyPartnershipReviewPortalInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          COMPANY APPLICATIONS
-          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+        <h1 className="text-3xl font-bold mb-0 text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('scad.dashboard.title')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
 
         {/* Moved Filter Controls Container */}
@@ -90,48 +94,48 @@ function ScadDashboardView() {
         <div className="absolute right-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute left-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex items-start gap-4 w-full md:w-auto relative z-10 rtl:flex-row">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              MANAGEMENT
+              {safeT('scad.dashboard.companyReview.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Company Partnership Review Portal</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">{safeT('scad.dashboard.companyReview.title')}</div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Efficiently manage and evaluate organization applications for SCAD internship partnerships. Review company profiles, internship offerings, and historical performance data to make informed decisions.</p>
+              <p className="mb-3">{safeT('scad.dashboard.companyReview.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Key Partnership Management Features:
+                  {safeT('scad.dashboard.companyReview.featuresTitle')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Comprehensive review of new company applications and profiles</span>
+                    <span>{safeT('scad.dashboard.companyReview.features.reviewApplications')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Evaluation of internship quality and alignment with academic requirements</span>
+                    <span>{safeT('scad.dashboard.companyReview.features.evaluateQuality')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Student feedback integration and satisfaction metrics</span>
+                    <span>{safeT('scad.dashboard.companyReview.features.studentFeedback')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Partnership history tracking and renewal management</span>
+                    <span>{safeT('scad.dashboard.companyReview.features.partnershipTracking')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                Maintain high-quality internship opportunities by thoroughly assessing each company's offerings, workplace environment, and student development potential.
+                {safeT('scad.dashboard.companyReview.qualityNote')}
               </p>
             </div>
           </div>
@@ -143,18 +147,18 @@ function ScadDashboardView() {
   // Filter sections config for ApplicationsFilterBar (Industry & Size)
   const companyFilterSections = [
     {
-      name: 'Industry',
+      name: safeT('scad.filters.industry'),
       options: [...uniqueIndustries],
       selected: selectedIndustry,
       onChange: (value) => setSelectedIndustry(value),
-      resetLabel: 'All Industries',
+      resetLabel: safeT('scad.filters.allIndustries'),
     },
     {
-      name: 'Size',
+      name: safeT('scad.filters.size'),
       options: [...uniqueSizes],
       selected: selectedSize,
       onChange: (value) => setSelectedSize(value),
-      resetLabel: 'All Sizes',
+      resetLabel: safeT('scad.filters.allSizes'),
     },
   ];
 
@@ -165,7 +169,7 @@ function ScadDashboardView() {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search companies by name or industry ..."
+          searchPlaceholder={safeT('scad.companyTable.searchPlaceholder')}
           onClearFilters={() => { setSearchTerm(''); setSelectedIndustry('all'); setSelectedSize('all'); }}
           filterSections={companyFilterSections}
         />
@@ -176,6 +180,9 @@ function ScadDashboardView() {
 }
 
 function StudentListView({ sidebarExpanded }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMajor, setSelectedMajor] = useState('all');
   const [selectedStatus, setSelectedStatus] = useState('all');
@@ -186,13 +193,20 @@ function StudentListView({ sidebarExpanded }) {
     ...new Set(mockStudents.map(student => student.major))
   ].filter(Boolean).map(major => ({ id: major, title: major }));
 
+  // Get unique statuses from mockStudents
   const uniqueStatuses = [
     ...new Set(mockStudents.map(student => student.internshipStatus))
-  ].filter(Boolean).map(status => ({ id: status.toLowerCase(), title: status }));
+  ].filter(Boolean).map(status => ({
+    id: status.toLowerCase(),
+    title: safeT(`scad.studentList.tabs.${status.toLowerCase()}`)
+  }));
 
   const uniqueSemesters = [
     ...new Set(mockStudents.map(student => student.semester))
-  ].filter(Boolean).map(sem => ({ id: sem, title: `Semester ${sem}` }));
+  ].filter(Boolean).map(sem => ({
+    id: sem,
+    title: `${safeT('scad.studentDirectory.filters.semester')} ${sem}`
+  }));
 
   // Filter students by search and major
   const filteredStudents = mockStudents.filter(student => {
@@ -210,35 +224,35 @@ function StudentListView({ sidebarExpanded }) {
 
   const studentFilterSections = [
     {
-      name: 'Major',
+      name: safeT('scad.studentDirectory.filters.major'),
       options: [...uniqueMajors],
       selected: selectedMajor,
       onChange: (value) => setSelectedMajor(value),
-      resetLabel: 'All Majors',
+      resetLabel: safeT('scad.studentDirectory.filters.allMajors'),
     },
     {
-      name: 'Status',
+      name: safeT('scad.studentDirectory.filters.status'),
       options: [...uniqueStatuses],
       selected: selectedStatus,
       onChange: (value) => setSelectedStatus(value),
-      resetLabel: 'All Statuses',
+      resetLabel: safeT('scad.studentDirectory.filters.allStatuses'),
     },
     {
-      name: 'Semester',
+      name: safeT('scad.studentDirectory.filters.semester'),
       options: [...uniqueSemesters],
       selected: selectedSemester,
       onChange: (value) => setSelectedSemester(value),
-      resetLabel: 'All Semesters',
+      resetLabel: safeT('scad.studentDirectory.filters.allSemesters'),
     },
   ];
 
   const StudentDirectoryManagementInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          STUDENT DIRECTORY
-          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+        <h1 className="text-3xl font-bold mb-0 text-left rtl:text-right text-[#2a5f74]">
+          {safeT('scad.studentDirectory.title')}
         </h1>
+        <span className="block ltr:ml-0 rtl:mr-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74] mt-2 mb-4"></span>
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         {/* Decorative elements */}
@@ -246,46 +260,46 @@ function StudentListView({ sidebarExpanded }) {
         <div className="absolute left-40 bottom-4 w-16 h-16 bg-[#D9F0F4] rounded-full opacity-40 group-hover:translate-x-2 transition-transform duration-500"></div>
         <div className="absolute right-20 -bottom-6 w-20 h-20 bg-[#F0FBFF] rounded-full opacity-40 group-hover:translate-y-1 transition-transform duration-500"></div>
 
-        <div className="flex items-start gap-4 w-full md:w-auto relative z-10">
+        <div className="flex items-start gap-4 w-full md:w-auto relative z-10 rtl:flex-row">
           <div className="flex-shrink-0 bg-gradient-to-br from-[#86CBDA] to-[#5DB2C7] rounded-full p-3 shadow-md transform group-hover:rotate-12 transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              DIRECTORY
+              {safeT('scad.studentDirectory.infoCard.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Student Directory Management</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">{safeT('scad.studentDirectory.infoCard.title')}</div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Access comprehensive profiles of all SCAD students registered in the internship system for academic support and opportunity matching.</p>
+              <p className="mb-3">{safeT('scad.studentDirectory.infoCard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Student Information Available:
+                  {safeT('scad.studentDirectory.infoCard.studentInfoAvailableTitle')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Academic details (major, minor, expected graduation date)</span>
+                    <span>{safeT('scad.studentDirectory.infoCard.items.academicDetails')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Skills inventory and proficiency levels</span>
+                    <span>{safeT('scad.studentDirectory.infoCard.items.skillsInventory')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Internship history and evaluation outcomes</span>
+                    <span>{safeT('scad.studentDirectory.infoCard.items.internshipHistory')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Assessment results and career interests</span>
+                    <span>{safeT('scad.studentDirectory.infoCard.items.assessmentResults')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Contact information and communication preferences</span>
+                    <span>{safeT('scad.studentDirectory.infoCard.items.contactInfo')}</span>
                   </li>
                 </ul>
               </div>
@@ -295,7 +309,7 @@ function StudentListView({ sidebarExpanded }) {
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
-                  Privacy Notice: Access to student information is restricted to authorized personnel and subject to educational privacy regulations. Use information only for legitimate educational purposes.
+                  {safeT('scad.studentDirectory.infoCard.privacyNotice')}
                 </p>
               </div>
             </div>
@@ -312,7 +326,7 @@ function StudentListView({ sidebarExpanded }) {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search students by name, email, or major ..."
+          searchPlaceholder={safeT('scad.studentDirectory.searchPlaceholder')}
           onClearFilters={() => { setSearchTerm(''); setSelectedMajor('all'); setSelectedStatus('all'); setSelectedSemester('all'); }}
           filterSections={studentFilterSections}
         />
@@ -328,13 +342,16 @@ function StudentListView({ sidebarExpanded }) {
 }
 
 function StatisticsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   // Define the Statistics Dashboard Info Card
   const StatisticsDashboardInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-left text-[#2a5f74] relative">
-          STATISTICS DASHBOARD
-          <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
+        <h1 className="text-3xl font-bold mb-6 text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('scad.statisticsDashboard.title')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-24 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
 
@@ -350,46 +367,48 @@ function StatisticsView() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="flex-1 text-left rtl:text-right">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              ANALYTICS
+              {safeT('scad.statisticsDashboard.badge')}
             </div>
-            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Statistics Dashboard & Reporting</h2>
+            <h2 className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('scad.statisticsDashboard.cardTitle')}
+            </h2>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Comprehensive analytics platform for monitoring internship program performance metrics and trends.</p>
+              <p className="mb-3">{safeT('scad.statisticsDashboard.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Key Analytics Features:
+                  {safeT('scad.statisticsDashboard.features.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Real-time dashboard with visual reports and metrics</span>
+                    <span>{safeT('scad.statisticsDashboard.features.items.realtime')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Top companies and courses based on student performance</span>
+                    <span>{safeT('scad.statisticsDashboard.features.items.topPerformers')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Internship report status tracking across academic cycles</span>
+                    <span>{safeT('scad.statisticsDashboard.features.items.tracking')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Faculty review time analysis and efficiency metrics</span>
+                    <span>{safeT('scad.statisticsDashboard.features.items.faculty')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Exportable PDF reports for academic administration</span>
+                    <span>{safeT('scad.statisticsDashboard.features.items.reports')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-blue-700 font-medium bg-blue-50 px-4 py-2 rounded-lg border-l-4 border-blue-500 shadow-sm">
-                Use this analytics suite to identify trends, measure program effectiveness, and make data-driven decisions to improve internship outcomes.
+                {safeT('scad.statisticsDashboard.note')}
               </p>
             </div>
           </div>
@@ -407,6 +426,8 @@ function StatisticsView() {
 }
 
 function ReportsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -451,9 +472,9 @@ function ReportsView() {
   return (
     <div className="w-full px-6 py-8">
       <div className="w-full max-w-6xl mx-auto mb-8">
-        <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          STUDENT REPORTS REVIEW
-          <span className="absolute bottom-0 left-0 w-24 h-1 bg-[#2a5f74]"></span>
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('scad.reportView.title')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-24 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
 
@@ -469,52 +490,78 @@ function ReportsView() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              ACADEMIC
+              {safeT('scad.reportView.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Student Report Review Portal</div>
-            <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Manage and distribute student internship reports to appropriate faculty members for academic evaluation and feedback.</p>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('scad.reportView.cardTitle')}
+            </div>
+            <div className="text-gray-700 mb-3 relative w-full">
+              <p className="mb-3">{safeT('scad.reportView.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Report Management Features:
+                  {safeT('scad.reportView.features.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Access all submitted student internship reports organized by department and date</span>
+                    <span>{safeT('scad.reportView.features.items.access')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>View report status (pending, flagged, rejected, accepted)</span>
+                    <span>{safeT('scad.reportView.features.items.status')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Assign reports to specific faculty reviewers based on expertise</span>
+                    <span>{safeT('scad.reportView.features.items.assign')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Monitor faculty review timelines and completion rates</span>
+                    <span>{safeT('scad.reportView.features.items.monitor')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Track report revision cycles and resubmissions</span>
+                    <span>{safeT('scad.reportView.features.items.track')}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
+                  <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
+                  {safeT('scad.reportView.contentControl.title')}
+                </p>
+                <ul className="space-y-2 mb-2">
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('scad.reportView.contentControl.items.standards')}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('scad.reportView.contentControl.items.quality')}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('scad.reportView.contentControl.items.coordinate')}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#3298BA] mr-2">✓</span>
+                    <span>{safeT('scad.reportView.contentControl.items.update')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                These reports represent the academic culmination of students' internship experiences, connecting professional practice with classroom learning.
+                {safeT('scad.reportView.academicNote')}
               </p>
             </div>
           </div>
         </div>
       </div>
-
 
       <ReportStatistics
         total={reports.length}
@@ -548,25 +595,24 @@ function ReportsView() {
                 &times;
               </button>
               <div className="mb-4">
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 items-start rtl:items-end">
                   <h2 className="text-2xl font-bold text-metallica-blue-700">{selectedReport.title}</h2>
                   <div className="flex flex-wrap gap-2 mt-2">
                     <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">
-                      Student: {selectedReport.studentName}
+                      {safeT('scad.reportsView.modal.student')}: {selectedReport.studentName}
                     </span>
                     <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">
-                      Major: {selectedReport.studentMajor}
+                      {safeT('scad.reportsView.modal.major')}: {selectedReport.studentMajor}
                     </span>
                     <span className="text-sm bg-metallica-blue-50 text-metallica-blue-700 px-2 py-1 rounded">
-                      Company: {selectedReport.companyName}
+                      {safeT('scad.reportsView.modal.company')}: {selectedReport.companyName}
                     </span>
                   </div>
                   <div className="flex flex-col">
                     <CustomButton
                       variant="primary"
-                      text={`Export as PDF`}
+                      text={safeT('scad.reportsView.modal.exportPdf')}
                       icon={faFilePdf}
-                      //   (nextStatus === 'completed' ? faCheckCircle : faClock)}
                       onClick={handleExportPDF}
                       width="w-60"
                     />
@@ -575,19 +621,25 @@ function ReportsView() {
               </div>
               <div className="overflow-y-auto flex-grow" style={{ maxHeight: 'calc(90vh - 140px)' }}>
                 <ReportViewer report={selectedReport} userType="scad" />
+                <div className="mt-4">
+                  <h3 className="text-lg font-semibold mb-2">{safeT('scad.reportsView.modal.comments.title')}</h3>
+                  <p className="text-gray-600 italic">
+                    {safeT('scad.reportsView.modal.comments.noComments')}
+                  </p>
+                </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-200">
-                <div className="flex justify-end gap-3">
+                {/* <div className="flex justify-end gap-3">
                   <button
                     onClick={handleCloseModal}
-                    className="inline-flex items-center justify-center w-32 min-w-[8rem] px-0 py-2 rounded-full font-medium shadow-sm bg-metallica-blue-500 text-metallica-blue-100 border border-metallica-blue-200 hover:bg-metallica-blue-900 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
+                    className="inline-flex items-center justify-center w-32 min-w-[8rem] px-0 py-2 rounded-full font-medium bg-metallica-blue-500 text-metallica-blue-100 border border-metallica-blue-200 hover:bg-metallica-blue-900 hover:-translate-y-0.5 shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
                   >
-                    Close
+                    {safeT('scad.reportsView.modal.close')}
                   </button>
-                </div>
+                </div> */}
                 {reviewSubmitted && (
                   <div className="mt-4 text-green-700 font-semibold text-center">
-                    Review submitted!
+                    {safeT('scad.reportsView.modal.reviewSubmitted')}
                   </div>
                 )}
               </div>
@@ -601,6 +653,9 @@ function ReportsView() {
 
 // Using the actual page components for each view
 function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [filters, setFilters] = useState({
     industry: '',
     duration: '',
@@ -615,11 +670,21 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const internshipDataForFilters = getRegularInternships();
   const uniqueIndustries = [...new Set(internshipDataForFilters.map(internship => internship.industry))]
     .filter(Boolean)
-    .map(ind => ({ id: ind, title: ind }));
+    .map(ind => ({
+      id: ind,
+      title: safeT(`company.browse.filters.industries.${ind.toLowerCase()}`)
+    }));
 
   const uniqueDurations = [...new Set(internshipDataForFilters.map(internship => internship.duration))]
     .filter(Boolean)
-    .map(dur => ({ id: dur, title: dur }));
+    .map(dur => {
+      const durationMatch = dur.match(/(\d+)/);
+      const durationNumber = durationMatch ? durationMatch[1] : '';
+      return {
+        id: dur,
+        title: `${durationNumber} ${safeT('company.browse.filters.monthsLabel')}`
+      };
+    });
 
   // Get internships based on active tab
   const baseInternships = activeTab === 'all'
@@ -715,24 +780,24 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 
   const filterSectionsConfig = [
     {
-      name: 'Industry',
+      name: safeT('company.browse.filters.industry'),
       options: [...uniqueIndustries],
       selected: filters.industry || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, industry: value === 'all' ? '' : value })),
-      resetLabel: 'All Industries',
+      resetLabel: safeT('company.browse.filters.allIndustries'),
     },
     {
-      name: 'Duration',
+      name: safeT('company.browse.filters.duration'),
       options: [...uniqueDurations],
       selected: filters.duration || 'all',
       onChange: (value) => setFilters(prev => ({ ...prev, duration: value === 'all' ? '' : value })),
-      resetLabel: 'All Durations',
+      resetLabel: safeT('company.browse.filters.allDurations'),
     },
     {
-      name: 'Payment',
+      name: safeT('company.browse.filters.payment'),
       options: [
-        { id: 'true', title: 'Paid' },
-        { id: 'false', title: 'Unpaid' },
+        { id: 'true', title: safeT('company.posts.filters.paid') },
+        { id: 'false', title: safeT('company.posts.filters.unpaid') },
       ],
       selected: filters.isPaid === null ? 'all' : filters.isPaid.toString(),
       onChange: (value) => {
@@ -742,7 +807,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
           setFilters(prev => ({ ...prev, isPaid: value === 'true' }));
         }
       },
-      resetLabel: 'All Payment',
+      resetLabel: safeT('company.browse.filters.allPaymentStatuses'),
     },
   ];
 
@@ -750,9 +815,9 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
   const InternshipListingsManagementInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          INTERNSHIP LISTINGS
-          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+        <h1 className="text-3xl font-bold mb-0 text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('scad.internships.title')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
@@ -767,46 +832,46 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              OVERSIGHT
+              {safeT('scad.internships.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Internship Listings Management</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">{safeT('scad.internships.management.title')}</div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Monitor and oversee all active internship opportunities posted by approved partner companies across the platform.</p>
+              <p className="mb-3">{safeT('scad.internships.management.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Oversight Features:
+                  {safeT('scad.internships.management.features.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>View complete details of all current internship listings</span>
+                    <span>{safeT('scad.internships.management.features.viewDetails')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Filter opportunities by company, industry, location, or status</span>
+                    <span>{safeT('scad.internships.management.features.filterOpportunities')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Verify compliance with posting guidelines and requirements</span>
+                    <span>{safeT('scad.internships.management.features.verifyCompliance')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Review compensation details and working conditions</span>
+                    <span>{safeT('scad.internships.management.features.reviewCompensation')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Ensure appropriate skill level requirements and educational alignment</span>
+                    <span>{safeT('scad.internships.management.features.ensureSkills')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                This dashboard enables SCAD administrators to maintain the quality and integrity of all internship opportunities available to students, ensuring they align with educational objectives and professional standards.
+                {safeT('scad.internships.management.note')}
               </p>
             </div>
           </div>
@@ -822,7 +887,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search internships by job title, company, or skills..."
+          searchPlaceholder={safeT('company.browse.searchPlaceholder')}
           onClearFilters={clearAllFilters}
           filterSections={filterSectionsConfig}
         />
@@ -832,7 +897,7 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
       <InternshipList
         title=""
         internships={hasActiveFilters ? filteredInternships : baseInternships}
-        type="browsing"
+        type="company-view"
         onApplicationCompleted={onApplicationCompleted}
         appliedInternshipIds={appliedInternshipIds}
         showSidebar={true}
@@ -848,6 +913,8 @@ function BrowseInternshipsView({ onApplicationCompleted, appliedInternshipIds })
 }
 
 function WorkshopsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedInstructor, setSelectedInstructor] = useState('all');
 
@@ -857,20 +924,20 @@ function WorkshopsView() {
 
   const workshopFilterSections = [
     {
-      name: 'Instructor',
+      name: safeT('scad.workshops.instructor'),
       options: [...uniqueInstructors],
       selected: selectedInstructor,
       onChange: (value) => setSelectedInstructor(value),
-      resetLabel: 'All Instructors',
+      resetLabel: safeT('scad.workshops.allInstructors'),
     },
   ];
 
   const WorkshopManagementPortalInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          WORKSHOP MANAGEMENT
-          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+        <h1 className="text-3xl font-bold mb-0 ltr:text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('scad.workshops.management.title')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
@@ -885,40 +952,42 @@ function WorkshopsView() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v10m2 4h-10a2 2 0 01-2-2v-4a2 2 0 012-2h10a2.5 2.5 0 012.5 2.5V18a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="text-left rtl:text-right w-full">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              PROFESSIONAL DEVELOPMENT
+              {safeT('scad.workshops.management.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Workshop Management Portal</div>
-            <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Create, schedule, and manage professional development workshops that enhance student career readiness and industry preparation.</p>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('scad.workshops.management.cardTitle')}
+            </div>
+            <div className="text-gray-700 mb-3 relative w-full">
+              <p className="mb-3">{safeT('scad.workshops.management.description')}</p>
 
               {/* Card content with improved styling */}
-              <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
-                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
+              <div className="w-full bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
+                <p className="text-metallica-blue-700 font-medium mb-2 flex items-center w-full">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Workshop Creation Tools:
+                  {safeT('scad.workshops.management.features.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Design new workshop listings with detailed descriptions and learning objectives</span>
+                    <span>{safeT('scad.workshops.management.features.designNewWorkshop')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Schedule sessions with flexible timing options (live, recurring, or on-demand)</span>
+                    <span>{safeT('scad.workshops.management.features.scheduleSessions')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Upload materials, presentations, and supplementary resources</span>
+                    <span>{safeT('scad.workshops.management.features.uploadMaterials')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Set capacity limits and registration requirements</span>
+                    <span>{safeT('scad.workshops.management.features.setCapacityLimits')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Designate workshops for specific student segments or Pro membership</span>
+                    <span>{safeT('scad.workshops.management.features.designateWorkshops')}</span>
                   </li>
                 </ul>
               </div>
@@ -926,30 +995,30 @@ function WorkshopsView() {
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Content Control:
+                  {safeT('scad.workshops.management.features.contentControl.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Ensure workshop content aligns with industry standards and emerging trends</span>
+                    <span>{safeT('scad.workshops.management.features.contentControl.ensureWorkshopContent')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Maintain quality and consistency across all professional development offerings</span>
+                    <span>{safeT('scad.workshops.management.features.contentControl.maintainQuality')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Coordinate with industry presenters and faculty facilitators</span>
+                    <span>{safeT('scad.workshops.management.features.contentControl.coordinateWithIndustry')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Update content as needed based on student feedback and industry changes</span>
+                    <span>{safeT('scad.workshops.management.features.contentControl.updateContent')}</span>
                   </li>
                 </ul>
               </div>
 
               <p className="text-metallica-blue-700 font-medium bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
-                This centralized system streamlines the entire workshop lifecycle from creation through evaluation, ensuring valuable professional development opportunities for all students.
+                {safeT('scad.workshops.management.note')}
               </p>
             </div>
           </div>
@@ -965,7 +1034,7 @@ function WorkshopsView() {
         <ApplicationsFilterBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          searchPlaceholder="Search by title or instructor..."
+          searchPlaceholder={safeT('scad.workshop.searchBarPlaceholder')}
           onClearFilters={() => { setSearchTerm(''); setSelectedInstructor('all'); }}
           filterSections={workshopFilterSections}
         />
@@ -976,6 +1045,9 @@ function WorkshopsView() {
 }
 
 function StudentEvalsView() {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRating, setSelectedRating] = useState('all');
 
@@ -1008,9 +1080,9 @@ function StudentEvalsView() {
   const InternshipsEvaluationAnalyticsInfoCard = () => (
     <div className="w-full mx-auto">
       <div className="w-full max-w-6xl mb-8 mx-auto">
-        <h1 className="text-3xl font-bold mb-0 text-left text-[#2a5f74] relative">
-          EVALUATION ANALYTICS
-          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#2a5f74]"></span>
+        <h1 className="text-3xl font-bold mb-0 text-left rtl:text-right text-[#2a5f74] relative">
+          {safeT('scad.evaluationAnalytics.title')}
+          <span className="absolute bottom-0 ltr:left-0 rtl:right-0 w-16 h-1 bg-[#2a5f74]"></span>
         </h1>
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md mb-8 border-2 border-metallica-blue-200 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
@@ -1025,47 +1097,49 @@ function StudentEvalsView() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <div className="text-left">
+          <div className="flex-1 text-left rtl:text-right">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#D9F0F4] text-[#2a5f74] mb-2">
-              ANALYTICS
+              {safeT('scad.evaluationAnalytics.badge')}
             </div>
-            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">Internships Evaluation Analytics</div>
+            <div className="text-2xl font-semibold text-[#2a5f74] mb-3 group-hover:text-[#3298BA] transition-colors duration-300">
+              {safeT('scad.evaluationAnalytics.cardTitle')}
+            </div>
             <div className="text-gray-700 mb-3 relative">
-              <p className="mb-3">Access and analyze student feedback on internship experiences to maintain quality partnerships and inform faculty advisors.</p>
+              <p className="mb-3">{safeT('scad.evaluationAnalytics.description')}</p>
 
               {/* Card content with improved styling */}
               <div className="bg-gradient-to-r from-[#EBF7FA] to-[#F7FBFD] p-4 rounded-xl border border-[#D9F0F4] mb-4">
                 <p className="text-metallica-blue-700 font-medium mb-2 flex items-center">
                   <span className="inline-block w-2 h-2 bg-[#3298BA] rounded-full mr-2"></span>
-                  Evaluation Insights:
+                  {safeT('scad.evaluationAnalytics.insights.title')}
                 </p>
                 <ul className="space-y-2 mb-2">
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>View comprehensive student assessments of partner companies</span>
+                    <span>{safeT('scad.evaluationAnalytics.insights.items.assessments')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Monitor ratings across key metrics (mentorship, learning environment, workload)</span>
+                    <span>{safeT('scad.evaluationAnalytics.insights.items.ratings')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Track recurring themes in qualitative feedback</span>
+                    <span>{safeT('scad.evaluationAnalytics.insights.items.themes')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Identify standout companies and those requiring intervention</span>
+                    <span>{safeT('scad.evaluationAnalytics.insights.items.companies')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-[#3298BA] mr-2">✓</span>
-                    <span>Compare evaluation trends across industries and time periods</span>
+                    <span>{safeT('scad.evaluationAnalytics.insights.items.trends')}</span>
                   </li>
                 </ul>
               </div>
 
               <div className="bg-[#D9F0F4] px-4 py-2 rounded-lg border-l-4 border-[#5DB2C7] shadow-sm">
                 <p className="text-metallica-blue-700 font-medium">
-                  Important: Student evaluations play a critical role in determining future partnership renewals and informing curriculum development.
+                  {safeT('scad.evaluationAnalytics.importantNote')}
                 </p>
               </div>
             </div>

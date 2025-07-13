@@ -2,6 +2,8 @@
 
 import SearchBar from './shared/SearchBar';
 import React from "react";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function DataTable({
   title = "",
@@ -9,11 +11,14 @@ export default function DataTable({
   columns = [],
   emptyMessage = "No items found",
   searchTerm = "",
-  setSearchTerm = () => {},
+  setSearchTerm = () => { },
   searchPlaceholder = "Search...",
   searchConfig = {},
   filterConfig = {}
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const getSpanClass = (span) => {
     const spans = {
       1: 'col-span-1',
@@ -49,7 +54,7 @@ export default function DataTable({
         <div className="flex items-start gap-4 w-full">
           {/* Search Bar */}
           <div className="flex-1 min-w-[200px]">
-            <SearchBar 
+            <SearchBar
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               placeholder={searchConfig.placeholder || searchPlaceholder}
@@ -71,7 +76,7 @@ export default function DataTable({
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
             </svg>
-            <span>{filterConfig.showFilters ? 'Hide Filters' : 'Filters'}</span>
+            <span>{filterConfig.showFilters ? safeT('company.common.hideFilters') : safeT('company.common.filter')}</span>
           </button>
 
           {/* Filter Panel - Appears inline when shown */}
@@ -127,7 +132,7 @@ export default function DataTable({
         {/* Column Headers */}
         <div className="grid grid-cols-12 gap-4 py-4 px-6 bg-gray-50 border-b border-gray-200">
           {columns.map(column => (
-            <div 
+            <div
               key={column.key}
               className={`${getSpanClass(column.span)} 
                 ${column.align === 'right' ? 'text-right' : 'text-left'}
@@ -141,12 +146,12 @@ export default function DataTable({
         {/* Data Rows */}
         <div className="divide-y divide-gray-100">
           {data.map((item, index) => (
-            <div 
+            <div
               key={item.id || index}
               className="grid grid-cols-12 gap-4 py-4 px-6 items-center hover:bg-gray-50 transition-colors"
             >
               {columns.map(column => (
-                <div 
+                <div
                   key={`${item.id || index}-${column.key}`}
                   className={`${getSpanClass(column.span)} 
                     ${column.align === 'right' ? 'text-right' : 'text-left'}

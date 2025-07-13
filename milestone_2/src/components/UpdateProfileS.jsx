@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faSave, faPlus, faTrash, faCamera, faPalette, faFont, faSquare, faExclamationCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from './shared/CustomButton';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 // Validation schema for student profile form
 const ProfileValidationSchema = Yup.object().shape({
@@ -25,6 +27,8 @@ const ProfileValidationSchema = Yup.object().shape({
 });
 
 export default function UpdateProfileS({ isOpen, onClose, studentData, onProfileUpdate }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(studentData?.profileImage || "/images/student.png");
   const [initialValues, setInitialValues] = useState({
@@ -186,7 +190,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
             fontWeight: "600",
             textAlign: "left"
           }}>
-            Edit Profile
+            {safeT('updateProfile.title')}
           </h1>
 
           {/* Close button from CallModal.jsx */}
@@ -211,7 +215,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                 <div className="update-profile-column">
                   {/* Basic Info Section */}
                   <div className="update-profile-section">
-                    <h3>Basic Information</h3>
+                    <h3>{safeT('updateProfile.basicInfo.title')}</h3>
                     <div className="profile-image-upload">
                       <div className="profile-image-preview">
                         <img src={imagePreview} alt="Profile Preview" />
@@ -228,17 +232,17 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                       </div>
                     </div>
                     <div className="form-row">
-                      <label htmlFor="name">Full Name</label>
+                      <label htmlFor="name">{safeT('updateProfile.basicInfo.fullName')}</label>
                       <Field type="text" id="name" name="name" />
                       <ErrorMessage name="name" component="div" className="error-message" />
                     </div>
                     <div className="form-row">
-                      <label htmlFor="handle">Email</label>
+                      <label htmlFor="handle">{safeT('updateProfile.basicInfo.email')}</label>
                       <Field type="text" id="handle" name="handle" />
                       <ErrorMessage name="handle" component="div" className="error-message" />
                     </div>
                     <div className="form-row">
-                      <label htmlFor="bio">Bio</label>
+                      <label htmlFor="bio">{safeT('updateProfile.basicInfo.bio')}</label>
                       <Field as="textarea" id="bio" name="bio" rows="3" />
                       <ErrorMessage name="bio" component="div" className="error-message" />
                     </div>
@@ -246,9 +250,9 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                     {/* Color Theme Picker */}
                     <div className="form-row color-picker-container">
                       <label htmlFor="cardColor" className="color-picker-label">
-                        <FontAwesomeIcon icon={faPalette} className="mr-2" /> Personalize Your Profile Card Theme
+                        <FontAwesomeIcon icon={faPalette} className="mr-2" /> {safeT('updateProfile.colorTheme.title')}
                       </label>
-                      <p className="text-sm text-gray-600 mb-2">Choose a color to automatically generate a matching theme for your profile card</p>
+                      <p className="text-sm text-gray-600 mb-2">{safeT('updateProfile.colorTheme.description')}</p>
                       <div className="color-picker-wrapper">
                         <div className="color-picker-clickable">
                           <input
@@ -266,7 +270,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                             className="color-picker-input"
                           />
                           <div className="click-indicator">
-                            <span className="click-text">Click to select color</span>
+                            <span className="click-text">{safeT('updateProfile.colorTheme.clickToSelect')}</span>
                           </div>
                         </div>
                         <div className="theme-preview-container">
@@ -276,7 +280,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                               background: generateGradient(values.cardColor)
                             }}
                           >
-                            <span className='preview'>Card Color Preview</span>
+                            <span className='preview'>{safeT('updateProfile.colorTheme.preview')}</span>
                           </div>
                           <div className="theme-color-squares">
                             <div className="theme-color-row">
@@ -295,7 +299,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 <FontAwesomeIcon icon={faFont} />
                               </div>
                               <div className="theme-color-square" style={{ backgroundColor: values.theme.background, color: values.theme.text }} title="Background">
-                                <span>Bg</span>
+                                <span>{safeT('updateProfile.colorTheme.background')}</span>
                               </div>
                             </div>
                           </div>
@@ -303,19 +307,19 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                       </div>
                     </div>
 
-                    <h4>Social Links</h4>
+                    <h4>{safeT('updateProfile.socialLinks.title')}</h4>
                     <div className="form-row">
-                      <label htmlFor="linkedin">LinkedIn URL</label>
+                      <label htmlFor="linkedin">{safeT('updateProfile.socialLinks.linkedin')}</label>
                       <Field type="text" id="linkedin" name="socialLinks.linkedin" />
                       <ErrorMessage name="socialLinks.linkedin" component="div" className="error-message" />
                     </div>
                     <div className="form-row">
-                      <label htmlFor="github">GitHub URL</label>
+                      <label htmlFor="github">{safeT('updateProfile.socialLinks.github')}</label>
                       <Field type="text" id="github" name="socialLinks.github" />
                       <ErrorMessage name="socialLinks.github" component="div" className="error-message" />
                     </div>
                     <div className="form-row">
-                      <label htmlFor="portfolio">Portfolio URL</label>
+                      <label htmlFor="portfolio">{safeT('updateProfile.socialLinks.portfolio')}</label>
                       <Field type="text" id="portfolio" name="socialLinks.portfolio" />
                       <ErrorMessage name="socialLinks.portfolio" component="div" className="error-message" />
                     </div>
@@ -323,7 +327,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
 
                   {/* Personality Traits Section */}
                   <div className="update-profile-section">
-                    <h3>Personality Traits</h3>
+                    <h3>{safeT('updateProfile.personalityTraits.title')}</h3>
                     <FieldArray name="personalityTraits">
                       {({ push, remove }) => (
                         <>
@@ -333,7 +337,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 <Field
                                   type="text"
                                   name={`personalityTraits.${index}.trait`}
-                                  placeholder="Trait name"
+                                  placeholder={safeT('updateProfile.personalityTraits.traitPlaceholder')}
                                   className="trait-name-input"
                                 />
                                 <button
@@ -358,7 +362,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                           bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
                           transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                             onClick={() => push({ trait: "", rating: 3 })}
-                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Trait </button>
+                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> {safeT('updateProfile.personalityTraits.addTrait')} </button>
                         </>
                       )}
                     </FieldArray>
@@ -366,13 +370,13 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
 
                   {/* Education Section */}
                   <div className="update-profile-section">
-                    <h3>Education</h3>
+                    <h3>{safeT('updateProfile.education.title')}</h3>
                     <div className="form-row">
-                      <label htmlFor="degree">Degree</label>
+                      <label htmlFor="degree">{safeT('updateProfile.education.degree')}</label>
                       <Field type="text" id="degree" name="education[0].degree" />
                     </div>
                     <div className="form-row">
-                      <label htmlFor="institution">Institution</label>
+                      <label htmlFor="institution">{safeT('updateProfile.education.institution')}</label>
                       <Field type="text" id="institution" name="education[0].institution" />
                     </div>
                     <div className="form-row">
@@ -380,9 +384,9 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                       <Field type="text" id="period" name="education[0].period" />
                     </div>
                     <div className="form-row">
-                      <label htmlFor="faculty">Faculty</label>
+                      <label htmlFor="faculty">{safeT('updateProfile.education.faculty')}</label>
                       <Field as="select" id="faculty" name="education[1].faculty">
-                        <option value="">Select Faculty</option>
+                        <option value="">{safeT('updateProfile.education.selectFaculty')}</option>
                         <option value="Media Engineering and Technology (MET)">Media Engineering and Technology (MET)</option>
                         <option value="Computer Science and Engineering">Computer Science and Engineering</option>
                         <option value="Mechanical Engineering">Mechanical Engineering</option>
@@ -392,7 +396,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                     <div className="form-row">
                       <label htmlFor="semester">Semester</label>
                       <Field as="select" id="semester" name="education[1].semester">
-                        <option value="">Select Semester</option>
+                        <option value="">{safeT('updateProfile.education.selectSemester')}</option>
                         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
                           <option key={num} value={num}>Semester {num}</option>
                         ))}
@@ -402,7 +406,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
 
                   {/* Skills Section */}
                   <div className="update-profile-section">
-                    <h3>Skills</h3>
+                    <h3>{safeT('updateProfile.skills.title')}</h3>
                     <FieldArray name="skills">
                       {({ push, remove }) => (
                         <div className="skills-edit-container">
@@ -431,7 +435,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                           bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
                           transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border w-fit"
                             onClick={() => push("")}
-                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Skill </button>
+                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> {safeT('updateProfile.skills.addSkill')} </button>
                         </div>
                       )}
                     </FieldArray>
@@ -441,14 +445,14 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                 <div className="update-profile-column">
                   {/* Job Interests Section */}
                   <div className="update-profile-section">
-                    <h3>Job Interests</h3>
+                    <h3>{safeT('updateProfile.jobInterests.title')}</h3>
                     <FieldArray name="jobInterests">
                       {({ push, remove }) => (
                         <>
                           {values.jobInterests.map((interest, index) => (
                             <div key={index} className="job-interest-edit">
                               <div className="form-row">
-                                <label htmlFor={`jobInterests-${index}-title`}>Job Title</label>
+                                <label htmlFor={`jobInterests-${index}-title`}>{safeT('updateProfile.jobInterests.jobTitle')}</label>
                                 <Field
                                   type="text"
                                   id={`jobInterests-${index}-title`}
@@ -456,7 +460,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 />
                               </div>
                               <div className="form-row">
-                                <label htmlFor={`jobInterests-${index}-description`}>Description</label>
+                                <label htmlFor={`jobInterests-${index}-description`}>{safeT('updateProfile.jobInterests.description')}</label>
                                 <Field
                                   as="textarea"
                                   id={`jobInterests-${index}-description`}
@@ -471,7 +475,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 bg-red-600 text-white hover:bg-red-700 focus:ring-red-500
                                 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                 onClick={() => remove(index)}
-                              ><FontAwesomeIcon icon={faTrash} className="mr-2" /> Remove Job Interest</button>
+                              ><FontAwesomeIcon icon={faTrash} className="mr-2" /> {safeT('updateProfile.jobInterests.removeJobInterest')}</button>
                               <hr className="section-divider" />
                             </div>
                           ))}
@@ -482,7 +486,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                           bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
                           transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                             onClick={() => push({ title: "", description: "" })}
-                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Job Interest </button>
+                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> {safeT('updateProfile.jobInterests.addJobInterest')} </button>
                         </>
                       )}
                     </FieldArray>
@@ -490,14 +494,14 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
 
                   {/* Experience Section */}
                   <div className="update-profile-section">
-                    <h3>Experience</h3>
+                    <h3>{safeT('updateProfile.experience.title')}</h3>
                     <FieldArray name="experience">
                       {({ push, remove }) => (
                         <>
                           {values.experience.map((exp, index) => (
                             <div key={index} className="experience-edit">
                               <div className="form-row">
-                                <label htmlFor={`experience-${index}-title`}>Title</label>
+                                <label htmlFor={`experience-${index}-title`}>{safeT('updateProfile.experience.title')}</label>
                                 <Field
                                   type="text"
                                   id={`experience-${index}-title`}
@@ -505,7 +509,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 />
                               </div>
                               <div className="form-row">
-                                <label htmlFor={`experience-${index}-company`}>Company</label>
+                                <label htmlFor={`experience-${index}-company`}>{safeT('updateProfile.experience.company')}</label>
                                 <Field
                                   type="text"
                                   id={`experience-${index}-company`}
@@ -513,7 +517,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 />
                               </div>
                               <div className="form-row">
-                                <label htmlFor={`experience-${index}-duration`}>Duration</label>
+                                <label htmlFor={`experience-${index}-duration`}>{safeT('updateProfile.experience.duration')}</label>
                                 <Field
                                   type="text"
                                   id={`experience-${index}-duration`}
@@ -521,7 +525,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 />
                               </div>
                               <div className="form-row">
-                                <label>Responsibilities</label>
+                                <label>{safeT('updateProfile.experience.responsibilities')}</label>
                                 <FieldArray name={`experience.${index}.responsibilities`}>
                                   {({ push: pushResp, remove: removeResp }) => (
                                     <>
@@ -545,10 +549,10 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                         type="button"
                                         className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
                                 flex items-center justify-center focus:outline-none focus:ring-2
-                               bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
+                              bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
                                 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                         onClick={() => pushResp("")}
-                                      >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Responsibilty </button>
+                                      >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> {safeT('updateProfile.experience.addResponsibility')} </button>
                                     </>
                                   )}
                                 </FieldArray>
@@ -560,7 +564,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 bg-red-600 text-white hover:bg-red-700 focus:ring-red-500
                                 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                 onClick={() => remove(index)}
-                              ><FontAwesomeIcon icon={faTrash} className="mr-2" /> Remove Experience</button>
+                              ><FontAwesomeIcon icon={faTrash} className="mr-2" /> {safeT('updateProfile.experience.removeExperience')}</button>
                               <hr className="section-divider" />
                             </div>
                           ))}
@@ -568,7 +572,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                             type="button"
                             variant="secondary"
                             onClick={() => push({ title: "", company: "", duration: "", responsibilities: [""] })}
-                            text="Add Experience"
+                            text={safeT('updateProfile.experience.addExperience')}
                             icon={faPlus}
                             width="w-full md:w-auto"
                           />
@@ -579,14 +583,14 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
 
                   {/* Internships Section */}
                   <div className="update-profile-section">
-                    <h3>Internships</h3>
+                    <h3>{safeT('updateProfile.internships.title')}</h3>
                     <FieldArray name="internships">
                       {({ push, remove }) => (
                         <>
                           {values.internships.map((internship, index) => (
                             <div key={index} className="internship-edit">
                               <div className="form-row">
-                                <label htmlFor={`internships-${index}-title`}>Position</label>
+                                <label htmlFor={`internships-${index}-title`}>{safeT('updateProfile.internships.position')}</label>
                                 <Field
                                   type="text"
                                   id={`internships-${index}-title`}
@@ -594,7 +598,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 />
                               </div>
                               <div className="form-row">
-                                <label htmlFor={`internships-${index}-company`}>Company</label>
+                                <label htmlFor={`internships-${index}-company`}>{safeT('updateProfile.internships.company')}</label>
                                 <Field
                                   type="text"
                                   id={`internships-${index}-company`}
@@ -602,7 +606,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 />
                               </div>
                               <div className="form-row">
-                                <label htmlFor={`internships-${index}-period`}>Period</label>
+                                <label htmlFor={`internships-${index}-period`}>{safeT('updateProfile.internships.period')}</label>
                                 <Field
                                   type="text"
                                   id={`internships-${index}-period`}
@@ -610,7 +614,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 />
                               </div>
                               <div className="form-row">
-                                <label htmlFor={`internships-${index}-description`}>Description</label>
+                                <label htmlFor={`internships-${index}-description`}>{safeT('updateProfile.internships.description')}</label>
                                 <Field
                                   as="textarea"
                                   id={`internships-${index}-description`}
@@ -625,20 +629,20 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                                 bg-red-600 text-white hover:bg-red-700 focus:ring-red-500
                                 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                                 onClick={() => remove(index)}
-                              ><FontAwesomeIcon icon={faTrash} className="mr-2" /> Remove Internship</button>
+                              ><FontAwesomeIcon icon={faTrash} className="mr-2" /> {safeT('updateProfile.internships.removeInternship')}</button>
                               <hr className="section-divider" />
                             </div>
                           ))}
                           <button
                             type="button"
                             className="text-sm py-2 px-4 font-semibold rounded-full transition-all duration-200 
-                                flex items-center justify-center focus:outline-none focus:ring-2
-                               bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
-                                transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
+                                  flex items-center justify-center focus:outline-none focus:ring-2
+                                bg-[#daedf0] text-[#318FA8] hover:bg-[#cee5e9] border-[#5DB2C7]
+                                  transform hover:-translate-y-0.5 shadow-md hover:shadow-lg border"
                             onClick={() => push({ title: "", company: "", period: "", description: "" })}
 
 
-                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Internship</button>
+                          >   <FontAwesomeIcon icon={faPlus} className="mr-2" /> {safeT('updateProfile.addInternship')}</button>
                         </>
                       )}
                     </FieldArray>
@@ -650,7 +654,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                 <CustomButton
                   type="submit"
                   variant="primary"
-                  text="Save Changes"
+                  text={safeT('updateProfile.saveChanges')}
                   width="w-[200px]"
                 />
               </div>
@@ -711,7 +715,7 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                     width: 60,
                     height: 60,
                     borderRadius: '50%',
-                    background: '#318FA8',
+                    background: '#22C55E',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
@@ -724,10 +728,10 @@ export default function UpdateProfileS({ isOpen, onClose, studentData, onProfile
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                Updated!
+                {safeT('updateProfile.updated')}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
-                Your profile has been successfully updated.
+                {safeT('updateProfile.message')}
               </div>
             </motion.div>
           </motion.div>

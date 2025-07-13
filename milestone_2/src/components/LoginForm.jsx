@@ -1,36 +1,26 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import PasswordInputField from "@/components/PasswordInputField";
 import FloatingLabelInput from "@/components/FloatingLabelInput";
-import { loginValidationSchema } from "../../utils/validationSchemas";
+import * as Yup from 'yup';
 import { MutatingDots } from 'react-loader-spinner';
 
 export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [rememberMe, setRememberMe] = useState(false);
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues] = useState({
     email: '',
     password: '',
     remember: false
   });
 
-  // Load saved credentials on mount
-  useEffect(() => {
-    const savedEmail = localStorage.getItem('rememberedEmail');
-    const savedPassword = localStorage.getItem('rememberedPassword');
-    const wasRemembered = localStorage.getItem('rememberMe') === 'true';
-
-    if (wasRemembered && savedEmail && savedPassword) {
-      setRememberMe(true);
-      setInitialValues({
-        email: savedEmail,
-        password: savedPassword,
-        remember: true
-      });
-    }
-  }, []);
+  // Remove pre-fill logic for credentials
 
   const formikRef = React.useRef(null);
 
@@ -64,11 +54,19 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
     setFieldValue('remember', isChecked);
   };
 
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email(safeT('validation.emailInvalid'))
+      .required(safeT('validation.emailRequired')),
+    password: Yup.string()
+      .required(safeT('validation.passwordRequired'))
+  });
+
   return (
     <Formik
       innerRef={formikRef}
       initialValues={initialValues}
-      validationSchema={loginValidationSchema}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       {({ errors, touched, isSubmitting, setFieldValue, isValid, dirty, values }) => (
@@ -77,16 +75,15 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
             <FloatingLabelInput
               name="email"
               type="email"
-              label="Email *"
+              label={safeT('login.emailLabel')}
               errors={errors}
               touched={touched}
-              hideErrorMessage={true}
             />
           </div>
 
           <PasswordInputField
             name="password"
-            label="Password *"
+            label={safeT('login.passwordLabel')}
             error={errors.password}
             touched={touched.password}
           />
@@ -100,10 +97,10 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
                 onChange={(e) => handleRememberMeChange(e, setFieldValue, values)}
                 className="w-4 h-4 accent-[#4C798B] border-gray-300 rounded focus:ring-0 focus:ring-offset-0 cursor-pointer"
               />
-              <span className="ml-2 text-sm text-gray-600 select-none cursor-pointer">Remember me</span>
+              <span className="ml-2 text-sm text-gray-600 select-none cursor-pointer">{safeT('login.rememberMe')}</span>
             </label>
             <Link href="/forgot-password" className="text-sm text-metallica-blue-off-charts hover:underline">
-              Forgot password?
+              {safeT('login.forgotPassword')}
             </Link>
           </div>
 
@@ -124,12 +121,12 @@ export default function LoginForm({ userType, onSubmit, isLoggingIn }) {
                   ariaLabel="mutating-dots-loading"
                   visible={true}
                 />
-                <span>Logging in...</span>
+                <span>{safeT('login.loggingIn')}</span>
               </div>
             ) : isSubmitting ? (
-              'Logging in...'
+              safeT('login.loggingIn')
             ) : (
-              'Log in'
+              safeT('login.logIn')
             )}
           </button>
 

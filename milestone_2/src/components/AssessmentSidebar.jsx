@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faShare } from '@fortawesome/free-solid-svg-icons';// Correct import path
 import CustomButton from "../components/shared/CustomButton";
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
+
 const likertOptions = [
   { id: 1, text: 'Strongly Disagree', color: 'border-[#FCA5A5] bg-[#FEE2E2]', selected: 'border-[#EF4444] bg-[#FCA5A5]/40' },
   { id: 2, text: 'Disagree', color: 'border-[#FDE68A] bg-[#FEF9C3]', selected: 'border-[#FBBF24] bg-[#FDE68A]/40' },
@@ -13,6 +16,8 @@ const likertOptions = [
 ];
 
 const AssessmentSidebar = ({ assessment, onClose }) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
   const [answers, setAnswers] = useState([]);
   const [testStarted, setTestStarted] = useState(false);
   const [testCompleted, setTestCompleted] = useState(false);
@@ -22,6 +27,14 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
 
   const [postFeedback, setPostFeedback] = useState(null);
   const [sharing, setSharing] = useState(null);
+  const [isRTL, setIsRTL] = useState(false);
+
+  // Detect document direction once on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsRTL(document.documentElement.getAttribute('dir') === 'rtl');
+    }
+  }, []);
 
   useEffect(() => {
     if (assessment) {
@@ -54,7 +67,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
       // console.log('Form values:', values); // Assuming 'values' is not defined here or part of a larger context
 
       // Show success toast notification with score
-      toast.info(`Your test score is ${calculatedScore}%. Please check your email for detailed results.`, {
+      toast.info(`${safeT('assessment.testScoreToastBefore')}${calculatedScore}${safeT('assessment.testScoreToastAfter')}`, {
         position: 'top-right',
         autoClose: 7000, // Increased duration for better readability
         hideProgressBar: false,
@@ -64,7 +77,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
       });
     } catch (error) {
       console.error('Error submitting test:', error);
-      toast.error('Error submitting test', {
+      toast.error(safeT('assessment.errorSubmittingTest'), {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -116,9 +129,9 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
           onClick={onClose}
         />
       )}
-      <div className={`fixed top-0 right-0 h-full w-1/3 z-50 transition-all duration-300 ease-in-out transform ${assessment ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed top-0 ltr:right-0 rtl:left-0 h-full w-1/3 z-50 transition-all duration-300 ease-in-out transform ${assessment ? 'translate-x-0' : isRTL ? '-translate-x-full' : 'translate-x-full'}`}>
         {assessment && !testStarted && !testCompleted && (
-          <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
+          <div className={`bg-white ltr:border-l-2 rtl:border-r-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative`}>
             <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
               <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
             </div>
@@ -135,7 +148,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
                 <div className="px-6 w-full flex flex-col items-start">
                   <h2 className="text-2xl font-bold text-[#3298BA] mb-4 text-left w-full">{assessment.title}</h2>
                   <p className="text-gray-700 mb-4">{assessment.description}</p>
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Why take the test?</h3>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">{safeT('assessment.whyTakeTheTest')}</h3>
                   <p className="text-gray-700 mb-4">{assessment.whyTakeIt}</p>
                   <p className="text-gray-700 mb-4">{assessment.resultExplanation}</p>
                 </div>
@@ -145,7 +158,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
               <CustomButton
                 onClick={() => setTestStarted(true)}
                 variant="primary"
-                text="Take the Test"
+                text={safeT('assessment.takeTheTest')}
                 width="w-full"
               />
             </div>
@@ -153,7 +166,7 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
         )}
 
         {assessment && testStarted && !testCompleted && (
-          <div className="bg-white border-l-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative overflow-y-auto">
+          <div className={`bg-white ltr:border-l-2 rtl:border-r-2 border-[#5DB2C7] h-full flex flex-col shadow-lg relative overflow-y-auto`}>
             <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
               <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
             </div>
@@ -203,14 +216,14 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
                 onClick={handleSubmitTest}
                 className="w-full mt-6 bg-[#3298BA] text-white py-2 px-4 rounded-full hover:bg-[#267a8c] transition-colors duration-200"
               >
-                Submit Test
+                {safeT('assessment.submitTest')}
               </button>
             </div>
           </div>
         )}
 
         {testCompleted && (
-          <div className="bg-white border-l-4 border-[#5DB2C7] h-full flex flex-col shadow-lg relative">
+          <div className={`bg-white ltr:border-l-4 rtl:border-r-4 border-[#5DB2C7] h-full flex flex-col shadow-lg relative`}>
             <div className="flex justify-end sticky top-0 bg-white z-10 p-2">
               <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
             </div>
@@ -219,9 +232,9 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
                 <div className="bg-green-50 rounded-full flex items-center justify-center mb-6" style={{ width: 72, height: 72 }}>
                   <FontAwesomeIcon icon={faCheck} className="text-green-500 text-3xl" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Test Completed!</h3>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">{safeT('assessment.testCompleted')}</h3>
 
-                <p className="text-gray-700 text-xl mb-2">Your Score:</p>
+                <p className="text-gray-700 text-xl mb-2">{safeT('assessment.yourScore')}</p>
                 <p className="text-5xl font-bold text-[#3298BA] mb-6">
                   {animatedScore}%
                 </p>
@@ -229,28 +242,28 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
                 {isScoreAnimationDone && (
                   <>
                     <p className="text-gray-600 text-sm mb-4">
-                      Detailed results have been sent to your email.
+                      {safeT('assessment.detailedResultsSent')}
                     </p>
                     <div className="mb-4">
-                      <p className="text-base font-medium text-gray-800 mb-2">Would you like to share your score?</p>
+                      <p className="text-base font-medium text-gray-800 mb-2">{safeT('assessment.wouldYouLikeToShare')}</p>
                       <div className="flex gap-4 justify-center">
                         <CustomButton
                           onClick={handlePostToProfile}
                           variant="primary"
-                          text="Yes, post it"
+                          text={safeT('assessment.yesPostIt')}
                           icon={faShare}
                           width="w-40"
                         />
                         <CustomButton
                           onClick={() => onClose()}
                           variant="secondary"
-                          text="No, thanks"
+                          text={safeT('assessment.noThanks')}
                           width="w-40"
                         />
                       </div>
                     </div>
                     {postFeedback === 'success' && (
-                      <div className="text-green-600 font-medium mt-2">Score posted to your profile!</div>
+                      <div className="text-green-600 font-medium mt-2">{safeT('assessment.scorePostedToProfile')}</div>
                     )}
                   </>
                 )}
@@ -263,6 +276,24 @@ const AssessmentSidebar = ({ assessment, onClose }) => {
           </div>
         )}
       </div>
+
+      {/* Add RTL animation styles */}
+      <style jsx global>{`
+        @keyframes slide-in-rtl {
+          from { transform: translateX(-100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slide-out-rtl {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(-100%); opacity: 0; }
+        }
+        .animate-slide-in-rtl {
+          animation: slide-in-rtl 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .animate-slide-out-rtl {
+          animation: slide-out-rtl 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+      `}</style>
     </>
   );
 };

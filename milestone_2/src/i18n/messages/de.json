@@ -1,0 +1,1849 @@
+{
+  "sidebar": {
+    "language": "Sprache",
+    "logout": "Abmelden",
+    "loggingOut": "Abmelden...",
+    "companyUser": "Firma",
+    "scadUser": "SCAD",
+    "facultyUser": "Fakultät",
+    "studentUser": "Studentin",
+    "company": {
+      "myPosts": "Meine Beiträge",
+      "browseInternships": "Stellenangebote durchsuchen",
+      "myApplicants": "Meine Bewerber",
+      "myInterns": "Meine Praktikanten",
+      "myEvaluations": "Meine Bewertungen"
+    },
+    "scad": {
+      "dashboard": "Übersicht",
+      "studentList": "Studentenliste",
+      "browseInternships": "Stellenangebote durchsuchen",
+      "studentEvaluations": "Studentenbewertungen",
+      "statistics": "Statistiken",
+      "reports": "Berichte",
+      "workshop": "Workshops"
+    },
+    "faculty": {
+      "dashboard": "Übersicht",
+      "evaluations": "Bewertungen",
+      "statistics": "Statistiken"
+    },
+    "student": {
+      "dashboard": "Übersicht",
+      "browseInternships": "Stellenangebote durchsuchen",
+      "myApplications": "Meine Bewerbungen",
+      "myInternships": "Meine Praktika",
+      "myReports": "Meine Berichte",
+      "myEvaluations": "Meine Bewertungen",
+      "workshops": "Workshops",
+      "notifications": "Benachrichtigungen",
+      "onlineAssessments": "Online Bewertungen",
+      "myProfile": "Mein Profil"
+    }
+  },
+  "company": {
+    "posts": {
+      "title": "PRAKTIKUMSSTELLEN",
+      "badge": "ARBEITGEBER PORTAL",
+      "heading": "Arbeitgeber Praktikums Portal",
+      "description": "Willkommen im Arbeitgeber-Dashboard, wo Sie Praktikumsmöglichkeiten für talentierte GUC-Studenten erstellen und verwalten können.",
+      "postOpportunities": "Neue Möglichkeiten veröffentlichen:",
+      "features": {
+        "createListings": "Detaillierte Praktikumsausschreibungen mit benutzerdefinierten Titeln und Beschreibungen erstellen",
+        "specifySkills": "Erforderliche Fähigkeiten, Qualifikationen und bevorzugte Studiengänge angeben",
+        "setTimeframes": "Klare Zeitrahmen, Arbeitseinstellungen (remote/hybrid/vor Ort) und Vergütungsdetails festlegen",
+        "addCompanyInfo": "Unternehmensinformationen und Vorgesetzten-Kontakte hinzufügen"
+      },
+      "connectionNote": "Unsere Plattform verbindet Sie direkt mit vorgeprüften, motivierten Studenten, deren Fähigkeiten und Interessen mit den Bedürfnissen Ihres Unternehmens übereinstimmen.",
+      "searchPlaceholder": "Praktika nach Stellentitel, Beschreibung, Fähigkeiten suchen...",
+      "createPost": "Stelle erstellen",
+      "createFirstPost": "Erste Stelle erstellen",
+      "updatePost": "Stelle aktualisieren",
+      "createNewPost": "Neue Stelle erstellen",
+      "postPreview": "Stellenvorschau",
+      "noPostsFound": "Keine Praktikumsstellen gefunden",
+      "createFirstMessage": "Erstellen Sie Ihre erste Stelle, um loszulegen",
+      "noMatchingPosts": "Keine Stellen gefunden, die Ihren Kriterien entsprechen",
+      "adjustSearchFilter": "Versuchen Sie, Ihre Suche oder Filter anzupassen",
+      "success": "Erfolgreich!",
+      "updated": "Aktualisiert!",
+      "postCreatedSuccess": "Stelle erfolgreich erstellt!",
+      "postUpdatedSuccess": "Stelle erfolgreich aktualisiert!",
+      "form": {
+        "jobTitle": "Stellentitel",
+        "jobDescription": "Stellenbeschreibung",
+        "startDate": "Startdatum",
+        "duration": "Dauer",
+        "internshipType": "Praktikumstyp",
+        "internshipSetting": "Arbeitsplatz",
+        "paymentStatus": "Vergütungsstatus",
+        "salary": "Gehalt",
+        "requirements": "Anforderungen",
+        "skills": "Fähigkeiten",
+        "jobTitlePlaceholder": "Stellentitel eingeben",
+        "jobDescriptionPlaceholder": "Detaillierte Stellenbeschreibung eingeben",
+        "selectDate": "Datum auswählen",
+        "durationPlaceholder": "z.B. 3 Monate, 6 Monate",
+        "salaryPlaceholder": "z.B. 500€/Monat, 15€/Stunde",
+        "requirementsPlaceholder": "Detaillierte Stellenanforderungen, Qualifikationen und Erwartungen eingeben",
+        "skillsPlaceholder": "Fähigkeit eingeben und Enter drücken (z.B. JavaScript, React, UI/UX)",
+        "pleaseSelectStartDate": "Bitte wählen Sie ein Startdatum",
+        "skillsHelpText": "Fähigkeiten erscheinen hier als Blasen, nachdem Sie Enter gedrückt haben",
+        "saveChanges": "Änderungen speichern",
+        "createPost": "Stelle erstellen",
+        "notSpecified": "Nicht angegeben",
+        "jobTitlePreview": "Stellentitel"
+      },
+      "filters": {
+        "jobType": "Stellentyp",
+        "jobSetting": "Arbeitsplatz",
+        "paymentStatus": "Vergütungsstatus",
+        "allJobTypes": "Alle Stellentypen",
+        "allSettings": "Alle Einstellungen",
+        "allPaymentStatuses": "Alle Vergütungsstatus",
+        "fullTime": "Vollzeit",
+        "partTime": "Teilzeit",
+        "contract": "Vertrag",
+        "internship": "Praktikum",
+        "remote": "Fernarbeit",
+        "onSite": "Vor Ort", 
+        "hybrid": "Hybrid",
+        "paid": "Bezahlt",
+        "unpaid": "Unbezahlt"
+      },
+      "post": {
+        "jobTitle": "Stellentitel",
+        "description": "Beschreibung",
+        "noDescription": "Keine Beschreibung vorhanden",
+        "startDate": "Startdatum",
+        "duration": "Dauer",
+        "requirements": "Anforderungen",
+        "skills": "Fähigkeiten",
+        "applicants": "Bewerber",
+        "notSpecified": "Nicht angegeben",
+        "start": "Start:",
+        "editPost": "Stelle bearbeiten",
+        "deletePost": "Stelle löschen",
+        "seeMore": "Mehr sehen",
+        "seeLess": "Weniger sehen",
+        "beFirstToApply": "Sei der Erste, der sich bewirbt!",
+        "personHasApplied": "Person hat sich beworben",
+        "peopleHaveApplied": "Personen haben sich beworben"
+      }
+    },
+    "browse": {
+      "title": "PRAKTIKA DURCHSUCHEN",
+      "badge": "PRAKTIKUMS EXPLORER",
+      "heading": "Unternehmens Praktikums Explorer",
+      "description": "Durchsuchen Sie Praktikumsmöglichkeiten von Partnerorganisationen in verschiedenen Branchen und Standorten.",
+      "whyUse": "Warum diesen Explorer verwenden:",
+      "benefitsPlus": {
+        "identifyPartners": "Dieser Explorer hilft Ihnen dabei, potenzielle Praktikumspartner zu identifizieren und deren bisherige Zusammenarbeit mit SCAD-Studenten zu untersuchen.",
+        "discoverLeaders": "Entdecken Sie Branchenführer und versteckte Perlen, die mit den Karriereinteressen Ihrer Studenten übereinstimmen."
+      },
+      "note": "Hinweis: Alle angezeigten Unternehmen wurden von SCAD geprüft und unterhalten aktive Partnerschaften mit unserer Institution.",
+      "searchPlaceholder": "Praktika nach Stellentitel oder Firmenname suchen...",
+      "keyBenefits": "Hauptvorteile für Partnerunternehmen",
+      "benefits": {
+        "talentedStudents": "Zugang zu talentierten Studenten mit spezialisierten Fähigkeiten",
+        "freshPerspectives": "Frische Perspektiven und innovative Ansätze",
+        "futureTalent": "Potenzial zur Entwicklung zukünftiger Vollzeit-Talente"
+      },
+      "addListingNote": "Um Ihre eigene Praktikumsausschreibung hinzuzufügen, verwenden Sie die Option \"Neues Praktikum veröffentlichen\" in Ihrem Unternehmen-Dashboard.",
+      "filters": {
+        "position": "Position",
+        "allPositions": "Alle Positionen",
+        "allCompanies": "Alle Unternehmen",
+        "company": "Unternehmen",
+        "industry": "Branche",
+        "duration": "Dauer",
+        "payment": "Vergütung",
+        "paid": "Bezahlt",
+        "unpaid": "Unbezahlt",
+        "durationValue": "{duration} Monate",
+        "allDurations": "Alle Zeiträume",
+        "allIndustries": "Alle Branchen",
+        "allPaymentStatuses": "Alle Vergütungsarten",
+        "monthsLabel": "Monate",
+        "industries": {
+          "technology": "Technologie",
+          "marketing": "Marketing",
+          "design": "Design",
+          "healthcare": "Gesundheitswesen"
+        }
+      }
+    },
+    "applications": {
+      "title": "BEWERBUNGSMANAGEMENT",
+      "badge": "BEWERBER PORTAL",
+      "heading": "Bewerber Management Portal", 
+      "description": "Überwachen und bewerten Sie alle Studentenbewerbungen für Ihre veröffentlichten Praktikumsmöglichkeiten an einem zentralen Ort.",
+      "trackingFeatures": "Bewerber-Tracking-Funktionen:",
+      "features": {
+        "viewApplications": "Alle Bewerbungen nach Position und Einreichungsdatum organisiert anzeigen",
+        "accessProfiles": "Zugriff auf umfassende Kandidatenprofile und Bewerbungsunterlagen",
+        "reviewDocuments": "Angehängte Dokumente überprüfen (Lebensläufe, Portfolios, Anschreiben)",
+        "exploreLinks": "Professionelle Social Links und relevante Studentenarbeiten erkunden", 
+        "trackStatus": "Bewerbungsstatus verfolgen (neu, überprüft, interviewt, ausgewählt, abgelehnt)"
+      },
+      "standardizedNote": "Alle Bewerbungsunterlagen werden in einem standardisierten Format für effizienten Vergleich präsentiert, während der einzigartige Präsentationsstil jedes Studenten erhalten bleibt.",
+      "privacyNotice": "Datenschutzhinweis: Studenteninformationen sind geschützt und sollten nur für Bewertungszwecke im Zusammenhang mit Ihren Praktikumsmöglichkeiten verwendet werden.",
+      "searchPlaceholder": "Nach Name, E-Mail oder Position suchen...",
+      "filters": {
+        "position": "Position",
+        "status": "Status",
+        "allPositions": "Alle Positionen",
+        "allStatus": "Alle Status"
+      },
+      "statuses": {
+        "pending": "AUSSTEHEND",
+        "accepted": "ANGENOMMEN",
+        "rejected": "ABGELEHNT",
+        "finalized": "ABGESCHLOSSEN",
+        "current": "AKTUELLER PRAKTIKANT",
+        "completed": "BEENDET",
+        "evaluated": "BEWERTET"
+      }
+    },
+    "interns": {
+      "title": "PRAKTIKANTEN MANAGEMENT DASHBOARD",
+      "badge": "PRAKTIKANTEN MANAGEMENT DASHBOARD",
+      "heading": "Praktikanten Management Dashboard",
+      "description": "Diese umfassende Ansicht zeigt alle SCAD-Studenten, die in Ihrem Unternehmen über alle Programme und Zeiträume hinweg ein Praktikum absolviert haben.",
+      "viewByCategory": "Nach Kategorie anzeigen:",
+      "categories": {
+        "current": "Aktuelle Praktikanten: Studenten, die aktiv in ihren Positionen arbeiten",
+        "completed": "Abgeschlossene Praktika: Ehemalige Praktikanten, die auf eine Bewertung warten",
+        "evaluated": "Bewertete Praktikanten: Studenten mit abgeschlossenen Feedback-Bewertungen"
+      },
+      "managementFeatures": "Management-Funktionen:",
+      "features": {
+        "filter": "Studenten nach Abteilung, Position, Zeitraum oder Bewertungsstatus filtern",
+        "identify": "Studenten mit ausstehenden Bewertungen identifizieren"
+      },
+      "note": "Hinweis: Studenteninformationen sind geschützt und sollten gemäß Ihrer Vertraulichkeitsvereinbarung mit SCAD behandelt werden.",
+      "searchPlaceholder": "Praktikanten nach Name, Abteilung, Position suchen...",
+      "statuses": {
+        "current": "AKTUELL",
+        "completed": "ABGESCHLOSSEN",
+        "evaluated": "BEWERTET",
+        "all": "ALLE"
+      }
+    },
+    "evaluations": {
+      "title": "BEWERTUNGSPORTAL",
+      "badge": "BEWERTUNGSPORTAL",
+      "heading": "Ihr Studenten Bewertungsportal",
+      "description": "Geben Sie wertvolles Feedback zu Praktikanten, die Positionen in Ihrem Unternehmen abgeschlossen haben. Ihre Bewertungen helfen bei der beruflichen Entwicklung der Studenten und informieren über zukünftige Platzierungen.",
+      "components": "Bewertungskomponenten:",
+      "features": {
+        "rateProfessional": "Bewerten Sie berufliche Kompetenzen (Anpassungsfähigkeit, Kommunikation, Problemlösung)",
+        "assessTechnical": "Bewerten Sie technische Fähigkeiten, die für die Position relevant sind",
+        "provideExamples": "Geben Sie spezifische Beispiele für Leistungen und Verbesserungsbereiche an",
+        "answerQuestions": "Beantworten Sie strukturierte Fragen zu Leistung und Potenzial",
+        "addComments": "Fügen Sie private Kommentare für Schuladministratoren hinzu (optional)"
+      },
+      "confidentialityNote": "Bewertungen bleiben vertraulich zwischen Ihrem Unternehmen und autorisierten Fakultäts- und SCAD-Mitgliedern."
+    },
+    "common": {
+      "filter": "Filters",
+      "hideFilters": "Filter ausblenden",
+      "clearFilters": "Filter löschen",
+      "search": "Suchen",
+      "all": "Alle",
+      "activeFilters": "Aktive Filter",
+      "noFiltersApplied": "Derzeit keine Filter angewendet",
+      "noFiltersAvailable": "Momentan sind keine Filter verfügbar",
+      "status": "Status"
+    },
+    "applicationDetails": {
+      "appliedOn": "Beworben am",
+      "applicantDetails": "Bewerberdetails",
+      "major": "Studiengang:",
+      "semester": "Semester:",
+      "applicationDocuments": "Bewerbungsunterlagen",
+      "resume": "Lebenslauf",
+      "coverLetter": "Anschreiben",
+      "portfolio": "Portfolio",
+      "currentApplicationStatus": "Aktueller Bewerbungsstatus",
+      "markAs": "Markieren als",
+      "noFurtherChanges": "Keine weiteren Statusänderungen verfügbar"
+    },
+    "internDetails": {
+      "startDate": "Startdatum:",
+      "skills": "Fähigkeiten:",
+      "degree": "Abschluss",
+      "jobInterests": "Arbeitsinteressen",
+      "endedOn": "Beendet am",
+      "startedOn": "begonnen am",
+      "evaluateIntern": "Praktikant bewerten",
+      "noInternsFound": "Keine Praktikanten gefunden, die Ihren Kriterien entsprechen",
+      "adjustSearchFilter": "Versuchen Sie, Ihre Suche oder Filter anzupassen"
+    },
+    "months": {
+      "full": {
+        "january": "Januar",
+        "february": "Februar",
+        "march": "März",
+        "april": "April",
+        "may": "Mai",
+        "june": "Juni",
+        "july": "Juli",
+        "august": "August",
+        "september": "September",
+        "october": "Oktober",
+        "november": "November",
+        "december": "Dezember"
+      },
+      "short": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mär",
+        "apr": "Apr",
+        "may": "Mai",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Aug",
+        "sep": "Sep",
+        "oct": "Okt",
+        "nov": "Nov",
+        "dec": "Dez"
+      }
+    },
+    "evaluation": {
+      "skillAttributes": {
+        "adaptToChange": "Anpassungsfähigkeit an Veränderungen",
+        "analyticalSkills": "Analytische Fähigkeiten",
+        "dataCollection": "Datensammlung/ Forschungsdaten-Fähigkeiten",
+        "creativity": "Kreativität",
+        "followUp": "Nachverfolgungsfähigkeiten",
+        "interpersonal": "Zwischenmenschliche Fähigkeiten mit Kollegen, Vorgesetzten und Kunden",
+        "problemSolving": "Problemlösung",
+        "punctuality": "Pünktlichkeit",
+        "reporting": "Berichterstattungsfähigkeiten",
+        "responsibility": "Verantwortung und Rechenschaftspflicht",
+        "stressHandling": "Stressbewältigung",
+        "takingInitiatives": "Initiative ergreifen",
+        "teamwork": "Teamarbeit",
+        "timeManagement": "Zeitmanagement"
+      },
+      "technicalAttributes": {
+        "technicalBackground": "Technischer Hintergrund",
+        "technicalKnowledge": "Technisches Wissen",
+        "compatibility": "Vereinbarkeit der technischen Fähigkeiten mit der Arbeit"
+      },
+      "ratingLabels": {
+        "unsatisfactory": "Ungenügend",
+        "belowAverage": "Unterdurchschnittlich",
+        "satisfactory": "Befriedigend",
+        "aboveAverage": "Überdurchschnittlich",
+        "excellent": "Ausgezeichnet"
+      },
+      "tabs": {
+        "skillsAndProfessional": "Fähigkeiten & Berufliche Eigenschaften",
+        "technical": "Technisch"
+      },
+      "buttons": {
+        "submitEvaluation": "Bewertung einreichen",
+        "saveChanges": "Änderungen speichern",
+        "saveAsDraft": "Als Entwurf speichern",
+        "submitting": "Wird eingereicht...",
+        "saving": "Wird gespeichert..."
+      },
+      "feedback": {
+        "updated": "Aktualisiert!",
+        "success": "Erfolgreich!",
+        "submittedSuccess": "Ihre Bewertung wurde erfolgreich eingereicht.",
+        "savedSuccess": "Ihre Änderungen wurden erfolgreich gespeichert.",
+        "updatedSuccess": "Ihre Bewertung wurde erfolgreich aktualisiert.",
+        "draftSaved": "Ihre Bewertung wurde erfolgreich als Entwurf gespeichert."
+      },
+      "placeholders": {
+        "skillsOther": "Weitere Rückmeldungen zu Fähigkeiten hinzufügen...",
+        "technicalOther": "Weitere technische Rückmeldungen hinzufügen...",
+        "technicalFeedback": "Rückmeldung zu {attribute} hinzufügen...",
+        "otherComments": "Weitere Rückmeldungen zur Leistung des Praktikanten hinzufügen...",
+        "tasks": "Beschreiben Sie die Aufgaben, die Sie während Ihres Praktikums ausgeführt haben...",
+        "environment": "Beschreiben Sie das Arbeitsumfeld und die Unternehmenskultur..."
+      },
+      "labels": {
+        "other": "Sonstiges:",
+        "yourRating": "Ihre Bewertung",
+        "recommend": "Würden Sie dieses Praktikum anderen Studenten empfehlen?",
+        "yes": "Ja",
+        "no": "Nein",
+        "supervisorName": "Name des Unternehmenssupervisors",
+        "supervisorEmail": "E-Mail des Unternehmenssupervisors",
+        "tasks": "Welche Aufgaben haben Sie erledigt?",
+        "environment": "Wie war das Arbeitsumfeld?",
+        "otherComments": "Weitere Kommentare",
+        "yourEvaluation": "Ihre Bewertung",
+        "editEvaluation": "Bewertung bearbeiten",
+        "mostLikedComments": "Beliebteste Kommentare",
+        "ratingScale": "Bewertungsskala",
+        "noReviews": "Keine Bewertungen verfügbar",
+        "liked": "Gefallen"
+      },
+      "helpText": {
+        "otherCommentsHelp": "Bitte geben Sie zusätzliche Kommentare zu den Stärken, Verbesserungsbereichen oder der Gesamtleistung des Praktikanten an, die nicht in der Fähigkeitsbewertung erfasst wurden."
+      }
+    },
+    "evaluationsDashboard": {
+      "tabs": {
+        "submittedEvaluations": "Eingereichte Bewertungen",
+        "savedAsDraft": "Als Entwurf gespeichert"
+      },
+      "actions": {
+        "seeMore": "Mehr sehen",
+        "editEvaluation": "Bewertung bearbeiten",
+        "deleteEvaluation": "Bewertung löschen",
+        "clearSearchFilter": "Suchfilter löschen",
+        "close": "Schließen"
+      },
+      "labels": {
+        "draft": "Entwurf",
+        "company": "Unternehmen:",
+        "date": "Datum:",
+        "skillsAndProfessional": "Fähigkeiten & Berufliche Eigenschaften",
+        "technical": "Technisch",
+        "skills": "Fähigkeiten",
+        "items": "Elemente",
+        "other": "Sonstiges:",
+        "comments": "Kommentare"
+      },
+      "emptyStates": {
+        "noSubmittedEvaluations": "Keine eingereichten Bewertungen gefunden.",
+        "noDraftEvaluations": "Keine Entwurfsbewertungen gefunden.",
+        "noEvaluations": "Keine Bewertungen gefunden.",
+        "noSearchResults": "Keine {type} Bewertungen gefunden für \"{searchTerm}\".",
+        "adjustFilters": "Versuchen Sie, Ihre Suche oder Filter anzupassen"
+      }
+    }
+  },
+  "faculty": {
+    "dashboard": {
+      "title": "FAKULTÄTS DASHBOARD",
+      "reportReview": {
+        "badge": "BERICHT REVIEW",
+        "title": "Fakultäts Bericht Review Dashboard",
+        "welcome": "Willkommen im Fakultäts Bericht Review Dashboard. Hier können Sie:",
+        "features": {
+          "reviewReports": "Studenten-Praktikumsberichte zur Bewertung überprüfen",
+          "provideFeedback": "Feedback und Anmerkungen zu Studenteneinreichungen geben",
+          "trackEvaluated": "Bereits bewertete Berichte verfolgen",
+          "flagReports": "Berichte markieren, die zusätzliche Aufmerksamkeit erfordern"
+        },
+        "pendingReports": "{count} Berichte warten derzeit auf Ihre Überprüfung."
+      },
+      "studentEvaluations": {
+        "badge": "STUDENTEN BEWERTUNGEN",
+        "title": "Praktikums-Bewertungsberichte überprüfen",
+        "description": "Durchsuchen und greifen Sie auf Bewertungen zu, die von Studenten zu ihren Praktikumserfahrungen eingereicht wurden. Sehen Sie sich Bewertungen, Unternehmensinformationen und detailliertes Feedback pro Student an.",
+        "features": {
+          "filterTitle": "FILTER",
+          "searchSortTitle": "Suchen & Sortieren",
+          "searchSortDescription": "Durchsuchen Sie Bewertungen einfach nach Studentenname, Unternehmen oder Betreuer, um schnell auf relevante Berichte zuzugreifen.",
+          "seeMoreButton": "Mehr sehen",
+          "fullReportTitle": "Vollständiger Bewertungsbericht",
+          "fullReportDescription": "Sehen Sie sich die vollständige Bewertung des Studenten an, einschließlich seines Feedbacks, der Unternehmensdetails, des Hauptbetreuers und der Praktikumsdauer."
+        },
+        "qualityNote": "Diese Bewertungen tragen zur Verbesserung der Praktikumsqualität bei und helfen zukünftigen Studenten bei der Entscheidungsfindung."
+      },
+      "statistics": {
+        "badge": "EINBLICKE & BERICHTE",
+        "title": "Echtzeit-Statistiken & Berichterstattung",
+        "sectionTitle": "STATISTIK DASHBOARD",
+        "features": {
+          "trackReports": "Verfolgen Sie angenommene, abgelehnte und markierte Berichte pro Praktikumszyklus",
+          "monitorReviewTime": "Überwachen Sie die durchschnittliche Überprüfungszeit bei der Fakultät",
+          "viewTopCourses": "Anzeigen der am häufigsten in Praktika verwendeten Kurse",
+          "discoverTopCompanies": "Entdecken Sie top-bewertete Unternehmen basierend auf Studentenbewertungen",
+          "identifyParticipation": "Identifizieren Sie Unternehmen mit der höchsten Praktikumsteilnahme"
+        },
+        "strategicNote": "Erstellen Sie umfassende Berichte basierend auf Echtzeit-Statistiken für strategische Entscheidungsfindung.",
+        "generateReport": "Bericht Erstellen"
+      }
+    },
+    "reports": {
+      "statistics": {
+        "totalReports": "Gesamt Berichte",
+        "acceptedReports": "Angenommene Berichte",
+        "pendingReports": "Ausstehende Berichte", 
+        "flaggedReports": "Markierte Berichte",
+        "rejectedReports": "Abgelehnte Berichte"
+      },
+      "table": {
+        "title": "Studenten Berichte",
+        "filterReports": "Berichte Filtern",
+        "clearFilters": "Filter Löschen",
+        "filterByMajor": "Nach Studiengang Filtern",
+        "filterByStatus": "Nach Status Filtern",
+        "allMajors": "Alle Studiengänge",
+        "allStatus": "Alle Status",
+        "major": "Studiengang:",
+        "status": "Status:",
+        "headers": {
+          "reportNumber": "Bericht #",
+          "studentName": "Studentenname",
+          "major": "Studiengang",
+          "internship": "Praktikum",
+          "company": "Unternehmen",
+          "submissionDate": "Einreichungsdatum",
+          "status": "Status",
+          "actions": "Aktionen"
+        },
+        "actions": {
+          "viewReport": "Bericht Anzeigen",
+          "evaluateReport": "Bericht Bewerten"
+        },
+        "statuses": {
+          "pending": "AUSSTEHEND",
+          "flagged": "MARKIERT",
+          "rejected": "ABGELEHNT", 
+          "accepted": "ANGENOMMEN"
+        },
+        "noResults": {
+          "noReportsMatch": "Keine Berichte entsprechen den ausgewählten Filtern",
+          "noReportsAvailable": "Derzeit sind keine Berichte verfügbar",
+          "clearAllFilters": "Alle Filter löschen"
+        }
+      }
+    },
+    "evaluationsDashboard": {
+      "searchPlaceholder": {
+        "submitted": "Durchsuche eingereichte Bewertungen nach Student, Unternehmen oder Betreuer...",
+        "draft": "Durchsuche Entwurfs-Bewertungen nach Student, Unternehmen oder Betreuer..."
+      },
+      "filterLabel": "Filter"
+    }
+  },
+  "facultyReportViewer": {
+    "navigation": {
+      "backToReports": "Zurück zu Berichten"
+    },
+    "header": {
+      "title": "Bericht Review & Annotation",
+      "student": "Studentin:",
+      "submitted": "Eingereicht:",
+      "loadingReport": "Bericht wird geladen...",
+      "reportNotFound": "Falls dies anhält, existiert der Bericht möglicherweise nicht"
+    },
+    "evaluationMode": {
+      "title": "Bewertungsmodus",
+      "description": "Sie bewerten den Bericht dieses Studenten. Wählen Sie beliebigen Text aus, um wichtige Abschnitte zu markieren oder Kommentare hinzuzufügen. Ihre Anmerkungen helfen dabei, konstruktives Feedback zu geben und die Berichtsqualität zu bewerten.",
+      "instructions": "Wählen Sie beliebigen Text im folgenden Bericht aus, um wichtige Abschnitte zu markieren oder Kommentare hinzuzufügen. Ihre Anmerkungen erscheinen in der Seitenleiste."
+    },
+    "feedback": {
+      "overallFeedback": "Gesamtfeedback",
+      "overallFeedbackPlaceholder": "Geben Sie Gesamtfeedback zum Bericht des Studenten...",
+      "reportStatus": "Berichtstatus",
+      "chooseStatus": "Wählen Sie den endgültigen Status für diesen Bericht nach Ihrer Überprüfung:",
+      "status": "Status",
+      "reasonFor": "Grund für {action}",
+      "reasonPlaceholder": "Bitte erklären Sie, warum dieser Bericht {status} wird...",
+      "flaggingHelp": "Das Markieren eines Berichts zeigt Probleme an, die vor der Annahme gelöst werden müssen.",
+      "rejectionHelp": "Bitte geben Sie spezifische Gründe an, warum dieser Bericht die Anforderungen nicht erfüllt.",
+      "facultyFeedback": "Fakultätsfeedback",
+      "reason": "Grund"
+    },
+    "statuses": {
+      "pending": "AUSSTEHEND",
+      "accepted": "ANGENOMMEN",
+      "rejected": "ABGELEHNT",
+      "flagged": "MARKIERT",
+      "reviewed": "ÜBERPRÜFT"
+    },
+    "statusMessages": {
+      "pendingMessage": "Bericht bleibt unter Überprüfung",
+      "acceptedMessage": "Bericht wird als angenommen markiert",
+      "rejectedMessage": "Bericht wird mit Feedback an den Studenten zurückgegeben",
+      "flaggedMessage": "Bericht wird für spezifische Probleme markiert"
+    },
+    "actions": {
+      "saving": "Wird gespeichert...",
+      "saved": "Gespeichert!",
+      "saveReview": "Überprüfung Speichern",
+      "submitReview": "Überprüfung Einreichen",
+      "flagging": "Markierung",
+      "rejecting": "Ablehnung"
+    },
+    "alerts": {
+      "reasonRequired": "Bitte geben Sie einen Grund für die Markierung oder Ablehnung des Berichts an."
+    }
+  },
+  "reportViewer": {
+    "annotations": {
+      "title": "Anmerkungen",
+      "noAnnotations": "Noch keine Anmerkungen. Wählen Sie Text aus, um Hervorhebungen oder Kommentare hinzuzufügen.",
+      "deleteTooltip": "Anmerkung löschen"
+    },
+    "annotationTypes": {
+      "comment": "Kommentar",
+      "highlight": "Hervorhebung"
+    },
+    "commentForm": {
+      "title": "Kommentar hinzufügen",
+      "placeholder": "Fügen Sie hier Ihren Kommentar hinzu...",
+      "save": "Speichern",
+      "cancel": "Abbrechen"
+    },
+    "highlightForm": {
+      "title": "Hervorhebungsfarbe auswählen",
+      "preview": "Vorschau:",
+      "cancel": "Abbrechen"
+    },
+    "colors": {
+      "yellow": "Gelb",
+      "green": "Grün",
+      "pink": "Rosa",
+      "blue": "Blau"
+    },
+    "errors": {
+      "noTextFound": "Kein Text für diese Hervorhebung gefunden"
+    },
+    "scadForm": {
+      "title": "Geben Sie Ihren Grund für die Markierung/Ablehnung dieses Berichts an",
+      "placeholder": "Geben Sie hier Ihren Grund ein...",
+      "submitButton": "Grund übermitteln",
+      "successMessage": "Grund übermittelt!"
+    }
+  },
+  "internship": {
+    "videoSidebar": {
+      "defaultTitle": "Praktikumsanforderungen",
+      "watchFor": "Ansehen: Praktika für",
+      "genZFuture": "Gen-Z gestaltet die Zukunft",
+      "requirementsText": "Erfahren Sie, welche Praktika für Ihre Abschlussanforderungen basierend auf Ihrem Studiengang und Studienplan angerechnet werden.",
+      "quickResources": "Schnelle Ressourcen",
+      "academicGuide": "Akademischer Anforderungsleitfaden",
+      "contactAdvisor": "Studienberater kontaktieren",
+      "faqsInternships": "FAQs zu Praktika"
+    },
+    "row": {
+      "timeAgo": {
+        "posted": "veröffentlicht",
+        "monthsAgo": "Monat",
+        "monthsAgoPlural": "Monate",
+        "weeksAgo": "Woche",
+        "weeksAgoPlural": "Wochen", 
+        "daysAgo": "Tag",
+        "daysAgoPlural": "Tage",
+        "hoursAgo": "Stunde",
+        "hoursAgoPlural": "Stunden",
+        "minutesAgo": "Minute",
+        "minutesAgoPlural": "Minuten",
+        "justNow": "gerade veröffentlicht",
+        "ago": "vor"
+      },
+      "statusTooltips": {
+        "accepted": "Ihre Bewerbung wurde vom Unternehmen angenommen! Herzlichen Glückwunsch!",
+        "pending": "Ihre Bewerbung wurde eingereicht, aber noch nicht vom Unternehmen überprüft.",
+        "finalized": "Sie gehören zu den besten Bewerbern und das Unternehmen könnte bald ein Angebot machen. Warten auf endgültige Bestätigung.",
+        "rejected": "Leider wurde Ihre Bewerbung diesmal nicht für diese Position ausgewählt."
+      },
+      "labels": {
+        "startDate": "Startdatum:",
+        "duration": "Dauer:",
+        "skills": "Fähigkeiten:",
+        "jobDescription": "Stellenbeschreibung",
+        "requirements": "Anforderungen",
+        "rateNotSpecified": "Vergütung nicht angegeben",
+        "startedOn": "begonnen am",
+        "appliedOn": "beworben am"
+      },
+      "buttons": {
+        "createReport": "Bericht erstellen",
+        "evaluateCompany": "Unternehmen bewerten",
+        "apply": "Bewerben",
+        "applied": "Beworben"
+      },
+      "statuses": {
+        "paid": "Bezahlt",
+        "unpaid": "Unbezahlt",
+        "current": "AKTUELL",
+        "completed": "ABGESCHLOSSEN",
+        "evaluated": "BEWERTET", 
+        "pending": "AUSSTEHEND",
+        "accepted": "ANGENOMMEN",
+        "rejected": "ABGELEHNT",
+        "finalized": "ABGESCHLOSSEN"
+      },
+      "tooltip": {
+        "statusInfo": "Status-Info"
+      }
+    }
+  },
+  "modals": {
+    "deleteConfirmation": {
+      "title": "Löschen bestätigen",
+      "message": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "closeModal": "Modal schließen"
+    }
+  },
+  "deleteTypes": {
+    "evaluation": "Bewertung",
+    "evaluationDraft": "Bewertungsentwurf",
+    "post": "Beitrag",
+    "workshop": "Workshop"
+  },
+  "common": {
+    "noResults": {
+      "notFound": "Keine {type} gefunden, die Ihren Kriterien entsprechen",
+      "tryAdjusting": "Versuchen Sie, Ihre Suche oder Filter anzupassen",
+      "noResultsGeneric": "Keine Ergebnisse gefunden, die Ihren Kriterien entsprechen",
+      "noInternships": "Keine Praktika gefunden, die Ihren Kriterien entsprechen",
+      "noApplications": "Keine Bewerbungen gefunden, die Ihren Kriterien entsprechen",
+      "noCompanies": "Keine Unternehmen gefunden, die Ihren Kriterien entsprechen",
+      "noReports": "Keine Berichte gefunden, die Ihren Kriterien entsprechen",
+      "noNotifications": "Keine Benachrichtigungen gefunden, die Ihren Kriterien entsprechen",
+      "noWorkshops": "Keine Workshops gefunden, die Ihren Kriterien entsprechen",
+      "noStudents": "Keine Studenten gefunden, die Ihren Kriterien entsprechen",
+      "noAssessments": "Keine Bewertungen gefunden, die Ihren Kriterien entsprechen"
+    }
+  },
+  "evaluation": {
+    "card": {
+      "seeMore": "Mehr sehen",
+      "hide": "Ausblenden",
+      "draft": "Entwurf",
+      "editTooltip": "Bewertung bearbeiten",
+      "deleteTooltip": "Bewertung löschen"
+    },
+    "details": {
+      "supervisorName": "Name des Betreuers:",
+      "supervisorEmail": "E-Mail des Betreuers:",
+      "tasks": "Aufgaben:",
+      "workEnvironment": "Arbeitsumfeld:",
+      "recommendToOthers": "Anderen empfehlen:",
+      "internshipStart": "Praktikumsbeginn:",
+      "internshipEnd": "Praktikumsende:",
+      "yes": "Ja",
+      "no": "Nein"
+    }
+  },
+  "scad": {
+    "workshop": {
+      "searchBarPlaceholder": "Suche nach Titel oder Dozenten..."
+    },
+    "reportsView": {
+      "modal": {
+        "student": "Studentin",
+        "major": "Studiengang",
+        "company": "Unternehmen",
+        "exportPdf": "Als PDF speichern",
+        "close": "Schließen",
+        "comments": {
+          "title": "Kommentare",
+          "noComments": "Noch keine Kommentare. Wählen Sie Text aus, um Hervorhebungen oder Kommentare hinzuzufügen."
+        }
+      }
+    },
+    "dashboard": {
+      "title": "UNTERNEHMENSBEWERBUNGEN",
+      "companyReview": {
+        "badge": "VERWALTUNG",
+        "title": "Unternehmenspartnerschaft Bewertungsportal",
+        "description": "Effiziente Verwaltung und Bewertung von Organisationsbewerbungen für SCAD-Praktikumspartnerschaften. Überprüfen Sie Unternehmensprofile, Praktikumsangebote und historische Leistungsdaten, um fundierte Entscheidungen zu treffen.",
+        "featuresTitle": "Wichtige Partnerschaftsverwaltungsfunktionen:",
+        "features": {
+          "reviewApplications": "Umfassende Überprüfung neuer Unternehmensbewerbungen und Profile",
+          "evaluateQuality": "Bewertung der Praktikumsqualität und Übereinstimmung mit akademischen Anforderungen",
+          "studentFeedback": "Integration von Studenten-Feedback und Zufriedenheitsmetriken",
+          "partnershipTracking": "Verfolgung der Partnerschaftshistorie und Erneuerungsverwaltung"
+        },
+        "qualityNote": "Sorgen Sie für hochwertige Praktikumsmöglichkeiten, indem Sie das Angebot, die Arbeitsumgebung und das Studentenentwicklungspotenzial jedes Unternehmens gründlich bewerten."
+      }
+    },
+    "companyTable": {
+      "headers": {
+        "company": "UNTERNEHMEN",
+        "industry": "BRANCHE", 
+        "size": "GRÖSSE"
+      },
+      "sidebar": {
+        "title": "Unternehmensdetails",
+        "expand": "Erweitern"
+      },
+      "emptyState": {
+        "noCompanies": "Keine Unternehmen gefunden, die Ihren Kriterien entsprechen",
+        "tryAdjusting": "Versuchen Sie, Ihre Suche oder Filter anzupassen"
+      },
+      "searchPlaceholder": "Suche nach Unternehmen nach Name oder Branche ..."
+    },
+    "companyDetails": {
+      "title": "Unternehmensdetails",
+      "profile": "Profil",
+      "notePad": "Notizblock",
+      "companySize": "Unternehmensgröße",
+      "industry": "Branche",
+      "verificationDocs": "Verifizierungsdokumente",
+      "noDocuments": "Keine Dokumente bereitgestellt.",
+      "registeredOn": "Registriert am",
+      "accept": "Akzeptieren",
+      "reject": "Ablehnen",
+      "feedback": {
+        "accepted": "Akzeptiert!",
+        "rejected": "Abgelehnt!",
+        "acceptedMessage": "Dieses Unternehmen wurde genehmigt und zu Ihrer Liste hinzugefügt.",
+        "rejectedMessage": "Dieses Unternehmen wurde abgelehnt und aus Ihrer Liste entfernt."
+      }
+    },
+    "filters": {
+      "industry": "Branche",
+      "size": "Größe",
+      "allIndustries": "Alle Branchen",
+      "allSizes": "Alle Größen"
+    },
+    "studentDirectory": {
+      "title": "STUDENTENVERZEICHNIS",
+      "searchPlaceholder": "Suche Studenten nach Name, E-Mail oder Studiengang ...",
+      "infoCard": {
+        "badge": "VERZEICHNIS",
+        "title": "Studentenverzeichnisverwaltung",
+        "description": "Greifen Sie auf umfassende Profile aller SCAD-Studenten zu, die im Praktikumssystem registriert sind, um akademische Unterstützung und Matching von Möglichkeiten zu ermöglichen.",
+        "studentInfoAvailableTitle": "Verfügbare Studenteninformationen:",
+        "items": {
+          "academicDetails": "Akademische Details (Studiengang, Nebenfach, voraussichtliches Abschlussdatum)",
+          "skillsInventory": "Fähigkeiteninventar und Kompetenzstufen",
+          "internshipHistory": "Praktikumshistorie und Bewertungsergebnisse",
+          "assessmentResults": "Bewertungsergebnisse und Karriereinteressen",
+          "contactInfo": "Kontaktinformationen und Kommunikationspräferenzen"
+        },
+        "privacyNotice": "Datenschutzhinweis: Der Zugriff auf Studenteninformationen ist auf autorisiertes Personal beschränkt und unterliegt den Datenschutzbestimmungen. Verwenden Sie Informationen nur für legitime Bildungszwecke."
+      },
+      "filters": {
+        "major": "Studiengang",
+        "status": "Status",
+        "semester": "Semester",
+        "allMajors": "Alle Studiengänge",
+        "allStatuses": "Alle Status",
+        "allSemesters": "Alle Semester"
+      }
+    },
+    "studentList": {
+      "tabs": {
+        "all": "ALLE",
+        "current": "AKTUELL",
+        "completed": "ABGESCHLOSSEN",
+        "evaluated": "BEWERTET"
+      },
+      "emptyState": {
+        "noStudents": "Keine Studenten gefunden, die Ihren Kriterien entsprechen",
+        "adjust": "Versuchen Sie, Ihre Suche oder Filter anzupassen"
+      }
+    },
+    "studentProfile": {
+      "sections": {
+        "academicInformation": "Akademische Informationen",
+        "education": "Ausbildung",
+        "skills": "Fähigkeiten",
+        "personalityTraits": "Persönlichkeitsmerkmale",
+        "jobInterests": "Berufliche Interessen",
+        "experience": "Erfahrung",
+        "internships": "Praktika"
+      },
+      "fields": {
+        "studentId": "Studenten-ID",
+        "semester": "Semester",
+        "gpa": "Notendurchschnitt",
+        "major": "Studiengang",
+        "faculty": "Fakultät"
+      },
+      "rating": "Bewertung",
+      "notAvailable": "Nicht verfügbar"
+    },
+    "student": {
+      "viewProfile": "Profil ansehen"
+    },
+    "internships": {
+      "title": "PRAKTIKUMSANGEBOTE",
+      "badge": "AUFSICHT",
+      "management": {
+        "title": "Verwaltung der Praktikumsangebote",
+        "description": "Überwachen und beaufsichtigen Sie alle aktiven Praktikumsmöglichkeiten, die von zugelassenen Partnerunternehmen auf der Plattform veröffentlicht wurden.",
+        "features": {
+          "title": "Aufsichtsfunktionen:",
+          "viewDetails": "Vollständige Details aller aktuellen Praktikumsangebote anzeigen",
+          "filterOpportunities": "Möglichkeiten nach Unternehmen, Branche, Standort oder Status filtern",
+          "verifyCompliance": "Überprüfung der Einhaltung von Veröffentlichungsrichtlinien und Anforderungen",
+          "reviewCompensation": "Überprüfung der Vergütungsdetails und Arbeitsbedingungen",
+          "ensureSkills": "Sicherstellen angemessener Qualifikationsanforderungen und Bildungsausrichtung"
+        },
+        "note": "Dieses Dashboard ermöglicht es SCAD-Administratoren, die Qualität und Integrität aller für Studenten verfügbaren Praktikumsmöglichkeiten zu gewährleisten und sicherzustellen, dass sie mit den Bildungszielen und professionellen Standards übereinstimmen."
+      }
+    },
+    "evaluationAnalytics": {
+      "title": "EVALUATIONSANALYSEN",
+      "badge": "ANALYSEN",
+      "cardTitle": "Praktikumsbewertungsanalysen",
+      "description": "Greifen Sie auf Studentenfeedback zu Praktikumserfahrungen zu, um Qualitätspartnerschaften aufrechtzuerhalten und Fakultätsberater zu informieren.",
+      "insights": {
+        "title": "Evaluationseinblicke:",
+        "items": {
+          "assessments": "Umfassende Studentenbewertungen von Partnerunternehmen einsehen",
+          "ratings": "Bewertungen über wichtige Metriken überwachen (Mentoring, Lernumgebung, Arbeitsbelastung)",
+          "themes": "Wiederkehrende Themen im qualitativen Feedback verfolgen",
+          "companies": "Herausragende Unternehmen und solche, die Intervention benötigen, identifizieren",
+          "trends": "Bewertungstrends über Branchen und Zeiträume hinweg vergleichen"
+        }
+      },
+      "importantNote": "Wichtig: Studentenbewertungen spielen eine entscheidende Rolle bei der Erneuerung von Partnerschaften und der Entwicklung des Lehrplans."
+    },
+    "statisticsDashboard": {
+      "title": "STATISTIK-DASHBOARD",
+      "badge": "ANALYSEN",
+      "cardTitle": "Statistik-Dashboard & Berichterstattung",
+      "description": "Umfassende Analyseplattform zur Überwachung von Leistungskennzahlen und Trends des Praktikumsprogramms.",
+      "features": {
+        "title": "Wichtige Analysefunktionen:",
+        "items": {
+          "realtime": "Echtzeit-Dashboard mit visuellen Berichten und Kennzahlen",
+          "topPerformers": "Top-Unternehmen und Kurse basierend auf Studentenleistung",
+          "tracking": "Verfolgung des Praktikumsberichtsstatus über akademische Zyklen",
+          "faculty": "Analyse der Fakultätsüberprüfungszeit und Effizienzmetriken",
+          "reports": "Exportierbare PDF-Berichte für die akademische Verwaltung"
+        }
+      },
+      "note": "Nutzen Sie diese Analysesuite, um Trends zu erkennen, die Programmeffektivität zu messen und datengestützte Entscheidungen zur Verbesserung der Praktikumsergebnisse zu treffen."
+    },
+    "reportView": {
+      "title": "ÜBERPRÜFUNG DER STUDENTENBERICHTE",
+      "badge": "AKADEMISCH",
+      "cardTitle": "Studentenberichts-Überprüfungsportal",
+      "description": "Verwalten und verteilen Sie Praktikumsberichte der Studenten an entsprechende Fakultätsmitglieder zur akademischen Bewertung und Rückmeldung.",
+      "features": {
+        "title": "Berichtsverwaltungsfunktionen:",
+        "items": {
+          "access": "Zugriff auf alle eingereichten Praktikumsberichte, organisiert nach Abteilung und Datum",
+          "status": "Berichtsstatus anzeigen (ausstehend, markiert, abgelehnt, akzeptiert)",
+          "assign": "Berichte basierend auf Expertise bestimmten Fakultätsprüfern zuweisen",
+          "monitor": "Überprüfungszeiten und Abschlussquoten der Fakultät überwachen",
+          "track": "Berichtsüberarbeitungszyklen und Neueinreichungen verfolgen"
+        }
+      },
+      "contentControl": {
+        "title": "Inhaltskontrolle:",
+        "items": {
+          "standards": "Sicherstellen, dass Workshop-Inhalte mit Industriestandards und aufkommenden Trends übereinstimmen",
+          "quality": "Qualität und Konsistenz über alle Angebote zur beruflichen Entwicklung hinweg aufrechterhalten",
+          "coordinate": "Koordination mit Branchenpräsentatoren und Fakultätsmoderatoren",
+          "update": "Inhalte bei Bedarf basierend auf Studentenfeedback und Branchenänderungen aktualisieren"
+        }
+      },
+      "academicNote": "Diese Berichte stellen den akademischen Höhepunkt der Praktikumserfahrungen der Studenten dar und verbinden berufliche Praxis mit Lernen im Klassenzimmer.",
+      "modal": {
+        "student": "Studentin",
+        "major": "Studiengang",
+        "company": "Unternehmen",
+        "exportPdf": "Als PDF exportieren",
+        "close": "Schließen",
+        "reviewSubmitted": "Überprüfung eingereicht!",
+        "comments": {
+          "noComments": "Noch keine Anmerkungen. Wählen Sie Text aus, um Hervorhebungen oder Kommentare hinzuzufügen."
+        }
+      }
+    },
+    "workshops": {
+      "instructor": "Dozent",
+      "allInstructors": "Alle Dozenten",
+      "addNewWorkshop": "Neuen Workshop hinzufügen",
+      "management": {
+        "title": "WORKSHOP-VERWALTUNG",
+        "badge": "BERUFLICHE ENTWICKLUNG",
+        "cardTitle": "Workshop-Verwaltungsportal",
+        "description": "Erstellen, planen und verwalten Sie Workshops zur beruflichen Entwicklung, die die Berufsvorbereitung und Branchenvorbereitung der Studierenden verbessern.",
+        "features": {
+          "title": "Workshop-Erstellungstools:",
+          "designNewWorkshop": "Neue Workshop-Listen mit detaillierten Beschreibungen und Lernzielen erstellen",
+          "scheduleSessions": "Sitzungen mit flexiblen Zeitoptionen (live, wiederkehrend, oder auf Anfrage) planen",
+          "uploadMaterials": "Materialien, Präsentationen und ergänzende Ressourcen hochladen",
+          "setCapacityLimits": "Kapazitätslimits und Registrierungsanforderungen festlegen",
+          "designateWorkshops": "Workshops für bestimmte Studierendensegmente oder Pro-Mitgliedschaften auswählen",
+          "contentControl": {
+            "title": "Inhaltskontrolle:",
+            "ensureWorkshopContent": "Sicherstellen, dass Workshop-Inhalte mit Industriestandards und aufkommenden Trends übereinstimmen",
+            "maintainQuality": "Qualität und Konsistenz über alle Angebote zur beruflichen Entwicklung hinweg aufrechterhalten",
+            "coordinateWithIndustry": "Koordination mit Branchenpräsentatoren und Fakultätsmoderatoren",
+            "updateContent": "Inhalte bei Bedarf basierend auf Studentenfeedback und Branchenänderungen aktualisieren"
+          }
+        },
+        "note": "Dieses zentrale System vereinfacht den gesamten Workshop-Lebenszyklus von der Erstellung bis zur Bewertung, um wertvolle berufliche Entwicklungsmöglichkeiten für alle Studierenden zu gewährleisten."
+      },
+      "form": {
+        "createNew": "Neuen Workshop erstellen",
+        "editWorkshop": "Workshop bearbeiten",
+        "title": "Workshop-Titel",
+        "titlePlaceholder": "Workshop-Titel eingeben",
+        "description": "Beschreibung",
+        "descriptionPlaceholder": "Workshop-Beschreibung eingeben",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "location": "Ort",
+        "locationPlaceholder": "Ort eingeben (Standard: Online)",
+        "maxAttendees": "Maximale Teilnehmerzahl",
+        "maxAttendeesPlaceholder": "Maximale Anzahl der Teilnehmer",
+        "category": "Kategorie",
+        "categoryPlaceholder": "Workshop-Kategorie eingeben",
+        "imageUrl": "Workshop-Bild URL",
+        "imageUrlPlaceholder": "Bild-URL eingeben",
+        "instructorInfo": "Dozenten-Informationen",
+        "instructorName": "Name des Dozenten",
+        "instructorNamePlaceholder": "Name des Dozenten eingeben",
+        "instructorBio": "Dozenten-Biografie",
+        "instructorBioPlaceholder": "Biografie des Dozenten eingeben",
+        "instructorImage": "Dozenten-Bild URL",
+        "instructorImagePlaceholder": "Dozenten-Bild-URL eingeben",
+        "agenda": "Workshop-Agenda",
+        "agendaPlaceholder": "Agendapunkt hinzufügen",
+        "noAgendaItems": "Noch keine Agendapunkte hinzugefügt",
+        "required": "*",
+        "preview": "Workshop-Vorschau",
+        "dateTime": "Datum & Uhrzeit",
+        "cancel": "Abbrechen",
+        "create": "Workshop erstellen",
+        "update": "Workshop aktualisieren",
+        "success": {
+          "created": "Workshop wurde erfolgreich erstellt.",
+          "updated": "Workshop wurde erfolgreich aktualisiert."
+        },
+        "validation": {
+          "titleRequired": "Workshop-Titel ist erforderlich",
+          "descriptionRequired": "Beschreibung ist erforderlich",
+          "instructorRequired": "Name des Dozenten ist erforderlich",
+          "instructorBioRequired": "Dozenten-Biografie ist erforderlich",
+          "agendaRequired": "Mindestens ein Agendapunkt ist erforderlich",
+          "endDateAfterStart": "Endzeit muss nach der Startzeit liegen"
+        }
+      }
+    }
+  },
+  "uploadDocuments": {
+    "title": "Laden Sie Ihre Dokumente hoch",
+    "resume": {
+      "label": "Lebenslauf",
+      "required": "*",
+      "error": "Lebenslauf ist erforderlich und muss vollständig hochgeladen werden."
+    },
+    "coverLetter": {
+      "label": "Anschreiben",
+      "textLabel": "Schreiben Sie Ihr eigenes Anschreiben",
+      "placeholder": "Geben Sie hier Ihr Anschreiben ein..."
+    },
+    "links": {
+      "label": "Fügen Sie einen Link zu Ihrem GitHub-Profil und/oder Ihrer Website hinzu",
+      "placeholder": "https://beispiel.de"
+    },
+    "buttons": {
+      "upload": "Hochladen",
+      "cancel": "Abbrechen"
+    },
+    "feedback": {
+      "success": "Erfolgreich!",
+      "successMessage": "Ihre Dokumente wurden erfolgreich hochgeladen."
+    }
+  },
+  "student": {
+    "dashboard": {
+      "titles": {
+        "home": "EMPFOHLENE MÖGLICHKEITEN",
+        "browse": "PRAKTIKUMSMÖGLICHKEITEN",
+        "applied": "BEWORBENE PRAKTIKA",
+        "my-internships": "MEINE PRAKTIKA",
+        "my-reports": "MEINE BERICHTE",
+        "my-evaluations": "MEINE BEWERTUNGEN",
+        "workshops": "WORKSHOPS",
+        "live-workshops": "LIVE WORKSHOPS",
+        "online-assessments": "ONLINE BEWERTUNGEN",
+        "notifications": "BENACHRICHTIGUNGEN",
+        "profile": "MEIN PROFIL"
+      },
+      "workshops": {
+        "backToWorkshops": "Zurück zu Workshops"
+      },
+      "searchPlaceholder": "Suche nach empfohlenen Praktikumsmöglichkeiten...",
+      "browseInternshipsSearchPlaceholder": "Suche nach Praktikumsmöglichkeiten nach Jobtitel oder Unternehmensname ...",
+      "appliedInternshipsSearchPlaceholder": "Suche nach angewendeten Praktikumsmöglichkeiten nach Unternehmensname oder Jobtitel ...",
+      "myInternshipsSearchPlaceholder": "Suche nach Praktikumsmöglichkeiten nach Unternehmensname oder Jobtitel ...",
+      "personalizedCard": {
+        "badge": "PERSONALISIERT",
+        "title": "Ihre personalisierten Praktikumsvorschläge",
+        "description": "Diese Seite zeigt Praktikumsmöglichkeiten, die speziell auf der Grundlage Ihres einzigartigen Profils und Ihrer Präferenzen zusammengestellt wurden.",
+        "howItWorks": {
+          "title": "So funktionieren diese Empfehlungen:",
+          "jobInterests": "Abgestimmt auf Ihre angegebenen Jobinteressen und Karriereziele",
+          "industries": "Gefiltert nach Ihren bevorzugten Branchen und Arbeitsumgebungen",
+          "ratings": "Enthält Positionen, die von ehemaligen SCAD-Praktikanten hoch bewertet wurden",
+          "updates": "Wird regelmäßig aktualisiert, wenn neue Möglichkeiten verfügbar sind"
+        },
+        "footer": "Nehmen Sie sich Zeit, diese maßgeschneiderten Vorschläge zu erkunden – sie repräsentieren Möglichkeiten, bei denen Ihre spezifischen Talente und Interessen wirklich glänzen können."
+      },
+      "browseInternshipsPersonalizedCard": {
+        "title": "Praktikumsmöglichkeiten für Ihre Karriere",
+        "description": "Entdecken Sie praktikumsmöglichkeiten, die von SCAD und unseren Partnern angeboten werden. Diese Positionen sind so konzipiert, dass Sie praktische Erfahrungen sammeln und Ihr berufliches Portfolio aufbauen können.",
+        "badge": "MÖGLICHKEITEN",
+        "howItWorks": {
+          "title": "Warum diese Möglichkeiten wichtig sind:",
+          "potential": "Potenzial für akademische Ansprüche und berufliche Referenzen",
+          "networking": "Netzwerkverbindungen, die zu einer vollzeitigen Beschäftigung führen können",
+          "portfolio": "Portfolio-bildende Projekte, um Ihre Fähigkeiten zu zeigen"
+        },
+        "footer": "Sehen Sie sich unser Informationsvideo \"Was macht Ihr Praktikum zählt\" an, um zu erfahren, wie Sie Ihre Praktikumserfahrung maximieren können!"
+      },
+      "appliedInternshipsPersonalizedCard": {
+        "title": "Ihre Praktikumsanwendungen",
+        "description": "Verwalten und verfolgen Sie alle Ihre Praktikumsanwendungen in einem zentralen Dashboard.",
+        "badge": "ANWENDUNGEN",
+        "howItWorks": {
+          "pending": "Ausstehend",
+          "accepted": "Akzeptiert",
+          "rejected": "Abgelehnt",
+          "finalized": "Abgeschlossen",
+          "pendingDescription": "Ausstehende Anwendungen werden noch von Unternehmen überprüft",
+          "acceptedDescription": "Akzeptierte Anwendungen bedeuten, dass Sie für die nächsten Schritte qualifiziert sind",
+          "rejectedDescription": "Abgelehnte Anwendungen waren dieses Mal nicht erfolgreich",
+          "finalizedDescription": "Abgeschlossene Anwendungen sind bestätigt und bereit zum Start"
+        },
+        "footer": "Verwenden Sie die Filter, um Ihre Anwendungen nach Unternehmen, Position oder Status zu sortieren!"
+      },
+      "myInternshipsPersonalizedCard": {
+        "title": "Ihre Praktikumsübersicht",
+        "description": "Verwalten Sie alle Ihre Praktika an einem Ort.",
+        "badge": "ÜBERSICHT",
+        "howItWorks": {
+          "current": "Aktuell",
+          "completed": "Abgeschlossen",
+          "evaluated": "Bewertet",
+          "currentDescription": "Aktuelle Praktika laufen",
+          "completedDescription": "Abgeschlossene Praktika warten auf Ihre Bericht- und Bewertungseinreichungen",
+          "evaluatedDescription": "Bewertete Praktika wurden von Ihrem Betreuer überprüft"
+        },
+        "footer": "Verwenden Sie die Filter, um Ihre Praktikumsgeschichte oder spezifische Möglichkeiten zu durchsuchen."
+      },
+      "evaluationsPersonalizedCard": {
+        "title": "Ihre Bewertungen",
+        "description": "Verwalten Sie Ihre Bewertungen für Unternehmen, bei denen Sie Praktika absolviert haben. Verfolgen Sie sowohl eingereichte als auch Entwürfe hier.",
+        "badge": "RÜCKMELDUNG",
+        "howItWorks": {
+          "submitted": "Eingereicht",
+          "draft": "Entwurf",
+          "submittedDescription": "Bewertungen, die Sie abgeschlossen und eingereicht haben, für Ihre Praktikumserfahrungen.",
+          "draftDescription": "Bewertungen, die Sie begonnen haben, aber noch nicht eingereicht haben. Weiterarbeiten Sie an diesen."
+        },
+        "footer": "Ihre Bewertungen geben wertvolle Rückmeldung an Unternehmen und helfen zukünftigen Studenten informierte Entscheidungen zu treffen."
+      },
+      "myReportsPersonalizedCard": {
+        "title": "Studentenbericht-Verwaltungssystem",
+        "description": "Willkommen in Ihrem Studentenbericht-Dashboard. Hier können Sie alle Ihre Praktikumsberichte an einem Ort verwalten und überwachen.",
+        "howItWorks": {
+          "pending": "AUSSTEHEND",
+          "flagged": "MARKIERT",
+          "rejected": "ABGELEHNT",
+          "accepted": "AKZEPTIERT",
+          "pendingDescription1": "Warten auf Rezension",
+          "pendingDescription2": "Ihr Bericht wurde eingereicht, aber noch nicht überprüft. Keine weitere Aktion erforderlich.",
+          "flaggedDescription1": "Benötigt Revision",
+          "flaggedDescription2": "Überprüfen Sie die Rückmeldung der Fakultät und reichen Sie Ihren aktualisierten Bericht erneut ein.",
+          "rejectedDescription1": "Nicht genehmigt",
+          "rejectedDescription2": "Erfüllt die Anforderungen nicht. Lesen Sie die Kommentare der Fakultät für Richtlinien.",
+          "acceptedDescription1": "Genehmigt",
+          "acceptedDescription2": "Ihr Bericht wurde genehmigt. Keine weitere Aktion erforderlich."
+        },
+        "footer1": "Berichte markiert und",
+        "footer2": "abgelehnt benötigen Ihre Aufmerksamkeit"
+      },
+      "workshopsInfoPersonalizedCard": {
+        "title": "Workshops & Berufliche Entwicklung",
+        "description": "Verbessern Sie Ihre Fähigkeiten und erweitern Sie Ihr berufliches Wissen durch unseren umfassenden Workshop-Zentrum.",
+        "badge": "BERUFLICHE ENTWICKLUNG",
+        "availableWorkshops": {
+          "title": "Verfügbare Workshop-Typen:",
+          "type1": "Bevorstehende Workshops",
+          "type1Description": "Durchsuchen und registrieren Sie für geplante zukünftige Sitzungen",
+          "type2": "Live Jetzt",
+          "type2Description": "Teilnehmen Sie aktiven Workshops, die in Echtzeit stattfinden",
+          "type3": "On-Demand-Bibliothek",
+          "type3Description": "Zugang zu voraufgezeichneten Sitzungen jederzeit"
+        },
+        "workshopBenefits": {
+          "title": "Workshop-Vorteile:",
+          "benefit1": "Branchenspezifische Fähigkeiten, die von Arbeitgebern geschätzt werden",
+          "benefit2": "Lernen Sie praktische Techniken von erfahrenen Fachleuten",
+          "benefit3": "Netzwerk mit Branchenvertretern und Kollegen",
+          "benefit4": "Erhalten Sie Zertifikate für Ihr Portfolio"
+        },
+        "footer": "Jeder Workshop ist sorgfältig entworfen, um kritische Fähigkeiten und Wissensbereiche zu adressieren, die Ihr akademisches Lernen ergänzen und Sie für berufliches Erfolg vorbereiten."
+      },
+      "notificationsPersonalizedInfoCard": {
+        "title": "Benachrichtigungszentrum",
+        "description": "Bleiben Sie informiert und verpassen Sie keine wichtigen Updates zu Ihrer beruflichen Entwicklung.",
+        "badge": "ALERTS",
+        "notificationHub": {
+          "title": "Ihr Benachrichtigungszentrum:",
+          "type1": "Anwendungsaktualisierungen",
+          "type1Description": "Statusänderungen und Rückmeldungen zu Ihren Praktikumsanwendungen",
+          "type2": "Bericht-Warnungen", 
+          "type2Description": "Neue Kommentare oder Statusänderungen zu Ihren eingereichten Berichten",
+          "type3": "Workshop-Erinnerungen",
+          "type3Description": "Bevorstehende Sitzungen, für die Sie registriert sind, und letzte Minuten-Verfügbarkeiten",
+          "type4": "Frist-Benachrichtigungen",
+          "type4Description": "Wichtige Termine für Praktikumsanwendungen und Bericht-Fristen",
+          "type5": "Personalisierte Möglichkeiten",
+          "type5Description": "Neue Praktika oder Workshops, die Ihrem Profil entsprechen",
+          "type6": "Premium-Inhalte",
+          "type6Description": "Exklusive Workshops und Veranstaltungen für Pro-Studierende"
+        },
+        "footer": "Einige Workshop-Benachrichtigungen sind ausschließlich für Studierende mit Pro-Mitgliedschaft verfügbar. Aktualisieren Sie Ihr Konto, um auf diese Premium-Berufsentwicklungsmöglichkeiten zuzugreifen.",
+        "footerLabel": "Hinweis:"
+      },
+      "onlineAssessmentsInfoCard": {
+        "title": "Online-Bewertungszentrum",
+        "description": "Entdecken Sie Ihre beruflichen Stärken und Präferenzen durch unsere umfassenden Bewertungstools.",
+        "badge": "SELBSTENTDECKUNG",
+        "assessmentBenefits": {
+          "title": "Bewertungsvorteile:",
+          "benefit1": "Wertvolle Einblicke in Ihre natürlichen Stärken und Arbeitspräferenzen",
+          "benefit2": "Erhalten Sie personalisierte Praktika- und Workshop-Empfehlungen",
+          "benefit3": "Besser Ihre einzigartigen Qualitäten ansprechen, um potenzielle Arbeitgeber zu überzeugen",
+          "benefit4": "Identifizieren Sie Karrierewege, die mit Ihrer Persönlichkeit und Fähigkeiten übereinstimmen"
+        },
+        "assessmentTypes": {
+          "personalityAssessment": {
+            "title": "Persönlichkeitsbewertung",
+            "description": "Verstehen Sie Ihr Arbeitsstil und Ihre Präferenzen für Teamdynamik"
+          },
+          "skillsProficiency": {
+            "title": "Fähigkeitsbewertung",
+            "description": "Messen Sie Ihre technischen und Soft-Skills-Kompetenzniveaus"
+          },
+          "careerInterestInventory": {
+            "title": "Karriereinteressen-Inventar",
+            "description": "Entdecken Sie Felder und Rollen, die Ihren Interessen entsprechen"
+          },
+          "aptitudeIndicators": {
+            "title": "Fähigkeitsindikatoren",
+            "description": "Identifizieren Sie Ihre natürlichen Fähigkeiten in verschiedenen Bereichen"
+          }
+        },
+        "footer": "Ergebnisse werden analysiert, um Ihr persönliches Profil zu erstellen, das Empfehlungen über die gesamte Plattform hinweg unterstützt."
+      },
+      "notificationsList": {
+        "proNote": "Details gesperrt - Upgrade zu PRO, um zu sehen, wer Ihr Profil angesehen hat",
+        "profileViews": "Profil-Ansichten",
+        "all": "Alle",
+        "noProfileViewsFoundMatchingYourCriteria": "Keine Profil-Ansichten gefunden, die Ihren Kriterien entsprechen",
+        "tryAdjustingYourFilters": "Versuchen Sie, Ihre Filter anzupassen",
+        "completeYourInternshipDurationToUnlockPROFeaturesAndSeeWhichCompaniesAreInterestedInYourProfile": "Vervollständigen Sie Ihre Praktikumsdauer, um PRO-Funktionen zu entsperren und zu sehen, welche Unternehmen Ihr Profil interessieren",
+        "companies": "Unternehmen",
+        "haveViewedYourProfile": "haben Ihr Profil angesehen",
+        "viewedProfile1": "Personalmanager bei ",
+        "viewedProfile2": " hat Ihr Profil angesehen",
+        "filtered": "Gefiltert",
+        "recently": "kürzlich",
+        "upgradeToPROToSeeDetails": "Upgrade zu PRO, um Details zu sehen"
+      },
+      "profilePersonalizedCard": {
+        "badge": "PORTFOLIO",
+        "title": "Student Profile Management",
+        "description": "Your professional profile is your digital portfolio and the foundation of your career development journey.",
+        "whyYourProfileMatters": {
+          "title": "Why Your Profile Matters:",
+          "point1": "Powers the personalized recommendation engine for internships and workshops",
+          "point2": "Visible to potential employers when you apply for positions",
+          "point3": "Helps faculty provide more targeted guidance and support",
+          "point4": "Creates a foundation for your professional brand development"
+        },
+        "remember": "Remember: Update your profile regularly to reflect new skills, experiences, and career goals as you grow professionally."
+      },
+      "statusPills": {
+        "industryMatch": "BRANCHENÜBEREINSTIMMUNG",
+        "recommendedByPastInterns": "VON VORHERIGEN PRAKTIKANTEN EMPFOHLEN",
+        "jobInterestMatch": "BERUFSINTERESSENÜBEREINSTIMMUNG",
+        "all": "ALLE",
+        "recent": "NEU",
+        "recommended": "EMPFOHLEN",
+        "applied": "ANGEWENDET",
+        "current": "AKTUELL",
+        "completed": "ABGESCHLOSSEN",
+        "evaluated": "BEWERTET",
+        "pending": "AUSSTEHEND",
+        "rejected": "ABGELEHNT",
+        "accepted": "AKZEPTIERT",
+        "finalized": "ABGESCHLOSSEN",
+        "upcoming": "BEVORSTEHEND",
+        "live": "LIVE",
+        "prerecorded": "VORAUFGEZEICHNET"
+      },
+      "filterSections": {
+        "fullTime": "Vollzeit",
+        "partTime": "Teilzeit",
+        "contract": "Vertrag",
+        "remote": "Fernarbeit",
+        "onSite": "Vor Ort", 
+        "hybrid": "Hybrid",
+        "paid": "Bezahlt",
+        "unpaid": "Unbezahlt",
+        "jobType": "Arbeitsart",
+        "jobSetting": "Arbeitsumgebung",
+        "paymentStatus": "Bezahlung",
+        "allJobTypes": "Alle Jobtypen",
+        "allJobSettings": "Alle Arbeitsumgebungen",
+        "allPaymentTypes": "Alle Bezahlungen",
+        "technology": "Technologie",
+        "design": "Design",
+        "marketing": "Marketing",
+        "healthcare": "Gesundheit",
+        "3 months": "3 Monate",
+        "4 months": "4 Monate",
+        "6 months": "6 Monate",
+        "12 months": "12 Monate",
+        "allDurations": "Alle Dauern",
+        "allIndustries": "Alle Branchen",
+        "allCompanies": "Alle Unternehmen",
+        "allContent": "Alle Inhalte",
+        "recommended": "Empfohlen",
+        "applied": "Beworben",
+        "current": "Aktuell",
+        "company": "Unternehmen",
+        "industry": "Branche",
+        "position": "Position",
+        "duration": "Dauer",
+        "allInternships": "Alle Praktika",
+        "allPositions": "Alle Positionen",
+        "contentType": "Inhaltstyp",
+        "status": "Status",
+        "allStatuses": "Alle Status"
+      },
+      "reportCards": {
+        "appealSuccessTitle": "Erfolgreich!",
+        "appealSuccessMessage": "Ihre Anfechtung wurde erfolgreich eingereicht und wird nun überprüft.",
+        "tabs": {
+          "submitted": "Eingereichte Berichte",
+          "drafts": "Als Entwurf gespeichert"
+        },
+        "makeAnAppeal": "Ein Bericht anfechten",
+        "appealPending": "Anfechtung ausstehend",
+        "cancel": "Abbrechen",
+        "submitAppeal": "Anfechtung einreichen",
+        "enterYourAppealMessage": "Geben Sie Ihre Anfechtungsmeldung ein...",
+        "company": "Unternehmen",
+        "major": "Studiengang",
+        "submitted": "Eingereicht",
+        "seeMore": "Mehr anzeigen",
+        "statusInfo": "Status-Informationen",
+        "statusTooltips": {
+          "accepted": "Ihr Bericht wurde von der Fakultät geprüft und genehmigt. Für diese Einreichung sind keine weiteren Maßnahmen erforderlich.",
+          "pending": "Ihr Bericht wurde eingereicht, aber noch nicht vom zuständigen Fakultätsmitglied geprüft. Derzeit sind keine Maßnahmen erforderlich.",
+          "flagged": "Ihr Bericht erfordert Überarbeitungen basierend auf dem Feedback der Fakultät. Überprüfen Sie die bereitgestellten Kommentare und reichen Sie Ihren aktualisierten Bericht erneut ein.",
+          "rejected": "Ihr Bericht erfüllt nicht die Anforderungen und kann nicht erneut eingereicht werden. Siehe Kommentare der Fakultät für eine Erklärung und weitere Anweisungen."
+        }
+      },
+      "reportCreationDashboard": {
+        "title": {
+          "create": "Praktikumsbericht erstellen",
+          "edit": "Praktikumsbericht bearbeiten"
+        },
+        "form": {
+          "reportTitle": {
+            "label": "Berichtstitel",
+            "placeholder": "Geben Sie einen beschreibenden Titel für Ihren Bericht ein"
+          },
+          "company": {
+            "label": "Unternehmensname/Organisation",
+            "placeholder": "Wo haben Sie Ihre Praktika absolviert?"
+          },
+          "major": {
+            "label": "Studiengang",
+            "placeholder": "Wählen Sie Ihren Studiengang",
+            "options": {
+              "csen": "CSEN",
+              "dmet": "DMET",
+              "biotech": "Biotechnologie",
+              "law": "Recht"
+            }
+          },
+          "courses": {
+            "label": "Kurse, die Ihnen während Ihrer Praktika geholfen haben",
+            "placeholder": "Wählen Sie einen Kurs"
+          }
+        },
+        "guidelines": {
+          "title": "Berichtsstruktur-Richtlinien",
+          "introduction": "Einleitung: Beschreiben Sie das Unternehmen und Ihre ersten Erwartungen",
+          "body": "Körper: Detailieren Sie Ihre Verantwortlichkeiten, Projekte und wichtige Lernerfahrungen",
+          "conclusion": "Schlussfolgerung: Summieren Sie Ihre Erfahrung und was Sie daraus gelernt haben"
+        },
+        "sections": {
+          "introduction": {
+            "label": "Einleitung",
+            "placeholder": "Beschreiben Sie das Unternehmen und Ihre Rolle..."
+          },
+          "body": {
+            "label": "Körper",
+            "placeholder": "Detailieren Sie Ihre Verantwortlichkeiten und Erfahrungen..."
+          },
+          "conclusion": {
+            "label": "Schlussfolgerung",
+            "placeholder": "Summieren Sie Ihre Erfahrung und was Sie daraus gelernt haben"
+          }
+        },
+        "buttons": {
+          "submit": "Bericht einreichen",
+          "submitEdit": "Einreichen",
+          "saveDraft": "Entwurf speichern",
+          "saveChanges": "Änderungen speichern",
+          "saving": "Speichern...",
+          "saved": "✓ Speichern!"
+        },
+        "preview": {
+          "title": "Berichtsvorschau",
+          "defaultTitle": "Ihr Berichtstitel",
+          "defaultCompany": "Unternehmensname",
+          "major": "Studiengang",
+          "notSpecified": "Nicht angegeben",
+          "submittedBy": "Eingereicht von",
+          "studentName": "Studentenname",
+          "relevantCourses": "Relevante Kurse",
+          "notProvided": "Nicht angegeben"
+        },
+        "feedback": {
+          "success": "Erfolgreich!",
+          "updated": "Aktualisiert!",
+          "submitSuccess": {
+            "create": "Ihr Bericht wurde erfolgreich eingereicht.",
+            "edit": "Your report has been successfully updated."
+          },
+          "draftSuccess": {
+            "create": "Ihr Bericht wurde erfolgreich als Entwurf gespeichert.",
+            "edit": "Ihr Bericht wurde erfolgreich als Entwurf aktualisiert."
+          }
+        }
+      },
+      "upcomingWorkshops": "Bevorstehende Workshops",
+      "liveWorkshops": "Live Workshops",
+      "prerecordedWorkshops": "Voraufgezeichnete Workshops",
+      "upcoming": "Bevorstehend",
+      "live": "Live",
+      "prerecorded": "Voraufgezeichnet",
+      "joinNow": "Jetzt teilnehmen",
+      "watchNow": "Jetzt ansehen",
+      "registerNow": "Jetzt registrieren",
+      "workshopFeedback": {
+        "title": "Workshop Feedback",
+        "subtitle": "Wie würden Sie diesen Workshop bewerten?",
+        "placeholder": "Teilen Sie Ihre Gedanken über den Workshop...",
+        "submitButton": "Feedback einreichen",
+        "submitting": "Einreichen...",
+        "success": "Erfolgreich!",
+        "updated": "Aktualisiert!",
+        "submitSuccess": {
+          "create": "Ihr Bericht wurde erfolgreich eingereicht.",
+          "edit": "Ihr Bericht wurde erfolgreich aktualisiert."
+        },
+        "draftSuccess": {
+          "create": "Ihr Bericht wurde erfolgreich als Entwurf gespeichert.",
+          "edit": "Ihr Bericht wurde erfolgreich als Entwurf aktualisiert."
+        },
+        "certificateSimulator": {
+          "title": "Glückwunsch!",
+          "message": "Sie haben den Workshop erfolgreich abgeschlossen!",
+          "download": "Zertifikat herunterladen"
+        },
+        "successMessage": "Sie haben sich erfolgreich für diesen Workshop registriert"
+      }
+    }
+  },
+  "callInterface": {
+    "chat": "Chat",
+    "notes": "Notizen",
+    "closeChatPanel": "Chat-Panel schließen",
+    "closeNotesPanel": "Notizen-Panel schließen",
+    "noMessagesYet": "Noch keine Nachrichten",
+    "startConversation": "Starte die Konversation!",
+    "typeMessage": "Nachricht eingeben...",
+    "sendMessage": "Nachricht senden",
+    "saveNotes": "Notizen speichern",
+    "takeNotes": "Notizen hier eingeb en...",
+    "connectingTo": "Verbinde mit...",
+    "callInProgress": "Anruf läuft",
+    "connectedWith": "Verbunden (Kamera aus)",
+    "simulateOtherPartyLeaving": "Andere Teilnehmer verlassen simulieren",
+    "toggleCam": "Kamera umschalten",
+    "toggleCameraState": "Kamera-Status umschalten",
+    "cameraIsTurnedOff": "Kamera ist ausgeschaltet",
+    "cameraIsOn": "Kamera ist eingeschaltet",
+    "connecting": "Verbinde...",
+    "otherPartyLeft": "hat den Anruf verlassen",
+    "you": "Du",
+    "muted": "Stumm geschaltet",
+    "unmute": "Stummschaltung aufheben",
+    "mute": "Stummschaltung",
+    "stopVideo": "Video stoppen",
+    "startVideo": "Video starten",
+    "stopSharing": "Teilen beenden",
+    "shareScreen": "Bildschirm teilen",
+    "endCall": "Anruf beenden",
+    "simLeave": "Simulierter Verlassen",
+    "presenter": "Präsentator",
+    "liveSession": "Live-Sitzung",
+    "subtitles": "Dies ist ein Beispiel für Untertitel, die hier während des Workshops erscheinen würden...",
+    "hideSubtitles": "Untertitel ausblenden",
+    "showSubtitles": "Untertitel anzeigen",
+    "leaveWorkshop": "Workshop verlassen",
+    "leaveWorkshopConfirmation": "Sind Sie sicher, dass Sie den Workshop verlassen möchten?",
+    "leaveWorkshopConfirmationMessage": "Sie werden zur Workshop-Liste weitergeleitet.",
+    "prerequisites": "Voraussetzungen",
+    "workshopTitle": "Workshop Titel",
+    "instructor": "Präsentator",
+    "instructorName": "Präsentator Name",
+    "like": "Gefällt mir",
+    "save": "Speichern",
+    "share": "Teilen",
+    "backToWorkshops": "Zurück zu Workshops",
+    "noDescriptionAvailable": "Keine Beschreibung verfügbar.",
+    "incomingVideoCall": "Eingehender Videoanruf",
+    "decline": "Ablehnen",
+    "accept": "Akzeptieren",
+    "callPROStudents": "PRO-Studierende anrufen",
+    "callSCADAdmin": "SCAD-Admin anrufen"
+  },
+  "dashboard": {
+    "incomingCaller": {
+      "devModeOn": "Entwicklermodus: AKTIV",
+      "enableDevMode": "Entwicklermodus aktivieren"
+    },
+    "setInternshipCycle": "Praktikumszyklus festlegen",
+    "startDate": "Startdatum",
+    "endDate": "Enddatum",
+    "cycle": "Zyklus",
+    "year": "Jahr",
+    "save": "Speichern",
+    "titles": {
+      "student": "Studentin Portal",
+      "scad": "SCAD Portal", 
+      "company": "Firma Portal",
+      "faculty": "Fakultät Portal"
+    },
+    "userTypes": {
+      "student": "Studentin",
+      "scad": "SCAD",
+      "company": "Firma", 
+      "faculty": "Fakultät"
+    }
+  },
+  "studentCard": {
+    "major": "Studiengang",
+    "graduatingClass": "Abschlussklasse",
+    "edit": "Bearbeiten",
+    "clickToViewLess": "Klicken Sie, um weniger anzuzeigen",
+    "clickToViewMore": "Klicken Sie, um mehr anzuzeigen"
+  },
+  "studentDetails": {
+    "personalityTraits": "Charakter",
+    "education": "Ausbildung",
+    "skills": "Fähigkeiten",
+    "jobInterests": "Berufliche Interessen",
+    "experience": "Erfahrung",
+    "internships": "Praktika"
+  },
+      "updateProfile": {
+      "saveChanges": "Änderungen speichern",
+      "addInternship": "Praktika hinzufügen",
+      "title": "Profil bearbeiten",
+      "updated": "Aktualisiert!",
+      "message": "Ihr Profil wurde erfolgreich aktualisiert.",
+    "basicInfo": {
+      "title": "Grundinformationen",
+      "fullName": "Vollständiger Name",
+      "email": "E-Mail",
+      "bio": "Bio"
+    },
+    "colorTheme": {
+      "title": "Personalisieren Sie Ihr Profilkarten-Thema",
+      "description": "Wählen Sie eine Farbe, um automatisch ein passendes Thema für Ihr Profilkarten zu generieren",
+      "clickToSelect": "Klicken Sie, um eine Farbe auszuwählen",
+      "preview": "Kartenfarb-Vorschau",
+      "background": "Hintergrund",
+      "text": "Text",
+      "primary": "Primär"
+    },
+    "socialLinks": {
+      "title": "Soziale Links",
+      "linkedin": "LinkedIn-URL",
+      "github": "GitHub-URL",
+      "portfolio": "Portfolio-URL"
+    },
+    "personalityTraits": {
+      "title": "Charaktermerkmale",
+      "traitPlaceholder": "Merkmalname",
+      "addTrait": "Merkmal hinzufügen"
+    },
+    "education": {
+      "title": "Ausbildung",
+      "degree": "Abschluss",
+      "institution": "Institut",
+      "period": "Periode",
+      "faculty": "Fakultät",
+      "semester": "Semester",
+      "selectFaculty": "Fakultät auswählen",
+      "selectSemester": "Semester auswählen",
+      "faculties": {
+        "met": "Media Engineering and Technology (MET)",
+        "cse": "Computer Science and Engineering",
+        "mechanical": "Mechanical Engineering",
+        "electrical": "Electrical Engineering"
+      }
+    },
+    "skills": {
+      "title": "Fähigkeiten",
+      "addSkill": "Fähigkeit hinzufügen"
+    },
+    "jobInterests": {
+      "title": "Berufliche Interessen",
+      "jobTitle": "Berufsbezeichnung",
+      "description": "Beschreibung",
+      "addJobInterest": "Berufliche Interesse hinzufügen",
+      "removeJobInterest": "Remove Job Interest"
+    },
+    "experience": {
+      "title": "Erfahrung",
+      "jobTitle": "Berufsbezeichnung",
+      "company": "Unternehmen",
+      "duration": "Dauer",
+      "responsibilities": "Verantwortlichkeiten",
+      "addResponsibility": "Verantwortlichkeit hinzufügen",
+      "addExperience": "Erfahrung hinzufügen",
+      "removeExperience": "Erfahrung entfernen"
+    },
+    "internships": {
+      "title": "Praktika",
+      "position": "Position",
+      "company": "Unternehmen",
+      "period": "Periode",
+      "description": "Beschreibung",
+      "addInternship": "Praktika hinzufügen",
+      "removeInternship": "Praktika entfernen"
+    },
+    "actions": {
+      "saveChanges": "Änderungen speichern"
+    },
+    "feedback": {
+      "updated": "Aktualisiert!",
+      "message": "Ihr Profil wurde erfolgreich aktualisiert."
+    },
+    "validation": {
+      "nameRequired": "Name ist erforderlich",
+      "nameInvalid": "Name kann nur Buchstaben, Leerzeichen und Bindestriche enthalten",
+      "nameMinLength": "Name muss mindestens 2 Zeichen lang sein",
+      "emailRequired": "E-Mail ist erforderlich",
+      "emailInvalid": "Ungültiges E-Mail-Format. Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "bioMaxLength": "Bio darf nicht mehr als 500 Zeichen enthalten",
+      "linkedinInvalid": "Ungültige URL. Bitte geben Sie eine gültige LinkedIn-URL ein",
+      "githubInvalid": "Ungültige URL. Bitte geben Sie eine gültige GitHub-URL ein",
+      "portfolioInvalid": "Ungültige URL. Bitte geben Sie eine gültige Portfolio-URL ein"
+    },
+    "footer": {
+      "copyright": "© {{year}} Deutsche Universität in Kairo. Alle Rechte vorbehalten."
+    }
+  },
+  "notifications": {
+    "techVisionPosted": "<b>{{company}}</b> hat ein neues Praktikum veröffentlicht, das zu deinen Fähigkeiten passt",
+    "brandBoostAccepted": "Deine Bewerbung bei <b>{{company}}</b> wurde angenommen",
+    "internshipStarts": "Dein <b>{{role}}</b> Praktikum beginnt in {{days}} Tagen",
+    "reportUpdated": "Der Status deines Praktikumsberichts wurde von SCAD aktualisiert",
+    "appointmentAccepted": "{{contact}} hat deine Terminanfrage akzeptiert",
+    "upcomingWorkshop": "Der Workshop, für den du dich angemeldet hast, beginnt bald",
+    "newMessage": "{{contact}} hat dir eine Nachricht gesendet",
+    "companyApplicationAccepted": "Deine Unternehmensbewerbung wurde angenommen",
+    "accountSetup": "Konto erfolgreich eingerichtet – prüfe deine E-Mails für Details",
+    "newApplicants": "{{count}} neue Bewerber für dein <b>{{role}}</b> Praktikum",
+    "reportsAwaitingReview": "{{count}} neue Studentenberichte warten auf Überprüfung",
+    "registrationsPending": "{{count}} neue Unternehmensregistrierungen warten auf Verifizierung",
+    "studentSubmittedAppeal": "Ein Student hat eine Anfechtung für einen Bericht eingereicht. Bitte überprüfen Sie diese."
+  },
+  "home": {
+    "welcomeTitle": "Willkommen bei",
+    "appName": "InternHub",
+    "slogan": "WO ERFAHRUNG BEGINNT",
+    "continueAs": "Weiter als",
+    "tailoredExperience": "Maßgeschneiderte Erfahrung für jede Rolle.",
+    "login": "Anmelden",
+    "notRegistered": "Noch nicht registriert?",
+    "signUp": "Registrieren",
+    "loading": "Laden..."
+  },
+  "signup": {
+    "title": "Registrieren",
+    "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
+    "login": "Anmelden",
+    "labels": {
+      "companyName": "Firmenname *",
+      "companyEmail": "Firmen-E-Mail *",
+      "industry": "Branche *",
+      "companySize": "Unternehmensgröße *",
+      "verificationType": "Verifizierungstyp *",
+      "companyLogo": "Firmenlogo *",
+      "companyRegistrationDocument": "Firmenregistrierungsdokument *",
+      "taxCardDocument": "Steuerkartendokument *",
+      "taxId": "Steuer-ID",
+      "chooseFile": "Datei auswählen...",
+      "browse": "Durchsuchen",
+      "acceptedLogoFormats": "Zulässige Formate: JPG, PNG, SVG (Bevorzugte Abmessungen: 200x200px)",
+      "acceptedDocFormats": "Zulässige Formate: JPG, PNG, PDF",
+      "submit": "Registrierung abschließen",
+      "processing": "Verarbeite..."
+    },
+    "placeholders": {
+      "industry": "Branche auswählen",
+      "companySize": "Größe auswählen",
+      "taxId": "XXX-XXX-XXX"
+    },
+    "tooltips": {
+      "companyEmail": "Bitte geben Sie eine offizielle Firmen-E-Mail-Adresse an. Kostenlose Anbieter (Gmail, Yahoo usw.) werden nicht akzeptiert."
+    },
+    "messages": {
+      "success": "Antrag wurde akzeptiert! Bitte überprüfen Sie Ihre E-Mail.",
+      "error": "Antrag wurde abgelehnt. Bitte überprüfen Sie Ihre E-Mail."
+    },
+    "verificationTypes": {
+      "registration": "Firmenregistrierung",
+      "taxCard": "Steuerkarte",
+      "taxId": "Steuer-ID"
+    },
+    "companySizes": {
+      "small": "Klein (50 Mitarbeiter oder weniger)",
+      "medium": "Mittel (51-100 Mitarbeiter)",
+      "large": "Groß (101-500 Mitarbeiter)",
+      "corporate": "Konzern (über 500 Mitarbeiter)"
+    }
+  },
+  "login": {
+    "emailLabel": "E-Mail *",
+    "passwordLabel": "Passwort *",
+    "rememberMe": "Angemeldet bleiben",
+    "forgotPassword": "Passwort vergessen?",
+    "logIn": "Anmelden",
+    "loggingIn": "Anmeldung läuft...",
+    "validation": {
+      "emailRequired": "E-Mail ist erforderlich",
+      "emailInvalid": "Ungültige E-Mail-Adresse",
+      "passwordRequired": "Passwort ist erforderlich",
+      "companyNameRequired": "Firmenname ist erforderlich",
+      "companyNameMin": "Firmenname muss mindestens 2 Zeichen lang sein",
+      "industryRequired": "Branche ist erforderlich",
+      "industryInvalid": "Bitte wählen Sie eine gültige Branche aus",
+      "companyEmailRequired": "Firmen-E-Mail ist erforderlich",
+      "companyEmailInvalid": "Bitte verwenden Sie eine gültige Firmen-E-Mail-Adresse",
+      "companySizeRequired": "Unternehmensgröße ist erforderlich",
+      "companySizeInvalid": "Bitte wählen Sie eine gültige Unternehmensgröße aus",
+      "verificationTypeRequired": "Verifizierungstyp ist erforderlich",
+      "verificationTypeInvalid": "Bitte wählen Sie einen gültigen Verifizierungstyp aus",
+      "companyLogoRequired": "Firmenlogo ist erforderlich",
+      "verificationDocumentRequired": "Verifizierungsdokument ist erforderlich",
+      "fileFormatUnsupported": "Nicht unterstütztes Dateiformat",
+      "fileTooLarge": "Datei ist zu groß",
+      "taxIdRequired": "Steuer-ID ist erforderlich",
+      "taxIdFormat": "Steuer-ID muss im Format XXX-XXX-XXX vorliegen"
+    }
+  },
+  "validation": {
+    "emailRequired": "E-Mail ist erforderlich",
+    "emailInvalid": "Ungültige E-Mail-Adresse",
+    "passwordRequired": "Passwort ist erforderlich",
+    "companyNameRequired": "Firmenname ist erforderlich",
+    "companyNameMin": "Firmenname muss mindestens 2 Zeichen lang sein",
+    "industryRequired": "Branche ist erforderlich",
+    "industryInvalid": "Bitte wählen Sie eine gültige Branche aus",
+    "companyEmailRequired": "Firmen-E-Mail ist erforderlich",
+    "companyEmailInvalid": "Bitte verwenden Sie eine gültige Firmen-E-Mail-Adresse",
+    "companySizeRequired": "Unternehmensgröße ist erforderlich",
+    "companySizeInvalid": "Bitte wählen Sie eine gültige Unternehmensgröße aus",
+    "verificationTypeRequired": "Verifizierungstyp ist erforderlich",
+    "verificationTypeInvalid": "Bitte wählen Sie einen gültigen Verifizierungstyp aus",
+    "companyLogoRequired": "Firmenlogo ist erforderlich",
+    "verificationDocumentRequired": "Verifizierungsdokument ist erforderlich",
+    "fileFormatUnsupported": "Nicht unterstütztes Dateiformat",
+    "fileTooLarge": "Datei ist zu groß",
+    "taxIdRequired": "Steuer-ID ist erforderlich",
+    "taxIdFormat": "Steuer-ID muss im Format XXX-XXX-XXX vorliegen"
+  },
+  "footer": {
+    "copyright": "© {{year}} Deutsche Universität in Kairo. Alle Rechte vorbehalten."
+  },
+  "callModal": {
+    "title": "Videoanrufe & Termine",
+    "appointmentPolicy": {
+      "title": "Termin-zuerst-Richtlinie:",
+      "description": "Sie können nur Kontakte mit bestätigten Terminen anrufen. Bitte fordern Sie einen Termin an und warten Sie auf die Bestätigung."
+    },
+    "sections": {
+      "availableContacts": "Verfügbare Kontakte",
+      "pendingRequests": "Ausstehende Anfragen",
+      "confirmedAppointments": "Bestätigte Termine",
+      "pastRejected": "Vergangen / Abgelehnt"
+    },
+    "noContacts": "Keine Kontakte gefunden.",
+    "userRoles": {
+      "scadAdmin": "SCAD Admin",
+      "student": "Student"
+    },
+    "statuses": {
+      "requested": "Angefordert",
+      "confirmed": "Bestätigt"
+    },
+    "buttons": {
+      "callNow": "Jetzt anrufen",
+      "requestAppointment": "Termin anfordern",
+      "cancelScheduling": "Terminplanung abbrechen",
+      "confirmRequest": "Anfrage bestätigen",
+      "acceptAppointment": "Termin akzeptieren",
+      "rejectAppointment": "Termin ablehnen",
+      "cancelAppointment": "Termin abbrechen"
+    },
+    "tooltips": {
+      "callNow": "Jetzt anrufen",
+      "confirmedAppointmentRequired": "Bestätigter Termin erforderlich",
+      "requestAppointment": "Termin anfordern",
+      "cancelScheduling": "Terminplanung abbrechen",
+      "confirmRequest": "Terminanfrage bestätigen",
+      "acceptAppointment": "Termin akzeptieren",
+      "rejectAppointment": "Termin ablehnen",
+      "cancelAppointment": "Termin abbrechen"
+    },
+    "calling": {
+      "title": "Anrufen...",
+      "cancelCall": "Anruf abbrechen"
+    },
+    "appointments": {
+      "wantsToSchedule": "Möchte einen Termin vereinbaren",
+      "confirmedNoDate": "Bestätigt (Kein Datum festgelegt)",
+      "youRequested": "Sie haben {name} angefragt",
+      "requestedYou": "{name} hat Sie angefragt",
+      "rejected": "Abgelehnt"
+    }
+  },
+  "callButton": {
+    "callPROStudents": "PRO-Studenten anrufen",
+    "callSCADAdmin": "SCAD-Admin anrufen",
+    "videoCall": "Videoanruf"
+  },
+  "toast": {
+    "certificateDownloaded": "Zertifikat erfolgreich heruntergeladen"
+  },
+  "assessment": {
+    "takeTheTest": "Test machen",
+    "submitTest": "Test einreichen",
+    "whyTakeTheTest": "Warum den Test machen?",
+    "testCompleted": "Test abgeschlossen!",
+    "yourScore": "Ihr Ergebnis:",
+    "detailedResultsSent": "Detaillierte Ergebnisse wurden an Ihre E-Mail gesendet.",
+    "wouldYouLikeToShare": "Möchten Sie Ihr Ergebnis teilen?",
+    "yesPostIt": "Ja, veröffentlichen",
+    "noThanks": "Nein, danke",
+    "scorePostedToProfile": "Ergebnis in Ihrem Profil veröffentlicht!",
+    "testScoreToastBefore": "Ihr Testergebnis ist ",
+    "testScoreToastAfter": "%. Bitte überprüfen Sie Ihre E-Mail für detaillierte Ergebnisse.",
+    "errorSubmittingTest": "Fehler beim Einreichen des Tests"
+  }
+}

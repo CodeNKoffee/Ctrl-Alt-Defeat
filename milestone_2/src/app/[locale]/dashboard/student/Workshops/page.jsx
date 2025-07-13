@@ -5,7 +5,7 @@ import WorkshopList from "@/components/WorkshopList.jsx"; // Adjust the import p
 export default function Page() {
   return (
     <main className="container mx-auto min-h-screen">
-    <WorkshopList />
+      <WorkshopList />
     </main>
   );
 }

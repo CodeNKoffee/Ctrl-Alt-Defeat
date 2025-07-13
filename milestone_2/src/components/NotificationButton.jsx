@@ -111,7 +111,7 @@ export default function NotificationButton() {
       {isPanelOpen && (
         <div
           ref={panelRef}
-          className="absolute top-full right-0 mt-2 w-96 max-w-lg bg-white rounded-xl shadow-2xl z-50 border border-gray-200 overflow-hidden"
+          className="absolute top-full ltr:right-0 rtl:left-0 mt-2 w-96 max-w-lg bg-white rounded-xl shadow-2xl z-50 border border-gray-200 overflow-hidden"
         >
           <div className="max-h-[calc(100vh-120px)] sm:max-h-[500px] overflow-y-auto">
             <NotificationsList hideFilters={true} />

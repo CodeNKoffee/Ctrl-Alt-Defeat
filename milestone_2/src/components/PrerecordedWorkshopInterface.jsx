@@ -8,8 +8,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Image from "next/image";
 import WorkshopFeedback from "./WorkshopFeedback";
+import { useTranslation } from "react-i18next";
+import { createSafeT } from "@/lib/translationUtils";
+import CertificateSimulatorButton from './CertificateSimulatorButton';
 
 export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -21,6 +27,7 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
   const [isSaved, setIsSaved] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
 
   const videoRef = useRef(null);
   const controlsTimeout = useRef(null);
@@ -135,14 +142,14 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
     setIsSaved(!isSaved);
   };
 
+  const handleBack = () => {
+    setShowFeedback(true);
+  };
+
   const handleFeedbackSubmit = (feedbackData) => {
     console.log("Feedback submitted:", feedbackData);
-    // Here you would typically save the feedback to your backend
-
-    // Directly navigate back to workshop list without delay
-    if (onBack) {
-      onBack();
-    }
+    setShowFeedback(false);
+    setShowCertificate(true);
   };
 
   const handleCompleteVideo = () => {
@@ -161,10 +168,10 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
       >
         {/* Back button overlay in top-left corner */}
         <button
-          onClick={onBack}
+          onClick={handleBack}
           className="absolute top-4 left-4 z-10 bg-black/50 text-white hover:bg-black/70 p-2 rounded-full transition-colors"
         >
-          <FontAwesomeIcon icon={faArrowLeft} /> Back to Workshops
+          <FontAwesomeIcon icon={faArrowLeft} /> {safeT('callInterface.backToWorkshops')}
         </button>
 
         <video
@@ -247,21 +254,21 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
 
       {/* Video Info & Actions */}
       <div className="bg-gray-900 text-white p-4">
-        <h2 className="text-xl font-bold mb-2">{workshop?.title || "Workshop Title"}</h2>
+        <h2 className="text-xl font-bold mb-2">{workshop?.title || safeT('callInterface.workshopTitle')}</h2>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
             <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
               <Image
                 src={workshop?.instructorImage || "/images/default-avatar.png"}
-                alt={workshop?.instructor || "Instructor"}
+                alt={workshop?.instructor || safeT('callInterface.instructor')}
                 width={40}
                 height={40}
                 className="object-cover"
               />
             </div>
             <div>
-              <p className="font-medium text-sm">{workshop?.instructor || "Instructor Name"}</p>
-              <p className="text-xs text-gray-400">Instructor</p>
+              <p className="font-medium text-sm">{workshop?.instructor || safeT('callInterface.instructorName')}</p>
+              <p className="text-xs text-gray-400">{safeT('callInterface.instructor')}</p>
             </div>
           </div>
 
@@ -271,7 +278,7 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
               className={`flex items-center space-x-1 px-3 py-2 rounded-full ${isLiked ? 'text-red-500' : 'text-white'} hover:bg-gray-800`}
             >
               <FontAwesomeIcon icon={faThumbsUp} />
-              <span>Like</span>
+              <span>{safeT('callInterface.like')}</span>
             </button>
 
             <button
@@ -279,12 +286,12 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
               className={`flex items-center space-x-1 px-3 py-2 rounded-full ${isSaved ? 'text-metallica-blue-500' : 'text-white'} hover:bg-gray-800`}
             >
               <FontAwesomeIcon icon={faBookmark} />
-              <span>Save</span>
+              <span>{safeT('callInterface.save')}</span>
             </button>
 
             <button className="flex items-center space-x-1 px-3 py-2 rounded-full text-white hover:bg-gray-800">
               <FontAwesomeIcon icon={faShare} />
-              <span>Share</span>
+              <span>{safeT('callInterface.share')}</span>
             </button>
 
 
@@ -295,13 +302,13 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
         <div className="bg-gray-800 p-4 rounded-lg">
           <h3 className="text-lg font-semibold mb-2">Description</h3>
           <p className="text-gray-300 text-sm">
-            {workshop?.description || "No description available."}
+            {workshop?.description || safeT('callInterface.noDescriptionAvailable')}
           </p>
 
           {/* Prerequisites */}
           {workshop?.prerequisites && (
             <div className="mt-4">
-              <h4 className="font-semibold text-gray-200">Prerequisites:</h4>
+              <h4 className="font-semibold text-gray-200">{safeT('callInterface.prerequisites')}:</h4>
               <p className="text-gray-300 text-sm">{workshop.prerequisites}</p>
             </div>
           )}
@@ -313,13 +320,24 @@ export default function PrerecordedWorkshopInterface({ workshop, onBack }) {
         isOpen={showFeedback}
         onClose={() => {
           setShowFeedback(false);
-          // Automatically return to workshop list when closing feedback modal
-          if (onBack) {
+          if (!showCertificate && onBack) {
             onBack();
           }
         }}
         onSubmit={handleFeedbackSubmit}
         workshop={workshop}
+      />
+      {/* Certificate Modal */}
+      <CertificateSimulatorButton
+        isOpen={showCertificate}
+        onClose={() => {
+          setShowCertificate(false);
+          if (onBack) onBack();
+        }}
+        onDownload={() => {
+          setShowCertificate(false);
+          if (onBack) onBack();
+        }}
       />
     </div>
   );

@@ -48,10 +48,10 @@ export default function FloatingLabelInput({ name, type, label, errors, touched,
               )}
             </div>
             <label
-              className={`absolute left-0 transition-all duration-200 ease-in-out pointer-events-none ${isFocused || hasValue
+              className={`absolute transition-all duration-200 ease-in-out pointer-events-none ltr:left-0 rtl:right-0 ${isFocused || hasValue
                 ? 'text-xs -top-4 text-metallica-blue-off-charts'
                 : 'top-2 text-gray-400'
-                }`}
+                } ${isFocused || hasValue ? '' : 'rtl:text-right'}`}
             >
               {label}
             </label>

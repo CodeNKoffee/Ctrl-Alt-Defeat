@@ -3,6 +3,8 @@
 // Import tools we need: React hooks to manage state and refs, and lottie-web to show animations
 import React, { useState, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 // Import Lottie dynamically with SSR disabled
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
@@ -17,6 +19,9 @@ import CustomButton from './shared/CustomButton';
 
 // Create the main component for uploading documents
 const UploadDocuments = ({ open, onClose, internshipId }) => {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   // States for Resume
   const [resumeFile, setResumeFile] = useState(null);
   const [isResumeUploading, setIsResumeUploading] = useState(false);
@@ -171,7 +176,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
 
   const handleActualSubmit = () => {
     if (!resumeFile || !resumeUploadComplete) {
-      setResumeError('Resume is required and must finish uploading.');
+      setResumeError(safeT('uploadDocuments.resume.error'));
       return;
     }
     setResumeError('');
@@ -205,6 +210,9 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
 
   const handleCoverLetterChange = (event) => setCoverLetterText(event.target.value);
 
+  // Detect RTL
+  const isRTL = typeof window !== 'undefined' && document?.documentElement?.dir === 'rtl';
+
   if (!open) return null;
 
   const renderUploadBox = (type) => {
@@ -212,18 +220,18 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
     const file = type === 'resume' ? resumeFile : coverLetterFile;
     const uploadComplete = type === 'resume' ? resumeUploadComplete : coverLetterUploadComplete;
     const progress = type === 'resume' ? resumeUploadProgress : coverLetterUploadProgress;
-    const title = type === 'resume' ? 'Resume' : 'Cover Letter';
+    const title = type === 'resume' ? safeT('uploadDocuments.resume.label') : safeT('uploadDocuments.coverLetter.label');
     const isRequired = type === 'resume';
 
     return (
       <div style={{ width: '48%', display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-          <label style={{ color: '#2A5F74', fontSize: '16px', fontWeight: '600', display: 'block', textAlign: 'left' }}>
-            {title} {isRequired && <span style={{ color: '#D32F2F' }}>*</span>}
+          <label style={{ color: '#2A5F74', fontSize: '16px', fontWeight: '600', display: 'block', textAlign: isRTL ? 'right' : 'left' }}>
+            {title} {isRequired && <span style={{ color: '#D32F2F' }}>{safeT('uploadDocuments.resume.required')}</span>}
           </label>
 
           {type === 'resume' && resumeError && (
-            <div style={{ color: '#D32F2F', fontSize: '12px', textAlign: 'right', marginLeft: '12px' }}>{resumeError}</div>
+            <div style={{ color: '#D32F2F', fontSize: '12px', textAlign: isRTL ? 'right' : 'left', marginLeft: '12px' }}>{resumeError}</div>
           )}
         </div>
 
@@ -231,7 +239,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
           border: '1px dashed #318FA8',
           borderRadius: '12px',
           padding: '20px',
-          textAlign: 'left',
+          textAlign: isRTL ? 'right' : 'left',
           backgroundColor: '#F8FAFB',
           position: 'relative',
           display: 'flex',
@@ -267,7 +275,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
               position: 'relative',
               paddingRight: '35px',
               width: 'calc(100% - 60px)',
-              textAlign: 'left',
+              textAlign: isRTL ? 'right' : 'left',
               margin: '0 auto',
               boxShadow: '0 3px 10px rgba(0, 0, 0, 0.05)',
               display: 'flex',
@@ -342,7 +350,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
                 e.target.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.05)';
               }}>
               <FontAwesomeIcon icon={faCloudArrowUp} style={{ width: '28px', height: '28px', color: '#318FA8' }} />
-              <span style={{ fontWeight: '600', fontSize: '14px' }}>Upload</span>
+              <span style={{ fontWeight: '600', fontSize: '14px' }}>{safeT('uploadDocuments.buttons.upload')}</span>
             </button>
           )}
           <input
@@ -363,7 +371,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
       backgroundColor: 'rgba(0, 0, 0, 0.6)', display: 'flex',
       alignItems: 'center', justifyContent: 'center', zIndex: 9999,
       backdropFilter: 'blur(2px)'
-    }}>
+    }} dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Feedback overlay */}
       <AnimatePresence>
         {feedback && (
@@ -429,10 +437,10 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
                 </div>
               </motion.div>
               <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2A5F74', marginBottom: '10px' }}>
-                Success!
+                {safeT('uploadDocuments.feedback.success')}
               </div>
               <div style={{ color: '#333', textAlign: 'center' }}>
-                Your documents have been successfully uploaded.
+                {safeT('uploadDocuments.feedback.successMessage')}
               </div>
             </motion.div>
           </motion.div>
@@ -454,7 +462,8 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
         border: '1px solid rgba(0, 0, 0, 0.1)'
       }}>
         <button onClick={handleCancelAndClose} style={{
-          position: 'absolute', top: '20px', right: '20px',
+          position: 'absolute', top: '20px',
+          ...(isRTL ? { left: '20px', right: 'unset' } : { right: '20px', left: 'unset' }),
           background: '#F0F0F0',
           border: 'none',
           cursor: 'pointer',
@@ -477,11 +486,11 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
           fontSize: '22px',
           fontWeight: '600',
           marginBottom: '24px',
-          textAlign: 'left',
+          textAlign: isRTL ? 'right' : 'left',
           borderBottom: '2px solid rgba(0, 0, 0, 0.1)',
           paddingBottom: '12px'
         }}>
-          Upload Your Documents
+          {safeT('uploadDocuments.title')}
         </h1>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px', marginBottom: '20px' }}>
@@ -496,12 +505,14 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
             fontWeight: '600',
             marginBottom: '10px',
             display: 'block',
-            textAlign: 'left'
-          }}>Write your own Cover Letter</label>
+            textAlign: isRTL ? 'right' : 'left'
+          }}>
+            {safeT('uploadDocuments.coverLetter.textLabel')}
+          </label>
           <textarea
             value={coverLetterText}
             onChange={handleCoverLetterChange}
-            placeholder="Type your cover letter here..."
+            placeholder={safeT('uploadDocuments.coverLetter.placeholder')}
             style={{
               width: '100%',
               height: '120px',
@@ -534,8 +545,10 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
             fontWeight: '600',
             display: 'block',
             marginBottom: '10px',
-            textAlign: 'left'
-          }}>Include a link to your GitHub profile and/or website</label>
+            textAlign: isRTL ? 'right' : 'left'
+          }}>
+            {safeT('uploadDocuments.links.label')}
+          </label>
           {links.map((link, index) => (
             <div
               key={link.id}
@@ -556,7 +569,7 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
                   type="text"
                   value={link.value}
                   onChange={(e) => handleLinkChange(link.id, e.target.value)}
-                  placeholder="https://example.com"
+                  placeholder={safeT('uploadDocuments.links.placeholder')}
                   style={{
                     width: '100%',
                     border: '1px solid #D9F0F4',
@@ -635,13 +648,13 @@ const UploadDocuments = ({ open, onClose, internshipId }) => {
           <CustomButton
             onClick={handleCancelAndClose}
             variant="danger"
-            text="Cancel"
+            text={safeT('uploadDocuments.buttons.cancel')}
             style={{ width: '200px' }}
           />
           <CustomButton
             onClick={handleActualSubmit}
             variant="primary"
-            text="Upload"
+            text={safeT('uploadDocuments.buttons.upload')}
             disabled={!resumeFile || !resumeUploadComplete || isResumeUploading}
             isLoading={isResumeUploading}
             style={{

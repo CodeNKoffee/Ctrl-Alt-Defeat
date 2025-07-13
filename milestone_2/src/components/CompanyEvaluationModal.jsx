@@ -3,43 +3,66 @@ import CustomButton from "./shared/CustomButton";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '../lib/translationUtils';
 
-const skillAttributes = [
-  "Ability to adapt to change",
-  "Analytical skills",
-  "Collecting data/ research data skills",
-  "Creativity",
-  "Follow up skills",
-  "Interpersonal skills with peers, supervisors, and clients",
-  "Problem solving",
-  "Punctuality",
-  "Reporting skills",
-  "Responsibility and accountability",
-  "Stress handling",
-  "Taking initiatives",
-  "Teamwork",
-  "Time management"
+// Skill attribute keys for mapping to translations
+const skillAttributeKeys = [
+  "adaptToChange",
+  "analyticalSkills",
+  "dataCollection",
+  "creativity",
+  "followUp",
+  "interpersonal",
+  "problemSolving",
+  "punctuality",
+  "reporting",
+  "responsibility",
+  "stressHandling",
+  "takingInitiatives",
+  "teamwork",
+  "timeManagement"
 ];
 
-const technicalAttributes = [
-  "Technical Background",
-  "Technical Knowledge",
-  "Compatibility of technical skills with the job"
+// Technical attribute keys for mapping to translations
+const technicalAttributeKeys = [
+  "technicalBackground",
+  "technicalKnowledge",
+  "compatibility"
 ];
 
-const ratingLabels = {
-  1: "Unsatisfactory",
-  2: "Below Average",
-  3: "Satisfactory",
-  4: "Above Average",
-  5: "Excellent"
+// Rating value keys for mapping to translations
+const ratingLabelKeys = {
+  1: "unsatisfactory",
+  2: "belowAverage",
+  3: "satisfactory",
+  4: "aboveAverage",
+  5: "excellent"
 };
 
 export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, evaluationToEdit = null }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
+  // Get translated skill attributes
+  const getSkillAttributes = () => skillAttributeKeys.map(key => safeT(`company.evaluation.skillAttributes.${key}`));
+
+  // Get translated technical attributes  
+  const getTechnicalAttributes = () => technicalAttributeKeys.map(key => safeT(`company.evaluation.technicalAttributes.${key}`));
+
+  // Get translated rating labels
+  const getRatingLabels = () => ({
+    1: safeT(`company.evaluation.ratingLabels.${ratingLabelKeys[1]}`),
+    2: safeT(`company.evaluation.ratingLabels.${ratingLabelKeys[2]}`),
+    3: safeT(`company.evaluation.ratingLabels.${ratingLabelKeys[3]}`),
+    4: safeT(`company.evaluation.ratingLabels.${ratingLabelKeys[4]}`),
+    5: safeT(`company.evaluation.ratingLabels.${ratingLabelKeys[5]}`)
+  });
+
   const [form, setForm] = useState({
-    skillRatings: Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
+    skillRatings: Object.fromEntries(getSkillAttributes().map(skill => [skill, 3])),
     skillOther: "",
-    technical: Object.fromEntries(technicalAttributes.map(attr => [attr, ""])),
+    technical: Object.fromEntries(getTechnicalAttributes().map(attr => [attr, ""])),
     technicalOther: ""
   });
   const [submitting, setSubmitting] = useState(false);
@@ -59,16 +82,16 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
 
       if (evaluationToEdit) {
         setForm({
-          skillRatings: evaluationToEdit.skillRatings || Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
+          skillRatings: evaluationToEdit.skillRatings || Object.fromEntries(getSkillAttributes().map(skill => [skill, 3])),
           skillOther: evaluationToEdit.skillOther || "",
-          technical: evaluationToEdit.technical || Object.fromEntries(technicalAttributes.map(attr => [attr, ""])),
+          technical: evaluationToEdit.technical || Object.fromEntries(getTechnicalAttributes().map(attr => [attr, ""])),
           technicalOther: evaluationToEdit.technicalOther || ""
         });
       } else {
         setForm({
-          skillRatings: Object.fromEntries(skillAttributes.map(skill => [skill, 3])),
+          skillRatings: Object.fromEntries(getSkillAttributes().map(skill => [skill, 3])),
           skillOther: "",
-          technical: Object.fromEntries(technicalAttributes.map(attr => [attr, ""])),
+          technical: Object.fromEntries(getTechnicalAttributes().map(attr => [attr, ""])),
           technicalOther: ""
         });
       }
@@ -89,7 +112,7 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (technicalAttributes.includes(name)) {
+    if (getTechnicalAttributes().includes(name)) {
       setForm(prev => ({
         ...prev,
         technical: {
@@ -173,12 +196,12 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
               </motion.div>
               <h3 className="text-2xl font-bold text-[#2A5F74] mb-2">
                 {console.log('Feedback modal rendering with feedbackType:', feedbackType)}
-                {feedbackType === 'saveDraft' ? 'Updated!' : 'Success!'}
+                {feedbackType === 'saveDraft' ? safeT('company.evaluation.feedback.updated') : safeT('company.evaluation.feedback.success')}
               </h3>
               <p className="text-gray-700 text-center text-sm">
                 {feedbackType === 'submit'
-                  ? 'Your evaluation has been successfully submitted.'
-                  : 'Your changes have been successfully saved.'}
+                  ? safeT('company.evaluation.feedback.submittedSuccess')
+                  : safeT('company.evaluation.feedback.savedSuccess')}
               </p>
             </motion.div>
           </motion.div>
@@ -201,7 +224,7 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
                 ${activeTab === 'skills' ? 'bg-white text-[#2A5F74] border-x border-t border-[#E2F4F7] -mb-px' : 'text-[#4C798B] bg-[#F8FAFB] hover:bg-white'}`}
               onClick={() => setActiveTab('skills')}
             >
-              Skills & Professional Attributes
+              {safeT('company.evaluation.tabs.skillsAndProfessional')}
             </button>
             <button
               type="button"
@@ -209,23 +232,23 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
                 ${activeTab === 'technical' ? 'bg-white text-[#2A5F74] border-x border-t border-[#E2F4F7] -mb-px' : 'text-[#4C798B] bg-[#F8FAFB] hover:bg-white'}`}
               onClick={() => setActiveTab('technical')}
             >
-              Technical
+              {safeT('company.evaluation.tabs.technical')}
             </button>
           </div>
 
           <div className="flex-1 overflow-y-auto pr-2">
             {activeTab === 'skills' && (
               <>
-                <h2 className="text-2xl font-bold text-[#2A5F74] mb-6 text-left">Skills & Professional Attributes</h2>
+                <h2 className="text-2xl font-bold text-[#2A5F74] mb-6 text-left">{safeT('company.evaluation.tabs.skillsAndProfessional')}</h2>
                 <div className="space-y-6 mb-8">
-                  {skillAttributes.map((skill) => (
+                  {getSkillAttributes().map((skill) => (
                     <div key={skill} className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
                       <div className="flex justify-between items-center mb-2">
                         <span className="font-semibold text-[#2A5F74] text-base">{skill}</span>
-                        <span className="text-xs text-[#4C798B]">{ratingLabels[form.skillRatings[skill]]}</span>
+                        <span className="text-xs text-[#4C798B]">{getRatingLabels()[form.skillRatings[skill]]}</span>
                       </div>
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs text-[#4C798B] w-24">Unsatisfactory</span>
+                        <span className="text-xs text-[#4C798B] w-24">{safeT('company.evaluation.ratingLabels.unsatisfactory')}</span>
                         <div className="flex-1 flex justify-center gap-2">
                           {[1, 2, 3, 4, 5].map((rating) => (
                             <label key={rating} className="cursor-pointer group">
@@ -249,12 +272,12 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
                             </label>
                           ))}
                         </div>
-                        <span className="text-xs text-[#4C798B] w-24 text-right">Excellent</span>
+                        <span className="text-xs text-[#4C798B] w-24 text-right">{safeT('company.evaluation.ratingLabels.excellent')}</span>
                       </div>
                     </div>
                   ))}
                   <div className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
-                    <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor="skillOther">Other:</label>
+                    <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor="skillOther">{safeT('company.evaluation.labels.other')}</label>
                     <textarea
                       id="skillOther"
                       name="skillOther"
@@ -262,7 +285,7 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
                       onChange={handleChange}
                       className="w-full border border-[#E2F4F7] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#4796a8] bg-white text-[#2A5F74] text-sm"
                       rows={2}
-                      placeholder="Add any other feedback on skills..."
+                      placeholder={safeT('company.evaluation.placeholders.skillsOther')}
                     />
                   </div>
                 </div>
@@ -270,9 +293,9 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
             )}
             {activeTab === 'technical' && (
               <>
-                <h2 className="text-2xl font-bold text-[#2A5F74] mb-6 text-left">Technical</h2>
+                <h2 className="text-2xl font-bold text-[#2A5F74] mb-6 text-left">{safeT('company.evaluation.tabs.technical')}</h2>
                 <div className="space-y-6 mb-8">
-                  {technicalAttributes.map((attr) => (
+                  {getTechnicalAttributes().map((attr) => (
                     <div key={attr} className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
                       <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor={attr}>{attr}</label>
                       <textarea
@@ -282,12 +305,12 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
                         onChange={handleChange}
                         className="w-full border border-[#E2F4F7] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#4796a8] bg-white text-[#2A5F74] text-sm"
                         rows={2}
-                        placeholder={`Add feedback on ${attr.toLowerCase()}...`}
+                        placeholder={safeT('company.evaluation.placeholders.technicalFeedback').replace('{attribute}', attr.toLowerCase())}
                       />
                     </div>
                   ))}
                   <div className="bg-white rounded-xl p-5 border border-[#E2F4F7] flex flex-col gap-2">
-                    <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor="technicalOther">Other:</label>
+                    <label className="font-semibold text-[#2A5F74] text-base mb-1" htmlFor="technicalOther">{safeT('company.evaluation.labels.other')}</label>
                     <textarea
                       id="technicalOther"
                       name="technicalOther"
@@ -295,7 +318,7 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
                       onChange={handleChange}
                       className="w-full border border-[#E2F4F7] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#4796a8] bg-white text-[#2A5F74] text-sm"
                       rows={2}
-                      placeholder="Add any other technical feedback..."
+                      placeholder={safeT('company.evaluation.placeholders.technicalOther')}
                     />
                   </div>
                 </div>
@@ -306,18 +329,18 @@ export default function CompanyEvaluationModal({ isOpen, onClose, onSubmit, eval
             <CustomButton
               variant="primary"
               type="submit"
-              text="Submit Evaluation"
+              text={safeT('company.evaluation.buttons.submitEvaluation')}
               isLoading={submitting}
-              loadingText="Submitting..."
+              loadingText={safeT('company.evaluation.buttons.submitting')}
               disabled={submitting || draftStatus === 'saving'}
               width="w-full"
             />
             <CustomButton
               variant="secondary"
               type="button"
-              text={isEditMode ? "Save Changes" : "Save as Draft"}
+              text={isEditMode ? safeT('company.evaluation.buttons.saveChanges') : safeT('company.evaluation.buttons.saveAsDraft')}
               isLoading={draftStatus === 'saving'}
-              loadingText="Saving..."
+              loadingText={safeT('company.evaluation.buttons.saving')}
               disabled={submitting || draftStatus === 'saving'}
               onClick={handleSaveDraft}
               width="w-full"

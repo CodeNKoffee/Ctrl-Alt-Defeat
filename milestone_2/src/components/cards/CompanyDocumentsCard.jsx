@@ -1,12 +1,17 @@
 import { faFile, faFilePdf, faFileImage, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function CompanyDocumentsCard({ documents = [] }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   return (
     <div className="companydocumentscard-root">
-      <div className="companydocumentscard-title">Verification Documents</div>
+      <div className="companydocumentscard-title">{safeT('scad.companyDetails.verificationDocs')}</div>
       <div className="companydocumentscard-list">
-        {documents.length === 0 && <div className="companydocumentscard-empty">No documents provided.</div>}
+        {documents.length === 0 && <div className="companydocumentscard-empty">{safeT('scad.companyDetails.noDocuments')}</div>}
         {documents.map((doc, idx) => (
           <div key={idx} className="companydocumentscard-item">
             <FontAwesomeIcon icon={faFile} className="text-metallica-blue-500 text-2xl" />

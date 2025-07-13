@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { createSafeT } from '@/lib/translationUtils';
 
 export default function ReportsTable({
   reports: initialReports = [],
@@ -10,6 +12,9 @@ export default function ReportsTable({
   onEdit,
   onDelete
 }) {
+  const { t, ready } = useTranslation();
+  const safeT = createSafeT(t, ready);
+
   const [reports, setReports] = useState([]);
   const [majorOptions, setMajorOptions] = useState([]);
   const [selectedMajor, setSelectedMajor] = useState('');
@@ -53,10 +58,10 @@ export default function ReportsTable({
 
   const formatStatus = (status) => {
     const statusMap = {
-      'pending': 'PENDING',
-      'flagged': 'FLAGGED',
-      'rejected': 'REJECTED',
-      'accepted': 'ACCEPTED'
+      'pending': safeT('faculty.reports.table.statuses.pending'),
+      'flagged': safeT('faculty.reports.table.statuses.flagged'),
+      'rejected': safeT('faculty.reports.table.statuses.rejected'),
+      'accepted': safeT('faculty.reports.table.statuses.accepted')
     };
     return statusMap[status] || status.toUpperCase();
   };
@@ -81,14 +86,14 @@ export default function ReportsTable({
   return (
     <div className="mt-8 bg-white shadow-md rounded-lg p-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-        <h2 className="text-2xl text-metallica-blue-800 font-semibold mb-4 md:mb-0">Student Reports</h2>
+        <h2 className="text-2xl text-metallica-blue-800 font-semibold mb-4 md:mb-0">{safeT('faculty.reports.table.title')}</h2>
         <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
           <button
             onClick={() => setShowFilters(!showFilters)}
             className={`flex items-center justify-center px-4 py-2 rounded-lg transition-colors ${isFiltersActive ? 'bg-metallica-blue-600 text-white' : 'bg-metallica-blue-100 text-metallica-blue-800'}`}
           >
             <FontAwesomeIcon icon={faFilter} className="mr-2" />
-            <span>Filter Reports</span>
+            <span>{safeT('faculty.reports.table.filterReports')}</span>
             {isFiltersActive && (
               <span className="ml-2 bg-white text-metallica-blue-800 rounded-full w-5 h-5 inline-flex items-center justify-center text-xs font-bold">
                 {(selectedMajor ? 1 : 0) + (selectedStatus ? 1 : 0)}
@@ -101,7 +106,7 @@ export default function ReportsTable({
               className="flex items-center justify-center px-4 py-2 bg-red-100 text-red-800 rounded-lg hover:bg-red-200 transition-colors"
             >
               <FontAwesomeIcon icon={faTimesCircle} className="mr-2" />
-              <span>Clear Filters</span>
+              <span>{safeT('faculty.reports.table.clearFilters')}</span>
             </button>
           )}
         </div>
@@ -110,36 +115,32 @@ export default function ReportsTable({
         <div className="mb-6 p-4 bg-metallica-blue-50 rounded-lg border border-metallica-blue-200">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="majorFilter" className="block text-sm font-medium text-metallica-blue-800 mb-1">
-                Filter by Major
-              </label>
+              <label htmlFor="majorFilter" className="block text-sm font-medium text-metallica-blue-800 mb-1">{safeT('faculty.reports.table.filterByMajor')}</label>
               <select
                 id="majorFilter"
                 value={selectedMajor}
                 onChange={(e) => setSelectedMajor(e.target.value)}
                 className="w-full px-3 py-2 border border-metallica-blue-200 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
               >
-                <option value="">All Majors</option>
+                <option value="">{safeT('faculty.reports.table.allMajors')}</option>
                 {majorOptions.map((major, index) => (
                   <option key={index} value={major}>{major}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label htmlFor="statusFilter" className="block text-sm font-medium text-metallica-blue-800 mb-1">
-                Filter by Status
-              </label>
+              <label htmlFor="statusFilter" className="block text-sm font-medium text-metallica-blue-800 mb-1">{safeT('faculty.reports.table.filterByStatus')}</label>
               <select
                 id="statusFilter"
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
                 className="w-full px-3 py-2 border border-metallica-blue-200 rounded-md focus:outline-none focus:ring-2 focus:ring-metallica-blue-500"
               >
-                <option value="">All Status</option>
-                <option value="pending">PENDING</option>
-                <option value="flagged">FLAGGED</option>
-                <option value="rejected">REJECTED</option>
-                <option value="accepted">ACCEPTED</option>
+                <option value="">{safeT('faculty.reports.table.allStatus')}</option>
+                <option value="pending">{safeT('faculty.reports.table.statuses.pending')}</option>
+                <option value="flagged">{safeT('faculty.reports.table.statuses.flagged')}</option>
+                <option value="rejected">{safeT('faculty.reports.table.statuses.rejected')}</option>
+                <option value="accepted">{safeT('faculty.reports.table.statuses.accepted')}</option>
               </select>
             </div>
           </div>
@@ -149,12 +150,12 @@ export default function ReportsTable({
         <div className="flex flex-wrap gap-2 mb-4">
           {selectedMajor && (
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-metallica-blue-100 text-metallica-blue-800 text-sm">
-              Major: {selectedMajor}
+              {safeT('faculty.reports.table.major')} {selectedMajor}
             </span>
           )}
           {selectedStatus && (
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-metallica-blue-100 text-metallica-blue-800 text-sm">
-              Status: {formatStatus(selectedStatus)}
+              {safeT('faculty.reports.table.status')} {formatStatus(selectedStatus)}
             </span>
           )}
         </div>
@@ -163,14 +164,14 @@ export default function ReportsTable({
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-metallica-blue-100 text-metallica-blue-800">
-              <th className="py-4 px-5 text-left">Report #</th>
-              <th className="py-4 px-5 text-left">Student Name</th>
-              <th className="py-4 px-5 text-left">Major</th>
-              <th className="py-4 px-5 text-left">Internship</th>
-              <th className="py-4 px-5 text-left">Company</th>
-              <th className="py-4 px-5 text-left">Submission Date</th>
-              <th className="py-4 px-5 text-left">Status</th>
-              <th className="py-4 px-5 text-center">Actions</th>
+              <th className="py-4 px-5 text-left">{safeT('faculty.reports.table.headers.reportNumber')}</th>
+              <th className="py-4 px-5 text-left">{safeT('faculty.reports.table.headers.studentName')}</th>
+              <th className="py-4 px-5 text-left">{safeT('faculty.reports.table.headers.major')}</th>
+              <th className="py-4 px-5 text-left">{safeT('faculty.reports.table.headers.internship')}</th>
+              <th className="py-4 px-5 text-left">{safeT('faculty.reports.table.headers.company')}</th>
+              <th className="py-4 px-5 text-left">{safeT('faculty.reports.table.headers.submissionDate')}</th>
+              <th className="py-4 px-5 text-left">{safeT('faculty.reports.table.headers.status')}</th>
+              <th className="py-4 px-5 text-center">{safeT('faculty.reports.table.headers.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -193,27 +194,27 @@ export default function ReportsTable({
                       <button
                         onClick={() => onView && onView(report)}
                         className="inline-flex items-center justify-center w-32 min-w-[8rem] px-0 py-2 rounded-full font-medium shadow-sm bg-metallica-blue-500 text-metallica-blue-100 border border-metallica-blue-200 hover:bg-metallica-blue-900 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
-                        title="View report"
+                        title={safeT('faculty.reports.table.actions.viewReport')}
                       >
-                        <span className="w-full text-center">View Report</span>
+                        <span className="w-full text-center">{safeT('faculty.reports.table.actions.viewReport')}</span>
                       </button>
                     ) : userType === "faculty" ? (
                       <button
                         onClick={() => onView && onView(report)}
                         className="inline-flex items-center justify-center w-32 min-w-[9rem] px-0 py-2 rounded-full font-medium shadow-sm bg-metallica-blue-500 text-metallica-blue-100 border border-metallica-blue-200 hover:bg-metallica-blue-900  hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-metallica-blue-200 focus:ring-offset-2"
-                        title={report.status === 'pending' ? 'Evaluate this report' : 'View this report'}
+                        title={report.status === 'pending' ? safeT('faculty.reports.table.actions.evaluateReport') : safeT('faculty.reports.table.actions.viewReport')}
                       >
                         <span className="w-full text-center">
-                          {report.status === 'pending' ? 'Evaluate Report' : 'View Report'}
+                          {report.status === 'pending' ? safeT('faculty.reports.table.actions.evaluateReport') : safeT('faculty.reports.table.actions.viewReport')}
                         </span>
                       </button>
                     ) : (
                       <button
                         onClick={() => onView && onView(report)}
                         className="inline-flex items-center px-4 py-2 bg-[var(--metallica-blue-600)] text-white rounded-lg hover:bg-[var(--metallica-blue-700)] transition shadow-sm hover:shadow-md"
-                        title="View report"
+                        title={safeT('faculty.reports.table.actions.viewReport')}
                       >
-                        <span className="font-medium">View</span>
+                        <span className="font-medium">{safeT('faculty.reports.table.actions.viewReport')}</span>
                       </button>
                     )}
                   </td>
@@ -223,14 +224,14 @@ export default function ReportsTable({
               <tr>
                 <td colSpan="8" className="py-8 text-center text-gray-500">
                   {reports.length > 0
-                    ? "No reports match the selected filters"
-                    : "No reports available at the moment"}
+                    ? safeT('faculty.reports.table.noResults.noReportsMatch')
+                    : safeT('faculty.reports.table.noResults.noReportsAvailable')}
                   {isFiltersActive && (
                     <button
                       onClick={clearFilters}
                       className="ml-2 text-metallica-blue-600 hover:text-metallica-blue-800 underline"
                     >
-                      Clear all filters
+                      {safeT('faculty.reports.table.noResults.clearAllFilters')}
                     </button>
                   )}
                 </td>

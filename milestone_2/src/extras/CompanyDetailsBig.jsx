@@ -20,7 +20,7 @@ export default function CompanyDetailsBig({ version, companyName, companyEmail, 
       {/* Main Card Border */}
       <div className={`p-6 pb-0 ${BORDER} ${ROUNDED} bg-[#eaf3f6]`} style={{ boxShadow: '0 2px 8px #49718410' }}>
         {/* Tab Header */}
-        <div className="-mt-8 -ml-6 mb-4 w-fit px-8 py-2 bg-[#497184] text-white text-lg font-medium rounded-t-lg tracking-wide" style={{ letterSpacing: 2 }}>
+        <div className="-mt-8 -ml-6 mb-4 w-fit px-8 py-2 text-metallica-blue-700 text-lg font-medium rounded-t-lg tracking-wide" style={{ letterSpacing: 2 }}>
           Company Details
         </div>
         {/* Top Row: Profile & Notepad */}
