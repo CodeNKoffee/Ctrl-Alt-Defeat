@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { MOCK_EVALUATIONS } from "../../../../../../constants/mockData";
 import EvaluationsDashboard from "@/components/EvaluationsDashboard";

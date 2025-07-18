@@ -333,9 +333,9 @@ export const MOCK_APPLIED_INTERNSHIPS = [
 // export const mockStudents = [
 //   {
 //     id: "61-1959",
-//     name: "Farid Khaled",
-//     photo: "/images/boy1.png",
-//     major: "DMET",
+//     name: "Sarah Johnson",
+//     photo: "/images/girl2.png",
+//     major: "Computer Science and Engineering",
 //     semester: "4",
 //     status: "Regular",
 //     gpa: 1.3
@@ -435,26 +435,26 @@ export const facultyScadReports = {
   "2": {
     id: "2",
     reportNumber: 'RPT-002',
-    title: 'Frontend Development Internship Final Report',
-    studentName: 'Sarah Wilson',
-    studentMajor: 'Computer Engineering',
-    companyName: 'Web Solutions Ltd.',
+    title: 'Embedded Systems Internship Final Report',
+    studentName: 'Sarah Johnson',
+    studentMajor: 'Computer Science and Engineering',
+    companyName: 'Tech Solutions Ltd.',
     submissionDate: '2025-04-10',
     status: 'flagged',
-    introduction: 'This report details my experience as a frontend developer intern at Web Solutions Ltd. from January to March 2025. I worked on user interface design and implementation using modern web technologies like React and TailwindCSS.',
-    body: 'During my internship at Web Solutions Ltd., I worked with the frontend development team on various client projects. The company specializes in creating custom web applications for businesses across different industries.\n\nMy main responsibilities included implementing UI components according to design specifications, fixing cross-browser compatibility issues, and optimizing application performance. I collaborated closely with designers and backend developers to ensure seamless integration of all system components.\n\nA significant project I contributed to was the redesign of a healthcare provider\'s patient portal. I implemented responsive components that improved accessibility and user experience, particularly for users with disabilities. This project taught me the importance of inclusive design and adherence to WCAG guidelines.\n\nThroughout the internship, I gained proficiency in:\n- React.js and state management with Redux\n- Styled Components and CSS-in-JS approaches\n- Frontend testing with Jest and React Testing Library\n- Webpack configuration and optimization\n- Client-side performance optimization techniques\n\nThe internship also helped me develop soft skills such as client communication, requirement analysis, and presenting technical concepts to non-technical stakeholders. I learned to balance aesthetic design with technical constraints, which is crucial for successful frontend development.\n\nThe knowledge from my Human-Computer Interaction and Web Development courses proved invaluable during this experience. Understanding usability principles and web standards helped me contribute meaningful improvements to projects right from the start of my internship.',
+    introduction: 'This report details my experience as an Embedded Systems intern at Tech Solutions Ltd. from January to March 2025. I worked on firmware development, microcontroller programming, and hardware-software integration, gaining hands-on experience with real-time operating systems (RTOS) and embedded C.',
+    body: 'During my internship at Tech Solutions Ltd., I was part of the embedded systems team working on IoT and industrial automation projects. My main responsibilities included writing and debugging firmware for ARM Cortex-M microcontrollers, integrating sensors and actuators, and ensuring reliable communication between hardware modules using protocols like SPI, I2C, and UART.\n\nA significant project I contributed to was the development of a real-time sensor data acquisition system for an industrial monitoring device. I implemented interrupt-driven routines for data collection, optimized memory usage, and worked closely with hardware engineers to troubleshoot signal integrity issues. This project taught me the importance of timing constraints, low-level debugging, and cross-functional collaboration between hardware and software teams.\n\nThroughout the internship, I gained proficiency in:\n- Embedded C/C++ programming\n- Real-Time Operating Systems (FreeRTOS)\n- Hardware debugging with oscilloscopes and logic analyzers\n- Communication protocols (SPI, I2C, UART, CAN)\n- PCB schematic review and basic hardware bring-up\n\nThe internship also helped me develop soft skills such as technical documentation, teamwork with multidisciplinary teams, and presenting technical findings to both engineers and non-technical stakeholders.\n\nThe knowledge from my Embedded Systems and Digital Electronics courses proved invaluable during this experience. Understanding microcontroller architectures and real-time constraints helped me contribute meaningful improvements to projects right from the start of my internship.',
     highlights: [
-      { start: 52, end: 148, color: '#D4F1F9' }, // "user interface design and implementation using modern web technologies like React and TailwindCSS"
-      { start: 412, end: 483, color: '#FFDBF2' }, // "optimizing application performance. I collaborated with designers"
-      { start: 557, end: 642, color: '#FFFBC9' }  // "responsive components that improved accessibility and user experience, particularly"
+      { start: 52, end: 120, color: '#D4F1F9' }, // "firmware development, microcontroller programming, and hardware-software integration"
+      { start: 312, end: 400, color: '#FFDBF2' }, // "real-time sensor data acquisition system for an industrial monitoring device. I implemented interrupt-driven routines"
+      { start: 540, end: 620, color: '#FFFBC9' }  // "proficiency in: Embedded C/C++, Real-Time Operating Systems (FreeRTOS), Hardware debugging"
     ],
     comments: [
-      { position: 137, text: "Need more details on specific React features used" },
-      { position: 465, text: "Good example of cross-functional collaboration" },
-      { position: 642, text: "This section lacks specific examples of accessibility improvements made" }
+      { position: 120, text: "Needs more detail on RTOS task scheduling and resource management" },
+      { position: 400, text: "Good example of hardware/software integration and debugging" },
+      { position: 620, text: "Consider elaborating on PCB bring-up challenges faced" }
     ],
-    feedback: 'The report shows good UI/UX understanding but lacks detail on accessibility improvements.',
-    statusReason: 'Needs clarification on accessibility implementation.'
+    feedback: 'The report shows solid embedded systems understanding but could include more detail on RTOS usage and hardware debugging techniques.',
+    statusReason: 'Needs clarification on RTOS implementation and hardware troubleshooting.'
   },
   "3": {
     id: "3",
@@ -1463,15 +1463,15 @@ export const mockAssessments = [
 export const mockStudents = [
   {
     id: "61-1959",
-    name: "Farid Khaled",
-    photo: "/images/boy1.png",
-    major: "DMET",
+    name: "Sarah Johnson",
+    photo: "/images/girl2.png",
+    major: "Computer Science and Engineering",
     semester: "4",
     status: "Regular",
     internshipStatus: "Completed",
     gpa: 1.3,
-    email: "FaridKhaled@student.guc.edu.eg",
-    bio: "DMET student with a strong interest in embedded systems and robotics.",
+    email: "sarah.johnson@student.guc.edu.eg",
+    bio: "Computer Science and Engineering student with a strong interest in embedded systems and robotics.",
     profileImage: "/images/boy1.png",
     socialLinks: {
       linkedin: "https://linkedin.com/in/faridkhaled",
@@ -1485,7 +1485,7 @@ export const mockStudents = [
     ],
     education: [
       {
-        degree: "B.Sc. in Digital Media Engineering & Technology",
+        degree: "B.Sc. in Computer Science and Engineering",
         institution: "German University in Cairo",
         period: "2021 - Present"
       }
@@ -2013,7 +2013,7 @@ export const MOCK_COMPANY_EVALUATIONS = [
     id: 1,
     status: 'submitted',
     studentName: 'Sarah Johnson',
-    internshipTitle: 'Frontend Developer Intern',
+    internshipTitle: 'Embedded Systems Intern',
     company: 'Tawabiry',
     date: '2025-04-10',
     skillRatings: {
@@ -2168,9 +2168,9 @@ export const MOCK_COMPANY_EVALUATIONS = [
   {
     id: 6,
     status: 'saved',
-    studentName: 'Omar Farouq',
-    internshipTitle: 'Software Engineer Intern',
-    company: 'Fawry',
+    studentName: 'Sarah Johnson',
+    internshipTitle: 'Embedded Systems Intern',
+    company: 'Valeo Egypt',
     date: '2025-04-22',
     skillRatings: {
       'Ability to adapt to change': 4,
@@ -2190,11 +2190,11 @@ export const MOCK_COMPANY_EVALUATIONS = [
     },
     skillOther: 'Consistent performer.',
     technical: {
-      'Technical Background': 'Good with Java and Spring.',
-      'Technical Knowledge': 'Solid software engineering principles.',
-      'Compatibility of technical skills with the job': 'Good match.'
+      'Technical Background': 'Strong with C++ and microcontrollers.',
+      'Technical Knowledge': 'Solid understanding of embedded systems and firmware development.',
+      'Compatibility of technical skills with the job': 'Very well-suited for embedded projects.'
     },
-    technicalOther: 'Could improve documentation.'
+    technicalOther: 'Could improve hardware debugging skills.'
   }
 ];
 
