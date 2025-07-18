@@ -19,7 +19,7 @@ const MOCK_APPLICATIONS = [
     studentEmail: "sarah.johnson@student.guc.edu.eg",
     studentPhone: "+20 123 456 7890",
     studentUniversity: "German University in Cairo",
-    studentMajor: "DMET",
+    studentMajor: "Computer Science and Engineering",
     studentSemester: "Spring 2024",
     appliedDate: "2024-04-10",
     resumeLink: "https://example.com/resume",

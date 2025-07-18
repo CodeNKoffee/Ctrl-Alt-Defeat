@@ -380,7 +380,7 @@ export default function EvaluationsDashboard({ evaluations: initialEvaluations, 
           </div>
         )} */}
 
-        <div className="w-full flex flex-wrap justify-between gap-2 relative bg-[#f4fafd] rounded-2xl shadow-md p-6">
+        <div className="w-full flex flex-wrap justify-start gap-[6.5rem] relative bg-[#f4fafd] rounded-2xl shadow-md p-6">
           {filteredEvaluations && filteredEvaluations.length > 0 ? (
             filteredEvaluations.map((evaluation, idx) => (
               <div

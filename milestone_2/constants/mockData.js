@@ -438,11 +438,11 @@ export const facultyScadReports = {
     title: 'Embedded Systems Internship Final Report',
     studentName: 'Sarah Johnson',
     studentMajor: 'Computer Science and Engineering',
-    companyName: 'Tech Solutions Ltd.',
+    companyName: 'Valeo Egypt',
     submissionDate: '2025-04-10',
     status: 'flagged',
-    introduction: 'This report details my experience as an Embedded Systems intern at Tech Solutions Ltd. from January to March 2025. I worked on firmware development, microcontroller programming, and hardware-software integration, gaining hands-on experience with real-time operating systems (RTOS) and embedded C.',
-    body: 'During my internship at Tech Solutions Ltd., I was part of the embedded systems team working on IoT and industrial automation projects. My main responsibilities included writing and debugging firmware for ARM Cortex-M microcontrollers, integrating sensors and actuators, and ensuring reliable communication between hardware modules using protocols like SPI, I2C, and UART.\n\nA significant project I contributed to was the development of a real-time sensor data acquisition system for an industrial monitoring device. I implemented interrupt-driven routines for data collection, optimized memory usage, and worked closely with hardware engineers to troubleshoot signal integrity issues. This project taught me the importance of timing constraints, low-level debugging, and cross-functional collaboration between hardware and software teams.\n\nThroughout the internship, I gained proficiency in:\n- Embedded C/C++ programming\n- Real-Time Operating Systems (FreeRTOS)\n- Hardware debugging with oscilloscopes and logic analyzers\n- Communication protocols (SPI, I2C, UART, CAN)\n- PCB schematic review and basic hardware bring-up\n\nThe internship also helped me develop soft skills such as technical documentation, teamwork with multidisciplinary teams, and presenting technical findings to both engineers and non-technical stakeholders.\n\nThe knowledge from my Embedded Systems and Digital Electronics courses proved invaluable during this experience. Understanding microcontroller architectures and real-time constraints helped me contribute meaningful improvements to projects right from the start of my internship.',
+    introduction: 'This report details my experience as an Embedded Systems intern at Valeo Egypt from January to March 2025. I worked on firmware development, microcontroller programming, and hardware-software integration, gaining hands-on experience with real-time operating systems (RTOS) and embedded C.',
+    body: 'During my internship at Valeo Egypt, I was part of the embedded systems team working on IoT and industrial automation projects. My main responsibilities included writing and debugging firmware for ARM Cortex-M microcontrollers, integrating sensors and actuators, and ensuring reliable communication between hardware modules using protocols like SPI, I2C, and UART.\n\nA significant project I contributed to was the development of a real-time sensor data acquisition system for an industrial monitoring device. I implemented interrupt-driven routines for data collection, optimized memory usage, and worked closely with hardware engineers to troubleshoot signal integrity issues. This project taught me the importance of timing constraints, low-level debugging, and cross-functional collaboration between hardware and software teams.\n\nThroughout the internship, I gained proficiency in:\n- Embedded C/C++ programming\n- Real-Time Operating Systems (FreeRTOS)\n- Hardware debugging with oscilloscopes and logic analyzers\n- Communication protocols (SPI, I2C, UART, CAN)\n- PCB schematic review and basic hardware bring-up\n\nThe internship also helped me develop soft skills such as technical documentation, teamwork with multidisciplinary teams, and presenting technical findings to both engineers and non-technical stakeholders.\n\nThe knowledge from my Embedded Systems and Digital Electronics courses proved invaluable during this experience. Understanding microcontroller architectures and real-time constraints helped me contribute meaningful improvements to projects right from the start of my internship.',
     highlights: [
       { start: 52, end: 120, color: '#D4F1F9' }, // "firmware development, microcontroller programming, and hardware-software integration"
       { start: 312, end: 400, color: '#FFDBF2' }, // "real-time sensor data acquisition system for an industrial monitoring device. I implemented interrupt-driven routines"
@@ -2014,7 +2014,7 @@ export const MOCK_COMPANY_EVALUATIONS = [
     status: 'submitted',
     studentName: 'Sarah Johnson',
     internshipTitle: 'Embedded Systems Intern',
-    company: 'Tawabiry',
+    company: 'Valeo Egypt',
     date: '2025-04-10',
     skillRatings: {
       'Ability to adapt to change': 4,
@@ -2106,6 +2106,37 @@ export const MOCK_COMPANY_EVALUATIONS = [
   {
     id: 4,
     status: 'saved',
+    studentName: 'Sarah Johnson',
+    internshipTitle: 'Embedded Systems Intern',
+    company: 'Valeo Egypt',
+    date: '2025-04-22',
+    skillRatings: {
+      'Ability to adapt to change': 4,
+      'Analytical skills': 4,
+      'Collecting data/ research data skills': 4,
+      'Creativity': 4,
+      'Follow up skills': 4,
+      'Interpersonal skills with peers, supervisors, and clients': 4,
+      'Problem solving': 4,
+      'Punctuality': 4,
+      'Reporting skills': 4,
+      'Responsibility and accountability': 4,
+      'Stress handling': 4,
+      'Taking initiatives': 4,
+      'Teamwork': 4,
+      'Time management': 4
+    },
+    skillOther: 'Consistent performer.',
+    technical: {
+      'Technical Background': 'Strong with C++ and microcontrollers.',
+      'Technical Knowledge': 'Solid understanding of embedded systems and firmware development.',
+      'Compatibility of technical skills with the job': 'Very well-suited for embedded projects.'
+    },
+    technicalOther: 'Could improve hardware debugging skills.'
+  },
+  {
+    id: 5,
+    status: 'saved',
     studentName: 'Ali Hassan',
     internshipTitle: 'Data Analyst Intern',
     company: 'Nestlé Egypt',
@@ -2135,7 +2166,7 @@ export const MOCK_COMPANY_EVALUATIONS = [
     technicalOther: 'Should learn Python.'
   },
   {
-    id: 5,
+    id: 6,
     status: 'saved',
     studentName: 'Nour Mohamed',
     internshipTitle: 'Marketing Intern',
@@ -2165,37 +2196,6 @@ export const MOCK_COMPANY_EVALUATIONS = [
     },
     technicalOther: 'Should take advanced marketing courses.'
   },
-  {
-    id: 6,
-    status: 'saved',
-    studentName: 'Sarah Johnson',
-    internshipTitle: 'Embedded Systems Intern',
-    company: 'Valeo Egypt',
-    date: '2025-04-22',
-    skillRatings: {
-      'Ability to adapt to change': 4,
-      'Analytical skills': 4,
-      'Collecting data/ research data skills': 4,
-      'Creativity': 4,
-      'Follow up skills': 4,
-      'Interpersonal skills with peers, supervisors, and clients': 4,
-      'Problem solving': 4,
-      'Punctuality': 4,
-      'Reporting skills': 4,
-      'Responsibility and accountability': 4,
-      'Stress handling': 4,
-      'Taking initiatives': 4,
-      'Teamwork': 4,
-      'Time management': 4
-    },
-    skillOther: 'Consistent performer.',
-    technical: {
-      'Technical Background': 'Strong with C++ and microcontrollers.',
-      'Technical Knowledge': 'Solid understanding of embedded systems and firmware development.',
-      'Compatibility of technical skills with the job': 'Very well-suited for embedded projects.'
-    },
-    technicalOther: 'Could improve hardware debugging skills.'
-  }
 ];
 
 export const TawabiryInternships = [
