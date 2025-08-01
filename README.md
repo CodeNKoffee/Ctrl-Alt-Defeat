@@ -1,98 +1,36 @@
-# GUC Internship System
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Overview
+## Getting Started
 
-The GUC Internship System is a web application designed to streamline and digitize the internship process for the German University in Cairo. The system connects students, faculty academics, companies, and the SCAD office in a unified platform for managing internship opportunities, applications, evaluations, and reporting.
+First, run the development server:
 
-## Project Context
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-- **Institution**: German University in Cairo
-- **Department**: Media Engineering and Technology
-- **Academic Year**: Spring 2025
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Project Team
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-### Development Team - "Ctrl + Alt + Defeat"
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-- 58-0454
-- 58-1959
-- 58-5727
-- 58-6188
-- 58-16143
+## Learn More
 
-### Faculty Supervisors
+To learn more about Next.js, take a look at the following resources:
 
-- Assoc. Prof. Mervat Abuelkheir
-- Dr. Aya Mohamed
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### Teaching Assistants
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-- Eng. Nada Ibrahim
-- Eng. Yasmine Elbehairy
-- Eng. Hager Khaled
-- Eng. Mariam Tamer
-- Eng. Heba Hegazy
-- Eng. Farida Helmy
+## Deploy on Vercel
 
-## Core Features
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-- Profile and identity management for students and companies
-- Internship opportunity posting and discovery
-- Application processing and tracking
-- Digital evaluation system
-- Automated reporting tools
-- Course feedback collection
-
-## Project Milestones
-
-### Milestone 1 - Requirements Engineering
-
-#### Part 1
-
-- **Without AI**: Due February 22, 2025, 11:59 PM
-- **With AI Improvement**: Due March 1, 2025, 11:59 PM
-
-##### Deliverables
-
-1. Excel sheet with 50 functional requirements (without AI)
-   - Filename format: `teamname-MS1-P1-A.xls`
-2. Improved Excel sheet with AI assistance
-   - Filename format: `teamname-MS1-P1-B.xls`
-3. ChatGPT conversation links (maximum 5)
-
-## Important Notes
-
-- AI usage is strictly prohibited before the first submission deadline
-- Plagiarism will result in zero marks for the entire milestone
-- All submissions must be made through the GitHub repository
-- Requirements must follow the provided template format
-- Each submission must contain exactly 50 unique user stories
-
-## Project Modules
-
-1. Profile and Identity Module
-   - Student Profiles and Customization
-   - Company Profiles and Customization
-2. Internship Search and Recruitment Module
-   - Internship Listings
-   - Internship Applications
-3. Evaluation and Reporting Module
-   - Company Evaluations
-   - Intern Reports
-
-## Development Guidelines
-
-- Requirements must be clear, consistent, and implementable
-- CRUD operations for any business entity count as one user story
-- Multiple stakeholders for the same action should be combined into one requirement
-- All requirements must be actionable, measurable, and testable
-
-## Grading Criteria
-
-- Accuracy (clarity, precision, and completeness)
-- Presentation (organization and consistency)
-- Composition (format, spelling, and English usage)
-
-## Contact
-
-For questions or clarifications, please contact the teaching assistants or faculty supervisors.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
