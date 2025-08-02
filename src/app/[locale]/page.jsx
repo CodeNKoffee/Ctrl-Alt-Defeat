@@ -45,6 +45,7 @@ export default function Home() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isNavigatingToSignup, setIsNavigatingToSignup] = useState(false);
 
   const textContent = [
     { title: "", subtitle: "" }, // Initial state
@@ -122,18 +123,34 @@ export default function Home() {
     }
   };
 
+  const handleNavigateToSignup = (e) => {
+    e.preventDefault(); // Prevent default Link behavior
+    setIsNavigatingToSignup(true);
+    
+    // Show loader and navigate to signup after delay
+    setTimeout(() => {
+      router.push(`/${locale}/auth/signup?userType=${selectedUserOption.value}`);
+    }, 250);
+  };
+
   const handleBackToOptions = () => {
     setIsTransitioning(true);
     setIsLoggingIn(false); // Reset login state
 
-    // Simple fade transition back (no loader)
+    // Show loader during back transition
     setTimeout(() => {
-      setSelectedUserOption(null);
-      setClickedOptionId(null);
-      setIsIconAnimating(false);
-      setView('options');
-      setIsTransitioning(false);
-    }, 250); // Increased from 150ms to 250ms for smoother back transition
+      setShowLoader(true);
+      
+      // Hide loader and complete transition after minimum 1 second
+      setTimeout(() => {
+        setSelectedUserOption(null);
+        setClickedOptionId(null);
+        setIsIconAnimating(false);
+        setView('options');
+        setShowLoader(false);
+        setIsTransitioning(false);
+      }, 1200); // 1.2 seconds for smooth back transition with loader
+    }, 250); // Brief delay before showing loader
   };
 
   const handleLogin = async (values) => {
@@ -542,7 +559,33 @@ export default function Home() {
           </motion.div>
         )}
 
-        {view === 'login' && selectedUserOption && !showLoader && (
+        {isNavigatingToSignup && (
+          <motion.div
+            key="signup-nav-loader"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.5 } }}
+            transition={{ duration: 0.35 }}
+            className="flex-grow flex items-center justify-center"
+          >
+            <div className="flex flex-col items-center space-y-4">
+              <MutatingDots
+                height={120}
+                width={120}
+                color="#2A5F74"
+                secondaryColor="#5DB2C7"
+                radius={12}
+                ariaLabel="mutating-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
+              <p className="text-metallica-blue-950 font-semibold text-xl mt-4">{safeT('home.loading')}</p>
+            </div>
+          </motion.div>
+        )}
+
+        {view === 'login' && selectedUserOption && !showLoader && !isNavigatingToSignup && (
           <motion.div
             key="login"
             {...fadeTransition}
@@ -578,9 +621,12 @@ export default function Home() {
                       {selectedUserOption.value === 'company' && (
                         <span className="text-black font-medium font-ibm-plex-sans">
                           {safeT('home.notRegistered')}{' '}
-                          <Link href={`/${locale}/auth/signup?userType=${selectedUserOption.value}`} className="text-metallica-blue-off-charts underline">
+                          <button 
+                            onClick={handleNavigateToSignup}
+                            className="text-metallica-blue-off-charts underline bg-transparent border-none cursor-pointer hover:text-metallica-blue-700 transition-colors"
+                          >
                             {safeT('home.signUp')}
-                          </Link>
+                          </button>
                         </span>
                       )}
                     </motion.div>
