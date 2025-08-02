@@ -352,7 +352,7 @@ button:hover {
 .option_name {
   background-color: var(--metallica-blue-700);
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 32px;
   text-align: center;
   width: 100%;
@@ -363,6 +363,12 @@ button:hover {
   align-items: center;
   letter-spacing: 1px;
   padding: 12px 24px;
+}
+
+@media (min-width: 1280px) {
+  .option_name {
+    font-size: 18px;
+  }
 }
 
 .continue-text {
